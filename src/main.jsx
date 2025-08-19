@@ -9,6 +9,9 @@ import FaqSection from './FaqSection.jsx';
 import Footer from './Footer.jsx';
 import CoursePage from './CoursePage.jsx';
 import ResultsPage from './ResultsPage.jsx';
+import SupportPage from './SupportPage.jsx';
+import PrivacyPage from './PrivacyPage.jsx';
+import TermsPage from './TermsPage.jsx';
 import { Routes, Route } from 'react-router-dom';
 
 function Home() {
@@ -30,6 +33,9 @@ function App() {
       <Routes>
         <Route path="/courses/:slug" element={<CoursePage />} />
         <Route path="/find/:state/:courseType" element={<ResultsPage />} />
+        <Route path="/support" element={<SupportPage />} />
+        <Route path="/privacy" element={<PrivacyPage />} />
+        <Route path="/terms" element={<TermsPage />} />
         <Route path="/" element={<Home />} />
       </Routes>
       <Footer />

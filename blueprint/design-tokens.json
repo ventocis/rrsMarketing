@@ -1,0 +1,23 @@
+﻿{
+  "colors": {
+    "primary": "#2454E6",
+    "primaryHover": "#1D46BF",
+    "text": "#0E1324",
+    "body": "#3B4250",
+    "muted": "#64748B",
+    "surface": "#FFFFFF",
+    "subtle": "#F7F9FC",
+    "border": "#E6EAF0",
+    "success": "#16A34A"
+  },
+  "radii": { "card": 12, "button": 12, "input": 12 },
+  "spacing": { "sectionY": 64, "containerX": 24, "maxWidth": 1120 },
+  "type": {
+    "h1": "clamp(32px,4vw,48px)",
+    "h2": "clamp(24px,3vw,32px)",
+    "h3": "22px",
+    "body": "16px",
+    "bodyLg": "18px",
+    "small": "14px"
+  }
+}

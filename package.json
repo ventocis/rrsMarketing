@@ -1,0 +1,9 @@
+﻿{
+  "scripts": {
+    "predev": "node ./blueprint/scripts/build-data.mjs",
+    "dev": "vite",
+    "prebuild": "node ./blueprint/scripts/build-data.mjs",
+    "build": "vite build",
+    "preview": "vite preview --port 4173"
+  }
+}

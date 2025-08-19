@@ -1,0 +1,34 @@
+﻿home:
+  sections:
+   - hero_finder     # hero with embedded Finder card
+    - usp
+    - how
+    - trust
+    - faq
+    - footer
+
+
+results:
+  sections:
+    - hero          # “Florida – Basic Driver Improvement”
+    - filters       # language chips (Any/English/Spanish)
+    - grid          # result cards with Learn more + Sign up
+    - faq
+    - footer
+
+
+course:
+  sections:
+    - hero
+    - facts         # state, duration, price, provider pill, CTA
+    - details       # eligibility, identity verification, reporting, certificate, retake
+    - features      # hide if show_modules=false
+    - cta
+    - faq
+    - footer
+
+
+static:
+  - support
+  - privacy
+  - terms

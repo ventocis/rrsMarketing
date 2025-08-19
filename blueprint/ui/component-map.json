@@ -1,0 +1,18 @@
+﻿{
+  "home": {
+    "hero_finder": {
+      "use": ["Flowbite.Card", "Flowbite.Label", "Flowbite.Select", "Flowbite.Button", "Flowbite.TextInput"],
+      "notes": "Finder renders inside a Card placed in the Hero; submit button uses primary style."
+    }
+  },
+  "results": {
+    "filters": { "use": ["Flowbite.Badge", "Flowbite.Select", "Flowbite.Button"] },
+    "grid": { "use": ["Flowbite.Card", "Flowbite.Badge", "Flowbite.Button"] }
+  },
+  "course": {
+    "hero": { "use": ["Flowbite.Badge", "Flowbite.Button"] },
+    "facts": { "use": ["Flowbite.Badge"] },
+    "details": { "use": ["Flowbite.ListGroup"] },
+    "faq": { "use": ["Flowbite.Accordion"] }
+  }
+}

@@ -1,0 +1,91 @@
+﻿{
+  "layout": {
+    "containerMaxWidth": 1120,
+    "grid": { "colsMd": 12, "gap": 24 },
+    "breakpoints": { "sm": 640, "md": 768, "lg": 1024 }
+  },
+
+
+  "coursePage": {
+    "sections": ["hero", "facts", "details", "features", "cta", "faq"],
+
+
+    "hero": {
+      "titleFrom": "headline",
+      "subFrom": "subhead",
+      "showPartnerPillWhen": "provider_type == 'Partner'",
+      "partnerPillTextFrom": "partner_badge",
+      "providerNoteKey": "provider_note",    // from copy/course-template.json
+      "primaryCta": {
+        "labelFrom": "hero_cta_label",
+        "hrefRule": "isPartner ? affiliate_link : '/courses/' + slug + '#enroll'",
+        "target": "isPartner ? '_blank' : '_self'",
+        "relWhenPartner": "noopener sponsored"
+      }
+    },
+
+
+    "facts": {
+      "style": "inline-cards",
+      "items": [
+        { "key": "state", "labelKey": "facts_labels.state" },
+        { "key": "duration_hours", "labelKey": "facts_labels.duration", "format": "hours" },
+        { "key": "price_usd", "labelKey": "facts_labels.price", "format": "usd", "hideWhenEmpty": true },
+        { "key": "provider_name", "labelKey": "facts_labels.provider" },
+        { "key": "certificate_delivery", "labelKey": "facts_labels.certificate", "truncate": 140 }
+      ],
+      "badgesFrom": "badge_list", "badgeSep": "|"
+    },
+
+
+    "details": {
+      "headingKey": "details",               // copy.headings.details
+      "as": "definition-list",
+      "order": ["eligibility","identity_verification","reporting_method","certificate_delivery","retake_policy"],
+      "hideEmpty": true
+    },
+
+
+    "features": {
+      "headingKey": "features",
+      "showWhen": "show_modules == true",
+      "source": "features|modules|notes",    // first non-empty field (optional)
+      "splitBy": "|"
+    },
+
+
+    "cta": {
+      "primary": "hero.primaryCta",
+      "secondary": {
+        "label": "Learn more",
+        "href": "/courses/{slug}",
+        "showOnResultsOnly": true
+      }
+    }
+  },
+
+
+  "resultsCard": {
+    "image": null,
+    "titleFrom": "course_name",
+    "subFrom": "blurb",
+    "meta": [
+      { "icon": "Clock", "from": "duration_hours", "format": "hours" },
+      { "icon": "Globe", "from": "language" },
+      { "icon": "Tag", "from": "price_usd", "format": "usd", "hideWhenEmpty": true }
+    ],
+    "showPartnerPillWhen": "provider_type == 'Partner'",
+    "partnerPillTextFrom": "partner_badge",
+    "buttons": {
+      "learnMore": { "label": "Learn more", "href": "/courses/{slug}" },
+      "signUp": {
+        "labelWhenPartner": "Continue on TicketSchool →",
+        "labelWhenInHouse": "Start course →",
+        "hrefWhenPartner": "{affiliate_link}",
+        "hrefWhenInHouse": "/courses/{slug}#enroll",
+        "targetWhenPartner": "_blank",
+        "relWhenPartner": "noopener sponsored"
+      }
+    }
+  }
+}

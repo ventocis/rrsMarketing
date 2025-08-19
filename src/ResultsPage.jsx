@@ -6,6 +6,7 @@ import resultsCopy from '../blueprint/copy/results.json';
 import FiltersBar from './components/FiltersBar.jsx';
 import Card from './components/Card.jsx';
 import CourseResultCard from './components/CourseResultCard.jsx';
+import Breadcrumbs from './components/Breadcrumbs.jsx';
 
 export default function ResultsPage() {
   const { state, courseType } = useParams();
@@ -32,6 +33,7 @@ export default function ResultsPage() {
     .replace('{STATE}', state)
     .replace('{COURSE_TYPE}', courseType === 'multi' ? 'Courses' : courseType);
   const heroSub = resultsCopy.hero.sub;
+  const courseTypeLabel = courseType === 'multi' ? 'Courses' : courseType;
 
   // Handle filter changes
   function handleFilterChange({ state: newState, language: newLang, sort: newSort }) {
@@ -44,9 +46,15 @@ export default function ResultsPage() {
   return (
     <main className="bg-gray-50 min-h-screen pb-12">
       <section className="max-w-6xl mx-auto px-4 py-16 md:py-20">
+        <Breadcrumbs state={state} courseType={courseType} lang={lang} courseTypeLabel={courseTypeLabel} />
         <div className="text-center">
           <h1 className="text-3xl md:text-4xl font-bold mb-2">{heroTitle}</h1>
           <p className="text-lg text-gray-700 mb-4">{heroSub}</p>
+          <div className="mb-6">
+            <Link to="/#find-course" className="inline-block">
+              <button type="button" className="text-blue-600 hover:text-blue-700 underline text-sm font-medium">Change state or reason</button>
+            </Link>
+          </div>
         </div>
         <FiltersBar
           state={state}

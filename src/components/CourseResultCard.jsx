@@ -28,9 +28,9 @@ export default function CourseResultCard({ course }) {
       </div>
       <div className="text-gray-600 leading-relaxed mt-2 text-sm">{truncate(course.blurb || course.description, 140)}</div>
       {course.provider_type === 'Partner' && course.provider_name && (
-        <div className="mt-3 inline-flex rounded-full bg-blue-50 text-blue-700 text-xs font-semibold px-3 py-1">
+        <span className="mt-3 inline-flex max-w-max self-start items-center gap-1 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700 leading-none">
           Provided by {course.provider_name}
-        </div>
+        </span>
       )}
       <div className="mt-5 flex items-center gap-3">
         <Button variant="secondary" href={`/courses/${course.slug}`}>{labels.learnMore}</Button>

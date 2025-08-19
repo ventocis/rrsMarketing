@@ -1,38 +1,23 @@
 import React, { useMemo } from 'react';
-import { useParams, useSearchParams, Link } from 'react-router-dom';
+import { useParams, useSearchParams, useNavigate, Link } from 'react-router-dom';
 import courses from './data/courses.json';
 import { usd, hours, truncate } from './lib/format.js';
-
-const resultsCopy = {
-  hero: {
-    titlePattern: '{STATE} – {COURSE_TYPE}',
-    sub: 'Select a course to continue.'
-  },
-  filters: {
-    label_language: 'Language',
-    any_language: 'Any'
-  },
-  grid: {
-    card: {
-      cta_learn: 'Learn more',
-      cta_signup: 'Sign up',
-      provider_pill_partner: 'Provided by TicketSchool'
-    },
-    empty: 'No courses match those filters. Try a different language or reason.'
-  }
-};
+import resultsCopy from '../blueprint/copy/results.json';
+import FiltersBar from './components/FiltersBar.jsx';
 
 export default function ResultsPage() {
   const { state, courseType } = useParams();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const lang = searchParams.get('lang') || '';
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const lang = searchParams.get('lang') || 'any';
+  const sort = searchParams.get('sort') || 'recommended';
 
   // Filter courses by state, courseType, and language
   const filtered = useMemo(() =>
     courses.filter(c =>
       c.state === state &&
       (courseType === 'multi' || c.course_type === courseType) &&
-      (!lang || lang === 'any' || c.language === lang)
+      (lang === 'any' || c.language === lang)
     ),
     [state, courseType, lang]
   );
@@ -44,29 +29,33 @@ export default function ResultsPage() {
   const heroTitle = resultsCopy.hero.titlePattern
     .replace('{STATE}', state)
     .replace('{COURSE_TYPE}', courseType === 'multi' ? 'Courses' : courseType);
+  const heroSub = resultsCopy.hero.sub;
+
+  // Handle filter changes
+  function handleFilterChange({ state: newState, language: newLang, sort: newSort }) {
+    const nextState = newState !== undefined ? newState : state;
+    const nextLang = newLang !== undefined ? newLang : lang;
+    const nextSort = newSort !== undefined ? newSort : sort;
+    navigate(`/find/${nextState}/${courseType}?lang=${nextLang}&sort=${nextSort}`);
+  }
 
   return (
     <main className="bg-gray-50 min-h-screen pb-12">
-      <section className="bg-white border-b border-gray-200 pt-10 pb-8 mb-8">
-        <div className="max-w-3xl mx-auto px-4 text-center">
+      <section className="max-w-6xl mx-auto px-4 py-16 md:py-20">
+        <div className="text-center">
           <h1 className="text-3xl md:text-4xl font-bold mb-2">{heroTitle}</h1>
-          <p className="text-lg text-gray-700 mb-4">{resultsCopy.hero.sub}</p>
+          <p className="text-lg text-gray-700 mb-4">{heroSub}</p>
         </div>
+        <FiltersBar
+          state={state}
+          courseType={courseType}
+          language={lang}
+          sort={sort}
+          languageOptions={languageOptions}
+          onChange={handleFilterChange}
+        />
       </section>
       <section className="max-w-4xl mx-auto px-4 mb-8">
-        <div className="flex items-center mb-6">
-          <label className="mr-2 font-medium">{resultsCopy.filters.label_language}:</label>
-          <select
-            className="border rounded px-2 py-1"
-            value={lang}
-            onChange={e => setSearchParams({ lang: e.target.value })}
-          >
-            <option value="any">{resultsCopy.filters.any_language}</option>
-            {languageOptions.map(l => (
-              <option key={l} value={l}>{l}</option>
-            ))}
-          </select>
-        </div>
         {filtered.length === 0 ? (
           <div className="text-center text-gray-500 py-12">{resultsCopy.grid.empty}</div>
         ) : (

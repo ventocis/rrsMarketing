@@ -66,15 +66,21 @@ export default function HeroFinder() {
   };
 
   return (
-    <section className="bg-white border-b border-gray-200 py-20 lg:py-28" id="find-course">
-      <div className="max-w-[65ch] mx-auto px-4 text-center">
+    <section className="relative bg-white border-b border-gray-200 py-20 lg:py-28 overflow-hidden scroll-mt-24" id="find-course">
+      {/* sref: hero-bg-gradient */}
+      <div aria-hidden="true" className="absolute inset-0 pointer-events-none select-none" style={{background: 'linear-gradient(120deg, #e0e7ff 0%, #f0fdfa 100%)', opacity: 0.25, zIndex: 0}}></div>
+      <div className="relative max-w-[65ch] mx-auto px-4 text-center z-10">
         {/* sref: hero-title */}
         <h1 className="text-4xl md:text-5xl font-bold mb-4">The modern way to finish your traffic course.</h1>
-        <p className="text-gray-600 leading-relaxed text-lg md:text-xl mb-8">Approved where required, built to be simple. Start on your phone, finish on your laptop—pick up right where you left off.</p>
+        <p className="text-lg md:text-xl text-gray-600 leading-relaxed mb-8">Approved where required, built to be simple. Start on your phone, finish on your laptop—pick up right where you left off.</p>
         <Button href="#find-course" variant="primary" size="lg" className="mb-8">
           Get started
         </Button>
-        <div className="max-w-xl mx-auto text-left shadow-md bg-white p-6 rounded-lg">
+        {/* sref: hero-scroll-cue */}
+        <div className="flex justify-center mt-2" aria-hidden="true">
+          <svg className="w-7 h-7 text-blue-400 animate-bounce" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+        </div>
+        <div className="max-w-xl mx-auto text-left shadow-md bg-white p-6 rounded-lg mt-12">
           <form className="space-y-4" onSubmit={handleSubmit}>
             {/* sref: finder-form-title */}
             <h2 className="text-2xl md:text-3xl font-bold mb-8">Find the right course</h2>

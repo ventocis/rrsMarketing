@@ -1,17 +1,18 @@
 import React from 'react';
-
+import Button from './components/Button.jsx';
+import howData from '../blueprint/copy/home.json';
 // sref: how-section.v1
+
 export default function HowSection() {
-  const steps = [
-    { n: 1, title: "Choose state & course", body: "Tell us where you’re licensed and why you need the course." },
-    { n: 2, title: "Take the course online", body: "Short, clear modules at your own pace on any device." },
-    { n: 3, title: "Pass & get your certificate", body: "Instant digital certificate upon completion." },
-    { n: 4, title: "Submit if required", body: "Some courts or insurers need documentation.", link: { label: "How to submit →", href: "#" } },
-  ];
+  const heading = howData.how.heading;
+  const steps = howData.how.steps;
+  // Optional: define CTA label and href if provided in blueprint, else fallback
+  const cta = { label: 'Get started', href: '#find-course' };
+
   return (
     <section className="bg-white py-20 lg:py-28 border-b border-gray-100">
       <div className="max-w-[65ch] mx-auto px-4">
-        <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">How it works</h2>
+        <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">{heading}</h2>
         <ol className="space-y-8">
           {steps.map((step, i) => (
             <li key={i} className="flex items-start">
@@ -24,6 +25,9 @@ export default function HowSection() {
             </li>
           ))}
         </ol>
+        <div className="mt-10 flex justify-center">
+          <Button variant="primary" size="lg" href={cta.href}>{cta.label}</Button>
+        </div>
       </div>
     </section>
   );

@@ -1,79 +1,70 @@
-// sref: hero-finder.v1
-import React from 'react';
-import { Card, Button } from 'flowbite-react';
-
-const HERO = {
-  h1: "The modern way to finish your traffic course.",
-  sub: "Approved where required, built to be simple. Start on your phone, finish on your laptop—pick up right where you left off.",
-  cta: "Get started",
-  cta_anchor: "#find-course"
-};
-
-const FINDER = {
-  heading: "Find the right course",
-  sub: "Select your state and reason. If there are multiple options, we’ll show you the choices.",
-  label_state: "State",
-  label_reason: "Reason",
-  label_course: "Course (optional)",
-  label_language: "Language",
-  any_language: "Any language",
-  option_best: "Best option for my state",
-  reasons: {
-    court: "Court / Ticket",
-    insurance: "Insurance Discount",
-    license: "Driver License"
-  },
-  submit: "Find course",
-  helper: "Leave “Course” as ‘Best option’ and we’ll recommend the right one.",
-  comingSoon: "We’re adding courses for this state. Check back soon."
-};
-
-const STATES = [
-  { code: "FL", name: "Florida" },
-  { code: "TX", name: "Texas" },
-  { code: "VA", name: "Virginia" },
-  { code: "NY", name: "New York" },
-  { code: "IL", name: "Illinois" },
-  { code: "MI", name: "Michigan" },
-  { code: "MO", name: "Missouri" },
-  { code: "TN", name: "Tennessee" }
-];
+// sref: hero-finder.v2
+import React, { useState } from 'react';
+import { Select, Button } from 'flowbite-react';
+import states from './data/states.json';
+import courses from './data/courses.json';
+import { useNavigate } from 'react-router-dom';
 
 export default function HeroFinder() {
+  const [selectedState, setSelectedState] = useState('');
+  const [selectedCourseType, setSelectedCourseType] = useState('');
+  const [emptyState, setEmptyState] = useState(false);
+  const navigate = useNavigate ? useNavigate() : (url => window.location.assign(url));
+
+  // Get unique course types for dropdown
+  const courseTypes = Array.from(new Set(courses.map(c => c.course_type)));
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    setEmptyState(false);
+    if (!selectedState || !selectedCourseType) return;
+    const filtered = courses.filter(c => c.state === selectedState && c.course_type === selectedCourseType);
+    if (filtered.length === 1) {
+      navigate(`/courses/${filtered[0].slug}`);
+    } else if (filtered.length > 1) {
+      navigate(`/find/${selectedState}/${selectedCourseType}`);
+    } else {
+      setEmptyState(true);
+    }
+  };
+
   return (
     <section className="bg-gray-50 border-b border-gray-200 pt-8 pb-12" id="find-course">
       <div className="max-w-3xl mx-auto px-4 text-center">
-        <h1 className="text-3xl md:text-5xl font-bold mb-4">{HERO.h1}</h1>
-        <p className="text-lg md:text-xl text-gray-700 mb-8">{HERO.sub}</p>
-        <a href={HERO.cta_anchor} className="inline-block mb-8">
-          <Button size="lg">{HERO.cta}</Button>
+        {/* sref: hero-title */}
+        <h1 className="text-3xl md:text-5xl font-bold mb-4">The modern way to finish your traffic course.</h1>
+        <p className="text-lg md:text-xl text-gray-700 mb-8">Approved where required, built to be simple. Start on your phone, finish on your laptop—pick up right where you left off.</p>
+        <a href="#find-course" className="inline-block mb-8">
+          <Button size="lg">Get started</Button>
         </a>
-        <Card className="max-w-xl mx-auto text-left shadow-md">
-          <form className="space-y-4">
-            <h2 className="text-xl font-semibold mb-2">{FINDER.heading}</h2>
-            <p className="text-gray-600 mb-4">{FINDER.sub}</p>
+        <div className="max-w-xl mx-auto text-left shadow-md bg-white p-6 rounded-lg">
+          <form className="space-y-4" onSubmit={handleSubmit}>
+            {/* sref: finder-form-title */}
+            <h2 className="text-xl font-semibold mb-2">Find the right course</h2>
+            <p className="text-gray-600 mb-4">Select your state and course type. If there are multiple options, we’ll show you the choices.</p>
             <div>
-              <label htmlFor="state" className="block text-sm font-medium mb-1">{FINDER.label_state}</label>
-              <select id="state" name="state" className="w-full border rounded px-3 py-2">
+              <label htmlFor="state" className="block text-sm font-medium mb-1">State</label>
+              <Select id="state" value={selectedState} onChange={e => setSelectedState(e.target.value)} required>
                 <option value="">Select a state</option>
-                {STATES.map(s => (
+                {states.map(s => (
                   <option key={s.code} value={s.code}>{s.name}</option>
                 ))}
-              </select>
+              </Select>
             </div>
             <div>
-              <label htmlFor="reason" className="block text-sm font-medium mb-1">{FINDER.label_reason}</label>
-              <select id="reason" name="reason" className="w-full border rounded px-3 py-2">
-                <option value="">Select a reason</option>
-                {Object.entries(FINDER.reasons).map(([key, label]) => (
-                  <option key={key} value={key}>{label}</option>
+              <label htmlFor="courseType" className="block text-sm font-medium mb-1">Course Type</label>
+              <Select id="courseType" value={selectedCourseType} onChange={e => setSelectedCourseType(e.target.value)} required>
+                <option value="">Select a course type</option>
+                {courseTypes.map(type => (
+                  <option key={type} value={type}>{type}</option>
                 ))}
-              </select>
+              </Select>
             </div>
-            <Button type="submit" className="w-full">{FINDER.submit}</Button>
-            <p className="text-xs text-gray-500 mt-2">{FINDER.helper}</p>
+            <Button type="submit" className="w-full">Find course</Button>
+            <p className="text-xs text-gray-500 mt-2">Leave “Course Type” as ‘Best option’ and we’ll recommend the right one.</p>
+            {emptyState && <div className="text-red-600 text-sm mt-2">No courses found for your selection.</div>}
           </form>
-        </Card>
+        </div>
       </div>
     </section>
   );

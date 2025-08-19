@@ -1,8 +1,5 @@
-﻿@tailwind base;
+﻿@import 'flowbite/dist/flowbite.css';
+
+@tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-
-/* Optional helpers tied to your tokens */
-:root { color-scheme: light; }
-.container { max-width: 1120px; margin-inline: auto; padding-inline: 24px; }

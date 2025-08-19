@@ -1,12 +1,15 @@
 ﻿import 'flowbite/dist/flowbite.css';
 import './index.css';
+import Header from './Header.jsx';
 import HeroFinder from './HeroFinder.jsx';
 
-function Home() {
+function App() {
   return (
     <>
+      <Header />
       <HeroFinder />
-      <div>Home Page</div>
     </>
   );
 }
+
+export default App;

@@ -6,6 +6,7 @@ import courses from './data/courses.json';
 import finderMap from '../blueprint/data/finder-map.json';
 import { useNavigate } from 'react-router-dom';
 import Button from './components/Button.jsx';
+import PopularStatesChips from './components/PopularStatesChips.jsx';
 
 const reasons = [
   { key: 'court', label: 'Court / Ticket' },
@@ -19,6 +20,7 @@ export default function HeroFinder() {
   const [selectedCourse, setSelectedCourse] = useState('');
   const [selectedLanguage, setSelectedLanguage] = useState('');
   const [emptyState, setEmptyState] = useState(false);
+  const [showAdvanced, setShowAdvanced] = useState(false);
   const navigate = useNavigate ? useNavigate() : (url => window.location.assign(url));
 
   // Get course types for the selected reason
@@ -34,6 +36,12 @@ export default function HeroFinder() {
   const courseOptions = Array.from(new Set(filteredCourses.map(c => c.course_name)));
   // Get unique languages for dropdown
   const languageOptions = Array.from(new Set(filteredCourses.map(c => c.language)));
+
+  const handleChipSelect = code => {
+    setSelectedState(code);
+    setSelectedCourse('');
+    setSelectedLanguage('');
+  };
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -86,6 +94,9 @@ export default function HeroFinder() {
               <h2 className="text-2xl md:text-3xl font-bold mb-4">Find the right course</h2>
               <p className="text-gray-500 text-sm mb-4">Select your state and reason. If there are multiple options, we’ll show you the choices.</p>
             </div>
+            <div className="col-span-1 lg:col-span-2">
+              <PopularStatesChips value={selectedState} onSelect={handleChipSelect} courseType={selectedCourse} />
+            </div>
             <div>
               <label htmlFor="state" className="block text-sm font-medium mb-1">State</label>
               <Select id="state" value={selectedState} onChange={e => { setSelectedState(e.target.value); setSelectedCourse(''); setSelectedLanguage(''); }} required className="w-full">
@@ -104,7 +115,18 @@ export default function HeroFinder() {
                 ))}
               </Select>
             </div>
-            <div>
+            <div className="col-span-1 lg:col-span-2">
+              <button
+                type="button"
+                className="mt-4 text-sm text-gray-700 underline underline-offset-4"
+                aria-expanded={showAdvanced}
+                onClick={() => setShowAdvanced(v => !v)}
+              >
+                Advanced options
+              </button>
+              <div className="text-sm text-gray-500 mt-1">Course and language are optional. Use these to narrow your results.</div>
+            </div>
+            <div className={showAdvanced ? '' : 'hidden'}>
               <label htmlFor="course" className="block text-sm font-medium mb-1">Course (optional)</label>
               <Select id="course" value={selectedCourse} onChange={e => setSelectedCourse(e.target.value)} disabled={!courseOptions.length} className="w-full">
                 <option value="">Best option for my state</option>
@@ -114,7 +136,7 @@ export default function HeroFinder() {
               </Select>
               <p className="text-gray-500 text-sm mt-1">Leave “Course” as ‘Best option’ and we’ll recommend the right one.</p>
             </div>
-            <div>
+            <div className={showAdvanced ? '' : 'hidden'}>
               <label htmlFor="language" className="block text-sm font-medium mb-1">Language</label>
               <Select id="language" value={selectedLanguage} onChange={e => setSelectedLanguage(e.target.value)} disabled={!languageOptions.length} className="w-full">
                 <option value="">Any language</option>

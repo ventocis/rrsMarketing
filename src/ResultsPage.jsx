@@ -4,6 +4,8 @@ import courses from './data/courses.json';
 import { usd, hours, truncate } from './lib/format.js';
 import resultsCopy from '../blueprint/copy/results.json';
 import FiltersBar from './components/FiltersBar.jsx';
+import Card from './components/Card.jsx';
+import CourseResultCard from './components/CourseResultCard.jsx';
 
 export default function ResultsPage() {
   const { state, courseType } = useParams();
@@ -54,49 +56,17 @@ export default function ResultsPage() {
           languageOptions={languageOptions}
           onChange={handleFilterChange}
         />
-      </section>
-      <section className="max-w-4xl mx-auto px-4 mb-8">
-        {filtered.length === 0 ? (
-          <div className="text-center text-gray-500 py-12">{resultsCopy.grid.empty}</div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {filtered.map(course => (
-              <div key={course.slug} className="bg-white rounded-lg shadow-md p-6 flex flex-col justify-between">
-                <div>
-                  <h2 className="font-bold text-lg mb-1">{course.course_name}</h2>
-                  <p className="text-gray-700 mb-2 text-sm">{truncate(course.blurb, 100)}</p>
-                  <div className="flex flex-wrap gap-2 mb-2">
-                    <span className="inline-block bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">{hours(course.duration_hours)}</span>
-                    <span className="inline-block bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">{course.language}</span>
-                    {course.price_usd && <span className="inline-block bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">{usd(course.price_usd)}</span>}
-                  </div>
-                  {course.provider_type === 'Partner' && (
-                    <span className="inline-block bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-semibold mb-2">{course.partner_badge || resultsCopy.grid.card.provider_pill_partner}</span>
-                  )}
-                </div>
-                <div className="mt-4 flex gap-2">
-                  <Link to={`/courses/${course.slug}`} className="flex-1">
-                    <button className="w-full bg-gray-200 text-gray-800 px-4 py-2 rounded font-semibold text-sm hover:bg-gray-300 transition">{resultsCopy.grid.card.cta_learn}</button>
-                  </Link>
-                  {course.provider_type === 'Partner' ? (
-                    <a
-                      href={course.affiliate_link}
-                      target="_blank"
-                      rel="noopener sponsored"
-                      className="flex-1"
-                    >
-                      <button className="w-full bg-blue-600 text-white px-4 py-2 rounded font-semibold text-sm hover:bg-blue-700 transition">{resultsCopy.grid.card.cta_signup}</button>
-                    </a>
-                  ) : (
-                    <Link to={`/courses/${course.slug}#enroll`} className="flex-1">
-                      <button className="w-full bg-blue-600 text-white px-4 py-2 rounded font-semibold text-sm hover:bg-blue-700 transition">{resultsCopy.grid.card.cta_signup}</button>
-                    </Link>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
+        <div className="mt-8">
+          {filtered.length === 0 ? (
+            <div className="text-center text-gray-500 py-12">{resultsCopy.grid.empty}</div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {filtered.map(course => (
+                <CourseResultCard key={course.slug} course={course} />
+              ))}
+            </div>
+          )}
+        </div>
       </section>
     </main>
   );

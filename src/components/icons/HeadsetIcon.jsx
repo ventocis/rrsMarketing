@@ -1,8 +1,12 @@
 import React from 'react';
-export default function HeadsetIcon({ className = '' }) {
+export default function HeadsetIcon({ className = "h-5 w-5 text-blue-600", ...props }) {
   return (
-    <svg className={`h-5 w-5 text-blue-600 ${className}`} aria-hidden="true" fill="none" viewBox="0 0 20 20" stroke="currentColor" strokeWidth={1.5}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M4 13v-2a6 6 0 1112 0v2m-1 3a2 2 0 002-2v-1a2 2 0 00-2-2h-1m-6 5a2 2 0 01-2-2v-1a2 2 0 012-2h1" />
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+         strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"
+         className={className} aria-hidden="true" {...props}>
+      <path d="M4 13a8 8 0 0 1 16 0" />
+      <path d="M4 13v3a3 3 0 0 0 3 3h1v-6H7a3 3 0 0 0-3 3z" />
+      <path d="M20 13v3a3 3 0 0 1-3 3h-1v-6h1a3 3 0 0 1 3 3z" />
     </svg>
   );
 }

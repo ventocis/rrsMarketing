@@ -1,9 +1,11 @@
 import React from 'react';
-export default function BadgeCheckIcon({ className = '' }) {
+export default function BadgeCheckIcon({ className = "h-5 w-5 text-blue-600", ...props }) {
   return (
-    <svg className={`h-5 w-5 text-blue-600 ${className}`} aria-hidden="true" fill="none" viewBox="0 0 20 20" stroke="currentColor" strokeWidth={1.5}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M10 2l2.09 4.24L17 7.27l-3.41 3.32L14.18 17 10 14.27 5.82 17l.59-6.41L3 7.27l4.91-.63L10 2z" />
-      <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 10.5l2 2 3-3" />
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+         strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"
+         className={className} aria-hidden="true" {...props}>
+      <path d="M12 3l2.1 1.1 2.4-.2 1.4 2 2.3.8-.4 2.4 1.5 2-1.5 2 .4 2.4-2.3.8-1.4 2-2.4-.2L12 21l-2.1-1.1-2.4.2-1.4-2-2.3-.8.4-2.4L2.7 12l1.5-2-.4-2.4 2.3-.8 1.4-2 2.4.2L12 3z" />
+      <path d="M9.5 12.5l2 2 3.5-3.5" />
     </svg>
   );
 }

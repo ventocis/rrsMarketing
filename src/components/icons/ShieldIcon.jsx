@@ -1,8 +1,10 @@
 import React from 'react';
-export default function ShieldIcon({ className = '' }) {
+export default function ShieldIcon({ className = "h-5 w-5 text-blue-600", ...props }) {
   return (
-    <svg className={`h-5 w-5 text-blue-600 ${className}`} aria-hidden="true" fill="none" viewBox="0 0 20 20" stroke="currentColor" strokeWidth={1.5}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M10 2.5l7 3v4.5c0 5.25-3.5 8.25-7 9-3.5-.75-7-3.75-7-9V5.5l7-3z" />
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+         strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"
+         className={className} aria-hidden="true" {...props}>
+      <path d="M12 3l7 4v5c0 5-3.5 8.5-7 9-3.5-.5-7-4-7-9V7l7-4z" />
     </svg>
   );
 }

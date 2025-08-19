@@ -2,6 +2,8 @@ import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import courses from './data/courses.json';
 import { usd, hours, truncate } from './lib/format.js';
+import { Accordion } from 'flowbite-react';
+import StickyEnrollBar from './components/StickyEnrollBar.jsx';
 
 // Blueprint copy and labels
 const copy = {
@@ -55,78 +57,96 @@ export default function CoursePage() {
   const features = (course.features || course.modules || course.notes || '').split('|').filter(Boolean);
   const badges = (course.badge_list || '').split('|').filter(Boolean);
 
-  // Hero
+  // Details accordion data
+  const details = [
+    { key: 'eligibility', title: copy.details_labels.eligibility, body: course.eligibility },
+    { key: 'identity_verification', title: copy.details_labels.identity_verification, body: course.identity_verification },
+    { key: 'reporting_method', title: copy.details_labels.reporting_method, body: course.reporting_method },
+    { key: 'certificate_delivery', title: copy.details_labels.certificate_delivery, body: course.certificate_delivery },
+    { key: 'retake_policy', title: copy.details_labels.retake_policy, body: course.retake_policy },
+  ].filter(item => item.body);
+
   return (
-    <main className="bg-gray-50 min-h-screen pb-12">
-      <section className="bg-white border-b border-gray-200 pt-10 pb-8 mb-8">
-        <div className="max-w-3xl mx-auto px-4 text-center">
-          <h1 className="text-3xl md:text-5xl font-bold mb-2">{course.headline}</h1>
-          <p className="text-lg md:text-xl text-gray-700 mb-4">{course.subhead}</p>
+    <main className="bg-gradient-to-b from-white to-gray-50 min-h-screen pb-16 md:pb-0">
+      {/* Hero */}
+      <section className="bg-gradient-to-b from-white to-gray-50">
+        <div className="max-w-4xl mx-auto px-4 py-14 md:py-20 text-center">
+          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">{course.headline}</h1>
+          <p className="mt-3 max-w-2xl mx-auto text-gray-600 text-lg md:text-xl">{course.subhead}</p>
           {isPartner && (
-            <div className="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold mb-2">{course.partner_badge || copy.partner_pill}</div>
+            <span className="mt-3 inline-flex max-w-max items-center gap-1 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700 leading-none">{course.partner_badge || copy.partner_pill}</span>
           )}
-          <div className="mb-4">
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
             {badges.map((b, i) => (
-              <span key={i} className="inline-block bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs mr-2 mb-1">{b}</span>
+              <span key={i} className="rounded-md bg-gray-100 text-gray-700 px-2 py-1 text-xs">{b}</span>
             ))}
           </div>
-          <a
-            href={isPartner ? course.affiliate_link : `/courses/${course.slug}#enroll`}
-            target={isPartner ? '_blank' : '_self'}
-            rel={isPartner ? 'noopener sponsored' : undefined}
-          >
-            <button className="bg-blue-600 text-white px-6 py-2 rounded font-semibold text-base hover:bg-blue-700 transition">{course.hero_cta_label || (isPartner ? copy.cta.partner : copy.cta.inhouse)}</button>
-          </a>
-          {isPartner && (
-            <div className="text-xs text-gray-500 mt-2">{copy.provider_note}</div>
-          )}
-        </div>
-      </section>
-
-      {/* Facts */}
-      <section className="max-w-3xl mx-auto px-4 mb-8">
-        <div className="flex flex-wrap gap-4 justify-center">
-          <div className="bg-white rounded-lg shadow-sm px-4 py-3 text-center min-w-[120px]">
-            <div className="text-xs text-gray-500 mb-1">{copy.facts_labels.state}</div>
-            <div className="font-semibold">{course.state}</div>
-          </div>
-          <div className="bg-white rounded-lg shadow-sm px-4 py-3 text-center min-w-[120px]">
-            <div className="text-xs text-gray-500 mb-1">{copy.facts_labels.duration}</div>
-            <div className="font-semibold">{hours(course.duration_hours)}</div>
-          </div>
-          {course.price_usd && (
-            <div className="bg-white rounded-lg shadow-sm px-4 py-3 text-center min-w-[120px]">
-              <div className="text-xs text-gray-500 mb-1">{copy.facts_labels.price}</div>
-              <div className="font-semibold">{usd(course.price_usd)}</div>
-            </div>
-          )}
-          <div className="bg-white rounded-lg shadow-sm px-4 py-3 text-center min-w-[120px]">
-            <div className="text-xs text-gray-500 mb-1">{copy.facts_labels.provider}</div>
-            <div className="font-semibold">{course.provider_name}</div>
-          </div>
-          <div className="bg-white rounded-lg shadow-sm px-4 py-3 text-center min-w-[120px]">
-            <div className="text-xs text-gray-500 mb-1">{copy.facts_labels.certificate}</div>
-            <div className="font-semibold">{truncate(course.certificate_delivery, 40)}</div>
+          <div className="mt-8">
+            <a
+              href={isPartner ? course.affiliate_link : `/courses/${course.slug}#enroll`}
+              target={isPartner ? '_blank' : '_self'}
+              rel={isPartner ? 'noopener sponsored' : undefined}
+            >
+              <button className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold text-lg hover:bg-blue-700 transition">{course.hero_cta_label || (isPartner ? copy.cta.partner : copy.cta.inhouse)}</button>
+            </a>
+            {isPartner && (
+              <p className="mt-2 text-sm text-gray-500">{copy.provider_note}</p>
+            )}
           </div>
         </div>
       </section>
 
-      {/* Details */}
-      <section className="max-w-3xl mx-auto px-4 mb-8">
-        <h2 className="text-xl font-bold mb-4">{copy.headings.details}</h2>
-        <dl className="bg-white rounded-lg shadow-sm p-6">
-          {['eligibility','identity_verification','reporting_method','certificate_delivery','retake_policy'].map(key => (
-            course[key] ? (
-              <div key={key} className="mb-4">
-                <dt className="font-semibold text-gray-700">{copy.details_labels[key]}</dt>
-                <dd className="ml-4 text-gray-800">{course[key]}</dd>
-              </div>
-            ) : null
-          ))}
-        </dl>
+      {/* Facts row */}
+      <section className="max-w-4xl mx-auto px-4 mt-10 grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="rounded-xl border border-gray-200 bg-white shadow-sm p-4 text-center">
+          <div className="text-xs uppercase tracking-wide text-gray-500">{copy.facts_labels.state}</div>
+          <div className="mt-1 text-lg font-semibold text-gray-900">{course.state}</div>
+        </div>
+        <div className="rounded-xl border border-gray-200 bg-white shadow-sm p-4 text-center">
+          <div className="text-xs uppercase tracking-wide text-gray-500">{copy.facts_labels.duration}</div>
+          <div className="mt-1 text-lg font-semibold text-gray-900">{hours(course.duration_hours)}</div>
+        </div>
+        <div className="rounded-xl border border-gray-200 bg-white shadow-sm p-4 text-center">
+          <div className="text-xs uppercase tracking-wide text-gray-500">{copy.facts_labels.price}</div>
+          <div className="mt-1 text-lg font-semibold text-gray-900">{usd(course.price_usd)}</div>
+        </div>
+        <div className="rounded-xl border border-gray-200 bg-white shadow-sm p-4 text-center">
+          <div className="text-xs uppercase tracking-wide text-gray-500">{copy.facts_labels.provider}</div>
+          <div className="mt-1 text-lg font-semibold text-gray-900">{course.provider_name}</div>
+        </div>
       </section>
 
-      {/* Features */}
+      {/* Certificate callout */}
+      {course.certificate_delivery && (
+        <div className="mt-4 flex justify-center">
+          <div className="inline-flex max-w-full items-center gap-2 rounded-xl border border-gray-200 bg-white shadow-sm px-4 py-3">
+            <svg viewBox="0 0 24 24" className="h-5 w-5 text-blue-600" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M12 2l3 3 4 1-1 4 3 3-3 3 1 4-4 1-3 3-3-3-4-1 1-4-3-3 3-3-1-4 4-1 3-3z"/>
+              <path d="M9.5 12.5l2 2 3.5-3.5"/>
+            </svg>
+            <span className="text-sm text-gray-800">{truncate(course.certificate_delivery, 80)}</span>
+          </div>
+        </div>
+      )}
+
+      {/* Details accordion */}
+      <section className="mt-12 max-w-4xl mx-auto px-4">
+        <h2 className="text-2xl font-bold text-gray-900">{copy.headings.details}</h2>
+        <div className="mt-4 rounded-xl border border-gray-200 bg-white shadow-sm">
+          <Accordion collapseAll={false} alwaysOpen={false}>
+            {details.map((item, idx) => (
+              <Accordion.Panel key={idx}>
+                <Accordion.Title className="text-gray-900 font-semibold">{item.title}</Accordion.Title>
+                <Accordion.Content>
+                  <p className="text-gray-700 leading-relaxed">{item.body}</p>
+                </Accordion.Content>
+              </Accordion.Panel>
+            ))}
+          </Accordion>
+        </div>
+      </section>
+
+      {/* Features (unchanged) */}
       {showFeatures && features.length > 0 && (
         <section className="max-w-3xl mx-auto px-4 mb-8">
           <h2 className="text-xl font-bold mb-4">{copy.headings.features}</h2>
@@ -140,6 +160,9 @@ export default function CoursePage() {
 
       {/* Disclaimer */}
       <div className="max-w-3xl mx-auto px-4 text-xs text-gray-400 mt-8">{copy.disclaimer}</div>
+
+      {/* Sticky enroll bar (mobile only) */}
+      <StickyEnrollBar course={course} />
     </main>
   );
 }

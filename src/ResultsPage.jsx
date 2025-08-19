@@ -7,6 +7,7 @@ import FiltersBar from './components/FiltersBar.jsx';
 import Card from './components/Card.jsx';
 import CourseResultCard from './components/CourseResultCard.jsx';
 import Breadcrumbs from './components/Breadcrumbs.jsx';
+import EmptyState from './components/EmptyState.jsx';
 
 export default function ResultsPage() {
   const { state, courseType } = useParams();
@@ -34,6 +35,13 @@ export default function ResultsPage() {
     .replace('{COURSE_TYPE}', courseType === 'multi' ? 'Courses' : courseType);
   const heroSub = resultsCopy.hero.sub;
   const courseTypeLabel = courseType === 'multi' ? 'Courses' : courseType;
+
+  // Empty state copy
+  const emptyCopy = resultsCopy.empty || {};
+  const emptyTitle = emptyCopy.title || 'No courses found';
+  const emptyBody = emptyCopy.body || 'Try a different state or reason. Some options may be unavailable in this state or language.';
+  const emptyPrimaryCta = emptyCopy.primaryCta || 'Find another course';
+  const emptySecondaryCta = emptyCopy.secondaryCta || 'Back to home';
 
   // Handle filter changes
   function handleFilterChange({ state: newState, language: newLang, sort: newSort }) {
@@ -66,7 +74,14 @@ export default function ResultsPage() {
         />
         <div className="mt-8">
           {filtered.length === 0 ? (
-            <div className="text-center text-gray-500 py-12">{resultsCopy.grid.empty}</div>
+            <EmptyState
+              title={emptyTitle}
+              body={emptyBody}
+              actionHref="/#find-course"
+              actionLabel={emptyPrimaryCta}
+              secondaryHref="/"
+              secondaryLabel={emptySecondaryCta}
+            />
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {filtered.map(course => (

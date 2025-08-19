@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from './components/Button.jsx';
 
 // sref: trust-section.v1
 export default function TrustSection() {
@@ -20,6 +21,11 @@ export default function TrustSection() {
             </li>
           ))}
         </ul>
+      </div>
+      <div className="mt-8 text-center">
+        <Button href="/support" variant="secondary" size="md">
+          Need help? Contact Support
+        </Button>
       </div>
     </section>
   );

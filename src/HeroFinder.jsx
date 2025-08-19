@@ -1,10 +1,11 @@
 // sref: hero-finder.v3
 import React, { useState } from 'react';
-import { Select, Button } from 'flowbite-react';
+import { Select } from 'flowbite-react';
 import states from './data/states.json';
 import courses from './data/courses.json';
 import finderMap from '../blueprint/data/finder-map.json';
 import { useNavigate } from 'react-router-dom';
+import Button from './components/Button.jsx';
 
 const reasons = [
   { key: 'court', label: 'Court / Ticket' },
@@ -70,9 +71,9 @@ export default function HeroFinder() {
         {/* sref: hero-title */}
         <h1 className="text-4xl md:text-5xl font-bold mb-4">The modern way to finish your traffic course.</h1>
         <p className="text-gray-600 leading-relaxed text-lg md:text-xl mb-8">Approved where required, built to be simple. Start on your phone, finish on your laptop—pick up right where you left off.</p>
-        <a href="#find-course" className="inline-block mb-8 text-blue-600 hover:text-blue-700">
-          <Button size="lg" color="blue">Get started</Button>
-        </a>
+        <Button href="#find-course" variant="primary" size="lg" className="mb-8">
+          Get started
+        </Button>
         <div className="max-w-xl mx-auto text-left shadow-md bg-white p-6 rounded-lg">
           <form className="space-y-4" onSubmit={handleSubmit}>
             {/* sref: finder-form-title */}
@@ -114,7 +115,9 @@ export default function HeroFinder() {
                 ))}
               </Select>
             </div>
-            <Button type="submit" color="blue" className="w-full">Find course</Button>
+            <Button type="submit" variant="primary" size="md" className="w-full">
+              Find course
+            </Button>
             <p className="text-xs text-gray-500 mt-2">Leave “Course” as ‘Best option’ and we’ll recommend the right one.</p>
             {emptyState && <div className="text-red-600 text-sm mt-2">No courses found for your selection.</div>}
           </form>

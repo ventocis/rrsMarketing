@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from './components/Button.jsx';
 
 // sref: faq-section.v1
 export default function FaqSection() {
@@ -22,6 +23,11 @@ export default function FaqSection() {
             </div>
           ))}
         </dl>
+      </div>
+      <div className="mt-8 text-center">
+        <Button href="/support" variant="link" size="md">
+          See full FAQ →
+        </Button>
       </div>
     </section>
   );

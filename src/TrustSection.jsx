@@ -22,7 +22,7 @@ export default function TrustSection() {
         <h2 className="text-2xl md:text-3xl font-bold text-center mb-10">Trusted & Supported</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
           {items.map((item, i) => (
-            <div key={i} className="h-full rounded-2xl border border-gray-200 bg-white shadow-sm p-5 hover:shadow-md hover:-translate-y-0.5 transition flex flex-col items-center text-center">
+            <div key={i} className="h-full rounded-2xl border border-gray-200 bg-white shadow-sm p-5 hover:shadow-md hover:-translate-y-0.5 focus:shadow-md focus:-translate-y-0.5 transition flex flex-col items-center text-center motion-reduce:transition-none motion-reduce:hover:transform-none motion-reduce:focus:transform-none">
               <div className="h-10 w-10 rounded-full bg-blue-50 flex items-center justify-center shrink-0 mb-3">
                 {iconMap[i]}
               </div>

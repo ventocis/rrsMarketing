@@ -11,14 +11,14 @@ export default function FaqSection() {
     { q: "What if my court or insurer needs proof?", a: "We provide clear next steps on the course page. If submission is required, follow the instructions or contact support." }
   ];
   return (
-    <section className="bg-gray-50 py-12 border-b border-gray-100">
-      <div className="max-w-3xl mx-auto px-4">
+    <section className="bg-white py-20 lg:py-28 border-b border-gray-100">
+      <div className="max-w-[65ch] mx-auto px-4">
         <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">{heading}</h2>
         <dl className="space-y-8">
           {items.map((item, i) => (
             <div key={i}>
-              <dt className="font-semibold text-lg mb-2">{item.q}</dt>
-              <dd className="text-gray-700 ml-4">{item.a}</dd>
+              <dt className="text-lg md:text-xl font-semibold mb-2">{item.q}</dt>
+              <dd className="text-gray-600 leading-relaxed ml-4">{item.a}</dd>
             </div>
           ))}
         </dl>

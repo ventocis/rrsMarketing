@@ -9,14 +9,14 @@ export default function UspSection() {
     { title: "Modern, distraction-free", body: "Clean UI, readable text, and a flow that just makes sense." },
   ];
   return (
-    <section className="bg-white py-12 border-b border-gray-100">
-      <div className="max-w-4xl mx-auto px-4">
+    <section className="bg-gray-50 py-20 lg:py-28 border-b border-gray-100">
+      <div className="max-w-[65ch] mx-auto px-4">
         <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">What sets us apart</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {items.map((item, i) => (
-            <div key={i} className="bg-gray-50 rounded-lg p-6 shadow-sm">
-              <h3 className="font-semibold text-lg mb-2">{item.title}</h3>
-              <p className="text-gray-700">{item.body}</p>
+            <div key={i} className="bg-white rounded-lg p-6 shadow-sm flex flex-col justify-between h-full">
+              <h3 className="text-lg md:text-xl font-semibold mb-2">{item.title}</h3>
+              <p className="text-gray-600 leading-relaxed">{item.body}</p>
             </div>
           ))}
         </div>

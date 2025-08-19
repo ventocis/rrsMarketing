@@ -65,19 +65,19 @@ export default function HeroFinder() {
   };
 
   return (
-    <section className="bg-gray-50 border-b border-gray-200 pt-8 pb-12" id="find-course">
-      <div className="max-w-3xl mx-auto px-4 text-center">
+    <section className="bg-white border-b border-gray-200 py-20 lg:py-28" id="find-course">
+      <div className="max-w-[65ch] mx-auto px-4 text-center">
         {/* sref: hero-title */}
-        <h1 className="text-3xl md:text-5xl font-bold mb-4">The modern way to finish your traffic course.</h1>
-        <p className="text-lg md:text-xl text-gray-700 mb-8">Approved where required, built to be simple. Start on your phone, finish on your laptop—pick up right where you left off.</p>
-        <a href="#find-course" className="inline-block mb-8">
-          <Button size="lg">Get started</Button>
+        <h1 className="text-4xl md:text-5xl font-bold mb-4">The modern way to finish your traffic course.</h1>
+        <p className="text-gray-600 leading-relaxed text-lg md:text-xl mb-8">Approved where required, built to be simple. Start on your phone, finish on your laptop—pick up right where you left off.</p>
+        <a href="#find-course" className="inline-block mb-8 text-blue-600 hover:text-blue-700">
+          <Button size="lg" color="blue">Get started</Button>
         </a>
         <div className="max-w-xl mx-auto text-left shadow-md bg-white p-6 rounded-lg">
           <form className="space-y-4" onSubmit={handleSubmit}>
             {/* sref: finder-form-title */}
-            <h2 className="text-xl font-semibold mb-2">Find the right course</h2>
-            <p className="text-gray-600 mb-4">Select your state and reason. If there are multiple options, we’ll show you the choices.</p>
+            <h2 className="text-2xl md:text-3xl font-bold mb-8">Find the right course</h2>
+            <p className="text-gray-600 leading-relaxed mb-4">Select your state and reason. If there are multiple options, we’ll show you the choices.</p>
             <div>
               <label htmlFor="state" className="block text-sm font-medium mb-1">State</label>
               <Select id="state" value={selectedState} onChange={e => { setSelectedState(e.target.value); setSelectedCourse(''); setSelectedLanguage(''); }} required>

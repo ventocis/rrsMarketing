@@ -81,13 +81,14 @@ export default function HeroFinder() {
           <svg className="w-7 h-7 text-blue-400 animate-bounce" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
         </div>
         <div className="max-w-xl mx-auto text-left shadow-md bg-white p-6 rounded-lg mt-12">
-          <form className="space-y-4" onSubmit={handleSubmit}>
-            {/* sref: finder-form-title */}
-            <h2 className="text-2xl md:text-3xl font-bold mb-8">Find the right course</h2>
-            <p className="text-gray-600 leading-relaxed mb-4">Select your state and reason. If there are multiple options, we’ll show you the choices.</p>
+          <form className="grid grid-cols-1 lg:grid-cols-2 gap-6" onSubmit={handleSubmit}>
+            <div className="col-span-1 lg:col-span-2">
+              <h2 className="text-2xl md:text-3xl font-bold mb-4">Find the right course</h2>
+              <p className="text-gray-500 text-sm mb-4">Select your state and reason. If there are multiple options, we’ll show you the choices.</p>
+            </div>
             <div>
               <label htmlFor="state" className="block text-sm font-medium mb-1">State</label>
-              <Select id="state" value={selectedState} onChange={e => { setSelectedState(e.target.value); setSelectedCourse(''); setSelectedLanguage(''); }} required>
+              <Select id="state" value={selectedState} onChange={e => { setSelectedState(e.target.value); setSelectedCourse(''); setSelectedLanguage(''); }} required className="w-full">
                 <option value="">Select a state</option>
                 {states.map(s => (
                   <option key={s.code} value={s.code}>{s.name}</option>
@@ -96,7 +97,7 @@ export default function HeroFinder() {
             </div>
             <div>
               <label htmlFor="reason" className="block text-sm font-medium mb-1">Reason</label>
-              <Select id="reason" value={selectedReason} onChange={e => { setSelectedReason(e.target.value); setSelectedCourse(''); setSelectedLanguage(''); }} required>
+              <Select id="reason" value={selectedReason} onChange={e => { setSelectedReason(e.target.value); setSelectedCourse(''); setSelectedLanguage(''); }} required className="w-full">
                 <option value="">Select a reason</option>
                 {reasons.map(r => (
                   <option key={r.key} value={r.key}>{r.label}</option>
@@ -105,27 +106,29 @@ export default function HeroFinder() {
             </div>
             <div>
               <label htmlFor="course" className="block text-sm font-medium mb-1">Course (optional)</label>
-              <Select id="course" value={selectedCourse} onChange={e => setSelectedCourse(e.target.value)} disabled={!courseOptions.length}>
+              <Select id="course" value={selectedCourse} onChange={e => setSelectedCourse(e.target.value)} disabled={!courseOptions.length} className="w-full">
                 <option value="">Best option for my state</option>
                 {courseOptions.map(name => (
                   <option key={name} value={name}>{name}</option>
                 ))}
               </Select>
+              <p className="text-gray-500 text-sm mt-1">Leave “Course” as ‘Best option’ and we’ll recommend the right one.</p>
             </div>
             <div>
               <label htmlFor="language" className="block text-sm font-medium mb-1">Language</label>
-              <Select id="language" value={selectedLanguage} onChange={e => setSelectedLanguage(e.target.value)} disabled={!languageOptions.length}>
+              <Select id="language" value={selectedLanguage} onChange={e => setSelectedLanguage(e.target.value)} disabled={!languageOptions.length} className="w-full">
                 <option value="">Any language</option>
                 {languageOptions.map(lang => (
                   <option key={lang} value={lang}>{lang}</option>
                 ))}
               </Select>
             </div>
-            <Button type="submit" variant="primary" size="md" className="w-full">
-              Find course
-            </Button>
-            <p className="text-xs text-gray-500 mt-2">Leave “Course” as ‘Best option’ and we’ll recommend the right one.</p>
-            {emptyState && <div className="text-red-600 text-sm mt-2">No courses found for your selection.</div>}
+            <div className="col-span-1 lg:col-span-2">
+              <Button type="submit" variant="primary" size="md" className="w-full mt-2">
+                Find course
+              </Button>
+              {emptyState && <div className="text-red-600 text-sm mt-2">No courses found for your selection.</div>}
+            </div>
           </form>
         </div>
       </div>

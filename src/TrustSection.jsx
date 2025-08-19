@@ -1,14 +1,14 @@
 import React from 'react';
 import Button from './components/Button.jsx';
-
 // sref: trust-section.v1
+// TODO: Move trust items and CTA label to blueprint/copy/home.json for full blueprint sourcing
+const items = [
+  "Secure checkout",
+  "Accepted where required",
+  "Email support 24/7 (reply within 24h)",
+  "Phone support Mon–Fri 9–5"
+];
 export default function TrustSection() {
-  const items = [
-    "Secure checkout",
-    "Accepted where required",
-    "Email support 24/7 (reply within 24h)",
-    "Phone support Mon–Fri 9–5"
-  ];
   return (
     <section className="bg-gray-50 py-20 lg:py-28 border-b border-gray-100">
       <div className="max-w-[65ch] mx-auto px-4 text-center">
@@ -21,6 +21,12 @@ export default function TrustSection() {
             </li>
           ))}
         </ul>
+        {/* Logo strip placeholder */}
+        <div className="mt-8 flex justify-center">
+          <div className="w-full max-w-md h-16 bg-gray-100 rounded-lg flex items-center justify-center text-gray-400 text-sm">
+            [Logo strip placeholder]
+          </div>
+        </div>
       </div>
       <div className="mt-8 text-center">
         <Button href="/support" variant="secondary" size="md">

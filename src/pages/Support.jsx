@@ -1,13 +1,14 @@
 import React from "react";
-import ReactMarkdown from "react-markdown";
 import md from "/blueprint/legal/support.md?raw";
+import DocPage from "../components/DocPage.jsx";
 
 export default function SupportPage() {
   return (
-    <main className="mx-auto max-w-3xl px-4 py-12">
-      <article className="prose prose-slate max-w-none">
-        <ReactMarkdown>{md}</ReactMarkdown>
-      </article>
-    </main>
+    <DocPage
+      title="Help Center"
+      subtitle="We’re here to help you start, finish, and get credit for your course."
+      markdown={md}
+      showContactCard
+    />
   );
 }

@@ -1,13 +1,13 @@
 import React from "react";
-import ReactMarkdown from "react-markdown";
 import md from "/blueprint/legal/terms.md?raw";
+import DocPage from "../components/DocPage.jsx";
 
 export default function TermsPage() {
   return (
-    <main className="mx-auto max-w-3xl px-4 py-12">
-      <article className="prose prose-slate max-w-none">
-        <ReactMarkdown>{md}</ReactMarkdown>
-      </article>
-    </main>
+    <DocPage
+      title="Terms of Service"
+      subtitle="The rules for using our site and services."
+      markdown={md}
+    />
   );
 }

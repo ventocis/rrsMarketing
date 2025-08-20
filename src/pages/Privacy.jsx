@@ -1,13 +1,13 @@
 import React from "react";
-import ReactMarkdown from "react-markdown";
 import md from "/blueprint/legal/privacy.md?raw";
+import DocPage from "../components/DocPage.jsx";
 
 export default function PrivacyPage() {
   return (
-    <main className="mx-auto max-w-3xl px-4 py-12">
-      <article className="prose prose-slate max-w-none">
-        <ReactMarkdown>{md}</ReactMarkdown>
-      </article>
-    </main>
+    <DocPage
+      title="Privacy Policy"
+      subtitle="How we collect, use, and protect your information."
+      markdown={md}
+    />
   );
 }

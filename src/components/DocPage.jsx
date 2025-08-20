@@ -21,18 +21,20 @@ export default function DocPage({ title, subtitle, markdown, showContactCard }) 
           {subtitle && <p className="mt-2 text-slate-600">{subtitle}</p>}
         </header>
         <div className="grid grid-cols-1 lg:grid-cols-[1fr,280px] gap-8">
-          <article className="prose prose-slate max-w-none">
-            <ReactMarkdown
-              remarkPlugins={[remarkGfm]}
-              rehypePlugins={[[rehypeSlug], [rehypeAutolinkHeadings, {behavior: 'wrap'}]]}
-              components={{
-                a: ({node, ...props}) => <a {...props} className="text-indigo-600 underline decoration-indigo-300 underline-offset-2 hover:decoration-2" />,
-                blockquote: ({node, ...props}) => <blockquote {...props} className="border-l-4 border-indigo-200 bg-indigo-50/60 pl-4 py-2 my-4 rounded-r" />,
-                code: ({node, ...props}) => <code {...props} className="rounded bg-slate-100 px-1.5 py-0.5" />,
-              }}
-            >
-              {md}
-            </ReactMarkdown>
+          <article>
+            <div className="prose prose-neutral max-w-none">
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                rehypePlugins={[[rehypeSlug]]}
+                components={{
+                  a: ({node, ...props}) => <a {...props} className="text-indigo-600 underline decoration-indigo-300 underline-offset-2 hover:decoration-2" />,
+                  blockquote: ({node, ...props}) => <blockquote {...props} className="border-l-4 border-indigo-200 bg-indigo-50/60 pl-4 py-2 my-4 rounded-r" />,
+                  code: ({node, ...props}) => <code {...props} className="rounded bg-slate-100 px-1.5 py-0.5" />,
+                }}
+              >
+                {md}
+              </ReactMarkdown>
+            </div>
           </article>
           {showContactCard && (
             <aside className="hidden lg:block">
@@ -43,11 +45,11 @@ export default function DocPage({ title, subtitle, markdown, showContactCard }) 
                 </p>
                 <div className="mt-3 text-sm">
                   <div className="font-medium text-slate-900">Email (24/7)</div>
-                  <a href="mailto:support@yourdomain.com" className="text-indigo-600">support@yourdomain.com</a>
+                  <a href="mailto:info@roadreadysafety.com" className="text-indigo-600">info@roadreadysafety.com</a>
                 </div>
                 <div className="mt-3 text-sm">
-                  <div className="font-medium text-slate-900">Phone (Mon–Fri 9–5)</div>
-                  <a href="tel:+15555555555" className="text-indigo-600">(555) 555-5555</a>
+                  <div className="font-medium text-slate-900">Phone (Mon–Fri, 9am–5pm local)</div>
+                  <a href="tel:+18888855707" className="text-indigo-600">(888) 885-5707</a>
                 </div>
               </div>
             </aside>

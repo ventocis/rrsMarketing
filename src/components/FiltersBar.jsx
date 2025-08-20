@@ -1,6 +1,7 @@
 import React from 'react';
 import { Select } from 'flowbite-react';
 import states from '../data/states.json';
+import { stateNames } from '../utils/states.js';
 
 export default function FiltersBar({
   state, courseType, language, sort, languageOptions, onChange
@@ -13,10 +14,10 @@ export default function FiltersBar({
           id="state-select"
           value={state}
           onChange={e => onChange({ state: e.target.value })}
-          className="w-full"
+          className="rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm"
         >
           {states.map(s => (
-            <option key={s.code} value={s.code}>{s.name}</option>
+            <option key={s.code} value={s.code}>{stateNames[s.code] || s.code}</option>
           ))}
         </Select>
       </div>
@@ -26,7 +27,7 @@ export default function FiltersBar({
           id="language-select"
           value={language}
           onChange={e => onChange({ language: e.target.value })}
-          className="w-full"
+          className="rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm"
         >
           <option value="any">Any</option>
           {languageOptions.map(l => (
@@ -40,7 +41,7 @@ export default function FiltersBar({
           id="sort-select"
           value={sort}
           onChange={e => onChange({ sort: e.target.value })}
-          className="w-full"
+          className="rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm"
         >
           <option value="recommended">Recommended</option>
           <option value="price-low">Price (low)</option>

@@ -7,6 +7,7 @@ import finderMap from '../blueprint/data/finder-map.json';
 import { useNavigate } from 'react-router-dom';
 import Button from './components/Button.jsx';
 import PopularStatesChips from './components/PopularStatesChips.jsx';
+import { stateNames } from './utils/states.js';
 
 const reasons = [
   { key: 'court', label: 'Court / Ticket' },
@@ -99,16 +100,16 @@ export default function HeroFinder() {
             </div>
             <div>
               <label htmlFor="state" className="block text-sm font-medium mb-1">State</label>
-              <Select id="state" value={selectedState} onChange={e => { setSelectedState(e.target.value); setSelectedCourse(''); setSelectedLanguage(''); }} required className="w-full">
+              <Select id="state" value={selectedState} onChange={e => { setSelectedState(e.target.value); setSelectedCourse(''); setSelectedLanguage(''); }} required className="rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm">
                 <option value="">Select a state</option>
                 {states.map(s => (
-                  <option key={s.code} value={s.code}>{s.name}</option>
+                  <option key={s.code} value={s.code}>{stateNames[s.code] || s.code}</option>
                 ))}
               </Select>
             </div>
             <div>
               <label htmlFor="reason" className="block text-sm font-medium mb-1">Reason</label>
-              <Select id="reason" value={selectedReason} onChange={e => { setSelectedReason(e.target.value); setSelectedCourse(''); setSelectedLanguage(''); }} required className="w-full">
+              <Select id="reason" value={selectedReason} onChange={e => { setSelectedReason(e.target.value); setSelectedCourse(''); setSelectedLanguage(''); }} required className="rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm">
                 <option value="">Select a reason</option>
                 {reasons.map(r => (
                   <option key={r.key} value={r.key}>{r.label}</option>
@@ -128,7 +129,7 @@ export default function HeroFinder() {
             </div>
             <div className={showAdvanced ? '' : 'hidden'}>
               <label htmlFor="course" className="block text-sm font-medium mb-1">Course (optional)</label>
-              <Select id="course" value={selectedCourse} onChange={e => setSelectedCourse(e.target.value)} disabled={!courseOptions.length} className="w-full">
+              <Select id="course" value={selectedCourse} onChange={e => setSelectedCourse(e.target.value)} disabled={!courseOptions.length} className="rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm">
                 <option value="">Best option for my state</option>
                 {courseOptions.map(name => (
                   <option key={name} value={name}>{name}</option>
@@ -138,7 +139,7 @@ export default function HeroFinder() {
             </div>
             <div className={showAdvanced ? '' : 'hidden'}>
               <label htmlFor="language" className="block text-sm font-medium mb-1">Language</label>
-              <Select id="language" value={selectedLanguage} onChange={e => setSelectedLanguage(e.target.value)} disabled={!languageOptions.length} className="w-full">
+              <Select id="language" value={selectedLanguage} onChange={e => setSelectedLanguage(e.target.value)} disabled={!languageOptions.length} className="rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm">
                 <option value="">Any language</option>
                 {languageOptions.map(lang => (
                   <option key={lang} value={lang}>{lang}</option>

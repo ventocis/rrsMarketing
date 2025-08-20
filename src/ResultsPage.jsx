@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { useParams, useSearchParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import courses from './data/courses.json';
 import { usd, hours, truncate } from './lib/format.js';
 import resultsCopy from '../blueprint/copy/results.json';
@@ -8,6 +8,7 @@ import Card from './components/Card.jsx';
 import CourseResultCard from './components/CourseResultCard.jsx';
 import Breadcrumbs from './components/Breadcrumbs.jsx';
 import EmptyState from './components/EmptyState.jsx';
+import { stateNames } from './utils/states.js';
 
 export default function ResultsPage() {
   const { state, courseType } = useParams();
@@ -30,9 +31,8 @@ export default function ResultsPage() {
   const languageOptions = Array.from(new Set(filtered.map(c => c.language)));
 
   // Hero title
-  const heroTitle = resultsCopy.hero.titlePattern
-    .replace('{STATE}', state)
-    .replace('{COURSE_TYPE}', courseType === 'multi' ? 'Courses' : courseType);
+  const stateFull = stateNames[state] || state;
+  const heroTitle = `${stateFull} – ${courseType === 'multi' ? 'Courses' : courseType}`;
   const heroSub = resultsCopy.hero.sub;
   const courseTypeLabel = courseType === 'multi' ? 'Courses' : courseType;
 
@@ -58,11 +58,6 @@ export default function ResultsPage() {
         <div className="text-center">
           <h1 className="text-3xl md:text-4xl font-bold mb-2">{heroTitle}</h1>
           <p className="text-lg text-gray-700 mb-4">{heroSub}</p>
-          <div className="mb-6">
-            <Link to="/#find-course" className="inline-block">
-              <button type="button" className="text-blue-600 hover:text-blue-700 underline text-sm font-medium">Change state or reason</button>
-            </Link>
-          </div>
         </div>
         <FiltersBar
           state={state}

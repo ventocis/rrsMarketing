@@ -9,9 +9,9 @@ import FaqSection from './FaqSection.jsx';
 import Footer from './Footer.jsx';
 import CoursePage from './CoursePage.jsx';
 import ResultsPage from './ResultsPage.jsx';
-import SupportPage from './SupportPage.jsx';
-import PrivacyPage from './PrivacyPage.jsx';
-import TermsPage from './TermsPage.jsx';
+import SupportPage from './pages/Support.jsx';
+import PrivacyPage from './pages/Privacy.jsx';
+import TermsPage from './pages/Terms.jsx';
 import Faq from './pages/Faq.jsx';
 import { Routes, Route } from 'react-router-dom';
 

@@ -12,6 +12,7 @@ import ResultsPage from './ResultsPage.jsx';
 import SupportPage from './SupportPage.jsx';
 import PrivacyPage from './PrivacyPage.jsx';
 import TermsPage from './TermsPage.jsx';
+import Faq from './pages/Faq.jsx';
 import { Routes, Route } from 'react-router-dom';
 
 function Home() {
@@ -36,6 +37,7 @@ function App() {
         <Route path="/support" element={<SupportPage />} />
         <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/terms" element={<TermsPage />} />
+        <Route path="/faq" element={<Faq />} />
         <Route path="/" element={<Home />} />
       </Routes>
       <Footer />

@@ -22,8 +22,8 @@ export default function FaqSection() {
           ))}
         </Accordion>
         <div className="mt-8 text-center">
-          <Button href="/support" variant="link" size="md">
-            See full FAQ 
+          <Button href="/faq" variant="link" size="md">
+            See full FAQ
           </Button>
         </div>
       </div>

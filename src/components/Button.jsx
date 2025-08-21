@@ -5,6 +5,7 @@ const variants = {
   primary: 'bg-blue-600 text-white hover:bg-blue-700 hover:shadow-md hover:-translate-y-0.5 focus:shadow-md focus:-translate-y-0.5',
   secondary: 'bg-gray-100 text-gray-700 hover:bg-gray-200 hover:shadow-md hover:-translate-y-0.5 focus:shadow-md focus:-translate-y-0.5',
   link: 'bg-transparent text-blue-600 hover:text-blue-700 underline shadow-none px-0 py-0',
+  custom: '', // No default styling, allows full custom className control
 };
 const sizes = {
   sm: 'px-3 py-1 text-sm',
@@ -21,13 +22,21 @@ export default function Button({
   className = '',
   ...rest
 }) {
-  const classes = [
-    base,
-    variants[variant] || variants.primary,
-    sizes[size] || sizes.md,
-    className,
-    'motion-reduce:transition-none motion-reduce:hover:transform-none motion-reduce:focus:transform-none',
-  ].join(' ');
+  let classes;
+  
+  if (variant === 'custom') {
+    // Custom variant bypasses all default styling
+    classes = className;
+  } else {
+    // Standard variants use default styling
+    classes = [
+      base,
+      variants[variant] || variants.primary,
+      sizes[size] || sizes.md,
+      className,
+      'motion-reduce:transition-none motion-reduce:hover:transform-none motion-reduce:focus:transform-none',
+    ].join(' ');
+  }
 
   if (href) {
     return (

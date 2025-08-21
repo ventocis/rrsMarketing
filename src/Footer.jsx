@@ -26,8 +26,9 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           {/* Logo and company info */}
           <div className="flex flex-col items-start">
-            <a href="/" className="hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded mb-4">
+            <a href="/" className="flex items-center gap-3 hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded mb-4">
               <img src="/assets/logo.svg" alt="Road Ready Safety" className="h-8" />
+              <span className="text-xl font-semibold text-slate-700">Road Ready Safety</span>
             </a>
             <p className="text-sm text-gray-500">© {new Date().getFullYear()} Road Ready Safety</p>
           </div>

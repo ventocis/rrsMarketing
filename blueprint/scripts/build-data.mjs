@@ -2,7 +2,7 @@
 // Build-time: parse CSV → JSON, derive states, validate, and write sitemap.xml.
 
 
-import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { readFile, writeFile, mkdir, readdir } from 'node:fs/promises';
 import path from 'node:path';
 import { parse as parseCsv } from 'csv-parse/sync';
 import YAML from 'yaml';
@@ -80,9 +80,61 @@ const validateRows = (rows) => {
 };
 
 
+const parseBlogPost = (content, filename) => {
+  const lines = content.split('\n');
+  const frontmatterEnd = lines.findIndex(line => line.trim() === '---');
+  
+  if (frontmatterEnd === -1) {
+    console.warn(`Warning: No frontmatter found in ${filename}`);
+    return null;
+  }
+  
+  const frontmatterLines = lines.slice(1, frontmatterEnd);
+  const contentLines = lines.slice(frontmatterEnd + 1);
+  
+  try {
+    const frontmatter = YAML.parse(frontmatterLines.join('\n'));
+    return {
+      ...frontmatter,
+      content: contentLines.join('\n').trim()
+    };
+  } catch (error) {
+    console.warn(`Warning: Invalid frontmatter in ${filename}: ${error.message}`);
+    return null;
+  }
+};
+
+
+const buildBlogData = async () => {
+  try {
+    const blogDir = BP('blog');
+    const files = await readdir(blogDir);
+    const markdownFiles = files.filter(f => f.endsWith('.md'));
+    
+    const posts = [];
+    
+    for (const file of markdownFiles) {
+      const content = await readFile(path.join(blogDir, file), 'utf8');
+      const post = parseBlogPost(content, file);
+      
+      if (post && post.title && post.slug && post.date) {
+        posts.push(post);
+      }
+    }
+    
+    // Sort by date (newest first)
+    posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+    
+    return posts;
+  } catch (error) {
+    console.warn(`Warning: Could not build blog data: ${error.message}`);
+    return [];
+  }
+};
+
+
 const build = async () => {
   const siteUrl = await loadSiteUrl();
-
 
   // 1) Read CSV
   const csv = await readFile(BP('data/courses.csv'), 'utf8');
@@ -109,25 +161,29 @@ const build = async () => {
   // 3) Validate
   validateRows(courses);
 
-
   // 4) Derive states from courses (to avoid drift)
   const statesSet = new Set(courses.map(c => c.state).filter(Boolean));
   const states = [...statesSet].sort().map(code => ({ code, name: code })); // you can map to full names later
 
+  // 5) Build blog data
+  const blogPosts = await buildBlogData();
 
-  // 5) Write JSON outputs
+  // 6) Write JSON outputs
   await ensureDir(SRC('data'));
   await writeFile(SRC('data/courses.json'), JSON.stringify(courses, null, 2));
   await writeFile(SRC('data/states.json'), JSON.stringify(states, null, 2));
-  console.log(`✓ Wrote src/data/courses.json and src/data/states.json`);
+  await writeFile(SRC('data/blog.json'), JSON.stringify({ posts: blogPosts }, null, 2));
+  console.log(`✓ Wrote src/data/courses.json, src/data/states.json, and src/data/blog.json`);
 
-
-  // 6) Generate sitemap.xml
+  // 7) Generate sitemap.xml
   const urls = [
     `${siteUrl}/`,
     `${siteUrl}/support`,
     `${siteUrl}/privacy`,
     `${siteUrl}/terms`,
+    `${siteUrl}/partners`,
+    `${siteUrl}/blog`,
+    ...blogPosts.map(p => `${siteUrl}/blog/${p.slug}`),
     ...courses.map(c => `${siteUrl}/courses/${c.slug}`)
   ];
   const now = new Date().toISOString().slice(0, 10);

@@ -14,6 +14,13 @@ const iconMap = [
   <DeviceIcon key="device" /> // Phone support (or device)
 ];
 
+const paymentMarks = [
+  { src: '/assets/payments/visa.svg', alt: 'Visa', label: 'Visa' },
+  { src: '/assets/payments/mastercard.svg', alt: 'Mastercard', label: 'Mastercard' },
+  { src: '/assets/payments/amex.svg', alt: 'American Express', label: 'American Express' },
+  { src: '/assets/payments/discover.svg', alt: 'Discover', label: 'Discover' },
+];
+
 export default function TrustSection() {
   const items = trustData.items;
   return (
@@ -30,13 +37,25 @@ export default function TrustSection() {
             </div>
           ))}
         </div>
+        
+        {/* Payment marks row */}
         <div className="mt-8 rounded-2xl border border-gray-200 bg-white/60 p-4">
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-            {[...Array(6)].map((_, i) => (
-              <div key={i} className="h-8 rounded bg-gray-200/70" aria-hidden="true"></div>
+          <div className="text-center mb-4 text-sm text-gray-600">Accepted payment methods</div>
+          <div className="flex justify-center items-center gap-6">
+            {paymentMarks.map((payment, i) => (
+              <div key={i} className="flex flex-col items-center">
+                <img 
+                  src={payment.src} 
+                  alt={payment.alt} 
+                  className="h-6 mb-2" 
+                  aria-label={payment.label}
+                />
+                <span className="text-xs text-gray-500">{payment.label}</span>
+              </div>
             ))}
           </div>
         </div>
+        
         <div className="mt-8 flex flex-col items-center">
           <Button href="/support" variant="secondary" size="md">
             Need help? Contact Support

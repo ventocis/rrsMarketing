@@ -24,43 +24,57 @@ const paymentMarks = [
 export default function TrustSection() {
   const items = trustData.items;
   return (
-    <section className="bg-gray-50 py-20 lg:py-28">
-      <div className="max-w-6xl mx-auto px-4">
-        <h2 className="text-2xl md:text-3xl font-bold text-center mb-10">Trusted & Supported</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
-          {items.map((item, i) => (
-            <div key={i} className="h-full rounded-2xl border border-gray-200 bg-white shadow-sm p-5 hover:shadow-md hover:-translate-y-0.5 focus:shadow-md focus:-translate-y-0.5 transition flex flex-col items-center text-center motion-reduce:transition-none motion-reduce:hover:transform-none motion-reduce:focus:transform-none">
-              <div className="h-10 w-10 rounded-full bg-blue-50 flex items-center justify-center shrink-0 mb-3">
-                {iconMap[i]}
-              </div>
-              <div className="text-gray-900 font-semibold">{item}</div>
+    <section className="bg-gray-50 py-20 lg:py-28 border-b border-gray-100">
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-8 md:gap-12">
+          {/* Left column - heading and trust/support cards */}
+          <div className="max-w-[65ch]">
+            <h2 className="text-2xl md:text-3xl font-bold mb-8 text-left">Trusted & Supported</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-stretch mb-8">
+              {items.map((item, i) => (
+                <div key={i} className="h-full rounded-2xl border border-gray-200 bg-white shadow-sm p-5 hover:shadow-md hover:-translate-y-0.5 focus:shadow-md focus:-translate-y-0.5 transition flex flex-col items-center text-center motion-reduce:transition-none motion-reduce:hover:transform-none motion-reduce:focus:transform-none">
+                  <div className="h-10 w-10 rounded-full bg-blue-50 flex items-center justify-center shrink-0 mb-3">
+                    {iconMap[i]}
+                  </div>
+                  <div className="text-gray-900 font-semibold">{item}</div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-        
-        {/* Payment marks row */}
-        <div className="mt-8 rounded-2xl border border-gray-200 bg-white/60 p-4">
-          <div className="text-center mb-4 text-sm text-gray-600">Accepted payment methods</div>
-          <div className="flex justify-center items-center gap-6">
-            {paymentMarks.map((payment, i) => (
-              <div key={i} className="flex flex-col items-center">
-                <img 
-                  src={payment.src} 
-                  alt={payment.alt} 
-                  className="h-6 mb-2" 
-                  aria-label={payment.label}
-                />
-                <span className="text-xs text-gray-500">{payment.label}</span>
+            
+            {/* Payment marks row */}
+            <div className="rounded-2xl border border-gray-200 bg-white/60 p-4 mb-8">
+              <div className="text-center mb-4 text-sm text-gray-600">Accepted payment methods</div>
+              <div className="flex justify-center items-center gap-8">
+                {paymentMarks.map((payment, i) => (
+                  <div key={i} className="flex flex-col items-center">
+                    <img 
+                      src={payment.src} 
+                      alt={payment.alt} 
+                      className="h-8 w-auto" 
+                      aria-label={payment.label}
+                    />
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
+            
+            <div className="flex flex-col items-start">
+              <Button href="/support" variant="secondary" size="md">
+                Need help? Contact Support
+              </Button>
+            </div>
           </div>
-        </div>
-        
-        <div className="mt-8 flex flex-col items-center">
-          <Button href="/support" variant="secondary" size="md">
-            Need help? Contact Support
-          </Button>
-          {/* Muted microcopy below CTA if available in trust.json */}
+          
+          {/* Right column - illustration only */}
+          <div className="hidden lg:block">
+            <div className="relative">
+              <img 
+                src="/assets/illustrations/trusted-secure.svg" 
+                alt="Trust and security features illustration"
+                className="h-48 md:h-64 lg:h-72 mx-auto lg:ml-auto"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </section>

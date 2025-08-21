@@ -6,7 +6,7 @@ import faqData from '../blueprint/copy/faq.json';
 
 export default function FaqSection() {
   const heading = faqData.heading;
-  const items = faqData.items;
+  const items = faqData.items.slice(0, 5); // Limit to first 5 items
   return (
     <section className="bg-white py-20 lg:py-28 border-b border-gray-100">
       <div className="max-w-[65ch] mx-auto px-4">

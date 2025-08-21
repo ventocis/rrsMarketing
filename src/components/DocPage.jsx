@@ -2,7 +2,6 @@ import React from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeSlug from "rehype-slug";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
 
 function replaceTodayToken(markdown) {
   const today = new Date().toLocaleDateString('en-US', {
@@ -22,7 +21,7 @@ export default function DocPage({ title, subtitle, markdown, showContactCard }) 
         </header>
         <div className="grid grid-cols-1 lg:grid-cols-[1fr,280px] gap-8">
           <article>
-            <div className="prose prose-neutral max-w-none">
+            <div className="prose prose-slate max-w-none">
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 rehypePlugins={[[rehypeSlug]]}

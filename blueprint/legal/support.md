@@ -61,4 +61,4 @@ Check the course page for:
 ---
 
 Need help fast?  
-📧 [info@roadreadysafety.com](mailto:info@roadreadysafety.com) | ☎ (888) 885-5707
+[info@roadreadysafety.com](mailto:info@roadreadysafety.com) | (888) 885-5707

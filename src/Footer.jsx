@@ -36,7 +36,7 @@ export default function Footer() {
             <h3 className="font-semibold text-gray-900 mb-3">Legal</h3>
             <nav aria-label="Legal" className="flex flex-col gap-2 ml-4">
               {legalLinks.map(link => (
-                <Button key={link.href} href={link.href} variant="link" size="sm" className="text-left justify-start p-0 h-auto text-sm text-gray-600 hover:text-gray-800">
+                <Button key={link.href} href={link.href} variant="custom" size="sm" className="text-left justify-start p-0 h-auto text-sm text-gray-600 hover:text-gray-800 underline">
                   {link.label}
                 </Button>
               ))}
@@ -64,7 +64,7 @@ export default function Footer() {
             <h3 className="font-semibold text-gray-900 mb-3">Resources</h3>
             <nav aria-label="Resources" className="flex flex-col gap-2 ml-4">
               {additionalLinks.map(link => (
-                <Button key={link.href} href={link.href} variant="link" size="sm" className="text-left justify-start p-0 h-auto text-sm text-gray-600 hover:text-gray-800 hover:underline">
+                <Button key={link.href} href={link.href} variant="custom" size="sm" className="text-left justify-start p-0 h-auto text-sm text-gray-600 hover:text-gray-800 underline">
                   {link.label}
                 </Button>
               ))}

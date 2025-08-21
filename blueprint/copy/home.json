@@ -31,7 +31,7 @@
     "heading": "What sets us apart",
     "items": [
       {
-        "title": "Instant digital certificate",
+        "title": "Digital certificate",
         "body": "Downloadable proof the moment you finish."
       },
       {
@@ -54,7 +54,7 @@
       {
         "n": 1,
         "title": "Choose state & course",
-        "body": "Tell us where you’re licensed and why you need the course."
+        "body": "Tell us where you're licensed and why you need the course."
       },
       {
         "n": 2,
@@ -64,13 +64,34 @@
       {
         "n": 3,
         "title": "Pass & get your certificate",
-        "body": "Instant digital certificate upon completion."
+        "body": "Digital certificate upon completion."
       },
       {
         "n": 4,
         "title": "Submit if required",
         "body": "Some courts or insurers need documentation.",
         "link": { "label": "How to submit →", "href": "#" }
+      }
+    ]
+  },
+  "trust": {
+    "heading": "Trusted & Supported",
+    "items": [
+      {
+        "title": "Secure checkout",
+        "body": "Payments processed by Stripe with TLS/SSL encryption."
+      },
+      {
+        "title": "Accepted where required",
+        "body": "Clearly labeled state approvals and reporting guidance."
+      },
+      {
+        "title": "Certificate delivery",
+        "body": "Electronic certificate available; electronic state reporting where required."
+      },
+      {
+        "title": "Responsive support",
+        "body": "Email 24/7 (reply within 24h) • Phone Mon–Fri 9–5."
       }
     ]
   }

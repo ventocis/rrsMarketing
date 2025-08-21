@@ -1,5 +1,3 @@
-# Terms of Service
-
 _Last updated: {{today}}_
 
 By using this site, you agree to these terms.
@@ -8,7 +6,7 @@ By using this site, you agree to these terms.
 
 ## Service and Providers
 
-We list and facilitate enrollment in online courses. Some courses are provided by third-party partners. When you enroll with a partner, you’ll complete checkout on their secure site and their terms may apply.
+We list and facilitate enrollment in online courses. Some courses are provided by third-party partners. When you enroll with a partner, you'll complete checkout on their secure site and their terms may apply.
 
 ---
 
@@ -40,7 +38,7 @@ Do not misuse the site or attempt to interfere with its operation.
 
 ## Disclaimers and Liability
 
-The site is provided _“as is.”_ To the extent permitted by law, we disclaim warranties and limit liability for indirect or consequential damages.
+The site is provided "_as is._" To the extent permitted by law, we disclaim warranties and limit liability for indirect or consequential damages.
 
 ---
 

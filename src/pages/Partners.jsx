@@ -1,17 +1,18 @@
-import React from 'react';
-import DocPage from '../components/DocPage.jsx';
+import React from "react";
+import md from "/blueprint/legal/partners.md?raw";
+import DocPage from "../components/DocPage.jsx";
 
-export default function Partners() {
-  const markdown = `# Become a partner
-
-We're building our partner program. Coming soon. For inquiries: info@roadreadysafety.com.`;
+export default function PartnersPage() {
+  const breadcrumbs = [
+    { label: "Become a Partner", href: "/partners" }
+  ];
 
   return (
-    <DocPage 
-      title="Become a partner"
-      subtitle="Partner program coming soon"
-      markdown={markdown}
-      showContactCard={false}
+    <DocPage
+      title="Become a Partner"
+      subtitle="Join our partner program to offer courses on our platform."
+      markdown={md}
+      breadcrumbs={breadcrumbs}
     />
   );
 }

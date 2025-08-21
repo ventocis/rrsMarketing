@@ -4,6 +4,7 @@ import courses from './data/courses.json';
 import { usd, hours, truncate } from './lib/format.js';
 import { Accordion } from 'flowbite-react';
 import StickyEnrollBar from './components/StickyEnrollBar.jsx';
+import CoursePreview from './components/CoursePreview.jsx';
 
 // Blueprint copy and labels
 const copy = {
@@ -128,6 +129,9 @@ export default function CoursePage() {
           </div>
         </div>
       )}
+
+      {/* Course Preview */}
+      <CoursePreview slug={course.slug} />
 
       {/* Details accordion */}
       <section className="mt-12 max-w-4xl mx-auto px-4">

@@ -68,10 +68,10 @@ export default function HeroFinder() {
   };
 
   return (
-    <section className="relative bg-white border-b border-gray-200 py-20 lg:py-28 overflow-hidden scroll-mt-24" id="find-course">
+    <section className="relative bg-white border-b border-gray-200 py-20 lg:py-28 overflow-hidden overflow-x-hidden scroll-mt-24" id="find-course">
       {/* sref: hero-bg-gradient */}
       <div aria-hidden="true" className="absolute inset-0 pointer-events-none select-none" style={{background: 'linear-gradient(120deg, #e0e7ff 0%, #f0fdfa 100%)', opacity: 0.25, zIndex: 0}}></div>
-      <div className="relative max-w-7xl mx-auto px-4 z-10">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 w-full overflow-x-hidden">
         <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-8 md:gap-12">
           {/* Left column - existing content unchanged */}
           <div className="max-w-[65ch] text-center lg:text-left">

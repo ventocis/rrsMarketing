@@ -32,7 +32,7 @@ function Home() {
 
 function App() {
   return (
-    <>
+    <div className="w-full overflow-x-hidden">
       <Header />
       <Routes>
         <Route path="/courses/:slug" element={<CoursePage />} />
@@ -47,7 +47,7 @@ function App() {
         <Route path="/" element={<Home />} />
       </Routes>
       <Footer />
-    </>
+    </div>
   );
 }
 

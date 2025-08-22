@@ -33,11 +33,11 @@ export default function CourseResultCard({ course }) {
         </span>
       )}
       <div className="mt-5 flex flex-col gap-3 md:flex-row md:items-center">
-        <Button variant="secondary" href={`/courses/${course.slug}`}>{labels.learnMore}</Button>
+        <Button variant="secondary" href={`/courses/${course.slug}`} className="w-full">{labels.learnMore}</Button>
         {course.provider_type === 'Partner' ? (
-          <Button variant="primary" href={course.affiliate_link} target="_blank" rel="noopener sponsored">{labels.signUp}</Button>
+          <Button variant="primary" href={course.affiliate_link} target="_blank" rel="noopener sponsored" className="w-full">{labels.signUp}</Button>
         ) : (
-          <Button variant="primary" href={`/courses/${course.slug}#enroll`}>{labels.signUp}</Button>
+          <Button variant="primary" href={`/courses/${course.slug}#enroll`} className="w-full">{labels.signUp}</Button>
         )}
       </div>
     </Card>

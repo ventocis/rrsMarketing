@@ -8,6 +8,7 @@ import TrustSection from './TrustSection.jsx';
 import FaqSection from './FaqSection.jsx';
 import Footer from './Footer.jsx';
 import CoursePage from './CoursePage.jsx';
+import CoursesIndex from './pages/CoursesIndex.jsx';
 import ResultsPage from './ResultsPage.jsx';
 import SupportPage from './pages/Support.jsx';
 import HowToSubmit from './pages/HowToSubmit.jsx';
@@ -36,6 +37,7 @@ function App() {
     <div className="w-full overflow-x-hidden">
       <Header />
       <Routes>
+        <Route path="/courses" element={<CoursesIndex />} />
         <Route path="/courses/:slug" element={<CoursePage />} />
         <Route path="/find/:state/:courseType" element={<ResultsPage />} />
         <Route path="/support" element={<SupportPage />} />

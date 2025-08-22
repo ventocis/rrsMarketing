@@ -30,8 +30,10 @@ export default function CoursePreview({ slug }) {
               break; // Stop if neither exists
             }
           }
-        } catch {
-          break; // Stop on error
+        } catch (error) {
+          // Silently continue on error - don't crash the component
+          console.warn(`Could not check image ${imageIndex} for course ${slug}:`, error);
+          break;
         }
         imageIndex++;
       }
@@ -40,7 +42,11 @@ export default function CoursePreview({ slug }) {
     };
 
     if (slug) {
-      checkImages();
+      checkImages().catch(error => {
+        // Prevent any uncaught promise rejections
+        console.warn(`Error checking course preview images for ${slug}:`, error);
+        setImages([]);
+      });
     }
   }, [slug]);
 

@@ -10,6 +10,7 @@ import Footer from './Footer.jsx';
 import CoursePage from './CoursePage.jsx';
 import ResultsPage from './ResultsPage.jsx';
 import SupportPage from './pages/Support.jsx';
+import HowToSubmit from './pages/HowToSubmit.jsx';
 import PrivacyPage from './pages/Privacy.jsx';
 import TermsPage from './pages/Terms.jsx';
 import Partners from './pages/Partners.jsx';
@@ -38,6 +39,7 @@ function App() {
         <Route path="/courses/:slug" element={<CoursePage />} />
         <Route path="/find/:state/:courseType" element={<ResultsPage />} />
         <Route path="/support" element={<SupportPage />} />
+        <Route path="/support/how-to-submit" element={<HowToSubmit />} />
         <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/terms" element={<TermsPage />} />
         <Route path="/partners" element={<Partners />} />

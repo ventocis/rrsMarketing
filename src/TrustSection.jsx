@@ -19,7 +19,7 @@ export default function TrustSection() {
   return (
     <section className="py-16 lg:py-24">
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-bold tracking-tight text-gray-900 text-left">Trusted & Supported</h2>
+        <h2 className="text-3xl font-bold tracking-tight text-gray-900 text-center md:text-left">Trusted & Supported</h2>
         
         {/* Cards grid - 2x2 layout for better card proportions */}
         <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -40,20 +40,7 @@ export default function TrustSection() {
           ))}
         </div>
         
-        {/* Payment marks row — centered */}
-        <div className="mt-8">
-          <div className="rounded-xl border border-gray-200 bg-white/70 px-5 md:px-6 py-3 md:py-4">
-            <div className="flex justify-center items-center gap-8">
-              {/* All logos normalized to the same height via h-6 md:h-7; width auto */}
-              <img src="/assets/payments/visa.svg" alt="Visa" className="h-6 md:h-7 w-auto object-contain opacity-90" />
-              <img src="/assets/payments/mastercard.svg" alt="Mastercard" className="h-6 md:h-7 w-auto object-contain opacity-90" />
-              <img src="/assets/payments/amex.svg" alt="American Express" className="h-6 md:h-7 w-auto object-contain opacity-90" />
-              <img src="/assets/payments/discover.svg" alt="Discover" className="h-6 md:h-7 w-auto object-contain opacity-90" />
-            </div>
-          </div>
-        </div>
-        
-        <div className="mt-8 flex flex-col items-start">
+        <div className="mt-8 flex flex-col items-center md:items-start">
           <Button href="/support" variant="secondary" size="md">
             Need help? Contact Support
           </Button>

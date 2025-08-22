@@ -86,7 +86,13 @@ export default function HeroFinder() {
                 </div>
                 <div>
                   <label htmlFor="state" className="block text-sm font-medium mb-1">State</label>
-                  <Select id="state" value={selectedState} onChange={e => { setSelectedState(e.target.value); setSelectedCourse(''); setSelectedLanguage(''); }} required>
+                  <Select 
+                    id="state" 
+                    value={selectedState} 
+                    onChange={e => { setSelectedState(e.target.value); setSelectedCourse(''); setSelectedLanguage(''); }} 
+                    required
+                    className="text-sm md:text-base [&>select]:text-sm [&>select]:md:text-base [&>select]:py-2 [&>select]:md:py-2.5 [&>select]:px-3 [&>select]:md:px-4 [&>select]:min-h-[44px] [&>select]:md:min-h-[44px] [&>select]:w-full [&>select]:border-gray-300 [&>select]:rounded-lg [&>select]:focus:ring-2 [&>select]:focus:ring-blue-500 [&>select]:focus:border-blue-500"
+                  >
                     <option value="">Select a state</option>
                     {states.map(s => (
                       <option key={s.code} value={s.code}>{stateNames[s.code] || s.code}</option>
@@ -95,7 +101,13 @@ export default function HeroFinder() {
                 </div>
                 <div>
                   <label htmlFor="reason" className="block text-sm font-medium mb-1">Reason</label>
-                  <Select id="reason" value={selectedReason} onChange={e => { setSelectedReason(e.target.value); setSelectedCourse(''); setSelectedLanguage(''); }} required>
+                  <Select 
+                    id="reason" 
+                    value={selectedReason} 
+                    onChange={e => { setSelectedReason(e.target.value); setSelectedCourse(''); setSelectedLanguage(''); }} 
+                    required
+                    className="text-sm md:text-base [&>select]:text-sm [&>select]:md:text-base [&>select]:py-2 [&>select]:md:py-2.5 [&>select]:px-3 [&>select]:md:px-4 [&>select]:min-h-[44px] [&>select]:md:min-h-[44px] [&>select]:w-full [&>select]:border-gray-300 [&>select]:rounded-lg [&>select]:focus:ring-2 [&>select]:focus:ring-blue-500 [&>select]:focus:border-blue-500"
+                  >
                     <option value="">Select a reason</option>
                     {reasons.map(r => (
                       <option key={r.key} value={r.key}>{r.label}</option>
@@ -104,7 +116,13 @@ export default function HeroFinder() {
                 </div>
                 <div className={showAdvanced ? '' : 'hidden'}>
                   <label htmlFor="course" className="block text-sm font-medium mb-1">Course (optional)</label>
-                  <Select id="course" value={selectedCourse} onChange={e => setSelectedCourse(e.target.value)} disabled={!courseOptions.length}>
+                  <Select 
+                    id="course" 
+                    value={selectedCourse} 
+                    onChange={e => setSelectedCourse(e.target.value)} 
+                    disabled={!courseOptions.length}
+                    className="text-sm md:text-base [&>select]:text-sm [&>select]:md:text-base [&>select]:py-2 [&>select]:md:py-2.5 [&>select]:px-3 [&>select]:md:px-4 [&>select]:min-h-[44px] [&>select]:md:min-h-[44px] [&>select]:w-full [&>select]:border-gray-300 [&>select]:rounded-lg [&>select]:focus:ring-2 [&>select]:focus:ring-blue-500 [&>select]:focus:border-blue-500"
+                  >
                     <option value="">Best option for my state</option>
                     {courseOptions.map(name => (
                       <option key={name} value={name}>{name}</option>
@@ -114,7 +132,13 @@ export default function HeroFinder() {
                 </div>
                 <div className={showAdvanced ? '' : 'hidden'}>
                   <label htmlFor="language" className="block text-sm font-medium mb-1">Language</label>
-                  <Select id="language" value={selectedLanguage} onChange={e => setSelectedLanguage(e.target.value)} disabled={!languageOptions.length}>
+                  <Select 
+                    id="language" 
+                    value={selectedLanguage} 
+                    onChange={e => setSelectedLanguage(e.target.value)} 
+                    disabled={!languageOptions.length}
+                    className="text-sm md:text-base [&>select]:text-sm [&>select]:md:text-base [&>select]:py-2 [&>select]:md:py-2.5 [&>select]:px-3 [&>select]:md:px-4 [&>select]:min-h-[44px] [&>select]:md:min-h-[44px] [&>select]:w-full [&>select]:border-gray-300 [&>select]:rounded-lg [&>select]:focus:ring-2 [&>select]:focus:ring-blue-500 [&>select]:focus:border-blue-500"
+                  >
                     <option value="">Any language</option>
                     {languageOptions.map(lang => (
                       <option key={lang} value={lang}>{lang}</option>

@@ -14,7 +14,7 @@ export default function FiltersBar({
           id="state-select"
           value={state}
           onChange={e => onChange({ state: e.target.value })}
-          className="rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm"
+          className="text-sm md:text-base [&>select]:text-sm [&>select]:md:text-base [&>select]:py-2 [&>select]:md:py-2.5 [&>select]:px-3 [&>select]:md:px-4 [&>select]:min-h-[44px] [&>select]:md:min-h-[44px] [&>select]:w-full [&>select]:border-gray-300 [&>select]:rounded-lg [&>select]:focus:ring-2 [&>select]:focus:ring-blue-500 [&>select]:focus:border-blue-500"
         >
           {states.map(s => (
             <option key={s.code} value={s.code}>{stateNames[s.code] || s.code}</option>
@@ -27,7 +27,7 @@ export default function FiltersBar({
           id="language-select"
           value={language}
           onChange={e => onChange({ language: e.target.value })}
-          className="rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm"
+          className="text-sm md:text-base [&>select]:text-sm [&>select]:md:text-base [&>select]:py-2 [&>select]:md:py-2.5 [&>select]:px-3 [&>select]:md:px-4 [&>select]:min-h-[44px] [&>select]:md:min-h-[44px] [&>select]:w-full [&>select]:border-gray-300 [&>select]:rounded-lg [&>select]:focus:ring-2 [&>select]:focus:ring-blue-500 [&>select]:focus:border-blue-500"
         >
           <option value="any">Any</option>
           {languageOptions.map(l => (
@@ -41,7 +41,7 @@ export default function FiltersBar({
           id="sort-select"
           value={sort}
           onChange={e => onChange({ sort: e.target.value })}
-          className="rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm"
+          className="text-sm md:text-base [&>select]:text-sm [&>select]:md:text-base [&>select]:py-2 [&>select]:md:py-2.5 [&>select]:px-3 [&>select]:md:px-4 [&>select]:min-h-[44px] [&>select]:md:min-h-[44px] [&>select]:w-full [&>select]:border-gray-300 [&>select]:rounded-lg [&>select]:focus:ring-2 [&>select]:focus:ring-blue-500 [&>select]:focus:border-blue-500"
         >
           <option value="recommended">Recommended</option>
           <option value="price-low">Price (low)</option>

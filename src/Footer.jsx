@@ -32,14 +32,6 @@ export default function Footer() {
               Approved where required. Built for simplicity.
             </p>
           </div>
-          
-          {/* Payment Logos */}
-          <div className="flex flex-wrap justify-center md:justify-start gap-4 md:gap-6">
-            <img src="/assets/payments/visa.svg" alt="Visa" className="h-6 md:h-7 w-auto max-w-full" />
-            <img src="/assets/payments/mastercard.svg" alt="Mastercard" className="h-6 md:h-7 w-auto max-w-full" />
-            <img src="/assets/payments/amex.svg" alt="American Express" className="h-6 md:h-7 w-auto max-w-full" />
-            <img src="/assets/payments/discover.svg" alt="Discover" className="h-6 md:h-7 w-auto max-w-full" />
-          </div>
         </div>
         
         {/* Middle Section – Quick Links and Support (Two Columns) */}

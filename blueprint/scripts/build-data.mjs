@@ -37,6 +37,12 @@ const toNumberOrNull = (v) => {
 };
 
 
+const toBoolean = (v) => {
+  if (v === undefined || v === null || v === '') return false;
+  return v.toLowerCase() === 'true';
+};
+
+
 const validateRows = (rows) => {
   const errs = [];
   const seen = new Set();
@@ -149,11 +155,23 @@ const build = async () => {
 
     // Ensure required derived booleans/fields
     const isPartner = r.provider_type === 'Partner';
+    
+    // Process boolean benefit fields
+    const benefits = {
+      stateApproved: toBoolean(r.stateApproved),
+      mobileFriendly: toBoolean(r.mobileFriendly),
+      instantCertificate: toBoolean(r.instantCertificate),
+      satisfactionGuarantee: toBoolean(r.satisfactionGuarantee),
+      shortestAllowed: toBoolean(r.shortestAllowed),
+      secureCheckout: toBoolean(r.secureCheckout)
+    };
+    
     return {
       ...r,
       isPartner,
       price_usd: r.price_usd ?? '',
       duration_hours: r.duration_hours ?? '',
+      ...benefits
     };
   });
 

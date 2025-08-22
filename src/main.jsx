@@ -12,6 +12,9 @@ import ResultsPage from './ResultsPage.jsx';
 import SupportPage from './pages/Support.jsx';
 import PrivacyPage from './pages/Privacy.jsx';
 import TermsPage from './pages/Terms.jsx';
+import Partners from './pages/Partners.jsx';
+import BlogIndex from './pages/BlogIndex.jsx';
+import BlogPost from './pages/BlogPost.jsx';
 import Faq from './pages/Faq.jsx';
 import { Routes, Route } from 'react-router-dom';
 
@@ -29,7 +32,7 @@ function Home() {
 
 function App() {
   return (
-    <>
+    <div className="w-full overflow-x-hidden">
       <Header />
       <Routes>
         <Route path="/courses/:slug" element={<CoursePage />} />
@@ -37,11 +40,14 @@ function App() {
         <Route path="/support" element={<SupportPage />} />
         <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/terms" element={<TermsPage />} />
+        <Route path="/partners" element={<Partners />} />
+        <Route path="/blog" element={<BlogIndex />} />
+        <Route path="/blog/:slug" element={<BlogPost />} />
         <Route path="/faq" element={<Faq />} />
         <Route path="/" element={<Home />} />
       </Routes>
       <Footer />
-    </>
+    </div>
   );
 }
 

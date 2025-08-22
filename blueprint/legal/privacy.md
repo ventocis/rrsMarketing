@@ -1,5 +1,3 @@
-# Privacy Policy
-
 _Last updated: {{today}}_
 
 We collect information you provide (like name and contact details), device information, and course activity to operate our site, enroll you in courses, issue certificates, and provide support.
@@ -60,7 +58,7 @@ This site is not directed to children under 13.
 
 ## Changes
 
-We may update this policy. We’ll post the revised version with an updated date.
+We may update this policy. We'll post the revised version with an updated date.
 
 ---
 

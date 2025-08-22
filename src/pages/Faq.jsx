@@ -1,10 +1,16 @@
 import React from "react";
 import { Accordion } from "flowbite-react";
+import { SimpleBreadcrumbs } from "../components/Breadcrumbs.jsx";
 import faq from "../../blueprint/copy/faq.json";
 
 export default function Faq() {
+  const breadcrumbs = [
+    { label: "FAQ", href: "/faq" }
+  ];
+
   return (
     <main className="mx-auto max-w-3xl px-4 py-12">
+      <SimpleBreadcrumbs items={breadcrumbs} />
       <h1 className="text-3xl font-bold text-gray-900">Frequently asked questions</h1>
       <p className="mt-2 text-gray-600">
         Answers to common questions about enrollment, certificates, and reporting.

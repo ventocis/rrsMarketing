@@ -19,7 +19,7 @@ export default function HowSection() {
             <ol className="space-y-8">
               {steps.map((step, i) => (
                 <li key={i} className="flex items-start">
-                  <span className="flex-shrink-0 w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-lg mr-4">{step.n}</span>
+                  <span className="flex-shrink-0 w-10 h-10 rounded-full bg-slate-500 text-white flex items-center justify-center font-bold text-lg mr-4">{step.n}</span>
                   <div>
                     <h3 className="text-lg md:text-xl font-semibold mb-1">{step.title}</h3>
                     <p className="text-gray-600 leading-relaxed mb-1">{step.body}</p>

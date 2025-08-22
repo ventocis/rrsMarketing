@@ -5,6 +5,21 @@ import { usd, hours, truncate } from './lib/format.js';
 import { Accordion } from 'flowbite-react';
 import StickyEnrollBar from './components/StickyEnrollBar.jsx';
 import CoursePreview from './components/CoursePreview.jsx';
+import BuyBox from './components/BuyBox.jsx';
+import CourseBullets from './components/CourseBullets.jsx';
+
+// State name mapping for full names
+const stateNames = {
+  'FL': 'Florida',
+  'IL': 'Illinois', 
+  'LA': 'Louisiana',
+  'MI': 'Michigan',
+  'MO': 'Missouri',
+  'NY': 'New York',
+  'TN': 'Tennessee',
+  'TX': 'Texas',
+  'VA': 'Virginia'
+};
 
 // Blueprint copy and labels
 const copy = {
@@ -24,10 +39,10 @@ const copy = {
   },
   headings: {
     details: 'Course requirements & logistics',
-    features: 'What you’ll learn',
+    features: 'What you\'ll learn',
   },
   partner_pill: 'Provided by TicketSchool',
-  provider_note: 'You’ll enroll and complete this course on TicketSchool’s secure site. Road Ready is a trusted affiliate.',
+  provider_note: 'You\'ll enroll and complete this course on TicketSchool\'s secure site. Road Ready is a trusted affiliate.',
   cta: {
     inhouse: 'Start course →',
     partner: 'Continue on TicketSchool →',
@@ -35,7 +50,7 @@ const copy = {
   disclaimer: 'Acceptance varies by court and insurer. Always confirm requirements.',
   empty: {
     notFoundTitle: 'Course not found',
-    notFoundBody: 'This course isn’t available yet. Please choose another course or check back soon.',
+    notFoundBody: 'This course isn\'t available yet. Please choose another course or check back soon.',
   },
 };
 
@@ -57,6 +72,11 @@ export default function CoursePage() {
   const showFeatures = course.show_modules === true || course.show_modules === 'TRUE';
   const features = (course.features || course.modules || course.notes || '').split('|').filter(Boolean);
   const badges = (course.badge_list || '').split('|').filter(Boolean);
+  
+  // Format data for BuyBox
+  const price = usd(course.price_usd);
+  const provider = isPartner ? course.provider_name : 'Road Ready';
+  const affiliateLink = course.affiliate_link;
 
   // Details accordion data
   const details = [
@@ -69,57 +89,84 @@ export default function CoursePage() {
 
   return (
     <main className="bg-gradient-to-b from-white to-gray-50 min-h-screen pb-16 md:pb-0">
-      {/* Hero */}
+      {/* Header Band - Two Column Layout */}
       <section className="bg-gradient-to-b from-white to-gray-50">
-        <div className="max-w-4xl mx-auto px-4 py-14 md:py-20 text-center">
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">{course.headline}</h1>
-          <p className="mt-3 max-w-2xl mx-auto text-gray-600 text-lg md:text-xl">{course.subhead}</p>
-          {isPartner && (
-            <span className="mt-3 inline-flex max-w-max items-center gap-1 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700 leading-none">{course.partner_badge || copy.partner_pill}</span>
-          )}
-          <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
-            {badges.map((b, i) => (
-              <span key={i} className="rounded-md bg-gray-100 text-gray-700 px-2 py-1 text-xs">{b}</span>
-            ))}
-          </div>
-          <div className="mt-8">
-            <a
-              href={isPartner ? course.affiliate_link : `/courses/${course.slug}#enroll`}
-              target={isPartner ? '_blank' : '_self'}
-              rel={isPartner ? 'noopener sponsored' : undefined}
-            >
-              <button className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold text-lg hover:bg-blue-700 transition">{course.hero_cta_label || (isPartner ? copy.cta.partner : copy.cta.inhouse)}</button>
-            </a>
-            {isPartner && (
-              <p className="mt-2 text-sm text-gray-500">{copy.provider_note}</p>
-            )}
+        <div className="max-w-7xl mx-auto px-4 py-14 md:py-20">
+          <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,2fr)_minmax(320px,1fr)] gap-8">
+            
+            {/* Left Column - Content */}
+            <div className="max-w-[65ch]">
+              <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900">
+                {course.headline}
+              </h1>
+              <p className="mt-3 text-gray-600 text-lg md:text-xl">
+                {course.subhead}
+              </p>
+              
+              {/* Affiliate Pill */}
+              {isPartner && (
+                <span className="mt-4 inline-flex max-w-max items-center gap-1 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700 leading-none">
+                  {course.partner_badge || copy.partner_pill}
+                </span>
+              )}
+              
+              {/* Course Bullets */}
+              <CourseBullets benefits={badges} />
+              
+              {/* Star Rating (placeholder) */}
+              <div className="mt-6 flex items-center gap-2">
+                <div className="flex text-yellow-400">
+                  {[...Array(5)].map((_, i) => (
+                    <svg key={i} className="h-5 w-5 fill-current" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                  ))}
+                </div>
+                <span className="text-sm text-gray-600">(placeholder)</span>
+              </div>
+            </div>
+            
+            {/* Right Column - Buy Box */}
+            <div className="lg:order-2">
+              <BuyBox
+                course={course}
+                price={price}
+                provider={provider}
+                isPartner={isPartner}
+                affiliateLink={affiliateLink}
+              />
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Facts row */}
-      <section className="max-w-4xl mx-auto px-4 mt-10 grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="rounded-xl border border-gray-200 bg-white shadow-sm p-4 text-center">
-          <div className="text-xs uppercase tracking-wide text-gray-500">{copy.facts_labels.state}</div>
-          <div className="mt-1 text-lg font-semibold text-gray-900">{course.state}</div>
-        </div>
-        <div className="rounded-xl border border-gray-200 bg-white shadow-sm p-4 text-center">
-          <div className="text-xs uppercase tracking-wide text-gray-500">{copy.facts_labels.duration}</div>
-          <div className="mt-1 text-lg font-semibold text-gray-900">{hours(course.duration_hours)}</div>
-        </div>
-        <div className="rounded-xl border border-gray-200 bg-white shadow-sm p-4 text-center">
-          <div className="text-xs uppercase tracking-wide text-gray-500">{copy.facts_labels.price}</div>
-          <div className="mt-1 text-lg font-semibold text-gray-900">{usd(course.price_usd)}</div>
-        </div>
-        <div className="rounded-xl border border-gray-200 bg-white shadow-sm p-4 text-center">
-          <div className="text-xs uppercase tracking-wide text-gray-500">{copy.facts_labels.provider}</div>
-          <div className="mt-1 text-lg font-semibold text-gray-900">{course.provider_name}</div>
+      {/* Facts Strip - Full Width Below Header */}
+      <section className="max-w-7xl mx-auto px-4 -mt-8 lg:mt-0">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="rounded-xl border border-gray-200 bg-white shadow-sm p-4 text-center">
+            <div className="text-xs uppercase tracking-wide text-gray-500">{copy.facts_labels.state}</div>
+            <div className="mt-1 text-lg font-semibold text-gray-900">
+              {stateNames[course.state] || course.state}
+            </div>
+          </div>
+          <div className="rounded-xl border border-gray-200 bg-white shadow-sm p-4 text-center">
+            <div className="text-xs uppercase tracking-wide text-gray-500">{copy.facts_labels.duration}</div>
+            <div className="mt-1 text-lg font-semibold text-gray-900">{hours(course.duration_hours)}</div>
+          </div>
+          <div className="rounded-xl border border-gray-200 bg-white shadow-sm p-4 text-center">
+            <div className="text-xs uppercase tracking-wide text-gray-500">{copy.facts_labels.price}</div>
+            <div className="mt-1 text-lg font-semibold text-gray-900">{usd(course.price_usd)}</div>
+          </div>
+          <div className="rounded-xl border border-gray-200 bg-white shadow-sm p-4 text-center">
+            <div className="text-xs uppercase tracking-wide text-gray-500">{copy.facts_labels.provider}</div>
+            <div className="mt-1 text-lg font-semibold text-gray-900">{provider}</div>
+          </div>
         </div>
       </section>
 
       {/* Certificate callout */}
       {course.certificate_delivery && (
-        <div className="mt-4 flex justify-center">
+        <div className="mt-8 flex justify-center">
           <div className="inline-flex max-w-full items-center gap-2 rounded-xl border border-gray-200 bg-white shadow-sm px-4 py-3">
             <svg viewBox="0 0 24 24" className="h-5 w-5 text-blue-600" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <path d="M12 2l3 3 4 1-1 4 3 3-3 3 1 4-4 1-3 3-3-3-4-1 1-4-3-3 3-3-1-4 4-1 3-3z"/>

@@ -29,16 +29,8 @@ export default function Footer() {
               <span className="text-xl font-semibold text-slate-700">Road Ready Safety</span>
             </a>
             <p className="text-center md:text-left text-gray-600 text-sm md:text-base">
-              Approved where required. Built for simplicity.
+              Trusted and approved. Built for simplicity.
             </p>
-          </div>
-          
-          {/* Payment Logos */}
-          <div className="flex flex-wrap justify-center md:justify-start gap-4 md:gap-6">
-            <img src="/assets/payments/visa.svg" alt="Visa" className="h-6 md:h-7 w-auto max-w-full" />
-            <img src="/assets/payments/mastercard.svg" alt="Mastercard" className="h-6 md:h-7 w-auto max-w-full" />
-            <img src="/assets/payments/amex.svg" alt="American Express" className="h-6 md:h-7 w-auto max-w-full" />
-            <img src="/assets/payments/discover.svg" alt="Discover" className="h-6 md:h-7 w-auto max-w-full" />
           </div>
         </div>
         

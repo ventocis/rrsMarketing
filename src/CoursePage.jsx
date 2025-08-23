@@ -4,10 +4,11 @@ import courses from './data/courses.json';
 import { usd, hours, truncate } from './lib/format.js';
 import { Accordion } from 'flowbite-react';
 import StickyEnrollBar from './components/StickyEnrollBar.jsx';
-import CoursePreview from './components/CoursePreview.jsx';
+// CoursePreview removed - was causing React Error #310
 import BuyBox from './components/BuyBox.jsx';
 import CourseBullets from './components/CourseBullets.jsx';
 import CourseIllustration from './components/CourseIllustration.jsx';
+
 
 // State name mapping for full names
 const stateNames = {
@@ -56,27 +57,37 @@ const copy = {
 };
 
 export default function CoursePage() {
+  console.log('🔍 CoursePage: Component starting to render');
+  
   const { slug } = useParams();
+  console.log('🔍 CoursePage: useParams slug =', slug);
+  
   const course = courses.find(c => c.slug === slug);
-
+  console.log('🔍 CoursePage: Found course =', course);
+  
   if (!course) {
+    console.log('🔍 CoursePage: No course found, showing error page');
     return (
       <div className="max-w-2xl mx-auto py-24 text-center">
         <h1 className="text-2xl font-bold mb-4">{copy.empty.notFoundTitle}</h1>
         <p className="text-gray-600 mb-8">{copy.empty.notFoundBody}</p>
-        <Link to="/" className="text-blue-600 hover:underline">Back to home</Link>
+        <Link to="/" className="text-blue-600 hover:underline">
+          Back to home
+        </Link>
       </div>
     );
   }
 
+  console.log('🔍 CoursePage: Course found, processing data');
+  
+  // Format data for display
+  const price = usd(course.price_usd);
+  const duration = hours(course.duration_hours);
   const isPartner = course.provider_type === 'Partner';
   const showFeatures = course.show_modules === true || course.show_modules === 'TRUE';
   const features = (course.features || course.modules || course.notes || '').split('|').filter(Boolean);
-  
-  // Format data for BuyBox
-  const price = usd(course.price_usd);
-  const provider = isPartner ? course.provider_name : 'Road Ready';
-  const affiliateLink = course.affiliate_link;
+
+  console.log('🔍 CoursePage: Data processed, rendering JSX');
 
   // Details accordion data
   const details = [
@@ -87,123 +98,126 @@ export default function CoursePage() {
     { key: 'retake_policy', title: copy.details_labels.retake_policy, body: course.retake_policy },
   ].filter(item => item.body);
 
+  console.log('🔍 CoursePage: About to return JSX');
+  
   return (
     <main className="bg-gradient-to-b from-white to-gray-50 min-h-screen pb-16 md:pb-0">
-      {/* Header Band - Two Column Layout */}
-      <section className="bg-gradient-to-b from-white to-gray-50">
-        <div className="max-w-7xl mx-auto px-4 py-14 md:py-20">
-          <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,2fr)_minmax(320px,1fr)] gap-8">
+      {/* Course Header */}
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        <h1 className="text-3xl font-bold text-gray-900 mb-4">{course.course_name}</h1>
+        {course.subhead && (
+          <p className="text-lg text-gray-600 mb-4">{course.subhead}</p>
+        )}
+      </div>
+      
+      {/* Main Content Grid - Left Content + Right BuyBox */}
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Left Column - Main Content */}
+          <div className="lg:col-span-2">
+            {/* CourseIllustration */}
+            <CourseIllustration />
             
-            {/* Left Column - Content */}
-            <div className="max-w-[65ch]">
-              <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900">
-                {course.headline}
-              </h1>
-              <p className="mt-3 text-gray-600 text-lg md:text-xl">
-                {course.subhead}
-              </p>
-              
-              {/* Affiliate Pill */}
-              {isPartner && (
-                <span className="mt-4 inline-flex max-w-max items-center gap-1 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700 leading-none">
-                  {course.partner_badge || copy.partner_pill}
-                </span>
-              )}
-              
-              {/* Course Illustration - Desktop Only */}
-              <CourseIllustration />
-              
-              {/* Course Bullets */}
-              <CourseBullets course={course} />
-            </div>
+            {/* CourseBullets */}
+            <CourseBullets course={course} />
             
-            {/* Right Column - Buy Box */}
-            <div className="lg:order-2">
-              <BuyBox
-                course={course}
-                price={price}
-                provider={provider}
-                isPartner={isPartner}
-                affiliateLink={affiliateLink}
-              />
+            {/* Facts Strip */}
+            <section className="mt-12">
+              <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                  <div>
+                    <div className="text-sm text-gray-500 mb-1">{copy.facts_labels.state}</div>
+                    <div className="font-semibold text-gray-900">{stateNames[course.state] || course.state}</div>
+                  </div>
+                  <div>
+                    <div className="text-sm text-gray-500 mb-1">{copy.facts_labels.duration}</div>
+                    <div className="font-semibold text-gray-900">{duration}</div>
+                  </div>
+                  <div>
+                    <div className="text-sm text-gray-500 mb-1">{copy.facts_labels.price}</div>
+                    <div className="font-semibold text-gray-900">{price}</div>
+                  </div>
+                  <div>
+                    <div className="text-sm text-gray-500 mb-1">{copy.facts_labels.provider}</div>
+                    <div className="font-semibold text-gray-900">{isPartner ? course.provider_name : 'Road Ready'}</div>
+                  </div>
+                </div>
+              </div>
+            </section>
+            
+            {/* Details Accordion */}
+            <section className="mt-12">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">{copy.headings.details}</h2>
+              <div className="bg-white rounded-2xl border border-slate-200 shadow-sm">
+                <Accordion>
+                  {details.map((item) => (
+                    <Accordion.Panel key={item.key}>
+                      <Accordion.Title>{item.title}</Accordion.Title>
+                      <Accordion.Content>
+                        <p className="text-gray-700 leading-relaxed">{item.body}</p>
+                      </Accordion.Content>
+                    </Accordion.Panel>
+                  ))}
+                </Accordion>
+              </div>
+            </section>
+            
+            {/* Features Section */}
+            {showFeatures && features.length > 0 && (
+              <section className="mt-12">
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">{copy.headings.features}</h2>
+                <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+                  <ul className="space-y-3">
+                    {features.map((feature, index) => (
+                      <li key={index} className="flex items-start gap-3">
+                        <span className="text-blue-600 font-bold mt-0.5">•</span>
+                        <span className="text-gray-700 leading-relaxed">{feature.trim()}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </section>
+            )}
+            
+            {/* Certificate Callout */}
+            <section className="mt-12">
+              <div className="bg-blue-50 rounded-2xl border border-blue-200 p-6">
+                <div className="flex items-start gap-4">
+                  <div className="text-blue-600">
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-blue-900 mb-2">Certificate Delivery</h3>
+                    <p className="text-blue-800 leading-relaxed">
+                      {course.certificate_delivery || 'Your certificate will be available for download upon course completion.'}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </section>
+            
+            {/* Disclaimer */}
+            <section className="mt-12">
+              <div className="bg-gray-50 rounded-2xl border border-gray-200 p-6">
+                <p className="text-sm text-gray-600 leading-relaxed text-center">
+                  {copy.disclaimer}
+                </p>
+              </div>
+            </section>
+          </div>
+          
+          {/* Right Column - BuyBox */}
+          <div className="lg:col-span-1">
+            <div className="sticky top-8">
+              <BuyBox course={course} />
             </div>
           </div>
         </div>
-      </section>
-
-      {/* Facts Strip - Full Width Below Header */}
-      <section className="max-w-7xl mx-auto px-4 -mt-8 lg:mt-0">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="rounded-xl border border-gray-200 bg-white shadow-sm p-4 text-center">
-            <div className="text-xs uppercase tracking-wide text-gray-500">{copy.facts_labels.state}</div>
-            <div className="mt-1 text-lg font-semibold text-gray-900">
-              {stateNames[course.state] || course.state}
-            </div>
-          </div>
-          <div className="rounded-xl border border-gray-200 bg-white shadow-sm p-4 text-center">
-            <div className="text-xs uppercase tracking-wide text-gray-500">{copy.facts_labels.duration}</div>
-            <div className="mt-1 text-lg font-semibold text-gray-900">{hours(course.duration_hours)}</div>
-          </div>
-          <div className="rounded-xl border border-gray-200 bg-white shadow-sm p-4 text-center">
-            <div className="text-xs uppercase tracking-wide text-gray-500">{copy.facts_labels.price}</div>
-            <div className="mt-1 text-lg font-semibold text-gray-900">{usd(course.price_usd)}</div>
-          </div>
-          <div className="rounded-xl border border-gray-200 bg-white shadow-sm p-4 text-center">
-            <div className="text-xs uppercase tracking-wide text-gray-500">{copy.facts_labels.provider}</div>
-            <div className="mt-1 text-lg font-semibold text-gray-900">{provider}</div>
-          </div>
-        </div>
-      </section>
-
-      {/* Certificate callout */}
-      {course.certificate_delivery && (
-        <div className="mt-8 flex justify-center">
-          <div className="inline-flex max-w-full items-center gap-2 rounded-xl border border-gray-200 bg-white shadow-sm px-4 py-3">
-            <svg viewBox="0 0 24 24" className="h-5 w-5 text-blue-600" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <path d="M12 2l3 3 4 1-1 4 3 3-3 3 1 4-4 1-3 3-3-3-4-1 1-4-3-3 3-3-1-4 4-1 3-3z"/>
-              <path d="M9.5 12.5l2 2 3.5-3.5"/>
-            </svg>
-            <span className="text-sm text-gray-800">{truncate(course.certificate_delivery, 80)}</span>
-          </div>
-        </div>
-      )}
-
-      {/* Course Preview */}
-      <CoursePreview slug={course.slug} />
-
-      {/* Details accordion */}
-      <section className="mt-12 max-w-4xl mx-auto px-4">
-        <h2 className="text-2xl font-bold text-gray-900">{copy.headings.details}</h2>
-        <div className="mt-4 rounded-xl border border-gray-200 bg-white shadow-sm">
-          <Accordion collapseAll={false} alwaysOpen={false}>
-            {details.map((item, idx) => (
-              <Accordion.Panel key={idx}>
-                <Accordion.Title className="text-gray-900 font-semibold">{item.title}</Accordion.Title>
-                <Accordion.Content>
-                  <p className="text-gray-700 leading-relaxed">{item.body}</p>
-                </Accordion.Content>
-              </Accordion.Panel>
-            ))}
-          </Accordion>
-        </div>
-      </section>
-
-      {/* Features (unchanged) */}
-      {showFeatures && features.length > 0 && (
-        <section className="max-w-3xl mx-auto px-4 mb-8">
-          <h2 className="text-xl font-bold mb-4">{copy.headings.features}</h2>
-          <ul className="bg-white rounded-lg shadow-sm p-6 list-disc list-inside">
-            {features.map((f, i) => (
-              <li key={i} className="text-gray-800 mb-2">{f}</li>
-            ))}
-          </ul>
-        </section>
-      )}
-
-      {/* Disclaimer */}
-      <div className="max-w-3xl mx-auto px-4 text-xs text-gray-400 mt-8">{copy.disclaimer}</div>
-
-      {/* Sticky enroll bar (mobile only) */}
+      </div>
+      
+      {/* StickyEnrollBar */}
       <StickyEnrollBar course={course} />
     </main>
   );

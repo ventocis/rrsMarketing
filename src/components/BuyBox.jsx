@@ -19,9 +19,9 @@ export default function BuyBox({
   return (
     <div className="rounded-xl border border-gray-200 bg-white shadow-sm p-6 lg:p-8">
       {/* Course Title (optional for context) */}
-      <h3 className="text-lg font-semibold text-gray-900 mb-4">
-        {course.title}
-      </h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">
+          {course.course_name}
+        </h3>
       
       {/* Price */}
       <div className="mb-6">
@@ -38,7 +38,7 @@ export default function BuyBox({
           size="lg"
           className="w-full"
           {...ctaProps}
-          aria-label={`${ctaLabel} for ${course.title}`}
+          aria-label={`${ctaLabel} for ${course.course_name}`}
         >
           {ctaLabel}
         </Button>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Button from './components/Button.jsx';
 import howData from '../blueprint/copy/home.json';
 // sref: how-section.v1
@@ -23,7 +24,17 @@ export default function HowSection() {
                   <div>
                     <h3 className="text-lg md:text-xl font-semibold mb-1">{step.title}</h3>
                     <p className="text-gray-600 leading-relaxed mb-1">{step.body}</p>
-                    {step.link && <a href={step.link.href} className="text-blue-600 hover:text-blue-700 text-sm">{step.link.label}</a>}
+                    {step.link && (
+                      step.link.href.startsWith('/') ? (
+                        <Link to={step.link.href} className="text-blue-600 hover:text-blue-700 text-sm underline underline-offset-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded">
+                          {step.link.label}
+                        </Link>
+                      ) : (
+                        <a href={step.link.href} className="text-blue-600 hover:text-blue-700 text-sm underline underline-offset-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded">
+                          {step.link.label}
+                        </a>
+                      )
+                    )}
                   </div>
                 </li>
               ))}

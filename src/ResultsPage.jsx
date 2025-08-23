@@ -3,7 +3,6 @@ import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import courses from './data/courses.json';
 import { usd, hours, truncate } from './lib/format.js';
 import resultsCopy from '../blueprint/copy/results.json';
-import FiltersBar from './components/FiltersBar.jsx';
 import Card from './components/Card.jsx';
 import CourseResultCard from './components/CourseResultCard.jsx';
 import Breadcrumbs from './components/Breadcrumbs.jsx';
@@ -53,20 +52,13 @@ export default function ResultsPage() {
 
   return (
     <main className="bg-gray-50 min-h-screen pb-12">
-      <section className="max-w-6xl mx-auto px-4 py-16 md:py-20">
+      <section className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-12">
         <Breadcrumbs state={state} courseType={courseType} lang={lang} courseTypeLabel={courseTypeLabel} />
-        <div className="text-center">
+        <div className="mt-8 md:mt-12 mb-6 md:mb-8">
           <h1 className="text-3xl md:text-4xl font-bold mb-2">{heroTitle}</h1>
           <p className="text-lg text-gray-700 mb-4">{heroSub}</p>
         </div>
-        <FiltersBar
-          state={state}
-          courseType={courseType}
-          language={lang}
-          sort={sort}
-          languageOptions={languageOptions}
-          onChange={handleFilterChange}
-        />
+        {/* FiltersBar hidden - preserving defaults behind the scenes */}
         <div className="mt-8">
           {filtered.length === 0 ? (
             <EmptyState
@@ -78,7 +70,7 @@ export default function ResultsPage() {
               secondaryLabel={emptySecondaryCta}
             />
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 gap-6 md:gap-8 lg:grid-cols-2">
               {filtered.map(course => (
                 <CourseResultCard key={course.slug} course={course} />
               ))}

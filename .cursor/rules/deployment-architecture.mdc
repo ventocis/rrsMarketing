@@ -1,0 +1,9 @@
+---
+description: Deployment architecture for the website, including S3 and Cloudfront
+globs:
+alwaysApply: false
+---
+
+The website is hosted on an S3 bucket. Cloudfront is used to reduce latency.
+
+@cf-dist.json @cloudfront-config.json

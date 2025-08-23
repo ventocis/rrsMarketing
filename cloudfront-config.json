@@ -33,6 +33,17 @@
         "DefaultTTL": 86400,
         "MaxTTL": 31536000
     },
+    "CustomErrorResponses": {
+        "Quantity": 1,
+        "Items": [
+            {
+                "ErrorCode": 404,
+                "ResponsePagePath": "/index.html",
+                "ResponseCode": "200",
+                "ErrorCachingMinTTL": 0
+            }
+        ]
+    },
     "Enabled": true,
     "PriceClass": "PriceClass_100"
 }

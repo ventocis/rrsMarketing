@@ -29,7 +29,7 @@ export default function Footer() {
               <span className="text-xl font-semibold text-slate-700">Road Ready Safety</span>
             </a>
             <p className="text-center md:text-left text-gray-600 text-sm md:text-base">
-              Approved where required. Built for simplicity.
+              Trusted and approved. Built for simplicity.
             </p>
           </div>
         </div>

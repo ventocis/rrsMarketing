@@ -32,7 +32,6 @@ export default function CoursePreview({ slug }) {
           }
         } catch (error) {
           // Silently continue on error - don't crash the component
-          console.warn(`Could not check image ${imageIndex} for course ${slug}:`, error);
           break;
         }
         imageIndex++;
@@ -44,14 +43,25 @@ export default function CoursePreview({ slug }) {
     if (slug) {
       checkImages().catch(error => {
         // Prevent any uncaught promise rejections
-        console.warn(`Error checking course preview images for ${slug}:`, error);
         setImages([]);
       });
     }
   }, [slug]);
 
+  // Reset currentImage when images change
+  useEffect(() => {
+    if (images.length > 0 && currentImage >= images.length) {
+      setCurrentImage(0);
+    }
+  }, [images]); // Removed currentImage to prevent infinite loop
+
   // Don't render if no images exist
   if (images.length === 0) {
+    return null;
+  }
+
+  // Extra safety check - ensure we have a valid image URL
+  if (!images[currentImage] || typeof images[currentImage] !== 'string') {
     return null;
   }
 
@@ -89,10 +99,13 @@ export default function CoursePreview({ slug }) {
           {/* Image area with fixed aspect ratio */}
           <div className="aspect-[16/10] rounded-lg overflow-hidden bg-gray-100">
             <img
-              src={images[currentImage]}
+              src={images[currentImage] || ''}
               alt={`Course preview ${currentImage + 1} of ${images.length}`}
               className="w-full h-full object-cover"
               loading="lazy"
+              onError={(e) => {
+                e.target.style.display = 'none';
+              }}
             />
           </div>
           

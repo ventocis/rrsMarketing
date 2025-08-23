@@ -1,5 +1,4 @@
 import React from 'react';
-import CheckCircleIcon from './icons/CheckCircleIcon.jsx';
 
 export default function CourseBullets({ course }) {
   // Map boolean fields to bullet text
@@ -28,7 +27,7 @@ export default function CourseBullets({ course }) {
       <ul className="space-y-2 mt-4" role="list">
         {defaultBenefits.map((benefit, index) => (
           <li key={index} className="flex items-center gap-2 mb-2">
-            <CheckCircleIcon className="h-5 w-5 text-blue-600 flex-shrink-0" />
+            <span className="text-blue-600 font-bold">✓</span>
             <span className="text-gray-700 leading-snug">{benefit}</span>
           </li>
         ))}
@@ -40,7 +39,7 @@ export default function CourseBullets({ course }) {
     <ul className="space-y-2 mt-4" role="list">
       {activeBenefits.map((benefit, index) => (
         <li key={index} className="flex items-center gap-2 mb-2">
-          <CheckCircleIcon className="h-5 w-5 text-blue-600 flex-shrink-0" />
+          <span className="text-blue-600 font-bold">✓</span>
           <span className="text-gray-700 leading-snug">{benefit.text}</span>
         </li>
       ))}

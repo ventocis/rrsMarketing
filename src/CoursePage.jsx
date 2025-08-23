@@ -8,6 +8,7 @@ import CoursePreview from './components/CoursePreview.jsx';
 import BuyBox from './components/BuyBox.jsx';
 import CourseBullets from './components/CourseBullets.jsx';
 import CourseIllustration from './components/CourseIllustration.jsx';
+import ErrorBoundary from './components/ErrorBoundary.jsx';
 
 // State name mapping for full names
 const stateNames = {
@@ -89,47 +90,51 @@ export default function CoursePage() {
 
   return (
     <main className="bg-gradient-to-b from-white to-gray-50 min-h-screen pb-16 md:pb-0">
-      {/* Header Band - Two Column Layout */}
-      <section className="bg-gradient-to-b from-white to-gray-50">
-        <div className="max-w-7xl mx-auto px-4 py-14 md:py-20">
-          <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,2fr)_minmax(320px,1fr)] gap-8">
-            
-            {/* Left Column - Content */}
-            <div className="max-w-[65ch]">
-              <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900">
-                {course.headline}
-              </h1>
-              <p className="mt-3 text-gray-600 text-lg md:text-xl">
-                {course.subhead}
-              </p>
+      <ErrorBoundary>
+        {/* Header Band - Two Column Layout */}
+        <section className="bg-gradient-to-b from-white to-gray-50">
+          <div className="max-w-7xl mx-auto px-4 py-14 md:py-20">
+            <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,2fr)_minmax(320px,1fr)] gap-8">
               
-              {/* Affiliate Pill */}
-              {isPartner && (
-                <span className="mt-4 inline-flex max-w-max items-center gap-1 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700 leading-none">
-                  {course.partner_badge || copy.partner_pill}
-                </span>
-              )}
+              {/* Left Column - Content */}
+              <div className="max-w-[65ch]">
+                <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900">
+                  {course.headline}
+                </h1>
+                <p className="mt-3 text-gray-600 text-lg md:text-xl">
+                  {course.subhead}
+                </p>
+                
+                {/* Affiliate Pill */}
+                {isPartner && (
+                  <span className="mt-4 inline-flex max-w-max items-center gap-1 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700 leading-none">
+                    {course.partner_badge || copy.partner_pill}
+                  </span>
+                )}
+                
+                {/* Course Illustration - Desktop Only */}
+                <CourseIllustration />
+                
+                {/* Course Bullets */}
+                <CourseBullets course={course} />
+                
+                {/* Course Preview - TEMPORARILY DISABLED FOR DEBUGGING */}
+                {/* <CoursePreview slug={course.slug} /> */}
+              </div>
               
-              {/* Course Illustration - Desktop Only */}
-              <CourseIllustration />
-              
-              {/* Course Bullets */}
-              <CourseBullets course={course} />
-            </div>
-            
-            {/* Right Column - Buy Box */}
-            <div className="lg:order-2">
-              <BuyBox
-                course={course}
-                price={price}
-                provider={provider}
-                isPartner={isPartner}
-                affiliateLink={affiliateLink}
-              />
+              {/* Right Column - Buy Box */}
+              <div className="lg:order-2">
+                <BuyBox
+                  course={course}
+                  price={price}
+                  provider={provider}
+                  isPartner={isPartner}
+                  affiliateLink={affiliateLink}
+                />
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
       {/* Facts Strip - Full Width Below Header */}
       <section className="max-w-7xl mx-auto px-4 -mt-8 lg:mt-0">
@@ -168,9 +173,6 @@ export default function CoursePage() {
         </div>
       )}
 
-      {/* Course Preview */}
-      <CoursePreview slug={course.slug} />
-
       {/* Details accordion */}
       <section className="mt-12 max-w-4xl mx-auto px-4">
         <h2 className="text-2xl font-bold text-gray-900">{copy.headings.details}</h2>
@@ -205,6 +207,7 @@ export default function CoursePage() {
 
       {/* Sticky enroll bar (mobile only) */}
       <StickyEnrollBar course={course} />
+        </ErrorBoundary>
     </main>
   );
 }

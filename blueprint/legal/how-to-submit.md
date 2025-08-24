@@ -67,11 +67,11 @@ Your court/insurer may offer one or more of these options. Use the method they s
 
 ## Troubleshooting
 
-- **Didn't receive the PDF?** Check spam for your completion email. For partner courses, sign in at TicketSchool to download the certificate. Still stuck? Contact us.
+**Didn't receive the PDF?** Check spam for your completion email. For partner courses, sign in at TicketSchool to download the certificate. Still stuck? Contact us.
 
-- **Name or citation mismatch** Make sure your profile matches your ID and ticket exactly (spelling, middle initials, suffix). If a correction is needed, contact support before resubmitting.
+**Name or citation mismatch** Make sure your profile matches your ID and ticket exactly (spelling, middle initials, suffix). If a correction is needed, contact support before resubmitting.
 
-- **Clerk can't find my completion** If reported electronically, wait 1–2 business days then call again. Otherwise, resend your PDF and include your case/citation number in the subject line and file name.
+**Clerk can't find my completion** If reported electronically, wait 1–2 business days then call again. Otherwise, resend your PDF and include your case/citation number in the subject line and file name.
 
 ---
 

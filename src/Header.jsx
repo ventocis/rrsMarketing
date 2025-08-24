@@ -26,7 +26,7 @@ export default function Header() {
           <a href="/faq" className="text-slate-700 hover:underline">FAQ</a>
           <a href="/support" className="text-slate-700 hover:underline">Help Center</a>
           <a href="/courses" className="text-slate-700 hover:underline">Courses</a>
-          <Button href="/login" variant="custom" className="h-8 px-4 rounded-full border border-gray-300 bg-white text-gray-600 hover:text-gray-800 hover:border-gray-400 text-sm font-medium flex items-center justify-center">Login</Button>
+          <Button href="https://courses.ticketschool.com/login/login.asp" variant="custom" className="h-8 px-4 rounded-full border border-gray-300 bg-white text-gray-600 hover:text-gray-800 hover:border-gray-400 text-sm font-medium flex items-center justify-center">Login</Button>
         </div>
         
         {/* Mobile Hamburger Menu */}
@@ -78,7 +78,7 @@ export default function Header() {
               </a>
               <div className="pt-2 w-full">
                 <Button 
-                  href="/login" 
+                  href="https://courses.ticketschool.com/login/login.asp" 
                   variant="custom" 
                   onClick={closeMenu}
                   className="w-full h-12 px-4 rounded-lg border border-gray-300 bg-white text-gray-600 hover:text-gray-800 hover:border-gray-400 text-sm font-medium flex items-center justify-center"

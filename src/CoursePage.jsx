@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import courses from './data/courses.json';
 import { usd, hours, truncate } from './lib/format.js';
@@ -7,6 +7,7 @@ import StickyEnrollBar from './components/StickyEnrollBar.jsx';
 // CoursePreview removed - was causing React Error #310
 import BuyBox from './components/BuyBox.jsx';
 import CourseIllustration from './components/CourseIllustration.jsx';
+import { getStateRequirements } from './utils/stateRequirements.js';
 
 
 // State name mapping for full names
@@ -88,6 +89,12 @@ export default function CoursePage() {
 
   console.log('🔍 CoursePage: Data processed, rendering JSX');
 
+  // Load state-specific requirements data
+  const stateRequirements = getStateRequirements(course.state, course.course_type);
+
+  // State for collapsible certificate details
+  const [showStateDetails, setShowStateDetails] = useState(false);
+
   // Details accordion data
   const details = [
     { key: 'eligibility', title: copy.details_labels.eligibility, body: course.eligibility },
@@ -95,7 +102,7 @@ export default function CoursePage() {
     { key: 'reporting_method', title: copy.details_labels.reporting_method, body: course.reporting_method },
     { key: 'certificate_delivery', title: copy.details_labels.certificate_delivery, body: course.certificate_delivery },
     { key: 'retake_policy', title: copy.details_labels.retake_policy, body: course.retake_policy },
-  ].filter(item => item.body);
+  ].filter(item => item.body && item.body !== 'Not specified');
 
   console.log('🔍 CoursePage: About to return JSX');
   
@@ -184,23 +191,81 @@ export default function CoursePage() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
-                  <div>
-                    <h3 className="font-semibold text-blue-900 mb-2">Certificate Delivery</h3>
-                    <p className="text-blue-800 leading-relaxed">
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between mb-2">
+                      <h3 className="font-semibold text-blue-900">Certificate & Submission</h3>
+                      {stateRequirements && stateRequirements.submission && (
+                        <button
+                          onClick={() => setShowStateDetails(!showStateDetails)}
+                          className="flex items-center gap-1 text-sm text-blue-700 hover:text-blue-800 transition-colors"
+                        >
+                          <span className="font-medium">
+                            {showStateDetails ? 'Hide' : 'Show'} state details
+                          </span>
+                          <svg 
+                            className={`h-4 w-4 transition-transform ${showStateDetails ? 'rotate-180' : ''}`} 
+                            fill="none" 
+                            stroke="currentColor" 
+                            viewBox="0 0 24 24"
+                          >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </button>
+                      )}
+                    </div>
+                    <p className="text-blue-800 leading-relaxed mb-4">
                       {course.certificate_delivery || 'Your certificate will be available for download upon course completion.'}
                     </p>
-                    <div className="mt-3">
+                    
+                    {stateRequirements && stateRequirements.submission && showStateDetails && (
+                      <div className="bg-white rounded-lg p-4 mb-4">
+                        <h4 className="font-medium text-blue-900 mb-2">State-Specific Details:</h4>
+                        <p className="text-sm text-gray-600 mb-3">
+                          These are the specific submission requirements and deadlines for {course.state} {course.course_type} courses:
+                        </p>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                          {stateRequirements.submission.certificate && (
+                            <div>
+                              <span className="font-medium text-gray-700">Submission:</span>
+                              <p className="text-gray-600 mt-1">{stateRequirements.submission.certificate}</p>
+                            </div>
+                          )}
+                          {stateRequirements.submission.deadlines && (
+                            <div className={!stateRequirements.submission.certificate ? 'md:col-span-2' : ''}>
+                              <span className="font-medium text-gray-700">Deadline:</span>
+                              <p className="text-gray-600 mt-1">{stateRequirements.submission.deadlines}</p>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                    
+                    <div className="flex flex-wrap gap-3">
                       <a 
-                        href="/support/how-to-submit" 
+                        href={`/courses/${course.slug}/requirements`}
                         target="_blank" 
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-1 text-sm font-medium text-blue-700 hover:text-blue-800 underline decoration-blue-300 underline-offset-2"
                       >
-                        How to submit your certificate
+                        Complete course requirements
                         <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                         </svg>
                       </a>
+                      
+                      {stateRequirements?.sources?.[0] && (
+                        <a 
+                          href={stateRequirements.sources[0].url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 text-sm font-medium text-blue-700 hover:text-blue-800 underline decoration-blue-300 underline-offset-2"
+                        >
+                          Official state requirements
+                          <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                          </svg>
+                        </a>
+                      )}
                     </div>
                   </div>
                 </div>

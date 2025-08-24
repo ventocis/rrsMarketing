@@ -18,6 +18,7 @@ import Partners from './pages/Partners.jsx';
 import BlogIndex from './pages/BlogIndex.jsx';
 import BlogPost from './pages/BlogPost.jsx';
 import Faq from './pages/Faq.jsx';
+import CourseRequirements from './pages/CourseRequirements.jsx';
 import { Routes, Route } from 'react-router-dom';
 
 function Home() {
@@ -39,6 +40,7 @@ function App() {
       <Routes>
         <Route path="/courses" element={<CoursesIndex />} />
         <Route path="/courses/:slug" element={<CoursePage />} />
+        <Route path="/courses/:slug/requirements" element={<CourseRequirements />} />
         <Route path="/find/:state/:courseType" element={<ResultsPage />} />
         <Route path="/support" element={<SupportPage />} />
         <Route path="/support/how-to-submit" element={<HowToSubmit />} />

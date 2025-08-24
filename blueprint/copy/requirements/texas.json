@@ -1,0 +1,52 @@
+{
+  "state": "Texas",
+  "courses": [
+    {
+      "course_name": "Defensive Driving / Driving Safety Course \u2013 6-hour",
+      "who_for": "Texas drivers with minor traffic tickets (dismissal once per 12 months) or seeking insurance discount.",
+      "requirements": [
+        "Court permission required for ticket dismissal",
+        "Valid license and insurance",
+        "TDLR-approved 6-hour course"
+      ],
+      "submission": {
+        "certificate": "Two copies: Court copy (submit to court), Insurance copy (submit to insurer)",
+        "reporting": "Providers issue embossed certificates; not electronic",
+        "deadlines": "Court deadline ~90 days; insurance discount valid 3 years"
+      },
+      "court_vs_insurance": {
+        "court": "Court dismisses ticket upon timely certificate submission.",
+        "insurance": "5\u201310% discount for 3 years (if voluntary)."
+      },
+      "sources": [
+        {
+          "name": "Texas DPS \u2013 Defensive Driving",
+          "url": "https://thewiserdriver.com/how-to-complete-a-texas-safe-driving-course/"
+        }
+      ]
+    },
+    {
+      "course_name": "Adult Driver Education \u2013 6-hour",
+      "who_for": "Texas first-time applicants age 18\u201324 (mandatory), optional for 25+.",
+      "requirements": [
+        "6-hour TDLR-approved course",
+        "Includes DPS written test if taken online"
+      ],
+      "submission": {
+        "certificate": "Form ADE-1317 (online) or DE-964 (classroom) must be presented at DPS",
+        "reporting": "Submit certificate to DPS when taking road test",
+        "deadlines": "Certificate valid until used; Impact Texas Adult Driver video required within 90 days"
+      },
+      "court_vs_insurance": {
+        "court": "Not for ticket dismissal.",
+        "insurance": "May qualify for insurance discounts depending on insurer."
+      },
+      "sources": [
+        {
+          "name": "Texas DPS \u2013 Adult Driver Education",
+          "url": "https://www.dps.texas.gov/section/driver-license/choosing-driver-education-course"
+        }
+      ]
+    }
+  ]
+}

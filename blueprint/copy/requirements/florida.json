@@ -1,0 +1,65 @@
+{
+  "state": "Florida",
+  "courses": [
+    {
+      "course_name": "Basic Driver Improvement (BDI) \u2013 4-hour",
+      "languages": [
+        "English",
+        "Spanish"
+      ],
+      "who_for": "Florida drivers with non-criminal moving violations (non-commercial license), court-ordered offenders, or voluntary attendees (max once every 12 months, 5 times lifetime).",
+      "requirements": [
+        "Notify county clerk of election within 30 days of citation",
+        "Pay fine/fees",
+        "Cannot have taken BDI in past 12 months or exceeded 5-lifetime limit",
+        "Court typically allows 60\u201390 days to finish"
+      ],
+      "submission": {
+        "certificate": "Submit to Clerk of Court in county of ticket",
+        "reporting": "Providers report completions electronically to DHSMV, but driver must ensure court gets proof",
+        "deadlines": "Set by the court (usually 60 days from election); no state grace period"
+      },
+      "court_vs_insurance": {
+        "court": "Avoids points and conviction; license can be suspended if not completed/reported on time.",
+        "insurance": "Not generally used for discounts. Florida has a separate Mature Driver Course."
+      },
+      "sources": [
+        {
+          "name": "Florida DHSMV \u2013 Driver Improvement Schools",
+          "url": "https://www.flhsmv.gov/driver-licenses-id-cards/education-courses/driver-improvement-schools/"
+        },
+        {
+          "name": "Florida DHSMV \u2013 Driver Improvement Courses FAQ",
+          "url": "https://www.flhsmv.gov/driver-licenses-id-cards/education-courses/driver-improvement-schools/driver-improvement-courses-faq/"
+        }
+      ]
+    },
+    {
+      "course_name": "Traffic Law & Substance Abuse Education (TLSAE) \u2013 4-hour",
+      "languages": [
+        "English"
+      ],
+      "who_for": "All first-time Florida drivers (teens or adults) before obtaining a learner\u2019s permit or license.",
+      "requirements": [
+        "Take with any Florida DMV-approved provider",
+        "Prerequisite for learner\u2019s permit/license exam",
+        "Can take at age 14+"
+      ],
+      "submission": {
+        "certificate": "No paper certificate needed for DMV",
+        "reporting": "Provider submits electronically to DHSMV",
+        "deadlines": "Must be completed before knowledge exam; does not expire once completed"
+      },
+      "court_vs_insurance": {
+        "court": "Not used in court settings; strictly a licensing prerequisite.",
+        "insurance": "Not applicable for discounts."
+      },
+      "sources": [
+        {
+          "name": "Florida DHSMV \u2013 Driver Improvement Schools",
+          "url": "https://www.flhsmv.gov/driver-licenses-id-cards/education-courses/driver-improvement-schools/"
+        }
+      ]
+    }
+  ]
+}

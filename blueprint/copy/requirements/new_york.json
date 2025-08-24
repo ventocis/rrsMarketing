@@ -1,0 +1,53 @@
+{
+  "state": "New York",
+  "courses": [
+    {
+      "course_name": "Point & Insurance Reduction Program (IPIRP) \u2013 6-hour",
+      "who_for": "NY licensed drivers seeking up to 4-point reduction and/or 10% insurance discount.",
+      "requirements": [
+        "DMV-approved online or classroom",
+        "Can be taken once every 18 months for point reduction",
+        "Insurance discount valid 3 years"
+      ],
+      "submission": {
+        "certificate": "Provider reports completion to DMV; driver submits certificate to insurer",
+        "reporting": "Automatic DMV update (points); physical certificate to insurer",
+        "deadlines": "Insurance certificate should be submitted within 90 days for retroactive discount"
+      },
+      "court_vs_insurance": {
+        "court": "Sometimes recommended by judges as part of plea deals.",
+        "insurance": "Guaranteed 10% discount for 3 years."
+      },
+      "sources": [
+        {
+          "name": "New York DMV \u2013 PIRP",
+          "url": "https://dmv.ny.gov/points-and-penalties/point-and-insurance-reduction-program"
+        }
+      ]
+    },
+    {
+      "course_name": "Pre-Licensing Course \u2013 5-hour",
+      "who_for": "All NY new drivers with a learner permit (required before road test).",
+      "requirements": [
+        "Must have learner permit",
+        "In-person or DMV-approved online course",
+        "Valid 1 year"
+      ],
+      "submission": {
+        "certificate": "Classroom: receive MV-278 certificate; Online: completion reported electronically to DMV",
+        "reporting": "Online providers notify DMV directly",
+        "deadlines": "Certificate/record valid for 1 year"
+      },
+      "court_vs_insurance": {
+        "court": "Not applicable; strictly for licensing.",
+        "insurance": "Not applicable for discounts."
+      },
+      "sources": [
+        {
+          "name": "New York DMV \u2013 Pre-Licensing Course",
+          "url": "https://dmv.ny.gov/node/8891"
+        }
+      ]
+    }
+  ]
+}

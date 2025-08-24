@@ -11,8 +11,9 @@ function replaceTodayToken(markdown) {
   return markdown.replace(/\{\{today\}\}/g, today);
 }
 
-export default function DocPage({ title, subtitle, markdown, showContactCard, breadcrumbs }) {
+export default function DocPage({ title, subtitle, markdown, showContactCard, breadcrumbs, customComponents }) {
   const md = replaceTodayToken(markdown);
+  
   return (
     <section className="bg-white">
       <div className="mx-auto max-w-6xl px-4 md:px-6 lg:px-8 py-10 md:py-12">
@@ -44,23 +45,35 @@ export default function DocPage({ title, subtitle, markdown, showContactCard, br
               >
                 {md}
               </ReactMarkdown>
+              
+              {/* Render custom components on mobile */}
+              <div className="lg:hidden">
+                {customComponents && Object.values(customComponents)}
+              </div>
             </div>
           </article>
-          {showContactCard && (
+          {(showContactCard || customComponents) && (
             <aside className="hidden lg:block">
-              <div className="sticky top-24 rounded-2xl border border-slate-200 bg-white shadow-sm p-5">
-                <h2 className="text-sm font-semibold text-slate-900">Need help?</h2>
-                <p className="mt-2 text-sm text-slate-600">
-                  Visit the <a href="/faq" className="text-indigo-600 underline underline-offset-2">FAQ</a> or contact Support.
-                </p>
-                <div className="mt-3 text-sm">
-                  <div className="font-medium text-slate-900">Email (24/7)</div>
-                  <a href="mailto:info@roadreadysafety.com" className="text-indigo-600">info@roadreadysafety.com</a>
-                </div>
-                <div className="mt-3 text-sm">
-                  <div className="font-medium text-slate-900">Phone (Mon–Fri, 9am–5pm local)</div>
-                  <a href="tel:+18888855707" className="text-indigo-600">(888) 885-5707</a>
-                </div>
+              <div className="sticky top-24 space-y-4">
+                {showContactCard && (
+                  <div className="rounded-2xl border border-slate-200 bg-white shadow-sm p-5">
+                    <h2 className="text-sm font-semibold text-slate-900">Need help?</h2>
+                    <p className="mt-2 text-sm text-slate-600">
+                      Visit the <a href="/faq" className="text-indigo-600 underline underline-offset-2">FAQ</a> or contact Support.
+                    </p>
+                    <div className="mt-3 text-sm">
+                      <div className="font-medium text-slate-900">Email (24/7)</div>
+                      <a href="mailto:info@roadreadysafety.com" className="text-indigo-600">info@roadreadysafety.com</a>
+                    </div>
+                    <div className="mt-3 text-sm">
+                      <div className="font-medium text-slate-900">Phone (Mon–Fri, 9am–5pm local)</div>
+                      <a href="tel:+18888855707" className="text-indigo-600">(888) 885-5707</a>
+                    </div>
+                  </div>
+                )}
+                
+                {/* Render custom components */}
+                {customComponents && Object.values(customComponents)}
               </div>
             </aside>
           )}

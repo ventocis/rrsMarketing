@@ -5,7 +5,6 @@ export default function CourseBullets({ course }) {
   const benefitMap = [
     { field: 'stateApproved', text: 'State approved' },
     { field: 'mobileFriendly', text: 'Works on any device' },
-    { field: 'instantCertificate', text: 'Instant certificate download' },
     { field: 'satisfactionGuarantee', text: 'Satisfaction guarantee available' },
     { field: 'shortestAllowed', text: 'Shortest course allowed by law' },
     { field: 'secureCheckout', text: 'Secure checkout' }
@@ -19,7 +18,6 @@ export default function CourseBullets({ course }) {
     const defaultBenefits = [
       'State approved',
       'Works on any device',
-      'Instant certificate download',
       'Satisfaction guarantee available'
     ];
     

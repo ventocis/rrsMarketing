@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from './Button.jsx';
 import LockIcon from './icons/LockIcon.jsx';
 import CourseBullets from './CourseBullets.jsx';
@@ -10,6 +10,8 @@ export default function BuyBox({
   isPartner, 
   affiliateLink 
 }) {
+  const [showGuarantee, setShowGuarantee] = useState(false);
+  
   const ctaLabel = isPartner ? 'Enroll now' : 'Sign up';
   const ctaHref = isPartner ? affiliateLink : `#enroll`;
   const ctaProps = isPartner 
@@ -22,6 +24,13 @@ export default function BuyBox({
               <h3 className="text-lg font-semibold text-gray-900 mb-4">
           {course.course_name}
         </h3>
+      
+      {/* Provider Pill */}
+      <div className="mb-4">
+        <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+          {provider}
+        </span>
+      </div>
       
       {/* Price */}
       <div className="mb-6">
@@ -44,30 +53,38 @@ export default function BuyBox({
         </Button>
       </div>
       
-      {/* Star Rating */}
-      <div className="mb-6">
-        <div className="flex items-center gap-2">
-          <div className="flex text-yellow-400">
-            {[...Array(5)].map((_, i) => (
-              <svg key={i} className="h-5 w-5 fill-current" viewBox="0 0 20 20" aria-hidden="true">
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-              </svg>
-            ))}
-          </div>
-          <span className="text-sm text-gray-600" aria-label="5 out of 5 stars">(placeholder)</span>
-        </div>
-      </div>
-      
       {/* Course Bullets */}
       <div className="mb-6">
         <CourseBullets course={course} />
       </div>
       
-      {/* Guarantee Line */}
+      {/* Satisfaction Guarantee */}
       <div className="mb-6">
-        <p className="text-sm text-gray-600">
-          Satisfaction guarantee available.
-        </p>
+        <button
+          onClick={() => setShowGuarantee(!showGuarantee)}
+          className="flex items-center gap-2 text-sm text-amber-700 hover:text-amber-800 transition-colors"
+        >
+          <span className="font-medium">Satisfaction Guarantee</span>
+          <svg 
+            className={`h-4 w-4 transition-transform ${showGuarantee ? 'rotate-180' : ''}`} 
+            fill="none" 
+            stroke="currentColor" 
+            viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        
+        {showGuarantee && (
+          <div className="mt-3 p-4 bg-amber-50 rounded-lg border border-amber-200">
+            <p className="text-sm text-amber-800 leading-relaxed">
+              {isPartner 
+                ? `${provider} stands behind their courses with a satisfaction guarantee. If you're not completely satisfied with your course experience, contact ${provider} for a full refund.`
+                : 'We stand behind our courses with a satisfaction guarantee. If you\'re not completely satisfied with your course experience, contact us for a full refund.'
+              }
+            </p>
+          </div>
+        )}
       </div>
       
       {/* Trust Micro-row */}
@@ -75,8 +92,12 @@ export default function BuyBox({
         <div className="flex items-center gap-2 text-sm text-gray-600">
           <LockIcon className="h-4 w-4 text-slate-500" />
           <span>Secure checkout</span>
-          <span className="text-gray-400">•</span>
-          <span>Stripe</span>
+          {!isPartner && (
+            <>
+              <span className="text-gray-400">•</span>
+              <span>Stripe</span>
+            </>
+          )}
         </div>
       </div>
       

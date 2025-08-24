@@ -6,7 +6,6 @@ import { Accordion } from 'flowbite-react';
 import StickyEnrollBar from './components/StickyEnrollBar.jsx';
 // CoursePreview removed - was causing React Error #310
 import BuyBox from './components/BuyBox.jsx';
-import CourseBullets from './components/CourseBullets.jsx';
 import CourseIllustration from './components/CourseIllustration.jsx';
 
 
@@ -118,9 +117,6 @@ export default function CoursePage() {
             {/* CourseIllustration */}
             <CourseIllustration />
             
-            {/* CourseBullets */}
-            <CourseBullets course={course} />
-            
             {/* Facts Strip */}
             <section className="mt-12">
               <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
@@ -211,7 +207,13 @@ export default function CoursePage() {
           {/* Right Column - BuyBox */}
           <div className="lg:col-span-1">
             <div className="sticky top-8">
-              <BuyBox course={course} />
+              <BuyBox 
+                course={course} 
+                price={price}
+                provider={isPartner ? course.provider_name : 'Road Ready'}
+                isPartner={isPartner}
+                affiliateLink={course.affiliate_link}
+              />
             </div>
           </div>
         </div>

@@ -15,13 +15,13 @@ export default function DocPage({ title, subtitle, markdown, showContactCard, br
   const md = replaceTodayToken(markdown);
   return (
     <section className="bg-white">
-      <div className="mx-auto max-w-3xl px-4 md:px-6 lg:px-8 py-10 md:py-12">
+      <div className="mx-auto max-w-6xl px-4 md:px-6 lg:px-8 py-10 md:py-12">
         {breadcrumbs && <SimpleBreadcrumbs items={breadcrumbs} />}
         <header className="mb-8 md:mb-10">
           <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900">{title}</h1>
           {subtitle && <p className="mt-3 text-base md:text-lg text-slate-600">{subtitle}</p>}
         </header>
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr,280px] gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr,320px] gap-8 xl:gap-12">
           <article>
             <div className="prose prose-slate max-w-none">
               <ReactMarkdown

@@ -9,7 +9,7 @@ export default function Faq() {
   ];
 
   return (
-    <main className="mx-auto max-w-3xl px-4 py-12">
+    <main className="mx-auto max-w-4xl px-4 py-12">
       <SimpleBreadcrumbs items={breadcrumbs} />
       <h1 className="text-3xl font-bold text-gray-900">Frequently asked questions</h1>
       <p className="mt-2 text-gray-600">

@@ -189,6 +189,19 @@ export default function CoursePage() {
                     <p className="text-blue-800 leading-relaxed">
                       {course.certificate_delivery || 'Your certificate will be available for download upon course completion.'}
                     </p>
+                    <div className="mt-3">
+                      <a 
+                        href="/support/how-to-submit" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-sm font-medium text-blue-700 hover:text-blue-800 underline decoration-blue-300 underline-offset-2"
+                      >
+                        How to submit your certificate
+                        <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>

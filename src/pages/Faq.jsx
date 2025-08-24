@@ -25,8 +25,8 @@ export default function Faq() {
               <Accordion.Content>
                 <div className="prose prose-slate max-w-none">
                   {Array.isArray(qa.a)
-                    ? qa.a.map((p, j) => <p key={j}>{p}</p>)
-                    : <p>{qa.a}</p>}
+                    ? qa.a.map((p, j) => <div key={j} dangerouslySetInnerHTML={{ __html: p }} />)
+                    : <div dangerouslySetInnerHTML={{ __html: qa.a }} />}
                 </div>
               </Accordion.Content>
             </Accordion.Panel>

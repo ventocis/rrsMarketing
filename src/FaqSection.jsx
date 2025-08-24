@@ -16,7 +16,13 @@ export default function FaqSection() {
             <Accordion.Panel key={i}>
               <Accordion.Title className="text-lg md:text-xl font-semibold">{item.q}</Accordion.Title>
               <Accordion.Content>
-                <p className="text-gray-600 leading-relaxed">{item.a}</p>
+                <div className="text-gray-600 leading-relaxed">
+                  {Array.isArray(item.a) ? item.a.map((paragraph, index) => (
+                    <div key={index} dangerouslySetInnerHTML={{ __html: paragraph }} />
+                  )) : (
+                    <div dangerouslySetInnerHTML={{ __html: item.a }} />
+                  )}
+                </div>
               </Accordion.Content>
             </Accordion.Panel>
           ))}

@@ -50,7 +50,7 @@ export default function HowSection() {
               <img 
                 src="/assets/illustrations/add-tasks.svg" 
                 alt="How it works - step-by-step process illustration"
-                className="h-48 md:h-64 lg:h-72 mx-auto lg:ml-auto"
+                className="h-72 md:h-96 lg:h-[32rem] xl:h-[36rem] mx-auto lg:ml-auto"
               />
             </div>
           </div>

@@ -18,7 +18,7 @@ export default function TrustSection() {
   const items = trustData.trust.items;
   return (
     <section className="py-16 lg:py-24">
-      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl font-bold tracking-tight text-gray-900 text-center md:text-left">Trusted & Supported</h2>
         
         {/* Cards grid - 2x2 layout for better card proportions */}

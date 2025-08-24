@@ -76,8 +76,8 @@ export default function HeroFinder() {
           {/* Left column - existing content unchanged */}
           <div className="max-w-[65ch] text-center lg:text-left">
             {/* sref: hero-title */}
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">The modern way to finish your traffic course.</h1>
-            <p className="text-lg md:text-xl text-gray-600 leading-relaxed mb-8">Approved where required, built to be simple. Start on your phone, finish on your laptop—pick up right where you left off.</p>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">Dismiss your ticket. Lower your rates. Get it done fast.</h1>
+            <p className="text-lg md:text-xl text-gray-600 leading-relaxed mb-8">State-approved, mobile-friendly, and built to save your progress. Learn at your pace, pass the quizzes, and get your certificate without the hassle.</p>
             <div className="max-w-xl mx-auto lg:mx-0 text-left shadow-md bg-white p-6 rounded-lg mt-12">
               <form className="grid grid-cols-1 lg:grid-cols-2 gap-6" onSubmit={handleSubmit}>
                 <div className="col-span-1 lg:col-span-2">
@@ -161,7 +161,7 @@ export default function HeroFinder() {
               <img 
                 src="/assets/illustrations/product-explainer.svg" 
                 alt="Modern traffic course interface showing mobile and desktop compatibility"
-                className="h-48 md:h-64 lg:h-72 mx-auto lg:ml-auto"
+                className="h-64 md:h-80 lg:h-96 xl:h-[28rem] mx-auto lg:ml-auto"
               />
             </div>
           </div>

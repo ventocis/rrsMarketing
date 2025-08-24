@@ -13,7 +13,7 @@ export default function Footer() {
   
   const socialLinks = [
     { href: 'https://facebook.com/roadreadysafety', icon: '/assets/social/facebook.svg', label: 'Facebook' },
-    { href: 'https://youtube.com/@roadreadysafety', icon: '/assets/social/youtube.svg', label: 'YouTube' }
+    { href: 'https://www.youtube.com/@RoadReadySafety', icon: '/assets/social/youtube.svg', label: 'YouTube' }
   ];
   
   return (

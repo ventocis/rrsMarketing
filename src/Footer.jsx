@@ -64,7 +64,7 @@ export default function Footer() {
                 <a href="tel:+18888855707" className="text-blue-600 hover:text-blue-700 text-sm">
                   (888) 885-5707
                 </a>
-                <span className="text-gray-500 text-xs">Mon–Fri, 9am–5pm local</span>
+                <span className="text-gray-500 text-xs">Mon–Fri, 9am–5pm EST</span>
               </div>
             </div>
             

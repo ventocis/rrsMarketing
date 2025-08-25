@@ -66,7 +66,7 @@ export default function DocPage({ title, subtitle, markdown, showContactCard, br
                       <a href="mailto:info@roadreadysafety.com" className="text-indigo-600">info@roadreadysafety.com</a>
                     </div>
                     <div className="mt-3 text-sm">
-                      <div className="font-medium text-slate-900">Phone (Mon–Fri, 9am–5pm local)</div>
+                      <div className="font-medium text-slate-900">Phone (Mon–Fri, 9am–5pm EST)</div>
                       <a href="tel:+18888855707" className="text-indigo-600">(888) 885-5707</a>
                     </div>
                   </div>

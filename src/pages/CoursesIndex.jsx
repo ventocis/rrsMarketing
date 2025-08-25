@@ -2,6 +2,7 @@ import React, { useMemo, useEffect } from 'react';
 import courses from '../data/courses.json';
 import { stateNames } from '../utils/states.js';
 import CourseResultCard from '../components/CourseResultCard.jsx';
+import SEO from '../components/SEO.jsx';
 
 export default function CoursesIndex() {
   // Set document title
@@ -44,7 +45,15 @@ export default function CoursesIndex() {
   }, []);
 
   return (
-    <main className="bg-gray-50 min-h-screen pb-12">
+    <>
+      <SEO 
+        title="All Courses"
+        description="Browse our complete catalog of state-approved traffic courses and defensive driving programs. Find the right course for your needs."
+        keywords="traffic courses, defensive driving, state approved, online courses, traffic school"
+        image="/assets/rrs (1200 x 630 px).png"
+        url="/courses"
+      />
+      <main className="bg-gray-50 min-h-screen pb-12">
       <section className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-12">
         {/* Page Header */}
         <div className="text-center mb-12">
@@ -81,5 +90,6 @@ export default function CoursesIndex() {
         )}
       </section>
     </main>
+    </>
   );
 }

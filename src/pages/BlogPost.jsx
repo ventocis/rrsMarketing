@@ -16,6 +16,7 @@ export default function BlogPost() {
         <SEO 
           title="Blog post not found"
           description="The blog post you're looking for doesn't exist."
+          image="/assets/rrs (1200 x 630 px).png"
           url="/blog/not-found"
         />
         <main className="bg-white min-h-screen">
@@ -37,6 +38,7 @@ export default function BlogPost() {
         title={post.title}
         description={post.description}
         keywords="driving tips, traffic safety, defensive driving, road safety"
+        image="/assets/rrs (1200 x 630 px).png"
         url={`/blog/${post.slug}`}
         type="article"
         publishedTime={post.date}

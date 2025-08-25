@@ -114,6 +114,7 @@ export default function CoursePage() {
         title={course.course_name}
         description={`${course.course_name} online. Mobile-friendly with clear requirements, pricing, and certificate details. ${course.subhead || ''}`}
         keywords={`${course.course_name}, ${stateNames[course.state] || course.state}, traffic school, defensive driving, online course`}
+        image="/assets/rrs (1200 x 630 px).png"
         url={`/courses/${course.slug}`}
       />
       <StructuredData type="course" data={course} />

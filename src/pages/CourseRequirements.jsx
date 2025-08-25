@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { getStateRequirements } from "../utils/stateRequirements.js";
 import courses from "../data/courses.json";
 import DocPage from "../components/DocPage.jsx";
+import SEO from "../components/SEO.jsx";
 
 export default function CourseRequirements() {
   const { slug } = useParams();
@@ -156,12 +157,21 @@ export default function CourseRequirements() {
   ];
 
   return (
-    <DocPage
-      title={`${course.course_name} - Course Requirements`}
-      subtitle={stateRequirements ? "Complete course requirements, submission details, and official sources" : "Course information and requirements"}
-      markdown={generateMarkdown()}
-      showContactCard={true}
-      breadcrumbs={breadcrumbs}
-    />
+    <>
+      <SEO 
+        title={`${course.course_name} - Course Requirements`}
+        description={`Complete requirements, submission details, and official sources for ${course.course_name}. Learn eligibility, deadlines, and how to submit your certificate.`}
+        keywords={`${course.course_name}, course requirements, ${course.state}, traffic school requirements, certificate submission`}
+        image="/assets/rrs (1200 x 630 px).png"
+        url={`/courses/${slug}/requirements`}
+      />
+      <DocPage
+        title={`${course.course_name} - Course Requirements`}
+        subtitle={stateRequirements ? "Complete course requirements, submission details, and official sources" : "Course information and requirements"}
+        markdown={generateMarkdown()}
+        showContactCard={true}
+        breadcrumbs={breadcrumbs}
+      />
+    </>
   );
 }

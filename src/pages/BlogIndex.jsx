@@ -10,6 +10,7 @@ export default function BlogIndex() {
         title="Drive Smart Blog"
         description="Tips, insights, and advice for safer driving. Expert guidance on traffic safety, defensive driving techniques, and road rules."
         keywords="driving tips, traffic safety, defensive driving, road safety, driving blog"
+        image="/assets/rrs (1200 x 630 px).png"
         url="/blog"
       />
       <main className="bg-white min-h-screen">

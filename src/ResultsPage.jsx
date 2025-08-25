@@ -9,6 +9,7 @@ import CourseResultCard from './components/CourseResultCard.jsx';
 import Breadcrumbs from './components/Breadcrumbs.jsx';
 import EmptyState from './components/EmptyState.jsx';
 import { stateNames } from './utils/states.js';
+import SEO from './components/SEO.jsx';
 
 export default function ResultsPage() {
   const { state, courseType } = useParams();
@@ -67,7 +68,15 @@ export default function ResultsPage() {
   }
 
   return (
-    <main className="bg-gray-50 min-h-screen pb-12">
+    <>
+      <SEO 
+        title={`${stateFull} ${courseType === 'multi' ? 'Courses' : courseType}`}
+        description={`Find state-approved ${courseType === 'multi' ? 'traffic courses' : courseType.toLowerCase()} in ${stateFull}. Compare prices, duration, and features.`}
+        keywords={`${stateFull}, ${courseType}, traffic school, defensive driving, online course`}
+        image="/assets/rrs (1200 x 630 px).png"
+        url={`/find/${state}/${courseType}`}
+      />
+      <main className="bg-gray-50 min-h-screen pb-12">
       <section className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-12">
         <Breadcrumbs state={state} courseType={courseType} lang={lang} courseTypeLabel={courseTypeLabel} />
         <div className="mt-8 md:mt-12 mb-6 md:mb-8">
@@ -95,5 +104,6 @@ export default function ResultsPage() {
         </div>
       </section>
     </main>
+    </>
   );
 }

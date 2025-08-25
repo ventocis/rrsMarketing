@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import md from "/blueprint/legal/how-to-submit.md?raw";
 import DocPage from "../components/DocPage.jsx";
 import courses from "../data/courses.json";
+import SEO from "../components/SEO.jsx";
 
 // Component for state-specific course links
 function StateCourseLinks() {
@@ -102,19 +103,28 @@ function StateCourseLinks() {
 
 export default function HowToSubmit() {
   return (
-    <DocPage
-      title="How to Submit Your Certificate"
-      subtitle="Learn when and how to submit your course completion certificate"
-      markdown={md}
-      showContactCard={true}
-      breadcrumbs={[
-        { label: "Home", href: "/" },
-        { label: "Help Center", href: "/support" },
-        { label: "How to Submit" }
-      ]}
-      customComponents={{
-        STATE_COURSE_LINKS: <StateCourseLinks />
-      }}
-    />
+    <>
+      <SEO 
+        title="How to Submit Your Certificate"
+        description="Learn when and how to submit your traffic course completion certificate to the court or DMV. Step-by-step instructions for each state."
+        keywords="certificate submission, traffic course certificate, DMV submission, court submission"
+        image="/assets/rrs (1200 x 630 px).png"
+        url="/support/how-to-submit"
+      />
+      <DocPage
+        title="How to Submit Your Certificate"
+        subtitle="Learn when and how to submit your course completion certificate"
+        markdown={md}
+        showContactCard={true}
+        breadcrumbs={[
+          { label: "Home", href: "/" },
+          { label: "Help Center", href: "/support" },
+          { label: "How to Submit" }
+        ]}
+        customComponents={{
+          STATE_COURSE_LINKS: <StateCourseLinks />
+        }}
+      />
+    </>
   );
 }

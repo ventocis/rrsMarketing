@@ -31,6 +31,7 @@ function Home() {
         title="The modern way to finish your traffic course"
         description="State-approved traffic school and defensive driving built to be simple. Start on your phone, finish anywhere. Instant digital certificate available."
         keywords="traffic school, defensive driving, online course, traffic ticket, driver improvement, state approved"
+        image="/assets/rrs (1200 x 630 px).png"
         url="/"
       />
       <StructuredData type="website" />

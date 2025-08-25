@@ -5,7 +5,7 @@ export default function SEO({
   title, 
   description, 
   keywords = '', 
-  image = '/assets/og-image.jpg',
+  image = '/assets/rrs (1200 x 630 px).png',
   url = '',
   type = 'website',
   publishedTime = '',

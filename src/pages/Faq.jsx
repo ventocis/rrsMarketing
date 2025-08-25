@@ -2,6 +2,7 @@ import React from "react";
 import { Accordion } from "flowbite-react";
 import { SimpleBreadcrumbs } from "../components/Breadcrumbs.jsx";
 import faq from "../../blueprint/copy/faq.json";
+import SEO from "../components/SEO.jsx";
 
 export default function Faq() {
   const breadcrumbs = [
@@ -9,7 +10,15 @@ export default function Faq() {
   ];
 
   return (
-    <main className="mx-auto max-w-4xl px-4 py-12">
+    <>
+      <SEO 
+        title="Frequently Asked Questions"
+        description="Answers to common questions about enrollment, certificates, and reporting for our traffic safety courses."
+        keywords="FAQ, traffic school questions, course enrollment, certificates, reporting"
+        image="/assets/rrs (1200 x 630 px).png"
+        url="/faq"
+      />
+      <main className="mx-auto max-w-4xl px-4 py-12">
       <SimpleBreadcrumbs items={breadcrumbs} />
       <h1 className="text-3xl font-bold text-gray-900">Frequently asked questions</h1>
       <p className="mt-2 text-gray-600">
@@ -37,5 +46,6 @@ export default function Faq() {
         Still need help? Visit our <a href="/support" className="text-indigo-600 underline">Help Center</a>.
       </p>
     </main>
+    </>
   );
 }

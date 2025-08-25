@@ -61,7 +61,7 @@ export default function HeroFinder() {
       navigate(`/courses/${results[0].slug}`);
     } else if (results.length > 1) {
       const courseTypeSlug = typesToUse.length === 1 ? typesToUse[0] : 'multi';
-      navigate(`/find/${selectedState}/${courseTypeSlug}?lang=${selectedLanguage || 'any'}`);
+      navigate(`/find/${selectedState}/${courseTypeSlug}?reason=${selectedReason}&lang=${selectedLanguage || 'any'}`);
     } else {
       setEmptyState(true);
     }

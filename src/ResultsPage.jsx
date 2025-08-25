@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import courses from './data/courses.json';
+import finderMap from '../blueprint/data/finder-map.json';
 import { usd, hours, truncate } from './lib/format.js';
 import resultsCopy from '../blueprint/copy/results.json';
 import Card from './components/Card.jsx';
@@ -15,15 +16,30 @@ export default function ResultsPage() {
   const navigate = useNavigate();
   const lang = searchParams.get('lang') || 'any';
   const sort = searchParams.get('sort') || 'recommended';
+  const reason = searchParams.get('reason');
+
+  // Determine which course types to show
+  const courseTypesToShow = useMemo(() => {
+    if (courseType === 'multi' && reason) {
+      // Use the reason to get the correct course types
+      return finderMap[reason] || [];
+    } else if (courseType === 'multi') {
+      // Fallback: show all course types that exist for this state
+      const stateCourses = courses.filter(c => c.state === state);
+      return Array.from(new Set(stateCourses.map(c => c.course_type)));
+    } else {
+      return [courseType];
+    }
+  }, [state, courseType, reason]);
 
   // Filter courses by state, courseType, and language
   const filtered = useMemo(() =>
     courses.filter(c =>
       c.state === state &&
-      (courseType === 'multi' || c.course_type === courseType) &&
+      courseTypesToShow.includes(c.course_type) &&
       (lang === 'any' || c.language === lang)
     ),
-    [state, courseType, lang]
+    [state, courseTypesToShow, lang]
   );
 
   // Unique languages for filter

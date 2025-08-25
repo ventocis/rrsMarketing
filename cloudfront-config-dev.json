@@ -1,13 +1,13 @@
 {
-    "CallerReference": "rrs-testaug202025-$(date +%s)",
-    "Comment": "Road Ready Safety Test Site - August 2025",
+    "CallerReference": "rrs-testaug202025-dev-$(date +%s)",
+    "Comment": "Road Ready Safety Test Site - Dev Environment - August 2025",
     "DefaultRootObject": "index.html",
     "Origins": {
         "Quantity": 1,
         "Items": [
             {
-                "Id": "S3-rrs-testaug202025",
-                "DomainName": "rrs-testaug202025.s3-website.us-east-2.amazonaws.com",
+                "Id": "S3-rrs-testaug202025-dev",
+                "DomainName": "rrs-testaug202025-dev.s3-website.us-east-2.amazonaws.com",
                 "CustomOriginConfig": {
                     "HTTPPort": 80,
                     "HTTPSPort": 443,
@@ -17,7 +17,7 @@
         ]
     },
     "DefaultCacheBehavior": {
-        "TargetOriginId": "S3-rrs-testaug202025",
+        "TargetOriginId": "S3-rrs-testaug202025-dev",
         "ViewerProtocolPolicy": "redirect-to-https",
         "TrustedSigners": {
             "Enabled": false,

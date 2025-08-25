@@ -78,6 +78,6 @@ Your court/insurer may offer one or more of these options. Use the method they s
 ## Need help?
 
 Email support (24/7): **info@roadreadysafety.com**  
-Phone support (Mon–Fri, 9am–5pm local): **(888) 885-5707**
+Phone support (Mon–Fri, 9am–5pm EST): **(888) 885-5707**
 
 We're here to help you finish, file, and get credit for your course.

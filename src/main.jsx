@@ -21,10 +21,20 @@ import Faq from './pages/Faq.jsx';
 import CourseRequirements from './pages/CourseRequirements.jsx';
 import { Routes, Route } from 'react-router-dom';
 import ScrollToTop from './components/ScrollToTop.jsx';
+import SEO from './components/SEO.jsx';
+import StructuredData from './components/StructuredData.jsx';
 
 function Home() {
   return (
     <>
+      <SEO 
+        title="The modern way to finish your traffic course"
+        description="State-approved traffic school and defensive driving built to be simple. Start on your phone, finish anywhere. Instant digital certificate available."
+        keywords="traffic school, defensive driving, online course, traffic ticket, driver improvement, state approved"
+        url="/"
+      />
+      <StructuredData type="website" />
+      <StructuredData type="organization" />
       <HeroFinder />
       <UspSection />
       <HowSection />

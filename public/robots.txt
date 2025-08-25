@@ -1,5 +1,8 @@
 ﻿User-agent: *
-Disallow: /
+Allow: /
 
-# This is a test site - do not index
-# Block all search engine crawlers
+# Sitemap location
+Sitemap: https://roadreadysafety.com/sitemap.xml
+
+# Allow all search engine crawlers
+# Remove the test site blocking

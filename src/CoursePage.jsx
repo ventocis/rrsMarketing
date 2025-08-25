@@ -8,6 +8,8 @@ import StickyEnrollBar from './components/StickyEnrollBar.jsx';
 import BuyBox from './components/BuyBox.jsx';
 import CourseIllustration from './components/CourseIllustration.jsx';
 import { getStateRequirements } from './utils/stateRequirements.js';
+import SEO from './components/SEO.jsx';
+import StructuredData from './components/StructuredData.jsx';
 
 
 // State name mapping for full names
@@ -107,7 +109,15 @@ export default function CoursePage() {
   console.log('🔍 CoursePage: About to return JSX');
   
   return (
-    <main className="bg-gradient-to-b from-white to-gray-50 min-h-screen pb-16 md:pb-0">
+    <>
+      <SEO 
+        title={course.course_name}
+        description={`${course.course_name} online. Mobile-friendly with clear requirements, pricing, and certificate details. ${course.subhead || ''}`}
+        keywords={`${course.course_name}, ${stateNames[course.state] || course.state}, traffic school, defensive driving, online course`}
+        url={`/courses/${course.slug}`}
+      />
+      <StructuredData type="course" data={course} />
+      <main className="bg-gradient-to-b from-white to-gray-50 min-h-screen pb-16 md:pb-0">
       {/* Course Header */}
       <div className="max-w-7xl mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-4">{course.course_name}</h1>
@@ -300,5 +310,6 @@ export default function CoursePage() {
       {/* StickyEnrollBar */}
       <StickyEnrollBar course={course} />
     </main>
+    </>
   );
 }

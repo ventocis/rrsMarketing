@@ -20,6 +20,7 @@ import BlogPost from './pages/BlogPost.jsx';
 import Faq from './pages/Faq.jsx';
 import CourseRequirements from './pages/CourseRequirements.jsx';
 import { Routes, Route } from 'react-router-dom';
+import ScrollToTop from './components/ScrollToTop.jsx';
 
 function Home() {
   return (
@@ -36,6 +37,7 @@ function Home() {
 function App() {
   return (
     <div className="w-full overflow-x-hidden">
+      <ScrollToTop />
       <Header />
       <Routes>
         <Route path="/courses" element={<CoursesIndex />} />

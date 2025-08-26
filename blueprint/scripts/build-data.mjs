@@ -3,6 +3,7 @@
 
 
 import { readFile, writeFile, mkdir, readdir } from 'node:fs/promises';
+import fs from 'node:fs';
 import path from 'node:path';
 import { parse as parseCsv } from 'csv-parse/sync';
 import YAML from 'yaml';
@@ -201,6 +202,9 @@ const build = async () => {
     `${siteUrl}/terms`,
     `${siteUrl}/partners`,
     `${siteUrl}/blog`,
+    `${siteUrl}/courses/fl-bdi`,
+    `${siteUrl}/courses/mi-bdic`,
+    `${siteUrl}/faq`,
     ...blogPosts.map(p => `${siteUrl}/blog/${p.slug}`),
     ...courses.map(c => `${siteUrl}/courses/${c.slug}`)
   ];
@@ -213,6 +217,14 @@ ${urls.map(u => `  <url><loc>${u}</loc><lastmod>${now}</lastmod><changefreq>week
 `;
   await ensureDir(PUB(''));
   await writeFile(PUB('sitemap.xml'), xml);
+  
+  // 8) Mirror sitemap to dist/ for static builds
+  const distPath = path.resolve(ROOT, 'dist');
+  if (fs.existsSync(distPath)) {
+    await writeFile(path.join(distPath, 'sitemap.xml'), xml);
+    console.log(`✓ Mirrored sitemap.xml to dist/`);
+  }
+  
   console.log(`✓ Wrote public/sitemap.xml`);
 };
 

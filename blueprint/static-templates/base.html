@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>{{TITLE}}</title>
+  <meta name="description" content="{{DESC}}">
+  <link rel="canonical" href="{{CANONICAL}}" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta property="og:title" content="{{TITLE}}" />
+  <meta property="og:description" content="{{DESC}}" />
+  <meta property="og:type" content="article" />
+  <script type="application/ld+json">{{JSONLD}}</script>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;line-height:1.6;margin:0}
+    header,main,footer{max-width:880px;margin:0 auto;padding:20px}
+    header a{color:inherit;text-decoration:none}
+    nav a{margin-right:12px}
+    .meta{color:#555;font-size:14px;margin-top:-8px}
+    article h1{font-size:28px;margin:16px 0}
+    article h2{font-size:20px;margin-top:24px}
+    .cta{margin-top:24px;padding:16px;border:1px solid #eee;border-radius:12px}
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/">Road Ready Safety</a>
+    <nav>
+      <a href="/courses/fl-bdi">Florida BDI</a>
+      <a href="/courses/mi-bdic">Michigan BDIC</a>
+      <a href="/faq">FAQ</a>
+      <a href="/blog">Blog</a>
+    </nav>
+  </header>
+  <main>
+    {{BODY}}
+    <div class="cta">
+      <strong>Enroll at Road Ready Safety →</strong> <a href="https://roadreadysafety.com/">https://roadreadysafety.com/</a>
+    </div>
+  </main>
+  <footer>
+    <div class="meta">© Road Ready Driver Instruction LLC</div>
+  </footer>
+</body>
+</html>

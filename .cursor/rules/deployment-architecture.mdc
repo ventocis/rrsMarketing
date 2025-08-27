@@ -6,4 +6,5 @@ alwaysApply: false
 
 The website is hosted on an S3 bucket. Cloudfront is used to reduce latency. Always use the us-east-2 region.
 
-The site is deployed to dev & to prod. The configuration & deployment files have either "dev" or "prod" in the name to indicate what environment they're for
+The site is deployed to dev & to prod. The configuration & deployment files have either "dev" or "prod" in the name to indicate what environment they're for.
+

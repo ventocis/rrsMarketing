@@ -89,15 +89,23 @@ const validateRows = (rows) => {
 
 const parseBlogPost = (content, filename) => {
   const lines = content.split('\n');
-  const frontmatterEnd = lines.findIndex(line => line.trim() === '---');
+  const firstDash = lines.findIndex(line => line.trim() === '---');
   
-  if (frontmatterEnd === -1) {
+  if (firstDash === -1) {
     console.warn(`Warning: No frontmatter found in ${filename}`);
     return null;
   }
   
-  const frontmatterLines = lines.slice(1, frontmatterEnd);
-  const contentLines = lines.slice(frontmatterEnd + 1);
+  // Find the second '---' to mark the end of frontmatter
+  const secondDash = lines.findIndex((line, index) => index > firstDash && line.trim() === '---');
+  
+  if (secondDash === -1) {
+    console.warn(`Warning: No closing frontmatter delimiter found in ${filename}`);
+    return null;
+  }
+  
+  const frontmatterLines = lines.slice(firstDash + 1, secondDash);
+  const contentLines = lines.slice(secondDash + 1);
   
   try {
     const frontmatter = YAML.parse(frontmatterLines.join('\n'));
@@ -115,14 +123,32 @@ const parseBlogPost = (content, filename) => {
 const buildBlogData = async () => {
   try {
     const blogDir = BP('blog');
-    const files = await readdir(blogDir);
-    const markdownFiles = files.filter(f => f.endsWith('.md'));
-    
     const posts = [];
     
-    for (const file of markdownFiles) {
-      const content = await readFile(path.join(blogDir, file), 'utf8');
-      const post = parseBlogPost(content, file);
+    // Recursively find all .md files in blog directory and subdirectories
+    const findMarkdownFiles = async (dir) => {
+      const items = await readdir(dir, { withFileTypes: true });
+      const files = [];
+      
+      for (const item of items) {
+        const fullPath = path.join(dir, item.name);
+        if (item.isDirectory()) {
+          const subFiles = await findMarkdownFiles(fullPath);
+          files.push(...subFiles);
+        } else if (item.isFile() && item.name.endsWith('.md')) {
+          files.push(fullPath);
+        }
+      }
+      
+      return files;
+    };
+    
+    const markdownFiles = await findMarkdownFiles(blogDir);
+    
+    for (const filePath of markdownFiles) {
+      const content = await readFile(filePath, 'utf8');
+      const filename = path.basename(filePath);
+      const post = parseBlogPost(content, filename);
       
       if (post && post.title && post.slug && post.date) {
         posts.push(post);

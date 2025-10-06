@@ -10,6 +10,8 @@ import CourseIllustration from './components/CourseIllustration.jsx';
 import { getStateRequirements } from './utils/stateRequirements.js';
 import SEO from './components/SEO.jsx';
 import StructuredData from './components/StructuredData.jsx';
+import CountySelector from './components/CountySelector.jsx';
+import Button from './components/Button.jsx';
 
 
 // State name mapping for full names
@@ -88,6 +90,9 @@ export default function CoursePage() {
   const isPartner = course.provider_type === 'Partner';
   const showFeatures = course.show_modules === true || course.show_modules === 'TRUE';
   const features = (course.features || course.modules || course.notes || '').split('|').filter(Boolean);
+  
+  // Texas-specific logic
+  const isTexasDefensive = course.slug === 'tx-defensive';
 
   console.log('🔍 CoursePage: Data processed, rendering JSX');
 
@@ -99,10 +104,34 @@ export default function CoursePage() {
 
   // Details accordion data
   const details = [
-    { key: 'eligibility', title: copy.details_labels.eligibility, body: course.eligibility },
-    { key: 'identity_verification', title: copy.details_labels.identity_verification, body: course.identity_verification },
-    { key: 'reporting_method', title: copy.details_labels.reporting_method, body: course.reporting_method },
-    { key: 'certificate_delivery', title: copy.details_labels.certificate_delivery, body: course.certificate_delivery },
+    { 
+      key: 'eligibility', 
+      title: copy.details_labels.eligibility, 
+      body: isTexasDefensive 
+        ? 'To dismiss a ticket, first ask the court for permission before the appearance date on your citation. Defensive Driving is for non-commercial drivers only. You must not have taken a Texas defensive driving course for a ticket in the past 12 months. Your violation must be eligible and not 25 miles per hour or more over the limit. If you\'re taking the course for an insurance discount, you don\'t need court permission—just finish the course and give the certificate to your insurer. For any extra steps your court may require, see the County section above.'
+        : course.eligibility 
+    },
+    { 
+      key: 'identity_verification', 
+      title: copy.details_labels.identity_verification, 
+      body: isTexasDefensive 
+        ? 'Texas requires us to confirm who\'s taking the course. You\'ll answer a few questions based on your driver or vehicle records at the start and at random times.'
+        : course.identity_verification 
+    },
+    { 
+      key: 'reporting_method', 
+      title: copy.details_labels.reporting_method, 
+      body: isTexasDefensive 
+        ? 'You are responsible for turning in your certificate to the court. After you get permission, complete the course and submit your certificate the way your court asks. Many courts also ask for a Type 3A driving record; we\'ll show you how to order it from Texas.gov in the County section. Most courts give about 90 days from the date permission is granted—follow your court\'s deadline.'
+        : course.reporting_method 
+    },
+    { 
+      key: 'certificate_delivery', 
+      title: copy.details_labels.certificate_delivery, 
+      body: isTexasDefensive 
+        ? 'We email your electronic certificate as soon as you finish, and you can download it from your dashboard. Check that your name and citation details are correct before you submit anything to the court or your insurer. For mailing addresses, in-person drop-off, email, or online portals—and for any forms your court needs—use the County section above.'
+        : course.certificate_delivery 
+    },
     { key: 'retake_policy', title: copy.details_labels.retake_policy, body: course.retake_policy },
   ].filter(item => item.body && item.body !== 'Not specified');
 
@@ -111,8 +140,11 @@ export default function CoursePage() {
   return (
     <>
       <SEO 
-        title={course.course_name}
-        description={`${course.course_name} online. Mobile-friendly with clear requirements, pricing, and certificate details. ${course.subhead || ''}`}
+        title={isTexasDefensive ? 'Texas Driver Safety Course (6-Hour) — TDLR-Approved | $25' : course.course_name}
+        description={isTexasDefensive 
+          ? 'Complete Texas\'s 6-hour Driver Safety Course online. TDLR-approved, $25 total, free e-certificate. Court dismissal with permission or insurance discount.'
+          : `${course.course_name} online. Mobile-friendly with clear requirements, pricing, and certificate details. ${course.subhead || ''}`
+        }
         keywords={`${course.course_name}, ${stateNames[course.state] || course.state}, traffic school, defensive driving, online course`}
         image="/assets/rrs (1200 x 630 px).png"
         url={`/courses/${course.slug}`}
@@ -121,8 +153,12 @@ export default function CoursePage() {
       <main className="bg-gradient-to-b from-white to-gray-50 min-h-screen pb-16 md:pb-0">
       {/* Course Header */}
       <div className="max-w-7xl mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-4">{course.course_name}</h1>
-        {course.subhead && (
+        <h1 className="text-3xl font-bold text-gray-900 mb-4">
+          {isTexasDefensive ? 'Texas Driver Safety Course (6-Hour)' : course.course_name}
+        </h1>
+        {isTexasDefensive ? (
+          <p className="text-lg text-gray-600 mb-4">TDLR-approved, 100% online. Finish today—free e-certificate by email.</p>
+        ) : course.subhead && (
           <p className="text-lg text-gray-600 mb-4">{course.subhead}</p>
         )}
       </div>
@@ -135,46 +171,159 @@ export default function CoursePage() {
             {/* CourseIllustration */}
             <CourseIllustration />
             
-            {/* Facts Strip */}
-            <section className="mt-12">
-              <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-                  <div>
-                    <div className="text-sm text-gray-500 mb-1">{copy.facts_labels.state}</div>
-                    <div className="font-semibold text-gray-900">{stateNames[course.state] || course.state}</div>
-                  </div>
-                  <div>
-                    <div className="text-sm text-gray-500 mb-1">{copy.facts_labels.duration}</div>
-                    <div className="font-semibold text-gray-900">{duration}</div>
-                  </div>
-                  <div>
-                    <div className="text-sm text-gray-500 mb-1">{copy.facts_labels.price}</div>
-                    <div className="font-semibold text-gray-900">{price}</div>
-                  </div>
-                  <div>
-                    <div className="text-sm text-gray-500 mb-1">{copy.facts_labels.provider}</div>
-                    <div className="font-semibold text-gray-900">{isPartner ? course.provider_name : 'Road Ready'}</div>
+            {/* Facts Strip - Hidden for Texas */}
+            {!isTexasDefensive && (
+              <section className="mt-12">
+                <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                    <div>
+                      <div className="text-sm text-gray-500 mb-1">{copy.facts_labels.state}</div>
+                      <div className="font-semibold text-gray-900">{stateNames[course.state] || course.state}</div>
+                    </div>
+                    <div>
+                      <div className="text-sm text-gray-500 mb-1">{copy.facts_labels.duration}</div>
+                      <div className="font-semibold text-gray-900">{duration}</div>
+                    </div>
+                    <div>
+                      <div className="text-sm text-gray-500 mb-1">{copy.facts_labels.price}</div>
+                      <div className="font-semibold text-gray-900">{price}</div>
+                    </div>
+                    <div>
+                      <div className="text-sm text-gray-500 mb-1">{copy.facts_labels.provider}</div>
+                      <div className="font-semibold text-gray-900">{isPartner ? course.provider_name : 'Road Ready'}</div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </section>
+              </section>
+            )}
+
+            {/* 3-Step Explainer - Texas Only */}
+            {isTexasDefensive && (
+              <section id="steps" className="mt-12">
+                <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="text-center">
+                      <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span className="text-xl font-bold text-blue-600">1</span>
+                      </div>
+                      <h3 className="font-semibold text-gray-900 mb-2">Ask your court for permission</h3>
+                      <p className="text-sm text-gray-600">Request to take the course before your appearance date</p>
+                    </div>
+                    <div className="text-center">
+                      <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span className="text-xl font-bold text-blue-600">2</span>
+                      </div>
+                      <h3 className="font-semibold text-gray-900 mb-2">Take the 6-hour online course</h3>
+                      <p className="text-sm text-gray-600">Complete at your own pace, pause anytime</p>
+                    </div>
+                    <div className="text-center">
+                      <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span className="text-xl font-bold text-blue-600">3</span>
+                      </div>
+                      <h3 className="font-semibold text-gray-900 mb-2">Submit your certificate</h3>
+                      <p className="text-sm text-gray-600">Send to court (and 3A record if required)</p>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            )}
             
+            {/* County Selector - Only for TX Defensive Driving */}
+            {isTexasDefensive && (
+              <section className="mt-12">
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">Find your county's instructions</h2>
+                <CountySelector />
+              </section>
+            )}
+
             {/* Details Accordion */}
-            <section className="mt-12">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">{copy.headings.details}</h2>
+            <section id="how-it-works" className="mt-12">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">
+                {isTexasDefensive ? 'How it works' : copy.headings.details}
+              </h2>
               <div className="bg-white rounded-2xl border border-slate-200 shadow-sm">
                 <Accordion>
-                  {details.map((item) => (
-                    <Accordion.Panel key={item.key}>
-                      <Accordion.Title>{item.title}</Accordion.Title>
-                      <Accordion.Content>
-                        <p className="text-gray-700 leading-relaxed">{item.body}</p>
-                      </Accordion.Content>
-                    </Accordion.Panel>
-                  ))}
+                  {details.map((item) => {
+                    // Texas-specific title mapping
+                    let title = item.title;
+                    if (isTexasDefensive) {
+                      switch (item.key) {
+                        case 'identity_verification':
+                          title = 'ID checks';
+                          break;
+                        case 'reporting_method':
+                          title = 'Submitting to your court';
+                          break;
+                        case 'certificate_delivery':
+                          title = 'Your certificate';
+                          break;
+                        default:
+                          title = item.title;
+                      }
+                    }
+                    
+                    return (
+                      <Accordion.Panel key={item.key}>
+                        <Accordion.Title className="min-h-[2.5rem] flex items-center">
+                          {title}
+                        </Accordion.Title>
+                        <Accordion.Content>
+                          <p className="text-gray-700 leading-relaxed text-base">{item.body}</p>
+                        </Accordion.Content>
+                      </Accordion.Panel>
+                    );
+                  })}
                 </Accordion>
               </div>
             </section>
+
+            {/* Insurance-only Note - Texas Only */}
+            {isTexasDefensive && (
+              <section className="mt-8">
+                <div className="bg-blue-50 rounded-2xl border border-blue-200 p-6">
+                  <div className="flex items-start gap-3">
+                    <div className="text-blue-600 mt-0.5">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-blue-900 mb-1">Doing this for insurance only?</h3>
+                      <p className="text-sm text-blue-800">
+                        Enroll and send your e-certificate to your insurer—no court permission needed.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            )}
+
+            {/* FAQ Section - Texas Only */}
+            {isTexasDefensive && (
+              <section className="mt-8">
+                <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Frequently Asked Questions</h3>
+                  <div className="space-y-4">
+                    <div>
+                      <h4 className="font-medium text-gray-900 mb-1">How fast can I finish?</h4>
+                      <p className="text-sm text-gray-600">Most finish in one sitting; you can pause anytime.</p>
+                    </div>
+                    <div>
+                      <h4 className="font-medium text-gray-900 mb-1">Do I need a final exam?</h4>
+                      <p className="text-sm text-gray-600">No.</p>
+                    </div>
+                    <div>
+                      <h4 className="font-medium text-gray-900 mb-1">When do I get my certificate?</h4>
+                      <p className="text-sm text-gray-600">Immediately by email.</p>
+                    </div>
+                    <div>
+                      <h4 className="font-medium text-gray-900 mb-1">What if my county needs a 3A record?</h4>
+                      <p className="text-sm text-gray-600">We'll show you how to order it from Texas.gov.</p>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            )}
             
             {/* Features Section */}
             {showFeatures && features.length > 0 && (
@@ -193,100 +342,102 @@ export default function CoursePage() {
               </section>
             )}
             
-            {/* Certificate Callout */}
-            <section className="mt-12">
-              <div className="bg-blue-50 rounded-2xl border border-blue-200 p-6">
-                <div className="flex items-start gap-4">
-                  <div className="text-blue-600">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between mb-2">
-                      <h3 className="font-semibold text-blue-900">Certificate & Submission</h3>
-                      {stateRequirements && stateRequirements.submission && (
-                        <button
-                          onClick={() => setShowStateDetails(!showStateDetails)}
-                          className="flex items-center gap-1 text-sm text-blue-700 hover:text-blue-800 transition-colors"
-                        >
-                          <span className="font-medium">
-                            {showStateDetails ? 'Hide' : 'Show'} state details
-                          </span>
-                          <svg 
-                            className={`h-4 w-4 transition-transform ${showStateDetails ? 'rotate-180' : ''}`} 
-                            fill="none" 
-                            stroke="currentColor" 
-                            viewBox="0 0 24 24"
-                          >
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                          </svg>
-                        </button>
-                      )}
+            {/* Certificate Callout - Hidden for TX Defensive Driving */}
+            {course.slug !== 'tx-defensive' && (
+              <section className="mt-12">
+                <div className="bg-blue-50 rounded-2xl border border-blue-200 p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="text-blue-600">
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
                     </div>
-                    <p className="text-blue-800 leading-relaxed mb-4">
-                      {course.certificate_delivery || 'Your certificate will be available for download upon course completion.'}
-                    </p>
-                    
-                    {stateRequirements && stateRequirements.submission && showStateDetails && (
-                      <div className="bg-white rounded-lg p-4 mb-4">
-                        <h4 className="font-medium text-blue-900 mb-2">State-Specific Details:</h4>
-                        <p className="text-sm text-gray-600 mb-3">
-                          These are the specific submission requirements and deadlines for {course.state} {course.course_type} courses:
-                        </p>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                          {stateRequirements.submission.certificate && (
-                            <div>
-                              <span className="font-medium text-gray-700">Submission:</span>
-                              <p className="text-gray-600 mt-1">{stateRequirements.submission.certificate}</p>
-                            </div>
-                          )}
-                          {stateRequirements.submission.deadlines && (
-                            <div className={!stateRequirements.submission.certificate ? 'md:col-span-2' : ''}>
-                              <span className="font-medium text-gray-700">Deadline:</span>
-                              <p className="text-gray-600 mt-1">{stateRequirements.submission.deadlines}</p>
-                            </div>
-                          )}
-                        </div>
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between mb-2">
+                        <h3 className="font-semibold text-blue-900">Certificate & Submission</h3>
+                        {stateRequirements && stateRequirements.submission && (
+                          <button
+                            onClick={() => setShowStateDetails(!showStateDetails)}
+                            className="flex items-center gap-1 text-sm text-blue-700 hover:text-blue-800 transition-colors"
+                          >
+                            <span className="font-medium">
+                              {showStateDetails ? 'Hide' : 'Show'} state details
+                            </span>
+                            <svg 
+                              className={`h-4 w-4 transition-transform ${showStateDetails ? 'rotate-180' : ''}`} 
+                              fill="none" 
+                              stroke="currentColor" 
+                              viewBox="0 0 24 24"
+                            >
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                            </svg>
+                          </button>
+                        )}
                       </div>
-                    )}
-                    
-                    <div className="flex flex-wrap gap-3">
-                      <a 
-                        href={`/courses/${course.slug}/requirements`}
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-sm font-medium text-blue-700 hover:text-blue-800 underline decoration-blue-300 underline-offset-2"
-                      >
-                        Complete course requirements
-                        <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                        </svg>
-                      </a>
+                      <p className="text-blue-800 leading-relaxed mb-4">
+                        {course.certificate_delivery || 'Your certificate will be available for download upon course completion.'}
+                      </p>
                       
-                      {stateRequirements?.sources?.[0] && (
+                      {stateRequirements && stateRequirements.submission && showStateDetails && (
+                        <div className="bg-white rounded-lg p-4 mb-4">
+                          <h4 className="font-medium text-blue-900 mb-2">State-Specific Details:</h4>
+                          <p className="text-sm text-gray-600 mb-3">
+                            These are the specific submission requirements and deadlines for {course.state} {course.course_type} courses:
+                          </p>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                            {stateRequirements.submission.certificate && (
+                              <div>
+                                <span className="font-medium text-gray-700">Submission:</span>
+                                <p className="text-gray-600 mt-1">{stateRequirements.submission.certificate}</p>
+                              </div>
+                            )}
+                            {stateRequirements.submission.deadlines && (
+                              <div className={!stateRequirements.submission.certificate ? 'md:col-span-2' : ''}>
+                                <span className="font-medium text-gray-700">Deadline:</span>
+                                <p className="text-gray-600 mt-1">{stateRequirements.submission.deadlines}</p>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      )}
+                      
+                      <div className="flex flex-wrap gap-3">
                         <a 
-                          href={stateRequirements.sources[0].url}
-                          target="_blank"
+                          href={`/courses/${course.slug}/requirements`}
+                          target="_blank" 
                           rel="noopener noreferrer"
                           className="inline-flex items-center gap-1 text-sm font-medium text-blue-700 hover:text-blue-800 underline decoration-blue-300 underline-offset-2"
                         >
-                          Official state requirements
+                          Complete course requirements
                           <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                           </svg>
                         </a>
-                      )}
+                        
+                        {stateRequirements?.sources?.[0] && (
+                          <a 
+                            href={stateRequirements.sources[0].url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 text-sm font-medium text-blue-700 hover:text-blue-800 underline decoration-blue-300 underline-offset-2"
+                          >
+                            Official state requirements
+                            <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                            </svg>
+                          </a>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </section>
+              </section>
+            )}
             
             {/* Disclaimer */}
-            <section className="mt-12">
-              <div className="bg-gray-50 rounded-2xl border border-gray-200 p-6">
-                <p className="text-sm text-gray-600 leading-relaxed text-center">
+            <section className="mt-12 mb-16">
+              <div className="bg-blue-50 rounded-2xl border border-blue-200 p-6">
+                <p className="text-sm text-blue-800 leading-relaxed text-center font-medium">
                   {copy.disclaimer}
                 </p>
               </div>
@@ -310,6 +461,25 @@ export default function CoursePage() {
       
       {/* StickyEnrollBar */}
       <StickyEnrollBar course={course} />
+
+      {/* Mobile Sticky CTA - Texas Only */}
+      {isTexasDefensive && (
+        <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 md:hidden z-50">
+          <div className="flex items-center gap-4">
+            <div className="text-2xl font-bold text-gray-900">$25</div>
+            <Button
+              href={course.affiliate_link}
+              target="_blank"
+              rel="noopener sponsored"
+              variant="primary"
+              size="lg"
+              className="flex-1"
+            >
+              Enroll now
+            </Button>
+          </div>
+        </div>
+      )}
     </main>
     </>
   );

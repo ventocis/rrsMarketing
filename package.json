@@ -4,11 +4,12 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "predev": "node ./scripts/build-county-manifest.mjs",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview --port 4173",
     "preview:static": "serve -s dist",
-    "prebuild": "node ./blueprint/scripts/build-data.mjs",
+    "prebuild": "node ./scripts/build-county-manifest.mjs && node ./blueprint/scripts/build-data.mjs",
     "build:spa": "vite build",
     "build:static": "node ./blueprint/scripts/prerender.mjs",
     "build:prod": "npm run build:spa && npm run build:static && node ./blueprint/scripts/swap-robots.mjs allow && node ./blueprint/scripts/build-data.mjs",
@@ -29,6 +30,8 @@
     "rehype-autolink-headings": "^7.1.0",
     "rehype-slug": "^6.0.0",
     "remark-gfm": "^4.0.1",
+    "rtf-parser": "^1.3.3",
+    "turndown": "^7.2.1",
     "yaml": "^2.8.1"
   },
   "devDependencies": {

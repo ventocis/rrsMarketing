@@ -12,6 +12,7 @@ export default function BuyBox({
 }) {
   const [showGuarantee, setShowGuarantee] = useState(false);
   
+  const isTexasDefensive = course.slug === 'tx-defensive';
   const ctaLabel = isPartner ? 'Enroll now' : 'Sign up';
   const ctaHref = isPartner ? affiliateLink : `#enroll`;
   const ctaProps = isPartner 
@@ -53,10 +54,37 @@ export default function BuyBox({
         </Button>
       </div>
       
-      {/* Course Bullets */}
+      {/* Course Bullets - Texas specific */}
       <div className="mb-6">
-        <CourseBullets course={course} />
+        {isTexasDefensive ? (
+          <div className="text-sm text-gray-600 space-y-1">
+            <div>State-approved • Any device • Satisfaction guarantee • Secure checkout</div>
+          </div>
+        ) : (
+          <CourseBullets course={course} />
+        )}
       </div>
+
+      {/* Court Permission Note - Texas Only */}
+      {isTexasDefensive && (
+        <div className="mb-4">
+          <p className="text-sm text-gray-600">
+            Dismissal requires court permission—most courts grant it if you qualify.
+          </p>
+        </div>
+      )}
+
+      {/* Secondary CTA - Texas Only */}
+      {isTexasDefensive && (
+        <div className="mb-6">
+          <a 
+            href="#how-it-works" 
+            className="text-sm text-blue-600 hover:text-blue-800 underline decoration-blue-300 underline-offset-2"
+          >
+            How it works
+          </a>
+        </div>
+      )}
       
       {/* Satisfaction Guarantee */}
       <div className="mb-6">
@@ -105,8 +133,10 @@ export default function BuyBox({
       {isPartner && (
         <div className="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
           <p className="text-sm text-blue-800">
-            You'll enroll and complete this course on TicketSchool's secure site. 
-            Road Ready is a trusted affiliate.
+            {isTexasDefensive 
+              ? 'Secure checkout on TicketSchool. Road Ready is a trusted affiliate.'
+              : 'You\'ll enroll and complete this course on TicketSchool\'s secure site. Road Ready is a trusted affiliate.'
+            }
           </p>
         </div>
       )}

@@ -152,13 +152,14 @@ export default function CountySelector() {
     <div className="space-y-6">
       {/* County Selector - Outside the white card */}
       <div>
-        <select
-          id="county"
-          value={selectedCounty}
-          onChange={handleCountyChange}
-          className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 bg-white"
-          aria-label="Select your Texas county"
-        >
+                <select
+                  id="county"
+                  value={selectedCounty}
+                  onChange={handleCountyChange}
+                  className="w-full h-12 px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 bg-white"
+                  aria-label="Select your Texas county"
+                  data-rr="county-select"
+                >
           <option value="">Select your county</option>
           <option value="texas-standard">Texas Standard Requirements</option>
           {counties.map((county) => (
@@ -171,7 +172,7 @@ export default function CountySelector() {
 
       {/* White Card - Only shown when content is selected */}
       {selectedCounty && (
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6" aria-live="polite">
           <div className="space-y-4">
             {/* Error State */}
             {error && (

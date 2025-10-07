@@ -129,7 +129,7 @@ export default function CoursePage() {
       key: 'certificate_delivery', 
       title: copy.details_labels.certificate_delivery, 
       body: isTexasDefensive 
-        ? 'We email your electronic certificate as soon as you finish, and you can download it from your dashboard. Check that your name and citation details are correct before you submit anything to the court or your insurer. For mailing addresses, in-person drop-off, email, or online portals—and for any forms your court needs—use the County section above.'
+        ? 'We email your electronic certificate as soon as you finish, and you can download it from your dashboard. Check that your name and citation details are correct before you submit anything to the court or your insurer. For mailing addresses, in-person drop-off, email, or online portals—and for any forms your court needs—use the County section below.'
         : course.certificate_delivery 
     },
     { key: 'retake_policy', title: copy.details_labels.retake_policy, body: course.retake_policy },
@@ -139,17 +139,17 @@ export default function CoursePage() {
   
   return (
     <>
-              <SEO
+      <SEO 
                 title={isTexasDefensive ? 'Texas Driver Safety Course (6-Hour) — TDLR-Approved | $25' : course.course_name}
                 description={isTexasDefensive
                   ? 'Complete Texas\'s 6-hour Driver Safety Course online. TDLR-approved, $25 total, free e-certificate. Court dismissal with permission or insurance discount.'
                   : `${course.course_name} online. Mobile-friendly with clear requirements, pricing, and certificate details. ${course.subhead || ''}`
                 }
-                keywords={`${course.course_name}, ${stateNames[course.state] || course.state}, traffic school, defensive driving, online course`}
-                image="/assets/rrs (1200 x 630 px).png"
-                url={`/courses/${course.slug}`}
-              />
-              <StructuredData type="course" data={course} />
+        keywords={`${course.course_name}, ${stateNames[course.state] || course.state}, traffic school, defensive driving, online course`}
+        image="/assets/rrs (1200 x 630 px).png"
+        url={`/courses/${course.slug}`}
+      />
+      <StructuredData type="course" data={course} />
               
               {/* FAQ JSON-LD for Texas page */}
               {isTexasDefensive && (
@@ -206,7 +206,7 @@ export default function CoursePage() {
                 />
               )}
       <main className="bg-gradient-to-b from-white to-gray-50 min-h-screen pb-20 md:pb-0">
-        {/* Course Header */}
+      {/* Course Header */}
         <div className="max-w-7xl mx-auto px-4 py-4 md:py-8">
         <h1 className={isTexasDefensive ? "text-2xl md:text-5xl font-extrabold text-gray-900 mb-3 md:mb-4" : "text-3xl font-bold text-gray-900 mb-4"}>
           {isTexasDefensive ? 'Texas Driver Safety Course (6-Hour)' : course.course_name}
@@ -360,7 +360,7 @@ export default function CoursePage() {
                         <Accordion.Title className="min-h-[2.5rem] h-10 w-full flex items-center" aria-label={`Toggle ${item.title}`}>
                           {item.title}
                         </Accordion.Title>
-                        <Accordion.Content>
+                      <Accordion.Content>
                           {item.body.includes('\n\n') ? (
                             item.body.split('\n\n').map((paragraph, idx) => (
                               <p key={idx} className="text-base leading-relaxed mb-4 last:mb-0">
@@ -370,12 +370,12 @@ export default function CoursePage() {
                           ) : (
                             <p className="text-base leading-relaxed">{item.body}</p>
                           )}
-                        </Accordion.Content>
-                      </Accordion.Panel>
-                    ))}
-                  </Accordion>
-                </div>
-              </section>
+                      </Accordion.Content>
+                    </Accordion.Panel>
+                  ))}
+                </Accordion>
+              </div>
+            </section>
             )}
             
             {/* County Selector - Only for TX Defensive Driving */}
@@ -600,15 +600,15 @@ export default function CoursePage() {
           </div>
           
                     {/* Right Column - BuyBox - Hidden on mobile for Texas */}
-                    <div className="lg:col-span-1">
+          <div className="lg:col-span-1">
                       <div className="sticky top-8 hidden md:block">
-                        <BuyBox
-                          course={course}
-                          price={price}
-                          provider={isPartner ? course.provider_name : 'Road Ready'}
-                          isPartner={isPartner}
-                          affiliateLink={course.affiliate_link}
-                        />
+              <BuyBox 
+                course={course} 
+                price={price}
+                provider={isPartner ? course.provider_name : 'Road Ready'}
+                isPartner={isPartner}
+                affiliateLink={course.affiliate_link}
+              />
 
                         {/* Insurance-only Note - Texas Only - Desktop only */}
                         {isTexasDefensive && (
@@ -630,8 +630,8 @@ export default function CoursePage() {
                             </div>
                           </div>
                         )}
-                      </div>
-                    </div>
+            </div>
+          </div>
         </div>
       </div>
       

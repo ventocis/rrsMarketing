@@ -162,14 +162,6 @@ export default function CoursePage() {
                       "mainEntity": [
                         {
                           "@type": "Question",
-                          "name": "How much does it cost?",
-                          "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "The total is $28: $25 for the course plus a $3 Texas state fee required by TDLR. If your court asks for a certified 3A driving record, you'll order it from Texas.gov at the state-set price."
-                          }
-                        },
-                        {
-                          "@type": "Question",
                           "name": "Do I need court permission?",
                           "acceptedAnswer": {
                             "@type": "Answer",
@@ -403,18 +395,6 @@ export default function CoursePage() {
                           <div className="bg-white rounded-2xl border border-slate-200 shadow-sm">
                             <Accordion>
                               <Accordion.Panel>
-                                <Accordion.Title className="min-h-[56px] px-4 w-full flex items-center" aria-label="Toggle How much does it cost?">
-                                  How much does it cost?
-                                </Accordion.Title>
-                                <Accordion.Content className="px-4 pb-5 md:pb-6 bg-slate-50">
-                                  <div className="max-w-prose mx-auto space-y-4">
-                                    <p className="text-base leading-relaxed">
-                                      <span className="font-medium">The total is $28: $25 for the course plus a $3 Texas state fee required by TDLR.</span> If your court asks for a certified 3A driving record, you'll order it from Texas.gov at the state-set price.
-                                    </p>
-                                  </div>
-                                </Accordion.Content>
-                              </Accordion.Panel>
-                              <Accordion.Panel>
                                 <Accordion.Title className="min-h-[56px] px-4 w-full flex items-center" aria-label="Toggle Do I need court permission?">
                                   Do I need court permission?
                                 </Accordion.Title>
@@ -492,7 +472,7 @@ export default function CoursePage() {
                               <div>
                                 <h3 className="text-sm font-medium text-blue-900 mb-1">Doing this for insurance only?</h3>
                                 <p className="text-xs text-blue-800">
-                                  Enroll and send your e-certificate to your insurer—no court permission needed. Price is $28 total ($25 course + $3 Texas state fee).
+                                  Enroll and send your e-certificate to your insurer—no court permission needed.
                                 </p>
                               </div>
                             </div>
@@ -643,7 +623,7 @@ export default function CoursePage() {
                                 <div>
                                   <h3 className="text-sm font-medium text-blue-900 mb-1">Doing this for insurance only?</h3>
                                   <p className="text-xs text-blue-800">
-                                    Enroll and send your e-certificate to your insurer—no court permission needed. Price is $28 total ($25 course + $3 Texas state fee).
+                                    Enroll and send your e-certificate to your insurer—no court permission needed.
                                   </p>
                                 </div>
                               </div>

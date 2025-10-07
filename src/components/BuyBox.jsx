@@ -36,8 +36,13 @@ export default function BuyBox({
       {/* Price */}
       <div>
         <div className="text-3xl font-bold text-gray-900">
-          {price}
+          {isTexasDefensive ? '$28 total' : price}
         </div>
+        {isTexasDefensive && (
+          <div className="text-sm text-muted-foreground mt-1">
+            $25 course + $3 required Texas state fee (TDLR) — no hidden fees
+          </div>
+        )}
       </div>
 
       {/* Primary CTA */}

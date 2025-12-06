@@ -42,7 +42,7 @@ function buildCountyManifest() {
   console.log('🔍 Building Texas county manifest...');
   
   if (!fs.existsSync(TEXAS_DOCS_PATH)) {
-    console.log('❌ Texas course documents directory not found:', TEXAS_DOCS_PATH);
+    // Directory doesn't exist - skip manifest building (not an error for static site)
     return;
   }
 

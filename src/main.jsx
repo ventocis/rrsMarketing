@@ -19,7 +19,8 @@ import BlogIndex from './pages/BlogIndex.jsx';
 import BlogPost from './pages/BlogPost.jsx';
 import Faq from './pages/Faq.jsx';
 import CourseRequirements from './pages/CourseRequirements.jsx';
-import { Routes, Route } from 'react-router-dom';
+import TexasIndex from './pages/texas/index.jsx';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import ScrollToTop from './components/ScrollToTop.jsx';
 import SEO from './components/SEO.jsx';
 import StructuredData from './components/StructuredData.jsx';
@@ -46,10 +47,13 @@ function Home() {
 }
 
 function App() {
+  const location = useLocation();
+  const isTexasRoute = location.pathname.startsWith('/texas');
+  
   return (
     <div className="w-full overflow-x-hidden">
       <ScrollToTop />
-      <Header />
+      {!isTexasRoute && <Header />}
       <Routes>
         <Route path="/courses" element={<CoursesIndex />} />
         <Route path="/courses/:slug" element={<CoursePage />} />
@@ -63,9 +67,10 @@ function App() {
         <Route path="/blog" element={<BlogIndex />} />
         <Route path="/blog/:slug" element={<BlogPost />} />
         <Route path="/faq" element={<Faq />} />
+        <Route path="/texas" element={<TexasIndex />} />
         <Route path="/" element={<Home />} />
       </Routes>
-      <Footer />
+      {!isTexasRoute && <Footer />}
     </div>
   );
 }

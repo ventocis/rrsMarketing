@@ -20,6 +20,7 @@ import BlogPost from './pages/BlogPost.jsx';
 import Faq from './pages/Faq.jsx';
 import CourseRequirements from './pages/CourseRequirements.jsx';
 import TexasIndex from './pages/texas/index.jsx';
+import TexasPricing from './pages/texas/pricing.jsx';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import ScrollToTop from './components/ScrollToTop.jsx';
 import SEO from './components/SEO.jsx';
@@ -68,6 +69,7 @@ function App() {
         <Route path="/blog/:slug" element={<BlogPost />} />
         <Route path="/faq" element={<Faq />} />
         <Route path="/texas" element={<TexasIndex />} />
+        <Route path="/texas/pricing" element={<TexasPricing />} />
         <Route path="/" element={<Home />} />
       </Routes>
       {!isTexasRoute && <Footer />}

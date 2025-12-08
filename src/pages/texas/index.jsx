@@ -8,7 +8,7 @@ import CheckCircleIcon from '../../components/icons/CheckCircleIcon.jsx';
 import SEO from '../../components/SEO.jsx';
 
 export default function TexasIndex() {
-  const [expandedExpect, setExpandedExpect] = useState(0);
+  const [expandedExpect, setExpandedExpect] = useState(null);
 
   return (
     <TexasLayout>
@@ -183,7 +183,7 @@ export default function TexasIndex() {
             What to Expect
           </h2>
           <div className="bg-white rounded-xl border border-gray-200 shadow-sm">
-            <Accordion>
+            <Accordion alwaysOpen={false}>
               <Accordion.Panel>
                 <Accordion.Title className="text-xl font-semibold text-gray-900">
                   Texas Requirements

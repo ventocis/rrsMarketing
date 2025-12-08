@@ -15,20 +15,27 @@ export default function TexasLayout({ children }) {
 
   return (
     <div className="w-full overflow-x-hidden">
+      {/* Announcement Ribbon */}
+      <div className="w-full bg-blue-600 text-white py-3 text-center">
+        <p className="text-sm md:text-base font-semibold">
+          FREE Instant Digital Certificate Included
+        </p>
+      </div>
+
       {/* Header */}
       <header className="w-full bg-white border-b border-gray-200 py-4 sticky top-0 z-50 shadow-sm">
         <nav className="max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6 lg:px-8 w-full">
           {/* Logo - Left aligned */}
-          <Link to="/" className="flex items-center gap-3 hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded flex-shrink-0">
+          <Link to="/texas" className="flex items-center gap-3 hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded flex-shrink-0">
             <img src="/assets/logo.svg" alt="Road Ready Safety" className="h-8 w-auto max-w-full" />
             <span className="text-xl font-semibold text-slate-700">Road Ready Safety</span>
           </Link>
           
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-4 flex-shrink-0">
-            <Link to="/faq" className="text-slate-700 hover:underline">FAQ</Link>
+            <Link to="/texas/pricing" className="text-slate-700 hover:underline">Pricing</Link>
             <Link to="/support" className="text-slate-700 hover:underline">Help Center</Link>
-            <Link to="/courses" className="text-slate-700 hover:underline">Courses</Link>
+            <Link to="/courses" className="text-slate-700 hover:underline">Ticket Resources</Link>
             <Button href="https://courses.ticketschool.com/login/login.asp" variant="custom" className="h-8 px-4 rounded-full border border-gray-300 bg-white text-gray-600 hover:text-gray-800 hover:border-gray-400 text-sm font-medium flex items-center justify-center">Login</Button>
           </div>
 
@@ -52,9 +59,9 @@ export default function TexasLayout({ children }) {
         {isMenuOpen && (
           <div className="md:hidden border-t border-gray-200 bg-white">
             <div className="px-4 py-4 space-y-3">
-              <Link to="/faq" onClick={closeMenu} className="block text-slate-700 hover:text-blue-600">FAQ</Link>
+              <Link to="/texas/pricing" onClick={closeMenu} className="block text-slate-700 hover:text-blue-600">Pricing</Link>
               <Link to="/support" onClick={closeMenu} className="block text-slate-700 hover:text-blue-600">Help Center</Link>
-              <Link to="/courses" onClick={closeMenu} className="block text-slate-700 hover:text-blue-600">Courses</Link>
+              <Link to="/courses" onClick={closeMenu} className="block text-slate-700 hover:text-blue-600">Ticket Resources</Link>
               <Button href="https://courses.ticketschool.com/login/login.asp" variant="custom" className="w-full h-10 px-4 rounded-full border border-gray-300 bg-white text-gray-600 hover:text-gray-800 hover:border-gray-400 text-sm font-medium flex items-center justify-center">Login</Button>
             </div>
           </div>
@@ -74,7 +81,7 @@ export default function TexasLayout({ children }) {
             
             {/* Column 1 - Logo & Tagline */}
             <div className="flex flex-col items-center md:items-start">
-              <Link to="/" className="flex items-center gap-3 hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded">
+              <Link to="/texas" className="flex items-center gap-3 hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded">
                 <img src="/assets/logo.svg" alt="Road Ready Safety" className="h-10 w-auto" />
                 <span className="text-lg font-semibold text-slate-700">Road Ready Safety</span>
               </Link>

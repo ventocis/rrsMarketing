@@ -6,3 +6,52 @@
 /* Optional helpers tied to your tokens */
 :root { color-scheme: light; }
 .container { max-width: 1120px; margin-inline: auto; padding-inline: 24px; }
+
+/* Ensure full-width layout - prevent pillarboxing */
+html {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  /* Prevent browser zoom issues */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  position: relative;
+  /* Reset any zoom transforms */
+  transform: scale(1);
+  transform-origin: top left;
+}
+
+/* Desktop-specific: Ensure viewport is calculated correctly */
+@media (min-width: 1024px) {
+  html {
+    font-size: 16px; /* Ensure base font size is correct */
+  }
+  
+  body {
+    min-width: 100vw;
+    width: 100%;
+  }
+}
+
+#root {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  position: relative;
+}

@@ -49,6 +49,16 @@ export default function TexasLayout({ children }) {
     const safeLog = (data) => {
       fetch(logEndpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}).catch(()=>{});
     };
+    safeLog({location:'TexasLayout.jsx:header-button',message:'Header Start Course button props',data:{href:'/courses/tx-defensive',variant:'custom',text:'Start Course'},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'});
+  }, []);
+  // #endregion
+
+  // #region agent log
+  React.useEffect(() => {
+    const logEndpoint = 'http://127.0.0.1:7242/ingest/d43cc9bd-40ea-434a-b828-df0c6f64d204';
+    const safeLog = (data) => {
+      fetch(logEndpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}).catch(()=>{});
+    };
     
     // Log viewport scaling for diagnosis - mobile vs desktop
     const checkViewportScaling = () => {
@@ -204,8 +214,8 @@ export default function TexasLayout({ children }) {
           {/* Desktop Navigation Links */}
           <div className="hidden md:flex items-center gap-8 flex-shrink-0">
             <Link to="/texas/pricing" className="text-sm font-medium text-[#616d7b] hover:text-[#1e2832] transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>Pricing</Link>
-            <Link to="#faq" className="text-sm font-medium text-[#616d7b] hover:text-[#1e2832] transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>FAQ</Link>
-            <Link to="/support" className="text-sm font-medium text-[#616d7b] hover:text-[#1e2832] transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>Help Center</Link>
+            <Link to="/texas/faq" className="text-sm font-medium text-[#616d7b] hover:text-[#1e2832] transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>FAQ</Link>
+            <Link to="/texas/helpcenter" className="text-sm font-medium text-[#616d7b] hover:text-[#1e2832] transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>Help Center</Link>
           </div>
 
           {/* Desktop Buttons */}
@@ -216,8 +226,8 @@ export default function TexasLayout({ children }) {
             <Button 
               href="/courses/tx-defensive" 
               variant="custom" 
-              className="pt-[11.6px] pb-[12.4px] px-[20px] rounded-[12px] bg-[#0667d1] text-white text-sm font-semibold shadow-[0px_10px_15px_-3px_rgba(17,23,34,0.08),0px_4px_6px_-4px_rgba(17,23,34,0.05)] hover:bg-[#0556b3] transition-colors flex items-center justify-center leading-[20px]"
-              style={{ fontFamily: "'DM Sans', sans-serif" }}
+              className="bg-[#0667d1] hover:bg-[#0556b3] text-white pt-[11.6px] pb-[12.4px] px-[20px] rounded-[12px] shadow-[0px_10px_15px_-3px_rgba(17,23,34,0.08),0px_4px_6px_-4px_rgba(17,23,34,0.05)] text-sm font-semibold flex items-center justify-center leading-[20px] no-underline text-center"
+              style={{ fontFamily: "'DM Sans', sans-serif", minHeight: '44px', textAlign: 'center' }}
             >
               Start Course
             </Button>
@@ -244,8 +254,8 @@ export default function TexasLayout({ children }) {
           <div className="md:hidden border-t border-gray-200 bg-white">
             <div className="px-4 py-4 space-y-3">
               <Link to="/texas/pricing" onClick={closeMenu} className="block text-sm font-medium text-[#616d7b] hover:text-[#1e2832]">Pricing</Link>
-              <Link to="#faq" onClick={closeMenu} className="block text-sm font-medium text-[#616d7b] hover:text-[#1e2832]">FAQ</Link>
-              <Link to="/support" onClick={closeMenu} className="block text-sm font-medium text-[#616d7b] hover:text-[#1e2832]">Help Center</Link>
+              <Link to="/texas/faq" onClick={closeMenu} className="block text-sm font-medium text-[#616d7b] hover:text-[#1e2832]">FAQ</Link>
+              <Link to="/texas/helpcenter" onClick={closeMenu} className="block text-sm font-medium text-[#616d7b] hover:text-[#1e2832]">Help Center</Link>
               <div className="pt-2 space-y-2">
                 <button className="w-full h-9 px-4 rounded-[10px] text-xs font-semibold text-[#1e2832] border border-gray-300 hover:bg-gray-100">
                   Log In
@@ -313,7 +323,7 @@ export default function TexasLayout({ children }) {
               <div className="flex flex-col gap-3">
                 <Link to="/texas" className="text-sm text-[#f6f6f9] leading-5 hover:text-white transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>Texas Course</Link>
                 <Link to="/texas/pricing" className="text-sm text-[#f6f6f9] leading-5 hover:text-white transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>Pricing</Link>
-                <Link to="#faq" className="text-sm text-[#f6f6f9] leading-5 hover:text-white transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>FAQ</Link>
+                <Link to="/texas/faq" className="text-sm text-[#f6f6f9] leading-5 hover:text-white transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>FAQ</Link>
               </div>
             </div>
             
@@ -321,11 +331,11 @@ export default function TexasLayout({ children }) {
             <div className="flex flex-col gap-4 items-start w-full lg:w-[192px]">
               <h4 className="text-base font-semibold text-white leading-6 tracking-[-0.4px]" style={{ fontFamily: "'Outfit', sans-serif" }}>Support</h4>
               <div className="flex flex-col gap-3">
-                <Link to="/support" className="text-sm text-[#f6f6f9] leading-5 hover:text-white transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>Help Center</Link>
-                <Link to="/contact" className="text-sm text-[#f6f6f9] leading-5 hover:text-white transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>Contact Us</Link>
+                <Link to="/texas/helpcenter" className="text-sm text-[#f6f6f9] leading-5 hover:text-white transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>Help Center</Link>
+                <Link to="/texas/contactus" className="text-sm text-[#f6f6f9] leading-5 hover:text-white transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>Contact Us</Link>
               </div>
-            </div>
-            
+              </div>
+              
             {/* Column 4 - Legal Links */}
             <div className="flex flex-col gap-4 items-start w-full lg:w-[192px]">
               <h4 className="text-base font-semibold text-white leading-6 tracking-[-0.4px]" style={{ fontFamily: "'Outfit', sans-serif" }}>Legal</h4>

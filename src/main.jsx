@@ -5,6 +5,10 @@ import { HelmetProvider } from 'react-helmet-async';
 import 'flowbite/dist/flowbite.css';
 import './index.css';
 import TexasIndex from './pages/texas/index.jsx';
+import TexasPricing from './pages/texas/pricing.jsx';
+import TexasFAQ from './pages/texas/faq.jsx';
+import TexasHelpCenter from './pages/texas/helpcenter.jsx';
+import TexasContactUs from './pages/texas/contactus.jsx';
 
 // #region agent log
 // Logging initialization and error capture - silent fail if endpoint unavailable
@@ -49,6 +53,10 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/texas" element={<TexasIndex />} />
+          <Route path="/texas/pricing" element={<TexasPricing />} />
+          <Route path="/texas/faq" element={<TexasFAQ />} />
+          <Route path="/texas/helpcenter" element={<TexasHelpCenter />} />
+          <Route path="/texas/contactus" element={<TexasContactUs />} />
           <Route path="/" element={<Home />} />
         </Routes>
       </BrowserRouter>

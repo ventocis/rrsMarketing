@@ -27,6 +27,24 @@ export default function TexasIndex() {
     const safeLog = (data) => {
       fetch(logEndpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}).catch(()=>{});
     };
+    safeLog({location:'texas/index.jsx:hero-button',message:'Hero Start Course button props',data:{href:'/courses/tx-defensive',variant:'custom',text:'Start Course'},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'D'});
+    setTimeout(() => {
+      const heroButtons = document.querySelectorAll('a[href="/courses/tx-defensive"]');
+      heroButtons.forEach((btn, idx) => {
+        const computed = window.getComputedStyle(btn);
+        const rect = btn.getBoundingClientRect();
+        safeLog({location:'texas/index.jsx:hero-button-dom',message:'Hero button DOM element',data:{index:idx,textContent:btn.textContent?.trim(),className:btn.className.substring(0,150),computedHeight:computed.height,computedPaddingTop:computed.paddingTop,computedPaddingBottom:computed.paddingBottom,computedFontSize:computed.fontSize,computedLineHeight:computed.lineHeight,computedFontFamily:computed.fontFamily,hasNoUnderline:btn.className.includes('no-underline'),actualHeight:rect.height,actualWidth:rect.width},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'E'});
+      });
+    }, 1000);
+  }, []);
+  // #endregion
+
+  // #region agent log
+  React.useEffect(() => {
+    const logEndpoint = 'http://127.0.0.1:7242/ingest/d43cc9bd-40ea-434a-b828-df0c6f64d204';
+    const safeLog = (data) => {
+      fetch(logEndpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}).catch(()=>{});
+    };
     safeLog({location:'texas/index.jsx:mount',message:'TexasIndex component mounted',data:{},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'});
     
     // Log component imports to verify they're not undefined
@@ -106,21 +124,23 @@ export default function TexasIndex() {
               <p className="text-lg lg:text-xl text-[#616d7b] leading-7 max-w-[576px]">
                 Complete your Texas-approved 6-hour defensive driving course from any device. Dismiss your ticket or reduce insurance rates — it's never been easier.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 pt-2">
+              <div className="flex flex-col sm:flex-row gap-4 pt-2" style={{ paddingTop: '8px', gap: '16px', alignItems: 'flex-start' }}>
                 <Button 
                   href="/courses/tx-defensive" 
                   variant="custom" 
-                  className="bg-[#0667d1] hover:bg-[#0556b3] text-white pt-[11.6px] pb-[12.4px] px-[20px] rounded-[12px] shadow-[0px_10px_15px_-3px_rgba(17,23,34,0.08),0px_4px_6px_-4px_rgba(17,23,34,0.05)] text-sm font-semibold flex items-center justify-center leading-[20px]"
+                  className="bg-[#0667D1] hover:bg-[#0556b3] text-white h-[56px] px-[40px] rounded-[16px] shadow-[0px_20px_25px_-5px_rgba(17,23,34,0.10),0px_8px_10px_-6px_rgba(17,23,34,0.05)] text-sm font-semibold flex items-center justify-center leading-[20px] no-underline text-center"
+                  style={{ fontFamily: "'DM Sans', sans-serif", textAlign: 'center' }}
                 >
-                Start Course
+                  Start Course
                 </Button>
                 <Button 
                   href="/texas/pricing" 
                   variant="custom" 
-                  className="bg-white border border-[#e4e6ea] text-[#1e2832] h-[56px] px-[42px] rounded-2xl shadow-[0px_4px_6px_-1px_rgba(17,23,34,0.07),0px_2px_4px_-2px_rgba(17,23,34,0.05)] text-lg font-semibold flex items-center justify-center leading-[28px]"
+                  className="bg-white border border-[#e4e6ea] text-[#1e2832] h-[56px] px-[40px] rounded-[16px] shadow-[0px_4px_6px_-1px_rgba(17,23,34,0.07),0px_2px_4px_-2px_rgba(17,23,34,0.05)] text-lg font-semibold flex items-center justify-center leading-[28px] no-underline text-center"
+                  style={{ fontFamily: "'DM Sans', sans-serif", textAlign: 'center' }}
                 >
                   Learn More
-              </Button>
+                </Button>
               </div>
             </div>
             

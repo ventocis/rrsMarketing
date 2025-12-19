@@ -1,4 +1,6 @@
-﻿// tailwind.config.js
+// tailwind.config.js
+import flowbite from "flowbite/plugin";
+
 export default {
   content: [
     "./index.html",
@@ -15,5 +17,5 @@ export default {
       maxWidth: { container: "1120px" }
     }
   },
-  plugins: [require("flowbite/plugin")]
+  plugins: [flowbite]
 };

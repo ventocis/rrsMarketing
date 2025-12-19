@@ -9,6 +9,7 @@ import TexasPricing from './pages/texas/pricing.jsx';
 import TexasFAQ from './pages/texas/faq.jsx';
 import TexasHelpCenter from './pages/texas/helpcenter.jsx';
 import TexasContactUs from './pages/texas/contactus.jsx';
+import TexasTerms from './pages/texas/terms.jsx';
 
 // #region agent log
 // Logging initialization and error capture - silent fail if endpoint unavailable
@@ -57,6 +58,7 @@ function App() {
           <Route path="/texas/faq" element={<TexasFAQ />} />
           <Route path="/texas/helpcenter" element={<TexasHelpCenter />} />
           <Route path="/texas/contactus" element={<TexasContactUs />} />
+          <Route path="/texas/terms" element={<TexasTerms />} />
           <Route path="/" element={<Home />} />
         </Routes>
       </BrowserRouter>

@@ -193,7 +193,7 @@ export default function TexasLayout({ children }) {
         {/* Main Navigation */}
         <nav className="h-20 max-w-[1152px] mx-auto flex items-center justify-between px-4 sm:px-6 lg:px-8 w-full">
           {/* Logo - Left aligned */}
-          <Link to="/" className="flex items-center gap-2 hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded flex-shrink-0">
+          <Link to="/texas" className="flex items-center gap-2 hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded flex-shrink-0">
             <img src={logoImage} alt="Road Ready Safety Logo" className="h-[39.633px] w-9" />
             <div className="flex flex-col">
               <span className="text-[18px] font-bold text-[#1e2832] leading-[22.5px]" style={{ fontFamily: "'Outfit', sans-serif" }}>Road Ready</span>
@@ -203,7 +203,7 @@ export default function TexasLayout({ children }) {
           
           {/* Desktop Navigation Links */}
           <div className="hidden md:flex items-center gap-8 flex-shrink-0">
-            <Link to="#pricing" className="text-sm font-medium text-[#616d7b] hover:text-[#1e2832] transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>Pricing</Link>
+            <Link to="/texas/pricing" className="text-sm font-medium text-[#616d7b] hover:text-[#1e2832] transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>Pricing</Link>
             <Link to="#faq" className="text-sm font-medium text-[#616d7b] hover:text-[#1e2832] transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>FAQ</Link>
             <Link to="/support" className="text-sm font-medium text-[#616d7b] hover:text-[#1e2832] transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>Help Center</Link>
           </div>
@@ -243,7 +243,7 @@ export default function TexasLayout({ children }) {
         {isMenuOpen && (
           <div className="md:hidden border-t border-gray-200 bg-white">
             <div className="px-4 py-4 space-y-3">
-              <Link to="#pricing" onClick={closeMenu} className="block text-sm font-medium text-[#616d7b] hover:text-[#1e2832]">Pricing</Link>
+              <Link to="/texas/pricing" onClick={closeMenu} className="block text-sm font-medium text-[#616d7b] hover:text-[#1e2832]">Pricing</Link>
               <Link to="#faq" onClick={closeMenu} className="block text-sm font-medium text-[#616d7b] hover:text-[#1e2832]">FAQ</Link>
               <Link to="/support" onClick={closeMenu} className="block text-sm font-medium text-[#616d7b] hover:text-[#1e2832]">Help Center</Link>
               <div className="pt-2 space-y-2">
@@ -276,7 +276,7 @@ export default function TexasLayout({ children }) {
             {/* Column 1 - Company Info */}
             <div className="flex flex-col gap-6 items-start w-full lg:w-[432px]">
               {/* Logo */}
-              <Link to="/" className="flex gap-2 items-center hover:opacity-80">
+              <Link to="/texas" className="flex gap-2 items-center hover:opacity-80">
                 <div className="bg-[#0351b4] rounded-2xl w-10 h-10 flex items-center justify-center flex-shrink-0">
                   <img src="/assets/icons/texas/logo-shield-footer.svg" alt="Road Ready Safety Logo" className="w-6 h-6" />
                 </div>

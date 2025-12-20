@@ -2,6 +2,29 @@
 import { Routes, Route } from 'react-router-dom';
 import 'flowbite/dist/flowbite.css';
 import './index.css';
+import Header from './Header.jsx';
+import HeroFinder from './HeroFinder.jsx';
+import UspSection from './UspSection.jsx';
+import HowSection from './HowSection.jsx';
+import TrustSection from './TrustSection.jsx';
+import FaqSection from './FaqSection.jsx';
+import Footer from './Footer.jsx';
+import CoursePage from './CoursePage.jsx';
+import CoursesIndex from './pages/CoursesIndex.jsx';
+import ResultsPage from './ResultsPage.jsx';
+import SupportPage from './pages/Support.jsx';
+import HowToSubmit from './pages/HowToSubmit.jsx';
+import PrivacyPage from './pages/Privacy.jsx';
+import TermsPage from './pages/Terms.jsx';
+import Partners from './pages/Partners.jsx';
+import BlogIndex from './pages/BlogIndex.jsx';
+import BlogPost from './pages/BlogPost.jsx';
+import Faq from './pages/Faq.jsx';
+import CourseRequirements from './pages/CourseRequirements.jsx';
+import ScrollToTop from './components/ScrollToTop.jsx';
+import SEO from './components/SEO.jsx';
+import StructuredData from './components/StructuredData.jsx';
+// Texas pages
 import TexasIndex from './pages/texas/index.jsx';
 import TexasPricing from './pages/texas/pricing.jsx';
 import TexasFAQ from './pages/texas/faq.jsx';
@@ -27,32 +50,6 @@ if (typeof window !== 'undefined') {
 }
 // #endregion
 
-﻿import 'flowbite/dist/flowbite.css';
-import './index.css';
-import Header from './Header.jsx';
-import HeroFinder from './HeroFinder.jsx';
-import UspSection from './UspSection.jsx';
-import HowSection from './HowSection.jsx';
-import TrustSection from './TrustSection.jsx';
-import FaqSection from './FaqSection.jsx';
-import Footer from './Footer.jsx';
-import CoursePage from './CoursePage.jsx';
-import CoursesIndex from './pages/CoursesIndex.jsx';
-import ResultsPage from './ResultsPage.jsx';
-import SupportPage from './pages/Support.jsx';
-import HowToSubmit from './pages/HowToSubmit.jsx';
-import PrivacyPage from './pages/Privacy.jsx';
-import TermsPage from './pages/Terms.jsx';
-import Partners from './pages/Partners.jsx';
-import BlogIndex from './pages/BlogIndex.jsx';
-import BlogPost from './pages/BlogPost.jsx';
-import Faq from './pages/Faq.jsx';
-import CourseRequirements from './pages/CourseRequirements.jsx';
-import { Routes, Route } from 'react-router-dom';
-import ScrollToTop from './components/ScrollToTop.jsx';
-import SEO from './components/SEO.jsx';
-import StructuredData from './components/StructuredData.jsx';
-
 function Home() {
   return (
     <>
@@ -76,10 +73,11 @@ function Home() {
 
 function App() {
   return (
-    <div className="w-full overflow-x-hidden">
+    <div className="w-full overflow-x-hidden m-0 p-0">
       <ScrollToTop />
       <Header />
       <Routes>
+        {/* Main site routes */}
         <Route path="/courses" element={<CoursesIndex />} />
         <Route path="/courses/:slug" element={<CoursePage />} />
         <Route path="/courses/:slug/requirements" element={<CourseRequirements />} />
@@ -92,14 +90,15 @@ function App() {
         <Route path="/blog" element={<BlogIndex />} />
         <Route path="/blog/:slug" element={<BlogPost />} />
         <Route path="/faq" element={<Faq />} />
-        <Route path="/" element={<Home />} />
+        {/* Texas pages */}
         <Route path="/texas" element={<TexasIndex />} />
-          <Route path="/texas/pricing" element={<TexasPricing />} />
-          <Route path="/texas/faq" element={<TexasFAQ />} />
-          <Route path="/texas/helpcenter" element={<TexasHelpCenter />} />
-          <Route path="/texas/contactus" element={<TexasContactUs />} />
-          <Route path="/texas/terms" element={<TexasTerms />} />
-          <Route path="/" element={<Home />} />
+        <Route path="/texas/pricing" element={<TexasPricing />} />
+        <Route path="/texas/faq" element={<TexasFAQ />} />
+        <Route path="/texas/helpcenter" element={<TexasHelpCenter />} />
+        <Route path="/texas/contactus" element={<TexasContactUs />} />
+        <Route path="/texas/terms" element={<TexasTerms />} />
+        {/* Home route - must be last */}
+        <Route path="/" element={<Home />} />
       </Routes>
       <Footer />
     </div>

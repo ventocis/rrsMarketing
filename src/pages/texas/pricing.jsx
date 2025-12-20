@@ -1,5 +1,4 @@
 import React from 'react';
-import TexasLayout from '../../components/texas/TexasLayout.jsx';
 import Button from '../../components/Button.jsx';
 import SEO from '../../components/SEO.jsx';
 
@@ -31,7 +30,7 @@ const imgIconShieldGuarantee = "/assets/icons/texas/icon-shield-guarantee.svg";
 
 export default function TexasPricing() {
   return (
-    <TexasLayout>
+    <>
       <SEO 
         title="Texas Defensive Driving Course Pricing | Road Ready Safety"
         description="Simple, transparent pricing for Texas defensive driving courses. One price, everything included. TDLR-approved provider."
@@ -1017,7 +1016,7 @@ export default function TexasPricing() {
           </div>
         </div>
       </section>
-    </TexasLayout>
+    </>
   );
 }
 

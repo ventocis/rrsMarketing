@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Accordion, AccordionPanel, AccordionTitle, AccordionContent } from 'flowbite-react';
-import TexasLayout from '../../components/texas/TexasLayout.jsx';
 import Button from '../../components/Button.jsx';
 import Card from '../../components/Card.jsx';
 import CheckCircleIcon from '../../components/icons/CheckCircleIcon.jsx';
@@ -94,7 +93,7 @@ export default function TexasIndex() {
   // #endregion
 
   return (
-    <TexasLayout>
+    <>
       <SEO 
         title="#1 Texas Driver Safety Course: Fast, Convenient, & Online"
         description="Check your eligibility, request permission from your court, and complete your Texas-approved course — all online, all on any device."
@@ -131,8 +130,8 @@ export default function TexasIndex() {
                   className="bg-[#0667D1] hover:bg-[#0556b3] text-white h-[56px] px-[40px] rounded-[16px] shadow-[0px_20px_25px_-5px_rgba(17,23,34,0.10),0px_8px_10px_-6px_rgba(17,23,34,0.05)] text-sm font-semibold flex items-center justify-center leading-[20px] no-underline text-center"
                   style={{ fontFamily: "'DM Sans', sans-serif", textAlign: 'center' }}
                 >
-                  Start Course
-                </Button>
+                Start Course
+              </Button>
                 <Button 
                   href="/texas/pricing" 
                   variant="custom" 
@@ -140,7 +139,7 @@ export default function TexasIndex() {
                   style={{ fontFamily: "'DM Sans', sans-serif", textAlign: 'center' }}
                 >
                   Learn More
-                </Button>
+              </Button>
               </div>
             </div>
             
@@ -1174,7 +1173,7 @@ export default function TexasIndex() {
           </div>
         </div>
       </section>
-    </TexasLayout>
+    </>
   );
 }
 

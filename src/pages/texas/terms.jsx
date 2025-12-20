@@ -1,10 +1,9 @@
 import React from 'react';
-import TexasLayout from '../../components/texas/TexasLayout.jsx';
 import SEO from '../../components/SEO.jsx';
 
 export default function TexasTerms() {
   return (
-    <TexasLayout>
+    <>
       <SEO 
         title="Terms of Service - Road Ready Safety"
         description="Terms of service, privacy policy, and student policies for Road Ready Safety's Texas defensive driving course."
@@ -767,7 +766,7 @@ export default function TexasTerms() {
           </div>
         </div>
       </section>
-    </TexasLayout>
+    </>
   );
 }
 

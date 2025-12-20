@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import TexasLayout from '../../components/texas/TexasLayout.jsx';
 import Button from '../../components/Button.jsx';
 import SEO from '../../components/SEO.jsx';
 
@@ -11,7 +10,7 @@ export default function TexasHelpCenter() {
   const [expandedHelp, setExpandedHelp] = useState(null);
 
   return (
-    <TexasLayout>
+    <>
       <SEO 
         title="Help Center - Texas Defensive Driving Course | Road Ready Safety"
         description="Step-by-step guides and tutorials for completing your Texas defensive driving course. Learn how to enroll, access your course, download your certificate, and more."
@@ -325,7 +324,7 @@ export default function TexasHelpCenter() {
           </div>
         </div>
       </section>
-    </TexasLayout>
+    </>
   );
 }
 

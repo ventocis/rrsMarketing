@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import TexasLayout from '../../components/texas/TexasLayout.jsx';
 import SEO from '../../components/SEO.jsx';
 
 export default function TexasContactUs() {
@@ -39,7 +38,7 @@ export default function TexasContactUs() {
   };
 
   return (
-    <TexasLayout>
+    <>
       <SEO 
         title="Contact Us - Road Ready Safety"
         description="Get in touch with Road Ready Safety. Have questions about our Texas defensive driving course? Contact our support team."
@@ -173,7 +172,7 @@ export default function TexasContactUs() {
           </div>
         </div>
       </section>
-    </TexasLayout>
+    </>
   );
 }
 

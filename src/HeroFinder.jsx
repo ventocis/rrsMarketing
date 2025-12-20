@@ -68,30 +68,47 @@ export default function HeroFinder() {
   };
 
   return (
-    <section className="relative bg-white border-b border-gray-200 py-20 lg:py-28 overflow-hidden overflow-x-hidden scroll-mt-24" id="find-course">
-      {/* sref: hero-bg-gradient */}
-      <div aria-hidden="true" className="absolute inset-0 pointer-events-none select-none" style={{background: 'linear-gradient(120deg, #e0e7ff 0%, #f0fdfa 100%)', opacity: 0.25, zIndex: 0}}></div>
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 w-full overflow-x-hidden">
-        <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-8 md:gap-12">
-          {/* Left column - existing content unchanged */}
+    <section className="relative bg-white border-b border-[#e5e5e5] py-16 lg:py-24 overflow-hidden overflow-x-hidden scroll-mt-24" id="find-course" style={{ fontFamily: "'Inter', sans-serif" }}>
+      <div className="relative max-w-[1152px] mx-auto px-4 sm:px-6 lg:px-8 z-10 w-full overflow-x-hidden">
+        <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-12 lg:gap-16">
+          {/* Left column - Text and Form */}
           <div className="max-w-[65ch] text-center lg:text-left">
-            {/* sref: hero-title */}
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">Dismiss your ticket. Lower your rates. Get it done fast.</h1>
-            <p className="text-lg md:text-xl text-gray-600 leading-relaxed mb-8">State-approved, mobile-friendly, and built to save your progress. Learn at your pace, pass the quizzes, and get your certificate without the hassle.</p>
-            <div className="max-w-xl mx-auto lg:mx-0 text-left shadow-md bg-white p-6 rounded-lg mt-12">
+            {/* Main Heading */}
+            <h1 className="mb-6 text-[40px] leading-[52px] font-extrabold text-[#1e2832] tracking-[-0.02em]">
+              Dismiss your ticket. Lower your rates. Get it done fast.
+            </h1>
+            {/* Subtitle */}
+            <p className="text-base leading-[22px] text-[#616d7b] mb-12">
+              State-approved, mobile-friendly, and built to save your progress. Learn at your pace, pass the quizzes, and get your certificate without the hassle.
+            </p>
+            {/* Form Card - light grey bg, 12px radius, shadow */}
+            <div className="max-w-xl mx-auto lg:mx-0 text-left bg-[#F9FAFB] p-6 rounded-[12px] mt-12" style={{ boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)' }}>
               <form className="grid grid-cols-1 lg:grid-cols-2 gap-6" onSubmit={handleSubmit}>
                 <div className="col-span-1 lg:col-span-2">
-                  <h2 className="text-2xl md:text-3xl font-bold mb-4">Find the right course</h2>
-                  <p className="text-gray-500 text-sm mb-4">Select your state and reason. If there are multiple options, we'll show you the choices.</p>
+                  {/* Form Heading */}
+                  <h2 className="text-xl leading-[30px] font-medium text-[#464646] mb-4">
+                    Find the right course
+                  </h2>
+                  {/* Helper text */}
+                  <p className="text-xs leading-4 text-[#616d7b] mb-4">
+                    Select your state and reason. If there are multiple options, we'll show you the choices.
+                  </p>
                 </div>
                 <div>
-                  <label htmlFor="state" className="block text-sm font-medium mb-1">State</label>
+                  <label 
+                    htmlFor="state" 
+                    className="block text-sm font-medium mb-2 text-[#262626]"
+                    style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500 }}
+                  >
+                    State
+                  </label>
                   <Select 
                     id="state" 
                     value={selectedState} 
                     onChange={e => { setSelectedState(e.target.value); setSelectedCourse(''); setSelectedLanguage(''); }} 
                     required
-                    className="text-sm md:text-base [&>select]:text-sm [&>select]:md:text-base [&>select]:py-2 [&>select]:md:py-2.5 [&>select]:px-3 [&>select]:md:px-4 [&>select]:min-h-[44px] [&>select]:md:min-h-[44px] [&>select]:w-full [&>select]:border-gray-300 [&>select]:rounded-lg [&>select]:focus:ring-2 [&>select]:focus:ring-blue-500 [&>select]:focus:border-blue-500"
+                    className="[&>select]:text-sm [&>select]:leading-5 [&>select]:py-3 [&>select]:px-4 [&>select]:min-h-[44px] [&>select]:w-full [&>select]:border [&>select]:border-[#e5e5e5] [&>select]:rounded-[8px] [&>select]:bg-white [&>select]:text-[#262626] [&>select]:focus:ring-2 [&>select]:focus:ring-[#fe915c] [&>select]:focus:border-[#fe915c] [&>select]:outline-none [&>select]:transition-colors"
+                    style={{ fontFamily: "'Inter', sans-serif" }}
                   >
                     <option value="">Select a state</option>
                     {states.map(s => (
@@ -100,13 +117,20 @@ export default function HeroFinder() {
                   </Select>
                 </div>
                 <div>
-                  <label htmlFor="reason" className="block text-sm font-medium mb-1">Reason</label>
+                  <label 
+                    htmlFor="reason" 
+                    className="block text-sm font-medium mb-2 text-[#262626]"
+                    style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500 }}
+                  >
+                    Reason
+                  </label>
                   <Select 
                     id="reason" 
                     value={selectedReason} 
                     onChange={e => { setSelectedReason(e.target.value); setSelectedCourse(''); setSelectedLanguage(''); }} 
                     required
-                    className="text-sm md:text-base [&>select]:text-sm [&>select]:md:text-base [&>select]:py-2 [&>select]:md:py-2.5 [&>select]:px-3 [&>select]:md:px-4 [&>select]:min-h-[44px] [&>select]:md:min-h-[44px] [&>select]:w-full [&>select]:border-gray-300 [&>select]:rounded-lg [&>select]:focus:ring-2 [&>select]:focus:ring-blue-500 [&>select]:focus:border-blue-500"
+                    className="[&>select]:text-sm [&>select]:leading-5 [&>select]:py-3 [&>select]:px-4 [&>select]:min-h-[44px] [&>select]:w-full [&>select]:border [&>select]:border-[#e5e5e5] [&>select]:rounded-[8px] [&>select]:bg-white [&>select]:text-[#262626] [&>select]:focus:ring-2 [&>select]:focus:ring-[#fe915c] [&>select]:focus:border-[#fe915c] [&>select]:outline-none [&>select]:transition-colors"
+                    style={{ fontFamily: "'Inter', sans-serif" }}
                   >
                     <option value="">Select a reason</option>
                     {reasons.map(r => (
@@ -115,29 +139,48 @@ export default function HeroFinder() {
                   </Select>
                 </div>
                 <div className={showAdvanced ? '' : 'hidden'}>
-                  <label htmlFor="course" className="block text-sm font-medium mb-1">Course (optional)</label>
+                  <label 
+                    htmlFor="course" 
+                    className="block text-sm font-medium mb-2 text-[#262626]"
+                    style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500 }}
+                  >
+                    Course (optional)
+                  </label>
                   <Select 
                     id="course" 
                     value={selectedCourse} 
                     onChange={e => setSelectedCourse(e.target.value)} 
                     disabled={!courseOptions.length}
-                    className="text-sm md:text-base [&>select]:text-sm [&>select]:md:text-base [&>select]:py-2 [&>select]:md:py-2.5 [&>select]:px-3 [&>select]:md:px-4 [&>select]:min-h-[44px] [&>select]:md:min-h-[44px] [&>select]:w-full [&>select]:border-gray-300 [&>select]:rounded-lg [&>select]:focus:ring-2 [&>select]:focus:ring-blue-500 [&>select]:focus:border-blue-500"
+                    className="[&>select]:text-sm [&>select]:leading-5 [&>select]:py-3 [&>select]:px-4 [&>select]:min-h-[44px] [&>select]:w-full [&>select]:border [&>select]:border-[#e5e5e5] [&>select]:rounded-[8px] [&>select]:bg-white [&>select]:text-[#262626] [&>select]:focus:ring-2 [&>select]:focus:ring-[#fe915c] [&>select]:focus:border-[#fe915c] [&>select]:outline-none [&>select]:transition-colors [&>select]:disabled:bg-[#efefef] [&>select]:disabled:text-[#7c7c7c]"
+                    style={{ fontFamily: "'Inter', sans-serif" }}
                   >
                     <option value="">Best option for my state</option>
                     {courseOptions.map(name => (
                       <option key={name} value={name}>{name}</option>
                     ))}
                   </Select>
-                  <p className="text-gray-500 text-sm mt-1">Leave "Course" as 'Best option' and we'll recommend the right one.</p>
+                  <p 
+                    className="text-xs leading-4 text-[#616d7b] mt-2"
+                    style={{ fontFamily: "'Inter', sans-serif" }}
+                  >
+                    Leave "Course" as 'Best option' and we'll recommend the right one.
+                  </p>
                 </div>
                 <div className={showAdvanced ? '' : 'hidden'}>
-                  <label htmlFor="language" className="block text-sm font-medium mb-1">Language</label>
+                  <label 
+                    htmlFor="language" 
+                    className="block text-sm font-medium mb-2 text-[#262626]"
+                    style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500 }}
+                  >
+                    Language
+                  </label>
                   <Select 
                     id="language" 
                     value={selectedLanguage} 
                     onChange={e => setSelectedLanguage(e.target.value)} 
                     disabled={!languageOptions.length}
-                    className="text-sm md:text-base [&>select]:text-sm [&>select]:md:text-base [&>select]:py-2 [&>select]:md:py-2.5 [&>select]:px-3 [&>select]:md:px-4 [&>select]:min-h-[44px] [&>select]:md:min-h-[44px] [&>select]:w-full [&>select]:border-gray-300 [&>select]:rounded-lg [&>select]:focus:ring-2 [&>select]:focus:ring-blue-500 [&>select]:focus:border-blue-500"
+                    className="[&>select]:text-sm [&>select]:leading-5 [&>select]:py-3 [&>select]:px-4 [&>select]:min-h-[44px] [&>select]:w-full [&>select]:border [&>select]:border-[#e5e5e5] [&>select]:rounded-[8px] [&>select]:bg-white [&>select]:text-[#262626] [&>select]:focus:ring-2 [&>select]:focus:ring-[#fe915c] [&>select]:focus:border-[#fe915c] [&>select]:outline-none [&>select]:transition-colors [&>select]:disabled:bg-[#efefef] [&>select]:disabled:text-[#7c7c7c]"
+                    style={{ fontFamily: "'Inter', sans-serif" }}
                   >
                     <option value="">Any language</option>
                     {languageOptions.map(lang => (
@@ -146,10 +189,25 @@ export default function HeroFinder() {
                   </Select>
                 </div>
                 <div className="col-span-1 lg:col-span-2">
-                  <Button type="submit" variant="primary" size="md" className="w-full mt-2">
+                  <Button 
+                    type="submit" 
+                    variant="custom" 
+                    className="w-full mt-2 bg-[#0667D1] hover:bg-[#0556b3] text-white text-sm font-semibold py-3 px-4 rounded-[16px] min-h-[44px] flex items-center justify-center transition-colors"
+                    style={{ 
+                      fontFamily: "'Inter', sans-serif",
+                      boxShadow: '0 20px 25px -5px rgba(17, 23, 34, 0.10), 0 8px 10px -6px rgba(17, 23, 34, 0.05)'
+                    }}
+                  >
                     Find course
                   </Button>
-                  {emptyState && <div className="text-red-600 text-sm mt-2">No courses found for your selection.</div>}
+                  {emptyState && (
+                    <div 
+                      className="text-[#ef4444] text-sm mt-2"
+                      style={{ fontFamily: "'Inter', sans-serif" }}
+                    >
+                      No courses found for your selection.
+                    </div>
+                  )}
                 </div>
               </form>
             </div>

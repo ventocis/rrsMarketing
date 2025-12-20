@@ -8,6 +8,7 @@ import UspSection from './UspSection.jsx';
 import HowSection from './HowSection.jsx';
 import TrustSection from './TrustSection.jsx';
 import FaqSection from './FaqSection.jsx';
+import CtaHeroFinderSection from './CtaHeroFinderSection.jsx';
 import Footer from './Footer.jsx';
 import CoursePage from './CoursePage.jsx';
 import CoursesIndex from './pages/CoursesIndex.jsx';
@@ -67,6 +68,7 @@ function Home() {
       <HowSection />
       <TrustSection />
       <FaqSection />
+      <CtaHeroFinderSection />
     </>
   );
 }

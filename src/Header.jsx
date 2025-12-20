@@ -53,14 +53,19 @@ export default function Header() {
             <button className="h-9 px-4 rounded-[10px] text-xs font-semibold text-[#1e2832] hover:bg-gray-100 transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>
               Log In
             </button>
-            <Button 
-              href="/courses/tx-defensive" 
-              variant="custom" 
-              className="bg-[#0667d1] hover:bg-[#0556b3] text-white pt-[11.6px] pb-[12.4px] px-[20px] rounded-[12px] shadow-[0px_10px_15px_-3px_rgba(17,23,34,0.08),0px_4px_6px_-4px_rgba(17,23,34,0.05)] text-sm font-semibold flex items-center justify-center leading-[20px] no-underline text-center"
-              style={{ fontFamily: "'DM Sans', sans-serif", minHeight: '44px', textAlign: 'center' }}
-            >
-              Start Course
-            </Button>
+          <Button 
+            href="/courses/tx-defensive" 
+            variant="custom" 
+            className="bg-[#0667D1] hover:bg-[#0556b3] text-white pt-[11.6px] pb-[12.4px] px-[20px] rounded-[16px] text-sm font-semibold flex items-center justify-center leading-[20px] no-underline text-center"
+            style={{ 
+              fontFamily: "'DM Sans', sans-serif", 
+              minHeight: '44px', 
+              textAlign: 'center',
+              boxShadow: '0 20px 25px -5px rgba(17, 23, 34, 0.10), 0 8px 10px -6px rgba(17, 23, 34, 0.05)'
+            }}
+          >
+            Start Course
+          </Button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -93,7 +98,11 @@ export default function Header() {
                 <Button 
                   href="/courses/tx-defensive" 
                   variant="custom" 
-                  className="w-full h-11 px-5 rounded-xl bg-[#0667d1] text-white text-sm font-semibold shadow-[0px_10px_15px_-3px_rgba(17,23,34,0.08),0px_4px_6px_-4px_rgba(17,23,34,0.05)] hover:bg-[#0556b3]"
+                  className="w-full h-11 px-5 rounded-[16px] bg-[#0667D1] text-white text-sm font-semibold hover:bg-[#0556b3]"
+                  style={{ 
+                    fontFamily: "'DM Sans', sans-serif",
+                    boxShadow: '0 20px 25px -5px rgba(17, 23, 34, 0.10), 0 8px 10px -6px rgba(17, 23, 34, 0.05)'
+                  }}
                 >
                   Start Course
                 </Button>
@@ -107,80 +116,113 @@ export default function Header() {
 
   // Standard Header
   return (
-    <header className="w-full bg-white border-b border-gray-200 py-4 sticky top-0 z-50 shadow-sm">
-      <nav className="max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6 lg:px-8 w-full">
+    <header className="w-full bg-white border-b border-gray-200 sticky top-0 z-50">
+      <nav className="max-w-[1152px] mx-auto flex items-center justify-between px-4 sm:px-6 lg:px-8 h-20 w-full">
         {/* Logo - Left aligned */}
-        <a href="/" className="flex items-center gap-3 hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded flex-shrink-0">
-          <img src="/assets/logo.svg" alt="Road Ready Safety" className="h-8 w-auto max-w-full" />
-          <span className="text-xl font-semibold text-slate-700">Road Ready Safety</span>
+        <a href="/" className="flex items-center gap-2 hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded flex-shrink-0">
+          <img src="/assets/icons/texas/logo-shield.svg" alt="Road Ready Safety Logo" className="h-[39.633px] w-9" />
+          <div className="flex flex-col">
+            <span className="text-[18px] font-bold text-[#1e2832] leading-[22.5px]" style={{ fontFamily: "'Outfit', sans-serif" }}>Road Ready</span>
+            <span className="text-xs font-medium text-[#616d7b] leading-4" style={{ fontFamily: "'DM Sans', sans-serif" }}>Safety</span>
+          </div>
         </a>
         
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-4 flex-shrink-0">
-          <a href="/faq" className="text-slate-700 hover:underline">FAQ</a>
-          <a href="/support" className="text-slate-700 hover:underline">Help Center</a>
-          <a href="/courses" className="text-slate-700 hover:underline">Courses</a>
-          <Button href="https://courses.ticketschool.com/login/login.asp" variant="custom" className="h-8 px-4 rounded-full border border-gray-300 bg-white text-gray-600 hover:text-gray-800 hover:border-gray-400 text-sm font-medium flex items-center justify-center">Login</Button>
+        {/* Desktop Navigation Links */}
+        <div className="hidden md:flex items-center gap-8 flex-shrink-0">
+          <a href="#how-it-works" className="text-sm font-medium text-[#616d7b] hover:text-[#1e2832] transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>How It Works</a>
+          <a href="/courses" className="text-sm font-medium text-[#616d7b] hover:text-[#1e2832] transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>Courses</a>
+          <a href="/faq" className="text-sm font-medium text-[#616d7b] hover:text-[#1e2832] transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>FAQ</a>
+          <a href="/support" className="text-sm font-medium text-[#616d7b] hover:text-[#1e2832] transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>Help Center</a>
+        </div>
+
+        {/* Desktop Buttons */}
+        <div className="hidden md:flex items-center gap-3 flex-shrink-0">
+          <button className="h-9 px-4 rounded-[10px] text-xs font-semibold text-[#1e2832] hover:bg-gray-100 transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+            Log In
+          </button>
+          <Button 
+            href="/courses" 
+            variant="custom" 
+            className="bg-[#0667D1] hover:bg-[#0556b3] text-white pt-[11.6px] pb-[12.4px] px-[20px] rounded-[16px] text-sm font-semibold flex items-center justify-center leading-[20px] no-underline text-center"
+            style={{ 
+              fontFamily: "'DM Sans', sans-serif", 
+              minHeight: '44px', 
+              textAlign: 'center',
+              boxShadow: '0 20px 25px -5px rgba(17, 23, 34, 0.10), 0 8px 10px -6px rgba(17, 23, 34, 0.05)'
+            }}
+          >
+            Start Course
+          </Button>
         </div>
         
         {/* Mobile Hamburger Menu */}
         <button
           onClick={toggleMenu}
-          className="md:hidden p-2 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 flex-shrink-0"
+          className="md:hidden p-2 rounded-lg text-[#616d7b] hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
           aria-label="Toggle navigation menu"
         >
-          <div className="w-6 h-6 flex flex-col justify-center items-center">
-            <span className={`block w-5 h-0.5 bg-slate-700 transition-all duration-300 ${isMenuOpen ? 'rotate-45 translate-y-1.5' : ''}`}></span>
-            <span className={`block w-5 h-0.5 bg-slate-700 transition-all duration-300 mt-1 ${isMenuOpen ? 'opacity-0' : ''}`}></span>
-            <span className={`block w-5 h-0.5 bg-slate-700 transition-all duration-300 mt-1 ${isMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}></span>
-          </div>
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            {isMenuOpen ? (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            ) : (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            )}
+          </svg>
         </button>
       </nav>
       
       {/* Mobile Menu Overlay */}
       {isMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-white border-b border-gray-200 shadow-lg w-full z-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 w-full">
-            <nav className="flex flex-col space-y-4 w-full">
-              <a 
-                href="/" 
-                onClick={closeMenu}
-                className="text-slate-700 hover:text-slate-900 py-2 px-3 rounded-lg hover:bg-gray-50 font-medium w-full"
-              >
-                Home
-              </a>
-              <a 
+        <div className="md:hidden border-t border-gray-200 bg-white">
+          <div className="px-4 py-4 space-y-3">
+            <a 
+              href="#how-it-works" 
+              onClick={closeMenu}
+              className="block text-sm font-medium text-[#616d7b] hover:text-[#1e2832]"
+              style={{ fontFamily: "'DM Sans', sans-serif" }}
+            >
+              How It Works
+            </a>
+            <a 
+              href="/courses" 
+              onClick={closeMenu}
+              className="block text-sm font-medium text-[#616d7b] hover:text-[#1e2832]"
+              style={{ fontFamily: "'DM Sans', sans-serif" }}
+            >
+              Courses
+            </a>
+            <a 
+              href="/faq" 
+              onClick={closeMenu}
+              className="block text-sm font-medium text-[#616d7b] hover:text-[#1e2832]"
+              style={{ fontFamily: "'DM Sans', sans-serif" }}
+            >
+              FAQ
+            </a>
+            <a 
+              href="/support" 
+              onClick={closeMenu}
+              className="block text-sm font-medium text-[#616d7b] hover:text-[#1e2832]"
+              style={{ fontFamily: "'DM Sans', sans-serif" }}
+            >
+              Help Center
+            </a>
+            <div className="pt-2 space-y-2">
+              <button className="w-full h-9 px-4 rounded-[10px] text-xs font-semibold text-[#1e2832] border border-gray-300 hover:bg-gray-100" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                Log In
+              </button>
+              <Button 
                 href="/courses" 
-                onClick={closeMenu}
-                className="text-slate-700 hover:text-slate-900 py-2 px-3 rounded-lg hover:bg-gray-50 font-medium w-full"
+                variant="custom" 
+                className="w-full h-11 px-5 rounded-[16px] bg-[#0667D1] text-white text-sm font-semibold hover:bg-[#0556b3]"
+                style={{ 
+                  fontFamily: "'DM Sans', sans-serif",
+                  boxShadow: '0 20px 25px -5px rgba(17, 23, 34, 0.10), 0 8px 10px -6px rgba(17, 23, 34, 0.05)'
+                }}
               >
-                Courses
-              </a>
-              <a 
-                href="/faq" 
-                onClick={closeMenu}
-                className="text-slate-700 hover:text-slate-900 py-2 px-3 rounded-lg hover:bg-gray-50 font-medium w-full"
-              >
-                FAQ
-              </a>
-              <a 
-                href="/support" 
-                onClick={closeMenu}
-                className="text-slate-700 hover:text-slate-900 py-2 px-3 rounded-lg hover:bg-gray-50 font-medium w-full"
-              >
-                Help Center
-              </a>
-              <div className="pt-2 w-full">
-                <Button 
-                  href="https://courses.ticketschool.com/login/login.asp" 
-                  variant="custom" 
-                  onClick={closeMenu}
-                  className="w-full h-12 px-4 rounded-lg border border-gray-300 bg-white text-gray-600 hover:text-gray-800 hover:border-gray-400 text-sm font-medium flex items-center justify-center"
-                >
-                  Login
-                </Button>
-              </div>
-            </nav>
+                Start Course
+              </Button>
+            </div>
           </div>
         </div>
       )}

@@ -1,8 +1,8 @@
 import React from 'react';
 
-const base = 'inline-flex items-center justify-center font-semibold rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition';
+const base = 'inline-flex items-center justify-center font-semibold rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition';
 const variants = {
-  primary: 'bg-blue-600 text-white hover:bg-blue-700 hover:shadow-md hover:-translate-y-0.5 focus:shadow-md focus:-translate-y-0.5',
+  primary: 'bg-[#0667D1] text-white hover:bg-[#0556b3] rounded-[16px] transition-colors',
   secondary: 'bg-gray-100 text-gray-700 hover:bg-gray-200 hover:shadow-md hover:-translate-y-0.5 focus:shadow-md focus:-translate-y-0.5',
   link: 'bg-transparent text-blue-600 hover:text-blue-700 underline shadow-none px-0 py-0',
   custom: '', // No default styling, allows full custom className control
@@ -68,15 +68,22 @@ export default function Button({
   }, []);
   // #endregion
 
+  // Add shadow style for primary variant
+  const primaryShadowStyle = variant === 'primary' ? {
+    boxShadow: '0 20px 25px -5px rgba(17, 23, 34, 0.10), 0 8px 10px -6px rgba(17, 23, 34, 0.05)'
+  } : {};
+
+  const combinedStyle = { ...primaryShadowStyle, ...rest.style };
+
   if (href) {
     return (
-      <a href={href} className={classes} onClick={onClick} {...rest}>
+      <a href={href} className={classes} onClick={onClick} {...rest} style={combinedStyle}>
         {children}
       </a>
     );
   }
   return (
-    <button type="button" className={classes} onClick={onClick} {...rest}>
+    <button type="button" className={classes} onClick={onClick} {...rest} style={combinedStyle}>
       {children}
     </button>
   );

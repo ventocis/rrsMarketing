@@ -30,13 +30,11 @@ export default function Footer() {
             {/* Column 1 - Company Info */}
             <div className="flex flex-col gap-6 items-start w-full lg:w-[432px]">
               {/* Logo */}
-              <Link to="/texas" className="flex gap-2 items-center hover:opacity-80">
-                <div className="bg-[#0351b4] rounded-2xl w-10 h-10 flex items-center justify-center flex-shrink-0">
-                  <img src="/assets/icons/texas/logo-shield-footer.svg" alt="Road Ready Safety Logo" className="w-6 h-6" />
-                </div>
+              <Link to="/texas" className="flex items-center gap-2 hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded flex-shrink-0">
+                <img src="/assets/icons/texas/logo-shield.svg" alt="Road Ready Safety Logo" className="h-[39.633px] w-9" />
                 <div className="flex flex-col">
-                  <span className="text-lg font-bold text-white leading-[22.5px]" style={{ fontFamily: "'Outfit', sans-serif" }}>Road Ready</span>
-                  <span className="text-xs font-medium text-[#f6f6f9] leading-4" style={{ fontFamily: "'DM Sans', sans-serif" }}>Safety</span>
+                  <span className="text-[18px] font-bold text-white leading-[22.5px]" style={{ fontFamily: "'Outfit', sans-serif" }}>Road Ready</span>
+                  <span className="text-xs font-medium text-[#616d7b] leading-4" style={{ fontFamily: "'DM Sans', sans-serif" }}>Safety</span>
                 </div>
               </Link>
               
@@ -98,10 +96,6 @@ export default function Footer() {
               <p className="text-sm text-[#616d7b] leading-5" style={{ fontFamily: "'DM Sans', sans-serif" }}>
                 © {new Date().getFullYear()} Road Ready Safety. All rights reserved.
               </p>
-              <div className="flex gap-2 items-center">
-                <img src="/assets/icons/texas/tdlr-badge-footer.svg" alt="" className="w-4 h-4" />
-                <span className="text-sm text-[#616d7b] leading-5" style={{ fontFamily: "'DM Sans', sans-serif" }}>TDLR Approved Provider</span>
-              </div>
             </div>
           </div>
         </div>
@@ -111,80 +105,119 @@ export default function Footer() {
   
   // Standard Footer
   return (
-    <footer className="border-t border-gray-200 mt-10 pt-8">
-      <div className="max-w-7xl mx-auto px-6">
-        {/* Main Footer Content - 3 Column Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          
-          {/* Column 1 - Logo & Tagline */}
-          <div className="flex flex-col items-center md:items-start">
-            <a href="/" className="flex items-center gap-3 hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded">
-              <img src="/assets/logo.svg" alt="Road Ready Safety" className="h-10 w-auto" />
-              <span className="text-lg font-semibold text-slate-700">Road Ready Safety</span>
-            </a>
-            <p className="text-sm text-gray-500 mt-2 text-center md:text-left">
+    <footer className="bg-[#1e2832]">
+      <div className="max-w-[1200px] mx-auto px-6 py-16">
+        {/* Main Footer Content - 4 Column Grid */}
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-[48px] items-start justify-center">
+          {/* Column 1 - Company Info */}
+          <div className="flex flex-col gap-6 items-start w-full lg:w-[432px]">
+            {/* Logo */}
+            <Link to="/" className="flex items-center gap-2 hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded flex-shrink-0">
+              <img src="/assets/icons/texas/logo-shield.svg" alt="Road Ready Safety Logo" className="h-[39.633px] w-9" />
+              <div className="flex flex-col">
+                <span className="text-[18px] font-bold text-white leading-[22.5px]" style={{ fontFamily: "'Outfit', sans-serif" }}>Road Ready</span>
+                <span className="text-xs font-medium text-[#616d7b] leading-4" style={{ fontFamily: "'DM Sans', sans-serif" }}>Safety</span>
+              </div>
+            </Link>
+            
+            {/* Description */}
+            <p className="text-[14px] text-[#f6f6f9] leading-[20px] max-w-[384px]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
               Trusted and approved. Built for simplicity.
             </p>
+            
+            {/* Contact Info */}
+            <div className="flex flex-col gap-[11.6px]">
+              <div className="flex gap-[12px] items-center">
+                <img src="/assets/icons/texas/email-icon.svg" alt="" className="w-4 h-4" />
+                <a href="mailto:info@roadreadysafety.com" className="text-[14px] text-[#f6f6f9] leading-[20px] hover:text-white transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                  info@roadreadysafety.com
+                </a>
+              </div>
+              <div className="flex gap-[12px] items-center">
+                <img src="/assets/icons/texas/location-icon.svg" alt="" className="w-4 h-4" />
+                <a href="tel:+18888855707" className="text-[14px] text-[#f6f6f9] leading-[20px] hover:text-white transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                  (888) 885-5707
+                </a>
+              </div>
+            </div>
           </div>
           
-          {/* Column 2 - Quick Links */}
-          <div className="flex flex-col items-center md:items-start">
-            <h3 className="font-semibold text-gray-700 mb-2">Quick Links</h3>
-            <div className="flex flex-col space-y-2">
-              {quickLinks.map(link => (
-                <Button 
+          {/* Column 2 - Quick Links / Course */}
+          <div className="flex flex-col gap-4 items-start w-full lg:w-[192px]">
+            <h4 className="text-[16px] font-semibold text-white leading-6 tracking-[-0.4px]" style={{ fontFamily: "'Outfit', sans-serif" }}>Course</h4>
+            <div className="flex flex-col gap-[12px]">
+              {quickLinks.filter(link => ['Courses', 'FAQ'].includes(link.label)).map(link => (
+                <Link 
                   key={link.href} 
-                  href={link.href} 
-                  variant="custom" 
-                  size="sm" 
-                  className="text-sm text-gray-500 hover:text-gray-700 underline p-0 h-auto justify-start w-full text-left"
+                  to={link.href}
+                  className="text-[14px] text-[#f6f6f9] leading-[20px] hover:text-white transition-colors" 
+                  style={{ fontFamily: "'DM Sans', sans-serif" }}
                 >
                   {link.label}
-                </Button>
+                </Link>
               ))}
             </div>
           </div>
           
-          {/* Column 3 - Support & Social */}
-          <div className="flex flex-col items-center md:items-start">
-            <h3 className="font-semibold text-gray-700 mb-2">Need Support?</h3>
-            <div className="space-y-2 mb-4">
-              <div className="flex flex-col items-center md:items-start">
-                <a href="mailto:info@roadreadysafety.com" className="text-blue-600 hover:text-blue-700 text-sm">
-                  info@roadreadysafety.com
-                </a>
-              </div>
-              <div className="flex flex-col items-center md:items-start">
-                <a href="tel:+18888855707" className="text-blue-600 hover:text-blue-700 text-sm">
-                  (888) 885-5707
-                </a>
-                <span className="text-gray-500 text-xs">Mon–Fri, 9am–5pm EST</span>
-              </div>
-            </div>
-            
-            {/* Social Media Icons */}
-            <div className="flex gap-3">
-              {socialLinks.map(social => (
-                <a
-                  key={social.href}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2 rounded-lg bg-white border border-gray-200 hover:opacity-80 transition-opacity min-h-[44px] min-w-[44px] flex items-center justify-center flex-shrink-0"
-                  aria-label={social.label}
+          {/* Column 3 - Support */}
+          <div className="flex flex-col gap-4 items-start w-full lg:w-[192px]">
+            <h4 className="text-[16px] font-semibold text-white leading-6 tracking-[-0.4px]" style={{ fontFamily: "'Outfit', sans-serif" }}>Support</h4>
+            <div className="flex flex-col gap-[12px]">
+              {quickLinks.filter(link => link.label === 'Help Center').map(link => (
+                <Link 
+                  key={link.href} 
+                  to={link.href}
+                  className="text-[14px] text-[#f6f6f9] leading-[20px] hover:text-white transition-colors" 
+                  style={{ fontFamily: "'DM Sans', sans-serif" }}
                 >
-                  <img src={social.icon} alt="" className="w-5 h-5 max-w-[24px] max-h-[24px]" />
-                </a>
+                  {link.label}
+                </Link>
+              ))}
+              <Link 
+                to="/support" 
+                className="text-[14px] text-[#f6f6f9] leading-[20px] hover:text-white transition-colors" 
+                style={{ fontFamily: "'DM Sans', sans-serif" }}
+              >
+                Contact Us
+              </Link>
+              {quickLinks.filter(link => link.label === 'Become a Partner').map(link => (
+                <Link 
+                  key={link.href} 
+                  to={link.href}
+                  className="text-[14px] text-[#f6f6f9] leading-[20px] hover:text-white transition-colors" 
+                  style={{ fontFamily: "'DM Sans', sans-serif" }}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+          
+          {/* Column 4 - Legal */}
+          <div className="flex flex-col gap-4 items-start w-full lg:w-[192px]">
+            <h4 className="text-[16px] font-semibold text-white leading-6 tracking-[-0.4px]" style={{ fontFamily: "'Outfit', sans-serif" }}>Legal</h4>
+            <div className="flex flex-col gap-[12px]">
+              {quickLinks.filter(link => ['Privacy Policy', 'Terms of Service'].includes(link.label)).map(link => (
+                <Link 
+                  key={link.href} 
+                  to={link.href}
+                  className="text-[14px] text-[#f6f6f9] leading-[20px] hover:text-white transition-colors" 
+                  style={{ fontFamily: "'DM Sans', sans-serif" }}
+                >
+                  {link.label}
+                </Link>
               ))}
             </div>
           </div>
         </div>
         
-        {/* Bottom Copyright */}
-        <div className="mt-8 pt-6 border-t border-gray-200">
-          <p className="text-xs text-gray-400 text-center">
-            © {new Date().getFullYear()} Road Ready Safety. All rights reserved.
-          </p>
+        {/* Bottom Section */}
+        <div className="border-t border-[#1c2331] pt-[32.8px]">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p className="text-[14px] text-[#616d7b] leading-[20px]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+              © {new Date().getFullYear()} Road Ready Safety. All rights reserved.
+            </p>
+          </div>
         </div>
       </div>
     </footer>

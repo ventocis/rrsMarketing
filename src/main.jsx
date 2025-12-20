@@ -1,7 +1,5 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
-import { HelmetProvider } from 'react-helmet-async';
+﻿import React from 'react';
+import { Routes, Route } from 'react-router-dom';
 import 'flowbite/dist/flowbite.css';
 import './index.css';
 import TexasIndex from './pages/texas/index.jsx';
@@ -29,45 +27,83 @@ if (typeof window !== 'undefined') {
 }
 // #endregion
 
-const Home = () => {
+﻿import 'flowbite/dist/flowbite.css';
+import './index.css';
+import Header from './Header.jsx';
+import HeroFinder from './HeroFinder.jsx';
+import UspSection from './UspSection.jsx';
+import HowSection from './HowSection.jsx';
+import TrustSection from './TrustSection.jsx';
+import FaqSection from './FaqSection.jsx';
+import Footer from './Footer.jsx';
+import CoursePage from './CoursePage.jsx';
+import CoursesIndex from './pages/CoursesIndex.jsx';
+import ResultsPage from './ResultsPage.jsx';
+import SupportPage from './pages/Support.jsx';
+import HowToSubmit from './pages/HowToSubmit.jsx';
+import PrivacyPage from './pages/Privacy.jsx';
+import TermsPage from './pages/Terms.jsx';
+import Partners from './pages/Partners.jsx';
+import BlogIndex from './pages/BlogIndex.jsx';
+import BlogPost from './pages/BlogPost.jsx';
+import Faq from './pages/Faq.jsx';
+import CourseRequirements from './pages/CourseRequirements.jsx';
+import { Routes, Route } from 'react-router-dom';
+import ScrollToTop from './components/ScrollToTop.jsx';
+import SEO from './components/SEO.jsx';
+import StructuredData from './components/StructuredData.jsx';
+
+function Home() {
   return (
-    <div className="min-h-screen bg-white">
-      <div className="container py-8">
-        <h1 className="text-3xl font-bold text-gray-900">Road Ready Safety</h1>
-        <p className="mt-4 text-gray-600">State-approved traffic courses. Mobile-friendly. Instant proof.</p>
-        <a href="/texas" className="text-blue-600 underline mt-4 inline-block">Go to Texas Page</a>
-      </div>
-    </div>
+    <>
+      <SEO 
+        title="The modern way to finish your traffic course"
+        description="State-approved traffic school and defensive driving built to be simple. Start on your phone, finish anywhere. Instant digital certificate available."
+        keywords="traffic school, defensive driving, online course, traffic ticket, driver improvement, state approved"
+        image="/assets/rrs (1200 x 630 px).png"
+        url="/"
+      />
+      <StructuredData type="website" />
+      <StructuredData type="organization" />
+      <HeroFinder />
+      <UspSection />
+      <HowSection />
+      <TrustSection />
+      <FaqSection />
+    </>
   );
-};
+}
 
 function App() {
-  // #region agent log
-  React.useEffect(() => {
-    const logEndpoint = 'http://127.0.0.1:7242/ingest/d43cc9bd-40ea-434a-b828-df0c6f64d204';
-    fetch(logEndpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.jsx:App:mount',message:'App component mounted',data:{pathname:window.location.pathname},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
-  }, []);
-  // #endregion
-  
   return (
-    <HelmetProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/texas" element={<TexasIndex />} />
+    <div className="w-full overflow-x-hidden">
+      <ScrollToTop />
+      <Header />
+      <Routes>
+        <Route path="/courses" element={<CoursesIndex />} />
+        <Route path="/courses/:slug" element={<CoursePage />} />
+        <Route path="/courses/:slug/requirements" element={<CourseRequirements />} />
+        <Route path="/find/:state/:courseType" element={<ResultsPage />} />
+        <Route path="/support" element={<SupportPage />} />
+        <Route path="/support/how-to-submit" element={<HowToSubmit />} />
+        <Route path="/privacy" element={<PrivacyPage />} />
+        <Route path="/terms" element={<TermsPage />} />
+        <Route path="/partners" element={<Partners />} />
+        <Route path="/blog" element={<BlogIndex />} />
+        <Route path="/blog/:slug" element={<BlogPost />} />
+        <Route path="/faq" element={<Faq />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/texas" element={<TexasIndex />} />
           <Route path="/texas/pricing" element={<TexasPricing />} />
           <Route path="/texas/faq" element={<TexasFAQ />} />
           <Route path="/texas/helpcenter" element={<TexasHelpCenter />} />
           <Route path="/texas/contactus" element={<TexasContactUs />} />
           <Route path="/texas/terms" element={<TexasTerms />} />
           <Route path="/" element={<Home />} />
-        </Routes>
-      </BrowserRouter>
-    </HelmetProvider>
+      </Routes>
+      <Footer />
+    </div>
   );
 }
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+export default App;

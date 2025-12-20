@@ -1,0 +1,7 @@
+---
+description: It must be a static site that can be hosted on s3
+globs:
+alwaysApply: true
+---
+
+This must be a static site. It will be stored on s3, so we need to be able to the build & store it on s3 as a static site.

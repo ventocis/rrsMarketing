@@ -1,0 +1,21 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Road Ready Driver Instruction LLC",
+  "url": "https://roadreadysafety.com/",
+  "logo": "https://roadreadysafety.com/logo.png",
+  "telephone": "+1-XXX-XXX-XXXX",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "<ADDR>",
+    "addressLocality": "<CITY>",
+    "addressRegion": "<ST>",
+    "postalCode": "<ZIP>",
+    "addressCountry": "US"
+  },
+  "sameAs": [
+    "https://www.facebook.com/<handle>",
+    "https://www.linkedin.com/company/<id>",
+    "https://x.com/<handle>"
+  ]
+}

@@ -8,10 +8,10 @@
     "sub": "Approved where required, built to be simple. Start on your phone, finish on your laptop—pick up right where you left off.",
     "cta": "Get started",
     "cta_anchor": "#find-course"
-{
+  },
   "finder": {
     "heading": "Find the right course",
-    "sub": "Select your state and reason. If there are multiple options, we’ll show you the choices.",
+    "sub": "Select your state and reason. If there are multiple options, we'll show you the choices.",
     "label_state": "State",
     "label_reason": "Reason",
     "label_course": "Course (optional)",
@@ -24,33 +24,27 @@
       "license": "Driver License"
     },
     "submit": "Find course",
-    "helper": "Leave “Course” as ‘Best option’ and we’ll recommend the right one.",
-    "comingSoon": "We’re adding courses for this state. Check back soon."
-  }
-}
-    },
-    "submit": "Find course",
-    "helper": "Leave “Course” as ‘Best option’ and we’ll recommend the right one.",
-    "comingSoon": "We’re adding courses for this state. Check back soon."
+    "helper": "Leave \"Course\" as 'Best option' and we'll recommend the right one.",
+    "comingSoon": "We're adding courses for this state. Check back soon."
   },
   "usp": {
-    "heading": "What sets us apart",
+    "heading": "Why Drivers Choose Road Ready",
     "items": [
       {
-        "title": "Instant digital certificate",
-        "body": "Downloadable proof the moment you finish."
+        "title": "Learn on your schedule",
+        "body": "Start, stop, and pick up anytime — your progress is always saved."
+      },
+      {
+        "title": "Satisfaction guarantee",
+        "body": "Every course comes with a built-in guarantee for your peace of mind."
+      },
+      {
+        "title": "Shortest course allowed by law",
+        "body": "No fluff. Just the approved minimum so you finish faster."
       },
       {
         "title": "Works on any device",
-        "body": "Mobile-first design that feels natural on phone, tablet, or desktop."
-      },
-      {
-        "title": "Start/stop anytime",
-        "body": "Your progress is auto-saved so you can learn at your pace."
-      },
-      {
-        "title": "Modern, distraction-free",
-        "body": "Clean UI, readable text, and a flow that just makes sense."
+        "body": "Mobile-first design works seamlessly on your phone, tablet, or desktop."
       }
     ]
   },
@@ -60,7 +54,7 @@
       {
         "n": 1,
         "title": "Choose state & course",
-        "body": "Tell us where you’re licensed and why you need the course."
+        "body": "Tell us where you're licensed and why you need the course."
       },
       {
         "n": 2,
@@ -70,13 +64,34 @@
       {
         "n": 3,
         "title": "Pass & get your certificate",
-        "body": "Instant digital certificate upon completion."
+        "body": "Digital certificate upon completion."
       },
       {
         "n": 4,
         "title": "Submit if required",
         "body": "Some courts or insurers need documentation.",
-        "link": { "label": "How to submit →", "href": "#" }
+        "link": { "label": "How to submit →", "href": "/support/how-to-submit" }
+      }
+    ]
+  },
+  "trust": {
+    "heading": "Trusted & Supported",
+    "items": [
+      {
+        "title": "Secure checkout",
+        "body": "Payments processed by Stripe with TLS/SSL encryption."
+      },
+      {
+        "title": "Accepted where required",
+        "body": "Clearly labeled state approvals and reporting guidance."
+      },
+      {
+        "title": "Certificate delivery",
+        "body": "Electronic certificate available; electronic state reporting where required."
+      },
+      {
+        "title": "Responsive support",
+        "body": "Email 24/7 (reply within 24h) • Phone Mon–Fri 9–5."
       }
     ]
   }

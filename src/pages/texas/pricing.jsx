@@ -20,6 +20,7 @@ const imgIconList = "/assets/icons/texas/icon-list.svg";
 
 // Local icon assets for How We Compare section
 const imgLogoShieldBlue = "/assets/icons/texas/logo-shield-blue.svg";
+const imgRRSLogo = "/assets/icons/texas/rrs-logo.svg";
 const imgCheckmarkBlue = "/assets/icons/texas/checkmark-blue.svg";
 const imgCheckmarkGray = "/assets/icons/texas/checkmark-gray.svg";
 const imgXRed = "/assets/icons/texas/x-red.svg";
@@ -63,9 +64,9 @@ export default function TexasPricing() {
           </div>
           
           {/* Pricing Cards */}
-          <div className="flex flex-col lg:flex-row gap-6 items-start justify-center">
+          <div className="flex flex-col lg:flex-row gap-6 items-center justify-center">
             {/* Basic Card */}
-            <div className="relative bg-white border border-[#eaecf0] rounded-2xl p-6 flex flex-col gap-6 w-full lg:w-[322px] h-[551px]">
+            <div className="hidden relative bg-white border border-[#eaecf0] rounded-2xl p-6 flex flex-col gap-6 w-full lg:w-[322px] h-[551px]">
               {/* Badge */}
               <div className="absolute bg-[#e5f6fe] px-2 py-1 rounded-2xl top-[42px] left-[195px]">
                 <span className="text-sm font-semibold text-[#1e2832] leading-[18px]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
@@ -162,18 +163,18 @@ export default function TexasPricing() {
             </div>
             
             {/* Professional Card - Highlighted */}
-            <div className="relative bg-gradient-to-r from-[#191917] to-[#3d3d3d] border border-[#eaecf0] rounded-2xl p-6 flex flex-col gap-6 w-full lg:w-[322px] h-[551px]">
+            <div className="relative bg-gradient-to-r from-[#191917] to-[#3d3d3d] border border-[#eaecf0] rounded-2xl p-8 flex flex-col gap-6 w-full lg:w-[400px] min-h-[600px]">
               {/* Badge */}
-              <div className="absolute bg-[#e5f6fe] px-2 py-1 rounded-2xl top-[26px] left-[180px]">
+              <div className="absolute bg-[#e5f6fe] px-3 py-1.5 rounded-2xl top-[32px] right-6">
                 <span className="text-sm font-semibold text-[#0667d1] leading-[18px]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
                   Recommended
                 </span>
               </div>
               
               {/* Header */}
-              <div className="flex flex-col gap-5">
-                <h3 className="text-[22px] font-bold text-white" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                  Professional
+              <div className="flex flex-col gap-5 pt-2">
+                <h3 className="text-[24px] lg:text-[26px] font-bold text-white leading-[32px] pr-20" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                  Texas Defensive Driving Course 6hr
                 </h3>
                 
                 {/* Price */}
@@ -206,7 +207,7 @@ export default function TexasPricing() {
                 <Button
                   href="/courses/tx-defensive"
                   variant="custom"
-                  className="h-[56px] px-[40px] bg-[#0667d1] border border-[#0667d1] text-white rounded-2xl shadow-[0px_10px_15px_-3px_rgba(17,23,34,0.08),0px_4px_6px_-4px_rgba(17,23,34,0.05)] text-lg font-semibold flex items-center justify-center gap-2 leading-[28px] w-[275px]"
+                  className="h-[56px] px-[40px] bg-[#0667d1] border border-[#0667d1] text-white rounded-2xl shadow-[0px_10px_15px_-3px_rgba(17,23,34,0.08),0px_4px_6px_-4px_rgba(17,23,34,0.05)] text-lg font-semibold flex items-center justify-center gap-2 leading-[28px] w-full"
                   style={{ fontFamily: "'DM Sans', sans-serif" }}
                 >
                   Enroll Now
@@ -245,22 +246,22 @@ export default function TexasPricing() {
                     <img src={imgCheckmark} alt="" className="w-4 h-4" />
                   </div>
                   <span className="text-base font-medium text-white" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                    Comparison 4
+                    Instant Certificate Download
                   </span>
                 </div>
                 <div className="flex gap-[17px] items-center">
-                  <div className="bg-[#f7f8f9] rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">
-                    <img src={imgX} alt="" className="w-4 h-4" />
+                  <div className="bg-[#e5f6fe] rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">
+                    <img src={imgCheckmark} alt="" className="w-4 h-4" />
                   </div>
-                  <span className="text-base font-medium text-[#a0abbb]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                    Comparison 5
+                  <span className="text-base font-medium text-white" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                    Compatible with any device
                   </span>
                 </div>
               </div>
             </div>
             
             {/* Enterprise Card */}
-            <div className="relative bg-white border border-[#eaecf0] rounded-2xl p-6 flex flex-col gap-6 w-full lg:w-[322px] h-[551px]">
+            <div className="hidden relative bg-white border border-[#eaecf0] rounded-2xl p-6 flex flex-col gap-6 w-full lg:w-[322px] h-[551px]">
               {/* Badge */}
               <div className="absolute bg-[#e5f6fe] px-2 py-1 rounded-2xl top-[26px] left-[222px]">
                 <span className="text-sm font-semibold text-[#1e2832] leading-[18px]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
@@ -446,17 +447,16 @@ export default function TexasPricing() {
                 </p>
               </div>
 
-              {/* Card 6: Texas-Based Support */}
+              {/* Card 6: Customer Support */}
               <div className="bg-white border border-[#e5e8eb] rounded-[20px] p-6 shadow-[0px_1px_3px_0px_rgba(17,23,34,0.04),0px_6px_16px_0px_rgba(17,23,34,0.06)] flex flex-col gap-3">
                 <div className="relative w-12 h-12 flex items-center justify-center rounded-[10px] border border-[#e8e8e8]">
                   <img src={imgIconSupport} alt="" className="w-6 h-6" />
                 </div>
                 <h3 className="text-base font-semibold text-[#111722] leading-6 tracking-[-0.4px]" style={{ fontFamily: "'Outfit', sans-serif" }}>
-                  Texas-Based Support
+                  Customer Support
                 </h3>
                 <p className="text-sm text-[#657386] leading-5" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                  Real humans ready to help via email within<br />
-                  1 business day
+                  Real humans ready to help via email (typically within 1 business day)
                 </p>
               </div>
             </div>
@@ -493,12 +493,6 @@ export default function TexasPricing() {
                   <div className="flex gap-2 items-start">
                     <img src={imgCheckmark} alt="" className="w-4 h-4 mt-0.5 flex-shrink-0" />
                     <p className="text-sm text-[#657386] leading-5" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                      Final exam
-                    </p>
-                  </div>
-                  <div className="flex gap-2 items-start">
-                    <img src={imgCheckmark} alt="" className="w-4 h-4 mt-0.5 flex-shrink-0" />
-                    <p className="text-sm text-[#657386] leading-5" style={{ fontFamily: "'DM Sans', sans-serif" }}>
                       Certificate of completion
                     </p>
                   </div>
@@ -507,11 +501,18 @@ export default function TexasPricing() {
 
               {/* Card 8: Bonus Tools */}
               <div className="bg-white border border-[#e5e8eb] rounded-[20px] p-6 shadow-[0px_1px_3px_0px_rgba(17,23,34,0.04),0px_6px_16px_0px_rgba(17,23,34,0.06)] flex flex-col gap-4 flex-1">
-                <div className="flex gap-2 items-center">
-                  <img src={imgIconList} alt="" className="w-5 h-5" />
-                  <h3 className="text-base font-semibold text-[#111722] leading-6 tracking-[-0.4px]" style={{ fontFamily: "'Outfit', sans-serif" }}>
-                    Bonus Tools
-                  </h3>
+                <div className="flex gap-2 items-center justify-between">
+                  <div className="flex gap-2 items-center">
+                    <img src={imgIconList} alt="" className="w-5 h-5" />
+                    <h3 className="text-base font-semibold text-[#111722] leading-6 tracking-[-0.4px]" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                      Bonus Tools
+                    </h3>
+                  </div>
+                  <div className="bg-[#0667d1] text-white px-2.5 py-1 rounded-full">
+                    <span className="text-xs font-semibold leading-4" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                      Coming Soon
+                    </span>
+                  </div>
                 </div>
                 <div className="flex flex-col gap-3">
                   <div className="flex gap-2 items-start">
@@ -577,7 +578,7 @@ export default function TexasPricing() {
                   <div className="flex gap-2 items-start">
                     <img src={imgCheckmark} alt="" className="w-4 h-4 mt-0.5 flex-shrink-0" />
                     <p className="text-sm text-[#657386] leading-5" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                      Email support (1 business day)
+                      Email support
                     </p>
                   </div>
                   <div className="flex gap-2 items-start">
@@ -617,22 +618,12 @@ export default function TexasPricing() {
                       Feature
                     </p>
                   </div>
-                  <div className="flex-1 px-4 py-10 flex flex-col items-center">
-                    <div className="bg-[#0667d1] rounded-2xl w-10 h-10 flex items-center justify-center mb-2">
-                      <img src={imgLogoShieldBlue} alt="Road Ready" className="w-5 h-5" />
-                    </div>
-                    <p className="text-base font-semibold text-[#0667d1] leading-6" style={{ fontFamily: "'Outfit', sans-serif" }}>
-                      Road Ready
-                    </p>
+                  <div className="flex-1 px-4 py-10 flex items-center justify-center">
+                    <img src={imgRRSLogo} alt="Road Ready Safety" className="h-[55px] w-auto object-contain" />
                   </div>
                   <div className="flex-1 px-4 py-10 flex items-center justify-center">
                     <p className="text-base font-medium text-[#657386] leading-6" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                      Competitor A
-                    </p>
-                  </div>
-                  <div className="flex-1 px-4 py-10 flex items-center justify-center">
-                    <p className="text-base font-medium text-[#657386] leading-6" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                      Competitor B
+                      Other Online Providers
                     </p>
                   </div>
                 </div>
@@ -653,36 +644,26 @@ export default function TexasPricing() {
                     </div>
                     <div className="flex-1 px-4 py-[18px] flex items-center justify-center">
                       <p className="text-sm text-[#657386] leading-5" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                        $24.95
-                      </p>
-                    </div>
-                    <div className="flex-1 px-4 py-[18px] flex items-center justify-center">
-                      <p className="text-sm text-[#657386] leading-5" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                        $29.95
+                        $49+
                       </p>
                     </div>
                   </div>
 
-                  {/* State Fee Included */}
+                  {/* Fees */}
                   <div className="flex border-b border-[rgba(229,232,235,0.5)]">
-                    <div className="flex-1 px-4 py-[18px] flex items-center">
+                    <div className="flex-1 px-4 py-4 flex items-center">
                       <p className="text-sm font-medium text-[#111722] leading-5" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                        State Fee Included
+                        Fees
                       </p>
                     </div>
                     <div className="flex-1 px-4 py-4 flex items-center justify-center">
                       <p className="text-base font-semibold text-[#0667d1] leading-6" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                        No ($3 separate)
+                        $3
                       </p>
                     </div>
-                    <div className="flex-1 px-4 py-[18px] flex items-center justify-center">
+                    <div className="flex-1 px-4 py-4 flex items-center justify-center">
                       <p className="text-sm text-[#657386] leading-5" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                        No ($3 separate)
-                      </p>
-                    </div>
-                    <div className="flex-1 px-4 py-[18px] flex items-center justify-center">
-                      <p className="text-sm text-[#657386] leading-5" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                        No ($7.95 separate)
+                        $15+
                       </p>
                     </div>
                   </div>
@@ -700,9 +681,6 @@ export default function TexasPricing() {
                     <div className="flex-1 px-4 py-4 flex items-center justify-center">
                       <img src={imgCheckmarkGray} alt="" className="w-5 h-5" />
                     </div>
-                    <div className="flex-1 px-4 py-4 flex items-center justify-center">
-                      <img src={imgCheckmarkGray} alt="" className="w-5 h-5" />
-                    </div>
                   </div>
 
                   {/* Mobile Friendly */}
@@ -714,9 +692,6 @@ export default function TexasPricing() {
                     </div>
                     <div className="flex-1 px-4 py-4 flex items-center justify-center">
                       <img src={imgCheckmarkBlue} alt="" className="w-5 h-5" />
-                    </div>
-                    <div className="flex-1 px-4 py-4 flex items-center justify-center">
-                      <img src={imgCheckmarkGray} alt="" className="w-5 h-5" />
                     </div>
                     <div className="flex-1 px-4 py-4 flex items-center justify-center">
                       <p className="text-sm text-[#657386] leading-5" style={{ fontFamily: "'DM Sans', sans-serif" }}>
@@ -733,13 +708,14 @@ export default function TexasPricing() {
                       </p>
                     </div>
                     <div className="flex-1 px-4 py-4 flex items-center justify-center">
-                      <img src={imgCheckmarkBlue} alt="" className="w-5 h-5" />
+                      <p className="text-base font-semibold text-[#0667d1] leading-6" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                        Free
+                      </p>
                     </div>
                     <div className="flex-1 px-4 py-4 flex items-center justify-center">
-                      <img src={imgCheckmarkGray} alt="" className="w-5 h-5" />
-                    </div>
-                    <div className="flex-1 px-4 py-4 flex items-center justify-center">
-                      <img src={imgXRed} alt="" className="w-5 h-5" />
+                      <p className="text-sm text-[#657386] leading-5" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                        $$$
+                      </p>
                     </div>
                   </div>
 
@@ -752,9 +728,6 @@ export default function TexasPricing() {
                     </div>
                     <div className="flex-1 px-4 py-4 flex items-center justify-center">
                       <img src={imgCheckmarkBlue} alt="" className="w-5 h-5" />
-                    </div>
-                    <div className="flex-1 px-4 py-4 flex items-center justify-center">
-                      <img src={imgXRed} alt="" className="w-5 h-5" />
                     </div>
                     <div className="flex-1 px-4 py-4 flex items-center justify-center">
                       <img src={imgCheckmarkGray} alt="" className="w-5 h-5" />
@@ -772,10 +745,22 @@ export default function TexasPricing() {
                       <img src={imgCheckmarkBlue} alt="" className="w-5 h-5" />
                     </div>
                     <div className="flex-1 px-4 py-4 flex items-center justify-center">
-                      <img src={imgCheckmarkGray} alt="" className="w-5 h-5" />
+                      <img src={imgXRed} alt="" className="w-5 h-5" />
+                    </div>
+                  </div>
+
+                  {/* Try It 100% Risk-Free */}
+                  <div className="flex border-b border-[rgba(229,232,235,0.5)]">
+                    <div className="flex-1 px-4 py-4 flex items-center">
+                      <p className="text-sm font-medium text-[#111722] leading-5" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                        Try It 100% Risk-Free
+                      </p>
                     </div>
                     <div className="flex-1 px-4 py-4 flex items-center justify-center">
-                      <img src={imgXRed} alt="" className="w-5 h-5" />
+                      <img src={imgCheckmarkBlue} alt="" className="w-5 h-5" />
+                    </div>
+                    <div className="flex-1 px-4 py-4 flex items-center justify-center">
+                      <img src={imgCheckmarkGray} alt="" className="w-5 h-5" />
                     </div>
                   </div>
 
@@ -787,10 +772,9 @@ export default function TexasPricing() {
                       </p>
                     </div>
                     <div className="flex-1 px-4 py-4 flex items-center justify-center">
-                      <img src={imgCheckmarkBlue} alt="" className="w-5 h-5" />
-                    </div>
-                    <div className="flex-1 px-4 py-4 flex items-center justify-center">
-                      <img src={imgXRed} alt="" className="w-5 h-5" />
+                      <p className="text-sm text-[#657386] leading-5" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                        Coming Soon
+                      </p>
                     </div>
                     <div className="flex-1 px-4 py-4 flex items-center justify-center">
                       <img src={imgXRed} alt="" className="w-5 h-5" />
@@ -805,48 +789,9 @@ export default function TexasPricing() {
                       </p>
                     </div>
                     <div className="flex-1 px-4 py-4 flex items-center justify-center">
-                      <img src={imgCheckmarkBlue} alt="" className="w-5 h-5" />
-                    </div>
-                    <div className="flex-1 px-4 py-4 flex items-center justify-center">
-                      <img src={imgXRed} alt="" className="w-5 h-5" />
-                    </div>
-                    <div className="flex-1 px-4 py-4 flex items-center justify-center">
-                      <img src={imgXRed} alt="" className="w-5 h-5" />
-                    </div>
-                  </div>
-
-                  {/* 100% Money-Back Guarantee */}
-                  <div className="flex border-b border-[rgba(229,232,235,0.5)]">
-                    <div className="flex-1 px-4 py-4 flex items-center">
-                      <p className="text-sm font-medium text-[#111722] leading-5" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                        100% Money-Back Guarantee
-                      </p>
-                    </div>
-                    <div className="flex-1 px-4 py-4 flex items-center justify-center">
-                      <img src={imgCheckmarkBlue} alt="" className="w-5 h-5" />
-                    </div>
-                    <div className="flex-1 px-4 py-4 flex items-center justify-center">
-                      <img src={imgXRed} alt="" className="w-5 h-5" />
-                    </div>
-                    <div className="flex-1 px-4 py-4 flex items-center justify-center">
                       <p className="text-sm text-[#657386] leading-5" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                        30 days
+                        Coming Soon
                       </p>
-                    </div>
-                  </div>
-
-                  {/* No Hidden Fees */}
-                  <div className="flex border-b border-[rgba(229,232,235,0.5)]">
-                    <div className="flex-1 px-4 py-4 flex items-center">
-                      <p className="text-sm font-medium text-[#111722] leading-5" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                        No Hidden Fees
-                      </p>
-                    </div>
-                    <div className="flex-1 px-4 py-4 flex items-center justify-center">
-                      <img src={imgCheckmarkBlue} alt="" className="w-5 h-5" />
-                    </div>
-                    <div className="flex-1 px-4 py-4 flex items-center justify-center">
-                      <img src={imgXRed} alt="" className="w-5 h-5" />
                     </div>
                     <div className="flex-1 px-4 py-4 flex items-center justify-center">
                       <img src={imgXRed} alt="" className="w-5 h-5" />
@@ -859,7 +804,7 @@ export default function TexasPricing() {
         </div>
       </section>
 
-      {/* 100% Money-Back Guarantee Section */}
+      {/* Try It 100% Risk-Free Section */}
       <section className="bg-[#e5f6fe] py-[96px] px-4 sm:px-6 lg:px-[144px]">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col lg:flex-row gap-12 items-center justify-between">
@@ -875,15 +820,12 @@ export default function TexasPricing() {
               
               {/* Title */}
               <h2 className="text-[36px] font-bold text-[#111722] leading-[40px] tracking-[-0.9px]" style={{ fontFamily: "'Outfit', sans-serif" }}>
-                100% Money-Back<br />
-                Guarantee
+                Try It 100% Risk-Free
               </h2>
               
               {/* Description */}
               <p className="text-lg text-[#111722] opacity-90 leading-[28px]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                We're confident you'll love our course. But if you're<br />
-                not completely satisfied for any reason, we'll<br />
-                refund your money — no questions asked.
+                We built Road Ready to be the easiest way to complete your Texas driving safety course. If you're not satisfied, you can request a full refund before you complete the course or receive your certificate.
               </p>
               
               {/* List */}
@@ -893,7 +835,7 @@ export default function TexasPricing() {
                     <img src={imgCheckmarkBlue} alt="" className="w-4 h-4" />
                   </div>
                   <p className="text-base text-[#111722] leading-6" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                    Full refund if you're not satisfied
+                    Full refund if you request it before course completion/certificate issuance
                   </p>
                 </div>
                 <div className="flex gap-3 items-center">
@@ -910,14 +852,6 @@ export default function TexasPricing() {
                   </div>
                   <p className="text-base text-[#111722] leading-6" style={{ fontFamily: "'DM Sans', sans-serif" }}>
                     Refund processed within 3-5 business days
-                  </p>
-                </div>
-                <div className="flex gap-3 items-center">
-                  <div className="bg-white rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0">
-                    <img src={imgCheckmarkBlue} alt="" className="w-4 h-4" />
-                  </div>
-                  <p className="text-base text-[#111722] leading-6" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                    Keep your progress if you decide to return
                   </p>
                 </div>
               </div>
@@ -946,8 +880,7 @@ export default function TexasPricing() {
                   Satisfaction Guaranteed
                 </p>
                 <p className="text-sm text-[#111722] opacity-70 leading-5 text-center pt-2" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                  Join thousands of Texas drivers who've successfully<br />
-                  dismissed their tickets with Road Ready Safety.
+                  Become one of the many Texas drivers choosing a simpler way to dismiss their tickets.
                 </p>
               </div>
             </div>
@@ -971,9 +904,7 @@ export default function TexasPricing() {
                 Ready to Dismiss Your Texas Ticket?
               </h2>
               <p className="text-lg text-[#b9e2fe] text-center leading-7 max-w-[672px]">
-                Join thousands of Texas drivers who have successfully completed their<br />
-                defensive driving course with Road Ready Safety. Start today and get your<br />
-                certificate instantly.
+                Become one of the many Texas drivers choosing a simpler way to dismiss their tickets. Start today and get your certificate instantly.
               </p>
               
               {/* Buttons */}

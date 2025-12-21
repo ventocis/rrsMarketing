@@ -22,6 +22,7 @@ export default function SupportPage() {
         markdown={md}
         showContactCard
         breadcrumbs={breadcrumbs}
+        hideHeader
       />
     </>
   );

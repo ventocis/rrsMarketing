@@ -17,18 +17,18 @@ export default function CourseResultCard({ course }) {
     >
       <div className="mt-3 flex flex-wrap gap-2 text-sm">
         {course.duration_hours && (
-          <span className="rounded-md bg-gray-100 text-gray-700 px-2 py-1">{hours(course.duration_hours)}</span>
+          <span className="rounded-md bg-white text-[#262626] border border-[#e5e5e5] px-2 py-1">{hours(course.duration_hours)}</span>
         )}
         {course.language && (
-          <span className="rounded-md bg-gray-100 text-gray-700 px-2 py-1">{Array.isArray(course.language) ? course.language[0] : course.language}</span>
+          <span className="rounded-md bg-white text-[#262626] border border-[#e5e5e5] px-2 py-1">{Array.isArray(course.language) ? course.language[0] : course.language}</span>
         )}
         {course.price_usd && (
-          <span className="rounded-md bg-gray-100 text-gray-700 px-2 py-1">{usd(course.price_usd)}</span>
+          <span className="rounded-md bg-white text-[#262626] border border-[#e5e5e5] px-2 py-1">{usd(course.price_usd)}</span>
         )}
       </div>
-      <div className="text-gray-600 leading-relaxed mt-2 text-sm">{truncate(course.blurb || course.description, 140)}</div>
+      <div className="text-[#616d7b] leading-relaxed mt-2 text-sm">{truncate(course.blurb || course.description, 140)}</div>
       {course.provider_type === 'Partner' && course.provider_name && (
-        <span className="mt-3 inline-flex max-w-max self-start items-center gap-1 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700 leading-none">
+        <span className="mt-3 inline-flex max-w-max self-start items-center gap-1 rounded-full border border-[#7cc3f9] bg-[#e6f4fd] px-3 py-1 text-xs font-semibold text-[#0667D1] leading-none">
           Provided by {course.provider_name}
         </span>
       )}

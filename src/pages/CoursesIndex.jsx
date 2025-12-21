@@ -53,12 +53,12 @@ export default function CoursesIndex() {
         image="/assets/rrs (1200 x 630 px).png"
         url="/courses"
       />
-      <main className="bg-gray-50 min-h-screen pb-12">
-      <section className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-12">
+      <main className="bg-white min-h-screen pb-12">
+      <section className="max-w-[1152px] mx-auto px-4 md:px-6 py-8 md:py-12">
         {/* Page Header */}
         <div className="text-center mb-12">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">All Courses</h1>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+          <h1 className="text-3xl md:text-4xl font-bold text-[#1e2832] mb-4">All Courses</h1>
+          <p className="text-lg text-[#616d7b] max-w-3xl mx-auto">
             Browse our complete catalog of state-approved traffic courses and defensive driving programs.
           </p>
         </div>
@@ -67,7 +67,7 @@ export default function CoursesIndex() {
         <div className="space-y-16">
           {coursesByState.map(({ stateCode, stateName, courses: stateCourses }) => (
             <div key={stateCode} id={stateCode}>
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8 border-b border-gray-200 pb-4">
+              <h2 className="text-2xl md:text-3xl font-bold text-[#1e2832] mb-8 border-b border-[#e5e5e5] pb-4">
                 {stateName}
               </h2>
               
@@ -84,8 +84,8 @@ export default function CoursesIndex() {
         {/* Empty State (defensive programming) */}
         {coursesByState.length === 0 && (
           <div className="text-center py-16">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">No courses available</h2>
-            <p className="text-gray-600">Check back soon for new course offerings.</p>
+            <h2 className="text-xl font-semibold text-[#1e2832] mb-4">No courses available</h2>
+            <p className="text-[#616d7b]">Check back soon for new course offerings.</p>
           </div>
         )}
       </section>

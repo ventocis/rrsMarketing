@@ -25,38 +25,68 @@ export default function UspSection() {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-12 lg:gap-16">
-          {/* Left column - content */}
-          <div className="max-w-[65ch]">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
-              {items.map((item, i) => (
+        <div className="max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+            {items.map((item, i) => {
+              // Choose icon based on card title
+              let iconSvg = null;
+              if (item.title.toLowerCase().includes('schedule') || item.title.toLowerCase().includes('learn')) {
+                // Clock icon for "Learn on your schedule"
+                iconSvg = (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                );
+              } else if (item.title.toLowerCase().includes('guarantee') || item.title.toLowerCase().includes('satisfaction')) {
+                // Check-circle icon for "Satisfaction guarantee"
+                iconSvg = (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                  </svg>
+                );
+              } else if (item.title.toLowerCase().includes('shortest') || item.title.toLowerCase().includes('course')) {
+                // Zap icon for "Shortest course allowed by law"
+                iconSvg = (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                  </svg>
+                );
+              } else if (item.title.toLowerCase().includes('device') || item.title.toLowerCase().includes('works')) {
+                // Smartphone icon for "Works on any device"
+                iconSvg = (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                    <line x1="12" y1="18" x2="12.01" y2="18"></line>
+                  </svg>
+                );
+              }
+
+              return (
                 <div 
                   key={i} 
-                  className="bg-white rounded-[12px] border border-[#e5e5e5] p-6 hover:shadow-md transition-shadow"
+                  className="bg-white rounded-[12px] border border-[#e5e5e5] p-8 hover:shadow-md transition-shadow relative"
                   style={{ boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)' }}
                 >
+                  {/* Icon in top right */}
+                  {iconSvg && (
+                    <div className="absolute top-8 right-8 text-[#0667D1]">
+                      {iconSvg}
+                    </div>
+                  )}
+                  
                   {/* Card Title */}
-                  <h3 className="text-xl font-medium text-[#262626] mb-3 tracking-[-0.02em]" style={{ lineHeight: '30px' }}>
+                  <h3 className="text-xl font-medium text-[#262626] mb-3 tracking-[-0.02em] pr-8" style={{ lineHeight: '30px' }}>
                     {item.title}
                   </h3>
                   {/* Card Body */}
                   <p className="text-base leading-[22px] text-[#616d7b]">
                     {item.body}
                   </p>
-                </div>
-              ))}
             </div>
-          </div>
-          
-          {/* Right column - illustration only */}
-          <div className="hidden lg:block">
-            <div className="relative">
-              <img 
-                src="/assets/illustrations/report.svg" 
-                alt="Why drivers choose Road Ready - reporting and compliance features"
-                className="h-48 md:h-64 lg:h-72 mx-auto lg:ml-auto"
-              />
-            </div>
+              );
+            })}
           </div>
         </div>
       </div>

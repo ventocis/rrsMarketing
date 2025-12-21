@@ -83,7 +83,7 @@ export default function HeroFinder() {
               State-approved, mobile-friendly, and built to save your progress. Learn at your pace, pass the quizzes, and get your certificate without the hassle.
             </p>
             {/* Form Card - light grey bg, 12px radius, shadow */}
-            <div className="max-w-xl mx-auto lg:mx-0 text-left bg-[#F9FAFB] p-6 rounded-[12px] mt-12" style={{ boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)' }}>
+            <div className="max-w-xl mx-auto lg:mx-0 text-left bg-[#F9FAFB] border border-[#e5e5e5] p-6 rounded-[12px] mt-12" style={{ boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)' }}>
               <form className="grid grid-cols-1 lg:grid-cols-2 gap-6" onSubmit={handleSubmit}>
                 <div className="col-span-1 lg:col-span-2">
                   {/* Form Heading */}

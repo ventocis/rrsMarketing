@@ -11,22 +11,24 @@ function replaceTodayToken(markdown) {
   return markdown.replace(/\{\{today\}\}/g, today);
 }
 
-export default function DocPage({ title, subtitle, markdown, showContactCard, breadcrumbs, customComponents }) {
+export default function DocPage({ title, subtitle, markdown, showContactCard, breadcrumbs, customComponents, hideHeader }) {
   const md = replaceTodayToken(markdown);
   
   return (
     <section className="bg-[#f9fafb] min-h-screen">
       <div className="max-w-[1152px] mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         {breadcrumbs && <SimpleBreadcrumbs items={breadcrumbs} />}
-        <header className="text-center mb-20 md:mb-24">
-          <div className="flex flex-col gap-4 items-center">
-            <div className="bg-[#e5f6fe] inline-flex items-center px-4 py-2 rounded-full">
-              <span className="text-sm font-semibold text-[#0351b4] leading-5" style={{ fontFamily: "'DM Sans', sans-serif" }}>Need Help?</span>
+        {!hideHeader && (
+          <header className="text-center mb-20 md:mb-24">
+            <div className="flex flex-col gap-4 items-center">
+              <div className="bg-[#e5f6fe] inline-flex items-center px-4 py-2 rounded-full">
+                <span className="text-sm font-semibold text-[#0351b4] leading-5" style={{ fontFamily: "'DM Sans', sans-serif" }}>Need Help?</span>
+              </div>
+              <h1 className="text-[36px] font-bold text-[#1e2832] text-center leading-[40px] tracking-[-0.9px]" style={{ fontFamily: "'Outfit', sans-serif" }}>{title}</h1>
+              {subtitle && <p className="text-base text-[#616d7b] text-center leading-6 max-w-3xl mx-auto" style={{ fontFamily: "'DM Sans', sans-serif" }}>{subtitle}</p>}
             </div>
-            <h1 className="text-[36px] font-bold text-[#1e2832] text-center leading-[40px] tracking-[-0.9px]" style={{ fontFamily: "'Outfit', sans-serif" }}>{title}</h1>
-            {subtitle && <p className="text-base text-[#616d7b] text-center leading-6 max-w-3xl mx-auto" style={{ fontFamily: "'DM Sans', sans-serif" }}>{subtitle}</p>}
-          </div>
-        </header>
+          </header>
+        )}
         <div className="grid grid-cols-1 lg:grid-cols-[1fr,320px] gap-8 xl:gap-12">
           <article>
             <div className="prose prose-slate max-w-none">

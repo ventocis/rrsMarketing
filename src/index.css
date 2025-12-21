@@ -106,3 +106,37 @@ body > #root > div {
   max-width: 100vw;
   overflow-x: hidden;
 }
+
+/* Override Flowbite select defaults in CTA section */
+#cta-state,
+#cta-reason,
+#cta-course,
+#cta-language {
+  border-color: #7cc3f9 !important;
+  background-color: white !important;
+  color: #262626 !important;
+}
+
+#cta-state:focus,
+#cta-reason:focus,
+#cta-course:focus,
+#cta-language:focus {
+  border-color: #7cc3f9 !important;
+  ring-color: #7cc3f9 !important;
+  --tw-ring-color: #7cc3f9 !important;
+}
+
+/* Override Flowbite Accordion defaults to remove outer borders */
+[data-testid="flowbite-accordion"] {
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+[data-testid="flowbite-accordion"] > * {
+  margin-bottom: 1rem;
+}
+
+[data-testid="flowbite-accordion"] > *:last-child {
+  margin-bottom: 0;
+}

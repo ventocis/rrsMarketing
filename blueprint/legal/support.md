@@ -1,9 +1,3 @@
-**Affiliate disclosure:** Road Ready may earn from partner referrals.
-
-We're here to help you start, finish, and get credit for your course.
-
----
-
 ## Contact Us
 
 **Email support (24/7):** [info@roadreadysafety.com](mailto:info@roadreadysafety.com)  
@@ -60,3 +54,9 @@ Check the course page for:
 
 **Email:** [info@roadreadysafety.com](mailto:info@roadreadysafety.com)  
 **Phone:** [(888) 885-5707](tel:+18888855707)
+
+---
+
+**Affiliate disclosure:** Road Ready may earn from partner referrals.
+
+We're here to help you start, finish, and get credit for your course.

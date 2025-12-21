@@ -86,22 +86,24 @@ export default function Header() {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden border-t border-gray-200 bg-white">
-            <div className="px-4 py-4 space-y-3">
-              <Link to="/texas/pricing" onClick={closeMenu} className="block text-sm font-medium text-[#616d7b] hover:text-[#1e2832]">Pricing</Link>
-              <Link to="/texas/faq" onClick={closeMenu} className="block text-sm font-medium text-[#616d7b] hover:text-[#1e2832]">FAQ</Link>
-              <Link to="/texas/helpcenter" onClick={closeMenu} className="block text-sm font-medium text-[#616d7b] hover:text-[#1e2832]">Help Center</Link>
-              <div className="pt-2 space-y-2">
-                <button className="w-full h-9 px-4 rounded-[10px] text-xs font-semibold text-[#1e2832] border border-gray-300 hover:bg-gray-100">
+          <div className="md:hidden border-t border-[#e5e5e5] bg-white">
+            <div className="px-4 py-6 space-y-4">
+              <Link to="/texas/pricing" onClick={closeMenu} className="block text-lg font-medium text-[#1e2832] text-center py-2" style={{ fontFamily: "'DM Sans', sans-serif" }}>Pricing</Link>
+              <Link to="/texas/faq" onClick={closeMenu} className="block text-lg font-medium text-[#1e2832] text-center py-2" style={{ fontFamily: "'DM Sans', sans-serif" }}>FAQ</Link>
+              <Link to="/texas/helpcenter" onClick={closeMenu} className="block text-lg font-medium text-[#1e2832] text-center py-2" style={{ fontFamily: "'DM Sans', sans-serif" }}>Help Center</Link>
+              <div className="pt-4 space-y-3">
+                <button className="w-full h-12 px-4 rounded-[10px] text-[18px] font-semibold text-[#1e2832] border border-[#e5e5e5] bg-white hover:bg-gray-50 transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>
                   Log In
                 </button>
                 <Button 
                   href="/courses/tx-defensive" 
                   variant="custom" 
-                  className="w-full h-11 px-5 rounded-[16px] bg-[#0667D1] text-white text-sm font-semibold hover:bg-[#0556b3]"
+                  className="w-full h-12 px-4 rounded-[10px] bg-[#0667D1] text-white text-[18px] font-semibold hover:bg-[#0556b3] transition-colors flex items-center justify-center"
                   style={{ 
                     fontFamily: "'DM Sans', sans-serif",
-                    boxShadow: '0 20px 25px -5px rgba(17, 23, 34, 0.10), 0 8px 10px -6px rgba(17, 23, 34, 0.05)'
+                    boxShadow: '0 20px 25px -5px rgba(17, 23, 34, 0.10), 0 8px 10px -6px rgba(17, 23, 34, 0.05)',
+                    minWidth: '0',
+                    display: 'flex'
                   }}
                 >
                   Start Course
@@ -173,12 +175,12 @@ export default function Header() {
       
       {/* Mobile Menu Overlay */}
       {isMenuOpen && (
-        <div className="md:hidden border-t border-gray-200 bg-white">
-          <div className="px-4 py-4 space-y-3">
+        <div className="md:hidden border-t border-[#e5e5e5] bg-white">
+          <div className="px-4 py-6 space-y-4">
             <a 
               href="#how-it-works" 
               onClick={closeMenu}
-              className="block text-sm font-medium text-[#616d7b] hover:text-[#1e2832]"
+              className="block text-lg font-medium text-[#1e2832] text-center py-2"
               style={{ fontFamily: "'DM Sans', sans-serif" }}
             >
               How It Works
@@ -186,7 +188,7 @@ export default function Header() {
             <a 
               href="/courses" 
               onClick={closeMenu}
-              className="block text-sm font-medium text-[#616d7b] hover:text-[#1e2832]"
+              className="block text-lg font-medium text-[#1e2832] text-center py-2"
               style={{ fontFamily: "'DM Sans', sans-serif" }}
             >
               Courses
@@ -194,7 +196,7 @@ export default function Header() {
             <a 
               href="/faq" 
               onClick={closeMenu}
-              className="block text-sm font-medium text-[#616d7b] hover:text-[#1e2832]"
+              className="block text-lg font-medium text-[#1e2832] text-center py-2"
               style={{ fontFamily: "'DM Sans', sans-serif" }}
             >
               FAQ
@@ -202,22 +204,24 @@ export default function Header() {
             <a 
               href="/support" 
               onClick={closeMenu}
-              className="block text-sm font-medium text-[#616d7b] hover:text-[#1e2832]"
+              className="block text-lg font-medium text-[#1e2832] text-center py-2"
               style={{ fontFamily: "'DM Sans', sans-serif" }}
             >
               Help Center
             </a>
-            <div className="pt-2 space-y-2">
-              <button className="w-full h-9 px-4 rounded-[10px] text-xs font-semibold text-[#1e2832] border border-gray-300 hover:bg-gray-100" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+            <div className="pt-4 space-y-3">
+              <button className="w-full h-12 px-4 rounded-[10px] text-[18px] font-semibold text-[#1e2832] border border-[#e5e5e5] bg-white hover:bg-gray-50 transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>
                 Log In
               </button>
               <Button 
                 href="/courses" 
                 variant="custom" 
-                className="w-full h-11 px-5 rounded-[16px] bg-[#0667D1] text-white text-sm font-semibold hover:bg-[#0556b3]"
+                className="w-full h-12 px-4 rounded-[10px] bg-[#0667D1] text-white text-[18px] font-semibold hover:bg-[#0556b3] transition-colors flex items-center justify-center"
                 style={{ 
                   fontFamily: "'DM Sans', sans-serif",
-                  boxShadow: '0 20px 25px -5px rgba(17, 23, 34, 0.10), 0 8px 10px -6px rgba(17, 23, 34, 0.05)'
+                  boxShadow: '0 20px 25px -5px rgba(17, 23, 34, 0.10), 0 8px 10px -6px rgba(17, 23, 34, 0.05)',
+                  minWidth: '0',
+                  display: 'flex'
                 }}
               >
                 Start Course

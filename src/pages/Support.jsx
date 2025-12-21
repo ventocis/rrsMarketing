@@ -19,7 +19,6 @@ export default function SupportPage() {
       />
       <DocPage
         title="Help Center"
-        subtitle="We're here to help you start, finish, and get credit for your course."
         markdown={md}
         showContactCard
         breadcrumbs={breadcrumbs}

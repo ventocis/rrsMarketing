@@ -68,7 +68,8 @@ export default function HeroFinder() {
   };
 
   return (
-    <section className="relative bg-white border-b border-[#e5e5e5] py-16 lg:py-24 overflow-hidden overflow-x-hidden scroll-mt-24" id="find-course" style={{ fontFamily: "'Inter', sans-serif" }}>
+    <section className="relative border-b border-[#e5e5e5] py-16 lg:py-24 overflow-hidden overflow-x-hidden scroll-mt-24" id="find-course" style={{ fontFamily: "'Inter', sans-serif" }}>
+      <div className="absolute inset-0 bg-gradient-to-b from-[#e5f6fe] opacity-50 to-white pointer-events-none"></div>
       <div className="relative max-w-[1152px] mx-auto px-4 sm:px-6 lg:px-8 z-10 w-full overflow-x-hidden">
         <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-12 lg:gap-16">
           {/* Left column - Text and Form */}

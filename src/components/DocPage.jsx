@@ -18,7 +18,7 @@ export default function DocPage({ title, subtitle, markdown, showContactCard, br
     <section className="bg-[#f9fafb] min-h-screen">
       <div className="max-w-[1152px] mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         {breadcrumbs && <SimpleBreadcrumbs items={breadcrumbs} />}
-        <header className="text-center mb-16 md:mb-20">
+        <header className="text-center mb-20 md:mb-24">
           <div className="flex flex-col gap-4 items-center">
             <div className="bg-[#e5f6fe] inline-flex items-center px-4 py-2 rounded-full">
               <span className="text-sm font-semibold text-[#0351b4] leading-5" style={{ fontFamily: "'DM Sans', sans-serif" }}>Need Help?</span>
@@ -35,17 +35,17 @@ export default function DocPage({ title, subtitle, markdown, showContactCard, br
                 rehypePlugins={[[rehypeSlug]]}
                 components={{
                   h1: ({node, ...props}) => null, // Hide h1 elements to prevent duplicate titles
-                  h2: ({node, ...props}) => <h2 {...props} className="text-2xl font-semibold text-[#1e2832] mt-8 mb-4 first:mt-0" />,
-                  h3: ({node, ...props}) => <h3 {...props} className="text-xl font-semibold text-[#1e2832] mt-6 mb-3" />,
-                  p: ({node, ...props}) => <p {...props} className="text-base md:text-lg text-[#616d7b] mb-4 leading-relaxed" />,
-                  ul: ({node, ...props}) => <ul {...props} className="list-disc list-inside mb-6 space-y-2" />,
+                  h2: ({node, ...props}) => <h2 {...props} className="text-2xl font-semibold text-[#1e2832] mt-16 mb-6 first:mt-0" />,
+                  h3: ({node, ...props}) => <h3 {...props} className="text-xl font-semibold text-[#1e2832] mt-12 mb-4" />,
+                  p: ({node, ...props}) => <p {...props} className="text-base md:text-lg text-[#616d7b] mb-6 leading-relaxed" />,
+                  ul: ({node, ...props}) => <ul {...props} className="list-disc list-inside mb-8 space-y-2" />,
                   li: ({node, ...props}) => <li {...props} className="text-base md:text-lg text-[#616d7b]" />,
                   strong: ({node, ...props}) => <strong {...props} className="font-semibold text-[#1e2832]" />,
                   em: ({node, ...props}) => <em {...props} className="italic text-[#616d7b]" />,
                   a: ({node, ...props}) => <a {...props} className="text-[#0667D1] underline decoration-[#7cc3f9] underline-offset-2 hover:text-[#0556b3] hover:decoration-2" />,
-                  blockquote: ({node, ...props}) => <blockquote {...props} className="border-l-4 border-[#7cc3f9] bg-[#e6f4fd] pl-4 py-2 my-6 rounded-r" />,
+                  blockquote: ({node, ...props}) => <blockquote {...props} className="border-l-4 border-[#7cc3f9] bg-[#e6f4fd] pl-4 py-2 my-8 rounded-r" />,
                   code: ({node, ...props}) => <code {...props} className="rounded bg-[#F9FAFB] border border-[#e5e5e5] px-1.5 py-0.5 text-sm text-[#1e2832]" />,
-                  hr: ({node, ...props}) => <hr {...props} className="border-t border-[#e5e5e5] my-8" />,
+                  hr: ({node, ...props}) => <hr {...props} className="border-t border-[#e5e5e5] my-12" />,
                 }}
               >
                 {md}

@@ -301,8 +301,7 @@ export default function TexasIndex() {
               <div className="flex flex-col gap-3 items-center w-full">
                 <h3 className="text-2xl font-semibold text-[#151515] leading-[32px]">100% Guarantee</h3>
                 <p className="text-sm text-[#4a5565] leading-5 text-center">
-                  Not happy? Get your money back, no<br />
-                  questions asked
+                  Not a fit? Get a full refund before you complete the course.
                 </p>
               </div>
             </div>
@@ -397,7 +396,6 @@ export default function TexasIndex() {
                   ))}
                 </div>
                 <span className="text-sm font-medium text-[#1e2832] leading-5">4.9 out of 5</span>
-                <span className="text-sm text-[#616d7b] leading-5">(2,400+ reviews)</span>
               </div>
 
               {/* Enroll Button */}
@@ -422,7 +420,7 @@ export default function TexasIndex() {
                 </div>
                 <div className="flex gap-2 items-center">
                   <img src="/assets/icons/texas/money-back-icon.svg" alt="" className="w-4 h-4" />
-                  <span className="text-sm text-[#616d7b] leading-5">100% money-back guarantee</span>
+                  <span className="text-sm text-[#616d7b] leading-5">100% risk-free guarantee</span>
                 </div>
               </div>
             </div>

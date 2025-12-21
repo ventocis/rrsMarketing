@@ -114,28 +114,30 @@ export default function TexasIndex() {
           {/* Hero - Two Column */}
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 xl:gap-16 items-center justify-center">
             {/* Left Column */}
-            <div className="w-full lg:w-[544px] flex flex-col gap-6">
-              <h1 className="text-4xl lg:text-[60px] font-bold text-[#021954] leading-[74px] tracking-[-2px]">
-                <span className="font-normal">#1</span> <span className="font-semibold">Texas Driver</span>
-                <br className="hidden lg:block" />
-                <span className="font-semibold">Safety Course:</span> <span className="font-normal">Fast, Convenient, & Online</span>
+            <div className="w-full lg:w-[544px] flex flex-col gap-[24px] items-center lg:items-start">
+              <h1 className="text-[36px] lg:text-[60px] font-bold text-[#021954] leading-[36px] lg:leading-[74px] tracking-[-2px] text-center lg:text-left w-full max-w-[343px] lg:max-w-none">
+                <span className="font-normal">#1</span> <span className="font-semibold">Texas Driver Safety Course:</span> <span className="font-normal">Fast, Convenient, & Online</span>
               </h1>
-              <p className="text-lg lg:text-xl text-[#616d7b] leading-7 max-w-[576px]">
-                Complete your Texas-approved 6-hour defensive driving course from any device. Dismiss your ticket or reduce insurance rates — it's never been easier.
+              <p className="text-[18px] lg:text-xl text-[#616d7b] leading-[28px] lg:leading-7 max-w-[576px] text-center lg:text-left">
+                Complete your Texas-approved 6-hour<br className="lg:hidden" />
+                <span className="hidden lg:inline"> </span>defensive driving course from any<br className="lg:hidden" />
+                <span className="hidden lg:inline"> </span>device. Dismiss your ticket or reduce<br className="lg:hidden" />
+                <span className="hidden lg:inline"> </span>insurance rates — it's never been easier.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 pt-2" style={{ paddingTop: '8px', gap: '16px', alignItems: 'flex-start' }}>
+              <div className="flex flex-col sm:flex-row gap-[16px] pt-[8px] w-full items-center lg:items-start">
                 <Button 
                   href="/courses/tx-defensive" 
                   variant="custom" 
-                  className="bg-[#0667D1] hover:bg-[#0556b3] text-white h-[56px] px-[40px] rounded-[16px] shadow-[0px_20px_25px_-5px_rgba(17,23,34,0.10),0px_8px_10px_-6px_rgba(17,23,34,0.05)] text-sm font-semibold flex items-center justify-center leading-[20px] no-underline text-center"
+                  className="bg-[#0667D1] hover:bg-[#0556b3] text-white h-[56px] px-[40px] sm:px-[40px] rounded-[16px] shadow-[0px_20px_25px_-5px_rgba(17,23,34,0.10),0px_8px_10px_-6px_rgba(17,23,34,0.05)] text-[18px] font-semibold flex items-center justify-center leading-[28px] no-underline text-center w-full sm:w-auto"
                   style={{ fontFamily: "'DM Sans', sans-serif", textAlign: 'center' }}
                 >
-                Start Course
-              </Button>
+                  <span className="sm:hidden">Start Course — $25</span>
+                  <span className="hidden sm:inline">Start Course</span>
+                </Button>
                 <Button 
                   href="/texas/pricing" 
                   variant="custom" 
-                  className="bg-white border border-[#e4e6ea] text-[#1e2832] h-[56px] px-[40px] rounded-[16px] shadow-[0px_4px_6px_-1px_rgba(17,23,34,0.07),0px_2px_4px_-2px_rgba(17,23,34,0.05)] text-lg font-semibold flex items-center justify-center leading-[28px] no-underline text-center"
+                  className="bg-white border border-[#e4e6ea] text-[#1e2832] h-[56px] px-[40px] sm:px-[40px] rounded-[16px] shadow-[0px_4px_6px_-1px_rgba(17,23,34,0.07),0px_2px_4px_-2px_rgba(17,23,34,0.05)] text-[18px] font-semibold flex items-center justify-center leading-[28px] no-underline text-center w-full sm:w-auto"
                   style={{ fontFamily: "'DM Sans', sans-serif", textAlign: 'center' }}
                 >
                   Learn More
@@ -145,7 +147,7 @@ export default function TexasIndex() {
             
             {/* Right Column - Phone Mockup */}
             <div className="relative w-full lg:w-[544px] flex items-start justify-center lg:justify-end">
-              <div className="relative w-full max-w-[320px] mx-auto lg:mx-0">
+              <div className="relative w-full max-w-[240px] mx-auto lg:mx-0 scale-75 lg:scale-100">
                 {/* Phone Frame */}
                 <div className="aspect-[320/675.55] bg-[#1e2832] rounded-[48px] p-2 shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)]">
                   <div className="bg-white rounded-[40px] h-full overflow-hidden">
@@ -313,65 +315,64 @@ export default function TexasIndex() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row gap-16 lg:gap-20 items-start justify-center">
             {/* Left Column */}
-            <div className="flex flex-col gap-6 items-start w-full lg:w-[536px] pb-8">
+            <div className="flex flex-col gap-[24px] items-start w-full lg:w-[536px] pb-8 lg:pb-0">
               <div className="bg-[#e5f6fe] inline-flex items-center px-4 py-2 rounded-full">
-                <span className="text-sm font-semibold text-[#0351b4] leading-5">Official 6hr Course</span>
+                <span className="text-sm font-semibold text-[#0351b4] leading-5">Texas Defensive Driving</span>
               </div>
-              <h2 className="text-4xl lg:text-[48px] font-bold text-[#1e2832] leading-[48px] tracking-[-1.2px]">
+              <h2 className="text-[30px] lg:text-[48px] font-bold text-[#1e2832] leading-[36px] lg:leading-[48px] tracking-[-0.75px] lg:tracking-[-1.2px]">
                 Texas Defensive Driving<br />
-                <span className="text-[#1e2832]">Course (6 hr)</span>
+                <span className="text-[#03449e]">Course (6 hr)</span>
               </h2>
-              <p className="text-lg text-[#616d7b] leading-7">
-                Everything you need to dismiss your Texas traffic ticket or<br />
-                reduce insurance premiums. State-approved, court-accepted,<br />
-                and designed for busy Texans.
+              <p className="text-[18px] lg:text-lg text-[#616d7b] leading-[28px] lg:leading-7">
+                Everything you need to dismiss your<br className="lg:hidden" />
+                <span className="hidden lg:inline"> </span>Texas traffic ticket or<br className="lg:hidden" />
+                <span className="hidden lg:inline"> </span>reduce insurance<br className="lg:hidden" />
+                <span className="hidden lg:inline"> </span>premiums. State-approved, court-<br className="lg:hidden" />
+                <span className="hidden lg:inline"> </span>accepted, and designed for busy Texans.
               </p>
-              {/* Feature List - 2 Column Grid with absolute positioning */}
-              <div className="relative w-full h-[200px]">
-                {/* Row 1 - Left */}
-                <div className="absolute left-0 right-[276px] top-0 flex gap-3 items-center">
-                  <div className="bg-[#b9e2fe] rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0">
+              {/* Feature List - Vertical Stack for Mobile */}
+              <div className="flex flex-col gap-[16px] w-full pt-[8px]">
+                {/* 6-Hour State-Approved Course */}
+                <div className="flex gap-[12px] items-center">
+                  <div className="bg-[#e5f6fe] rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0">
                     <img src="/assets/icons/texas/checkmark-feature.svg" alt="" className="w-3.5 h-3.5" />
                   </div>
-                  <div className="flex flex-col">
-                    <span className="text-base font-medium text-[#1e2832] leading-6">6-Hour State-Approved</span>
-                    <span className="text-base font-medium text-[#1e2832] leading-6">Course</span>
-                  </div>
+                  <span className="text-[16px] font-medium text-[#1e2832] leading-[24px]">6-Hour State-Approved Course</span>
                 </div>
-                {/* Row 1 - Right */}
-                <div className="absolute left-[276px] right-0 top-0 flex gap-3 items-center py-3">
-                  <div className="bg-[#b9e2fe] rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0">
+                {/* Instant Digital Certificate */}
+                <div className="flex gap-[12px] items-center">
+                  <div className="bg-[#e5f6fe] rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0">
                     <img src="/assets/icons/texas/checkmark-feature.svg" alt="" className="w-3.5 h-3.5" />
                   </div>
-                  <span className="text-base font-medium text-[#1e2832] leading-6">Instant Digital Certificate</span>
+                  <span className="text-[16px] font-medium text-[#1e2832] leading-[24px]">Instant Digital Certificate</span>
                 </div>
-                {/* Row 2 - Left */}
-                <div className="absolute left-0 right-[276px] top-[64px] flex gap-3 items-center">
-                  <div className="bg-[#b9e2fe] rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0">
+                {/* Mobile & Desktop Access */}
+                <div className="flex gap-[12px] items-center">
+                  <div className="bg-[#e5f6fe] rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0">
                     <img src="/assets/icons/texas/checkmark-feature.svg" alt="" className="w-3.5 h-3.5" />
                   </div>
-                  <span className="text-base font-medium text-[#1e2832] leading-6">Mobile & Desktop Access</span>
+                  <span className="text-[16px] font-medium text-[#1e2832] leading-[24px]">Mobile & Desktop Access</span>
                 </div>
-                {/* Row 2 - Right */}
-                <div className="absolute left-[276px] right-0 top-[64px] flex gap-3 items-center">
-                  <div className="bg-[#b9e2fe] rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0">
+                {/* Automatic Progress Saving */}
+                <div className="flex gap-[12px] items-center">
+                  <div className="bg-[#e5f6fe] rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0">
                     <img src="/assets/icons/texas/checkmark-feature.svg" alt="" className="w-3.5 h-3.5" />
                   </div>
-                  <span className="text-base font-medium text-[#1e2832] leading-6">Automatic Progress Saving</span>
+                  <span className="text-[16px] font-medium text-[#1e2832] leading-[24px]">Automatic Progress Saving</span>
                 </div>
-                {/* Row 3 - Left */}
-                <div className="absolute left-0 right-[276px] top-[104px] flex gap-3 items-center py-3">
-                  <div className="bg-[#b9e2fe] rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0">
+                {/* Unlimited Quiz Attempts */}
+                <div className="flex gap-[12px] items-center">
+                  <div className="bg-[#e5f6fe] rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0">
                     <img src="/assets/icons/texas/checkmark-feature.svg" alt="" className="w-3.5 h-3.5" />
                   </div>
-                  <span className="text-base font-medium text-[#1e2832] leading-6">Unlimited Quiz Attempts</span>
+                  <span className="text-[16px] font-medium text-[#1e2832] leading-[24px]">Unlimited Quiz Attempts</span>
                 </div>
-                {/* Row 4 - Left */}
-                <div className="absolute left-0 right-[276px] top-[168px] flex gap-3 items-center">
-                  <div className="bg-[#b9e2fe] rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0">
+                {/* Customer Support */}
+                <div className="flex gap-[12px] items-center">
+                  <div className="bg-[#e5f6fe] rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0">
                     <img src="/assets/icons/texas/checkmark-feature.svg" alt="" className="w-3.5 h-3.5" />
                   </div>
-                  <span className="text-base font-medium text-[#1e2832] leading-6">Customer Support</span>
+                  <span className="text-[16px] font-medium text-[#1e2832] leading-[24px]">Customer Support</span>
                 </div>
               </div>
             </div>

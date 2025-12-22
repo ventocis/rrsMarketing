@@ -74,6 +74,11 @@ function Home() {
 }
 
 function App() {
+  // Check if Texas routes are enabled via environment variable
+  // Set VITE_TEXAS_ROUTES_ENABLED=true to enable Texas routes
+  // Defaults to false (disabled) if not set
+  const isTexasRoutesEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+
   return (
     <div className="w-full overflow-x-hidden m-0 p-0">
       <ScrollToTop />
@@ -92,13 +97,17 @@ function App() {
         <Route path="/blog" element={<BlogIndex />} />
         <Route path="/blog/:slug" element={<BlogPost />} />
         <Route path="/faq" element={<Faq />} />
-        {/* Texas pages */}
-        <Route path="/texas" element={<TexasIndex />} />
-        <Route path="/texas/pricing" element={<TexasPricing />} />
-        <Route path="/texas/faq" element={<TexasFAQ />} />
-        <Route path="/texas/helpcenter" element={<TexasHelpCenter />} />
-        <Route path="/texas/contactus" element={<TexasContactUs />} />
-        <Route path="/texas/terms" element={<TexasTerms />} />
+        {/* Texas pages - only rendered if VITE_TEXAS_ROUTES_ENABLED=true */}
+        {isTexasRoutesEnabled && (
+          <>
+            <Route path="/texas" element={<TexasIndex />} />
+            <Route path="/texas/pricing" element={<TexasPricing />} />
+            <Route path="/texas/faq" element={<TexasFAQ />} />
+            <Route path="/texas/helpcenter" element={<TexasHelpCenter />} />
+            <Route path="/texas/contactus" element={<TexasContactUs />} />
+            <Route path="/texas/terms" element={<TexasTerms />} />
+          </>
+        )}
         {/* Home route - must be last */}
         <Route path="/" element={<Home />} />
       </Routes>

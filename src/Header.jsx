@@ -5,7 +5,9 @@ import Button from './components/Button.jsx';
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
-  const isTexasRoute = location.pathname.startsWith('/texas');
+  // Check if Texas routes are enabled via environment variable
+  const isTexasRoutesEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+  const isTexasRoute = isTexasRoutesEnabled && location.pathname.startsWith('/texas');
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);

@@ -1,8 +1,10 @@
 ﻿User-agent: *
 Allow: /
+Disallow: /texas/
 
 # Sitemap location
 Sitemap: https://roadreadysafety.com/sitemap.xml
 
 # Allow all search engine crawlers
 # Remove the test site blocking
+# Texas routes are excluded from search engine indexing

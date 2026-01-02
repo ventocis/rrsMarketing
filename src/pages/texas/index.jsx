@@ -502,7 +502,7 @@ export default function TexasIndex() {
                           </div>
                           <div className="flex flex-col gap-1 flex-1">
                             <h4 className="text-sm font-bold text-[#101828] leading-5 mb-1">Complete a Course</h4>
-                            <p className="text-sm text-[#4a5565] leading-5">You must finish every lesson, pass the required quizzes and final exam, and certify that you—not someone else—completed the course.</p>
+                            <p className="text-sm text-[#4a5565] leading-5">You must finish every lesson, pass the required quizzes, and certify that you—not someone else—completed the course.</p>
                           </div>
                         </div>
                       </div>
@@ -655,7 +655,7 @@ export default function TexasIndex() {
                     <div className="mt-4">
                       <h4 className="text-sm font-bold text-[#101828] leading-5 mb-2">Testing</h4>
                       <p className="text-sm text-[#364153] leading-6">
-                        And don't stress about testing: instead of a giant scary exam, you'll see short 3-question knowledge checks along the way and one final quiz. You always get unlimited retries, so the goal is learning—not tricking you.
+                        And don't stress about testing: instead of a giant scary exam, you'll see short 3-question knowledge checks along the way. You always get unlimited retries, so the goal is learning—not tricking you.
                       </p>
               </div>
             </div>
@@ -898,30 +898,6 @@ export default function TexasIndex() {
 
           {/* FAQ Accordion Items */}
           <div className="flex flex-col gap-4">
-            {/* FAQ 1 */}
-            <div className="bg-white border border-[#e4e6ea] rounded-2xl overflow-hidden">
-              <button
-                onClick={() => setExpandedFAQ(expandedFAQ === 'faq1' ? null : 'faq1')}
-                className="w-full px-6 py-5 flex items-center justify-between"
-              >
-                <span className="text-base font-semibold text-[#1e2832] leading-6 tracking-[-0.4px] text-left">
-                  Why is the course $25 + $3?
-                </span>
-                <img 
-                  src="/assets/icons/texas/chevron-faq.svg" 
-                  alt="" 
-                  className={`w-4 h-4 transition-transform ${expandedFAQ === 'faq1' ? 'rotate-180' : ''}`} 
-                />
-              </button>
-              {expandedFAQ === 'faq1' && (
-                <div className="px-6 pb-5">
-                  <p className="text-base text-[#616d7b] leading-6">
-                    The $25 is our course fee, and the $3 is a required state processing fee that goes directly to the Texas Department of Licensing and Regulation (TDLR). This is the minimum fee allowed by Texas law.
-                  </p>
-                </div>
-              )}
-            </div>
-
             {/* FAQ 2 */}
             <div className="bg-white border border-[#e4e6ea] rounded-2xl overflow-hidden">
               <button
@@ -1012,7 +988,7 @@ export default function TexasIndex() {
               {expandedFAQ === 'faq5' && (
                 <div className="px-6 pb-5">
                   <p className="text-base text-[#616d7b] leading-6">
-                    You have up to 180 days from enrollment to complete the course. However, you must finish before your court's deadline for ticket dismissal.
+                    You have up to 90 days from enrollment to complete the course. However, you must finish before your court's deadline for ticket dismissal.
                   </p>
                 </div>
               )}
@@ -1060,7 +1036,7 @@ export default function TexasIndex() {
               {expandedFAQ === 'faq7' && (
                 <div className="px-6 pb-5">
                   <p className="text-base text-[#616d7b] leading-6">
-                    You get unlimited retakes on all quizzes and the final exam. The goal is learning, not tricking you. Take your time and review the material as needed.
+                    You get unlimited retakes on all unit quizzes. There is no final exam. The goal is learning, not tricking you. Take your time and review the material as needed.
                   </p>
                 </div>
               )}
@@ -1084,7 +1060,7 @@ export default function TexasIndex() {
               {expandedFAQ === 'faq8' && (
                 <div className="px-6 pb-5">
                   <p className="text-base text-[#616d7b] leading-6">
-                    Yes, we offer a 100% money-back guarantee. If you're not satisfied with the course, contact us within 30 days of enrollment for a full refund.
+                    Yes! If you're not satisfied, you can request a full refund before you complete the course or receive your certificate.
                   </p>
                 </div>
               )}
@@ -1097,7 +1073,7 @@ export default function TexasIndex() {
               Still have questions?
             </h3>
             <p className="text-base text-[#616d7b] text-center leading-6 pb-3">
-              Our Texas-based support team is here to help. We typically respond within 1 business day.
+              Our support team is here to help.
             </p>
             <Button 
               href="/contact" 

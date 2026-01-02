@@ -121,8 +121,8 @@ export default function TexasHelpCenter() {
                     <li>Read the content and watch any videos included</li>
                     <li>Complete the knowledge checks at the end of each section</li>
                     <li>Take your time — there's no time limit per module</li>
-                    <li>You must pass the final exam with a 70% or higher to complete the course</li>
-                    <li>Don't worry — you get unlimited retakes on all quizzes and the final exam</li>
+                    <li>You must pass the quizzes with 70% or higher to complete the course</li>
+                    <li>Don't worry — you get unlimited retakes on all quizzes</li>
                   </ol>
                 </div>
               )}
@@ -151,7 +151,7 @@ export default function TexasHelpCenter() {
                   <ol className="list-decimal list-inside space-y-2 text-base text-[#616d7b] leading-6" style={{ fontFamily: "'DM Sans', sans-serif" }}>
                     <li>Log in to your account dashboard</li>
                     <li>Look for the "Certificate" section or "Download Certificate" button</li>
-                    <li>Click to download your Certificate of Completion (PDF format)</li>
+                    <li>Click to download your Certificate of Completion</li>
                     <li>Save it to your computer or print it immediately</li>
                     <li>You can download it as many times as needed — it's always available in your account</li>
                   </ol>
@@ -187,7 +187,7 @@ export default function TexasHelpCenter() {
                     <li>Request your Texas Driver Record (DPS Type 3A) from the Texas Department of Public Safety</li>
                     <li>Check if your court requires a court affidavit (some courts do, some don't)</li>
                     <li>Gather all required documents according to your court's specific instructions</li>
-                    <li>Submit everything to your court by the deadline (usually 90-120 days from ticket date)</li>
+                    <li>Submit everything to your court by the deadline</li>
                     <li>Keep copies of everything you submit for your records</li>
                   </ol>
                   <p className="text-base text-[#616d7b] leading-6 mt-4" style={{ fontFamily: "'DM Sans', sans-serif" }}>
@@ -310,7 +310,7 @@ export default function TexasHelpCenter() {
               Still need help?
             </h3>
             <p className="text-base text-[#616d7b] text-center leading-6 pb-3" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-              Our Texas-based support team is here to help. We typically respond within 1 business day.
+              Our support team is here to help.
             </p>
             <Button
               href="/texas/contactus"

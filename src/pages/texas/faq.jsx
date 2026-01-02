@@ -34,30 +34,6 @@ export default function TexasFAQ() {
 
           {/* FAQ Accordion Items */}
           <div className="flex flex-col gap-4">
-            {/* FAQ 1 */}
-            <div className="bg-white border border-[#e4e6ea] rounded-2xl overflow-hidden">
-              <button
-                onClick={() => setExpandedFAQ(expandedFAQ === 'faq1' ? null : 'faq1')}
-                className="w-full px-6 py-5 flex items-center justify-between hover:bg-gray-50 transition-colors"
-              >
-                <span className="text-base font-semibold text-[#1e2832] leading-6 tracking-[-0.4px] text-left" style={{ fontFamily: "'Outfit', sans-serif" }}>
-                  Why is the course $25 + $3?
-                </span>
-                <img 
-                  src={imgChevronFAQ} 
-                  alt="" 
-                  className={`w-4 h-4 transition-transform ${expandedFAQ === 'faq1' ? 'rotate-180' : ''}`} 
-                />
-              </button>
-              {expandedFAQ === 'faq1' && (
-                <div className="px-6 pb-5">
-                  <p className="text-base text-[#616d7b] leading-6" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                    The $25 is our course fee, and the $3 is a required state processing fee that goes directly to the Texas Department of Licensing and Regulation (TDLR). This is the minimum fee allowed by Texas law.
-                  </p>
-                </div>
-              )}
-            </div>
-
             {/* FAQ 2 */}
             <div className="bg-white border border-[#e4e6ea] rounded-2xl overflow-hidden">
               <button
@@ -148,7 +124,7 @@ export default function TexasFAQ() {
               {expandedFAQ === 'faq5' && (
                 <div className="px-6 pb-5">
                   <p className="text-base text-[#616d7b] leading-6" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                    You have up to 180 days from enrollment to complete the course. However, you must finish before your court's deadline for ticket dismissal.
+                    You have up to 90 days from enrollment to complete the course. However, you must finish before your court's deadline for ticket dismissal.
                   </p>
                 </div>
               )}
@@ -196,7 +172,7 @@ export default function TexasFAQ() {
               {expandedFAQ === 'faq7' && (
                 <div className="px-6 pb-5">
                   <p className="text-base text-[#616d7b] leading-6" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                    You get unlimited retakes on all quizzes and the final exam. The goal is learning, not tricking you. Take your time and review the material as needed.
+                    You get unlimited retakes on all unit quizzes. There is no final exam. The goal is learning, not tricking you. Take your time and review the material as needed.
                   </p>
                 </div>
               )}
@@ -220,7 +196,7 @@ export default function TexasFAQ() {
               {expandedFAQ === 'faq8' && (
                 <div className="px-6 pb-5">
                   <p className="text-base text-[#616d7b] leading-6" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                    Yes! We offer a 100% money-back guarantee. If you're not satisfied for any reason, contact us within 30 days of enrollment for a full refund.
+                    Yes! If you're not satisfied, you can request a full refund before you complete the course or receive your certificate.
                   </p>
                 </div>
               )}
@@ -233,7 +209,7 @@ export default function TexasFAQ() {
               Still have questions?
             </h3>
             <p className="text-base text-[#616d7b] text-center leading-6 pb-3" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-              Our Texas-based support team is here to help. We typically respond within 1 business day.
+              Our support team is here to help.
             </p>
             <Button
               href="/texas/contactus"

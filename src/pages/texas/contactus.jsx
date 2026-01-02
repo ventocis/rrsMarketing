@@ -149,7 +149,7 @@ export default function TexasContactUs() {
               {submitStatus === 'success' && (
                 <div className="bg-[#e5f6fe] border border-[#03449e] rounded-xl p-4">
                   <p className="text-sm text-[#03449e] leading-5 text-center" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                    ✓ Thank you! Your message has been sent. We'll get back to you within 1 business day.
+                    ✓ Thank you! Your message has been sent. We'll typically get back to you within 1 business day.
                   </p>
                 </div>
               )}

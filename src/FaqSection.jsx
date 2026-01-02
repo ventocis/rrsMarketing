@@ -56,7 +56,7 @@ export default function FaqSection() {
             Still have questions?
           </h3>
           <p className="text-base text-center text-[#616d7b] leading-6 max-w-[672px]">
-            Our Texas-based support team is here to help. We typically respond within 1 business day.
+            Our support team is here to help.
           </p>
           <Button 
             href="/support" 

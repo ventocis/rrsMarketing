@@ -1076,7 +1076,7 @@ export default function TexasIndex() {
               Our support team is here to help.
             </p>
             <Button 
-              href="/contact" 
+              href="/texas/contactus" 
               variant="custom" 
               className="h-12 px-8 border-2 border-[#03449e] text-[#03449e] hover:bg-[#03449e] hover:text-white rounded-2xl text-base font-semibold flex items-center justify-center gap-2"
             >

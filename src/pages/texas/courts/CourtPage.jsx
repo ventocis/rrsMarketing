@@ -106,6 +106,11 @@ export default function CourtPage() {
                     </p>
                     <p className="text-sm text-[#3e4c59] leading-5 mb-0" style={{ fontFamily: "'Outfit', sans-serif" }}>
                       {(() => {
+                        // Handle new structure with judges array
+                        if (Array.isArray(court.judges) && court.judges.length > 0) {
+                          return court.judges.join(', ');
+                        }
+                        // Fallback to old structure
                         const nameParts = [
                           court.prefix,
                           court.firstName,
@@ -133,15 +138,21 @@ export default function CourtPage() {
                     <p className="text-sm font-bold text-[#323f4b] leading-5 mb-0" style={{ fontFamily: "'Outfit', sans-serif" }}>
                       Phone
                     </p>
-                    {court.phone ? (
-                      <a href={`tel:${court.phone}`} className="text-sm text-[#3e4c59] leading-5 underline mb-0" style={{ fontFamily: "'Outfit', sans-serif" }}>
-                        {court.phone}
-                      </a>
-                    ) : (
-                      <p className="text-sm text-[#3e4c59] leading-5 mb-0" style={{ fontFamily: "'Outfit', sans-serif" }}>
-                        Unavailable
-                      </p>
-                    )}
+                    {(() => {
+                      // Handle new structure with phone array
+                      const phones = Array.isArray(court.phone) ? court.phone : (court.phone ? [court.phone] : []);
+                      if (phones.length > 0) {
+                        return phones.map((phone, idx) => (
+                          <React.Fragment key={idx}>
+                            {idx > 0 && ', '}
+                            <a href={`tel:${phone}`} className="text-sm text-[#3e4c59] leading-5 underline mb-0" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                              {phone}
+                            </a>
+                          </React.Fragment>
+                        ));
+                      }
+                      return <p className="text-sm text-[#3e4c59] leading-5 mb-0" style={{ fontFamily: "'Outfit', sans-serif" }}>Unavailable</p>;
+                    })()}
                   </div>
                 </div>
 
@@ -158,15 +169,21 @@ export default function CourtPage() {
                     <p className="text-sm font-bold text-[#323f4b] leading-5 mb-0" style={{ fontFamily: "'Outfit', sans-serif" }}>
                       Website
                     </p>
-                    {court.website ? (
-                      <a href={court.website} target="_blank" rel="noopener noreferrer" className="text-sm text-[#3e4c59] leading-5 underline mb-0" style={{ fontFamily: "'Outfit', sans-serif" }}>
-                        {court.website}
-                      </a>
-                    ) : (
-                      <p className="text-sm text-[#3e4c59] leading-5 mb-0" style={{ fontFamily: "'Outfit', sans-serif" }}>
-                        Unavailable
-                      </p>
-                    )}
+                    {(() => {
+                      // Handle new structure with website array
+                      const websites = Array.isArray(court.website) ? court.website : (court.website ? [court.website] : []);
+                      if (websites.length > 0) {
+                        return websites.map((website, idx) => (
+                          <React.Fragment key={idx}>
+                            {idx > 0 && ', '}
+                            <a href={website} target="_blank" rel="noopener noreferrer" className="text-sm text-[#3e4c59] leading-5 underline mb-0" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                              {website}
+                            </a>
+                          </React.Fragment>
+                        ));
+                      }
+                      return <p className="text-sm text-[#3e4c59] leading-5 mb-0" style={{ fontFamily: "'Outfit', sans-serif" }}>Unavailable</p>;
+                    })()}
                   </div>
                 </div>
 
@@ -182,15 +199,21 @@ export default function CourtPage() {
                     <p className="text-sm font-bold text-[#323f4b] leading-5 mb-0" style={{ fontFamily: "'Outfit', sans-serif" }}>
                       Email
                     </p>
-                    {court.email ? (
-                      <a href={`mailto:${court.email}`} className="text-sm text-[#3e4c59] leading-5 underline mb-0" style={{ fontFamily: "'Outfit', sans-serif" }}>
-                        {court.email}
-                      </a>
-                    ) : (
-                      <p className="text-sm text-[#3e4c59] leading-5 mb-0" style={{ fontFamily: "'Outfit', sans-serif" }}>
-                        Unavailable
-                      </p>
-                    )}
+                    {(() => {
+                      // Handle new structure with email array
+                      const emails = Array.isArray(court.email) ? court.email : (court.email ? [court.email] : []);
+                      if (emails.length > 0) {
+                        return emails.map((email, idx) => (
+                          <React.Fragment key={idx}>
+                            {idx > 0 && ', '}
+                            <a href={`mailto:${email}`} className="text-sm text-[#3e4c59] leading-5 underline mb-0" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                              {email}
+                            </a>
+                          </React.Fragment>
+                        ));
+                      }
+                      return <p className="text-sm text-[#3e4c59] leading-5 mb-0" style={{ fontFamily: "'Outfit', sans-serif" }}>Unavailable</p>;
+                    })()}
                   </div>
                 </div>
 
@@ -208,6 +231,11 @@ export default function CourtPage() {
                     </p>
                     <p className="text-sm text-[#3e4c59] leading-5 mb-0" style={{ fontFamily: "'Outfit', sans-serif" }}>
                       {(() => {
+                        // Handle new structure with address array
+                        if (Array.isArray(court.address) && court.address.length > 0) {
+                          return court.address.join('; ');
+                        }
+                        // Fallback to old structure
                         const parts = [];
                         if (court.address) parts.push(court.address);
                         if (court.city) parts.push(court.city);

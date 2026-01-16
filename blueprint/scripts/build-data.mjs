@@ -202,52 +202,101 @@ const buildCourtData = async () => {
     const worksheet = workbook.Sheets['MergedData'];
     const data = XLSX.utils.sheet_to_json(worksheet, { defval: '' });
     
-    // Extract first 3 rows
-    const firstThreeRows = data.slice(0, 3);
+    // Process all rows and group by county + courtType + courtName
+    // First, collect all valid rows
+    const validRows = data
+      .map((row, index) => {
+        const county = String(row['County'] || row['county'] || '').trim();
+        const courtType = String(row['Court Type'] || row['Court Type'] || row['courtType'] || row['CourtType'] || '').trim();
+        const courtName = String(row['Court'] || row['Court name'] || row['Court Name'] || row['courtName'] || row['CourtName'] || '').trim();
+        
+        // Skip rows with missing required fields
+        if (!county || !courtType || !courtName) {
+          console.warn(`Skipping row ${index + 2}: Missing required field (County: ${county ? '✓' : '✗'}, Court Type: ${courtType ? '✓' : '✗'}, Court Name: ${courtName ? '✓' : '✗'})`);
+          return null;
+        }
+        
+        return {
+          county,
+          courtType,
+          courtName,
+          prefix: String(row['Prefix'] || '').trim(),
+          firstName: String(row['First Name'] || row['First Name'] || row['firstName'] || row['FirstName'] || '').trim(),
+          middleName: String(row['Middle Name'] || row['Middle Name'] || row['middleName'] || row['MiddleName'] || '').trim(),
+          lastName: String(row['Last Name'] || row['Last Name'] || row['lastName'] || row['LastName'] || '').trim(),
+          suffix: String(row['Suffix'] || '').trim(),
+          title: String(row['Title'] || '').trim(),
+          address: String(row['Address'] || '').trim(),
+          city: String(row['City'] || '').trim(),
+          zipCode: String(row['Zip Code'] || row['Zip code'] || row['zipCode'] || row['ZipCode'] || row['Zip'] || '').trim(),
+          phone: String(row['Phone'] || row['phone'] || '').trim(),
+          email: String(row['Email'] || row['email'] || '').trim(),
+          website: String(row['Website'] || '').trim(),
+          hyperlink: String(row['Hyperlink'] || '').trim()
+        };
+      })
+      .filter(row => row !== null);
     
-    // Map to court objects
-    const courts = firstThreeRows.map((row, index) => {
-      // Extract all fields from Excel
-      const county = row['County'] || row['county'] || '';
-      const courtType = row['Court Type'] || row['Court Type'] || row['courtType'] || row['CourtType'] || '';
-      const courtName = row['Court'] || row['Court name'] || row['Court Name'] || row['courtName'] || row['CourtName'] || '';
-      const website = row['Website'] || row['website'] || '';
-      const hyperlink = row['Hyperlink'] || row['hyperlink'] || '';
-      const prefix = row['Prefix'] || row['prefix'] || '';
-      const firstName = row['First Name'] || row['First Name'] || row['firstName'] || row['FirstName'] || '';
-      const middleName = row['Middle Name'] || row['Middle Name'] || row['middleName'] || row['MiddleName'] || '';
-      const lastName = row['Last Name'] || row['Last Name'] || row['lastName'] || row['LastName'] || '';
-      const suffix = row['Suffix'] || row['suffix'] || '';
-      const title = row['Title'] || row['title'] || '';
-      const address = row['Address'] || row['address'] || '';
-      const city = row['City'] || row['city'] || '';
-      const zipCode = row['Zip Code'] || row['Zip code'] || row['zipCode'] || row['ZipCode'] || row['Zip'] || '';
-      const phone = row['Phone'] || row['phone'] || '';
-      const email = row['Email'] || row['email'] || '';
+    // Group by county + courtType + courtName
+    const courtMap = new Map();
+    
+    validRows.forEach(row => {
+      const key = `${row.county}|${row.courtType}|${row.courtName}`;
       
-      // Generate slug from court name
-      const slug = generateSlug(courtName) || `court-${index + 1}`;
+      if (!courtMap.has(key)) {
+        // Generate slug
+        const countySlug = generateSlug(row.county);
+        const courtTypeSlug = generateSlug(row.courtType);
+        const courtNameSlug = generateSlug(row.courtName);
+        const slug = [countySlug, courtTypeSlug, courtNameSlug].filter(Boolean).join('-');
+        
+        courtMap.set(key, {
+          slug,
+          county: row.county,
+          courtType: row.courtType,
+          courtName: row.courtName,
+          judges: [],
+          phones: new Set(),
+          addresses: new Set(),
+          websites: new Set(),
+          emails: new Set()
+        });
+      }
       
-      return {
-        slug,
-        county: String(county).trim(),
-        courtType: String(courtType).trim(),
-        courtName: String(courtName).trim(),
-        website: String(website).trim(),
-        hyperlink: String(hyperlink).trim(),
-        prefix: String(prefix).trim(),
-        firstName: String(firstName).trim(),
-        middleName: String(middleName).trim(),
-        lastName: String(lastName).trim(),
-        suffix: String(suffix).trim(),
-        title: String(title).trim(),
-        address: String(address).trim(),
-        city: String(city).trim(),
-        zipCode: String(zipCode).trim(),
-        phone: String(phone).trim(),
-        email: String(email).trim()
-      };
+      const court = courtMap.get(key);
+      
+      // Add judge
+      const nameParts = [row.prefix, row.firstName, row.middleName, row.lastName, row.suffix].filter(Boolean);
+      const fullName = nameParts.join(' ');
+      const judgeName = row.title ? `${row.title} ${fullName}` : fullName;
+      if (judgeName.trim()) {
+        court.judges.push(judgeName.trim());
+      }
+      
+      // Add unique contact info
+      if (row.phone) court.phones.add(row.phone);
+      if (row.email) court.emails.add(row.email);
+      
+      const website = row.website && row.website !== 'Website Not Found' ? row.website : '';
+      if (website) court.websites.add(website);
+      
+      const fullAddress = [row.address, row.city, row.zipCode].filter(Boolean).join(', ');
+      if (fullAddress) court.addresses.add(fullAddress);
     });
+    
+    // Convert to final format
+    const courts = Array.from(courtMap.values())
+      .map(court => ({
+        slug: court.slug,
+        county: court.county,
+        courtType: court.courtType,
+        courtName: court.courtName,
+        judges: court.judges,
+        phone: Array.from(court.phones),
+        address: Array.from(court.addresses),
+        website: Array.from(court.websites),
+        email: Array.from(court.emails)
+      }));
     
     return courts;
   } catch (error) {

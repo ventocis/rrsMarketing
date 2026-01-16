@@ -7,6 +7,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { parse as parseCsv } from 'csv-parse/sync';
 import YAML from 'yaml';
+import XLSX from 'xlsx';
 
 
 const ROOT = process.cwd();
@@ -166,6 +167,96 @@ const buildBlogData = async () => {
 };
 
 
+const generateSlug = (text) => {
+  if (!text) return '';
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, '') // Remove special characters
+    .replace(/\s+/g, '-') // Replace spaces with hyphens
+    .replace(/-+/g, '-') // Replace multiple hyphens with single hyphen
+    .replace(/^-|-$/g, ''); // Remove leading/trailing hyphens
+};
+
+
+const buildCourtData = async () => {
+  try {
+    const excelPath = '/Users/jacksonmaitner/Downloads/Courts Directory By County.xlsx';
+    
+    // Check if file exists
+    if (!fs.existsSync(excelPath)) {
+      console.warn(`Warning: Excel file not found at ${excelPath}`);
+      return [];
+    }
+    
+    // Read Excel file
+    const workbook = XLSX.readFile(excelPath);
+    
+    // Check if MergedData sheet exists
+    if (!workbook.SheetNames.includes('MergedData')) {
+      console.warn(`Warning: MergedData sheet not found in Excel file. Available sheets: ${workbook.SheetNames.join(', ')}`);
+      return [];
+    }
+    
+    // Read MergedData sheet
+    const worksheet = workbook.Sheets['MergedData'];
+    const data = XLSX.utils.sheet_to_json(worksheet, { defval: '' });
+    
+    // Extract first 3 rows
+    const firstThreeRows = data.slice(0, 3);
+    
+    // Map to court objects
+    const courts = firstThreeRows.map((row, index) => {
+      // Extract all fields from Excel
+      const county = row['County'] || row['county'] || '';
+      const courtType = row['Court Type'] || row['Court Type'] || row['courtType'] || row['CourtType'] || '';
+      const courtName = row['Court'] || row['Court name'] || row['Court Name'] || row['courtName'] || row['CourtName'] || '';
+      const website = row['Website'] || row['website'] || '';
+      const hyperlink = row['Hyperlink'] || row['hyperlink'] || '';
+      const prefix = row['Prefix'] || row['prefix'] || '';
+      const firstName = row['First Name'] || row['First Name'] || row['firstName'] || row['FirstName'] || '';
+      const middleName = row['Middle Name'] || row['Middle Name'] || row['middleName'] || row['MiddleName'] || '';
+      const lastName = row['Last Name'] || row['Last Name'] || row['lastName'] || row['LastName'] || '';
+      const suffix = row['Suffix'] || row['suffix'] || '';
+      const title = row['Title'] || row['title'] || '';
+      const address = row['Address'] || row['address'] || '';
+      const city = row['City'] || row['city'] || '';
+      const zipCode = row['Zip Code'] || row['Zip code'] || row['zipCode'] || row['ZipCode'] || row['Zip'] || '';
+      const phone = row['Phone'] || row['phone'] || '';
+      const email = row['Email'] || row['email'] || '';
+      
+      // Generate slug from court name
+      const slug = generateSlug(courtName) || `court-${index + 1}`;
+      
+      return {
+        slug,
+        county: String(county).trim(),
+        courtType: String(courtType).trim(),
+        courtName: String(courtName).trim(),
+        website: String(website).trim(),
+        hyperlink: String(hyperlink).trim(),
+        prefix: String(prefix).trim(),
+        firstName: String(firstName).trim(),
+        middleName: String(middleName).trim(),
+        lastName: String(lastName).trim(),
+        suffix: String(suffix).trim(),
+        title: String(title).trim(),
+        address: String(address).trim(),
+        city: String(city).trim(),
+        zipCode: String(zipCode).trim(),
+        phone: String(phone).trim(),
+        email: String(email).trim()
+      };
+    });
+    
+    return courts;
+  } catch (error) {
+    console.warn(`Warning: Could not build court data: ${error.message}`);
+    return [];
+  }
+};
+
+
 const build = async () => {
   const siteUrl = await loadSiteUrl();
 
@@ -213,14 +304,18 @@ const build = async () => {
   // 5) Build blog data
   const blogPosts = await buildBlogData();
 
-  // 6) Write JSON outputs
+  // 6) Build court data
+  const courts = await buildCourtData();
+
+  // 7) Write JSON outputs
   await ensureDir(SRC('data'));
   await writeFile(SRC('data/courses.json'), JSON.stringify(courses, null, 2));
   await writeFile(SRC('data/states.json'), JSON.stringify(states, null, 2));
   await writeFile(SRC('data/blog.json'), JSON.stringify({ posts: blogPosts }, null, 2));
-  console.log(`✓ Wrote src/data/courses.json, src/data/states.json, and src/data/blog.json`);
+  await writeFile(SRC('data/texas-courts.json'), JSON.stringify({ courts }, null, 2));
+  console.log(`✓ Wrote src/data/courses.json, src/data/states.json, src/data/blog.json, and src/data/texas-courts.json`);
 
-  // 7) Generate sitemap.xml
+  // 8) Generate sitemap.xml
   const urls = [
     `${siteUrl}/`,
     `${siteUrl}/support`,
@@ -232,7 +327,8 @@ const build = async () => {
     `${siteUrl}/courses/mi-bdic`,
     `${siteUrl}/faq`,
     ...blogPosts.map(p => `${siteUrl}/blog/${p.slug}`),
-    ...courses.map(c => `${siteUrl}/courses/${c.slug}`)
+    ...courses.map(c => `${siteUrl}/courses/${c.slug}`),
+    ...courts.map(c => `${siteUrl}/texas/courts/${c.slug}`)
   ];
   const now = new Date().toISOString().slice(0, 10);
   const xml =
@@ -244,7 +340,7 @@ ${urls.map(u => `  <url><loc>${u}</loc><lastmod>${now}</lastmod><changefreq>week
   await ensureDir(PUB(''));
   await writeFile(PUB('sitemap.xml'), xml);
   
-  // 8) Mirror sitemap to dist/ for static builds
+  // 9) Mirror sitemap to dist/ for static builds
   const distPath = path.resolve(ROOT, 'dist');
   if (fs.existsSync(distPath)) {
     await writeFile(path.join(distPath, 'sitemap.xml'), xml);

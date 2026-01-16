@@ -45,3 +45,28 @@ export function SimpleBreadcrumbs({ items }) {
     </nav>
   );
 }
+
+// Texas court breadcrumbs: Texas → County → Court
+export function TexasCourtBreadcrumbs({ county, courtName }) {
+  return (
+    <nav aria-label="Breadcrumb" className="mb-6 text-sm text-[#616d7b]">
+      <ol className="inline-flex items-center space-x-1">
+        <li>
+          <Link to="/texas" className="hover:underline text-[#616d7b] hover:text-[#1e2832]">Texas</Link>
+        </li>
+        {county && (
+          <>
+            <li className="text-[#616d7b]">/</li>
+            <li className="text-[#616d7b]">{county} County</li>
+          </>
+        )}
+        {courtName && (
+          <>
+            <li className="text-[#616d7b]">/</li>
+            <li aria-current="page" className="text-[#1e2832] font-semibold">{courtName}</li>
+          </>
+        )}
+      </ol>
+    </nav>
+  );
+}

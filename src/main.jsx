@@ -32,6 +32,7 @@ import TexasFAQ from './pages/texas/faq.jsx';
 import TexasHelpCenter from './pages/texas/helpcenter.jsx';
 import TexasContactUs from './pages/texas/contactus.jsx';
 import TexasTerms from './pages/texas/terms.jsx';
+import CourtPage from './pages/texas/courts/CourtPage.jsx';
 
 // #region agent log
 // Logging initialization and error capture - silent fail if endpoint unavailable
@@ -106,6 +107,7 @@ function App() {
             <Route path="/texas/helpcenter" element={<TexasHelpCenter />} />
             <Route path="/texas/contactus" element={<TexasContactUs />} />
             <Route path="/texas/terms" element={<TexasTerms />} />
+            <Route path="/texas/courts/:slug" element={<CourtPage />} />
           </>
         )}
         {/* Home route - must be last */}

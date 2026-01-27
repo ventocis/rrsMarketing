@@ -1,0 +1,6 @@
+---
+description: Which AWS profile to use 
+globs:
+alwaysApply: false
+---
+Always use the default AWS profile unless specifically prompted to use the prod-deploy profile.

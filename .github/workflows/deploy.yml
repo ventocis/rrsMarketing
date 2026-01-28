@@ -29,6 +29,6 @@ jobs:
 
       - run: npm ci
 
-      - run: make deploy ENV=${{ github.ref_name }}
+      - run: make ci BRANCH=${{ github.ref_name }}
         env:
           GIT_SHA: ${{ github.sha }}

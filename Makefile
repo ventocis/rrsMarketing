@@ -30,3 +30,10 @@ ifndef ENV
 	$(error ENV is required. Usage: make deploy ENV=qa)
 endif
 	$(CDK_DEPLOY) '*-$(ENV)'
+
+ci:
+ifndef BRANCH
+	$(error BRANCH is required. Usage: make ci BRANCH=qa)
+endif
+	cd infra && npm ci
+	$(CDK_DEPLOY) '*-$(ENV)'

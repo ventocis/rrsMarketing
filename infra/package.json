@@ -9,6 +9,6 @@
   "dependencies": {
     "aws-cdk-lib": "2.215.0",
     "constructs": "^10.0.0",
-    "infrastructure": "file:../../infrastructure"
+    "infrastructure": "git@github.com:ventocis/rrsInfra.git"
   }
 }

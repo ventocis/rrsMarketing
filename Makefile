@@ -36,4 +36,4 @@ ifndef BRANCH
 	$(error BRANCH is required. Usage: make ci BRANCH=qa)
 endif
 	cd infra && npm ci
-	$(CDK_DEPLOY) '*-$(ENV)'
+	$(MAKE) deploy ENV=$(BRANCH)

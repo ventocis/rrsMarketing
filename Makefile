@@ -37,7 +37,7 @@ ifndef REF
 endif
 	npm ci
 	cd infra && npm ci
-ifeq ($(REF),refs/heads/main)
+ifeq ($(REF),qa)
 	$(MAKE) deploy ENV=qa
 else
 	$(MAKE) build

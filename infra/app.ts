@@ -1,6 +1,6 @@
 import * as cdk from 'aws-cdk-lib/core'
-import { AppEnv, CdkEnvironments, Constants } from 'infrastructure/constants'
-import { applyCdkTags } from 'infrastructure/utils/tagging'
+import { AppEnv, CdkEnvironments, Constants } from '@roadreadysafety/cdk-infrastructure/constants'
+import { applyCdkTags } from '@roadreadysafety/cdk-infrastructure/utils/tagging'
 import * as stacks from './stacks'
 import path from 'path'
 

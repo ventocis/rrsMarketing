@@ -41,3 +41,10 @@ else ifeq ($(DEPLOY),prod)
 else
 	$(MAKE) build
 endif
+
+# run from cli to release a new version
+publish:
+ifndef V
+	$(error V is required. Usage: make publish V=0.3.4)
+endif
+	git tag v$(V) && git push origin v$(V)

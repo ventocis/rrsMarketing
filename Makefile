@@ -22,6 +22,7 @@ endif
 	@echo "configuring git access with token"
 	git config --global url."https://x-access-token:$(GITHUB_TOKEN)@github.com/".insteadOf "git@github.com:"
 	git config --global url."https://x-access-token:$(GITHUB_TOKEN)@github.com/".insteadOf "ssh://git@github.com/"
+	git ls-remote https://x-access-token:$(GITHUB_TOKEN)@github.com/ventocis/rrsInfra.git HEAD > /dev/null 2>&1 && echo "Token has access" || echo "Token cannot access repo"
 
 clean:
 	rm -rf infra/cdk.out

@@ -16,9 +16,10 @@ CDK_DEPLOY = $(CDK) deploy --app cdk.out -c gitHash=$(GIT_SHA)
 .PHONY: clean build cdk-synth cdk-deploy-shared cdk-deploy-qa deploy configure-git
 
 configure-git:
-ifdef GITHUB_TOKEN
-	git config --global url."https://x-access-token:$(GITHUB_TOKEN)@github.com/".insteadOf "ssh://git@github.com/"
+ifndef GITHUB_TOKEN
+	$(error GITHUB_TOKEN is required)
 endif
+	@git config --global url."https://x-access-token:$(GITHUB_TOKEN)@github.com/".insteadOf "ssh://git@github.com/"
 
 clean:
 	rm -rf infra/cdk.out

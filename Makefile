@@ -32,8 +32,12 @@ endif
 	$(CDK_DEPLOY) '*-$(ENV)'
 
 ci:
-ifndef BRANCH
-	$(error BRANCH is required. Usage: make ci BRANCH=qa)
+ifndef REF
+	$(error REF is required. Usage: make ci REF=main)
 endif
 	cd infra && npm ci
-	$(MAKE) deploy ENV=$(BRANCH)
+ifeq ($(REF),main)
+	$(MAKE) deploy ENV=qa
+else
+	$(MAKE) build
+endif

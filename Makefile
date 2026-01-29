@@ -19,6 +19,7 @@ configure-git:
 ifndef GITHUB_TOKEN
 	$(error GITHUB_TOKEN is required)
 endif
+	@echo "configuring git access with token"
 	@git config --global url."https://x-access-token:$(GITHUB_TOKEN)@github.com/".insteadOf "ssh://git@github.com/"
 
 clean:

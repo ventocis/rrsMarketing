@@ -7,7 +7,6 @@ import path from 'path'
 const app = new cdk.App();
 
 const gitRepoName = 'rrsMarketing'
-const gitHash = app.node.tryGetContext('gitHash')
 
 // Configure apps
 const defaultConfig = {
@@ -39,5 +38,5 @@ Object.values(AppEnv).forEach(env => {
             env: {account: config.env.account, region: 'us-east-1'},
         },
     })
-    applyCdkTags(cloudfrontCertStack, env, gitRepoName, gitHash)
+    applyCdkTags(cloudfrontCertStack, env, gitRepoName)
 })

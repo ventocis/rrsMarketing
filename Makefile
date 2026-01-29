@@ -8,7 +8,7 @@ GIT_SHA ?= $(shell git rev-parse --short HEAD)
 
 CDK = cd infra && npx cdk
 CDK_SYNTH = $(CDK) synth -c gitHash=$(GIT_SHA)
-CDK_DEPLOY = $(CDK) deploy --app cdk.out -c gitHash=$(GIT_SHA)
+CDK_DEPLOY = $(CDK) deploy --app cdk.out -c gitHash=$(GIT_SHA) --require-approval never
 
 .PHONY: clean build cdk-synth cdk-deploy-shared cdk-deploy-qa deploy
 
@@ -32,13 +32,12 @@ endif
 	$(CDK_DEPLOY) '*-$(ENV)'
 
 ci:
-ifndef REF
-	$(error REF is required. Usage: make ci REF=main)
-endif
 	npm ci
 	cd infra && npm ci
-ifeq ($(REF),qa)
+ifeq ($(DEPLOY),qa)
 	$(MAKE) deploy ENV=qa
+else ifeq ($(DEPLOY),prod)
+	$(MAKE) deploy ENV=prod
 else
 	$(MAKE) build
 endif

@@ -2,8 +2,8 @@ name: Deploy to QA
 
 on:
   push:
-    branches:
-      - main
+    tags:
+      - 'v*.*.*'
 
 permissions:
   id-token: write
@@ -35,7 +35,7 @@ jobs:
             --query authorizationToken \
             --output text)" >> $GITHUB_ENV
 
-      - run: make ci DEPLOY=qa
+      - run: make ci DEPLOY=prod
         env:
           GIT_SHA: ${{ github.sha }}
 

@@ -34,10 +34,8 @@ endif
 ci:
 	npm ci
 	cd infra && npm ci
-ifeq ($(DEPLOY),qa)
-	$(MAKE) deploy ENV=qa
-else ifeq ($(DEPLOY),prod)
-	$(MAKE) deploy ENV=prod
+ifdef ENV
+	$(MAKE) deploy ENV=$(ENV)
 else
 	$(MAKE) build
 endif

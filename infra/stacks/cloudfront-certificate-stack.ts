@@ -23,6 +23,8 @@ export interface CloudfrontCertificateStackProps extends cdk.StackProps, Environ
  */
 export class CloudfrontCertificateStack extends cdk.Stack {
 
+    public readonly distributionId: string
+
     constructor(scope: Construct, id: string, props: CloudfrontCertificateStackProps) {
         super(scope, id, props);
 
@@ -57,10 +59,12 @@ export class CloudfrontCertificateStack extends cdk.Stack {
                 compress: true,
             },
             errorResponses: [
-                { httpStatus: 403, responseHttpStatus: 200, responsePagePath: '/200.html' },
-                { httpStatus: 404, responseHttpStatus: 200, responsePagePath: '/200.html' },
+                { httpStatus: 403, responseHttpStatus: 200, responsePagePath: '/index.html' },
+                { httpStatus: 404, responseHttpStatus: 200, responsePagePath: '/index.html' },
             ],
         })
+
+        this.distributionId = distribution.distributionId
 
         new r53.ARecord(this, 'UiAliasRecord', {
             zone,

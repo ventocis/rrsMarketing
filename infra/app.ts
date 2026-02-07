@@ -39,4 +39,11 @@ Object.values(AppEnv).forEach(env => {
         },
     })
     applyCdkTags(cloudfrontCertStack, env, gitRepoName)
+
+    const monitoringStack = new stacks.MonitoringStack(app, `rrsMarketing-monitoring-${env}`, {
+        env: {account: config.env.account, region: 'us-east-1'},
+        appEnv: config.appEnv,
+        distributionId: cloudfrontCertStack.distributionId,
+    })
+    applyCdkTags(monitoringStack, env, gitRepoName)
 })

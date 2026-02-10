@@ -15,6 +15,7 @@ CDK_DEPLOY = $(CDK) deploy --app cdk.out -c gitHash=$(GIT_SHA) --require-approva
 clean:
 	rm -rf infra/cdk.out
 	rm -rf .output
+	rm -rf dist
 
 dist:
 	npm run build

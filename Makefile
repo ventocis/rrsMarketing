@@ -7,8 +7,8 @@ AWS_ACCOUNT_ID ?= $(shell aws sts get-caller-identity --query Account --output t
 GIT_SHA ?= $(shell git rev-parse --short HEAD)
 
 CDK = cd infra && npx cdk
-CDK_SYNTH = $(CDK) synth -c gitHash=$(GIT_SHA)
-CDK_DEPLOY = $(CDK) deploy --app cdk.out -c gitHash=$(GIT_SHA) --require-approval never
+CDK_SYNTH = $(CDK) synth
+CDK_DEPLOY = $(CDK) deploy --app cdk.out --require-approval never
 
 .PHONY: clean build cdk-synth cdk-deploy-shared cdk-deploy-qa deploy
 

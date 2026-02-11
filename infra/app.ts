@@ -1,13 +1,12 @@
-import * as cdk from 'aws-cdk-lib/core'
-import { AppEnv, CdkEnvironments, Constants } from 'infrastructure/constants'
-import { applyCdkTags } from 'infrastructure/utils/tagging'
+import * as cdk from 'aws-cdk-lib'
+import { AppEnv, CdkEnvironments, Constants } from '@roadreadysafety/cdk-infrastructure/constants'
+import { applyCdkTags } from '@roadreadysafety/cdk-infrastructure/utils/tagging'
 import * as stacks from './stacks'
 import path from 'path'
 
 const app = new cdk.App();
 
 const gitRepoName = 'rrsMarketing'
-const gitHash = app.node.tryGetContext('gitHash')
 
 // Configure apps
 const defaultConfig = {
@@ -39,5 +38,12 @@ Object.values(AppEnv).forEach(env => {
             env: {account: config.env.account, region: 'us-east-1'},
         },
     })
-    applyCdkTags(cloudfrontCertStack, env, gitRepoName, gitHash)
+    applyCdkTags(cloudfrontCertStack, env, gitRepoName)
+
+    const monitoringStack = new stacks.MonitoringStack(app, `rrsMarketing-monitoring-${env}`, {
+        env: {account: config.env.account, region: 'us-east-1'},
+        appEnv: config.appEnv,
+        distributionId: cloudfrontCertStack.distributionId,
+    })
+    applyCdkTags(monitoringStack, env, gitRepoName)
 })

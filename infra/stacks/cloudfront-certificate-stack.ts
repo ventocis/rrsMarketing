@@ -7,10 +7,9 @@ import * as targets from 'aws-cdk-lib/aws-route53-targets'
 import * as r53 from 'aws-cdk-lib/aws-route53'
 import * as s3 from 'aws-cdk-lib/aws-s3'
 import * as s3deploy from 'aws-cdk-lib/aws-s3-deployment'
-import { AppEnv, EnvironmentConstants } from 'infrastructure/constants'
+import { AppEnv, EnvironmentConstants } from '@roadreadysafety/cdk-infrastructure/constants'
 import { HostedZone } from 'aws-cdk-lib/aws-route53'
-import * as utils from 'infrastructure/utils'
-import path from 'path'
+import * as utils from '@roadreadysafety/cdk-infrastructure/utils'
 
 export interface CloudfrontCertificateStackProps extends cdk.StackProps, EnvironmentConstants {
     env: Required<cdk.Environment>,
@@ -23,6 +22,8 @@ export interface CloudfrontCertificateStackProps extends cdk.StackProps, Environ
  * The certificate is created in us-east-1 and exported to the root stack for use in other stacks.
  */
 export class CloudfrontCertificateStack extends cdk.Stack {
+
+    public readonly distributionId: string
 
     constructor(scope: Construct, id: string, props: CloudfrontCertificateStackProps) {
         super(scope, id, props);
@@ -58,10 +59,12 @@ export class CloudfrontCertificateStack extends cdk.Stack {
                 compress: true,
             },
             errorResponses: [
-                { httpStatus: 403, responseHttpStatus: 200, responsePagePath: '/200.html' },
-                { httpStatus: 404, responseHttpStatus: 200, responsePagePath: '/200.html' },
+                { httpStatus: 403, responseHttpStatus: 200, responsePagePath: '/index.html' },
+                { httpStatus: 404, responseHttpStatus: 200, responsePagePath: '/index.html' },
             ],
         })
+
+        this.distributionId = distribution.distributionId
 
         new r53.ARecord(this, 'UiAliasRecord', {
             zone,

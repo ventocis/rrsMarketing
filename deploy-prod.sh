@@ -9,7 +9,7 @@ echo "🚀 Starting production deployment..."
 
 # Build the project
 echo "📦 Building the project..."
-npm run build
+npm run build:prod
 
 # Check if build was successful
 if [ ! -d "dist" ]; then

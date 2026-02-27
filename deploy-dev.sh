@@ -7,9 +7,9 @@ set -e  # Exit on any error
 
 echo "🚀 Starting deployment..."
 
-# Build the project
-echo "📦 Building the project..."
-npm run build
+# Build the project (QA build: Texas routes on, QA login/enrollment URLs)
+echo "📦 Building the project (QA)..."
+npm run build:qa
 
 # Check if build was successful
 if [ ! -d "dist" ]; then

@@ -1,4 +1,4 @@
-﻿@import 'flowbite/dist/flowbite.css';
+@import 'flowbite/dist/flowbite.css';
 
 @tailwind base;
 @tailwind components;
@@ -139,4 +139,13 @@ body > #root > div {
 
 [data-testid="flowbite-accordion"] > *:last-child {
   margin-bottom: 0;
+}
+
+/* QA Log In link: center text when still rendered as <a> (e.g. cached build) */
+a[href*="app.qa.roadreadysafety.com"][class*="rounded"] {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-decoration: none !important;
+  color: inherit !important;
 }

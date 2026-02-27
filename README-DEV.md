@@ -34,6 +34,17 @@ If you set env vars in CI or in `.env.local` (see `.env.example`), use:
 
 Copy `.env.example` to `.env.local` and uncomment/edit as needed for local QA testing.
 
+### CI / deployment steps
+
+The deploy scripts are wired so each environment gets the right build:
+
+| Script | Build used | Result |
+|--------|------------|--------|
+| **`./deploy-prod.sh`** | `npm run build:prod` | Texas routes **off**, DTA affiliate, no QA login link. Safe for production. |
+| **`./deploy-dev.sh`** | `npm run build:qa` | Texas routes **on**, QA enrollment URL, QA login link. Use for dev/QA (e.g. qa.roadreadysafety.com). |
+
+No extra env vars are required in CI: the scripts call the right npm script, which sets the needed `VITE_*` vars for that environment. If your CI runs these scripts (or runs the same commands), prod and dev will deploy correctly.
+
 ---
 
 ## 🏗️ **Infrastructure**
@@ -65,8 +76,8 @@ Copy `.env.example` to `.env.local` and uncomment/edit as needed for local QA te
 
 ### Manual Steps (if needed)
 ```bash
-# Build the project
-npm run build
+# Build the project (QA: Texas on, QA URLs)
+npm run build:qa
 
 # Sync to S3 dev bucket
 aws s3 sync dist/ s3://rrs-testaug202025-dev --delete

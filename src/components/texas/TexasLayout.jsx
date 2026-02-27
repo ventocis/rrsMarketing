@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Button from '../Button.jsx';
 import { TEXAS_ENROLLMENT_URL } from '../../config/texasEnrollment.js';
 
 export default function TexasLayout({ children }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
+  const isQa = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+  const loginUrl = isQa
+    ? `https://app.qa.roadreadysafety.com/public/login?returnUrl=${encodeURIComponent(location.pathname || '/')}`
+    : null;
 
   // #region agent log
   React.useEffect(() => {
@@ -221,7 +226,12 @@ export default function TexasLayout({ children }) {
 
           {/* Desktop Buttons */}
           <div className="hidden md:flex items-center gap-3 flex-shrink-0">
-            <button className="h-9 px-4 rounded-[10px] text-xs font-semibold text-[#1e2832] hover:bg-gray-100 transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+            <button
+              type="button"
+              className="h-9 px-4 rounded-[10px] text-xs font-semibold text-[#1e2832] hover:bg-gray-100 transition-colors"
+              style={{ fontFamily: "'DM Sans', sans-serif" }}
+              onClick={loginUrl ? () => { window.location.href = loginUrl; } : undefined}
+            >
               Log In
             </button>
             <Button 
@@ -258,7 +268,12 @@ export default function TexasLayout({ children }) {
               <Link to="/texas/faq" onClick={closeMenu} className="block text-sm font-medium text-[#616d7b] hover:text-[#1e2832]">FAQ</Link>
               <Link to="/texas/helpcenter" onClick={closeMenu} className="block text-sm font-medium text-[#616d7b] hover:text-[#1e2832]">Help Center</Link>
               <div className="pt-2 space-y-2">
-                <button className="w-full h-9 px-4 rounded-[10px] text-xs font-semibold text-[#1e2832] border border-gray-300 hover:bg-gray-100">
+                <button
+                  type="button"
+                  className="w-full h-9 px-4 rounded-[10px] text-xs font-semibold text-[#1e2832] border border-gray-300 hover:bg-gray-100"
+                  style={{ fontFamily: "'DM Sans', sans-serif" }}
+                  onClick={loginUrl ? () => { window.location.href = loginUrl; } : undefined}
+                >
                   Log In
                 </button>
                 <Button 

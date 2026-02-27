@@ -43,6 +43,8 @@ To deploy updates to production:
 ./deploy-prod.sh
 ```
 
+**Use the production build only.** Do not set `VITE_TEXAS_ROUTES_ENABLED` or `VITE_TEXAS_ENROLLMENT_URL` for prod; the Texas landing page stays off and Texas enrollment uses the existing affiliate (DTA). For QA builds and env vars, see **README-DEV.md** (“Builds: QA vs production”).
+
 This script will:
 1. Build the project
 2. Sync files to S3

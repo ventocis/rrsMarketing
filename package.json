@@ -11,8 +11,9 @@
     "prebuild": "node ./blueprint/scripts/build-data.mjs",
     "build:spa": "vite build",
     "build:static": "node ./blueprint/scripts/prerender.mjs",
-    "build:prod": "npm run build:spa && npm run build:static && node ./blueprint/scripts/swap-robots.mjs allow && node ./blueprint/scripts/build-data.mjs",
-    "build:staging": "npm run build:spa && npm run build:static && node ./blueprint/scripts/swap-robots.mjs block && node ./blueprint/scripts/build-data.mjs"
+    "build:prod": "VITE_TEXAS_ROUTES_ENABLED=false VITE_TEXAS_ENROLLMENT_URL= npm run build:spa && npm run build:static && node ./blueprint/scripts/swap-robots.mjs allow && node ./blueprint/scripts/build-data.mjs",
+    "build:staging": "npm run build:spa && npm run build:static && node ./blueprint/scripts/swap-robots.mjs block && node ./blueprint/scripts/build-data.mjs",
+    "build:qa": "VITE_TEXAS_ROUTES_ENABLED=true VITE_TEXAS_ENROLLMENT_URL=https://app.qa.roadreadysafety.com/public/checkout?sku=tx-bdi npm run build:spa"
   },
   "dependencies": {
     "fast-glob": "^3.3.3",

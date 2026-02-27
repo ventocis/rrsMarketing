@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import 'flowbite/dist/flowbite.css';
 import './index.css';
@@ -77,8 +77,8 @@ function Home() {
 
 function App() {
   // Check if Texas routes are enabled via environment variable
-  // Set VITE_TEXAS_ROUTES_ENABLED=true to enable Texas routes
-  // Defaults to false (disabled) if not set
+  // Set VITE_TEXAS_ROUTES_ENABLED=true to enable Texas routes (e.g. QA build). See .env.example.
+  // Defaults to false (disabled) if not set — prod keeps /texas off.
   const isTexasRoutesEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 
   return (

@@ -5,6 +5,7 @@ import Button from '../../components/Button.jsx';
 import Card from '../../components/Card.jsx';
 import CheckCircleIcon from '../../components/icons/CheckCircleIcon.jsx';
 import SEO from '../../components/SEO.jsx';
+import { TEXAS_ENROLLMENT_URL } from '../../config/texasEnrollment.js';
 
 // Local icon assets for What to Expect accordion
 const imgAfterTakingCourse = "/assets/icons/texas/after-taking-course.svg";
@@ -28,7 +29,7 @@ export default function TexasIndex() {
     };
     safeLog({location:'texas/index.jsx:hero-button',message:'Hero Start Course button props',data:{href:'/courses/tx-defensive',variant:'custom',text:'Start Course'},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'D'});
     setTimeout(() => {
-      const heroButtons = document.querySelectorAll('a[href="/courses/tx-defensive"]');
+      const heroButtons = document.querySelectorAll('a[href={TEXAS_ENROLLMENT_URL}]');
       heroButtons.forEach((btn, idx) => {
         const computed = window.getComputedStyle(btn);
         const rect = btn.getBoundingClientRect();
@@ -126,7 +127,7 @@ export default function TexasIndex() {
               </p>
               <div className="flex flex-col sm:flex-row gap-[16px] pt-[8px] w-full items-center lg:items-start">
                 <Button 
-                  href="/courses/tx-defensive" 
+                  href={TEXAS_ENROLLMENT_URL} 
                   variant="custom" 
                   className="bg-[#0667D1] hover:bg-[#0556b3] text-white h-[56px] px-[40px] sm:px-[40px] rounded-[16px] shadow-[0px_20px_25px_-5px_rgba(17,23,34,0.10),0px_8px_10px_-6px_rgba(17,23,34,0.05)] text-[18px] font-semibold flex items-center justify-center leading-[28px] no-underline text-center w-full sm:w-auto"
                   style={{ fontFamily: "'DM Sans', sans-serif", textAlign: 'center' }}
@@ -186,7 +187,7 @@ export default function TexasIndex() {
                         ))}
                       </div>
                       <Button 
-                        href="/courses/tx-defensive" 
+                        href={TEXAS_ENROLLMENT_URL} 
                         variant="custom" 
                         className="w-full bg-[#0667d1] text-white rounded-xl py-[14.8px] pb-[13.2px] text-sm font-semibold flex items-center justify-center leading-5"
                       >
@@ -400,7 +401,7 @@ export default function TexasIndex() {
 
               {/* Enroll Button */}
               <Button 
-                href="/courses/tx-defensive" 
+                href={TEXAS_ENROLLMENT_URL} 
                 variant="custom" 
                 className="w-full h-[56px] bg-[#0667d1] hover:bg-[#0556b3] text-white rounded-2xl shadow-[0px_10px_15px_-3px_rgba(17,23,34,0.08),0px_4px_6px_-4px_rgba(17,23,34,0.05)] text-lg font-semibold flex items-center justify-center gap-2 mb-6"
               >
@@ -1111,7 +1112,7 @@ export default function TexasIndex() {
             {/* Buttons */}
             <div className="flex flex-col sm:flex-row gap-[16px] items-center justify-center pt-[8px]">
               <Button 
-                href="/courses/tx-defensive" 
+                href={TEXAS_ENROLLMENT_URL} 
                 variant="custom" 
                 className="h-[56px] px-[40px] py-0 bg-[#0667d1] hover:bg-[#0556b3] text-white rounded-[16px] shadow-[0px_20px_25px_-5px_rgba(17,23,34,0.1),0px_8px_10px_-6px_rgba(17,23,34,0.05)] text-[18px] font-semibold flex items-center justify-center gap-2 leading-[28px] no-underline"
                 style={{ fontFamily: "'DM Sans', sans-serif" }}

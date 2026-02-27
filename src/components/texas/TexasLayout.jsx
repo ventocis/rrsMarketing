@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../Button.jsx';
+import { TEXAS_ENROLLMENT_URL } from '../../config/texasEnrollment.js';
 
 export default function TexasLayout({ children }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -224,7 +225,7 @@ export default function TexasLayout({ children }) {
               Log In
             </button>
             <Button 
-              href="/courses/tx-defensive" 
+              href={TEXAS_ENROLLMENT_URL} 
               variant="custom" 
               className="bg-[#0667d1] hover:bg-[#0556b3] text-white pt-[11.6px] pb-[12.4px] px-[20px] rounded-[12px] shadow-[0px_10px_15px_-3px_rgba(17,23,34,0.08),0px_4px_6px_-4px_rgba(17,23,34,0.05)] text-sm font-semibold flex items-center justify-center leading-[20px] no-underline text-center"
               style={{ fontFamily: "'DM Sans', sans-serif", minHeight: '44px', textAlign: 'center' }}
@@ -261,7 +262,7 @@ export default function TexasLayout({ children }) {
                   Log In
                 </button>
                 <Button 
-                  href="/courses/tx-defensive" 
+                  href={TEXAS_ENROLLMENT_URL} 
                   variant="custom" 
                   className="w-full h-11 px-5 rounded-xl bg-[#0667d1] text-white text-sm font-semibold shadow-[0px_10px_15px_-3px_rgba(17,23,34,0.08),0px_4px_6px_-4px_rgba(17,23,34,0.05)] hover:bg-[#0556b3]"
                 >

@@ -2,6 +2,40 @@
 
 This document describes the development environment setup and deployment process for the Road Ready Safety website.
 
+## 🏗️ **Builds: QA vs production**
+
+The site supports two build modes that control **Texas routes** and **enrollment links**:
+
+| Build | Use for | Texas /texas page | Texas “Start course” / Enroll links |
+|-------|--------|--------------------|-------------------------------------|
+| **Production** | prod (e.g. roadreadysafety.com) | Off | `/courses/tx-defensive` → affiliate (DTA) |
+| **QA** | QA (e.g. qa.roadreadysafety.com) | On | `https://app.qa.roadreadysafety.com/public/checkout?sku=tx-bdi` |
+
+### Commands
+
+- **Production build** (no Texas routes, current prod behavior):
+  ```bash
+  npm run build:prod
+  ```
+  Or your usual prod deploy script (e.g. `./deploy-prod.sh`), which should **not** set the Texas env vars below.
+
+- **QA build** (Texas on, enrollment → QA app):
+  ```bash
+  npm run build:qa
+  ```
+  This sets `VITE_TEXAS_ROUTES_ENABLED=true` and `VITE_TEXAS_ENROLLMENT_URL=https://app.qa.roadreadysafety.com/public/checkout?sku=tx-bdi` for that build. Use this when deploying to **qa.roadreadysafety.com**.
+
+### Env vars (optional / CI)
+
+If you set env vars in CI or in `.env.local` (see `.env.example`), use:
+
+- **`VITE_TEXAS_ROUTES_ENABLED`** — `true` to enable `/texas` and course-finder → Texas; unset or `false` for prod.
+- **`VITE_TEXAS_ENROLLMENT_URL`** — When set, all Texas “Start course” / “Enroll” buttons use this URL (e.g. QA checkout). Leave unset for prod.
+
+Copy `.env.example` to `.env.local` and uncomment/edit as needed for local QA testing.
+
+---
+
 ## 🏗️ **Infrastructure**
 
 ### AWS Resources

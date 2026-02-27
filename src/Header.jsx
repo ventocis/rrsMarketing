@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import Button from './components/Button.jsx';
+import { TEXAS_ENROLLMENT_URL } from './config/texasEnrollment.js';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -56,7 +57,7 @@ export default function Header() {
               Log In
             </button>
           <Button 
-            href="/courses/tx-defensive" 
+            href={TEXAS_ENROLLMENT_URL} 
             variant="custom" 
             className="bg-[#0667D1] hover:bg-[#0556b3] text-white pt-[11.6px] pb-[12.4px] px-[20px] rounded-[16px] text-sm font-semibold flex items-center justify-center leading-[20px] no-underline text-center"
             style={{ 

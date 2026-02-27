@@ -11,8 +11,8 @@
     "prebuild": "node ./blueprint/scripts/build-data.mjs",
     "build:spa": "vite build",
     "build:static": "node ./blueprint/scripts/prerender.mjs",
-    "build:prod": "npm run build:spa && npm run build:static && node ./blueprint/scripts/swap-robots.mjs allow && node ./blueprint/scripts/build-data.mjs",
-    "build:qa": "npm run build:spa -- --mode qa && npm run build:static && node ./blueprint/scripts/swap-robots.mjs block && node ./blueprint/scripts/build-data.mjs"
+    "build:prod": "node ./blueprint/scripts/build-data.mjs && npm run build:spa && npm run build:static && node ./blueprint/scripts/swap-robots.mjs allow",
+    "build:qa": "node ./blueprint/scripts/build-data.mjs && npm run build:spa -- --mode qa && npm run build:static && node ./blueprint/scripts/swap-robots.mjs block"
   },
   "dependencies": {
     "fast-glob": "^3.3.3",

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import { SITE_URL } from '../config/urls.js';
 
 export default function StructuredData({ type, data }) {
   const getStructuredData = () => {
@@ -9,8 +10,8 @@ export default function StructuredData({ type, data }) {
           "@context": "https://schema.org",
           "@type": "Organization",
           "name": "Road Ready Safety",
-          "url": "https://roadreadysafety.com",
-          "logo": "https://roadreadysafety.com/assets/logo.svg",
+          "url": SITE_URL,
+          "logo": `${SITE_URL}/assets/logo.svg`,
           "description": "State-approved traffic school and defensive driving courses built to be simple.",
           "contactPoint": {
             "@type": "ContactPoint",
@@ -37,13 +38,13 @@ export default function StructuredData({ type, data }) {
           "timeRequired": `PT${data.duration_hours}H`,
           "courseMode": "online",
           "inLanguage": "en-US",
-          "url": `https://roadreadysafety.com/courses/${data.slug}`,
+          "url": `${SITE_URL}/courses/${data.slug}`,
           "offers": {
             "@type": "Offer",
             "price": data.price_usd,
             "priceCurrency": "USD",
             "availability": "https://schema.org/OnlineOnly",
-            "url": `https://roadreadysafety.com/courses/${data.slug}`
+            "url": `${SITE_URL}/courses/${data.slug}`
           }
         };
       
@@ -62,14 +63,14 @@ export default function StructuredData({ type, data }) {
             "name": "Road Ready Safety",
             "logo": {
               "@type": "ImageObject",
-              "url": "https://roadreadysafety.com/assets/logo.svg"
+              "url": `${SITE_URL}/assets/logo.svg`
             }
           },
           "datePublished": data.date,
           "dateModified": data.date,
           "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": `https://roadreadysafety.com/blog/${data.slug}`
+            "@id": `${SITE_URL}/blog/${data.slug}`
           }
         };
       
@@ -78,11 +79,11 @@ export default function StructuredData({ type, data }) {
           "@context": "https://schema.org",
           "@type": "WebSite",
           "name": "Road Ready Safety",
-          "url": "https://roadreadysafety.com",
+          "url": SITE_URL,
           "description": "State-approved traffic school and defensive driving courses",
           "potentialAction": {
             "@type": "SearchAction",
-            "target": "https://roadreadysafety.com/find/{state}/{courseType}",
+            "target": `${SITE_URL}/find/{state}/{courseType}`,
             "query-input": "required name=state name=courseType"
           }
         };

@@ -14,7 +14,6 @@ This document describes the development environment setup and deployment process
 - `bucket-policy-dev.json` - S3 bucket policy for public access
 - `cf-dist-dev.json` - CloudFront distribution details
 - `cloudfront-update-config-dev.json` - CloudFront update configuration
-- `deploy-dev.sh` - Deployment script for dev environment
 
 ## 🚀 **Deployment Process**
 
@@ -25,29 +24,15 @@ This document describes the development environment setup and deployment process
 
 ### Quick Deploy
 ```bash
-# Deploy to dev environment
-./deploy-dev.sh
-```
-
-### Manual Steps (if needed)
-```bash
-# Build the project
-npm run build
-
-# Sync to S3 dev bucket
-aws s3 sync dist/ s3://rrs-testaug202025-dev --delete
-
-# Invalidate CloudFront cache
-aws cloudfront create-invalidation \
-  --distribution-id E23C0I4XA6HHPK \
-  --paths "/*"
+# Deploy to QA environment via CDK
+make deploy ENV=qa
 ```
 
 ## 🔧 **Development Workflow**
 
 1. **Make changes** to the source code
 2. **Test locally** with `npm run dev`
-3. **Deploy to dev** with `./deploy-dev.sh`
+3. **Deploy to QA** with `make deploy ENV=qa`
 4. **Verify** at `https://d3nf9vaelf82s8.cloudfront.net`
 
 ## 📋 **AWS Commands Reference**

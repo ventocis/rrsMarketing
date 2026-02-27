@@ -78,6 +78,7 @@ export class CloudfrontCertificateStack extends cdk.Stack {
             distribution, // Invalidate CloudFront cache after deployment
             distributionPaths: ['/*'],
             prune: true,
+            exclude: ['banner.json'],
         })
     }
 }

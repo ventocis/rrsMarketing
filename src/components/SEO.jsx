@@ -3,6 +3,7 @@ import React from 'react';
 // Import will fail if package is missing - error will be caught by global error handler
 // #endregion
 import { Helmet } from 'react-helmet-async';
+import { SITE_URL } from '../config/urls.js';
 
 export default function SEO({ 
   title, 
@@ -17,8 +18,8 @@ export default function SEO({
 }) {
   const siteTitle = 'Road Ready Safety';
   const fullTitle = title ? `${title} – ${siteTitle}` : siteTitle;
-  const fullUrl = url ? `https://roadreadysafety.com${url}` : 'https://roadreadysafety.com';
-  const fullImage = image.startsWith('http') ? image : `https://roadreadysafety.com${image}`;
+  const fullUrl = url ? `${SITE_URL}${url}` : SITE_URL;
+  const fullImage = image.startsWith('http') ? image : `${SITE_URL}${image}`;
 
   return (
     <Helmet>

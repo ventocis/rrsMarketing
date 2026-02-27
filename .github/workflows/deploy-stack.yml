@@ -1,29 +1,44 @@
-name: Deploy
+name: Deploy stack
 
 on:
   push:
     tags:
       - 'v*.*.*'
     branches:
-      - main
+      - prod
 
 permissions:
-  id-token: write
   contents: read
+  id-token: write
 
 jobs:
-  deploy:
+  get-env:
     runs-on: ubuntu-latest
+    outputs:
+      env: ${{ steps.set-env.outputs.env }}
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Determine environment
+      - name: Set env
+        id: set-env
         run: |
-          if [[ "${{ github.ref }}" == refs/tags/v* ]]; then
-            echo "DEPLOY_ENV=prod" >> $GITHUB_ENV
+          if [[ "${{ github.ref_name }}" == "prod" ]]; then
+            echo "env=prod" >> $GITHUB_OUTPUT
           else
-            echo "DEPLOY_ENV=qa" >> $GITHUB_ENV
+            echo "env=qa" >> $GITHUB_OUTPUT
           fi
+
+  deploy-to-aws:
+    needs: get-env
+    concurrency:
+      group: marketing-deployment-${{ needs.get-env.outputs.env }}
+      cancel-in-progress: false
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
@@ -48,6 +63,11 @@ jobs:
             --query authorizationToken \
             --output text)" >> $GITHUB_ENV
 
-      - run: make ci ENV=${{ env.DEPLOY_ENV }}
-        env:
-          GIT_SHA: ${{ github.sha }}
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install infra dependencies
+        working-directory: infra
+        run: npm ci
+
+      - run: make deploy ENV=${{ needs.get-env.outputs.env }}

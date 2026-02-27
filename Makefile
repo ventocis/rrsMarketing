@@ -10,13 +10,18 @@ clean:
 	rm -rf infra/cdk.out
 	rm -rf dist
 
-dist:
-	npm run build
+ifeq ($(ENV),qa)
+BUILD_CMD = npm run build:qa
+else
+BUILD_CMD = npm run build:prod
+endif
 
-infra/cdk.out: dist
+build:
+ifndef ENV
+	$(error ENV is required. Usage: make build ENV=qa)
+endif
+	$(BUILD_CMD)
 	$(CDK_SYNTH)
-
-build: infra/cdk.out
 
 # Usage: make deploy ENV=qa
 deploy: build

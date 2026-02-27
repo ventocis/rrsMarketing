@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Button from './Button.jsx';
 import LockIcon from './icons/LockIcon.jsx';
 import CourseBullets from './CourseBullets.jsx';
+import { PORTAL_URL } from '../config/urls.js';
 
 export default function BuyBox({ 
   course, 
@@ -13,7 +14,7 @@ export default function BuyBox({
   const [showGuarantee, setShowGuarantee] = useState(false);
   
   const ctaLabel = isPartner ? 'Enroll now' : 'Sign up';
-  const ctaHref = isPartner ? affiliateLink : `#enroll`;
+  const ctaHref = isPartner ? affiliateLink : PORTAL_URL;
   const ctaProps = isPartner 
     ? { target: '_blank', rel: 'noopener sponsored' }
     : {};

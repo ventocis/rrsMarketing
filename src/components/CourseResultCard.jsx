@@ -3,6 +3,7 @@ import Card from './Card.jsx';
 import Button from './Button.jsx';
 import { usd, hours, truncate } from '../lib/format.js';
 import resultsCopy from '../../blueprint/copy/results.json';
+import { PORTAL_URL } from '../config/urls.js';
 
 const labels = {
   learnMore: resultsCopy?.grid?.card?.cta_learn || 'Learn more',
@@ -37,7 +38,7 @@ export default function CourseResultCard({ course }) {
         {course.provider_type === 'Partner' ? (
           <Button variant="primary" href={course.affiliate_link} target="_blank" rel="noopener sponsored" className="w-full">{labels.signUp}</Button>
         ) : (
-          <Button variant="primary" href={`/courses/${course.slug}#enroll`} className="w-full">{labels.signUp}</Button>
+          <Button variant="primary" href={PORTAL_URL} className="w-full">{labels.signUp}</Button>
         )}
       </div>
     </Card>

@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from './Button.jsx';
 import { usd, hours } from '../lib/format.js';
+import { PORTAL_URL } from '../config/urls.js';
 
 export default function StickyEnrollBar({ course }) {
   if (!course || (!course.price_usd && !course.duration_hours)) return null;
@@ -15,7 +16,7 @@ export default function StickyEnrollBar({ course }) {
         <Button
           size="md"
           variant="primary"
-          href={isPartner ? course.affiliate_link : `/courses/${course.slug}#enroll`}
+          href={isPartner ? course.affiliate_link : PORTAL_URL}
           target={isPartner ? '_blank' : undefined}
           rel={isPartner ? 'noopener sponsored' : undefined}
         >

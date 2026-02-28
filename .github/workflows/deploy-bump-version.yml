@@ -1,0 +1,52 @@
+name: Version Bump on Merge
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  bump-version:
+    concurrency:
+      group: marketing-version-${{ github.ref_name }}
+      cancel-in-progress: false
+    runs-on: ubuntu-latest
+    # Skip if the commit message starts with "Bump version to" to prevent recursion
+    if: "!startsWith(github.event.head_commit.message, 'Bump version to')"
+    permissions:
+      contents: write
+
+    steps:
+      - name: Generate Token
+        id: generate_token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.RRS_BOT_CLIENT_ID }}
+          private-key: ${{ secrets.RRS_BOT_PRIVATE_KEY }}
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          # use the bot token to push the version bump commit
+          # as the default CI token isn't able to kick off a new workflow run to prevent recursion
+          # avoiding using the PAT allows us to prevent pushing to protected branches
+          token: ${{ steps.generate_token.outputs.token }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Bump version
+        run: |
+          npm version minor -m "Bump version to %s"
+
+      - name: Push changes
+        run: |
+          git push origin ${{ github.ref_name }} --follow-tags

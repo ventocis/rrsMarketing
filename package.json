@@ -1,6 +1,6 @@
 {
   "name": "road-ready-bdi",
-  "version": "1.0.0",
+  "version": "1.4.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -13,7 +13,8 @@
     "build:static": "node ./blueprint/scripts/prerender.mjs",
     "build:prod": "VITE_TEXAS_ROUTES_ENABLED=false VITE_TEXAS_ENROLLMENT_URL= npm run build:spa && npm run build:static && node ./blueprint/scripts/swap-robots.mjs allow && node ./blueprint/scripts/build-data.mjs",
     "build:staging": "npm run build:spa && npm run build:static && node ./blueprint/scripts/swap-robots.mjs block && node ./blueprint/scripts/build-data.mjs",
-    "build:qa": "VITE_TEXAS_ROUTES_ENABLED=true VITE_TEXAS_ENROLLMENT_URL=https://app.qa.roadreadysafety.com/public/checkout?sku=tx-bdi npm run build:spa && npm run build:static && node ./blueprint/scripts/swap-robots.mjs block && node ./blueprint/scripts/build-data.mjs"
+    "build:qa": "VITE_TEXAS_ROUTES_ENABLED=true VITE_TEXAS_ENROLLMENT_URL=https://app.qa.roadreadysafety.com/public/checkout?sku=tx-bdi npm run build:spa && npm run build:static && node ./blueprint/scripts/swap-robots.mjs block && node ./blueprint/scripts/build-data.mjs",
+    "preview:qa": "npm run build:qa && vite preview --port 4174"
   },
   "dependencies": {
     "fast-glob": "^3.3.3",

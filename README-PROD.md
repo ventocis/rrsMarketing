@@ -31,7 +31,6 @@ The Road Ready Safety website has been successfully deployed to AWS using the fo
 
 ### Files Created
 
-- `deploy-prod.sh` - Production deployment script
 - `cloudfront-update-config-us-east-2.json` - CloudFront distribution configuration
 - `bucket-policy-prod-us-east-2.json` - S3 bucket public access policy
 
@@ -40,12 +39,12 @@ The Road Ready Safety website has been successfully deployed to AWS using the fo
 To deploy updates to production:
 
 ```bash
-./deploy-prod.sh
+make deploy ENV=prod
 ```
 
 **Use the production build only.** Do not set `VITE_TEXAS_ROUTES_ENABLED` or `VITE_TEXAS_ENROLLMENT_URL` for prod; the Texas landing page stays off and Texas enrollment uses the existing affiliate (DTA). For QA builds and env vars, see **README-DEV.md** (“Builds: QA vs production”).
 
-This script will:
+You can deploy with `./deploy-prod.sh` (which runs `npm run build:prod`), or via CDK: `make deploy ENV=prod`. Either way:
 1. Build the project
 2. Sync files to S3
 3. Invalidate CloudFront cache

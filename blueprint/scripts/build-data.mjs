@@ -313,6 +313,18 @@ const build = async () => {
   const csv = await readFile(BP('data/courses.csv'), 'utf8');
   const records = parseCsv(csv, { columns: true, skip_empty_lines: true, bom: true });
 
+  // 1b) Load existing qa_link values if courses.json exists
+  let existingQaLinks = {};
+  try {
+    const existing = JSON.parse(await readFile(SRC('data/courses.json'), 'utf8'));
+    if (Array.isArray(existing)) {
+      existing.forEach(c => {
+        if (c.slug && c.qa_link) existingQaLinks[c.slug] = c.qa_link;
+      });
+    }
+  } catch {
+    // File doesn't exist or can't be parsed, that's fine
+  }
 
   // 2) Normalize + basic shaping
   const courses = records.map(r => {
@@ -322,7 +334,7 @@ const build = async () => {
 
     // Ensure required derived booleans/fields
     const isPartner = r.provider_type === 'Partner';
-    
+
     // Process boolean benefit fields
     const benefits = {
       stateApproved: toBoolean(r.stateApproved),
@@ -332,12 +344,19 @@ const build = async () => {
       shortestAllowed: toBoolean(r.shortestAllowed),
       secureCheckout: toBoolean(r.secureCheckout)
     };
-    
+
+    // Hardcode QA-specific links for courses that need them
+    const qaLinkMap = {
+      'tx-defensive': 'https://app.qa.roadreadysafety.com/public/checkout?sku=tx-bdi'
+    };
+
     return {
       ...r,
       isPartner,
       price_usd: r.price_usd ?? '',
       duration_hours: r.duration_hours ?? '',
+      // Include qa_link from hardcoded map or from existing file
+      ...(qaLinkMap[r.slug] || existingQaLinks[r.slug]) && { qa_link: qaLinkMap[r.slug] || existingQaLinks[r.slug] },
       ...benefits
     };
   });

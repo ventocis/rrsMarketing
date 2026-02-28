@@ -59,7 +59,6 @@ No extra env vars are required in CI: the scripts call the right npm script, whi
 - `bucket-policy-dev.json` - S3 bucket policy for public access
 - `cf-dist-dev.json` - CloudFront distribution details
 - `cloudfront-update-config-dev.json` - CloudFront update configuration
-- `deploy-dev.sh` - Deployment script for dev environment
 
 ## 🚀 **Deployment Process**
 
@@ -68,6 +67,7 @@ No extra env vars are required in CI: the scripts call the right npm script, whi
 - Node.js and npm installed
 - Access to the dev AWS account
 
+### Quick Deploy
 ### Quick Deploy
 ```bash
 # Deploy to dev environment
@@ -88,11 +88,13 @@ aws cloudfront create-invalidation \
   --paths "/*"
 ```
 
+Alternatively, deploy to QA via CDK: `make deploy ENV=qa`
+
 ## 🔧 **Development Workflow**
 
 1. **Make changes** to the source code
 2. **Test locally** with `npm run dev`
-3. **Deploy to dev** with `./deploy-dev.sh`
+3. **Deploy to QA** with `make deploy ENV=qa`
 4. **Verify** at `https://d3nf9vaelf82s8.cloudfront.net`
 
 ## 📋 **AWS Commands Reference**

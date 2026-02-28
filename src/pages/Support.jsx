@@ -1,11 +1,10 @@
 import React, { useEffect } from "react";
 import SEO from "../components/SEO.jsx";
-
-const SUPPORT_REDIRECT_URL = "https://app.roadreadysafety.com/contact";
+import { CONTACT_US_URL } from "../config/urls.js";
 
 export default function SupportPage() {
   useEffect(() => {
-    window.location.replace(SUPPORT_REDIRECT_URL);
+    window.location.replace(CONTACT_US_URL);
   }, []);
 
   return (

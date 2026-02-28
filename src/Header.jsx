@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import Button from './components/Button.jsx';
 import { TEXAS_ENROLLMENT_URL } from './config/texasEnrollment.js';
+import { LOGIN_URL } from './config/urls.js';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -19,8 +20,8 @@ export default function Header() {
   };
 
   const isQa = isTexasRoutesEnabled;
-  const loginUrl = isQa
-    ? `https://app.qa.roadreadysafety.com/public/login?returnUrl=${encodeURIComponent(location.pathname || '/')}`
+  const loginUrl = LOGIN_URL
+    ? `${LOGIN_URL}${LOGIN_URL.includes('?') ? '&' : '?'}returnUrl=${encodeURIComponent(location.pathname || '/')}`
     : null;
 
   const logInButtonClass = "h-9 px-4 rounded-[10px] text-xs font-semibold text-[#1e2832] hover:bg-gray-100 transition-colors";

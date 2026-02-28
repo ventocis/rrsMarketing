@@ -149,3 +149,32 @@ a[href*="app.qa.roadreadysafety.com"][class*="rounded"] {
   text-decoration: none !important;
   color: inherit !important;
 }
+
+/* Force white text on blue primary buttons site-wide (override inherited/link color) */
+/* Match only elements with blue background (bg-[#0667...]), not blue text links */
+a[class*="bg-"][class*="0667D1"],
+a[class*="bg-"][class*="0667d1"],
+button[class*="bg-"][class*="0667D1"],
+button[class*="bg-"][class*="0667d1"] {
+  color: #fff !important;
+}
+a[class*="bg-"][class*="0667D1"] *,
+a[class*="bg-"][class*="0667d1"] *,
+button[class*="bg-"][class*="0667D1"] *,
+button[class*="bg-"][class*="0667d1"] * {
+  color: inherit !important;
+}
+
+/* Texas site: ensure blue buttons (Start Course, Continue Module, etc.) always have white text */
+.texas-route a[class*="bg-"][class*="0667D1"],
+.texas-route a[class*="bg-"][class*="0667d1"],
+.texas-route button[class*="bg-"][class*="0667D1"],
+.texas-route button[class*="bg-"][class*="0667d1"] {
+  color: #fff !important;
+}
+.texas-route a[class*="bg-"][class*="0667D1"] *,
+.texas-route a[class*="bg-"][class*="0667d1"] *,
+.texas-route button[class*="bg-"][class*="0667D1"] *,
+.texas-route button[class*="bg-"][class*="0667d1"] * {
+  color: inherit !important;
+}

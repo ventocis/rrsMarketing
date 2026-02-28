@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Button from '../Button.jsx';
 import { TEXAS_ENROLLMENT_URL } from '../../config/texasEnrollment.js';
+import { LOGIN_URL } from '../../config/urls.js';
 
 export default function TexasLayout({ children }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
   const isQa = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
-  const loginUrl = isQa
-    ? `https://app.qa.roadreadysafety.com/public/login?returnUrl=${encodeURIComponent(location.pathname || '/')}`
+  const loginUrl = LOGIN_URL
+    ? `${LOGIN_URL}${LOGIN_URL.includes('?') ? '&' : '?'}returnUrl=${encodeURIComponent(location.pathname || '/')}`
     : null;
 
   // #region agent log
@@ -322,13 +323,13 @@ export default function TexasLayout({ children }) {
               <div className="flex flex-col gap-3">
                 <div className="flex gap-3 items-center">
                   <img src="/assets/icons/texas/email-icon.svg" alt="" className="w-4 h-4" />
-                  <a href="mailto:support@roadreadysafety.com" className="text-sm text-[#f6f6f9] leading-5 hover:text-white transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                    support@roadreadysafety.com
+                  <a href="mailto:info@roadreadysafety.com" className="text-sm text-[#f6f6f9] leading-5 hover:text-white transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                    info@roadreadysafety.com
                   </a>
                 </div>
                 <div className="flex gap-3 items-center">
-                  <img src="/assets/icons/texas/location-icon.svg" alt="" className="w-4 h-4" />
-                  <span className="text-sm text-[#f6f6f9] leading-5" style={{ fontFamily: "'DM Sans', sans-serif" }}>Provider License #: xxxxx</span>
+                  <img src="/assets/icons/texas/tdlr-badge-footer.svg" alt="" className="w-4 h-4" />
+                  <span className="text-sm text-[#f6f6f9] leading-5" style={{ fontFamily: "'DM Sans', sans-serif" }}>TDLR Approved: CPXXXX</span>
                 </div>
               </div>
             </div>

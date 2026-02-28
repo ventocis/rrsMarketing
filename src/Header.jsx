@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import Button from './components/Button.jsx';
+import { TEXAS_ENROLLMENT_URL } from './config/texasEnrollment.js';
+import { LOGIN_URL } from './config/urls.js';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,6 +18,15 @@ export default function Header() {
   const closeMenu = () => {
     setIsMenuOpen(false);
   };
+
+  const isQa = isTexasRoutesEnabled;
+  const loginUrl = LOGIN_URL
+    ? `${LOGIN_URL}${LOGIN_URL.includes('?') ? '&' : '?'}returnUrl=${encodeURIComponent(location.pathname || '/')}`
+    : null;
+
+  const logInButtonClass = "h-9 px-4 rounded-[10px] text-xs font-semibold text-[#1e2832] hover:bg-gray-100 transition-colors";
+  const logInButtonStyle = { fontFamily: "'DM Sans', sans-serif" };
+  const logInMobileClass = "w-full h-12 px-4 rounded-[10px] text-[18px] font-semibold text-[#1e2832] border border-[#e5e5e5] bg-white hover:bg-gray-50 transition-colors";
 
   const logoImage = "/assets/icons/texas/logo-shield.svg";
 
@@ -52,11 +63,16 @@ export default function Header() {
 
           {/* Desktop Buttons */}
           <div className="hidden md:flex items-center gap-3 flex-shrink-0">
-            <button className="h-9 px-4 rounded-[10px] text-xs font-semibold text-[#1e2832] hover:bg-gray-100 transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+            <button
+              type="button"
+              className={logInButtonClass}
+              style={logInButtonStyle}
+              onClick={loginUrl ? () => { window.location.href = loginUrl; } : undefined}
+            >
               Log In
             </button>
           <Button 
-            href="/courses/tx-defensive" 
+            href={TEXAS_ENROLLMENT_URL} 
             variant="custom" 
             className="bg-[#0667D1] hover:bg-[#0556b3] text-white pt-[11.6px] pb-[12.4px] px-[20px] rounded-[16px] text-sm font-semibold flex items-center justify-center leading-[20px] no-underline text-center"
             style={{ 
@@ -94,11 +110,16 @@ export default function Header() {
               <Link to="/texas/faq" onClick={closeMenu} className="block text-lg font-medium text-[#1e2832] text-center py-2" style={{ fontFamily: "'DM Sans', sans-serif" }}>FAQ</Link>
               <Link to="/texas/helpcenter" onClick={closeMenu} className="block text-lg font-medium text-[#1e2832] text-center py-2" style={{ fontFamily: "'DM Sans', sans-serif" }}>Help Center</Link>
               <div className="pt-4 space-y-3">
-                <button className="w-full h-12 px-4 rounded-[10px] text-[18px] font-semibold text-[#1e2832] border border-[#e5e5e5] bg-white hover:bg-gray-50 transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                <button
+                  type="button"
+                  className={logInMobileClass}
+                  style={logInButtonStyle}
+                  onClick={loginUrl ? () => { window.location.href = loginUrl; } : undefined}
+                >
                   Log In
                 </button>
                 <Button 
-                  href="/courses/tx-defensive" 
+                  href={TEXAS_ENROLLMENT_URL} 
                   variant="custom" 
                   className="w-full h-12 px-4 rounded-[10px] bg-[#0667D1] text-white text-[18px] font-semibold hover:bg-[#0556b3] transition-colors flex items-center justify-center"
                   style={{ 
@@ -141,7 +162,12 @@ export default function Header() {
 
         {/* Desktop Buttons */}
         <div className="hidden md:flex items-center gap-3 flex-shrink-0">
-          <button className="h-9 px-4 rounded-[10px] text-xs font-semibold text-[#1e2832] hover:bg-gray-100 transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+          <button
+            type="button"
+            className={logInButtonClass}
+            style={logInButtonStyle}
+            onClick={loginUrl ? () => { window.location.href = loginUrl; } : undefined}
+          >
             Log In
           </button>
           <Button 
@@ -212,7 +238,12 @@ export default function Header() {
               Help Center
             </a>
             <div className="pt-4 space-y-3">
-              <button className="w-full h-12 px-4 rounded-[10px] text-[18px] font-semibold text-[#1e2832] border border-[#e5e5e5] bg-white hover:bg-gray-50 transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+              <button
+                type="button"
+                className={logInMobileClass}
+                style={logInButtonStyle}
+                onClick={loginUrl ? () => { window.location.href = loginUrl; } : undefined}
+              >
                 Log In
               </button>
               <Button 

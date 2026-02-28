@@ -42,6 +42,13 @@ export default function HeroFinder() {
     setEmptyState(false);
     if (!selectedState || !selectedReason) return;
 
+    // When Texas routes are enabled (QA), send Texas + Court/Ticket or Insurance to /texas
+    const isTexasRoutesEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+    if (isTexasRoutesEnabled && selectedState === 'TX' && (selectedReason === 'court' || selectedReason === 'insurance')) {
+      navigate('/texas');
+      return;
+    }
+
     // Determine course types to filter by
     let typesToUse = courseTypes;
     if (selectedCourse) {

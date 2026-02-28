@@ -2,6 +2,51 @@
 
 This document describes the development environment setup and deployment process for the Road Ready Safety website.
 
+## 🏗️ **Builds: QA vs production**
+
+The site supports two build modes that control **Texas routes** and **enrollment links**:
+
+| Build | Use for | Texas /texas page | Texas “Start course” / Enroll links |
+|-------|--------|--------------------|-------------------------------------|
+| **Production** | prod (e.g. roadreadysafety.com) | Off | `/courses/tx-defensive` → affiliate (DTA) |
+| **QA** | QA (e.g. qa.roadreadysafety.com) | On | `https://app.qa.roadreadysafety.com/public/checkout?sku=tx-bdi` |
+
+### Commands
+
+- **Production build** (no Texas routes, current prod behavior):
+  ```bash
+  npm run build:prod
+  ```
+  Or your usual prod deploy script (e.g. `./deploy-prod.sh`), which should **not** set the Texas env vars below.
+
+- **QA build** (Texas on, enrollment → QA app):
+  ```bash
+  npm run build:qa
+  ```
+  This sets `VITE_TEXAS_ROUTES_ENABLED=true` and `VITE_TEXAS_ENROLLMENT_URL=https://app.qa.roadreadysafety.com/public/checkout?sku=tx-bdi` for that build. Use this when deploying to **qa.roadreadysafety.com**.
+
+### Env vars (optional / CI)
+
+If you set env vars in CI or in `.env.local` (see `.env.example`), use:
+
+- **`VITE_TEXAS_ROUTES_ENABLED`** — `true` to enable `/texas` and course-finder → Texas; unset or `false` for prod.
+- **`VITE_TEXAS_ENROLLMENT_URL`** — When set, all Texas “Start course” / “Enroll” buttons use this URL (e.g. QA checkout). Leave unset for prod.
+
+Copy `.env.example` to `.env.local` and uncomment/edit as needed for local QA testing.
+
+### CI / deployment steps
+
+The deploy scripts are wired so each environment gets the right build:
+
+| Script | Build used | Result |
+|--------|------------|--------|
+| **`./deploy-prod.sh`** | `npm run build:prod` | Texas routes **off**, DTA affiliate, no QA login link. Safe for production. |
+| **`./deploy-dev.sh`** | `npm run build:qa` | Texas routes **on**, QA enrollment URL, QA login link. Use for dev/QA (e.g. qa.roadreadysafety.com). |
+
+No extra env vars are required in CI: the scripts call the right npm script, which sets the needed `VITE_*` vars for that environment. If your CI runs these scripts (or runs the same commands), prod and dev will deploy correctly.
+
+---
+
 ## 🏗️ **Infrastructure**
 
 ### AWS Resources
@@ -24,9 +69,46 @@ This document describes the development environment setup and deployment process
 
 ### Quick Deploy
 ```bash
-# Deploy to QA environment via CDK
-make deploy ENV=qa
+# Deploy to dev environment
+./deploy-dev.sh
 ```
+
+### Manual Steps (if needed)
+```bash
+# Build the project (QA: Texas on, QA URLs)
+npm run build:qa
+
+# Sync to S3 dev bucket
+aws s3 sync dist/ s3://rrs-testaug202025-dev --delete
+
+# Invalidate CloudFront cache
+aws cloudfront create-invalidation \
+  --distribution-id E23C0I4XA6HHPK \
+  --paths "/*"
+```
+
+Alternatively, deploy to QA via CDK: `make deploy ENV=qa`
+
+## Testing the build (QA vs prod)
+
+To confirm env and URLs behave correctly:
+
+1. **QA build (Texas on, QA portal URLs)**
+   - Run: `npm run build:qa` then `npm run preview:qa` (or `vite preview --port 4174`).
+   - Open http://localhost:4174.
+   - **Texas:** Go to `/texas` — page should load; header/footer should show Texas nav; "Start Course" should go to app.qa.../checkout; "Log In" should go to app.qa.../public/login?returnUrl=...
+   - **Main site Contact Us:** Open `/support` — should redirect to `https://app.qa.roadreadysafety.com/public/contact`.
+   - **Prod behavior absent:** `/texas` should be present (not 404).
+
+2. **Prod build (Texas off, prod portal URLs)**
+   - Run: `npm run build:prod` then `npm run preview` (port 4173).
+   - Open http://localhost:4173.
+   - **Texas:** Navigating to `/texas` should 404 or show the home page (Texas routes not registered).
+   - **Main site Contact Us:** Open `/support` — should redirect to `https://app.roadreadysafety.com/public/sign-up?stage=two-factor-setup&returnUrl=/contact`.
+   - **Log In:** Header "Log In" should do nothing (no link to portal).
+
+3. **Pipeline**
+   - Pushing to the branch that runs the workflow and running `make deploy ENV=qa` or `ENV=prod` should use `.env.qa` or `.env.production` (no inline vars in the npm scripts). Verify the deployed QA site has Texas and QA URLs; the deployed prod site has no Texas and prod contact/login behavior.
 
 ## 🔧 **Development Workflow**
 

@@ -1,9 +1,16 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Button from '../Button.jsx';
+import { TEXAS_ENROLLMENT_URL } from '../../config/texasEnrollment.js';
+import { LOGIN_URL } from '../../config/urls.js';
 
 export default function TexasLayout({ children }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
+  const isQa = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+  const loginUrl = LOGIN_URL
+    ? `${LOGIN_URL}${LOGIN_URL.includes('?') ? '&' : '?'}returnUrl=${encodeURIComponent(location.pathname || '/')}`
+    : null;
 
   // #region agent log
   React.useEffect(() => {
@@ -220,11 +227,16 @@ export default function TexasLayout({ children }) {
 
           {/* Desktop Buttons */}
           <div className="hidden md:flex items-center gap-3 flex-shrink-0">
-            <button className="h-9 px-4 rounded-[10px] text-xs font-semibold text-[#1e2832] hover:bg-gray-100 transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+            <button
+              type="button"
+              className="h-9 px-4 rounded-[10px] text-xs font-semibold text-[#1e2832] hover:bg-gray-100 transition-colors"
+              style={{ fontFamily: "'DM Sans', sans-serif" }}
+              onClick={loginUrl ? () => { window.location.href = loginUrl; } : undefined}
+            >
               Log In
             </button>
             <Button 
-              href="/courses/tx-defensive" 
+              href={TEXAS_ENROLLMENT_URL} 
               variant="custom" 
               className="bg-[#0667d1] hover:bg-[#0556b3] text-white pt-[11.6px] pb-[12.4px] px-[20px] rounded-[12px] shadow-[0px_10px_15px_-3px_rgba(17,23,34,0.08),0px_4px_6px_-4px_rgba(17,23,34,0.05)] text-sm font-semibold flex items-center justify-center leading-[20px] no-underline text-center"
               style={{ fontFamily: "'DM Sans', sans-serif", minHeight: '44px', textAlign: 'center' }}
@@ -257,11 +269,16 @@ export default function TexasLayout({ children }) {
               <Link to="/texas/faq" onClick={closeMenu} className="block text-sm font-medium text-[#616d7b] hover:text-[#1e2832]">FAQ</Link>
               <Link to="/texas/helpcenter" onClick={closeMenu} className="block text-sm font-medium text-[#616d7b] hover:text-[#1e2832]">Help Center</Link>
               <div className="pt-2 space-y-2">
-                <button className="w-full h-9 px-4 rounded-[10px] text-xs font-semibold text-[#1e2832] border border-gray-300 hover:bg-gray-100">
+                <button
+                  type="button"
+                  className="w-full h-9 px-4 rounded-[10px] text-xs font-semibold text-[#1e2832] border border-gray-300 hover:bg-gray-100"
+                  style={{ fontFamily: "'DM Sans', sans-serif" }}
+                  onClick={loginUrl ? () => { window.location.href = loginUrl; } : undefined}
+                >
                   Log In
                 </button>
                 <Button 
-                  href="/courses/tx-defensive" 
+                  href={TEXAS_ENROLLMENT_URL} 
                   variant="custom" 
                   className="w-full h-11 px-5 rounded-xl bg-[#0667d1] text-white text-sm font-semibold shadow-[0px_10px_15px_-3px_rgba(17,23,34,0.08),0px_4px_6px_-4px_rgba(17,23,34,0.05)] hover:bg-[#0556b3]"
                 >
@@ -306,13 +323,13 @@ export default function TexasLayout({ children }) {
               <div className="flex flex-col gap-3">
                 <div className="flex gap-3 items-center">
                   <img src="/assets/icons/texas/email-icon.svg" alt="" className="w-4 h-4" />
-                  <a href="mailto:support@roadreadysafety.com" className="text-sm text-[#f6f6f9] leading-5 hover:text-white transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                    support@roadreadysafety.com
+                  <a href="mailto:info@roadreadysafety.com" className="text-sm text-[#f6f6f9] leading-5 hover:text-white transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                    info@roadreadysafety.com
                   </a>
                 </div>
                 <div className="flex gap-3 items-center">
-                  <img src="/assets/icons/texas/location-icon.svg" alt="" className="w-4 h-4" />
-                  <span className="text-sm text-[#f6f6f9] leading-5" style={{ fontFamily: "'DM Sans', sans-serif" }}>Provider License #: xxxxx</span>
+                  <img src="/assets/icons/texas/tdlr-badge-footer.svg" alt="" className="w-4 h-4" />
+                  <span className="text-sm text-[#f6f6f9] leading-5" style={{ fontFamily: "'DM Sans', sans-serif" }}>TDLR Approved: CPXXXX</span>
                 </div>
               </div>
             </div>

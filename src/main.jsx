@@ -1,5 +1,5 @@
-﻿import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import React from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import 'flowbite/dist/flowbite.css';
 import './index.css';
 import Header from './Header.jsx';
@@ -77,12 +77,14 @@ function Home() {
 
 function App() {
   // Check if Texas routes are enabled via environment variable
-  // Set VITE_TEXAS_ROUTES_ENABLED=true to enable Texas routes
-  // Defaults to false (disabled) if not set
+  // Set VITE_TEXAS_ROUTES_ENABLED=true to enable Texas routes (e.g. QA build). See .env.example.
+  // Defaults to false (disabled) if not set — prod keeps /texas off.
   const isTexasRoutesEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+  const location = useLocation();
+  const isTexasRoute = isTexasRoutesEnabled && location.pathname.startsWith('/texas');
 
   return (
-    <div className="w-full overflow-x-hidden m-0 p-0">
+    <div className={`w-full overflow-x-hidden m-0 p-0${isTexasRoute ? ' texas-route' : ''}`}>
       <ScrollToTop />
       <Header />
       <Routes>

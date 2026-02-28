@@ -7,12 +7,14 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview --port 4173",
+    "preview:qa": "npm run build:qa && vite preview --port 4174",
     "preview:static": "serve -s dist",
     "prebuild": "node ./blueprint/scripts/build-data.mjs",
     "build:spa": "vite build",
     "build:static": "node ./blueprint/scripts/prerender.mjs",
-    "build:prod": "node ./blueprint/scripts/build-data.mjs && npm run build:spa && npm run build:static && node ./blueprint/scripts/swap-robots.mjs allow",
-    "build:qa": "node ./blueprint/scripts/build-data.mjs && npm run build:spa -- --mode qa && npm run build:static && node ./blueprint/scripts/swap-robots.mjs block"
+    "build:prod": "npm run build:spa -- --mode production && npm run build:static && node ./blueprint/scripts/swap-robots.mjs allow && node ./blueprint/scripts/build-data.mjs",
+    "build:staging": "npm run build:spa && npm run build:static && node ./blueprint/scripts/swap-robots.mjs block && node ./blueprint/scripts/build-data.mjs",
+    "build:qa": "npm run build:spa -- --mode qa && npm run build:static && node ./blueprint/scripts/swap-robots.mjs block && node ./blueprint/scripts/build-data.mjs"
   },
   "dependencies": {
     "fast-glob": "^3.3.3",

@@ -10,6 +10,15 @@ const labels = {
   signUp: resultsCopy?.grid?.card?.cta_signup || 'Sign up',
 };
 
+// When Texas routes are enabled (QA), "Learn more" for Texas Defensive Driving goes to /texas instead of affiliate course page.
+const isTexasRoutesEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const TEXAS_COURSE_SLUG = 'tx-defensive';
+
+function getLearnMoreHref(slug) {
+  if (isTexasRoutesEnabled && slug === TEXAS_COURSE_SLUG) return '/texas';
+  return `/courses/${slug}`;
+}
+
 export default function CourseResultCard({ course }) {
   return (
     <Card
@@ -34,7 +43,7 @@ export default function CourseResultCard({ course }) {
         </span>
       )}
       <div className="mt-5 flex flex-col gap-3 md:flex-row md:items-center">
-        <Button variant="secondary" href={`/courses/${course.slug}`} className="w-full">{labels.learnMore}</Button>
+        <Button variant="secondary" href={getLearnMoreHref(course.slug)} className="w-full">{labels.learnMore}</Button>
         {IS_QA && course.qa_link ? (
           <Button variant="primary" href={course.qa_link} className="w-full">{labels.signUp}</Button>
         ) : course.provider_type === 'Partner' ? (

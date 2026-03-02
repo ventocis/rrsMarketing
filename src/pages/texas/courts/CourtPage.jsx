@@ -4,6 +4,7 @@ import SEO from '../../../components/SEO.jsx';
 import { TexasCourtBreadcrumbs } from '../../../components/Breadcrumbs.jsx';
 import Button from '../../../components/Button.jsx';
 import courtData from '../../../data/texas-courts.json';
+import { TEXAS_ENROLLMENT_URL } from '../../../config/texasEnrollment.js';
 
 export default function CourtPage() {
   const { slug } = useParams();
@@ -1040,9 +1041,9 @@ export default function CourtPage() {
                 <span className="text-xs font-medium text-[#1e2832] leading-4" style={{ fontFamily: "'DM Sans', sans-serif" }}>4.9 out of 5</span>
               </div>
 
-              {/* Enroll Button */}
+              {/* Enroll Button - always use Texas enrollment URL (QA or prod) instead of affiliate link */}
               <Button 
-                href="/courses/tx-defensive" 
+                href={TEXAS_ENROLLMENT_URL} 
                 variant="custom" 
                 className="w-full h-[44px] bg-[#0667d1] hover:bg-[#0556b3] text-white rounded-2xl shadow-[0px_10px_15px_-3px_rgba(17,23,34,0.08),0px_4px_6px_-4px_rgba(17,23,34,0.05)] text-sm font-semibold flex items-center justify-center gap-2 mb-3"
                 style={{ fontFamily: "'DM Sans', sans-serif" }}

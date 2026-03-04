@@ -56,7 +56,7 @@ export default function Footer() {
                 </div>
                 <div className="flex gap-3 items-center">
                   <img src="/assets/icons/texas/tdlr-badge-footer.svg" alt="" className="w-4 h-4" />
-                  <span className="text-sm text-[#f6f6f9] leading-5" style={{ fontFamily: "'DM Sans', sans-serif" }}>TDLR Approved: CPXXXX</span>
+                  <span className="text-sm text-[#f6f6f9] leading-5" style={{ fontFamily: "'DM Sans', sans-serif" }}>TDLR Approved: CP#1234</span>
                 </div>
               </div>
             </div>

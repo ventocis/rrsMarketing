@@ -165,7 +165,20 @@ button[class*="bg-"][class*="0667d1"] * {
   color: inherit !important;
 }
 
-/* Texas site: ensure blue buttons (Start Course, Continue Module, etc.) always have white text */
+/* Texas page: remove top gap above green banner and header */
+body.texas-page {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+.texas-route {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+.texas-route > header {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  top: 0;
+}
 .texas-route a[class*="bg-"][class*="0667D1"],
 .texas-route a[class*="bg-"][class*="0667d1"],
 .texas-route button[class*="bg-"][class*="0667D1"],

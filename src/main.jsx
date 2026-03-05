@@ -83,6 +83,13 @@ function App() {
   const location = useLocation();
   const isTexasRoute = isTexasRoutesEnabled && location.pathname.startsWith('/texas');
 
+  // Remove top gap on Texas pages: ensure body has no margin/padding so green banner and header sit flush
+  React.useEffect(() => {
+    if (isTexasRoute) document.body.classList.add('texas-page');
+    else document.body.classList.remove('texas-page');
+    return () => document.body.classList.remove('texas-page');
+  }, [isTexasRoute]);
+
   return (
     <div className={`w-full overflow-x-hidden m-0 p-0${isTexasRoute ? ' texas-route' : ''}`}>
       <ScrollToTop />

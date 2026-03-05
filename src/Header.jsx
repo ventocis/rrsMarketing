@@ -49,8 +49,8 @@ export default function Header() {
           <Link to="/texas" className="flex items-center gap-2 hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded flex-shrink-0">
             <img src={logoImage} alt="Road Ready Safety Logo" className="h-[39.633px] w-9" />
             <div className="flex flex-col">
-              <span className="text-[18px] font-bold text-[#1e2832] leading-[22.5px]" style={{ fontFamily: "'Outfit', sans-serif" }}>Road Ready</span>
-              <span className="text-xs font-medium text-[#616d7b] leading-4" style={{ fontFamily: "'DM Sans', sans-serif" }}>Safety</span>
+              <span className="text-[18px] font-bold text-[#2E323D] leading-[22.5px]" style={{ fontFamily: "'Outfit', sans-serif" }}>Road Ready</span>
+              <span className="text-xs font-medium leading-4" style={{ fontFamily: "'DM Sans', sans-serif" }}><span className="text-[#2E323D]">Safety</span><span className="text-[#6E747F]"> TDLR: CP#1234</span></span>
             </div>
           </Link>
           

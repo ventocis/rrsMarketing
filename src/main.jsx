@@ -30,8 +30,9 @@ import TexasIndex from './pages/texas/index.jsx';
 import TexasPricing from './pages/texas/pricing.jsx';
 import TexasFAQ from './pages/texas/faq.jsx';
 import TexasHelpCenter from './pages/texas/helpcenter.jsx';
-import TexasContactUs from './pages/texas/contactus.jsx';
 import TexasTerms from './pages/texas/terms.jsx';
+import TexasRefund from './pages/texas/refund.jsx';
+import TexasAccessibility from './pages/texas/accessibility.jsx';
 import CourtPage from './pages/texas/courts/CourtPage.jsx';
 import CourtsIndex from './pages/texas/courts/CourtsIndex.jsx';
 
@@ -115,8 +116,10 @@ function App() {
             <Route path="/texas/pricing" element={<TexasPricing />} />
             <Route path="/texas/faq" element={<TexasFAQ />} />
             <Route path="/texas/helpcenter" element={<TexasHelpCenter />} />
-            <Route path="/texas/contactus" element={<TexasContactUs />} />
+            <Route path="/texas/contactus" element={<SupportPage />} />
             <Route path="/texas/terms" element={<TexasTerms />} />
+            <Route path="/texas/refund" element={<TexasRefund />} />
+            <Route path="/texas/accessibility" element={<TexasAccessibility />} />
             <Route path="/texas/courts" element={<CourtsIndex />} />
             <Route path="/texas/courts/:slug" element={<CourtPage />} />
           </>

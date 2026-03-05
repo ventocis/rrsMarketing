@@ -151,17 +151,17 @@ a[href*="app.qa.roadreadysafety.com"][class*="rounded"] {
 }
 
 /* Force white text on blue primary buttons site-wide (override inherited/link color) */
-/* Match only elements with blue background (bg-[#0667...]), not blue text links */
-a[class*="bg-"][class*="0667D1"],
-a[class*="bg-"][class*="0667d1"],
-button[class*="bg-"][class*="0667D1"],
-button[class*="bg-"][class*="0667d1"] {
+/* Exclude buttons with white bg (e.g. CTA section "Find course") so their text stays visible */
+a[class*="bg-"][class*="0667D1"]:not([class*="bg-white"]),
+a[class*="bg-"][class*="0667d1"]:not([class*="bg-white"]),
+button[class*="bg-"][class*="0667D1"]:not([class*="bg-white"]),
+button[class*="bg-"][class*="0667d1"]:not([class*="bg-white"]) {
   color: #fff !important;
 }
-a[class*="bg-"][class*="0667D1"] *,
-a[class*="bg-"][class*="0667d1"] *,
-button[class*="bg-"][class*="0667D1"] *,
-button[class*="bg-"][class*="0667d1"] * {
+a[class*="bg-"][class*="0667D1"]:not([class*="bg-white"]) *,
+a[class*="bg-"][class*="0667d1"]:not([class*="bg-white"]) *,
+button[class*="bg-"][class*="0667D1"]:not([class*="bg-white"]) *,
+button[class*="bg-"][class*="0667d1"]:not([class*="bg-white"]) * {
   color: inherit !important;
 }
 
@@ -179,15 +179,15 @@ body.texas-page {
   padding-top: 0 !important;
   top: 0;
 }
-.texas-route a[class*="bg-"][class*="0667D1"],
-.texas-route a[class*="bg-"][class*="0667d1"],
-.texas-route button[class*="bg-"][class*="0667D1"],
-.texas-route button[class*="bg-"][class*="0667d1"] {
+.texas-route a[class*="bg-"][class*="0667D1"]:not([class*="bg-white"]),
+.texas-route a[class*="bg-"][class*="0667d1"]:not([class*="bg-white"]),
+.texas-route button[class*="bg-"][class*="0667D1"]:not([class*="bg-white"]),
+.texas-route button[class*="bg-"][class*="0667d1"]:not([class*="bg-white"]) {
   color: #fff !important;
 }
-.texas-route a[class*="bg-"][class*="0667D1"] *,
-.texas-route a[class*="bg-"][class*="0667d1"] *,
-.texas-route button[class*="bg-"][class*="0667D1"] *,
-.texas-route button[class*="bg-"][class*="0667d1"] * {
+.texas-route a[class*="bg-"][class*="0667D1"]:not([class*="bg-white"]) *,
+.texas-route a[class*="bg-"][class*="0667d1"]:not([class*="bg-white"]) *,
+.texas-route button[class*="bg-"][class*="0667D1"]:not([class*="bg-white"]) *,
+.texas-route button[class*="bg-"][class*="0667d1"]:not([class*="bg-white"]) * {
   color: inherit !important;
 }

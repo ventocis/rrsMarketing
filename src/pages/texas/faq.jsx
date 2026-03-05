@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Button from '../../components/Button.jsx';
 import SEO from '../../components/SEO.jsx';
+import { CONTACT_US_URL } from '../../config/urls.js';
 
 // Local icon assets for FAQ section
 const imgChevronFAQ = "/assets/icons/texas/chevron-faq.svg";
@@ -212,7 +213,7 @@ export default function TexasFAQ() {
               Our support team is here to help.
             </p>
             <Button
-              href="/texas/contactus"
+              href={CONTACT_US_URL}
               variant="custom"
               className="h-12 px-[33.6px] border border-[#03449e] text-[#03449e] rounded-2xl text-base font-semibold flex items-center justify-center gap-2 leading-6"
               style={{ fontFamily: "'DM Sans', sans-serif" }}

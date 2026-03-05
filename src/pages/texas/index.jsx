@@ -6,6 +6,7 @@ import Card from '../../components/Card.jsx';
 import CheckCircleIcon from '../../components/icons/CheckCircleIcon.jsx';
 import SEO from '../../components/SEO.jsx';
 import { TEXAS_ENROLLMENT_URL } from '../../config/texasEnrollment.js';
+import { CONTACT_US_URL } from '../../config/urls.js';
 
 // Local icon assets for What to Expect accordion
 const imgAfterTakingCourse = "/assets/icons/texas/after-taking-course.svg";
@@ -689,7 +690,15 @@ export default function TexasIndex() {
                     <p className="text-sm text-[#364153] leading-6">
                       Our friendly support team is here to help with anything from questions about topics covered to technical issues like login or account access. You can browse our help articles and resources anytime, and if you still need assistance, email us and a real person will typically respond within one business day.
                     </p>
-              </div>
+                    <Button
+                      href={CONTACT_US_URL}
+                      variant="custom"
+                      className="h-12 px-6 border-2 border-[#03449e] text-[#03449e] hover:bg-[#03449e] hover:text-white rounded-2xl text-base font-semibold flex items-center justify-center gap-2 w-fit"
+                    >
+                      Contact Support
+                      <img src="/assets/icons/texas/arrow-contact-support.svg" alt="" className="w-4 h-4" />
+                    </Button>
+                  </div>
             </div>
               )}
             </div>
@@ -1077,7 +1086,7 @@ export default function TexasIndex() {
               Our support team is here to help.
             </p>
             <Button 
-              href="/texas/contactus" 
+              href={CONTACT_US_URL} 
               variant="custom" 
               className="h-12 px-8 border-2 border-[#03449e] text-[#03449e] hover:bg-[#03449e] hover:text-white rounded-2xl text-base font-semibold flex items-center justify-center gap-2"
             >

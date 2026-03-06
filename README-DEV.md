@@ -97,14 +97,14 @@ To confirm env and URLs behave correctly:
    - Run: `npm run build:qa` then `npm run preview:qa` (or `vite preview --port 4174`).
    - Open http://localhost:4174.
    - **Texas:** Go to `/texas` — page should load; header/footer should show Texas nav; "Start Course" should go to app.qa.../checkout; "Log In" should go to app.qa.../public/login?returnUrl=...
-   - **Main site Contact Us:** Open `/support` — should redirect to `https://app.qa.roadreadysafety.com/public/contact`.
+   - **Main site Contact Us:** Open `/support` — should redirect to `https://app.qa.roadreadysafety.com/contact`.
    - **Prod behavior absent:** `/texas` should be present (not 404).
 
 2. **Prod build (Texas off, prod portal URLs)**
    - Run: `npm run build:prod` then `npm run preview` (port 4173).
    - Open http://localhost:4173.
    - **Texas:** Navigating to `/texas` should 404 or show the home page (Texas routes not registered).
-   - **Main site Contact Us:** Open `/support` — should redirect to `https://app.roadreadysafety.com/public/sign-up?stage=two-factor-setup&returnUrl=/contact`.
+   - **Main site Contact Us:** Open `/support` — should redirect to `https://app.roadreadysafety.com/contact`.
    - **Log In:** Header "Log In" should do nothing (no link to portal).
 
 3. **Pipeline**

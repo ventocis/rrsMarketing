@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Button from '../Button.jsx';
 import { TEXAS_ENROLLMENT_URL } from '../../config/texasEnrollment.js';
-import { LOGIN_URL } from '../../config/urls.js';
+import { LOGIN_URL, CONTACT_US_URL } from '../../config/urls.js';
 
 export default function TexasLayout({ children }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -349,7 +349,7 @@ export default function TexasLayout({ children }) {
               <h4 className="text-base font-semibold text-white leading-6 tracking-[-0.4px]" style={{ fontFamily: "'Outfit', sans-serif" }}>Support</h4>
               <div className="flex flex-col gap-3">
                 <Link to="/texas/helpcenter" className="text-sm text-[#f6f6f9] leading-5 hover:text-white transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>Help Center</Link>
-                <Link to="/texas/contactus" className="text-sm text-[#f6f6f9] leading-5 hover:text-white transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>Contact Us</Link>
+                <a href={CONTACT_US_URL} className="text-sm text-[#f6f6f9] leading-5 hover:text-white transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>Contact Us</a>
               </div>
               </div>
               
@@ -359,8 +359,8 @@ export default function TexasLayout({ children }) {
               <div className="flex flex-col gap-3">
                 <Link to="/privacy" className="text-sm text-[#f6f6f9] leading-5 hover:text-white transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>Privacy Policy</Link>
                 <Link to="/texas/terms" className="text-sm text-[#f6f6f9] leading-5 hover:text-white transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>Terms of Service</Link>
-                <Link to="/refund" className="text-sm text-[#f6f6f9] leading-5 hover:text-white transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>Refund Policy</Link>
-                <Link to="/accessibility" className="text-sm text-[#f6f6f9] leading-5 hover:text-white transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>Accessibility</Link>
+                <Link to="/texas/refund" className="text-sm text-[#f6f6f9] leading-5 hover:text-white transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>Refund Policy</Link>
+                <Link to="/texas/accessibility" className="text-sm text-[#f6f6f9] leading-5 hover:text-white transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>Accessibility</Link>
               </div>
             </div>
           </div>

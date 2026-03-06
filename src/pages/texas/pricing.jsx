@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from '../../components/Button.jsx';
 import SEO from '../../components/SEO.jsx';
+import { TEXAS_ENROLLMENT_URL } from '../../config/texasEnrollment.js';
 
 // Local icon assets for pricing section
 const imgCheckmark = "/assets/icons/texas/checkmark-feature.svg";
@@ -107,7 +108,7 @@ export default function TexasPricing() {
                 
                 {/* Button */}
                 <Button
-                  href="/courses/tx-defensive"
+                  href={TEXAS_ENROLLMENT_URL}
                   variant="custom"
                   className="h-[56px] px-[40px] border border-[#0667d1] text-[#0667d1] rounded-2xl shadow-[0px_10px_15px_-3px_rgba(17,23,34,0.08),0px_4px_6px_-4px_rgba(17,23,34,0.05)] text-lg font-semibold flex items-center justify-center gap-2 leading-[28px] w-[275px]"
                   style={{ fontFamily: "'DM Sans', sans-serif" }}
@@ -205,7 +206,7 @@ export default function TexasPricing() {
                 
                 {/* Button */}
                 <Button
-                  href="/courses/tx-defensive"
+                  href={TEXAS_ENROLLMENT_URL}
                   variant="custom"
                   className="h-[56px] px-[40px] bg-[#0667d1] border border-[#0667d1] text-white rounded-2xl shadow-[0px_10px_15px_-3px_rgba(17,23,34,0.08),0px_4px_6px_-4px_rgba(17,23,34,0.05)] text-lg font-semibold flex items-center justify-center gap-2 leading-[28px] w-full"
                   style={{ fontFamily: "'DM Sans', sans-serif" }}
@@ -302,7 +303,7 @@ export default function TexasPricing() {
                 
                 {/* Button */}
                 <Button
-                  href="/courses/tx-defensive"
+                  href={TEXAS_ENROLLMENT_URL}
                   variant="custom"
                   className="h-[56px] px-[40px] border border-[#0667d1] text-[#0667d1] rounded-2xl shadow-[0px_10px_15px_-3px_rgba(17,23,34,0.08),0px_4px_6px_-4px_rgba(17,23,34,0.05)] text-lg font-semibold flex items-center justify-center gap-2 leading-[28px] w-[275px]"
                   style={{ fontFamily: "'DM Sans', sans-serif" }}
@@ -858,7 +859,7 @@ export default function TexasPricing() {
               
               {/* Button */}
               <Button
-                href="/courses/tx-defensive"
+                href={TEXAS_ENROLLMENT_URL}
                 variant="custom"
                 className="h-12 px-8 bg-[#0667d1] hover:bg-[#0556b3] text-white rounded-2xl shadow-[0px_20px_25px_-5px_rgba(17,23,34,0.1),0px_8px_10px_-6px_rgba(17,23,34,0.05)] text-base font-semibold flex items-center justify-center leading-6"
                 style={{ fontFamily: "'DM Sans', sans-serif" }}
@@ -910,7 +911,7 @@ export default function TexasPricing() {
               {/* Buttons */}
               <div className="flex flex-col sm:flex-row gap-[16px] items-center justify-center pt-[8px]">
                 <Button 
-                  href="/courses/tx-defensive" 
+                  href={TEXAS_ENROLLMENT_URL} 
                   variant="custom" 
                   className="h-[56px] px-[40px] py-0 bg-[#0667d1] hover:bg-[#0556b3] text-white rounded-[16px] shadow-[0px_20px_25px_-5px_rgba(17,23,34,0.1),0px_8px_10px_-6px_rgba(17,23,34,0.05)] text-[18px] font-semibold flex items-center justify-center gap-2 leading-[28px] no-underline"
                   style={{ fontFamily: "'DM Sans', sans-serif" }}

@@ -36,24 +36,6 @@ import TexasAccessibility from './pages/texas/accessibility.jsx';
 import CourtPage from './pages/texas/courts/CourtPage.jsx';
 import CourtsIndex from './pages/texas/courts/CourtsIndex.jsx';
 
-// #region agent log
-// Logging initialization and error capture - silent fail if endpoint unavailable
-if (typeof window !== 'undefined') {
-  const logEndpoint = 'http://127.0.0.1:7242/ingest/d43cc9bd-40ea-434a-b828-df0c6f64d204';
-  const safeLog = (data) => {
-    fetch(logEndpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}).catch(()=>{});
-  };
-  window.addEventListener('error', (e) => {
-    safeLog({location:'main.jsx:error-handler',message:'JavaScript error caught',data:{message:e.message,filename:e.filename,lineno:e.lineno,error:e.error?.toString()},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'});
-    console.error('Runtime error:', e.message, e.filename, e.lineno);
-  });
-  window.addEventListener('unhandledrejection', (e) => {
-    safeLog({location:'main.jsx:unhandled-rejection',message:'Unhandled promise rejection',data:{reason:e.reason?.toString()},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'});
-    console.error('Unhandled rejection:', e.reason);
-  });
-}
-// #endregion
-
 function Home() {
   return (
     <>

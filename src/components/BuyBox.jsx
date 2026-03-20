@@ -16,8 +16,16 @@ export default function BuyBox({
   const ctaLabel = isPartner ? 'Enroll now' : 'Sign up';
   const enrollUrl = IS_QA && course.qa_link ? course.qa_link : isPartner ? affiliateLink : PORTAL_URL;
   const ctaHref = enrollUrl;
-  const ctaProps = isPartner && !(IS_QA && course.qa_link)
-    ? { target: '_blank', rel: 'noopener sponsored' }
+  const isAffiliateLink = isPartner && !(IS_QA && course.qa_link);
+  const ctaProps = isAffiliateLink
+    ? {
+        target: '_blank',
+        rel: 'noopener noreferrer',
+        'data-affiliate': 'true',
+        'data-partner': 'ticket-school',
+        ...(course.ga4_state && { 'data-state': course.ga4_state }),
+        ...(course.ga4_course && { 'data-course': course.ga4_course })
+      }
     : {};
 
   return (

@@ -47,7 +47,19 @@ export default function CourseResultCard({ course }) {
         {IS_QA && course.qa_link ? (
           <Button variant="primary" href={course.qa_link} className="w-full">{labels.signUp}</Button>
         ) : course.provider_type === 'Partner' ? (
-          <Button variant="primary" href={course.affiliate_link} target="_blank" rel="noopener sponsored" className="w-full">{labels.signUp}</Button>
+          <Button
+            variant="primary"
+            href={course.affiliate_link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full"
+            data-affiliate="true"
+            data-partner="ticket-school"
+            data-state={course.ga4_state}
+            data-course={course.ga4_course}
+          >
+            {labels.signUp}
+          </Button>
         ) : (
           <Button variant="primary" href={PORTAL_URL} className="w-full">{labels.signUp}</Button>
         )}

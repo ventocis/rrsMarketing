@@ -1,4 +1,4 @@
-﻿// /blueprint/scripts/build-data.mjs
+// /blueprint/scripts/build-data.mjs
 // Build-time: parse CSV → JSON, derive states, validate, and write sitemap.xml.
 
 
@@ -350,6 +350,26 @@ const build = async () => {
       'tx-defensive': 'https://app.qa.roadreadysafety.com/public/checkout?sku=tx-bdi'
     };
 
+    // GA4 affiliate tracking attributes (TicketSchool partner courses only)
+    const ga4Map = {
+      'fl-bdi': { ga4_state: 'florida', ga4_course: 'basic-driver-improvement-4hr-english' },
+      'fl-bdi-es': { ga4_state: 'florida', ga4_course: 'basic-driver-improvement-4hr-spanish' },
+      'fl-tlsae': { ga4_state: 'florida', ga4_course: 'drug-alcohol-tlsae-4hr' },
+      'fl-adi': { ga4_state: 'florida', ga4_course: 'advanced-driver-improvement-12hr' },
+      'fl-idi': { ga4_state: 'florida', ga4_course: 'intermediate-driver-improvement-8hr' },
+      'fl-exam': { ga4_state: 'florida', ga4_course: 'driver-license-exam' },
+      'il-adult-ed': { ga4_state: 'illinois', ga4_course: 'adult-driver-ed' },
+      'la-di': { ga4_state: 'louisiana', ga4_course: 'driver-improvement' },
+      'mi-bdic': { ga4_state: 'michigan', ga4_course: 'basic-driver-improvement' },
+      'mo-dip': { ga4_state: 'missouri', ga4_course: 'driver-improvement' },
+      'ny-ipirp': { ga4_state: 'new-york', ga4_course: 'ipirp' },
+      'ny-5hr': { ga4_state: 'new-york', ga4_course: 'pre-licensing-5hr' },
+      'tn-driver-ed': { ga4_state: 'tennessee', ga4_course: 'online-driver-education' },
+      'tx-defensive': { ga4_state: 'texas', ga4_course: 'defensive-driving' },
+      'tx-adult-ed': { ga4_state: 'texas', ga4_course: 'adult-driver-ed' },
+      'va-driver-improvement': { ga4_state: 'virginia', ga4_course: 'driver-improvement' }
+    };
+
     return {
       ...r,
       isPartner,
@@ -357,6 +377,7 @@ const build = async () => {
       duration_hours: r.duration_hours ?? '',
       // Include qa_link from hardcoded map or from existing file
       ...(qaLinkMap[r.slug] || existingQaLinks[r.slug]) && { qa_link: qaLinkMap[r.slug] || existingQaLinks[r.slug] },
+      ...(isPartner && ga4Map[r.slug] && ga4Map[r.slug]),
       ...benefits
     };
   });

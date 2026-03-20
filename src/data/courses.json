@@ -32,7 +32,9 @@
     "satisfactionGuarantee": true,
     "shortestAllowed": true,
     "secureCheckout": true,
-    "isPartner": true
+    "isPartner": true,
+    "ga4_state": "florida",
+    "ga4_course": "basic-driver-improvement-4hr-english"
   },
   {
     "slug": "fl-bdi-es",
@@ -67,7 +69,9 @@
     "satisfactionGuarantee": true,
     "shortestAllowed": true,
     "secureCheckout": true,
-    "isPartner": true
+    "isPartner": true,
+    "ga4_state": "florida",
+    "ga4_course": "basic-driver-improvement-4hr-spanish"
   },
   {
     "slug": "fl-tlsae",
@@ -102,7 +106,9 @@
     "satisfactionGuarantee": true,
     "shortestAllowed": true,
     "secureCheckout": true,
-    "isPartner": true
+    "isPartner": true,
+    "ga4_state": "florida",
+    "ga4_course": "drug-alcohol-tlsae-4hr"
   },
   {
     "slug": "fl-adi",
@@ -137,7 +143,9 @@
     "satisfactionGuarantee": true,
     "shortestAllowed": false,
     "secureCheckout": true,
-    "isPartner": true
+    "isPartner": true,
+    "ga4_state": "florida",
+    "ga4_course": "advanced-driver-improvement-12hr"
   },
   {
     "slug": "fl-idi",
@@ -172,7 +180,9 @@
     "satisfactionGuarantee": true,
     "shortestAllowed": false,
     "secureCheckout": true,
-    "isPartner": true
+    "isPartner": true,
+    "ga4_state": "florida",
+    "ga4_course": "intermediate-driver-improvement-8hr"
   },
   {
     "slug": "fl-exam",
@@ -207,7 +217,9 @@
     "satisfactionGuarantee": true,
     "shortestAllowed": false,
     "secureCheckout": true,
-    "isPartner": true
+    "isPartner": true,
+    "ga4_state": "florida",
+    "ga4_course": "driver-license-exam"
   },
   {
     "slug": "il-adult-ed",
@@ -242,7 +254,9 @@
     "satisfactionGuarantee": true,
     "shortestAllowed": false,
     "secureCheckout": true,
-    "isPartner": true
+    "isPartner": true,
+    "ga4_state": "illinois",
+    "ga4_course": "adult-driver-ed"
   },
   {
     "slug": "la-di",
@@ -277,7 +291,9 @@
     "satisfactionGuarantee": true,
     "shortestAllowed": false,
     "secureCheckout": true,
-    "isPartner": true
+    "isPartner": true,
+    "ga4_state": "louisiana",
+    "ga4_course": "driver-improvement"
   },
   {
     "slug": "mi-bdic",
@@ -312,7 +328,9 @@
     "satisfactionGuarantee": true,
     "shortestAllowed": true,
     "secureCheckout": true,
-    "isPartner": true
+    "isPartner": true,
+    "ga4_state": "michigan",
+    "ga4_course": "basic-driver-improvement"
   },
   {
     "slug": "mo-dip",
@@ -347,7 +365,9 @@
     "satisfactionGuarantee": true,
     "shortestAllowed": false,
     "secureCheckout": true,
-    "isPartner": true
+    "isPartner": true,
+    "ga4_state": "missouri",
+    "ga4_course": "driver-improvement"
   },
   {
     "slug": "ny-ipirp",
@@ -382,7 +402,9 @@
     "satisfactionGuarantee": true,
     "shortestAllowed": false,
     "secureCheckout": true,
-    "isPartner": true
+    "isPartner": true,
+    "ga4_state": "new-york",
+    "ga4_course": "ipirp"
   },
   {
     "slug": "ny-5hr",
@@ -417,7 +439,9 @@
     "satisfactionGuarantee": true,
     "shortestAllowed": false,
     "secureCheckout": true,
-    "isPartner": true
+    "isPartner": true,
+    "ga4_state": "new-york",
+    "ga4_course": "pre-licensing-5hr"
   },
   {
     "slug": "tn-driver-ed",
@@ -452,7 +476,9 @@
     "satisfactionGuarantee": true,
     "shortestAllowed": true,
     "secureCheckout": true,
-    "isPartner": true
+    "isPartner": true,
+    "ga4_state": "tennessee",
+    "ga4_course": "online-driver-education"
   },
   {
     "slug": "tx-defensive",
@@ -488,7 +514,9 @@
     "shortestAllowed": false,
     "secureCheckout": true,
     "isPartner": true,
-    "qa_link": "https://app.qa.roadreadysafety.com/public/checkout?sku=tx-bdi"
+    "qa_link": "https://app.qa.roadreadysafety.com/public/checkout?sku=tx-bdi",
+    "ga4_state": "texas",
+    "ga4_course": "defensive-driving"
   },
   {
     "slug": "tx-adult-ed",
@@ -523,7 +551,9 @@
     "satisfactionGuarantee": true,
     "shortestAllowed": false,
     "secureCheckout": true,
-    "isPartner": true
+    "isPartner": true,
+    "ga4_state": "texas",
+    "ga4_course": "adult-driver-ed"
   },
   {
     "slug": "va-driver-improvement",
@@ -558,6 +588,8 @@
     "satisfactionGuarantee": true,
     "shortestAllowed": false,
     "secureCheckout": true,
-    "isPartner": true
+    "isPartner": true,
+    "ga4_state": "virginia",
+    "ga4_course": "driver-improvement"
   }
 ]

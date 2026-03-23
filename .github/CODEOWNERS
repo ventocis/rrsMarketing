@@ -1,0 +1,10 @@
+# Require approval from @ventocis for deployment and GitHub Actions changes
+
+# GitHub Actions workflows
+/.github/ @ventocis
+
+# AWS CDK infrastructure
+/infra/ @ventocis
+
+# Deployment configs
+/Makefile @ventocis

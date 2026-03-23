@@ -1,9 +1,8 @@
 import React from 'react';
-// #region agent log
-// Import will fail if package is missing - error will be caught by global error handler
-// #endregion
 import { Helmet } from 'react-helmet-async';
 import { SITE_URL } from '../config/urls.js';
+
+const IS_QA = import.meta.env.VITE_IS_QA === 'true';
 
 export default function SEO({ 
   title, 
@@ -46,7 +45,10 @@ export default function SEO({
       
       {/* Additional Meta Tags */}
       <meta name="author" content={author} />
-      <meta name="robots" content="index, follow" />
+      {IS_QA
+        ? <meta name="robots" content="noindex, nofollow" />
+        : <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+      }
       <link rel="canonical" href={fullUrl} />
       
       {/* Article specific meta tags */}

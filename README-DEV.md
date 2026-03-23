@@ -17,7 +17,6 @@ The site supports two build modes that control **Texas routes** and **enrollment
   ```bash
   npm run build:prod
   ```
-  Or your usual prod deploy script (e.g. `./deploy-prod.sh`), which should **not** set the Texas env vars below.
 
 - **QA build** (Texas on, enrollment → QA app):
   ```bash
@@ -36,14 +35,14 @@ Copy `.env.example` to `.env.local` and uncomment/edit as needed for local QA te
 
 ### CI / deployment steps
 
-The deploy scripts are wired so each environment gets the right build:
+Deployments are handled via CDK and GitHub Actions:
 
-| Script | Build used | Result |
-|--------|------------|--------|
-| **`./deploy-prod.sh`** | `npm run build:prod` | Texas routes **off**, DTA affiliate, no QA login link. Safe for production. |
-| **`./deploy-dev.sh`** | `npm run build:qa` | Texas routes **on**, QA enrollment URL, QA login link. Use for dev/QA (e.g. qa.roadreadysafety.com). |
+| Command | Build used | Result |
+|---------|------------|--------|
+| `make deploy ENV=prod` | `npm run build:prod` | Texas routes **off**, DTA affiliate, no QA login link. Safe for production. |
+| `make deploy ENV=qa` | `npm run build:qa` | Texas routes **on**, QA enrollment URL, QA login link. Use for dev/QA (e.g. qa.roadreadysafety.com). |
 
-No extra env vars are required in CI: the scripts call the right npm script, which sets the needed `VITE_*` vars for that environment. If your CI runs these scripts (or runs the same commands), prod and dev will deploy correctly.
+No extra env vars are required in CI: the Makefile calls the right npm script, which sets the needed `VITE_*` vars for that environment.
 
 ---
 
@@ -54,40 +53,17 @@ No extra env vars are required in CI: the scripts call the right npm script, whi
 - **CloudFront Distribution**: `E23C0I4XA6HHPK`
 - **Website URL**: `https://d3nf9vaelf82s8.cloudfront.net`
 
-### Configuration Files
-- `cloudfront-config-dev.json` - CloudFront distribution configuration
-- `bucket-policy-dev.json` - S3 bucket policy for public access
-- `cf-dist-dev.json` - CloudFront distribution details
-- `cloudfront-update-config-dev.json` - CloudFront update configuration
-
 ## 🚀 **Deployment Process**
 
 ### Prerequisites
-- AWS CLI configured with appropriate permissions
 - Node.js and npm installed
 - Access to the dev AWS account
 
-### Quick Deploy
+### Deploy
 ```bash
-# Deploy to dev environment
-./deploy-dev.sh
+# Deploy to QA environment
+make deploy ENV=qa
 ```
-
-### Manual Steps (if needed)
-```bash
-# Build the project (QA: Texas on, QA URLs)
-npm run build:qa
-
-# Sync to S3 dev bucket
-aws s3 sync dist/ s3://rrs-testaug202025-dev --delete
-
-# Invalidate CloudFront cache
-aws cloudfront create-invalidation \
-  --distribution-id E23C0I4XA6HHPK \
-  --paths "/*"
-```
-
-Alternatively, deploy to QA via CDK: `make deploy ENV=qa`
 
 ## Testing the build (QA vs prod)
 

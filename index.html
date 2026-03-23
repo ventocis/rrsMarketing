@@ -43,7 +43,11 @@
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
 
-      gtag('config', 'G-F8S6Y64XWJ');
+      gtag('config', 'G-F8S6Y64XWJ', {
+        linker: {
+          domains: ['roadreadysafety.com', 'app.roadreadysafety.com']
+        }
+      });
     </script>
   </head>
   <body>

@@ -4,6 +4,28 @@ import { BrowserRouter } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import App from "./main.jsx";
 
+// GA4 scroll depth tracking — fires once per page at 90% scroll
+function ScrollDepthTracker() {
+  useEffect(() => {
+    let fired = false;
+    const handler = () => {
+      if (fired) return;
+      const scrolled = window.scrollY + window.innerHeight;
+      const total = document.documentElement.scrollHeight;
+      if (scrolled / total >= 0.9) {
+        fired = true;
+        if (typeof gtag !== 'undefined') {
+          gtag('event', 'scroll', { percent_scrolled: 90 });
+        }
+        window.removeEventListener('scroll', handler);
+      }
+    };
+    window.addEventListener('scroll', handler, { passive: true });
+    return () => window.removeEventListener('scroll', handler);
+  }, []);
+  return null;
+}
+
 // GA4 affiliate link click tracking (main site only; app.roadreadysafety.com is separate)
 function AffiliateClickTracker() {
   useEffect(() => {
@@ -28,6 +50,7 @@ function AffiliateClickTracker() {
 createRoot(document.getElementById("root")).render(
   <HelmetProvider>
     <BrowserRouter>
+      <ScrollDepthTracker />
       <AffiliateClickTracker />
       <App />
     </BrowserRouter>

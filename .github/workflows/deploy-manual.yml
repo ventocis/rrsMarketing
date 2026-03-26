@@ -1,0 +1,40 @@
+name: Deploy to environment (manual)
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Target environment'
+        required: true
+        type: choice
+        options:
+          - qa
+          - prod
+      version_tag:
+        description: 'Version tag to deploy (e.g. v3.2.0)'
+        required: true
+        type: string
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate tag format
+        run: |
+          if [[ ! "${{ inputs.version_tag }}" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::Invalid tag format. Expected vX.Y.Z"
+            exit 1
+          fi
+
+      - name: Verify tag exists
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.version_tag }}
+          fetch-depth: 1
+
+  deploy:
+    needs: validate
+    uses: ./.github/workflows/util-deploy.yml
+    with:
+      environment: ${{ inputs.environment }}
+      version_tag: ${{ inputs.version_tag }}

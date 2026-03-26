@@ -45,7 +45,7 @@ jobs:
 
       - name: Bump version
         run: |
-          npm version minor -m "Bump version to %s"
+          npm version minor -m "Bump version to v%s"
 
       - name: Push changes
         run: |

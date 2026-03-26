@@ -53,6 +53,8 @@ export default function TexasIndex() {
                 <span className="hidden lg:inline"> </span>defensive driving course from any<br className="lg:hidden" />
                 <span className="hidden lg:inline"> </span>device. Dismiss your ticket or reduce<br className="lg:hidden" />
                 <span className="hidden lg:inline"> </span>insurance rates — it's never been easier.
+                <br />
+                Get your certificate instantly after completing.
               </p>
               <div className="flex flex-col sm:flex-row gap-[16px] pt-[8px] w-full items-center lg:items-start">
                 <Button 
@@ -62,10 +64,10 @@ export default function TexasIndex() {
                   style={{ fontFamily: "'DM Sans', sans-serif", textAlign: 'center' }}
                 >
                   <span className="sm:hidden">Start Course — $25</span>
-                  <span className="hidden sm:inline">Start Course</span>
+                  <span className="hidden sm:inline">Start Course — $25</span>
                 </Button>
                 <Button 
-                  href="/texas/pricing" 
+                  href="#pricing" 
                   variant="custom" 
                   className="bg-white border border-[#e4e6ea] text-[#1e2832] h-[56px] px-[40px] sm:px-[40px] rounded-[16px] shadow-[0px_4px_6px_-1px_rgba(17,23,34,0.07),0px_2px_4px_-2px_rgba(17,23,34,0.05)] text-[18px] font-semibold flex items-center justify-center leading-[28px] no-underline text-center w-full sm:w-auto"
                   style={{ fontFamily: "'DM Sans', sans-serif", textAlign: 'center' }}
@@ -147,14 +149,13 @@ export default function TexasIndex() {
               </div>
                     <p className="text-sm font-semibold text-[#1e2832] leading-5">4.9/5</p>
                   </div>
-                  <p className="text-xs text-[#616d7b] leading-4">2,400+ reviews</p>
                 </div>
               </div>
               </div>
             </div>
             
           {/* Feature Badges - 4 Column Horizontal Layout */}
-          <div className="relative flex flex-col sm:flex-row gap-6 lg:gap-8 mt-12 lg:mt-16 justify-center items-center">
+          <div className="relative grid grid-cols-2 gap-6 lg:gap-8 mt-12 lg:mt-16 justify-center items-center md:flex md:flex-row">
             {/* Vector decorations - positioned between cards based on Figma design */}
             {/* Vector 1: between card 1 and 2, at y=55.65px relative to container top (31.65px from card top) */}
             <div className="absolute left-[calc(25%-68px+12px)] top-[31.65px] w-[136px] h-4 hidden lg:block z-0">
@@ -240,7 +241,7 @@ export default function TexasIndex() {
       </section>
 
       {/* Course Info + Pricing Card */}
-      <section className="py-16 lg:py-[112px] bg-white">
+      <section id="pricing" className="py-16 lg:py-[112px] bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row gap-16 lg:gap-20 items-start justify-center">
             {/* Left Column */}
@@ -334,7 +335,7 @@ export default function TexasIndex() {
                 variant="custom" 
                 className="w-full h-[56px] bg-[#0667d1] hover:bg-[#0556b3] text-white rounded-2xl shadow-[0px_10px_15px_-3px_rgba(17,23,34,0.08),0px_4px_6px_-4px_rgba(17,23,34,0.05)] text-lg font-semibold flex items-center justify-center gap-2 mb-6"
               >
-                Enroll Now
+                Start Course — $25
                 <img src="/assets/icons/texas/arrow-enroll.svg" alt="" className="w-4 h-4" />
               </Button>
 

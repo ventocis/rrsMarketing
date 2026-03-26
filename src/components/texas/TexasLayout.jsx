@@ -30,7 +30,7 @@ export default function TexasLayout({ children }) {
         <div className="bg-[#17a34a] w-full">
           <div className="px-4 py-2">
             <p className="text-white text-sm font-medium text-center leading-5">
-              🎉 Limited Time: Texas Defensive Driving Course — Only $25 + $3 state fee
+              Complete today & get your certificate instantly for FREE — $28 total, no hidden fees
             </p>
           </div>
         </div>

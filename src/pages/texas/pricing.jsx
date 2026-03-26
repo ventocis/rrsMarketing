@@ -21,7 +21,8 @@ const imgIconList = "/assets/icons/texas/icon-list.svg";
 
 // Local icon assets for How We Compare section
 const imgLogoShieldBlue = "/assets/icons/texas/logo-shield-blue.svg";
-const imgRRSLogo = "/assets/icons/texas/rrs-logo.svg";
+// Use the same logo asset as the Texas header/footer to ensure it exists in production.
+const imgRRSLogo = "/assets/icons/texas/logo-shield.svg";
 const imgCheckmarkBlue = "/assets/icons/texas/checkmark-blue.svg";
 const imgCheckmarkGray = "/assets/icons/texas/checkmark-gray.svg";
 const imgXRed = "/assets/icons/texas/x-red.svg";

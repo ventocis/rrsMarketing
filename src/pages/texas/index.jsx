@@ -178,8 +178,8 @@ export default function TexasIndex() {
                   <img src="/assets/icons/texas/tdlr-approved-icon.svg" alt="" className="w-10 h-10" />
               </div>
               </div>
-              <div className="flex flex-col gap-3 items-center w-full">
-                <h3 className="text-2xl font-semibold text-[#151515] leading-[32px]">TDLR- Approved</h3>
+              <div className="flex flex-col gap-3 items-center w-full max-md:text-center">
+                <h3 className="text-2xl font-semibold text-[#151515] leading-[32px] max-md:text-center">TDLR- Approved</h3>
                 <p className="text-sm text-[#4a5565] leading-5 text-center">
                   State-certified course accepted by all<br />
                   Texas courts
@@ -195,8 +195,8 @@ export default function TexasIndex() {
                   <img src="/assets/icons/texas/mobile-friendly-icon.svg" alt="" className="w-10 h-10" />
               </div>
               </div>
-              <div className="flex flex-col gap-3 items-center w-full">
-                <h3 className="text-2xl font-semibold text-[#151515] leading-[32px]">Mobile Friendly</h3>
+              <div className="flex flex-col gap-3 items-center w-full max-md:text-center">
+                <h3 className="text-2xl font-semibold text-[#151515] leading-[32px] max-md:text-center">Mobile Friendly</h3>
                 <p className="text-sm text-[#4a5565] leading-5 text-center">
                   Complete on any device - phone,<br />
                   tablet, or computer
@@ -212,8 +212,8 @@ export default function TexasIndex() {
                   <img src="/assets/icons/texas/super-easy-icon.svg" alt="" className="w-10 h-10" />
                 </div>
               </div>
-              <div className="flex flex-col gap-3 items-center w-full">
-                <h3 className="text-2xl font-semibold text-[#151515] leading-[32px]">Super Easy</h3>
+              <div className="flex flex-col gap-3 items-center w-full max-md:text-center">
+                <h3 className="text-2xl font-semibold text-[#151515] leading-[32px] max-md:text-center">Super Easy</h3>
                 <p className="text-sm text-[#4a5565] leading-5 text-center">
                   Simple lessons, unlimited quiz<br />
                   attempts, auto-save progress
@@ -229,8 +229,8 @@ export default function TexasIndex() {
                   <img src="/assets/icons/texas/guarantee-icon.svg" alt="" className="w-10 h-10" />
                 </div>
               </div>
-              <div className="flex flex-col gap-3 items-center w-full">
-                <h3 className="text-2xl font-semibold text-[#151515] leading-[32px]">100% Guarantee</h3>
+              <div className="flex flex-col gap-3 items-center w-full max-md:text-center">
+                <h3 className="text-2xl font-semibold text-[#151515] leading-[32px] max-md:text-center">100% Guarantee</h3>
                 <p className="text-sm text-[#4a5565] leading-5 text-center">
                   Not a fit? Get a full refund before you complete the course.
                 </p>
@@ -247,7 +247,7 @@ export default function TexasIndex() {
             {/* Left Column */}
             <div className="flex flex-col gap-[24px] items-start w-full lg:w-[536px] pb-8 lg:pb-0">
               <div className="bg-[#e5f6fe] inline-flex items-center px-4 py-2 rounded-full">
-                <span className="text-sm font-semibold text-[#0351b4] leading-5">Texas Defensive Driving</span>
+                <span className="text-sm font-semibold text-[#0351b4] leading-5">Dismiss Your Texas Traffic Ticket Online</span>
               </div>
               <h2 className="text-[30px] lg:text-[48px] font-bold text-[#1e2832] leading-[36px] lg:leading-[48px] tracking-[-0.75px] lg:tracking-[-1.2px]">
                 Texas Defensive Driving<br />

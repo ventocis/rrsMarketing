@@ -21,8 +21,8 @@ const imgIconList = "/assets/icons/texas/icon-list.svg";
 
 // Local icon assets for How We Compare section
 const imgLogoShieldBlue = "/assets/icons/texas/logo-shield-blue.svg";
-// Use the same logo asset as the Texas header/footer to ensure it exists in production.
-const imgRRSLogo = "/assets/icons/texas/logo-shield.svg";
+// Full horizontal wordmark (shield + "Road Ready" / "Safety") — not the shield-only icon
+const imgRRSLogo = "/assets/icons/texas/road-ready-safety-wordmark.png";
 const imgCheckmarkBlue = "/assets/icons/texas/checkmark-blue.svg";
 const imgCheckmarkGray = "/assets/icons/texas/checkmark-gray.svg";
 const imgXRed = "/assets/icons/texas/x-red.svg";
@@ -170,7 +170,7 @@ export default function TexasPricing() {
               <div className="flex justify-end w-full lg:absolute lg:top-8 lg:right-6 lg:z-10 lg:w-auto">
                 <div className="bg-[#e5f6fe] px-3 py-1.5 rounded-2xl shrink-0">
                   <span className="text-sm font-semibold text-[#0667d1] leading-[18px]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                    Recommended
+                    Great Value
                   </span>
                 </div>
               </div>
@@ -622,12 +622,12 @@ export default function TexasPricing() {
                       Feature
                     </p>
                   </div>
-                  <div className="flex-1 px-4 py-10 flex items-center justify-center">
-                    <div className="inline-flex h-[55px] shrink-0 items-center justify-center">
+                  <div className="flex-1 min-w-0 px-4 py-10 flex items-center justify-center">
+                    <div className="flex w-full min-w-0 max-w-[min(100%,300px)] items-center justify-center">
                       <img
                         src={imgRRSLogo}
                         alt="Road Ready Safety"
-                        className="h-full w-auto max-h-[55px] object-contain"
+                        className="h-auto max-h-[52px] w-auto max-w-full object-contain"
                       />
                     </div>
                   </div>

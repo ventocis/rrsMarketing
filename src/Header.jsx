@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import Button from './components/Button.jsx';
+import TopBanner from './components/TopBanner.jsx';
 import { TEXAS_ENROLLMENT_URL } from './config/texasEnrollment.js';
 import { LOGIN_URL } from './config/urls.js';
 
@@ -35,13 +36,7 @@ export default function Header() {
     return (
       <header className="backdrop-blur-[2px] backdrop-filter bg-[rgba(255,255,255,0.95)] border-[#e4e6ea] border-b sticky top-0 z-50 m-0">
         {/* Promotional Banner */}
-        <div className="bg-[#17a34a] w-full">
-          <div className="px-4 py-2">
-            <p className="text-white text-sm font-medium text-center leading-5">
-              Complete today & get your certificate instantly for FREE — $28 total, no hidden fees
-            </p>
-          </div>
-        </div>
+        <TopBanner />
         
         {/* Main Navigation */}
         <nav className="h-20 max-w-[1152px] mx-auto flex items-center justify-between px-4 sm:px-6 lg:px-8 w-full">

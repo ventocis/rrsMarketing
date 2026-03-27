@@ -621,7 +621,13 @@ export default function TexasPricing() {
                     </p>
                   </div>
                   <div className="flex-1 px-4 py-10 flex items-center justify-center">
-                    <img src={imgRRSLogo} alt="Road Ready Safety" className="h-[55px] w-auto object-contain" />
+                    <div className="inline-flex h-[55px] shrink-0 items-center justify-center">
+                      <img
+                        src={imgRRSLogo}
+                        alt="Road Ready Safety"
+                        className="h-full w-auto max-h-[55px] object-contain"
+                      />
+                    </div>
                   </div>
                   <div className="flex-1 px-4 py-10 flex items-center justify-center">
                     <p className="text-base font-medium text-[#657386] leading-6" style={{ fontFamily: "'DM Sans', sans-serif" }}>

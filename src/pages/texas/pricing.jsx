@@ -166,16 +166,18 @@ export default function TexasPricing() {
             
             {/* Professional Card - Highlighted */}
             <div className="relative bg-gradient-to-r from-[#191917] to-[#3d3d3d] border border-[#eaecf0] rounded-2xl p-8 flex flex-col gap-6 w-full lg:w-[400px] min-h-[600px]">
-              {/* Badge */}
-              <div className="absolute bg-[#e5f6fe] px-3 py-1.5 rounded-2xl top-[32px] right-6">
-                <span className="text-sm font-semibold text-[#0667d1] leading-[18px]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                  Recommended
-                </span>
+              {/* Badge: in document flow on mobile (no overlap); absolute top-right on lg */}
+              <div className="flex justify-end w-full lg:absolute lg:top-8 lg:right-6 lg:z-10 lg:w-auto">
+                <div className="bg-[#e5f6fe] px-3 py-1.5 rounded-2xl shrink-0">
+                  <span className="text-sm font-semibold text-[#0667d1] leading-[18px]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                    Recommended
+                  </span>
+                </div>
               </div>
-              
+
               {/* Header */}
-              <div className="flex flex-col gap-5 pt-2">
-                <h3 className="text-[24px] lg:text-[26px] font-bold text-white leading-[32px] pr-20" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+              <div className="flex flex-col gap-5 pt-0 lg:pt-2">
+                <h3 className="text-[24px] lg:text-[26px] font-bold text-white leading-[32px] pr-0 lg:pr-24" style={{ fontFamily: "'DM Sans', sans-serif" }}>
                   Texas Defensive Driving Course 6hr
                 </h3>
                 

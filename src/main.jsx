@@ -40,8 +40,8 @@ function Home() {
   return (
     <>
       <SEO 
-        title="The modern way to finish your traffic course"
-        description="State-approved traffic school and defensive driving built to be simple. Start on your phone, finish anywhere. Instant digital certificate available."
+        title="Online Defensive Driving Course | Road Ready Safety"
+        description="State-approved defensive driving courses accepted by courts nationwide. Affordable, convenient, and built for busy people."
         keywords="traffic school, defensive driving, online course, traffic ticket, driver improvement, state approved"
         image="/assets/rrs (1200 x 630 px).png"
         url="/"

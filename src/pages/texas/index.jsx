@@ -25,8 +25,8 @@ export default function TexasIndex() {
   return (
     <>
       <SEO 
-        title="#1 Texas Driver Safety Course: Fast, Convenient, & Online"
-        description="Check your eligibility, request permission from your court, and complete your Texas-approved course — all online, all on any device."
+        title="Dismiss Your Texas Traffic Ticket Online — $28 Total | Road Ready Safety"
+        description="The easiest way to dismiss your Texas traffic ticket. TDLR-approved, all courts accepted. Download your free certificate instantly. 100% refund guaranteed."
         keywords="Texas driver safety course, defensive driving, traffic school, online course, Texas approved"
         image="/assets/rrs (1200 x 630 px).png"
         url="/texas"

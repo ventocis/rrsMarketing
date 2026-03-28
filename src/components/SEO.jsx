@@ -16,7 +16,13 @@ export default function SEO({
   author = 'Road Ready Safety'
 }) {
   const siteTitle = 'Road Ready Safety';
-  const fullTitle = title ? `${title} – ${siteTitle}` : siteTitle;
+  const trimmedTitle = typeof title === 'string' ? title.trim() : title;
+  const fullTitle =
+    !trimmedTitle
+      ? siteTitle
+      : trimmedTitle.endsWith('| Road Ready Safety')
+        ? trimmedTitle
+        : `${trimmedTitle} – ${siteTitle}`;
   const fullUrl = url ? `${SITE_URL}${url}` : SITE_URL;
   const fullImage = image.startsWith('http') ? image : `${SITE_URL}${image}`;
 

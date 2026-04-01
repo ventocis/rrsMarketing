@@ -151,11 +151,12 @@ export default function TexasCostPage() {
       <SEO
         exactTitle
         title="How Much Does Texas Defensive Driving Cost? (2026 Guide)"
-        description="Most Texas defensive driving courses advertise a low price but add fees at checkout. See the real all-in cost — including state fees and certificate delivery."
+        description="Most Texas defensive driving courses advertise a low price but add fees at checkout. See the real all-in cost — including fees and certificate delivery."
         url="/texas-defensive-driving-cost"
         type="article"
         publishedTime="2026-03-03"
         modifiedTime="2026-03-03"
+        robots="index, follow"
       />
       <Helmet>
         <script type="application/ld+json">{JSON.stringify(ARTICLE_JSON_LD)}</script>
@@ -237,62 +238,89 @@ export default function TexasCostPage() {
             All-in price comparison — TDLR-approved online courses
           </h2>
 
-          <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 mb-4 rounded-xl border border-[#e4e6ea]">
-            <table className="w-full min-w-[1000px] text-sm border-collapse">
+          <div className="mb-4 w-full rounded-xl border border-[#e4e6ea]">
+            <table className="w-full border-collapse text-[12px] md:text-sm break-words">
               <thead>
                 <tr className="bg-[#f9fafb] text-left border-b border-[#e4e6ea]">
-                  <th className="py-3 px-3 font-semibold text-[#1e2832]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                  <th
+                    className="py-2 px-1 sm:px-2 md:py-3 md:px-3 font-semibold text-[#1e2832]"
+                    style={{ fontFamily: "'DM Sans', sans-serif" }}
+                  >
                     Provider
                   </th>
-                  <th className="py-3 px-3 font-semibold text-[#1e2832]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                  <th
+                    className="hidden md:table-cell py-2 px-1 sm:px-2 md:py-3 md:px-3 font-semibold text-[#1e2832]"
+                    style={{ fontFamily: "'DM Sans', sans-serif" }}
+                  >
                     CP#
                   </th>
-                  <th className="py-3 px-3 font-semibold text-[#1e2832]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                  <th
+                    className="py-2 px-1 sm:px-2 md:py-3 md:px-3 font-semibold text-[#1e2832]"
+                    style={{ fontFamily: "'DM Sans', sans-serif" }}
+                  >
                     Course Price
                   </th>
-                  <th className="py-3 px-3 font-semibold text-[#1e2832]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                  <th
+                    className="py-2 px-1 sm:px-2 md:py-3 md:px-3 font-semibold text-[#1e2832]"
+                    style={{ fontFamily: "'DM Sans', sans-serif" }}
+                  >
                     Processing Fee
                   </th>
-                  <th className="py-3 px-3 font-semibold text-[#1e2832]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                    Min. Certificate Cost
+                  <th
+                    className="py-2 px-1 sm:px-2 md:py-3 md:px-3 font-semibold text-[#1e2832]"
+                    style={{ fontFamily: "'DM Sans', sans-serif" }}
+                  >
+                    Min. Cert. Cost
                   </th>
-                  <th className="py-3 px-3 font-semibold text-[#1e2832]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                  <th
+                    className="py-2 px-1 sm:px-2 md:py-3 md:px-3 font-semibold text-[#1e2832]"
+                    style={{ fontFamily: "'DM Sans', sans-serif" }}
+                  >
                     Total
                   </th>
-                  <th className="py-3 px-3 font-semibold text-[#1e2832]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                  <th
+                    className="py-2 px-1 sm:px-2 md:py-3 md:px-3 font-semibold text-[#1e2832]"
+                    style={{ fontFamily: "'DM Sans', sans-serif" }}
+                  >
                     Certificate
                   </th>
-                  <th className="py-3 px-3 font-semibold text-[#1e2832]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                  <th
+                    className="py-2 px-1 sm:px-2 md:py-3 md:px-3 font-semibold text-[#1e2832]"
+                    style={{ fontFamily: "'DM Sans', sans-serif" }}
+                  >
                     Format
                   </th>
-                  <th className="py-3 px-3 font-semibold text-[#1e2832]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                  <th
+                    className="py-2 px-1 sm:px-2 md:py-3 md:px-3 font-semibold text-[#1e2832]"
+                    style={{ fontFamily: "'DM Sans', sans-serif" }}
+                  >
                     Language
                   </th>
                 </tr>
               </thead>
               <tbody style={{ fontFamily: "'DM Sans', sans-serif" }}>
                 <tr className="bg-[#e5f6fe] border-b border-[#c5e6fa]">
-                  <td className="py-3 px-3 font-semibold text-[#1e2832]">Road Ready Safety</td>
-                  <td className="py-3 px-3">CP1234</td>
-                  <td className="py-3 px-3">$25.00</td>
-                  <td className="py-3 px-3">$3.00</td>
-                  <td className="py-3 px-3">$0.00</td>
-                  <td className="py-3 px-3 font-bold text-[#03449e]">$28.00</td>
-                  <td className="py-3 px-3">Free instant download</td>
-                  <td className="py-3 px-3">Online</td>
-                  <td className="py-3 px-3">English</td>
+                  <td className="py-2 px-1 sm:px-2 md:py-3 md:px-3 font-semibold text-[#1e2832]">Road Ready Safety</td>
+                  <td className="hidden md:table-cell py-2 px-1 sm:px-2 md:py-3 md:px-3">CP1234</td>
+                  <td className="py-2 px-1 sm:px-2 md:py-3 md:px-3">$25.00</td>
+                  <td className="py-2 px-1 sm:px-2 md:py-3 md:px-3">$3.00</td>
+                  <td className="py-2 px-1 sm:px-2 md:py-3 md:px-3">$0.00</td>
+                  <td className="py-2 px-1 sm:px-2 md:py-3 md:px-3 font-bold text-[#03449e]">$28.00</td>
+                  <td className="py-2 px-1 sm:px-2 md:py-3 md:px-3">Free instant download</td>
+                  <td className="py-2 px-1 sm:px-2 md:py-3 md:px-3">Online</td>
+                  <td className="py-2 px-1 sm:px-2 md:py-3 md:px-3">English</td>
                 </tr>
                 {COMPARISON_ROWS.map((row) => (
                   <tr key={row.cp} className="border-b border-[#eef0f3]">
-                    <td className="py-3 px-3 text-[#1e2832]">{row.provider}</td>
-                    <td className="py-3 px-3">{row.cp}</td>
-                    <td className="py-3 px-3">{row.coursePrice}</td>
-                    <td className="py-3 px-3">{row.processingFee}</td>
-                    <td className="py-3 px-3">{row.minCertCost}</td>
-                    <td className="py-3 px-3 font-bold text-[#1e2832]">{row.total}</td>
-                    <td className="py-3 px-3">{row.certificate}</td>
-                    <td className="py-3 px-3">{row.format}</td>
-                    <td className="py-3 px-3">{row.language}</td>
+                    <td className="py-2 px-1 sm:px-2 md:py-3 md:px-3 text-[#1e2832]">{row.provider}</td>
+                    <td className="hidden md:table-cell py-2 px-1 sm:px-2 md:py-3 md:px-3">{row.cp}</td>
+                    <td className="py-2 px-1 sm:px-2 md:py-3 md:px-3">{row.coursePrice}</td>
+                    <td className="py-2 px-1 sm:px-2 md:py-3 md:px-3">{row.processingFee}</td>
+                    <td className="py-2 px-1 sm:px-2 md:py-3 md:px-3">{row.minCertCost}</td>
+                    <td className="py-2 px-1 sm:px-2 md:py-3 md:px-3 font-bold text-[#1e2832]">{row.total}</td>
+                    <td className="py-2 px-1 sm:px-2 md:py-3 md:px-3">{row.certificate}</td>
+                    <td className="py-2 px-1 sm:px-2 md:py-3 md:px-3">{row.format}</td>
+                    <td className="py-2 px-1 sm:px-2 md:py-3 md:px-3">{row.language}</td>
                   </tr>
                 ))}
               </tbody>
@@ -338,9 +366,10 @@ export default function TexasCostPage() {
                 instant PDF download eliminates that cost and that risk.
               </li>
               <li>
-                <strong className="text-[#1e2832]">Whether the state fee is bundled.</strong> TDLR requires a $3.00 state
-                processing fee for every course completion. Some providers show a $25 base price and add $3 at checkout.
-                Others include it in the advertised price. The total is what matters.
+                <strong className="text-[#1e2832]">How the course fee is itemized.</strong> Texas law sets a $25.00
+                minimum course fee. Prior to September 2025, a separate $3.00 fee for materials and administration was also
+                required — many providers still itemize this separately at checkout. Check your final order total, not the
+                advertised base price.
               </li>
               <li>
                 <strong className="text-[#1e2832]">Processing or convenience fees.</strong> Some providers add a

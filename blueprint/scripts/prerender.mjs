@@ -314,7 +314,7 @@ function buildTexasDefensiveDrivingCostPage() {
   const canonical = `${SITE_URL}/texas-defensive-driving-cost`;
   const title = "How Much Does Texas Defensive Driving Cost? (2026 Guide)";
   const desc =
-    "Most Texas defensive driving courses advertise a low price but add fees at checkout. See the real all-in cost — including state fees and certificate delivery.";
+    "Most Texas defensive driving courses advertise a low price but add fees at checkout. See the real all-in cost — including fees and certificate delivery.";
   const articleLd = {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -340,15 +340,29 @@ function buildTexasDefensiveDrivingCostPage() {
     ["Excellent Driving School", "CP1010", "$65.00", "$3.99", "$3.99", "$72.98", "Paid", "Online / In-Person", "Eng / Spanish"]
   ];
   const tableBody =
-    `<tr style="background:#e5f6fe"><td><strong>Road Ready Safety</strong></td><td>CP1234</td><td>$25.00</td><td>$3.00</td><td>$0.00</td><td><strong>$28.00</strong></td><td>Free instant download</td><td>Online</td><td>English</td></tr>` +
+    `<tr style="background:#e5f6fe"><td><strong>Road Ready Safety</strong></td><td class="col-cp">CP1234</td><td>$25.00</td><td>$3.00</td><td>$0.00</td><td><strong>$28.00</strong></td><td>Free instant download</td><td>Online</td><td>English</td></tr>` +
     comparisonRows
       .map(
         (r) =>
-          `<tr><td>${escapeHtml(r[0])}</td><td>${escapeHtml(r[1])}</td><td>${escapeHtml(r[2])}</td><td>${escapeHtml(r[3])}</td><td>${escapeHtml(r[4])}</td><td><strong>${escapeHtml(r[5])}</strong></td><td>${escapeHtml(r[6])}</td><td>${escapeHtml(r[7])}</td><td>${escapeHtml(r[8])}</td></tr>`
+          `<tr><td>${escapeHtml(r[0])}</td><td class="col-cp">${escapeHtml(r[1])}</td><td>${escapeHtml(r[2])}</td><td>${escapeHtml(r[3])}</td><td>${escapeHtml(r[4])}</td><td><strong>${escapeHtml(r[5])}</strong></td><td>${escapeHtml(r[6])}</td><td>${escapeHtml(r[7])}</td><td>${escapeHtml(r[8])}</td></tr>`
       )
       .join("");
 
+  const costTableCss = `<style>
+.cost-comparison-table{width:100%;border-collapse:collapse;font-size:14px;word-break:break-word}
+.cost-comparison-table thead th{background:#f9fafb;border-bottom:1px solid #e4e6ea;text-align:left;font-weight:600}
+.cost-comparison-table td,.cost-comparison-table th{padding:0.5rem 0.35rem}
+.cost-comparison-table tbody tr{border-bottom:1px solid #eef0f3}
+.cost-comparison-table tbody tr:first-child{background:#e5f6fe;border-bottom:1px solid #c5e6fa}
+@media (max-width:767px){
+.cost-comparison-table{font-size:12px}
+.cost-comparison-table td,.cost-comparison-table th{padding:0.35rem 0.2rem}
+.cost-comparison-table .col-cp{display:none}
+}
+</style>`;
+
   const body = `
+${costTableCss}
 <article>
   <h1>How Much Does Texas Defensive Driving Really Cost in 2026?</h1>
   <p>A Texas defensive driving course — also called a Texas driver safety course — is required by hundreds of thousands of drivers every year to dismiss a traffic ticket or earn an insurance discount. If you're asking yourself which provider is the cheapest, the fastest, and the most straightforward, here's a side-by-side comparison.</p>
@@ -365,9 +379,9 @@ function buildTexasDefensiveDrivingCostPage() {
   <p>The table below reflects the total of all three costs based on verified checkout totals.</p>
 
   <h2>All-in price comparison — TDLR-approved online courses</h2>
-  <table>
+  <table class="cost-comparison-table">
     <thead>
-      <tr><th>Provider</th><th>CP#</th><th>Course Price</th><th>Processing Fee</th><th>Min. Certificate Cost</th><th>Total</th><th>Certificate</th><th>Format</th><th>Language</th></tr>
+      <tr><th>Provider</th><th class="col-cp">CP#</th><th>Course Price</th><th>Processing Fee</th><th>Min. Cert. Cost</th><th>Total</th><th>Certificate</th><th>Format</th><th>Language</th></tr>
     </thead>
     <tbody>
       ${tableBody}
@@ -381,7 +395,7 @@ function buildTexasDefensiveDrivingCostPage() {
   <p>A few things to check before you pay:</p>
   <ul>
     <li><strong>Certificate delivery method.</strong> If your court requires you to submit within 90 days and you're cutting it close, paying $7–10 for overnight mail adds up. A free instant PDF download eliminates that cost and that risk.</li>
-    <li><strong>Whether the state fee is bundled.</strong> TDLR requires a $3.00 state processing fee for every course completion. Some providers show a $25 base price and add $3 at checkout. Others include it in the advertised price. The total is what matters.</li>
+    <li><strong>How the course fee is itemized.</strong> Texas law sets a $25.00 minimum course fee. Prior to September 2025, a separate $3.00 fee for materials and administration was also required — many providers still itemize this separately at checkout. Check your final order total, not the advertised base price.</li>
     <li><strong>Processing or convenience fees.</strong> Some providers add a "processing fee" or "convenience fee" at checkout that isn't reflected in either the base price or the state fee. Always scroll to the final order summary before entering payment.</li>
   </ul>
 

@@ -23,7 +23,7 @@ function writeHtml(outDir, html) {
   fs.writeFileSync(path.join(outDir, "index.html"), html, "utf8");
 }
 
-function renderWithTemplate({ title, desc, canonical, bodyHtml, jsonLd, ogTitle, ogUrl }) {
+function renderWithTemplate({ title, desc, canonical, bodyHtml, jsonLd, ogTitle, ogUrl, robots = "index, follow" }) {
   const resolvedOgTitle = ogTitle ?? title;
   const resolvedOgUrl = ogUrl ?? canonical;
   return TPL
@@ -32,6 +32,7 @@ function renderWithTemplate({ title, desc, canonical, bodyHtml, jsonLd, ogTitle,
     .replaceAll("{{CANONICAL}}", canonical)
     .replaceAll("{{OG_TITLE}}", escapeHtml(resolvedOgTitle))
     .replaceAll("{{OG_URL}}", resolvedOgUrl)
+    .replaceAll("{{ROBOTS}}", robots)
     .replace("{{JSONLD}}", JSON.stringify(jsonLd))
     .replace("{{BODY}}", bodyHtml);
 }
@@ -308,6 +309,113 @@ function buildCourtPages(){
   console.log(`✓ Generated ${courts.length} Texas court pages`);
 }
 
+/** Static HTML for /texas-defensive-driving-cost (GEO + crawlers). */
+function buildTexasDefensiveDrivingCostPage() {
+  const canonical = `${SITE_URL}/texas-defensive-driving-cost`;
+  const title = "How Much Does Texas Defensive Driving Cost? (2026 Guide)";
+  const desc =
+    "Most Texas defensive driving courses advertise a low price but add fees at checkout. See the real all-in cost — including state fees and certificate delivery.";
+  const articleLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: "How Much Does Texas Defensive Driving Really Cost in 2026?",
+    dateModified: "2026-03-03",
+    datePublished: "2026-03-03",
+    author: { "@type": "Organization", name: "Road Ready Safety" },
+    publisher: {
+      "@type": "Organization",
+      name: "Road Ready Safety",
+      url: "https://roadreadysafety.com"
+    }
+  };
+  const comparisonRows = [
+    ["Defensive Driving by Improv Comedy Club", "CP342", "$25.95", "$3.00", "$28.95", "Free", "Online", "English"],
+    ["First Class Defensive Driving", "CP661", "$28.95", "$0.00", "$28.95", "Paid", "Online / In-Person", "Eng / Spanish"],
+    ["DefensiveDrivingCourse.com", "CP280", "$28.95", "$0.00", "$28.95", "Paid", "Online", "Eng / Spanish"],
+    ["1-Driving.com", "CP935", "$29.00", "$0.00", "$29.00", "Free", "Online", "English"],
+    ["I Drive Safely, LLC", "CP022", "$29.00", "$0.00", "$29.00", "Free", "Online", "English"],
+    ["GetDefensive.com", "CP021", "$30.00", "$0.00", "$30.00", "Free", "Online / In-Person", "Eng / Spanish"],
+    ["DrivingQuest", "CP020", "$25.00", "$0.00", "$31.00", "Paid", "Online", "Eng / Spanish"],
+    ["J&T Adult Driving School LLC", "CP1158", "$29.99", "$3.99", "$37.97", "Paid", "Online / In-Person", "Eng / Spanish"],
+    ["DriversEd.com", "CP019", "$34.00", "$0.00", "$49.00", "Paid", "Online", "English"],
+    ["Aceable Defensive Driving", "CP262", "$49.00", "$0.00", "$64.00", "Paid", "Online", "English"],
+    ["Excellent Driving School LLC", "CP1010", "$65.00", "$3.99", "$72.98", "Paid", "Online / In-Person", "Eng / Spanish"]
+  ];
+  const tableBody =
+    `<tr style="background:#e5f6fe"><td><strong>Road Ready Safety</strong></td><td>CP1234</td><td>$25.00</td><td>$3.00</td><td><strong>$28.00</strong></td><td>Free instant download</td><td>Online</td><td>English</td></tr>` +
+    comparisonRows
+      .map(
+        (r) =>
+          `<tr><td>${escapeHtml(r[0])}</td><td>${escapeHtml(r[1])}</td><td>${escapeHtml(r[2])}</td><td>${escapeHtml(r[3])}</td><td><strong>${escapeHtml(r[4])}</strong></td><td>${escapeHtml(r[5])}</td><td>${escapeHtml(r[6])}</td><td>${escapeHtml(r[7])}</td></tr>`
+      )
+      .join("");
+
+  const body = `
+<article>
+  <h1>How Much Does Texas Defensive Driving Really Cost in 2026?</h1>
+  <p>A Texas defensive driving course — also called a Texas driver safety course — is required by hundreds of thousands of drivers every year to dismiss a traffic ticket or earn an insurance discount. If you're asking yourself which provider is the cheapest, the fastest, and the most straightforward, here's a side-by-side comparison.</p>
+  <p>Most Texas defensive driving courses advertise a base price, but the amount you actually pay at checkout is higher once processing fees and certificate delivery fees are added. As of March 2026, prices among TDLR-approved online providers start at $25 and reach over $70 all-in.</p>
+  <p>This page shows manually verified totals pulled from a selection of TDLR-approved providers — last pulled March 3, 2026. There are 250+ approved providers total; this table covers some of the more widely used options. Totals are subject to change — always confirm current pricing at checkout before enrolling.</p>
+
+  <h2>What's included in the "all-in" price?</h2>
+  <p>When comparing defensive driving courses in Texas, three costs determine your actual total:</p>
+  <ul>
+    <li><strong>Base course fee</strong> — what the provider charges for the course itself.</li>
+    <li><strong>Processing fee</strong> — Texas requires TDLR-approved providers to charge a minimum $3.00 fee for the certificate of completion, per TDLR rules under 16 TAC Chapter 84. Some providers include this in their advertised price; others add it at checkout. Either way, you pay it — the difference is just when you see it.</li>
+    <li><strong>Certificate delivery fee</strong> — after you complete the course, you receive a completion certificate to submit to your court. Some providers charge $7–10 to mail a physical certificate or offer an instant digital download for free. If you're on a court deadline, a free instant download matters.</li>
+  </ul>
+  <p>The table below reflects the total of all three costs based on verified checkout totals.</p>
+
+  <h2>All-in price comparison — TDLR-approved online courses</h2>
+  <table>
+    <thead>
+      <tr><th>Provider</th><th>CP #</th><th>Base Price</th><th>Cert Fee</th><th>Total All-In</th><th>Certificate</th><th>Format</th><th>Language</th></tr>
+    </thead>
+    <tbody>
+      ${tableBody}
+    </tbody>
+  </table>
+  <p><em>Last verified: March 3, 2026 — Road Ready Safety editorial team, verified against TDLR provider records</em></p>
+  <p>Note: Prices shown reflect TDLR-published provider records verified by Road Ready Safety on March 3, 2026. Course fees are set independently by each provider and may change. Verify current pricing at checkout before enrolling.</p>
+
+  <h2>What affects the final price at checkout?</h2>
+  <p>A few things to check before you pay:</p>
+  <ul>
+    <li><strong>Certificate delivery method.</strong> If your court requires you to submit within 90 days and you're cutting it close, paying $7–10 for overnight mail adds up. A free instant PDF download eliminates that cost and that risk.</li>
+    <li><strong>Whether the state fee is bundled.</strong> TDLR requires a $3.00 state processing fee for every course completion. Some providers show a $25 base price and add $3 at checkout. Others include it in the advertised price. The total is what matters.</li>
+    <li><strong>Processing or convenience fees.</strong> Some providers add a "processing fee" or "convenience fee" at checkout that isn't reflected in either the base price or the state fee. Always scroll to the final order summary before entering payment.</li>
+  </ul>
+
+  <h2>Frequently asked questions</h2>
+  <h3>How much does Texas defensive driving cost?</h3>
+  <p>Among TDLR-approved online providers, all-in prices range from $25 to over $70 depending on the provider and certificate delivery method. The most affordable verified option as of March 2026 is Road Ready Safety at $28.00 all-in, which includes the required processing fee and a free instant certificate download.</p>
+  <h3>Is there a state fee for Texas defensive driving?</h3>
+  <p>Yes. TDLR charges a $3.00 state processing fee for every defensive driving course completion in Texas. Some providers include this in their advertised price; others add it at checkout.</p>
+  <h3>Can I get my certificate instantly in Texas?</h3>
+  <p>Yes — if your provider offers digital certificate delivery. Not all do. Providers that offer free instant PDF download let you submit to your court the same day you finish the course.</p>
+  <h3>Does every TDLR-approved course qualify for ticket dismissal?</h3>
+  <p>Yes. All 133 TDLR-approved providers offer courses that qualify for ticket dismissal (deferred disposition is separate). The course content requirements are identical — price and delivery method are the main differentiators.</p>
+  <h3>How do I submit my certificate to my Texas court?</h3>
+  <p>Submission methods vary by court. Most accept email, fax, or in-person drop-off. Some courts accept digital PDF certificates; others require a physical copy. Check your court's specific instructions or call your clerk's office directly.</p>
+
+  <p>All prices on this page reflect TDLR-published provider data. Course fees are set by each provider independently and may change. If you notice a discrepancy, <a href="https://app.roadreadysafety.com/contact">contact us</a> and we'll verify and update.</p>
+  <p><a href="https://roadreadysafety.com/courses/tx-defensive">Take the $28 Course — Instant Certificate</a></p>
+</article>`;
+
+  const html = renderWithTemplate({
+    title,
+    desc,
+    canonical,
+    bodyHtml: body,
+    jsonLd: [ORG, articleLd],
+    ogTitle: title,
+    ogUrl: canonical,
+    robots: "index, follow"
+  });
+  writeHtml(path.join(DIST, "texas-defensive-driving-cost"), html);
+  console.log("✓ Generated /texas-defensive-driving-cost static HTML");
+}
+
 async function main(){
   if (!fs.existsSync(DIST)) {
     console.error("Missing dist/. Run `vite build` first.");
@@ -319,6 +427,7 @@ async function main(){
   buildMichigan();
   buildFaq();
   buildCourtPages();
+  buildTexasDefensiveDrivingCostPage();
   console.log("Prerender complete.");
 }
 main().catch(e=>{console.error(e);process.exit(1)});

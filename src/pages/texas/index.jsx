@@ -240,6 +240,18 @@ export default function TexasIndex() {
         </div>
       </section>
 
+      <section className="bg-white border-t border-[#e4e6ea] py-5" aria-label="Texas defensive driving pricing comparison">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <Link
+            to="/texas-defensive-driving-cost"
+            className="text-sm sm:text-base font-semibold text-[#03449e] hover:text-[#023d8a] hover:underline inline-flex items-center justify-center gap-1"
+            style={{ fontFamily: "'DM Sans', sans-serif" }}
+          >
+            Comparing prices? See the full all-in cost breakdown →
+          </Link>
+        </div>
+      </section>
+
       {/* Course Info + Pricing Card */}
       <section id="pricing" className="py-16 lg:py-[112px] bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -13,12 +13,15 @@ export default function SEO({
   type = 'website',
   publishedTime = '',
   modifiedTime = '',
-  author = 'Road Ready Safety'
+  author = 'Road Ready Safety',
+  /** When true, use `title` as the full document title (no "– Road Ready Safety" suffix). */
+  exactTitle = false
 }) {
   const siteTitle = 'Road Ready Safety';
   const trimmedTitle = typeof title === 'string' ? title.trim() : title;
-  const fullTitle =
-    !trimmedTitle
+  const fullTitle = exactTitle && trimmedTitle
+    ? trimmedTitle
+    : !trimmedTitle
       ? siteTitle
       : trimmedTitle.endsWith('| Road Ready Safety')
         ? trimmedTitle

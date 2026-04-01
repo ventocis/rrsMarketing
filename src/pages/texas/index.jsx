@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { Accordion, AccordionPanel, AccordionTitle, AccordionContent } from 'flowbite-react';
 import Button from '../../components/Button.jsx';
 import Card from '../../components/Card.jsx';

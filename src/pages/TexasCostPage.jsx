@@ -23,53 +23,36 @@ const ARTICLE_JSON_LD = {
   }
 };
 
-/** Rows after RRS: sorted by total all-in ascending. Data per editorial brief — do not change prices. */
+/** Rows after RRS — editorial table data. */
 const COMPARISON_ROWS = [
   {
-    provider: 'Defensive Driving by Improv Comedy Club',
-    cp: 'CP342',
-    base: '$25.95',
-    cert: '$3.00',
-    total: '$28.95',
-    certificate: 'Free',
+    provider: 'Aware Driver',
+    cp: 'CP995',
+    coursePrice: '$25.00',
+    processingFee: '$3.00',
+    minCertCost: '$0.00',
+    total: '$28.00',
+    certificate: 'Paid',
     format: 'Online',
     language: 'English'
   },
   {
-    provider: 'First Class Defensive Driving',
-    cp: 'CP661',
-    base: '$28.95',
-    cert: '$0.00',
-    total: '$28.95',
-    certificate: 'Paid',
-    format: 'Online / In-Person',
-    language: 'Eng / Spanish'
-  },
-  {
-    provider: 'DefensiveDrivingCourse.com',
-    cp: 'CP280',
-    base: '$28.95',
-    cert: '$0.00',
-    total: '$28.95',
-    certificate: 'Paid',
-    format: 'Online',
-    language: 'Eng / Spanish'
-  },
-  {
-    provider: '1-Driving.com',
-    cp: 'CP935',
-    base: '$29.00',
-    cert: '$0.00',
-    total: '$29.00',
-    certificate: 'Free',
+    provider: 'DefensiveDriving.com',
+    cp: 'CP284',
+    coursePrice: '$25.00',
+    processingFee: '$3.00',
+    minCertCost: '$0.00',
+    total: '$28.00',
+    certificate: 'Mail',
     format: 'Online',
     language: 'English'
   },
   {
-    provider: 'I Drive Safely, LLC',
+    provider: 'I Drive Safely',
     cp: 'CP022',
-    base: '$29.00',
-    cert: '$0.00',
+    coursePrice: '$29.00',
+    processingFee: '$0.00',
+    minCertCost: '$0.00',
     total: '$29.00',
     certificate: 'Free',
     format: 'Online',
@@ -78,8 +61,9 @@ const COMPARISON_ROWS = [
   {
     provider: 'GetDefensive.com',
     cp: 'CP021',
-    base: '$30.00',
-    cert: '$0.00',
+    coursePrice: '$30.00',
+    processingFee: '$0.00',
+    minCertCost: '$0.00',
     total: '$30.00',
     certificate: 'Free',
     format: 'Online / In-Person',
@@ -88,18 +72,20 @@ const COMPARISON_ROWS = [
   {
     provider: 'DrivingQuest',
     cp: 'CP020',
-    base: '$25.00',
-    cert: '$0.00',
+    coursePrice: '$25.00',
+    processingFee: '$0.00',
+    minCertCost: '$6.00',
     total: '$31.00',
     certificate: 'Paid',
     format: 'Online',
     language: 'Eng / Spanish'
   },
   {
-    provider: 'J&T Adult Driving School LLC',
+    provider: 'J&T Adult Driving School',
     cp: 'CP1158',
-    base: '$29.99',
-    cert: '$3.99',
+    coursePrice: '$29.99',
+    processingFee: '$3.99',
+    minCertCost: '$3.99',
     total: '$37.97',
     certificate: 'Paid',
     format: 'Online / In-Person',
@@ -108,8 +94,9 @@ const COMPARISON_ROWS = [
   {
     provider: 'DriversEd.com',
     cp: 'CP019',
-    base: '$34.00',
-    cert: '$0.00',
+    coursePrice: '$34.00',
+    processingFee: '$0.00',
+    minCertCost: '$15.00',
     total: '$49.00',
     certificate: 'Paid',
     format: 'Online',
@@ -118,18 +105,20 @@ const COMPARISON_ROWS = [
   {
     provider: 'Aceable Defensive Driving',
     cp: 'CP262',
-    base: '$49.00',
-    cert: '$0.00',
+    coursePrice: '$49.00',
+    processingFee: '$0.00',
+    minCertCost: '$15.00',
     total: '$64.00',
     certificate: 'Paid',
     format: 'Online',
     language: 'English'
   },
   {
-    provider: 'Excellent Driving School LLC',
+    provider: 'Excellent Driving School',
     cp: 'CP1010',
-    base: '$65.00',
-    cert: '$3.99',
+    coursePrice: '$65.00',
+    processingFee: '$3.99',
+    minCertCost: '$3.99',
     total: '$72.98',
     certificate: 'Paid',
     format: 'Online / In-Person',
@@ -143,16 +132,12 @@ const FAQ_ITEMS = [
     a: 'Among TDLR-approved online providers, all-in prices range from $25 to over $70 depending on the provider and certificate delivery method. The most affordable verified option as of March 2026 is Road Ready Safety at $28.00 all-in, which includes the required processing fee and a free instant certificate download.'
   },
   {
-    q: 'Is there a state fee for Texas defensive driving?',
-    a: 'Yes. TDLR charges a $3.00 state processing fee for every defensive driving course completion in Texas. Some providers include this in their advertised price; others add it at checkout.'
+    q: 'Is there a required minimum fee for a Texas defensive driving course?',
+    a: 'Yes. Under Texas Education Code §1001.352 (as amended by H.B. 3012, effective September 1, 2025), TDLR-approved providers are required to charge each student a minimum of $25.00 for a driving safety course. Prior to September 2025, a separate minimum $3.00 fee for course materials and administration was also required by law — which is why many providers still show a $25 base + $3 fee structure. Some providers have absorbed this into a flat price; others continue to itemize it at checkout. Either way, the statutory floor is now $25.00 total — meaning courses listed at $28.00 are pricing above the minimum, not meeting a two-part requirement.'
   },
   {
     q: 'Can I get my certificate instantly in Texas?',
     a: 'Yes — if your provider offers digital certificate delivery. Not all do. Providers that offer free instant PDF download let you submit to your court the same day you finish the course.'
-  },
-  {
-    q: 'Does every TDLR-approved course qualify for ticket dismissal?',
-    a: 'Yes. All 133 TDLR-approved providers offer courses that qualify for ticket dismissal (deferred disposition is separate). The course content requirements are identical — price and delivery method are the main differentiators.'
   },
   {
     q: 'How do I submit my certificate to my Texas court?',
@@ -227,15 +212,18 @@ export default function TexasCostPage() {
                 itself.
               </li>
               <li>
-                <strong className="text-[#1e2832]">Processing fee</strong> — Texas requires TDLR-approved providers to
-                charge a minimum $3.00 fee for the certificate of completion, per TDLR rules under 16 TAC Chapter 84.
-                Some providers include this in their advertised price; others add it at checkout. Either way, you pay
-                it — the difference is just when you see it.
+                <strong className="text-[#1e2832]">Processing fee</strong> — Texas law requires all TDLR-approved
+                providers to charge a minimum of $25.00 for a defensive driving course. You may notice some providers show
+                a $25 base price plus a separate $3 fee at checkout — that two-part structure was required by law until
+                September 1, 2025, when it was simplified to a single $25 minimum. Some providers still itemize the $3
+                separately; others have rolled it into a flat price. Either way, always check your final checkout total
+                before paying — the advertised price and what you actually owe are not always the same number.
               </li>
               <li>
                 <strong className="text-[#1e2832]">Certificate delivery fee</strong> — after you complete the course,
-                you receive a completion certificate to submit to your court. Some providers charge $7–10 to mail a
-                physical certificate or offer an instant digital download for free. If you&apos;re on a court deadline,
+                you receive a completion certificate to submit to your court. Some providers charge $7+ to mail a physical
+                certificate, others charge $0 to mail a physical certificate (while charging $5-$10+ for an instant
+                download certificate) and others offer an instant download for free. If you&apos;re on a court deadline,
                 a free instant download matters.
               </li>
             </ul>
@@ -250,23 +238,26 @@ export default function TexasCostPage() {
           </h2>
 
           <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 mb-4 rounded-xl border border-[#e4e6ea]">
-            <table className="w-full min-w-[720px] text-sm border-collapse">
+            <table className="w-full min-w-[1000px] text-sm border-collapse">
               <thead>
                 <tr className="bg-[#f9fafb] text-left border-b border-[#e4e6ea]">
                   <th className="py-3 px-3 font-semibold text-[#1e2832]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
                     Provider
                   </th>
                   <th className="py-3 px-3 font-semibold text-[#1e2832]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                    CP #
+                    CP#
                   </th>
                   <th className="py-3 px-3 font-semibold text-[#1e2832]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                    Base Price
+                    Course Price
                   </th>
                   <th className="py-3 px-3 font-semibold text-[#1e2832]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                    Cert Fee
+                    Processing Fee
                   </th>
                   <th className="py-3 px-3 font-semibold text-[#1e2832]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                    Total All-In
+                    Min. Certificate Cost
+                  </th>
+                  <th className="py-3 px-3 font-semibold text-[#1e2832]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                    Total
                   </th>
                   <th className="py-3 px-3 font-semibold text-[#1e2832]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
                     Certificate
@@ -285,6 +276,7 @@ export default function TexasCostPage() {
                   <td className="py-3 px-3">CP1234</td>
                   <td className="py-3 px-3">$25.00</td>
                   <td className="py-3 px-3">$3.00</td>
+                  <td className="py-3 px-3">$0.00</td>
                   <td className="py-3 px-3 font-bold text-[#03449e]">$28.00</td>
                   <td className="py-3 px-3">Free instant download</td>
                   <td className="py-3 px-3">Online</td>
@@ -294,8 +286,9 @@ export default function TexasCostPage() {
                   <tr key={row.cp} className="border-b border-[#eef0f3]">
                     <td className="py-3 px-3 text-[#1e2832]">{row.provider}</td>
                     <td className="py-3 px-3">{row.cp}</td>
-                    <td className="py-3 px-3">{row.base}</td>
-                    <td className="py-3 px-3">{row.cert}</td>
+                    <td className="py-3 px-3">{row.coursePrice}</td>
+                    <td className="py-3 px-3">{row.processingFee}</td>
+                    <td className="py-3 px-3">{row.minCertCost}</td>
                     <td className="py-3 px-3 font-bold text-[#1e2832]">{row.total}</td>
                     <td className="py-3 px-3">{row.certificate}</td>
                     <td className="py-3 px-3">{row.format}</td>
@@ -305,6 +298,18 @@ export default function TexasCostPage() {
               </tbody>
             </table>
           </div>
+
+          <p
+            className="text-[#364153] text-base leading-7 mb-4"
+            style={{ fontFamily: "'DM Sans', sans-serif" }}
+          >
+            The Certificate column shows how each provider delivers your completion certificate. &apos;Free instant
+            download&apos; means you can print or email your certificate the same day you finish — no waiting, no extra
+            charge. &apos;Paid&apos; means the provider charges an additional delivery fee, which may or may not be reflected
+            in the total above depending on the method selected at checkout. &apos;Mail&apos; means the provider mails a
+            physical certificate, which typically adds several business days and may cost extra. If your court deadline is
+            close, certificate delivery method matters as much as price.
+          </p>
 
           <p
             className="text-sm text-[#616d7b] mb-2"
@@ -365,6 +370,31 @@ export default function TexasCostPage() {
                 </p>
               </div>
             ))}
+          </div>
+
+          <h2
+            className="text-2xl font-bold text-[#1e2832] mt-10 mb-4"
+            style={{ fontFamily: "'Outfit', sans-serif" }}
+          >
+            Finding a course by format, language, or price range
+          </h2>
+          <div className="space-y-4 text-[#364153] text-base leading-7 mb-12" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+            <p>
+              All providers in the table above offer online courses, meaning you can complete the required 6-hour Texas
+              driver safety course from any device without visiting a classroom. Several providers offer bilingual courses
+              in both English and Spanish, including GetDefensive.com, J&amp;T Adult Driving School, and Excellent Driving
+              School.
+            </p>
+            <p>
+              If you are looking for an online English-language Texas defensive driving course under $30, Road Ready
+              Safety, Aware Driver, DefensiveDriving.com, and I Drive Safely all meet that criteria based on verified March
+              2026 totals. Of those, only Road Ready Safety includes a free instant certificate download with no additional
+              delivery fee — making it the lowest-friction option if you need to submit to your court quickly.
+            </p>
+            <p>
+              If you need a bilingual course in English and Spanish, options in the table priced under $40 include
+              GetDefensive.com ($30.00) and J&amp;T Adult Driving School ($37.97).
+            </p>
           </div>
 
           <div

@@ -13,12 +13,17 @@ export default function SEO({
   type = 'website',
   publishedTime = '',
   modifiedTime = '',
-  author = 'Road Ready Safety'
+  author = 'Road Ready Safety',
+  /** When true, use `title` as the full document title (no "– Road Ready Safety" suffix). */
+  exactTitle = false,
+  /** When set (non-QA), overrides default robots meta content. */
+  robots: robotsOverride = undefined
 }) {
   const siteTitle = 'Road Ready Safety';
   const trimmedTitle = typeof title === 'string' ? title.trim() : title;
-  const fullTitle =
-    !trimmedTitle
+  const fullTitle = exactTitle && trimmedTitle
+    ? trimmedTitle
+    : !trimmedTitle
       ? siteTitle
       : trimmedTitle.endsWith('| Road Ready Safety')
         ? trimmedTitle
@@ -51,10 +56,13 @@ export default function SEO({
       
       {/* Additional Meta Tags */}
       <meta name="author" content={author} />
-      {IS_QA
-        ? <meta name="robots" content="noindex, nofollow" />
-        : <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
-      }
+      {IS_QA ? (
+        <meta name="robots" content="noindex, nofollow" />
+      ) : typeof robotsOverride === 'string' && robotsOverride.length > 0 ? (
+        <meta name="robots" content={robotsOverride} />
+      ) : (
+        <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+      )}
       <link rel="canonical" href={fullUrl} />
       
       {/* Article specific meta tags */}

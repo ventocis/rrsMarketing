@@ -35,6 +35,7 @@ import TexasRefund from './pages/texas/refund.jsx';
 import TexasAccessibility from './pages/texas/accessibility.jsx';
 import CourtPage from './pages/texas/courts/CourtPage.jsx';
 import CourtsIndex from './pages/texas/courts/CourtsIndex.jsx';
+import TexasCostPage from './pages/TexasCostPage.jsx';
 
 function Home() {
   return (
@@ -91,6 +92,7 @@ function App() {
         <Route path="/blog" element={<BlogIndex />} />
         <Route path="/blog/:slug" element={<BlogPost />} />
         <Route path="/faq" element={<Faq />} />
+        <Route path="/texas-defensive-driving-cost" element={<TexasCostPage />} />
         {/* Texas pages - only rendered if VITE_TEXAS_ROUTES_ENABLED=true */}
         {isTexasRoutesEnabled && (
           <>

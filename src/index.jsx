@@ -32,14 +32,15 @@ function AffiliateClickTracker() {
     const handler = (e) => {
       const link = e.target.closest('a[data-affiliate="true"]');
       if (!link) return;
-      if (typeof gtag === 'undefined') return;
-      gtag('event', 'affiliate_click', {
-        partner_name: link.dataset.partner,
-        destination_state: link.dataset.state,
-        course_type: link.dataset.course,
-        destination_url: link.href,
-        page_location: window.location.pathname
-      });
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'affiliate_click', {
+          partner_name: link.dataset.partner,
+          destination_state: link.dataset.state,
+          course_type: link.dataset.course,
+          destination_url: link.href,
+          page_location: window.location.pathname
+        });
+      }
     };
     document.addEventListener('click', handler);
     return () => document.removeEventListener('click', handler);

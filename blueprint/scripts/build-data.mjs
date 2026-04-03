@@ -415,6 +415,7 @@ const build = async () => {
     `${siteUrl}/courses/fl-bdi`,
     `${siteUrl}/courses/mi-bdic`,
     `${siteUrl}/faq`,
+    `${siteUrl}/texas-defensive-driving-cost`,
     ...blogPosts.map(p => `${siteUrl}/blog/${p.slug}`),
     ...courses.map(c => `${siteUrl}/courses/${c.slug}`),
     ...courts.map(c => `${siteUrl}/texas/courts/${c.slug}`)

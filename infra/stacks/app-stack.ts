@@ -27,7 +27,6 @@ export class AppStack extends cdk.Stack {
       env: props.env,
       isPrerendered: true,
       wwwRedirect: true,
-      spaFallbackPage: undefined,
     });
   }
 }

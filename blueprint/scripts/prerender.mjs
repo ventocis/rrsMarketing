@@ -18,6 +18,19 @@ const CONTENT_DIR = path.resolve(ROOT, "content/blog");
 const TPL = fs.readFileSync(path.resolve(ROOT, "blueprint/static-templates/base.html"), "utf8");
 const ORG = JSON.parse(fs.readFileSync(path.resolve(ROOT, "blueprint/static-templates/org.json"), "utf8"));
 
+// Extract SPA asset tags from the built index.html so prerendered pages can boot the full React app
+const SPA_INDEX = fs.readFileSync(path.join(DIST, "index.html"), "utf8");
+const SPA_ASSETS = (() => {
+  const scripts = [...SPA_INDEX.matchAll(/<script[^>]*src="[^"]*"[^>]*><\/script>/g)].map(m => m[0]);
+  const styles = [...SPA_INDEX.matchAll(/<link[^>]*rel="stylesheet"[^>]*>/g)].map(m => m[0]);
+  // Extract preconnects and font stylesheet links (deduplicated)
+  const preconnects = [...SPA_INDEX.matchAll(/<link[^>]*rel="preconnect"[^>]*>/g)].map(m => m[0]);
+  const fonts = [...SPA_INDEX.matchAll(/<link[^>]*href="https:\/\/fonts\.googleapis\.com\/css2[^"]*"[^>]*>/g)].map(m => m[0]);
+  // Deduplicate all head tags
+  const headTags = [...new Set([...preconnects, ...fonts, ...styles])];
+  return { scripts, headTags };
+})();
+
 function writeHtml(outDir, html) {
   mkdirp.sync(outDir);
   fs.writeFileSync(path.join(outDir, "index.html"), html, "utf8");
@@ -26,6 +39,13 @@ function writeHtml(outDir, html) {
 function renderWithTemplate({ title, desc, canonical, bodyHtml, jsonLd, ogTitle, ogUrl, robots = "index, follow" }) {
   const resolvedOgTitle = ogTitle ?? title;
   const resolvedOgUrl = ogUrl ?? canonical;
+
+  // Build SPA head tags (preconnects, fonts, stylesheets)
+  const spaHead = SPA_ASSETS.headTags.join("\n  ");
+
+  // Build SPA script tags
+  const spaScripts = SPA_ASSETS.scripts.join("\n  ");
+
   return TPL
     .replaceAll("{{TITLE}}", escapeHtml(title))
     .replaceAll("{{DESC}}", escapeHtml(desc || "Road Ready Safety"))
@@ -34,7 +54,9 @@ function renderWithTemplate({ title, desc, canonical, bodyHtml, jsonLd, ogTitle,
     .replaceAll("{{OG_URL}}", resolvedOgUrl)
     .replaceAll("{{ROBOTS}}", robots)
     .replace("{{JSONLD}}", JSON.stringify(jsonLd))
-    .replace("{{BODY}}", bodyHtml);
+    .replace("{{BODY}}", bodyHtml)
+    .replace("{{SPA_HEAD}}", spaHead)
+    .replace("{{SPA_SCRIPTS}}", spaScripts);
 }
 
 function escapeHtml(s=""){return s.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;")}

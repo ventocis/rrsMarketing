@@ -15,35 +15,44 @@ const defaultConfig = {
     bundlePath: path.join(__dirname, '../dist'),
 }
 
-const appConfig: Record<AppEnv, stacks.CloudfrontCertificateStackProps> = {
+const appConfig: Record<AppEnv, Omit<stacks.AppStackProps & stacks.CertificateStackProps & stacks.DnsStackProps, 'certificate' | 'hostedZone'>> = {
     [AppEnv.QA]: {
         appEnv: AppEnv.QA,
         env: CdkEnvironments[AppEnv.QA],
-        ...Constants.environments[AppEnv.QA],
+        domainName: Constants.environments[AppEnv.QA].rootDomain,
         ...defaultConfig,
     },
     [AppEnv.PROD]: {
         appEnv: AppEnv.PROD,
         env: CdkEnvironments[AppEnv.PROD],
-        ...Constants.environments[AppEnv.PROD],
+        domainName: Constants.environments[AppEnv.PROD].rootDomain,
         ...defaultConfig,
     },
 }
 
 Object.values(AppEnv).forEach(env => {
-    const config = appConfig[env]
-    const cloudfrontCertStack = new stacks.CloudfrontCertificateStack(app, `rrsMarketing-cloudfront-${env}`, {
-        ...config,
-        ...{
-            env: {account: config.env.account, region: 'us-east-1'},
-        },
-    })
-    applyCdkTags(cloudfrontCertStack, env, gitRepoName)
+    const appEnv = env as AppEnv;
+    const config = appConfig[appEnv];
 
-    const monitoringStack = new stacks.MonitoringStack(app, `rrsMarketing-monitoring-${env}`, {
-        env: {account: config.env.account, region: 'us-east-1'},
-        appEnv: config.appEnv,
-        distributionId: cloudfrontCertStack.distributionId,
+    const dnsStack = new stacks.DnsStack(app, `rrsMarketing-dns-${env}`, {
+        ...config,
+        env: config.env,
     })
-    applyCdkTags(monitoringStack, env, gitRepoName)
+    applyCdkTags(dnsStack, env, gitRepoName)
+
+    const certStack = new stacks.CertificateStack(app, `rrsMarketing-certificate-${env}`, {
+        ...config,
+        hostedZone: dnsStack.hostedZone,
+        env: { account: config.env.account, region: 'us-east-1' },
+    })
+    certStack.addDependency(dnsStack)
+    applyCdkTags(certStack, env, gitRepoName)
+
+    const appStack = new stacks.AppStack(app, `rrsMarketing-app-${env}`, {
+        ...config,
+        env: config.env,
+        hostedZone: dnsStack.hostedZone,
+        certificate: certStack.certificate,
+    })
+    applyCdkTags(appStack, env, gitRepoName)
 })

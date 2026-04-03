@@ -12,22 +12,26 @@
   <meta property="og:url" content="{{OG_URL}}" />
   <meta property="og:type" content="article" />
   <script type="application/ld+json">{{JSONLD}}</script>
+  {{SPA_HEAD}}
   <style>
-    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;line-height:1.6;margin:0}
-    header,main,footer{max-width:880px;margin:0 auto;padding:20px}
-    header a{color:inherit;text-decoration:none}
-    nav a{margin-right:12px}
-    .meta{color:#555;font-size:14px;margin-top:-8px}
-    article h1{font-size:28px;margin:16px 0}
-    article h2{font-size:20px;margin-top:24px}
-    article h3{font-size:17px;margin-top:20px;margin-bottom:8px}
-    article table{border-collapse:collapse;width:100%;margin:16px 0;font-size:13px}
-    article th,article td{border:1px solid #e5e7eb;padding:8px;text-align:left;vertical-align:top}
-    article thead th{background:#f9fafb;font-weight:600}
-    .cta{margin-top:24px;padding:16px;border:1px solid #eee;border-radius:12px}
+    /* Styles for the static/crawler-visible content — hidden once SPA mounts */
+    #seo-fallback{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;line-height:1.6;margin:0}
+    #seo-fallback header,#seo-fallback main,#seo-fallback footer{max-width:880px;margin:0 auto;padding:20px}
+    #seo-fallback header a{color:inherit;text-decoration:none}
+    #seo-fallback nav a{margin-right:12px}
+    #seo-fallback .meta{color:#555;font-size:14px;margin-top:-8px}
+    #seo-fallback article h1{font-size:28px;margin:16px 0}
+    #seo-fallback article h2{font-size:20px;margin-top:24px}
+    #seo-fallback article h3{font-size:17px;margin-top:20px;margin-bottom:8px}
+    #seo-fallback article table{border-collapse:collapse;width:100%;margin:16px 0;font-size:13px}
+    #seo-fallback article th,#seo-fallback article td{border:1px solid #e5e7eb;padding:8px;text-align:left;vertical-align:top}
+    #seo-fallback article thead th{background:#f9fafb;font-weight:600}
+    #seo-fallback .cta{margin-top:24px;padding:16px;border:1px solid #eee;border-radius:12px}
   </style>
 </head>
 <body>
+  <div id="root"></div>
+  <div id="seo-fallback">
   <header>
     <a href="/">Road Ready Safety</a>
     <nav>
@@ -46,5 +50,7 @@
   <footer>
     <div class="meta">© Road Ready Driver Instruction LLC</div>
   </footer>
+  </div>
+  {{SPA_SCRIPTS}}
 </body>
 </html>

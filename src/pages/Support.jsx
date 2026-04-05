@@ -14,11 +14,6 @@ export default function SupportPage() {
         description="Get help with your traffic safety course. Contact support for enrollment, certificates, and reporting assistance."
         url="/support"
       />
-      <div className="min-h-[40vh] flex items-center justify-center">
-        <p className="text-[#616d7b]">
-          Redirecting to support…
-        </p>
-      </div>
     </>
   );
 }

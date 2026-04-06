@@ -149,7 +149,13 @@ export default function Header() {
         
         {/* Desktop Navigation Links */}
         <div className="hidden md:flex items-center gap-8 flex-shrink-0">
-          <a href="#how-it-works" className="text-sm font-medium text-[#616d7b] hover:text-[#1e2832] transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>How It Works</a>
+          <Link
+            to={{ pathname: '/', hash: 'how-it-works' }}
+            className="text-sm font-medium text-[#616d7b] hover:text-[#1e2832] transition-colors"
+            style={{ fontFamily: "'DM Sans', sans-serif" }}
+          >
+            How It Works
+          </Link>
           <a href="/courses" className="text-sm font-medium text-[#616d7b] hover:text-[#1e2832] transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>Courses</a>
           <a href="/faq" className="text-sm font-medium text-[#616d7b] hover:text-[#1e2832] transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>FAQ</a>
           <a href="/support" className="text-sm font-medium text-[#616d7b] hover:text-[#1e2832] transition-colors" style={{ fontFamily: "'DM Sans', sans-serif" }}>Help Center</a>
@@ -200,14 +206,14 @@ export default function Header() {
       {isMenuOpen && (
         <div className="md:hidden border-t border-[#e5e5e5] bg-white">
           <div className="px-4 py-6 space-y-4">
-            <a 
-              href="#how-it-works" 
+            <Link
+              to={{ pathname: '/', hash: 'how-it-works' }}
               onClick={closeMenu}
               className="block text-lg font-medium text-[#1e2832] text-center py-2"
               style={{ fontFamily: "'DM Sans', sans-serif" }}
             >
               How It Works
-            </a>
+            </Link>
             <a 
               href="/courses" 
               onClick={closeMenu}

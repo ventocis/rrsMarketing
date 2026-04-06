@@ -18,23 +18,18 @@ const CONTENT_DIR = path.resolve(ROOT, "content/blog");
 const TPL = fs.readFileSync(path.resolve(ROOT, "blueprint/static-templates/base.html"), "utf8");
 const ORG = JSON.parse(fs.readFileSync(path.resolve(ROOT, "blueprint/static-templates/org.json"), "utf8"));
 
-function getSpaAssets() {
-  const indexPath = path.join(DIST, "index.html");
-  if (!fs.existsSync(indexPath)) {
-    return { headTags: "", scriptTags: "" };
-  }
-  const html = fs.readFileSync(indexPath, "utf8");
-  const headTags = [
-    ...html.match(/<link[^>]*rel="preconnect"[^>]*>/g) || [],
-    ...html.match(/<link[^>]*href="https:\/\/fonts\.googleapis\.com\/css2[^"]*"[^>]*>/g) || [],
-    ...html.match(/<link[^>]*rel="stylesheet"[^>]*>/g) || []
-  ];
-  const scriptTags = [...html.match(/<script[^>]*src="[^"]*"[^>]*><\/script>/g) || []];
-  return {
-    headTags: [...new Set(headTags)].join("\n  "),
-    scriptTags: scriptTags.join("\n  ")
-  };
-}
+// Extract SPA asset tags from the built index.html so prerendered pages can boot the full React app
+const SPA_INDEX = fs.readFileSync(path.join(DIST, "index.html"), "utf8");
+const SPA_ASSETS = (() => {
+  const scripts = [...SPA_INDEX.matchAll(/<script[^>]*src="[^"]*"[^>]*><\/script>/g)].map(m => m[0]);
+  const styles = [...SPA_INDEX.matchAll(/<link[^>]*rel="stylesheet"[^>]*>/g)].map(m => m[0]);
+  // Extract preconnects and font stylesheet links (deduplicated)
+  const preconnects = [...SPA_INDEX.matchAll(/<link[^>]*rel="preconnect"[^>]*>/g)].map(m => m[0]);
+  const fonts = [...SPA_INDEX.matchAll(/<link[^>]*href="https:\/\/fonts\.googleapis\.com\/css2[^"]*"[^>]*>/g)].map(m => m[0]);
+  // Deduplicate all head tags
+  const headTags = [...new Set([...preconnects, ...fonts, ...styles])];
+  return { scripts, headTags };
+})();
 
 function writeHtml(outDir, html) {
   mkdirp.sync(outDir);
@@ -192,7 +187,8 @@ function buildFaq(){
 }
 
 function buildErrorPage() {
-  const { headTags, scriptTags } = getSpaAssets();
+  const headTags = SPA_ASSETS.headTags.join("\n  ");
+  const scriptTags = SPA_ASSETS.scripts.join("\n  ");
   const html = `<!doctype html>
 <html lang="en">
 <head>

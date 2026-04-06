@@ -39,6 +39,13 @@ function writeHtml(outDir, html) {
 function renderWithTemplate({ title, desc, canonical, bodyHtml, jsonLd, ogTitle, ogUrl, robots = "index, follow" }) {
   const resolvedOgTitle = ogTitle ?? title;
   const resolvedOgUrl = ogUrl ?? canonical;
+
+  // Build SPA head tags (preconnects, fonts, stylesheets)
+  const spaHead = SPA_ASSETS.headTags.join("\n  ");
+
+  // Build SPA script tags
+  const spaScripts = SPA_ASSETS.scripts.join("\n  ");
+
   return TPL
     .replaceAll("{{TITLE}}", escapeHtml(title))
     .replaceAll("{{DESC}}", escapeHtml(desc || "Road Ready Safety"))
@@ -47,7 +54,9 @@ function renderWithTemplate({ title, desc, canonical, bodyHtml, jsonLd, ogTitle,
     .replaceAll("{{OG_URL}}", resolvedOgUrl)
     .replaceAll("{{ROBOTS}}", robots)
     .replace("{{JSONLD}}", JSON.stringify(jsonLd))
-    .replace("{{BODY}}", bodyHtml);
+    .replace("{{BODY}}", bodyHtml)
+    .replace("{{SPA_HEAD}}", spaHead)
+    .replace("{{SPA_SCRIPTS}}", spaScripts);
 }
 
 function escapeHtml(s=""){return s.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;")}

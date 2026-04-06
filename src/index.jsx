@@ -48,6 +48,10 @@ function AffiliateClickTracker() {
   return null;
 }
 
+// Remove the SEO fallback content once the SPA mounts (prerendered pages only)
+const seoFallback = document.getElementById("seo-fallback");
+if (seoFallback) seoFallback.remove();
+
 createRoot(document.getElementById("root")).render(
   <HelmetProvider>
     <BrowserRouter>

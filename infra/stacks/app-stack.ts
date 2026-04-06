@@ -27,6 +27,7 @@ export class AppStack extends cdk.Stack {
       env: props.env,
       isPrerendered: true,
       wwwRedirect: true,
+      customErrorConfig: { mode: "static", errorPage: "/404.html" },
     });
   }
 }

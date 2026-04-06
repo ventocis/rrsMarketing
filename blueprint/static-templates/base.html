@@ -17,7 +17,7 @@
   <script type="application/ld+json">{{JSONLD}}</script>
   {{SPA_HEAD}}
   <style>
-    /* Styles for the static/crawler-visible content — hidden once SPA mounts */
+    /* Static copy for crawlers (still in HTML source). display:none on #seo-fallback keeps users from seeing a layout flash before #root mounts. */
     #seo-fallback{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;line-height:1.6;margin:0}
     #seo-fallback header,#seo-fallback main,#seo-fallback footer{max-width:880px;margin:0 auto;padding:20px}
     #seo-fallback header a{color:inherit;text-decoration:none}
@@ -34,7 +34,7 @@
 </head>
 <body>
   <div id="root"></div>
-  <div id="seo-fallback">
+  <div id="seo-fallback" style="display:none">
   <header>
     <a href="/">Road Ready Safety</a>
     <nav>

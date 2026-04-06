@@ -286,7 +286,7 @@ function buildErrorPage() {
 </head>
 <body>
   <div id="root"></div>
-  <div id="seo-fallback">
+  <div id="seo-fallback" style="display:none">
     <header>
       <a href="/">Road Ready Safety</a>
       <nav>

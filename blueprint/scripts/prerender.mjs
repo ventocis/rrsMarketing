@@ -52,6 +52,36 @@ function renderWithTemplate({ title, desc, canonical, bodyHtml, jsonLd, ogTitle,
 
 function escapeHtml(s=""){return s.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;")}
 
+/** Build FAQ answer blocks from blueprint/copy/faq.json (same source as Faq.jsx). */
+function faqAnswerToParagraphs(a) {
+  const arr = Array.isArray(a) ? a : [String(a)];
+  return arr
+    .filter((line) => line != null && String(line).trim() !== "")
+    .map((line) => {
+      const s = String(line);
+      const inner = /<[^>]+>/.test(s) ? s : escapeHtml(s);
+      return `    <p>${inner}</p>`;
+    })
+    .join("\n");
+}
+
+function buildFaqBodyFromJson() {
+  const faqPath = path.join(ROOT, "blueprint", "copy", "faq.json");
+  const raw = fs.readFileSync(faqPath, "utf8").replace(/^\uFEFF/, "");
+  const { items } = JSON.parse(raw);
+  const blocks = items.map((item) => {
+    const q = escapeHtml(item.q);
+    const paras = faqAnswerToParagraphs(item.a);
+    return `  <h3>${q}</h3>\n${paras}`;
+  });
+  return `<article>
+  <h1>Frequently asked questions</h1>
+  <p>Answers to common questions about enrollment, certificates, and reporting.</p>
+${blocks.join("\n\n")}
+  <p>Still need help? Visit our <a href="/support">Help Center</a>.</p>
+</article>`;
+}
+
 function breadcrumb(items){
   return {
     "@context":"https://schema.org",
@@ -62,18 +92,40 @@ function breadcrumb(items){
   };
 }
 
+/** Slug → post from src/data/blog.json (same source as BlogIndex / BlogPost). */
+function loadBlogJsonBySlug() {
+  const blogPath = path.join(ROOT, "src", "data", "blog.json");
+  const data = JSON.parse(fs.readFileSync(blogPath, "utf8"));
+  return new Map((data.posts || []).map((p) => [p.slug, p]));
+}
+
+/** Title and meta description for a course page — matches CoursePage.jsx + SEO.jsx. */
+function coursePageSeoTitleAndDesc(course) {
+  const siteTitle = "Road Ready Safety";
+  const title = `${course.course_name} – ${siteTitle}`;
+  const desc = `${course.course_name} online. Mobile-friendly with clear requirements, pricing, and certificate details. ${course.subhead || ""}`;
+  return { title, desc };
+}
+
+function getCourseBySlug(slug) {
+  const courses = JSON.parse(fs.readFileSync(path.join(ROOT, "src", "data", "courses.json"), "utf8"));
+  const course = courses.find((c) => c.slug === slug);
+  if (!course) throw new Error(`courses.json: missing slug "${slug}"`);
+  return course;
+}
+
 // --- 1) Blog index ---
 async function buildBlogIndex(posts){
   const list = posts.slice().sort((a,b)=> (b.meta.date||"").localeCompare(a.meta.date||""));
   const items = list.map(p=>`<li><a href="/blog/${p.meta.slug}">${escapeHtml(p.meta.title)}</a> <span class="meta">— ${escapeHtml(p.meta.date||"")}</span><br><small>${escapeHtml(p.meta.description||"")}</small></li>`).join("");
-  const body = `<article><h1>Road Ready Safety Blog</h1><ul>${items}</ul></article>`;
+  const body = `<article><h1>Drive Smart Blog</h1><ul>${items}</ul></article>`;
   const jsonLd = [ORG, breadcrumb([
     {name:"Home", url:"https://roadreadysafety.com/"},
     {name:"Blog", url:"https://roadreadysafety.com/blog"}
   ])];
   const html = renderWithTemplate({
-    title:"Road Ready Safety Blog",
-    desc:"Best-fit briefs for Florida BDI & Michigan BDIC: deadlines, eligibility, and submission steps.",
+    title: "Drive Smart Blog – Road Ready Safety",
+    desc: "Tips, insights, and advice for safer driving. Expert guidance on traffic safety, defensive driving techniques, and road rules.",
     canonical:"https://roadreadysafety.com/blog",
     bodyHtml:body,
     jsonLd
@@ -83,21 +135,27 @@ async function buildBlogIndex(posts){
 
 // --- 2) Blog posts ---
 async function buildBlogPosts(){
+  const blogBySlug = loadBlogJsonBySlug();
   const mdFiles = await globby("**/*.md", { cwd: CONTENT_DIR, absolute:true });
   const posts = mdFiles.map(fp=>{
     const raw = fs.readFileSync(fp, "utf8");
     const { data:meta, content } = matter(raw);
     const html = marked.parse(content);
     const body = `<article><h1>${escapeHtml(meta.title)}</h1><div class="meta">${escapeHtml(meta.date||"")}</div>${html}</article>`;
+    const bp = blogBySlug.get(meta.slug);
+    const seoTitleBase = bp?.title ?? meta.title;
+    const seoDesc = bp?.description ?? meta.description ?? "Road Ready Safety";
+    const pageTitle = `${seoTitleBase} – Road Ready Safety`;
+    const crumbName = bp?.title ?? meta.title;
     const jsonLd = [ORG, breadcrumb([
       {name:"Home", url:"https://roadreadysafety.com/"},
       {name:"Blog", url:"https://roadreadysafety.com/blog"},
-      {name: meta.title, url:`https://roadreadysafety.com/blog/${meta.slug}`}
+      {name: crumbName, url:`https://roadreadysafety.com/blog/${meta.slug}`}
     ])];
     const out = path.join(DIST, "blog", meta.slug);
     const page = renderWithTemplate({
-      title: meta.title + " | Road Ready Safety",
-      desc: meta.description || "Road Ready Safety",
+      title: pageTitle,
+      desc: seoDesc,
       canonical: `https://roadreadysafety.com/blog/${meta.slug}`,
       bodyHtml: body,
       jsonLd
@@ -128,9 +186,11 @@ function buildFlorida(){
   </ol>
   <p><strong>Official sources:</strong> FLHSMV Driver Improvement Schools; Traffic Citations; Find Your Clerk.</p>
 </article>`;
+  const flCourse = getCourseBySlug("fl-bdi");
+  const { title: flTitle, desc: flDesc } = coursePageSeoTitleAndDesc(flCourse);
   const html = staticSection(
-    "Florida Basic Driver Improvement (BDI) – Road Ready Safety",
-    "Exact steps, deadlines, and official links for Florida BDI.",
+    flTitle,
+    flDesc,
     "https://roadreadysafety.com/courses/fl-bdi",
     body,
     [
@@ -154,9 +214,11 @@ function buildMichigan(){
   </ol>
   <p><strong>Official sources:</strong> Michigan SOS BDIC eligibility and FAQ.</p>
 </article>`;
+  const miCourse = getCourseBySlug("mi-bdic");
+  const { title: miTitle, desc: miDesc } = coursePageSeoTitleAndDesc(miCourse);
   const html = staticSection(
-    "Michigan Basic Driver Improvement Course (BDIC) – Road Ready Safety",
-    "How Michigan's 60-day BDIC works, with official SOS links.",
+    miTitle,
+    miDesc,
     "https://roadreadysafety.com/courses/mi-bdic",
     body,
     [
@@ -168,14 +230,10 @@ function buildMichigan(){
 }
 
 function buildFaq(){
-  const body = `
-<article>
-  <h1>Driver Improvement FAQ – Florida BDI & Michigan BDIC</h1>
-  <p>Quick answers about election timing, eligibility, deadlines, and certificate submission—with official links.</p>
-</article>`;
+  const body = buildFaqBodyFromJson();
   const html = staticSection(
-    "FAQ – Road Ready Safety",
-    "Answers about Florida BDI and Michigan BDIC with official sources.",
+    "Frequently Asked Questions – Road Ready Safety",
+    "Answers to common questions about enrollment, certificates, and reporting for our traffic safety courses.",
     "https://roadreadysafety.com/faq",
     body,
     [
@@ -193,6 +251,9 @@ function buildErrorPage() {
 <html lang="en">
 <head>
   <meta charset="utf-8" />
+  <link rel="icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="icon" type="image/svg+xml" href="/assets/logo.svg" />
+  <link rel="apple-touch-icon" href="/assets/favicon.png" />
   <title>Page Not Found | Road Ready Safety</title>
   <meta name="description" content="The page you requested could not be found." />
   <link rel="canonical" href="${SITE_URL}/404.html" />

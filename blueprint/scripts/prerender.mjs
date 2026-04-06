@@ -195,6 +195,68 @@ function buildFaq(){
   writeHtml(path.join(DIST, "faq"), html);
 }
 
+function buildErrorPage() {
+  const headTags = SPA_ASSETS.headTags.join("\n  ");
+  const scriptTags = SPA_ASSETS.scripts.join("\n  ");
+  const html = `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Page Not Found | Road Ready Safety</title>
+  <meta name="description" content="The page you requested could not be found." />
+  <link rel="canonical" href="${SITE_URL}/404.html" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="robots" content="noindex" />
+  <meta property="og:title" content="Page Not Found | Road Ready Safety" />
+  <meta property="og:description" content="The page you requested could not be found." />
+  <meta property="og:url" content="${SITE_URL}/404.html" />
+  <meta property="og:type" content="website" />
+  ${headTags}
+  <style>
+    #seo-fallback{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;line-height:1.6;margin:0}
+    #seo-fallback header,#seo-fallback main,#seo-fallback footer{max-width:880px;margin:0 auto;padding:20px}
+    #seo-fallback header a{color:inherit;text-decoration:none}
+    #seo-fallback nav a{margin-right:12px}
+    #seo-fallback .meta{color:#555;font-size:14px;margin-top:-8px}
+    #seo-fallback article h1{font-size:28px;margin:16px 0}
+    #seo-fallback article h2{font-size:20px;margin-top:24px}
+    #seo-fallback .cta{margin-top:24px;padding:16px;border:1px solid #eee;border-radius:12px}
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <div id="seo-fallback">
+    <header>
+      <a href="/">Road Ready Safety</a>
+      <nav>
+        <a href="/courses/fl-bdi">Florida BDI</a>
+        <a href="/courses/mi-bdic">Michigan BDIC</a>
+        <a href="/faq">FAQ</a>
+        <a href="/blog">Blog</a>
+      </nav>
+    </header>
+    <main>
+      <article>
+        <h1>Page not found</h1>
+        <p>Sorry, we could not find that page. The URL may be outdated, mistyped, or no longer available.</p>
+      </article>
+      <div class="cta">
+        <strong>Back to safety resources →</strong>
+        <a href="/">Return to homepage</a><br />
+        <a href="/texas/courts">Looking for a Texas court page? Browse all courts.</a>
+      </div>
+    </main>
+    <footer>
+      <div class="meta">© Road Ready Driver Instruction LLC</div>
+    </footer>
+  </div>
+  ${scriptTags}
+</body>
+</html>`;
+  fs.writeFileSync(path.join(DIST, "404.html"), html, "utf8");
+  console.log("✓ Generated /404.html static error page");
+}
+
 const ENROLL_URL = "https://roadreadysafety.com/courses/tx-defensive";
 const SITE_URL = "https://roadreadysafety.com";
 
@@ -464,6 +526,7 @@ async function main(){
   buildFlorida();
   buildMichigan();
   buildFaq();
+  buildErrorPage();
   buildCourtPages();
   buildTexasDefensiveDrivingCostPage();
   console.log("Prerender complete.");

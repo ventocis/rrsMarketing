@@ -22,6 +22,7 @@ import BlogIndex from './pages/BlogIndex.jsx';
 import BlogPost from './pages/BlogPost.jsx';
 import Faq from './pages/Faq.jsx';
 import CourseRequirements from './pages/CourseRequirements.jsx';
+import NotFoundPage from './pages/NotFoundPage.jsx';
 import ScrollToTop from './components/ScrollToTop.jsx';
 import SEO from './components/SEO.jsx';
 import StructuredData from './components/StructuredData.jsx';
@@ -108,8 +109,8 @@ function App() {
             <Route path="/texas/courts/:slug" element={<CourtPage />} />
           </>
         )}
-        {/* Home route - must be last */}
         <Route path="/" element={<Home />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <Footer />
     </div>

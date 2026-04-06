@@ -181,12 +181,12 @@ const generateSlug = (text) => {
 
 const buildCourtData = async () => {
   try {
-    const excelPath = '/Users/jacksonmaitner/Downloads/Courts Directory By County.xlsx';
+    const excelPath = BP('data/courts-directory.xlsx');
     
     // Check if file exists
     if (!fs.existsSync(excelPath)) {
-      console.warn(`Warning: Excel file not found at ${excelPath}`);
-      return [];
+      console.error(`ERROR: Court Excel file not found at ${excelPath}. Aborting.`);
+      process.exit(1);
     }
     
     // Read Excel file

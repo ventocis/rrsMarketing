@@ -404,7 +404,7 @@ const build = async () => {
   await writeFile(SRC('data/texas-courts.json'), JSON.stringify({ courts }, null, 2));
   console.log(`✓ Wrote src/data/courses.json, src/data/states.json, src/data/blog.json, and src/data/texas-courts.json`);
 
-  // 8) Generate sitemap.xml
+  // 8) Generate sitemap.xml (non-court URLs keep the original shape; courts come from texas-courts.json)
   const urls = [
     `${siteUrl}/`,
     `${siteUrl}/support`,
@@ -417,14 +417,32 @@ const build = async () => {
     `${siteUrl}/faq`,
     `${siteUrl}/texas-defensive-driving-cost`,
     ...blogPosts.map(p => `${siteUrl}/blog/${p.slug}`),
-    ...courses.map(c => `${siteUrl}/courses/${c.slug}`),
-    ...courts.map(c => `${siteUrl}/texas/courts/${c.slug}`)
+    ...courses.map(c => `${siteUrl}/courses/${c.slug}`)
   ];
   const now = new Date().toISOString().slice(0, 10);
+  const baseUrlEntries = urls.map(
+    (u) => `  <url><loc>${u}</loc><lastmod>${now}</lastmod><changefreq>weekly</changefreq></url>`
+  );
+
+  const { courts: courtsForSitemap } = JSON.parse(
+    await readFile(SRC('data/texas-courts.json'), 'utf8')
+  );
+  const courtUrlEntries = (Array.isArray(courtsForSitemap) ? courtsForSitemap : [])
+    .filter((c) => c && c.slug)
+    .map(
+      (c) =>
+        `  <url>
+    <loc>${siteUrl}/texas/courts/${c.slug}/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>`
+    );
+
   const xml =
 `<?xml version="1.0" encoding="UTF-8"?> 
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls.map(u => `  <url><loc>${u}</loc><lastmod>${now}</lastmod><changefreq>weekly</changefreq></url>`).join('\n')}
+${baseUrlEntries.join('\n')}
+${courtUrlEntries.join('\n')}
 </urlset>
 `;
   await ensureDir(PUB(''));

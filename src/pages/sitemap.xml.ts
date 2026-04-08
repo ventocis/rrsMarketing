@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro';
 import coursesData from '../data/courses.json';
 import blogData from '../data/blog.json';
+import courtsData from '../data/texas-courts.json';
 
 // Generate sitemap at build time from known static routes
 const siteUrl = (import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com').replace(/\/$/, '');
@@ -49,7 +50,11 @@ for (const state of states) {
   findRoutes.push(`/find/${state}/multi`);
 }
 
-const allRoutes = [...staticRoutes, ...courseRoutes, ...courseRequirementsRoutes, ...blogRoutes, ...findRoutes];
+// Texas courts routes
+const texasCourtsRoutes = ['/texas/courts'];
+const courtSlugRoutes = ((courtsData as any).courts as Array<{ slug: string }>).map(c => `/texas/courts/${c.slug}`);
+
+const allRoutes = [...staticRoutes, ...courseRoutes, ...courseRequirementsRoutes, ...blogRoutes, ...findRoutes, ...texasCourtsRoutes, ...courtSlugRoutes];
 
 const toEntry = (path: string) =>
   `  <url>\n    <loc>${siteUrl}${path}</loc>\n    <changefreq>weekly</changefreq>\n  </url>`;

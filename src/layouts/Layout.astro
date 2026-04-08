@@ -1,0 +1,109 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  keywords?: string;
+  image?: string;
+  url?: string;
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description = 'State-approved traffic school and defensive driving built to be simple.',
+  keywords = 'traffic school, defensive driving, online course, traffic ticket',
+  image = '/assets/rrs (1200 x 630 px).png',
+  url = '/',
+  noindex = false,
+} = Astro.props;
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+const canonicalUrl = `${siteUrl}${url}`;
+const fullImageUrl = image.startsWith('http') ? image : `${siteUrl}${image}`;
+const enableAnalytics = import.meta.env.VITE_ENABLE_ANALYTICS === 'true';
+const ga4Id = import.meta.env.VITE_GA4_ID;
+const googleAdsId = import.meta.env.VITE_GOOGLE_ADS_ID;
+// Disable indexing in non-prod environments
+const isNoindex = noindex || import.meta.env.VITE_ENABLE_ANALYTICS !== 'true';
+const pageTitle = title.includes('Road Ready') ? title : `${title} | Road Ready Safety`;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- SEO -->
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    {keywords && <meta name="keywords" content={keywords} />}
+    <link rel="canonical" href={canonicalUrl} />
+    {isNoindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={fullImageUrl} />
+    <meta property="og:site_name" content="Road Ready Safety" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={fullImageUrl} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/assets/icons/texas/logo-shield.svg" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- JSON-LD: Organization -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Road Ready Safety",
+        "url": "https://roadreadysafety.com",
+        "logo": "https://roadreadysafety.com/assets/icons/texas/logo-shield.svg",
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+1-888-885-5707",
+          "contactType": "customer support"
+        },
+        "sameAs": [
+          "https://facebook.com/roadreadysafety",
+          "https://www.youtube.com/@RoadReadySafety"
+        ]
+      }
+    </script>
+
+    <!-- Google Analytics — production only -->
+    {enableAnalytics && ga4Id && (
+      <>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${ga4Id}`}></script>
+        <script define:vars={{ ga4Id, googleAdsId }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag() { dataLayer.push(arguments); }
+          gtag('js', new Date());
+          gtag('config', ga4Id);
+          if (googleAdsId) gtag('config', googleAdsId);
+        </script>
+      </>
+    )}
+  </head>
+  <body class="w-full overflow-x-hidden m-0 p-0 bg-white text-[#1e2832]" style="font-family: 'DM Sans', sans-serif;">
+    <slot />
+  </body>
+</html>

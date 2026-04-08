@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Brand color tokens — change here, propagates everywhere */
+:root {
+  --color-primary: #0667D1;
+  --color-primary-hover: #0556b3;
+  --color-primary-deep: #03449e;
+  --color-primary-badge: #0351b4;
+
+  --color-surface: #ffffff;
+  --color-surface-muted: #F9FAFB;
+
+  --color-text: #1e2832;
+  --color-text-muted: #616d7b;
+  --color-text-subtle: #262626;
+  --color-text-inverse: #f6f6f9;
+
+  --color-border: #e5e5e5;
+  --color-accent: #FE915C;
+}
+
+/* Typography utilities */
+.heading-xl {
+  @apply text-[40px] leading-[52px] font-extrabold tracking-[-0.02em];
+  font-family: 'Outfit', sans-serif;
+}
+.heading-lg {
+  @apply text-[28px] lg:text-[36px] font-bold tracking-[-0.02em] leading-[150%] lg:leading-[40px];
+  font-family: 'Outfit', sans-serif;
+}
+.heading-md {
+  @apply text-xl font-medium tracking-[-0.02em];
+  line-height: 30px;
+  font-family: 'Outfit', sans-serif;
+}
+.body-base {
+  @apply text-base leading-[22px];
+  font-family: 'DM Sans', sans-serif;
+}
+.body-sm {
+  @apply text-sm leading-5;
+  font-family: 'DM Sans', sans-serif;
+}

@@ -1,0 +1,98 @@
+{
+  "acknowledged-issue-numbers": [
+    34892
+  ],
+  "availability-zones:account=639810476828:region=us-east-2": [
+    "us-east-2a",
+    "us-east-2b",
+    "us-east-2c"
+  ],
+  "availability-zones:account=588106420479:region=us-east-2": [
+    "us-east-2a",
+    "us-east-2b",
+    "us-east-2c"
+  ],
+  "ssm:account=639810476828:parameterName=/shared/vpcId:region=us-east-2": "vpc-040c0925ae7decf09",
+  "vpc-provider:account=639810476828:filter.vpc-id=vpc-040c0925ae7decf09:region=us-east-2:returnAsymmetricSubnets=true": {
+    "vpcId": "vpc-040c0925ae7decf09",
+    "vpcCidrBlock": "10.1.0.0/16",
+    "ownerAccountId": "639810476828",
+    "availabilityZones": [],
+    "subnetGroups": [
+      {
+        "name": "data",
+        "type": "Isolated",
+        "subnets": [
+          {
+            "subnetId": "subnet-043040596513eeaeb",
+            "cidr": "10.1.4.0/24",
+            "availabilityZone": "us-east-2a",
+            "routeTableId": "rtb-0bd2509461d834a13"
+          },
+          {
+            "subnetId": "subnet-08cadd7893cac5c8b",
+            "cidr": "10.1.5.0/24",
+            "availabilityZone": "us-east-2b",
+            "routeTableId": "rtb-0e3864e5a72cc7583"
+          }
+        ]
+      },
+      {
+        "name": "priv",
+        "type": "Private",
+        "subnets": [
+          {
+            "subnetId": "subnet-0eb092045748c0afb",
+            "cidr": "10.1.2.0/24",
+            "availabilityZone": "us-east-2a",
+            "routeTableId": "rtb-05f721cb64e392522"
+          },
+          {
+            "subnetId": "subnet-0f4db214dbc4763eb",
+            "cidr": "10.1.3.0/24",
+            "availabilityZone": "us-east-2b",
+            "routeTableId": "rtb-0e049fc4aab52f290"
+          }
+        ]
+      },
+      {
+        "name": "pub",
+        "type": "Public",
+        "subnets": [
+          {
+            "subnetId": "subnet-00ddf103eafa28e81",
+            "cidr": "10.1.0.0/24",
+            "availabilityZone": "us-east-2a",
+            "routeTableId": "rtb-0570a340bb584cc37"
+          },
+          {
+            "subnetId": "subnet-0eac98e1da029dee1",
+            "cidr": "10.1.1.0/24",
+            "availabilityZone": "us-east-2b",
+            "routeTableId": "rtb-0f3447f13bd52ddc9"
+          }
+        ]
+      }
+    ]
+  },
+  "hosted-zone:account=639810476828:domainName=qa.roadreadysafety.com:region=us-east-1": {
+    "Id": "/hostedzone/Z009071939B0Q3E2MM52E",
+    "Name": "qa.roadreadysafety.com."
+  },
+  "hosted-zone:account=639810476828:domainName=qa.roadreadysafety.com:privateZone=false:region=us-east-1": {
+    "Id": "/hostedzone/Z009071939B0Q3E2MM52E",
+    "Name": "qa.roadreadysafety.com."
+  },
+  "hosted-zone:account=588106420479:domainName=roadreadysafety.com:privateZone=false:region=us-east-1": {
+    "Id": "/hostedzone/Z0399913IJK7XVMDZHQS",
+    "Name": "roadreadysafety.com."
+  },
+  "hosted-zone:account=639810476828:domainName=qa.roadreadysafety.com:region=us-east-2": {
+    "Id": "/hostedzone/Z009071939B0Q3E2MM52E",
+    "Name": "qa.roadreadysafety.com."
+  },
+  "hosted-zone:account=588106420479:domainName=roadreadysafety.com:region=us-east-2": {
+    "Id": "/hostedzone/Z0399913IJK7XVMDZHQS",
+    "Name": "roadreadysafety.com."
+  }
+}

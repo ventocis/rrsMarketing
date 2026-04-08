@@ -1,0 +1,79 @@
+name: Deploy (reusable)
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+      version_tag:
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  deploy:
+    environment: ${{ inputs.environment }}
+    concurrency:
+      group: marketing-deployment-${{ inputs.environment }}
+      cancel-in-progress: false
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.version_tag }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            infra/package-lock.json
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::632757408528:role/GitHubActionsRole
+          aws-region: us-east-2
+
+      - name: Get CodeArtifact token
+        run: |
+          echo "CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token \
+            --domain roadreadysafety \
+            --domain-owner 632757408528 \
+            --region us-east-2 \
+            --query authorizationToken \
+            --output text)" >> $GITHUB_ENV
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install infra dependencies
+        working-directory: infra
+        run: npm ci
+
+      # Prod: VITE_ENABLE_ANALYTICS=true; optional secrets override GA IDs (if unset, build uses .env.production).
+      # QA: force analytics off; empty IDs so loadEnv does not inherit prod from a stray env.
+      - name: Deploy to AWS
+        run: |
+          if [ "${{ inputs.environment }}" = "prod" ]; then
+            export VITE_ENABLE_ANALYTICS=true
+            if [ -n "${{ secrets.VITE_GA4_ID }}" ]; then
+              export VITE_GA4_ID='${{ secrets.VITE_GA4_ID }}'
+            fi
+            if [ -n "${{ secrets.VITE_GOOGLE_ADS_ID }}" ]; then
+              export VITE_GOOGLE_ADS_ID='${{ secrets.VITE_GOOGLE_ADS_ID }}'
+            fi
+          else
+            export VITE_ENABLE_ANALYTICS=false
+            export VITE_GA4_ID=
+            export VITE_GOOGLE_ADS_ID=
+          fi
+          make deploy ENV=${{ inputs.environment }}

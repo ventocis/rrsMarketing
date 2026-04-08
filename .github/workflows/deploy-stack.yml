@@ -1,0 +1,17 @@
+name: Deploy stack on tag push
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  deploy:
+    uses: ./.github/workflows/util-deploy.yml
+    with:
+      environment: qa
+      version_tag: ${{ github.ref_name }}

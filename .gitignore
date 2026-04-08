@@ -8,11 +8,11 @@ node_modules/
 infra/node_modules/
 infra/cdk.out/
 
-# Environment files — never commit these
+# Environment files
+# .env and .env.local may contain local secrets — keep ignored
+# .env.qa and .env.production contain only public URLs/flags — committed intentionally
 .env
 .env.local
-.env.qa
-.env.production
 
 # OS
 .DS_Store

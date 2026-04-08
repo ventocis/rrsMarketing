@@ -1,0 +1,78 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+import EligibilityChecker from '../../components/EligibilityChecker';
+import courtsData from '../../data/texas-courts.json';
+
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+
+const pageSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Texas Defensive Driving Eligibility Checker",
+  "description": "Free interactive tool to check if you qualify to dismiss your Texas traffic ticket through a TDLR-approved defensive driving course.",
+  "url": "https://roadreadysafety.com/texas/eligibility-tracker",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "provider": {
+    "@type": "Organization",
+    "name": "Road Ready Safety",
+    "url": "https://roadreadysafety.com"
+  }
+});
+
+const breadcrumbSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://roadreadysafety.com" },
+    { "@type": "ListItem", "position": 2, "name": "Texas Defensive Driving", "item": "https://roadreadysafety.com/texas" },
+    { "@type": "ListItem", "position": 3, "name": "Eligibility Checker", "item": "https://roadreadysafety.com/texas/eligibility-tracker" }
+  ]
+});
+---
+
+{!isEnabled && <meta http-equiv="refresh" content="0;url=/" />}
+
+{isEnabled && (
+<TexasLayout
+  title="Texas Defensive Driving Eligibility Checker | Road Ready Safety"
+  description="Not sure if you qualify to dismiss your Texas traffic ticket? Answer 4 quick questions and find out instantly — free, no sign-up required."
+  keywords="Texas defensive driving eligibility, ticket dismissal eligibility, TDLR course eligibility, Texas traffic ticket dismissal, defensive driving qualification"
+  url="/texas/eligibility-tracker"
+>
+  <script type="application/ld+json" set:html={pageSchema} />
+  <script type="application/ld+json" set:html={breadcrumbSchema} />
+
+  <section class="py-12 lg:py-20 px-4 sm:px-6 lg:px-8 bg-[#f9fafb] min-h-screen">
+    <div class="max-w-2xl mx-auto">
+
+      <!-- Breadcrumb -->
+      <nav class="flex items-center gap-2 text-sm text-[#616d7b] mb-8 flex-wrap">
+        <a href="/texas" class="hover:text-[#1e2832] transition-colors no-underline">Texas</a>
+        <span>›</span>
+        <span class="text-[#1e2832] font-medium">Eligibility Checker</span>
+      </nav>
+
+      <!-- Page Header -->
+      <div class="text-center mb-10">
+        <div class="inline-flex items-center gap-2 bg-[#e5f6fe] text-[#0667D1] text-sm font-semibold px-4 py-2 rounded-full mb-4">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM7 7V5h2v2H7Zm0 4V9h2v2H7Z" fill="currentColor"/></svg>
+          Free · 2 Minutes · No Sign-Up
+        </div>
+        <h1 class="text-3xl lg:text-4xl font-bold text-[#1e2832] leading-tight mb-4" style="font-family:'Outfit',sans-serif;">
+          Texas Defensive Driving<br />Eligibility Checker
+        </h1>
+        <p class="text-base text-[#616d7b] leading-7 max-w-lg mx-auto">
+          Answer 4 quick questions to find out if you can dismiss your Texas traffic ticket through a TDLR-approved defensive driving course.
+        </p>
+      </div>
+
+      <!-- React Island -->
+      <EligibilityChecker courts={(courtsData as any).courts} client:load />
+
+    </div>
+  </section>
+
+</TexasLayout>
+)}

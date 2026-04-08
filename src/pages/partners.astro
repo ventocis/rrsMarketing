@@ -1,0 +1,18 @@
+---
+import DocLayout from '../layouts/DocLayout.astro';
+import { marked } from 'marked';
+import { readFileSync } from 'fs';
+import { join } from 'path';
+
+const md = readFileSync(join(process.cwd(), 'src/content/partners.md'), 'utf-8');
+const html = marked(md);
+---
+
+<DocLayout
+  title="Become a Partner"
+  description="Partner with Road Ready Safety to offer state-approved traffic courses to your customers or members."
+  url="/partners"
+  breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Become a Partner' }]}
+>
+  <Fragment set:html={html} />
+</DocLayout>

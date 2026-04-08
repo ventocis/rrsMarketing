@@ -1,0 +1,68 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import blogData from '../../data/blog.json';
+
+const posts = (blogData as any).posts ?? [];
+
+function formatDate(dateStr: string) {
+  return new Date(dateStr).toLocaleDateString('en-US', {
+    year: 'numeric', month: 'long', day: 'numeric'
+  });
+}
+---
+
+<Layout
+  title="Drive Smart Blog"
+  description="Tips, insights, and advice for safer driving. Expert guidance on traffic safety, defensive driving techniques, and road rules."
+  keywords="driving tips, traffic safety, defensive driving, road safety, driving blog"
+  url="/blog"
+>
+  <Header />
+
+  <main class="bg-white min-h-screen">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 py-16">
+      <header class="text-center mb-12">
+        <h1 class="text-4xl font-bold text-[#1e2832] mb-4" style="font-family: 'Outfit', sans-serif;">Drive Smart Blog</h1>
+        <p class="text-xl text-[#616d7b]" style="font-family: 'DM Sans', sans-serif;">Tips, insights, and advice for safer driving</p>
+      </header>
+
+      {posts.length > 0 ? (
+        <div class="grid gap-8">
+          {posts.map((post: any) => (
+            <article class="border-b border-[#e5e5e5] pb-8 last:border-b-0">
+              <time class="text-sm text-[#616d7b] block mb-3" datetime={post.date} style="font-family: 'DM Sans', sans-serif;">
+                {formatDate(post.date)}
+              </time>
+              <h2 class="text-2xl font-bold text-[#1e2832] mb-3" style="font-family: 'Outfit', sans-serif;">
+                <a href={`/blog/${post.slug}`} class="hover:text-[#0667D1] transition-colors">
+                  {post.title}
+                </a>
+              </h2>
+              <p class="text-[#616d7b] mb-4 leading-relaxed" style="font-family: 'DM Sans', sans-serif;">
+                {post.description}
+              </p>
+              <a
+                href={`/blog/${post.slug}`}
+                class="inline-flex items-center text-[#0667D1] hover:text-[#0556b3] font-medium transition-colors"
+                style="font-family: 'DM Sans', sans-serif;"
+              >
+                Read more
+                <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </a>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <div class="text-center py-12">
+          <p class="text-[#616d7b] text-lg" style="font-family: 'DM Sans', sans-serif;">No blog posts available yet. Check back soon!</p>
+        </div>
+      )}
+    </div>
+  </main>
+
+  <Footer />
+</Layout>

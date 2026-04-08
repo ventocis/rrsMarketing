@@ -1,0 +1,33 @@
+{
+  "state": "Louisiana",
+  "courses": [
+    {
+      "course_name": "Driver Improvement / Defensive Driving",
+      "who_for": "Louisiana drivers taking a course for court dismissal (Art. 892.1) or voluntary insurance discount (R.S. 22:1457).",
+      "requirements": [
+        "Court permission required for ticket-related dismissals",
+        "Enroll in LA OMV-approved provider (classroom or online)",
+        "Course typically 4\u20136 hours"
+      ],
+      "submission": {
+        "certificate": "Submit certificate to court for ticket dismissal; submit to insurance agent for discount",
+        "reporting": "Providers issue certificates; no central reporting to OMV",
+        "deadlines": "Court sets deadlines (often 30\u201360 days); insurance discount valid 3 years"
+      },
+      "court_vs_insurance": {
+        "court": "Course can set aside/dismiss ticket if completed on time (once per certain period).",
+        "insurance": "Voluntary completion yields up to 10% discount (3 years validity); must resubmit every 3 years."
+      },
+      "sources": [
+        {
+          "name": "Louisiana Code of Criminal Procedure Art. 892.1",
+          "url": "https://www.shreveportla.gov/1135/Driving-School"
+        },
+        {
+          "name": "Louisiana Insurance Statute R.S. 22:1457",
+          "url": "https://codes.findlaw.com/la/revised-statutes/la-rev-stat-tit-22-sect-1457/"
+        }
+      ]
+    }
+  ]
+}

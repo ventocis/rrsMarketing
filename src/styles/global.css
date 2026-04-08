@@ -2,6 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Fallback font metrics — closely match DM Sans/Outfit/Inter so layout barely shifts
+   even when web fonts aren't cached. Eliminates CLS from font loading. */
+@font-face {
+  font-family: 'DM Sans';
+  src: local('Arial');
+  ascent-override: 94%;
+  descent-override: 24%;
+  line-gap-override: 0%;
+  size-adjust: 100%;
+}
+@font-face {
+  font-family: 'Outfit';
+  src: local('Arial');
+  ascent-override: 96%;
+  descent-override: 22%;
+  line-gap-override: 0%;
+  size-adjust: 100%;
+}
+@font-face {
+  font-family: 'Inter';
+  src: local('Arial');
+  ascent-override: 90%;
+  descent-override: 22%;
+  line-gap-override: 0%;
+  size-adjust: 100%;
+}
+
 /* Brand color tokens — change here, propagates everywhere */
 :root {
   --color-primary: #0667D1;

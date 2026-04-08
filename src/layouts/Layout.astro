@@ -61,11 +61,17 @@ const pageTitle = title.includes('Road Ready') ? title : `${title} | Road Ready 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/assets/icons/texas/logo-shield.svg" />
 
-    <!-- Fonts -->
+    <!-- Fonts: preconnect first, then load with display=optional -->
+    <!-- display=optional: browser uses fallback if font isn't cached — eliminates font-swap CLS entirely -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=optional"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=optional"
       rel="stylesheet"
     />
 

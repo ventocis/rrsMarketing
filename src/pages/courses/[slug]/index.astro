@@ -30,7 +30,11 @@ const stateFull = stateNames[course.state] || course.state;
 const price = usd(course.price_usd);
 const duration = hours(course.duration_hours);
 
+// Redirect tx-defensive to the Texas landing page
+const isTexasPage = isTexasEnabled && course.slug === 'tx-defensive';
+
 function getEnrollHref(c: any) {
+  if (isTexasEnabled && c.slug === 'tx-defensive') return '/texas';
   if (isQa && c.qa_link) return c.qa_link;
   if (c.provider_type === 'Partner' && c.affiliate_link) return c.affiliate_link;
   return portalUrl;
@@ -66,7 +70,9 @@ const courseSchema = JSON.stringify({
 });
 ---
 
-<Layout
+{isTexasPage && <meta http-equiv="refresh" content="0;url=/texas" />}
+
+{!isTexasPage && <Layout
   title={course.course_name}
   description={`${course.course_name} — online, ${stateFull}. ${course.subhead || 'State-approved, mobile-friendly.'}`}
   keywords={`${course.course_name}, ${stateFull}, traffic school, defensive driving, online course`}
@@ -317,7 +323,8 @@ const courseSchema = JSON.stringify({
   </main>
 
   <Footer />
-</Layout>
+</Layout>}
+
 
 <style>
   details > summary::-webkit-details-marker { display: none; }

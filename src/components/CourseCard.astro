@@ -34,6 +34,7 @@ function getLearnMoreHref(slug: string) {
 }
 
 function getSignUpHref(course: Course) {
+  if (isTexasEnabled && course.slug === TEXAS_SLUG) return '/texas';
   if (isQa && course.qa_link) return course.qa_link;
   if (course.provider_type === 'Partner' && course.affiliate_link) return course.affiliate_link;
   return portalUrl;

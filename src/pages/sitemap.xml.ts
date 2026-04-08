@@ -14,6 +14,14 @@ const staticRoutes = [
   '/terms',
   '/partners',
   '/support/how-to-submit',
+  '/texas',
+  '/texas/pricing',
+  '/texas/faq',
+  '/texas/helpcenter',
+  '/texas/terms',
+  '/texas/refund',
+  '/texas/accessibility',
+  '/texas/cost',
 ];
 
 const courseRoutes = (coursesData as Array<{ slug: string }>).map(c => `/courses/${c.slug}`);

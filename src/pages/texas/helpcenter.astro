@@ -1,0 +1,177 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const contactUrl = import.meta.env.VITE_CONTACT_US_URL || 'https://roadreadysafety.com/support';
+
+const items = [
+  {
+    key: 'help1',
+    q: 'How to enroll in the course',
+    steps: [
+      'Click the "Start Course" or "Enroll Now" button on any page',
+      'Enter your ticket information and personal details',
+      'Complete the secure payment ($25 + $3 state fee)',
+      "You'll receive an email confirmation with your login credentials",
+      'Log in to your account and begin the course immediately',
+    ],
+  },
+  {
+    key: 'help2',
+    q: 'How to access your course',
+    steps: [
+      'Go to the login page and enter your email and password',
+      'If you forgot your password, click "Forgot Password" to reset it',
+      "Once logged in, you'll see your course dashboard",
+      'Click "Continue Course" to pick up where you left off',
+      'Your progress is automatically saved, so you can stop and resume anytime',
+    ],
+  },
+  {
+    key: 'help3',
+    q: 'How to complete the course modules',
+    steps: [
+      "Work through each module in order (you can't skip ahead)",
+      'Read the content and watch any videos included',
+      'Complete the knowledge checks at the end of each section',
+      "Take your time — there's no time limit per module",
+      'You must pass the quizzes with 70% or higher to complete the course',
+      "Don't worry — you get unlimited retakes on all quizzes",
+    ],
+  },
+  {
+    key: 'help4',
+    q: 'How to download your certificate',
+    steps: [
+      'Log in to your account dashboard',
+      'Look for the "Certificate" section or "Download Certificate" button',
+      'Click to download your Certificate of Completion',
+      'Save it to your computer or print it immediately',
+      "You can download it as many times as needed — it's always available in your account",
+    ],
+    note: 'Your certificate is available immediately after course completion. No waiting period required.',
+  },
+  {
+    key: 'help5',
+    q: 'How to submit your certificate to the court',
+    steps: [
+      'Download your Certificate of Completion from your account',
+      'Request your Texas Driver Record (DPS Type 3A) from the Texas Department of Public Safety',
+      "Check if your court requires a court affidavit (some courts do, some don't)",
+      "Gather all required documents according to your court's specific instructions",
+      'Submit everything to your court by the deadline',
+      'Keep copies of everything you submit for your records',
+    ],
+    note: "Every court has different requirements. Always check your court's website or call them directly for their exact submission instructions.",
+  },
+  {
+    key: 'help6',
+    q: 'How to request your Texas Driver Record (DPS Type 3A)',
+    steps: [
+      'Visit the Texas DPS website or go to a DPS office in person',
+      'Request a "Type 3A" driver record (this is the specific type courts require)',
+      'Pay the required fee (usually around $10-12, paid directly to DPS)',
+      'You can request it online, by mail, or in person',
+      'Processing time is typically 5-10 business days',
+      "Make sure to request it early enough to meet your court deadline",
+    ],
+    tip: 'You can request your driver record online at the Texas DPS website for faster processing.',
+  },
+  {
+    key: 'help7',
+    q: 'How to reset your password',
+    steps: [
+      'Go to the login page',
+      'Click the "Forgot Password" link below the login form',
+      'Enter the email address you used to enroll',
+      'Check your email for a password reset link',
+      'Click the link in the email (it expires after 24 hours)',
+      'Create a new password following the requirements',
+      'Log in with your new password',
+    ],
+    note: "If you don't receive the email, check your spam folder. If you still have issues, contact our support team.",
+  },
+  {
+    key: 'help8',
+    q: 'How to take the course on mobile devices',
+    steps: [
+      'Open your mobile browser (Safari, Chrome, Firefox, etc.)',
+      'Navigate to our website and log in to your account',
+      'The course automatically adapts to your screen size',
+      'You can scroll through content, watch videos, and take quizzes just like on a computer',
+      'Your progress saves automatically, so you can switch between devices anytime',
+      'Complete the course entirely on your phone, or switch between phone, tablet, and computer',
+    ],
+    tip: 'For the best experience, use a stable internet connection and keep your browser updated.',
+  },
+];
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Help Center — Texas Defensive Driving | Road Ready Safety"
+    description="Step-by-step guides for completing your Texas defensive driving course. Enrollment, certificates, court submission, and more."
+    url="/texas/helpcenter"
+  >
+    <section class="py-[112px] px-4 sm:px-6 lg:px-8 bg-[#f9fafb]">
+      <div class="max-w-4xl mx-auto flex flex-col gap-12">
+
+        <div class="flex flex-col gap-4 items-center">
+          <div class="bg-[#e5f6fe] inline-flex items-center px-4 py-2 rounded-full">
+            <span class="text-sm font-semibold text-[#0351b4] leading-5" style="font-family: 'DM Sans', sans-serif;">Need Help?</span>
+          </div>
+          <h1 class="text-[36px] font-bold text-[#1e2832] text-center leading-[40px] tracking-[-0.9px]" style="font-family: 'Outfit', sans-serif;">Help Center</h1>
+          <p class="text-base text-[#616d7b] text-center leading-6" style="font-family: 'DM Sans', sans-serif;">
+            Step-by-step guides to help you complete your Texas defensive driving course and dismiss your ticket.
+          </p>
+        </div>
+
+        <div class="flex flex-col gap-4">
+          {items.map(item => (
+            <details class="group bg-white border border-[#e4e6ea] rounded-2xl overflow-hidden">
+              <summary class="flex items-center justify-between w-full px-6 py-5 cursor-pointer list-none hover:bg-gray-50 transition-colors">
+                <span class="text-base font-semibold text-[#1e2832] leading-6 tracking-[-0.4px] text-left" style="font-family: 'Outfit', sans-serif;">{item.q}</span>
+                <img src="/assets/icons/texas/chevron-faq.svg" alt="" class="w-4 h-4 transition-transform duration-200 group-open:rotate-180 flex-shrink-0 ml-4" />
+              </summary>
+              <div class="px-6 pb-5 pt-4 border-t border-[#f0f0f0]">
+                <ol class="list-decimal list-inside space-y-2 text-base text-[#616d7b] leading-6" style="font-family: 'DM Sans', sans-serif;">
+                  {item.steps.map(step => <li>{step}</li>)}
+                </ol>
+                {item.note && (
+                  <p class="text-base text-[#616d7b] leading-6 mt-4" style="font-family: 'DM Sans', sans-serif;">
+                    <strong class="text-[#1e2832]">Note:</strong> {item.note}
+                  </p>
+                )}
+                {item.tip && (
+                  <p class="text-base text-[#616d7b] leading-6 mt-4" style="font-family: 'DM Sans', sans-serif;">
+                    <strong class="text-[#1e2832]">Tip:</strong> {item.tip}
+                  </p>
+                )}
+              </div>
+            </details>
+          ))}
+        </div>
+
+        <div class="bg-white border border-[#e4e6ea] rounded-[20px] p-8 flex flex-col gap-3 items-center">
+          <h2 class="text-xl font-semibold text-[#1e2832] text-center leading-7 tracking-[-0.5px]" style="font-family: 'Outfit', sans-serif;">Still need help?</h2>
+          <p class="text-base text-[#616d7b] text-center leading-6 pb-3" style="font-family: 'DM Sans', sans-serif;">Our support team is here to help.</p>
+          <a
+            href={contactUrl}
+            class="h-12 px-8 border border-[#03449e] text-[#03449e] rounded-2xl text-base font-semibold inline-flex items-center justify-center gap-2"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            Contact Support
+            <img src="/assets/icons/texas/arrow-contact-support.svg" alt="" class="w-4 h-4" />
+          </a>
+        </div>
+
+      </div>
+    </section>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}
+
+<style>
+  details > summary::-webkit-details-marker { display: none; }
+  details > summary::marker { display: none; }
+</style>

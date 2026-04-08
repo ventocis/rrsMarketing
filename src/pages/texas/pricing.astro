@@ -1,0 +1,554 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '#';
+---
+
+{!isEnabled && (
+  <meta http-equiv="refresh" content="0;url=/" />
+)}
+
+{isEnabled && (
+<TexasLayout
+  title="Texas Defensive Driving Course Pricing | Road Ready Safety"
+  description="Simple, transparent pricing for Texas defensive driving courses. One price, everything included. TDLR-approved provider."
+  url="/texas/pricing"
+>
+
+  <!-- Pricing Section Header -->
+  <section class="relative py-[96px] px-4 sm:px-6 lg:px-[120px]" style="background: linear-gradient(to bottom, rgba(229, 246, 254, 0.5), rgba(255, 255, 255, 1));">
+    <div class="max-w-[1200px] mx-auto px-6">
+      <!-- Header -->
+      <div class="flex flex-col gap-[42px] items-center mb-12">
+        <div class="flex flex-col gap-[24px] items-center max-w-[768px]">
+          <!-- Badge -->
+          <div class="bg-[#e5f6fe] inline-flex gap-2 items-center px-4 py-2 rounded-full">
+            <img src="/assets/icons/texas/tdlr-approved-icon.svg" alt="" class="w-4 h-4" />
+            <span class="text-sm font-semibold text-[#0351b4] leading-5" style="font-family: 'DM Sans', sans-serif;">
+              TDLR-Approved Course Provider
+            </span>
+          </div>
+
+          <!-- Title -->
+          <h1 class="text-[60px] font-bold text-[#111722] text-center leading-[60px] tracking-[-1.5px]" style="font-family: 'Outfit', sans-serif;">
+            Simple, Transparent Pricing
+          </h1>
+
+          <!-- Subtitle -->
+          <p class="text-xl text-[#657386] text-center leading-[28px]" style="font-family: 'DM Sans', sans-serif;">
+            One price. Everything included. No surprises.
+          </p>
+        </div>
+      </div>
+
+      <!-- Pricing Cards -->
+      <div class="flex flex-col lg:flex-row gap-6 items-center justify-center">
+
+        <!-- Professional Card - Highlighted (dark gradient) -->
+        <div class="relative bg-gradient-to-r from-[#191917] to-[#3d3d3d] border border-[#eaecf0] rounded-2xl p-8 flex flex-col gap-6 w-full lg:w-[400px] min-h-[600px]">
+          <!-- Badge -->
+          <div class="flex justify-end w-full lg:absolute lg:top-8 lg:right-6 lg:z-10 lg:w-auto">
+            <div class="bg-[#e5f6fe] px-3 py-1.5 rounded-2xl shrink-0">
+              <span class="text-sm font-semibold text-[#0667d1] leading-[18px]" style="font-family: 'DM Sans', sans-serif;">
+                Great Value
+              </span>
+            </div>
+          </div>
+
+          <!-- Header -->
+          <div class="flex flex-col gap-5 pt-0 lg:pt-2">
+            <h3 class="text-[24px] lg:text-[26px] font-bold text-white leading-[32px] pr-0 lg:pr-24" style="font-family: 'DM Sans', sans-serif;">
+              Texas Defensive Driving Course 6hr
+            </h3>
+
+            <!-- Price -->
+            <div class="flex flex-col gap-1">
+              <div class="flex items-baseline gap-1">
+                <span class="text-[40px] font-bold text-white" style="font-family: 'DM Sans', sans-serif;">$25</span>
+                <span class="text-base text-white" style="font-family: 'DM Sans', sans-serif;">.00</span>
+                <span class="text-2xl font-medium text-[#aeaeae] line-through ml-2">$35.00</span>
+              </div>
+              <p class="text-sm text-white leading-5" style="font-family: 'DM Sans', sans-serif;">
+                + $3.00 state processing fee
+              </p>
+            </div>
+
+            <!-- Rating -->
+            <div class="flex flex-col gap-1">
+              <div class="flex gap-3 items-center">
+                <div class="flex gap-0">
+                  {[...Array(5)].map((_, i) => (
+                    <img src="/assets/icons/texas/star-pricing.svg" alt="" class="w-5 h-5" />
+                  ))}
+                </div>
+                <span class="text-sm font-medium text-white leading-5" style="font-family: 'DM Sans', sans-serif;">
+                  4.9 out of 5
+                </span>
+              </div>
+            </div>
+
+            <!-- Button -->
+            <a
+              href={enrollUrl}
+              class="h-[56px] px-[40px] bg-[#0667d1] border border-[#0667d1] text-white rounded-2xl shadow-[0px_10px_15px_-3px_rgba(17,23,34,0.08),0px_4px_6px_-4px_rgba(17,23,34,0.05)] text-lg font-semibold flex items-center justify-center gap-2 leading-[28px] w-full no-underline hover:bg-[#0556b3] transition-colors"
+              style="font-family: 'DM Sans', sans-serif;"
+            >
+              Enroll Now
+              <img src="/assets/icons/texas/arrow-enroll.svg" alt="" class="w-4 h-4" />
+            </a>
+          </div>
+
+          <!-- Features -->
+          <div class="flex flex-col gap-3">
+            {[
+              'Secure checkout',
+              'TDLR-approved provider',
+              '100% money-back guarantee',
+              'Instant Certificate Download',
+              'Compatible with any device',
+            ].map((feature) => (
+              <div class="flex gap-[17px] items-center">
+                <div class="bg-[#e5f6fe] rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">
+                  <img src="/assets/icons/texas/checkmark-feature.svg" alt="" class="w-4 h-4" />
+                </div>
+                <span class="text-base font-medium text-white" style="font-family: 'DM Sans', sans-serif;">
+                  {feature}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Everything You Get Section -->
+  <section class="bg-[rgba(249,250,251,0.3)] py-[96px] px-4 sm:px-6 lg:px-[120px]">
+    <div class="max-w-[1200px] mx-auto px-6">
+      <div class="flex flex-col gap-12 items-center">
+        <!-- Header -->
+        <div class="flex flex-col gap-4 items-center max-w-[672px]">
+          <h2 class="text-[36px] font-bold text-[#111722] text-center leading-[40px] tracking-[-0.9px]" style="font-family: 'Outfit', sans-serif;">
+            Everything You Get
+          </h2>
+          <p class="text-lg text-[#657386] text-center leading-[28px]" style="font-family: 'DM Sans', sans-serif;">
+            One payment covers your entire defensive driving journey &mdash; from start to<br />
+            certificate.
+          </p>
+        </div>
+
+        <!-- Top Grid - 6 Feature Cards (3x2) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-[1024px]">
+
+          <!-- Card 1: 6-Hour State Minimum -->
+          <div class="bg-white border border-[#e5e8eb] rounded-[20px] p-6 shadow-[0px_1px_3px_0px_rgba(17,23,34,0.04),0px_6px_16px_0px_rgba(17,23,34,0.06)] flex flex-col gap-3">
+            <div class="relative w-12 h-12 flex items-center justify-center rounded-[10px] border border-[#e8e8e8]">
+              <img src="/assets/icons/texas/icon-6-hour.svg" alt="" class="w-6 h-6" />
+            </div>
+            <h3 class="text-base font-semibold text-[#111722] leading-6 tracking-[-0.4px]" style="font-family: 'Outfit', sans-serif;">
+              6-Hour State Minimum
+            </h3>
+            <p class="text-sm text-[#657386] leading-5" style="font-family: 'DM Sans', sans-serif;">
+              Complete the course as fast as Texas law allows
+            </p>
+          </div>
+
+          <!-- Card 2: Any Device Access -->
+          <div class="bg-white border border-[#e5e8eb] rounded-[20px] p-6 shadow-[0px_1px_3px_0px_rgba(17,23,34,0.04),0px_6px_16px_0px_rgba(17,23,34,0.06)] flex flex-col gap-3">
+            <div class="relative w-12 h-12 flex items-center justify-center rounded-[10px] border border-[#e8e8e8]">
+              <img src="/assets/icons/texas/icon-device.svg" alt="" class="w-6 h-6" />
+            </div>
+            <h3 class="text-base font-semibold text-[#111722] leading-6 tracking-[-0.4px]" style="font-family: 'Outfit', sans-serif;">
+              Any Device Access
+            </h3>
+            <p class="text-sm text-[#657386] leading-5" style="font-family: 'DM Sans', sans-serif;">
+              Take the course on your phone, tablet, or computer
+            </p>
+          </div>
+
+          <!-- Card 3: Instant Certificate -->
+          <div class="bg-white border border-[#e5e8eb] rounded-[20px] p-6 shadow-[0px_1px_3px_0px_rgba(17,23,34,0.04),0px_6px_16px_0px_rgba(17,23,34,0.06)] flex flex-col gap-3">
+            <div class="relative w-12 h-12 flex items-center justify-center rounded-[10px] border border-[#e8e8e8]">
+              <img src="/assets/icons/texas/icon-certificate.svg" alt="" class="w-6 h-6" />
+            </div>
+            <h3 class="text-base font-semibold text-[#111722] leading-6 tracking-[-0.4px]" style="font-family: 'Outfit', sans-serif;">
+              Instant Certificate
+            </h3>
+            <p class="text-sm text-[#657386] leading-5" style="font-family: 'DM Sans', sans-serif;">
+              Download your certificate immediately upon completion
+            </p>
+          </div>
+
+          <!-- Card 4: Unlimited Retakes -->
+          <div class="bg-white border border-[#e5e8eb] rounded-[20px] p-6 shadow-[0px_1px_3px_0px_rgba(17,23,34,0.04),0px_6px_16px_0px_rgba(17,23,34,0.06)] flex flex-col gap-3">
+            <div class="relative w-12 h-12 flex items-center justify-center rounded-[10px] border border-[#e8e8e8]">
+              <img src="/assets/icons/texas/icon-retakes.svg" alt="" class="w-6 h-6" />
+            </div>
+            <h3 class="text-base font-semibold text-[#111722] leading-6 tracking-[-0.4px]" style="font-family: 'Outfit', sans-serif;">
+              Unlimited Retakes
+            </h3>
+            <p class="text-sm text-[#657386] leading-5" style="font-family: 'DM Sans', sans-serif;">
+              Retake quizzes as many times as needed at no extra cost
+            </p>
+          </div>
+
+          <!-- Card 5: Auto-Save Progress -->
+          <div class="bg-white border border-[#e5e8eb] rounded-[20px] p-6 shadow-[0px_1px_3px_0px_rgba(17,23,34,0.04),0px_6px_16px_0px_rgba(17,23,34,0.06)] flex flex-col gap-3">
+            <div class="relative w-12 h-12 flex items-center justify-center rounded-[10px] border border-[#e8e8e8]">
+              <img src="/assets/icons/texas/icon-autosave.svg" alt="" class="w-6 h-6" />
+            </div>
+            <h3 class="text-base font-semibold text-[#111722] leading-6 tracking-[-0.4px]" style="font-family: 'Outfit', sans-serif;">
+              Auto-Save Progress
+            </h3>
+            <p class="text-sm text-[#657386] leading-5" style="font-family: 'DM Sans', sans-serif;">
+              Your progress is automatically saved &mdash; pick up where you left off
+            </p>
+          </div>
+
+          <!-- Card 6: Customer Support -->
+          <div class="bg-white border border-[#e5e8eb] rounded-[20px] p-6 shadow-[0px_1px_3px_0px_rgba(17,23,34,0.04),0px_6px_16px_0px_rgba(17,23,34,0.06)] flex flex-col gap-3">
+            <div class="relative w-12 h-12 flex items-center justify-center rounded-[10px] border border-[#e8e8e8]">
+              <img src="/assets/icons/texas/icon-support.svg" alt="" class="w-6 h-6" />
+            </div>
+            <h3 class="text-base font-semibold text-[#111722] leading-6 tracking-[-0.4px]" style="font-family: 'Outfit', sans-serif;">
+              Customer Support
+            </h3>
+            <p class="text-sm text-[#657386] leading-5" style="font-family: 'DM Sans', sans-serif;">
+              Real humans ready to help via email (typically within 1 business day)
+            </p>
+          </div>
+        </div>
+
+        <!-- Bottom Grid - 3 Feature List Cards -->
+        <div class="flex flex-col lg:flex-row gap-8 items-stretch justify-center w-full max-w-[1024px]">
+
+          <!-- Card 7: State Requirements -->
+          <div class="bg-white border border-[#e5e8eb] rounded-[20px] p-6 shadow-[0px_1px_3px_0px_rgba(17,23,34,0.04),0px_6px_16px_0px_rgba(17,23,34,0.06)] flex flex-col gap-4 flex-1">
+            <div class="flex gap-2 items-center">
+              <img src="/assets/icons/texas/icon-list.svg" alt="" class="w-5 h-5" />
+              <h3 class="text-base font-semibold text-[#111722] leading-6 tracking-[-0.4px]" style="font-family: 'Outfit', sans-serif;">
+                State Requirements
+              </h3>
+            </div>
+            <div class="flex flex-col gap-3">
+              {[
+                '6-hour defensive driving curriculum',
+                'All required course modules',
+                'Chapter quizzes',
+                'Certificate of completion',
+              ].map((item) => (
+                <div class="flex gap-2 items-start">
+                  <img src="/assets/icons/texas/checkmark-feature.svg" alt="" class="w-4 h-4 mt-0.5 flex-shrink-0" />
+                  <p class="text-sm text-[#657386] leading-5" style="font-family: 'DM Sans', sans-serif;">{item}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <!-- Card 8: Bonus Tools -->
+          <div class="bg-white border border-[#e5e8eb] rounded-[20px] p-6 shadow-[0px_1px_3px_0px_rgba(17,23,34,0.04),0px_6px_16px_0px_rgba(17,23,34,0.06)] flex flex-col gap-4 flex-1">
+            <div class="flex gap-2 items-center justify-between">
+              <div class="flex gap-2 items-center">
+                <img src="/assets/icons/texas/icon-list.svg" alt="" class="w-5 h-5" />
+                <h3 class="text-base font-semibold text-[#111722] leading-6 tracking-[-0.4px]" style="font-family: 'Outfit', sans-serif;">
+                  Bonus Tools
+                </h3>
+              </div>
+              <div class="bg-[#0667d1] text-white px-2.5 py-1 rounded-full">
+                <span class="text-xs font-semibold leading-4" style="font-family: 'DM Sans', sans-serif;">Coming Soon</span>
+              </div>
+            </div>
+            <div class="flex flex-col gap-3">
+              {[
+                'Eligibility checker tool',
+                'Court permission letter template',
+                'Court lookup by county',
+                'Step-by-step dismissal guide',
+                'Driving record request instructions',
+              ].map((item) => (
+                <div class="flex gap-2 items-start">
+                  <img src="/assets/icons/texas/checkmark-feature.svg" alt="" class="w-4 h-4 mt-0.5 flex-shrink-0" />
+                  <p class="text-sm text-[#657386] leading-5" style="font-family: 'DM Sans', sans-serif;">{item}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <!-- Card 9: Support & Access -->
+          <div class="bg-white border border-[#e5e8eb] rounded-[20px] p-6 shadow-[0px_1px_3px_0px_rgba(17,23,34,0.04),0px_6px_16px_0px_rgba(17,23,34,0.06)] flex flex-col gap-4 flex-1">
+            <div class="flex gap-2 items-center">
+              <img src="/assets/icons/texas/icon-list.svg" alt="" class="w-5 h-5" />
+              <h3 class="text-base font-semibold text-[#111722] leading-6 tracking-[-0.4px]" style="font-family: 'Outfit', sans-serif;">
+                Support &amp; Access
+              </h3>
+            </div>
+            <div class="flex flex-col gap-3">
+              {[
+                'Access on any device',
+                'Unlimited quiz retakes',
+                'Automatic progress saving',
+                'Email support',
+                'Help center resources',
+              ].map((item) => (
+                <div class="flex gap-2 items-start">
+                  <img src="/assets/icons/texas/checkmark-feature.svg" alt="" class="w-4 h-4 mt-0.5 flex-shrink-0" />
+                  <p class="text-sm text-[#657386] leading-5" style="font-family: 'DM Sans', sans-serif;">{item}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How We Compare Section -->
+  <section class="py-[112px] px-4 sm:px-6 lg:px-[217px]">
+    <div class="max-w-[1200px] mx-auto">
+      <div class="flex flex-col gap-12 items-center">
+        <!-- Header -->
+        <div class="flex flex-col gap-4 items-center max-w-[672px]">
+          <h2 class="text-[36px] font-bold text-[#111722] text-center leading-[40px] tracking-[-0.9px]" style="font-family: 'Outfit', sans-serif;">
+            How We Compare
+          </h2>
+          <p class="text-lg text-[#657386] text-center leading-[28px]" style="font-family: 'DM Sans', sans-serif;">
+            See why Texas drivers choose Road Ready Safety over the competition.
+          </p>
+        </div>
+
+        <!-- Comparison Table -->
+        <div class="w-full overflow-x-auto">
+          <div class="min-w-[800px]">
+            <!-- Table Header -->
+            <div class="flex border-b border-[#e5e8eb]">
+              <div class="flex-1 px-4 py-10">
+                <p class="text-base font-semibold text-[#111722] leading-6" style="font-family: 'Outfit', sans-serif;">Feature</p>
+              </div>
+              <div class="flex-1 min-w-0 px-4 py-10 flex items-center justify-center">
+                <div class="flex w-full min-w-0 max-w-[min(100%,300px)] items-center justify-center">
+                  <img
+                    src="/assets/icons/texas/road-ready-safety-wordmark.png"
+                    alt="Road Ready Safety"
+                    class="h-auto max-h-[52px] w-auto max-w-full object-contain"
+                  />
+                </div>
+              </div>
+              <div class="flex-1 px-4 py-10 flex items-center justify-center">
+                <p class="text-base font-medium text-[#657386] leading-6" style="font-family: 'DM Sans', sans-serif;">Other Online Providers</p>
+              </div>
+            </div>
+
+            <!-- Table Rows -->
+            <div class="flex flex-col">
+              <!-- Course Price -->
+              <div class="flex border-b border-[rgba(229,232,235,0.5)]">
+                <div class="flex-1 px-4 py-[18px] flex items-center">
+                  <p class="text-sm font-medium text-[#111722] leading-5" style="font-family: 'DM Sans', sans-serif;">Course Price</p>
+                </div>
+                <div class="flex-1 px-4 py-4 flex items-center justify-center">
+                  <p class="text-base font-semibold text-[#0667d1] leading-6" style="font-family: 'DM Sans', sans-serif;">$25</p>
+                </div>
+                <div class="flex-1 px-4 py-[18px] flex items-center justify-center">
+                  <p class="text-sm text-[#657386] leading-5" style="font-family: 'DM Sans', sans-serif;">$49+</p>
+                </div>
+              </div>
+
+              <!-- Fees -->
+              <div class="flex border-b border-[rgba(229,232,235,0.5)]">
+                <div class="flex-1 px-4 py-4 flex items-center">
+                  <p class="text-sm font-medium text-[#111722] leading-5" style="font-family: 'DM Sans', sans-serif;">Fees</p>
+                </div>
+                <div class="flex-1 px-4 py-4 flex items-center justify-center">
+                  <p class="text-base font-semibold text-[#0667d1] leading-6" style="font-family: 'DM Sans', sans-serif;">$3</p>
+                </div>
+                <div class="flex-1 px-4 py-4 flex items-center justify-center">
+                  <p class="text-sm text-[#657386] leading-5" style="font-family: 'DM Sans', sans-serif;">$15+</p>
+                </div>
+              </div>
+
+              <!-- TDLR Approved -->
+              <div class="flex border-b border-[rgba(229,232,235,0.5)]">
+                <div class="flex-1 px-4 py-4 flex items-center">
+                  <p class="text-sm font-medium text-[#111722] leading-5" style="font-family: 'DM Sans', sans-serif;">TDLR Approved</p>
+                </div>
+                <div class="flex-1 px-4 py-4 flex items-center justify-center">
+                  <img src="/assets/icons/texas/checkmark-blue.svg" alt="Yes" class="w-5 h-5" />
+                </div>
+                <div class="flex-1 px-4 py-4 flex items-center justify-center">
+                  <img src="/assets/icons/texas/checkmark-gray.svg" alt="Varies" class="w-5 h-5" />
+                </div>
+              </div>
+
+              <!-- Mobile Friendly -->
+              <div class="flex border-b border-[rgba(229,232,235,0.5)]">
+                <div class="flex-1 px-4 py-4 flex items-center">
+                  <p class="text-sm font-medium text-[#111722] leading-5" style="font-family: 'DM Sans', sans-serif;">Mobile Friendly</p>
+                </div>
+                <div class="flex-1 px-4 py-4 flex items-center justify-center">
+                  <img src="/assets/icons/texas/checkmark-blue.svg" alt="Yes" class="w-5 h-5" />
+                </div>
+                <div class="flex-1 px-4 py-4 flex items-center justify-center">
+                  <p class="text-sm text-[#657386] leading-5" style="font-family: 'DM Sans', sans-serif;">Limited</p>
+                </div>
+              </div>
+
+              <!-- Instant Certificate -->
+              <div class="flex border-b border-[rgba(229,232,235,0.5)]">
+                <div class="flex-1 px-4 py-4 flex items-center">
+                  <p class="text-sm font-medium text-[#111722] leading-5" style="font-family: 'DM Sans', sans-serif;">Instant Certificate</p>
+                </div>
+                <div class="flex-1 px-4 py-4 flex items-center justify-center">
+                  <p class="text-base font-semibold text-[#0667d1] leading-6" style="font-family: 'DM Sans', sans-serif;">Free</p>
+                </div>
+                <div class="flex-1 px-4 py-4 flex items-center justify-center">
+                  <p class="text-sm text-[#657386] leading-5" style="font-family: 'DM Sans', sans-serif;">$$$</p>
+                </div>
+              </div>
+
+              <!-- Unlimited Quiz Retakes -->
+              <div class="flex border-b border-[rgba(229,232,235,0.5)]">
+                <div class="flex-1 px-4 py-4 flex items-center">
+                  <p class="text-sm font-medium text-[#111722] leading-5" style="font-family: 'DM Sans', sans-serif;">Unlimited Quiz Retakes</p>
+                </div>
+                <div class="flex-1 px-4 py-4 flex items-center justify-center">
+                  <img src="/assets/icons/texas/checkmark-blue.svg" alt="Yes" class="w-5 h-5" />
+                </div>
+                <div class="flex-1 px-4 py-4 flex items-center justify-center">
+                  <img src="/assets/icons/texas/checkmark-gray.svg" alt="Varies" class="w-5 h-5" />
+                </div>
+              </div>
+
+              <!-- Progress Auto-Save -->
+              <div class="flex border-b border-[rgba(229,232,235,0.5)]">
+                <div class="flex-1 px-4 py-4 flex items-center">
+                  <p class="text-sm font-medium text-[#111722] leading-5" style="font-family: 'DM Sans', sans-serif;">Progress Auto-Save</p>
+                </div>
+                <div class="flex-1 px-4 py-4 flex items-center justify-center">
+                  <img src="/assets/icons/texas/checkmark-blue.svg" alt="Yes" class="w-5 h-5" />
+                </div>
+                <div class="flex-1 px-4 py-4 flex items-center justify-center">
+                  <img src="/assets/icons/texas/x-red.svg" alt="No" class="w-5 h-5" />
+                </div>
+              </div>
+
+              <!-- Try It 100% Risk-Free -->
+              <div class="flex border-b border-[rgba(229,232,235,0.5)]">
+                <div class="flex-1 px-4 py-4 flex items-center">
+                  <p class="text-sm font-medium text-[#111722] leading-5" style="font-family: 'DM Sans', sans-serif;">Try It 100% Risk-Free</p>
+                </div>
+                <div class="flex-1 px-4 py-4 flex items-center justify-center">
+                  <img src="/assets/icons/texas/checkmark-blue.svg" alt="Yes" class="w-5 h-5" />
+                </div>
+                <div class="flex-1 px-4 py-4 flex items-center justify-center">
+                  <img src="/assets/icons/texas/checkmark-gray.svg" alt="Varies" class="w-5 h-5" />
+                </div>
+              </div>
+
+              <!-- Court Lookup Tool -->
+              <div class="flex border-b border-[rgba(229,232,235,0.5)]">
+                <div class="flex-1 px-4 py-4 flex items-center">
+                  <p class="text-sm font-medium text-[#111722] leading-5" style="font-family: 'DM Sans', sans-serif;">Court Lookup Tool</p>
+                </div>
+                <div class="flex-1 px-4 py-4 flex items-center justify-center">
+                  <p class="text-sm text-[#657386] leading-5" style="font-family: 'DM Sans', sans-serif;">Coming Soon</p>
+                </div>
+                <div class="flex-1 px-4 py-4 flex items-center justify-center">
+                  <img src="/assets/icons/texas/x-red.svg" alt="No" class="w-5 h-5" />
+                </div>
+              </div>
+
+              <!-- Eligibility Checker -->
+              <div class="flex border-b border-[rgba(229,232,235,0.5)]">
+                <div class="flex-1 px-4 py-4 flex items-center">
+                  <p class="text-sm font-medium text-[#111722] leading-5" style="font-family: 'DM Sans', sans-serif;">Eligibility Checker</p>
+                </div>
+                <div class="flex-1 px-4 py-4 flex items-center justify-center">
+                  <p class="text-sm text-[#657386] leading-5" style="font-family: 'DM Sans', sans-serif;">Coming Soon</p>
+                </div>
+                <div class="flex-1 px-4 py-4 flex items-center justify-center">
+                  <img src="/assets/icons/texas/x-red.svg" alt="No" class="w-5 h-5" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Try It 100% Risk-Free Section -->
+  <section class="bg-[#e5f6fe] py-[96px] px-4 sm:px-6 lg:px-[144px]">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex flex-col lg:flex-row gap-12 items-center justify-between">
+        <!-- Left Column -->
+        <div class="flex flex-col gap-6 items-start w-full lg:w-[424px]">
+          <!-- Badge -->
+          <div class="bg-white inline-flex gap-2 items-center px-4 py-2 rounded-full">
+            <img src="/assets/icons/texas/icon-lock.svg" alt="" class="w-4 h-4" />
+            <span class="text-sm font-semibold text-[#111722] leading-5" style="font-family: 'DM Sans', sans-serif;">
+              Risk-Free Guarantee
+            </span>
+          </div>
+
+          <!-- Title -->
+          <h2 class="text-[36px] font-bold text-[#111722] leading-[40px] tracking-[-0.9px]" style="font-family: 'Outfit', sans-serif;">
+            Try It 100% Risk-Free
+          </h2>
+
+          <!-- Description -->
+          <p class="text-lg text-[#111722] leading-[28px]" style="font-family: 'DM Sans', sans-serif; opacity: 0.9;">
+            We built Road Ready to be the easiest way to complete your Texas driving safety course. If you're not satisfied, you can request a full refund before you complete the course or receive your certificate.
+          </p>
+
+          <!-- List -->
+          <div class="flex flex-col gap-4">
+            {[
+              'Full refund if you request it before course completion/certificate issuance',
+              'No complicated forms or hoops',
+              'Refund processed within 3-5 business days',
+            ].map((item) => (
+              <div class="flex gap-3 items-center">
+                <div class="bg-white rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0">
+                  <img src="/assets/icons/texas/checkmark-blue.svg" alt="" class="w-4 h-4" />
+                </div>
+                <p class="text-base text-[#111722] leading-6" style="font-family: 'DM Sans', sans-serif;">{item}</p>
+              </div>
+            ))}
+          </div>
+
+          <!-- Button -->
+          <a
+            href={enrollUrl}
+            class="h-12 px-8 bg-[#0667d1] hover:bg-[#0556b3] text-white rounded-2xl shadow-[0px_20px_25px_-5px_rgba(17,23,34,0.1),0px_8px_10px_-6px_rgba(17,23,34,0.05)] text-base font-semibold flex items-center justify-center leading-6 no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            Start Risk-Free Today
+          </a>
+        </div>
+
+        <!-- Right Column - Stats Card -->
+        <div class="backdrop-blur-[2px] bg-white border border-[rgba(255,255,255,0.2)] rounded-[24px] p-8 flex flex-col gap-6 items-center w-full lg:w-[424px]">
+          <div class="bg-[rgba(255,255,255,0.2)] rounded-full w-24 h-24 flex items-center justify-center">
+            <img src="/assets/icons/texas/icon-shield-guarantee.svg" alt="" class="w-12 h-12" />
+          </div>
+          <div class="flex flex-col gap-2 items-center">
+            <p class="text-[48px] font-bold text-[#111722] leading-[48px]" style="font-family: 'Outfit', sans-serif;">
+              100%
+            </p>
+            <p class="text-xl font-medium text-[#111722] leading-[28px]" style="font-family: 'DM Sans', sans-serif; opacity: 0.9;">
+              Satisfaction Guaranteed
+            </p>
+            <p class="text-sm text-[#111722] leading-5 text-center pt-2" style="font-family: 'DM Sans', sans-serif; opacity: 0.7;">
+              Become one of the many Texas drivers choosing a simpler way to dismiss their tickets.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</TexasLayout>
+)}

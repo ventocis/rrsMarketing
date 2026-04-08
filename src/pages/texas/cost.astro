@@ -1,0 +1,169 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+const contactUrl = import.meta.env.VITE_CONTACT_US_URL || 'https://roadreadysafety.com/support';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'How Much Does Texas Defensive Driving Really Cost in 2026?',
+  dateModified: '2026-03-03',
+  datePublished: '2026-03-03',
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+});
+
+const comparisonRows = [
+  { provider: 'Aware Driver', cp: 'CP995', coursePrice: '$25.00', processingFee: '$3.00', minCertCost: '$0.00', total: '$28.00', certificate: 'Paid', format: 'Online', language: 'English' },
+  { provider: 'DefensiveDriving.com', cp: 'CP284', coursePrice: '$25.00', processingFee: '$3.00', minCertCost: '$0.00', total: '$28.00', certificate: 'Mail', format: 'Online', language: 'English' },
+  { provider: 'I Drive Safely', cp: 'CP022', coursePrice: '$29.00', processingFee: '$0.00', minCertCost: '$0.00', total: '$29.00', certificate: 'Free', format: 'Online', language: 'English' },
+  { provider: 'GetDefensive.com', cp: 'CP021', coursePrice: '$30.00', processingFee: '$0.00', minCertCost: '$0.00', total: '$30.00', certificate: 'Free', format: 'Online / In-Person', language: 'Eng / Spanish' },
+  { provider: 'DrivingQuest', cp: 'CP020', coursePrice: '$25.00', processingFee: '$0.00', minCertCost: '$6.00', total: '$31.00', certificate: 'Paid', format: 'Online', language: 'Eng / Spanish' },
+  { provider: 'J&T Adult Driving School', cp: 'CP1158', coursePrice: '$29.99', processingFee: '$3.99', minCertCost: '$3.99', total: '$37.97', certificate: 'Paid', format: 'Online / In-Person', language: 'Eng / Spanish' },
+  { provider: 'DriversEd.com', cp: 'CP019', coursePrice: '$34.00', processingFee: '$0.00', minCertCost: '$15.00', total: '$49.00', certificate: 'Paid', format: 'Online', language: 'English' },
+  { provider: 'Aceable Defensive Driving', cp: 'CP262', coursePrice: '$49.00', processingFee: '$0.00', minCertCost: '$15.00', total: '$64.00', certificate: 'Paid', format: 'Online', language: 'English' },
+  { provider: 'Excellent Driving School', cp: 'CP1010', coursePrice: '$65.00', processingFee: '$3.99', minCertCost: '$3.99', total: '$72.98', certificate: 'Paid', format: 'Online / In-Person', language: 'Eng / Spanish' },
+];
+
+const faqs = [
+  { q: 'How much does Texas defensive driving cost?', a: 'Among TDLR-approved online providers, all-in prices range from $25 to over $70 depending on the provider and certificate delivery method. The most affordable verified option as of March 2026 is Road Ready Safety at $28.00 all-in, which includes the required processing fee and a free instant certificate download.' },
+  { q: 'Is there a required minimum fee for a Texas defensive driving course?', a: 'Yes. Under Texas Education Code §1001.352 (as amended by H.B. 3012, effective September 1, 2025), TDLR-approved providers are required to charge each student a minimum of $25.00 for a driving safety course. Prior to September 2025, a separate minimum $3.00 fee for course materials and administration was also required by law — which is why many providers still show a $25 base + $3 fee structure. Some providers have absorbed this into a flat price; others continue to itemize it at checkout. Either way, the statutory floor is now $25.00 total — meaning courses listed at $28.00 are pricing above the minimum, not meeting a two-part requirement.' },
+  { q: 'Can I get my certificate instantly in Texas?', a: 'Yes — if your provider offers digital certificate delivery. Not all do. Providers that offer free instant PDF download let you submit to your court the same day you finish the course.' },
+  { q: 'How do I submit my certificate to my Texas court?', a: "Submission methods vary by court. Most accept email, fax, or in-person drop-off. Some courts accept digital PDF certificates; others require a physical copy. Check your court's specific instructions or call your clerk's office directly." },
+];
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="How Much Does Texas Defensive Driving Cost? (2026 Guide)"
+    description="Most Texas defensive driving courses advertise a low price but add fees at checkout. See the real all-in cost — including state fees and certificate delivery."
+    url="/texas/cost"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-[#616d7b] mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-[#03449e] font-medium hover:underline">Texas defensive driving</a>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-[#021954] leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          How Much Does Texas Defensive Driving Really Cost in 2026?
+        </h1>
+
+        <div class="space-y-4 text-[#364153] text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>A Texas defensive driving course — also called a Texas driver safety course — is required by hundreds of thousands of drivers every year to dismiss a traffic ticket or earn an insurance discount. If you're asking yourself which provider is the cheapest, the fastest, and the most straightforward, here's a side-by-side comparison.</p>
+          <p>Most Texas defensive driving courses advertise a base price, but the amount you actually pay at checkout is higher once processing fees and certificate delivery fees are added. As of March 2026, prices among TDLR-approved online providers start at $25 and reach over $70 all-in.</p>
+          <p>This page shows manually verified totals pulled from a selection of TDLR-approved providers — last pulled March 3, 2026. There are 250+ approved providers total; this table covers some of the more widely used options. Totals are subject to change — always confirm current pricing at checkout before enrolling.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-[#1e2832] mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What's included in the "all-in" price?</h2>
+        <div class="space-y-4 text-[#364153] text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>When comparing defensive driving courses in Texas, three costs determine your actual total:</p>
+          <ul class="list-disc pl-6 space-y-3">
+            <li><strong class="text-[#1e2832]">Base course fee</strong> — what the provider charges for the course itself.</li>
+            <li><strong class="text-[#1e2832]">Processing fee</strong> — Texas law requires all TDLR-approved providers to charge a minimum of $25.00 for a defensive driving course. You may notice some providers show a $25 base price plus a separate $3 fee at checkout — that two-part structure was required by law until September 1, 2025, when it was simplified to a single $25 minimum. Some providers still itemize the $3 separately; others have rolled it into a flat price. Either way, always check your final checkout total before paying.</li>
+            <li><strong class="text-[#1e2832]">Certificate delivery fee</strong> — after you complete the course, you receive a completion certificate to submit to your court. Some providers charge $7+ to mail a physical certificate, others charge $0 to mail while charging $5-$10+ for instant download, and others offer an instant download for free. If you're on a court deadline, a free instant download matters.</li>
+          </ul>
+          <p>The table below reflects the total of all three costs based on verified checkout totals.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-[#1e2832] mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">All-in price comparison — TDLR-approved online courses</h2>
+
+        <div class="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 mb-4 rounded-xl border border-[#e4e6ea]">
+          <table class="w-full min-w-[1000px] text-sm border-collapse">
+            <thead>
+              <tr class="bg-[#f9fafb] text-left border-b border-[#e4e6ea]">
+                {['Provider','CP#','Course Price','Processing Fee','Min. Certificate Cost','Total','Certificate','Format','Language'].map(h => (
+                  <th class="py-3 px-3 font-semibold text-[#1e2832]" style="font-family: 'DM Sans', sans-serif;">{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody style="font-family: 'DM Sans', sans-serif;">
+              <tr class="bg-[#e5f6fe] border-b border-[#c5e6fa]">
+                <td class="py-3 px-3 font-semibold text-[#1e2832]">Road Ready Safety</td>
+                <td class="py-3 px-3">CP1234</td>
+                <td class="py-3 px-3">$25.00</td>
+                <td class="py-3 px-3">$3.00</td>
+                <td class="py-3 px-3">$0.00</td>
+                <td class="py-3 px-3 font-bold text-[#03449e]">$28.00</td>
+                <td class="py-3 px-3">Free instant download</td>
+                <td class="py-3 px-3">Online</td>
+                <td class="py-3 px-3">English</td>
+              </tr>
+              {comparisonRows.map(row => (
+                <tr class="border-b border-[#eef0f3]">
+                  <td class="py-3 px-3 text-[#1e2832]">{row.provider}</td>
+                  <td class="py-3 px-3 text-[#616d7b]">{row.cp}</td>
+                  <td class="py-3 px-3 text-[#616d7b]">{row.coursePrice}</td>
+                  <td class="py-3 px-3 text-[#616d7b]">{row.processingFee}</td>
+                  <td class="py-3 px-3 text-[#616d7b]">{row.minCertCost}</td>
+                  <td class="py-3 px-3 font-bold text-[#1e2832]">{row.total}</td>
+                  <td class="py-3 px-3 text-[#616d7b]">{row.certificate}</td>
+                  <td class="py-3 px-3 text-[#616d7b]">{row.format}</td>
+                  <td class="py-3 px-3 text-[#616d7b]">{row.language}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <p class="text-[#364153] text-base leading-7 mb-4" style="font-family: 'DM Sans', sans-serif;">
+          The Certificate column shows how each provider delivers your completion certificate. 'Free instant download' means you can print or email your certificate the same day you finish — no waiting, no extra charge. 'Paid' means the provider charges an additional delivery fee. 'Mail' means the provider mails a physical certificate, which typically adds several business days and may cost extra. If your court deadline is close, certificate delivery method matters as much as price.
+        </p>
+
+        <p class="text-sm text-[#616d7b] mb-2" style="font-family: 'DM Sans', sans-serif;">Last verified: March 3, 2026 — Road Ready Safety editorial team, verified against TDLR provider records</p>
+        <p class="text-sm text-[#616d7b] mb-10" style="font-family: 'DM Sans', sans-serif;">Note: Prices shown reflect TDLR-published provider records verified by Road Ready Safety on March 3, 2026. Course fees are set independently by each provider and may change. Verify current pricing at checkout before enrolling.</p>
+
+        <h2 class="text-2xl font-bold text-[#1e2832] mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What affects the final price at checkout?</h2>
+        <div class="space-y-4 text-[#364153] text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>A few things to check before you pay:</p>
+          <ul class="list-disc pl-6 space-y-3">
+            <li><strong class="text-[#1e2832]">Certificate delivery method.</strong> If your court requires you to submit within 90 days and you're cutting it close, paying $7–10 for overnight mail adds up. A free instant PDF download eliminates that cost and that risk.</li>
+            <li><strong class="text-[#1e2832]">Whether the state fee is bundled.</strong> TDLR requires a $3.00 state processing fee for every course completion. Some providers show a $25 base price and add $3 at checkout. Others include it in the advertised price. The total is what matters.</li>
+            <li><strong class="text-[#1e2832]">Processing or convenience fees.</strong> Some providers add a "processing fee" or "convenience fee" at checkout that isn't reflected in either the base price or the state fee. Always scroll to the final order summary before entering payment.</li>
+          </ul>
+        </div>
+
+        <h2 class="text-2xl font-bold text-[#1e2832] mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-[#1e2832] mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-[#364153] text-base leading-7" style="font-family: 'DM Sans', sans-serif;">{item.a}</p>
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-[#1e2832] mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Finding a course by format, language, or price range</h2>
+        <div class="space-y-4 text-[#364153] text-base leading-7 mb-12" style="font-family: 'DM Sans', sans-serif;">
+          <p>All providers in the table above offer online courses, meaning you can complete the required 6-hour Texas driver safety course from any device without visiting a classroom. Several providers offer bilingual courses in both English and Spanish, including GetDefensive.com, J&amp;T Adult Driving School, and Excellent Driving School.</p>
+          <p>If you are looking for an online English-language Texas defensive driving course under $30, Road Ready Safety, Aware Driver, DefensiveDriving.com, and I Drive Safely all meet that criteria based on verified March 2026 totals. Of those, only Road Ready Safety includes a free instant certificate download with no additional delivery fee — making it the lowest-friction option if you need to submit to your court quickly.</p>
+          <p>If you need a bilingual course in English and Spanish, options in the table priced under $40 include GetDefensive.com ($30.00) and J&amp;T Adult Driving School ($37.97).</p>
+        </div>
+
+        <div class="space-y-6 text-[#364153] text-base leading-7 pt-4 border-t border-[#e4e6ea]" style="font-family: 'DM Sans', sans-serif;">
+          <p>
+            All prices on this page reflect TDLR-published provider data. Course fees are set by each provider independently and may change. If you notice a discrepancy,{' '}
+            <a href={contactUrl} class="text-[#03449e] font-semibold hover:underline">contact us</a> and we'll verify and update.
+          </p>
+          <div>
+            <a
+              href={enrollUrl}
+              class="inline-flex bg-[#0667D1] hover:bg-[#0556b3] text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+              style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+            >
+              Take the $28 Course — Instant Certificate
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

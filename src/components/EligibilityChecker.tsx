@@ -529,7 +529,7 @@ export default function EligibilityChecker({ courts }: Props) {
                   </div>
 
                   {/* Enroll CTA */}
-                  <
+                  <a
                     href={enrollUrl}
                     className="w-full h-11 bg-[#0667d1] hover:bg-[#0556b3] text-white rounded-2xl text-sm font-semibold flex items-center justify-center gap-2 no-underline transition-colors mb-3 shadow-sm"
                     style={{ fontFamily: "'DM Sans', sans-serif" }}

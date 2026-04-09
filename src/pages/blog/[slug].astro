@@ -1,0 +1,137 @@
+---
+import { marked } from 'marked';
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import blogData from '../../data/blog.json';
+
+export function getStaticPaths() {
+  const posts = (blogData as any).posts ?? [];
+  return posts.map((post: any) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+interface Props {
+  post: {
+    slug: string;
+    title: string;
+    date: string;
+    description: string;
+    tags?: string[];
+    content: string;
+  };
+}
+
+const { post } = Astro.props;
+const htmlContent = marked(post.content) as string;
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+function formatDate(dateStr: string) {
+  return new Date(dateStr).toLocaleDateString('en-US', {
+    year: 'numeric', month: 'long', day: 'numeric'
+  });
+}
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: post.title,
+  description: post.description,
+  datePublished: post.date,
+  dateModified: post.date,
+  url: `${siteUrl}/blog/${post.slug}`,
+  publisher: {
+    '@type': 'Organization',
+    name: 'Road Ready Safety',
+    url: siteUrl,
+  },
+});
+---
+
+<Layout
+  title={post.title}
+  description={post.description}
+  keywords={`driving tips, traffic safety, ${post.tags?.join(', ') ?? 'defensive driving'}`}
+  url={`/blog/${post.slug}`}
+>
+  <script type="application/ld+json" set:html={articleSchema} />
+  <Header />
+
+  <main class="bg-white min-h-screen">
+    <div class="max-w-[768px] mx-auto px-4 sm:px-6 py-8 md:py-16">
+
+      <!-- Back nav -->
+      <nav class="mb-8">
+        <a
+          href="/blog"
+          class="inline-flex items-center text-[#0667D1] hover:text-[#0556b3] font-medium transition-colors"
+          style="font-family: 'DM Sans', sans-serif;"
+        >
+          <svg class="mr-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+          Back to blog
+        </a>
+      </nav>
+
+      <!-- Article header -->
+      <header class="mb-10">
+        <time
+          class="text-sm text-[#616d7b] block mb-4"
+          datetime={post.date}
+          style="font-family: 'DM Sans', sans-serif;"
+        >
+          {formatDate(post.date)}
+        </time>
+        <h1
+          class="text-3xl md:text-4xl font-bold text-[#1e2832] mb-4 leading-tight"
+          style="font-family: 'Outfit', sans-serif;"
+        >
+          {post.title}
+        </h1>
+        <p
+          class="text-xl text-[#616d7b] leading-relaxed"
+          style="font-family: 'DM Sans', sans-serif;"
+        >
+          {post.description}
+        </p>
+      </header>
+
+      <!-- Article body -->
+      <article
+        class="prose prose-slate max-w-none
+          prose-headings:font-bold prose-headings:text-[#1e2832] prose-headings:tracking-tight
+          prose-h1:text-3xl prose-h1:mb-4
+          prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4
+          prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3
+          prose-p:text-[#616d7b] prose-p:leading-7
+          prose-a:text-[#0667D1] prose-a:no-underline hover:prose-a:underline
+          prose-strong:text-[#1e2832]
+          prose-ul:text-[#616d7b] prose-ol:text-[#616d7b]
+          prose-li:leading-7
+          prose-hr:border-[#e5e5e5]
+          prose-blockquote:border-[#0667D1] prose-blockquote:text-[#616d7b]"
+        set:html={htmlContent}
+      />
+
+      <!-- Footer nav -->
+      <footer class="mt-12 pt-8 border-t border-[#e5e5e5]">
+        <a
+          href="/blog"
+          class="inline-flex items-center text-[#0667D1] hover:text-[#0556b3] font-medium transition-colors"
+          style="font-family: 'DM Sans', sans-serif;"
+        >
+          <svg class="mr-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+          Back to blog
+        </a>
+      </footer>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>

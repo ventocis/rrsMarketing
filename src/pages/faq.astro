@@ -1,0 +1,72 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import faqData from '../copy/faq.json';
+
+const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/support';
+---
+
+<Layout
+  title="Frequently Asked Questions"
+  description="Answers to common questions about enrollment, certificates, and reporting for our traffic safety courses."
+  keywords="FAQ, traffic school questions, course enrollment, certificates, reporting"
+  url="/faq"
+>
+  <Header />
+
+  <main class="bg-[#f9fafb] min-h-screen">
+    <section class="max-w-[1152px] mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+
+      <!-- Breadcrumb -->
+      <nav aria-label="Breadcrumb" class="mb-6">
+        <ol class="flex items-center gap-2 text-sm text-[#616d7b]" style="font-family: 'DM Sans', sans-serif;">
+          <li><a href="/" class="hover:text-[#0667D1] transition-colors">Home</a></li>
+          <li aria-hidden="true">›</li>
+          <li class="text-[#1e2832] font-medium">FAQ</li>
+        </ol>
+      </nav>
+
+      <!-- Page header -->
+      <div class="text-center mb-12">
+        <h1 class="text-3xl md:text-4xl font-bold text-[#1e2832] mb-4" style="font-family: 'Outfit', sans-serif;">
+          Frequently asked questions
+        </h1>
+        <p class="text-lg text-[#616d7b] max-w-3xl mx-auto" style="font-family: 'DM Sans', sans-serif;">
+          Answers to common questions about enrollment, certificates, and reporting.
+        </p>
+      </div>
+
+      <!-- Full FAQ accordion — native <details>, zero JS -->
+      <div class="flex flex-col gap-4 mb-12 max-w-[768px] mx-auto">
+        {faqData.items.map((item) => (
+          <details class="group bg-white border border-[#e4e6ea] rounded-[16px] overflow-hidden">
+            <summary class="flex items-center justify-between px-6 py-5 text-base font-semibold text-[#1e2832] tracking-[-0.4px] leading-6 cursor-pointer hover:bg-gray-50 transition-colors list-none">
+              {item.q}
+              <svg class="w-5 h-5 text-[#616d7b] flex-shrink-0 ml-4 transition-transform duration-200 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="px-6 py-4 border-t border-[#e4e6ea] text-base leading-6 text-[#616d7b]">
+              {Array.isArray(item.a)
+                ? item.a.map((p) => <div set:html={p} />)
+                : <div set:html={item.a} />
+              }
+            </div>
+          </details>
+        ))}
+      </div>
+
+      <p class="text-center text-sm text-[#616d7b]" style="font-family: 'DM Sans', sans-serif;">
+        Still need help? Visit our <a href={contactUrl} class="text-[#0667D1] hover:text-[#0556b3] underline">Help Center</a>.
+      </p>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  details > summary::-webkit-details-marker { display: none; }
+  details > summary::marker { display: none; }
+</style>

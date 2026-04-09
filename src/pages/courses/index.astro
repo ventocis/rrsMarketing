@@ -1,0 +1,94 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import CourseCard from '../../components/CourseCard.astro';
+import coursesData from '../../data/courses.json';
+import { stateNames } from '../../utils/states';
+
+// Group and sort courses by state at build time — zero JS on client
+const grouped: Record<string, typeof coursesData> = {};
+for (const course of coursesData) {
+  if (!grouped[course.state]) grouped[course.state] = [];
+  grouped[course.state].push(course);
+}
+
+// Sort courses within each state
+for (const stateCode of Object.keys(grouped)) {
+  grouped[stateCode].sort((a, b) => {
+    if ('recommended_order' in a && 'recommended_order' in b) {
+      return (a as any).recommended_order - (b as any).recommended_order;
+    }
+    return a.course_name.localeCompare(b.course_name);
+  });
+}
+
+const coursesByState = Object.entries(grouped)
+  .map(([stateCode, courses]) => ({
+    stateCode,
+    stateName: stateNames[stateCode] || stateCode,
+    courses,
+  }))
+  .sort((a, b) => a.stateName.localeCompare(b.stateName));
+---
+
+<Layout
+  title="All Courses"
+  description="Browse our complete catalog of state-approved traffic courses and defensive driving programs. Find the right course for your needs."
+  keywords="traffic courses, defensive driving, state approved, online courses, traffic school"
+  image="/assets/rrs (1200 x 630 px).png"
+  url="/courses"
+>
+  <Header />
+
+  <main class="bg-white min-h-screen pb-12">
+    <section class="max-w-[1152px] mx-auto px-4 md:px-6 py-8 md:py-12">
+
+      <!-- Page header -->
+      <div class="text-center mb-12">
+        <h1 class="text-3xl md:text-4xl font-bold text-[#1e2832] mb-4" style="font-family: 'Outfit', sans-serif;">All Courses</h1>
+        <p class="text-lg text-[#616d7b] max-w-3xl mx-auto" style="font-family: 'DM Sans', sans-serif;">
+          Browse our complete catalog of state-approved traffic courses and defensive driving programs.
+        </p>
+      </div>
+
+      <!-- State jump links -->
+      <nav aria-label="Jump to state" class="flex flex-wrap gap-2 justify-center mb-12">
+        {coursesByState.map(({ stateCode, stateName }) => (
+          <a
+            href={`#${stateCode}`}
+            class="px-3 py-1.5 text-sm font-medium text-[#0667D1] bg-[#e5f6fe] hover:bg-[#cceeff] rounded-full transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            {stateName}
+          </a>
+        ))}
+      </nav>
+
+      <!-- Courses by state -->
+      {coursesByState.length > 0 ? (
+        <div class="space-y-16">
+          {coursesByState.map(({ stateCode, stateName, courses }) => (
+            <div id={stateCode}>
+              <h2 class="text-2xl md:text-3xl font-bold text-[#1e2832] mb-8 border-b border-[#e5e5e5] pb-4" style="font-family: 'Outfit', sans-serif;">
+                {stateName}
+              </h2>
+              <div class="grid grid-cols-1 gap-6 md:gap-8 lg:grid-cols-2">
+                {courses.map((course) => (
+                  <CourseCard course={course} />
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div class="text-center py-16">
+          <h2 class="text-xl font-semibold text-[#1e2832] mb-4">No courses available</h2>
+          <p class="text-[#616d7b]">Check back soon for new course offerings.</p>
+        </div>
+      )}
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

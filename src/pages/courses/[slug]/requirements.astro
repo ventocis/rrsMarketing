@@ -1,0 +1,94 @@
+---
+import { marked } from 'marked';
+import DocLayout from '../../../layouts/DocLayout.astro';
+import coursesData from '../../../data/courses.json';
+import { stateNames } from '../../../utils/states';
+import { getStateRequirements } from '../../../utils/stateRequirements';
+
+export function getStaticPaths() {
+  return (coursesData as any[]).map((course: any) => ({
+    params: { slug: course.slug },
+    props: { course },
+  }));
+}
+
+interface Props {
+  course: any;
+}
+
+const { course } = Astro.props;
+const stateFull = stateNames[course.state] || course.state;
+const stateReqs = getStateRequirements(course.state, course.course_type);
+
+// Build markdown content at build time
+function buildMarkdown(): string {
+  let md = `# ${course.course_name} — Course Requirements\n\n`;
+  md += `_Last updated: ${new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}_\n\n`;
+
+  if (stateReqs) {
+    if (stateReqs.who_for) {
+      md += `## Who This Course Is For\n\n${stateReqs.who_for}\n\n`;
+    }
+
+    if (stateReqs.requirements?.length) {
+      md += `## Requirements & Deadlines\n\n`;
+      stateReqs.requirements.forEach(req => { md += `- ${req}\n`; });
+      md += '\n';
+    }
+
+    if (stateReqs.submission) {
+      md += `## Submission Details\n\n`;
+      if (stateReqs.submission.certificate) md += `**Certificate Submission:** ${stateReqs.submission.certificate}\n\n`;
+      if (stateReqs.submission.reporting)   md += `**Reporting Method:** ${stateReqs.submission.reporting}\n\n`;
+      if (stateReqs.submission.deadlines)   md += `**Deadlines:** ${stateReqs.submission.deadlines}\n\n`;
+    }
+
+    if (stateReqs.court_vs_insurance) {
+      md += `## Court vs Insurance Use\n\n`;
+      if (stateReqs.court_vs_insurance.court)     md += `### For Court / Tickets\n\n${stateReqs.court_vs_insurance.court}\n\n`;
+      if (stateReqs.court_vs_insurance.insurance) md += `### For Insurance\n\n${stateReqs.court_vs_insurance.insurance}\n\n`;
+    }
+
+    if (stateReqs.sources?.length) {
+      md += `## Official Sources\n\nFor the most up-to-date information, refer to these official sources:\n\n`;
+      stateReqs.sources.forEach(src => { md += `- [${src.name}](${src.url})\n`; });
+      md += '\n';
+    }
+  } else {
+    md += `## Course Overview\n\n${course.blurb || 'This course provides state-approved driver education and improvement training.'}\n\n`;
+    if (course.eligibility)            md += `## Eligibility\n\n${course.eligibility}\n\n`;
+    if (course.identity_verification)  md += `## Identity Verification\n\n${course.identity_verification}\n\n`;
+    if (course.reporting_method)       md += `## Reporting Method\n\n${course.reporting_method}\n\n`;
+    if (course.certificate_delivery)   md += `## Certificate Delivery\n\n${course.certificate_delivery}\n\n`;
+    md += `> **Note:** Detailed state-specific requirements for this course are being updated. Please contact your court, insurer, or the relevant state agency for the most current information.\n\n`;
+  }
+
+  md += `## Course Information\n\n`;
+  md += `- **Course Name:** ${course.course_name}\n`;
+  md += `- **State:** ${stateFull}\n`;
+  md += `- **Duration:** ${course.duration_hours} hours\n`;
+  md += `- **Price:** $${course.price_usd}\n`;
+  md += `- **Provider:** ${course.provider_name || 'Road Ready Safety'}\n\n`;
+  md += `---\n\n**Need help?** Visit our [Help Center](/support) or [contact us](/support).\n\n`;
+  md += `*This information is provided for reference only. Always confirm requirements with your court, insurer, or the relevant state agency.*`;
+
+  return md;
+}
+
+const html = marked(buildMarkdown()) as string;
+---
+
+<DocLayout
+  title={`${course.course_name} — Course Requirements`}
+  description={`Complete requirements, submission details, and official sources for ${course.course_name}. Eligibility, deadlines, and certificate submission for ${stateFull}.`}
+  keywords={`${course.course_name}, course requirements, ${stateFull}, traffic school requirements, certificate submission`}
+  url={`/courses/${course.slug}/requirements`}
+  breadcrumbs={[
+    { label: 'Home', href: '/' },
+    { label: 'Courses', href: '/courses' },
+    { label: course.course_name, href: `/courses/${course.slug}` },
+    { label: 'Requirements' },
+  ]}
+>
+  <Fragment set:html={html} />
+</DocLayout>

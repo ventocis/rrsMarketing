@@ -1,46 +1,28 @@
 {
-  "name": "road-ready-bdi",
-  "version": "1.40.0",
-  "private": true,
+  "name": "rrs-marketing-astro",
+  "version": "1.2.0-Astro.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview --port 4173",
-    "preview:qa": "npm run build:qa && vite preview --port 4174",
-    "preview:static": "serve -s dist",
-    "prebuild": "node ./blueprint/scripts/build-data.mjs",
-    "build:spa": "vite build",
-    "build:static": "node ./blueprint/scripts/prerender.mjs",
-    "build:prod": "npm run build:spa -- --mode production && npm run build:static && node ./blueprint/scripts/swap-robots.mjs allow && node ./blueprint/scripts/build-data.mjs",
-    "build:staging": "npm run build:spa && npm run build:static && node ./blueprint/scripts/swap-robots.mjs block && node ./blueprint/scripts/build-data.mjs",
-    "build:qa": "npm run build:spa -- --mode qa && npm run build:static && node ./blueprint/scripts/swap-robots.mjs block && node ./blueprint/scripts/build-data.mjs"
+    "dev": "astro dev",
+    "build": "astro build",
+    "build:qa": "astro build --mode qa",
+    "build:prod": "astro build --mode production",
+    "preview": "astro preview",
+    "preview:qa": "astro preview --port 4174",
+    "astro": "astro"
   },
   "dependencies": {
-    "fast-glob": "^3.3.3",
-    "flowbite": "^2.3.0",
-    "flowbite-react": "^0.7.0",
-    "gray-matter": "^4.0.3",
-    "marked": "^16.2.0",
-    "mkdirp": "^3.0.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-helmet-async": "^2.0.5",
-    "react-markdown": "^10.1.0",
-    "react-router-dom": "^6.23.0",
-    "rehype-autolink-headings": "^7.1.0",
-    "rehype-slug": "^6.0.0",
-    "remark-gfm": "^4.0.1",
-    "xlsx": "^0.18.5",
-    "yaml": "^2.8.1"
+    "@astrojs/react": "^3.6.0",
+    "@astrojs/tailwind": "^5.1.0",
+    "astro": "^4.15.0",
+    "marked": "^18.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwindcss": "^3.4.10"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^4.3.1",
-    "autoprefixer": "^10.4.20",
-    "csv-parse": "^5.5.2",
-    "postcss": "^8.4.31",
-    "serve": "^14.2.4",
-    "tailwindcss": "^3.4.0",
-    "vite": "^4.5.0"
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "typescript": "^5.5.4"
   }
 }

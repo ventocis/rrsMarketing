@@ -53,6 +53,15 @@ const details = [
 // Badge list from course data
 const badges: string[] = course.badge_list ? course.badge_list.split('|').filter(Boolean) : [];
 
+// Detail icon map (defined here to avoid TypeScript generics in template)
+const detailIconMap: Record<string, string> = {
+  eligibility: '✅',
+  identity_verification: '🪪',
+  reporting_method: '📋',
+  certificate_delivery: '📄',
+  retake_policy: '🔁',
+};
+
 // State requirements
 const stateReqs = getStateRequirements(course.state, course.course_type);
 
@@ -156,14 +165,7 @@ const courseSchema = JSON.stringify({
               </h3>
               <ul class="space-y-4">
                 {details.map(item => {
-                  const iconMap: Record<string, string> = {
-                    eligibility: '✅',
-                    identity_verification: '🪪',
-                    reporting_method: '📋',
-                    certificate_delivery: '📄',
-                    retake_policy: '🔁',
-                  };
-                  const icon = iconMap[item.key] || '•';
+                  const icon = detailIconMap[item.key] || '•';
                   return (
                     <li class="flex gap-3">
                       <span class="text-base leading-relaxed flex-shrink-0 mt-0.5" aria-hidden="true">{icon}</span>

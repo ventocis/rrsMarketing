@@ -30,6 +30,30 @@ type ResultType =
   | 'eligible'
   | '';
 
+// Heading + subtitle shown above the card for each step
+const STEP_HEADERS: Record<Exclude<Step, 'result'>, { heading: string; subtitle: string }> = {
+  step1: {
+    heading: 'What type of violation do you need dismissed?',
+    subtitle: 'Select the option that best describes your ticket.',
+  },
+  step1b: {
+    heading: 'How far were you going over the speed limit?',
+    subtitle: 'The amount over the limit affects your eligibility.',
+  },
+  step2: {
+    heading: "Do you hold a Commercial Driver's License (CDL)?",
+    subtitle: 'This applies even if you were driving a personal vehicle at the time.',
+  },
+  step3: {
+    heading: 'Have you had a ticket dismissed with a defensive driving course in the past 12 months?',
+    subtitle: 'Texas only permits one dismissal per 12-month period.',
+  },
+  step4: {
+    heading: 'Have you received court approval to take a defensive driving course?',
+    subtitle: 'Most Texas courts require you to request permission before enrolling.',
+  },
+};
+
 const RESULT_DATA: Record<
   Exclude<ResultType, ''>,
   { badge: string; badgeClass: string; heading: string; body: string; isEligible: boolean }
@@ -147,6 +171,15 @@ export default function EligibilityChecker({ courts }: Props) {
       c.courtName === selectedCourtName
   );
 
+  // Derive the header shown above the card
+  const resultData = result !== '' ? RESULT_DATA[result] : null;
+  const headerHeading = step === 'result' && resultData
+    ? resultData.heading
+    : STEP_HEADERS[step as Exclude<Step, 'result'>]?.heading ?? '';
+  const headerSubtitle = step === 'result' && resultData
+    ? resultData.body
+    : STEP_HEADERS[step as Exclude<Step, 'result'>]?.subtitle ?? '';
+
   const selectClass =
     'w-full border border-[#e4e6ea] rounded-xl px-4 py-3 text-sm text-[#1e2832] focus:outline-none focus:ring-2 focus:ring-[#0667d1] bg-white disabled:bg-[#f9fafb] disabled:text-[#adb5bd] transition-colors';
 
@@ -164,6 +197,44 @@ export default function EligibilityChecker({ courts }: Props) {
 
   return (
     <div className="max-w-2xl mx-auto">
+
+      {/* ── Dynamic header above card ── */}
+      <div className="mb-8">
+        {/* Badge — result screens only */}
+        {step === 'result' && resultData && (
+          <div className="mb-4">
+            <span className={resultData.badgeClass} style={{ fontFamily: "'DM Sans', sans-serif" }}>
+              {resultData.isEligible ? (
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                  <circle cx="7" cy="7" r="7" fill="#16a34a" />
+                  <path d="M4 7l2 2 4-4" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              ) : (
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                  <circle cx="7" cy="7" r="7" fill="#dc2626" />
+                  <path d="M4.5 4.5l5 5M9.5 4.5l-5 5" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
+                </svg>
+              )}
+              {resultData.badge}
+            </span>
+          </div>
+        )}
+
+        <h2
+          className="text-3xl lg:text-4xl font-bold text-[#1e2832] leading-tight mb-3"
+          style={{ fontFamily: "'Outfit', sans-serif" }}
+        >
+          {headerHeading}
+        </h2>
+        <p
+          className="text-base text-[#616d7b] leading-7"
+          style={{ fontFamily: "'DM Sans', sans-serif" }}
+        >
+          {headerSubtitle}
+        </p>
+      </div>
+
+      {/* ── Card ── */}
       <div className="bg-white rounded-2xl border border-[#e4e6ea] shadow-sm p-8">
 
         {/* Progress bar */}
@@ -194,49 +265,35 @@ export default function EligibilityChecker({ courts }: Props) {
 
         {/* ── STEP 1 ── */}
         {step === 'step1' && (
-          <div>
-            <h2
-              className="text-2xl font-bold text-[#1e2832] mb-2"
-              style={{ fontFamily: "'Outfit', sans-serif" }}
-            >
-              What type of violation do you need dismissed?
-            </h2>
-            <p
-              className="text-base text-[#616d7b] leading-7 mb-6"
-              style={{ fontFamily: "'DM Sans', sans-serif" }}
-            >
-              Select the option that best describes your ticket.
-            </p>
-            <div className="flex flex-col gap-3">
-              {[
-                { label: 'Speeding', icon: '🚗', value: 'speeding' as ViolationType },
-                { label: 'Red Light or Stop Sign', icon: '🛑', value: 'red_light' as ViolationType },
-                { label: 'No Proof of Insurance', icon: '📋', value: 'insurance' as ViolationType },
-                { label: 'Cell Phone / Texting While Driving', icon: '📱', value: 'cell_phone' as ViolationType },
-                { label: 'Other Minor Traffic Violation', icon: '⚠️', value: 'other' as ViolationType },
-                { label: 'Serious or Criminal Violation', icon: '🚨', value: 'serious' as ViolationType },
-              ].map(opt => (
-                <button
-                  key={opt.value}
-                  className={optionButtonClass}
-                  style={{ fontFamily: "'DM Sans', sans-serif" }}
-                  onClick={() => {
-                    setViolation(opt.value);
-                    if (opt.value === 'serious') {
-                      setResult('ineligible-serious');
-                      setStep('result');
-                    } else if (opt.value === 'speeding') {
-                      setStep('step1b');
-                    } else {
-                      setStep('step2');
-                    }
-                  }}
-                >
-                  <span className="text-lg leading-none">{opt.icon}</span>
-                  {opt.label}
-                </button>
-              ))}
-            </div>
+          <div className="flex flex-col gap-3">
+            {[
+              { label: 'Speeding', icon: '🚗', value: 'speeding' as ViolationType },
+              { label: 'Red Light or Stop Sign', icon: '🛑', value: 'red_light' as ViolationType },
+              { label: 'No Proof of Insurance', icon: '📋', value: 'insurance' as ViolationType },
+              { label: 'Cell Phone / Texting While Driving', icon: '📱', value: 'cell_phone' as ViolationType },
+              { label: 'Other Minor Traffic Violation', icon: '⚠️', value: 'other' as ViolationType },
+              { label: 'Serious or Criminal Violation', icon: '🚨', value: 'serious' as ViolationType },
+            ].map(opt => (
+              <button
+                key={opt.value}
+                className={optionButtonClass}
+                style={{ fontFamily: "'DM Sans', sans-serif" }}
+                onClick={() => {
+                  setViolation(opt.value);
+                  if (opt.value === 'serious') {
+                    setResult('ineligible-serious');
+                    setStep('result');
+                  } else if (opt.value === 'speeding') {
+                    setStep('step1b');
+                  } else {
+                    setStep('step2');
+                  }
+                }}
+              >
+                <span className="text-lg leading-none">{opt.icon}</span>
+                {opt.label}
+              </button>
+            ))}
           </div>
         )}
 
@@ -250,18 +307,6 @@ export default function EligibilityChecker({ courts }: Props) {
             >
               ← Back
             </button>
-            <h2
-              className="text-2xl font-bold text-[#1e2832] mb-2"
-              style={{ fontFamily: "'Outfit', sans-serif" }}
-            >
-              How far were you going over the speed limit?
-            </h2>
-            <p
-              className="text-base text-[#616d7b] leading-7 mb-6"
-              style={{ fontFamily: "'DM Sans', sans-serif" }}
-            >
-              The amount over the limit affects your eligibility.
-            </p>
             <div className="flex flex-col gap-3">
               <button
                 className={optionButtonClass}
@@ -296,18 +341,6 @@ export default function EligibilityChecker({ courts }: Props) {
             >
               ← Back
             </button>
-            <h2
-              className="text-2xl font-bold text-[#1e2832] mb-2"
-              style={{ fontFamily: "'Outfit', sans-serif" }}
-            >
-              Do you hold a Commercial Driver's License (CDL)?
-            </h2>
-            <p
-              className="text-base text-[#616d7b] leading-7 mb-6"
-              style={{ fontFamily: "'DM Sans', sans-serif" }}
-            >
-              This applies even if you were driving a personal vehicle at the time.
-            </p>
             <div className="flex flex-col gap-3">
               <button
                 className={optionButtonClass}
@@ -342,18 +375,6 @@ export default function EligibilityChecker({ courts }: Props) {
             >
               ← Back
             </button>
-            <h2
-              className="text-2xl font-bold text-[#1e2832] mb-2"
-              style={{ fontFamily: "'Outfit', sans-serif" }}
-            >
-              Have you had a ticket dismissed with a defensive driving course in the past 12 months?
-            </h2>
-            <p
-              className="text-base text-[#616d7b] leading-7 mb-6"
-              style={{ fontFamily: "'DM Sans', sans-serif" }}
-            >
-              Texas only permits one dismissal per 12-month period.
-            </p>
             <div className="flex flex-col gap-3">
               <button
                 className={optionButtonClass}
@@ -396,18 +417,6 @@ export default function EligibilityChecker({ courts }: Props) {
             >
               ← Back
             </button>
-            <h2
-              className="text-2xl font-bold text-[#1e2832] mb-2"
-              style={{ fontFamily: "'Outfit', sans-serif" }}
-            >
-              Have you received court approval to take a defensive driving course?
-            </h2>
-            <p
-              className="text-base text-[#616d7b] leading-7 mb-6"
-              style={{ fontFamily: "'DM Sans', sans-serif" }}
-            >
-              Most Texas courts require you to request permission before enrolling.
-            </p>
             <div className="flex flex-col gap-3">
               <button
                 className={optionButtonClass}
@@ -460,37 +469,7 @@ export default function EligibilityChecker({ courts }: Props) {
                 ← Back
               </button>
 
-              {/* Result card */}
-              <div className="mb-6">
-                <span className={data.badgeClass} style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                  {data.isEligible ? (
-                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                      <circle cx="7" cy="7" r="7" fill="#16a34a" />
-                      <path d="M4 7l2 2 4-4" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  ) : (
-                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                      <circle cx="7" cy="7" r="7" fill="#dc2626" />
-                      <path d="M4.5 4.5l5 5M9.5 4.5l-5 5" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
-                    </svg>
-                  )}
-                  {data.badge}
-                </span>
-                <h2
-                  className="text-2xl font-bold text-[#1e2832] mt-4 mb-3"
-                  style={{ fontFamily: "'Outfit', sans-serif" }}
-                >
-                  {data.heading}
-                </h2>
-                <p
-                  className="text-base text-[#616d7b] leading-7"
-                  style={{ fontFamily: "'DM Sans', sans-serif" }}
-                >
-                  {data.body}
-                </p>
-              </div>
-
-              {/* Buy box — fully eligible (has court approval) only */}
+              {/* Buy box — fully eligible (has court approval) */}
               {result === 'eligible' && (
                 <div className="border border-[#e4e6ea] rounded-2xl p-5 mb-6 shadow-sm">
                   {/* Header row */}

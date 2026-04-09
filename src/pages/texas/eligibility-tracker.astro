@@ -44,7 +44,7 @@ const breadcrumbSchema = JSON.stringify({
   <script type="application/ld+json" set:html={pageSchema} />
   <script type="application/ld+json" set:html={breadcrumbSchema} />
 
-  <section class="py-12 lg:py-20 px-4 sm:px-6 lg:px-8 bg-[#f9fafb] min-h-screen">
+  <section class="py-12 lg:py-16 px-4 sm:px-6 lg:px-8 bg-[#f9fafb] min-h-screen">
     <div class="max-w-2xl mx-auto">
 
       <!-- Breadcrumb -->
@@ -54,21 +54,7 @@ const breadcrumbSchema = JSON.stringify({
         <span class="text-[#1e2832] font-medium">Eligibility Checker</span>
       </nav>
 
-      <!-- Page Header -->
-      <div class="text-center mb-10">
-        <div class="inline-flex items-center gap-2 bg-[#e5f6fe] text-[#0667D1] text-sm font-semibold px-4 py-2 rounded-full mb-4">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM7 7V5h2v2H7Zm0 4V9h2v2H7Z" fill="currentColor"/></svg>
-          Free · 2 Minutes · No Sign-Up
-        </div>
-        <h1 class="text-3xl lg:text-4xl font-bold text-[#1e2832] leading-tight mb-4" style="font-family:'Outfit',sans-serif;">
-          Texas Defensive Driving<br />Eligibility Checker
-        </h1>
-        <p class="text-base text-[#616d7b] leading-7 max-w-lg mx-auto">
-          Answer 4 quick questions to find out if you can dismiss your Texas traffic ticket through a TDLR-approved defensive driving course.
-        </p>
-      </div>
-
-      <!-- React Island -->
+      <!-- React Island (owns the dynamic heading above the card) -->
       <EligibilityChecker courts={(courtsData as any).courts} client:load />
 
     </div>

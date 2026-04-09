@@ -107,10 +107,14 @@ const TRUST_ITEMS = [
   'Compatible with any device',
 ];
 
-export default function EligibilityChecker({ courts: _courts }: Props) {
+export default function EligibilityChecker({ courts }: Props) {
   const [step, setStep] = useState<Step>('step1');
   const [violation, setViolation] = useState<ViolationType>('');
   const [result, setResult] = useState<ResultType>('');
+  const [courtSectionOpen, setCourtSectionOpen] = useState(false);
+  const [selectedCounty, setSelectedCounty] = useState('');
+  const [selectedCourtType, setSelectedCourtType] = useState('');
+  const [selectedCourtName, setSelectedCourtName] = useState('');
 
   const isSpeedingPath = violation === 'speeding';
   const totalSteps = getTotalSteps(isSpeedingPath);
@@ -121,7 +125,30 @@ export default function EligibilityChecker({ courts: _courts }: Props) {
     setStep('step1');
     setViolation('');
     setResult('');
+    setCourtSectionOpen(false);
+    setSelectedCounty('');
+    setSelectedCourtType('');
+    setSelectedCourtName('');
   };
+
+  // Court dropdown data (used for eligible-pending result)
+  const allCounties = Array.from(new Set(courts.map(c => c.county))).sort();
+  const courtTypesForCounty = Array.from(
+    new Set(courts.filter(c => c.county === selectedCounty).map(c => c.courtType))
+  ).sort();
+  const courtNamesForSelection = courts
+    .filter(c => c.county === selectedCounty && c.courtType === selectedCourtType)
+    .map(c => c.courtName)
+    .sort();
+  const selectedCourt = courts.find(
+    c =>
+      c.county === selectedCounty &&
+      c.courtType === selectedCourtType &&
+      c.courtName === selectedCourtName
+  );
+
+  const selectClass =
+    'w-full border border-[#e4e6ea] rounded-xl px-4 py-3 text-sm text-[#1e2832] focus:outline-none focus:ring-2 focus:ring-[#0667d1] bg-white disabled:bg-[#f9fafb] disabled:text-[#adb5bd] transition-colors';
 
   const optionButtonClass =
     'w-full text-left px-5 py-4 rounded-xl border border-[#e4e6ea] bg-white hover:border-[#0667D1] hover:bg-[#e5f6fe] transition-all text-sm font-semibold text-[#1e2832] flex items-center gap-3';
@@ -463,8 +490,8 @@ export default function EligibilityChecker({ courts: _courts }: Props) {
                 </p>
               </div>
 
-              {/* Buy box — eligible results only */}
-              {data.isEligible && (
+              {/* Buy box — fully eligible (has court approval) only */}
+              {result === 'eligible' && (
                 <div className="border border-[#e4e6ea] rounded-2xl p-5 mb-6 shadow-sm">
                   {/* Header row */}
                   <div className="flex items-start justify-between gap-2 mb-3">
@@ -502,12 +529,7 @@ export default function EligibilityChecker({ courts: _courts }: Props) {
                   </div>
 
                   {/* Enroll CTA */}
-                  {result === 'eligible-pending' && (
-                    <p className="text-xs text-[#616d7b] mb-2 leading-5" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                      ⚠️ Get court approval first, then enroll.
-                    </p>
-                  )}
-                  <a
+                  <
                     href={enrollUrl}
                     className="w-full h-11 bg-[#0667d1] hover:bg-[#0556b3] text-white rounded-2xl text-sm font-semibold flex items-center justify-center gap-2 no-underline transition-colors mb-3 shadow-sm"
                     style={{ fontFamily: "'DM Sans', sans-serif" }}
@@ -531,6 +553,132 @@ export default function EligibilityChecker({ courts: _courts }: Props) {
                       </div>
                     ))}
                   </div>
+                </div>
+              )}
+
+              {/* Court finder — eligible-pending (needs court approval first) */}
+              {result === 'eligible-pending' && (
+                <div className="border border-[#e4e6ea] rounded-xl p-6 mb-6">
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <h3
+                        className="text-base font-bold text-[#1e2832] mb-1"
+                        style={{ fontFamily: "'Outfit', sans-serif" }}
+                      >
+                        Want step-by-step instructions for your court?
+                      </h3>
+                      <p
+                        className="text-sm text-[#616d7b]"
+                        style={{ fontFamily: "'DM Sans', sans-serif" }}
+                      >
+                        Find your court to get a tailored dismissal guide.
+                      </p>
+                    </div>
+                    {!courtSectionOpen && (
+                      <button
+                        className={`${primaryButtonClass} whitespace-nowrap shrink-0`}
+                        style={{ fontFamily: "'DM Sans', sans-serif" }}
+                        onClick={() => setCourtSectionOpen(true)}
+                      >
+                        Find My Court
+                      </button>
+                    )}
+                  </div>
+
+                  {courtSectionOpen && (
+                    <div className="mt-5 flex flex-col gap-4">
+                      {/* County */}
+                      <div>
+                        <label
+                          htmlFor="ec-county"
+                          className="block text-xs font-semibold text-[#616d7b] uppercase tracking-wide mb-1.5"
+                          style={{ fontFamily: "'DM Sans', sans-serif" }}
+                        >
+                          County
+                        </label>
+                        <select
+                          id="ec-county"
+                          className={selectClass}
+                          style={{ fontFamily: "'DM Sans', sans-serif" }}
+                          value={selectedCounty}
+                          onChange={e => {
+                            setSelectedCounty(e.target.value);
+                            setSelectedCourtType('');
+                            setSelectedCourtName('');
+                          }}
+                        >
+                          <option value="">Select a county</option>
+                          {allCounties.map(county => (
+                            <option key={county} value={county}>{county}</option>
+                          ))}
+                        </select>
+                      </div>
+
+                      {/* Court Type */}
+                      <div>
+                        <label
+                          htmlFor="ec-court-type"
+                          className="block text-xs font-semibold text-[#616d7b] uppercase tracking-wide mb-1.5"
+                          style={{ fontFamily: "'DM Sans', sans-serif" }}
+                        >
+                          Court Type
+                        </label>
+                        <select
+                          id="ec-court-type"
+                          className={selectClass}
+                          style={{ fontFamily: "'DM Sans', sans-serif" }}
+                          value={selectedCourtType}
+                          disabled={!selectedCounty}
+                          onChange={e => {
+                            setSelectedCourtType(e.target.value);
+                            setSelectedCourtName('');
+                          }}
+                        >
+                          <option value="">Select a court type</option>
+                          {courtTypesForCounty.map(ct => (
+                            <option key={ct} value={ct}>{ct}</option>
+                          ))}
+                        </select>
+                      </div>
+
+                      {/* Court Name */}
+                      <div>
+                        <label
+                          htmlFor="ec-court-name"
+                          className="block text-xs font-semibold text-[#616d7b] uppercase tracking-wide mb-1.5"
+                          style={{ fontFamily: "'DM Sans', sans-serif" }}
+                        >
+                          Court Name
+                        </label>
+                        <select
+                          id="ec-court-name"
+                          className={selectClass}
+                          style={{ fontFamily: "'DM Sans', sans-serif" }}
+                          value={selectedCourtName}
+                          disabled={!selectedCourtType}
+                          onChange={e => setSelectedCourtName(e.target.value)}
+                        >
+                          <option value="">Select a court</option>
+                          {courtNamesForSelection.map(name => (
+                            <option key={name} value={name}>{name}</option>
+                          ))}
+                        </select>
+                      </div>
+
+                      {/* CTA link */}
+                      {selectedCourt && (
+                        <a
+                          href={`/texas/courts/${selectedCourt.slug}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={`${primaryButtonClass} inline-flex items-center justify-center gap-2 mt-1`}
+                          style={{ fontFamily: "'DM Sans', sans-serif" }}
+                        >
+                          View {selectedCourt.courtName} Step-by-Step Instructions →
+                        </a>
+                      )}
+                    </div>
+                  )}
                 </div>
               )}
 

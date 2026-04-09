@@ -38,21 +38,29 @@ const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
           <p class="text-[18px] lg:text-xl text-[#616d7b] leading-[28px] lg:leading-7 max-w-[576px] text-center lg:text-left">
             Complete your Texas-approved 6-hour defensive driving course from any device. Dismiss your ticket or reduce insurance rates &mdash; it&apos;s never been easier. Get your certificate instantly after completing.
           </p>
-          <div class="flex flex-col sm:flex-row gap-[16px] pt-[8px] w-full items-center lg:items-start">
-            <a
-              href={enrollUrl}
-              class="bg-[#0667D1] hover:bg-[#0556b3] text-white h-[56px] px-[40px] rounded-[16px] shadow-[0px_20px_25px_-5px_rgba(17,23,34,0.10),0px_8px_10px_-6px_rgba(17,23,34,0.05)] text-[18px] font-semibold flex items-center justify-center leading-[28px] no-underline text-center w-full sm:w-auto"
-              style="font-family: 'DM Sans', sans-serif;"
-            >
-              Start Course &mdash; $25
-            </a>
-            <a
-              href="#pricing"
-              class="bg-white border border-[#e4e6ea] text-[#1e2832] h-[56px] px-[40px] rounded-[16px] shadow-[0px_4px_6px_-1px_rgba(17,23,34,0.07),0px_2px_4px_-2px_rgba(17,23,34,0.05)] text-[18px] font-semibold flex items-center justify-center leading-[28px] no-underline text-center w-full sm:w-auto"
-              style="font-family: 'DM Sans', sans-serif;"
-            >
-              Learn More
-            </a>
+          <div class="flex flex-col gap-[16px] pt-[8px] w-full items-center lg:items-start">
+            <!-- Primary CTA row -->
+            <div class="flex flex-col sm:flex-row gap-[16px] w-full items-center lg:items-start">
+              <a
+                href={enrollUrl}
+                class="bg-[#0667D1] hover:bg-[#0556b3] text-white h-[56px] px-[40px] rounded-[16px] shadow-[0px_20px_25px_-5px_rgba(17,23,34,0.10),0px_8px_10px_-6px_rgba(17,23,34,0.05)] text-[18px] font-semibold flex items-center justify-center leading-[28px] no-underline text-center w-full sm:w-auto"
+                style="font-family: 'DM Sans', sans-serif;"
+              >
+                Start Course &mdash; $25
+              </a>
+              <a
+                href="/texas/eligibility-tracker"
+                class="bg-white border border-[#e4e6ea] text-[#1e2832] h-[56px] px-[40px] rounded-[16px] shadow-[0px_4px_6px_-1px_rgba(17,23,34,0.07),0px_2px_4px_-2px_rgba(17,23,34,0.05)] text-[18px] font-semibold flex items-center justify-center leading-[28px] no-underline text-center w-full sm:w-auto"
+                style="font-family: 'DM Sans', sans-serif;"
+              >
+                Check Eligibility
+              </a>
+            </div>
+            <!-- Eligibility nudge -->
+            <div class="text-center lg:text-left">
+              <p class="text-sm font-semibold text-[#1e2832]" style="font-family:'DM Sans',sans-serif;">Not sure if you qualify to dismiss your ticket?</p>
+              <p class="text-sm text-[#616d7b]" style="font-family:'DM Sans',sans-serif;">Answer 4 quick questions and find out instantly.</p>
+            </div>
           </div>
         </div>
 
@@ -833,39 +841,6 @@ const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
         >
           Contact Support
           <img src="/assets/icons/texas/arrow-contact-support.svg" alt="" class="w-4 h-4" />
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Eligibility Checker CTA -->
-  <section class="py-8 px-4 sm:px-6 lg:px-8 bg-[#f9fafb]">
-    <div class="max-w-7xl mx-auto">
-      <div class="bg-gradient-to-r from-[#e5f6fe] to-[#eef5ff] rounded-2xl border border-[#b3dffe] px-8 py-7 flex flex-col sm:flex-row items-center gap-6 justify-between">
-        <!-- Icon + Text -->
-        <div class="flex items-center gap-5">
-          <div class="bg-[#0667D1] rounded-xl w-12 h-12 flex items-center justify-center flex-shrink-0 shadow-[0_4px_12px_rgba(6,103,209,0.3)]">
-            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M7 11l3 3 5-5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-              <circle cx="11" cy="11" r="9" stroke="white" stroke-width="1.8" fill="none"/>
-            </svg>
-          </div>
-          <div>
-            <p class="text-xs font-semibold text-[#0667D1] uppercase tracking-wider mb-0.5" style="font-family:'DM Sans',sans-serif;">Free · 2 min · No sign-up</p>
-            <h3 class="text-base font-bold text-[#1e2832]" style="font-family:'Outfit',sans-serif;">Not sure if you qualify to dismiss your ticket?</h3>
-            <p class="text-sm text-[#616d7b] leading-5 mt-0.5 max-w-lg" style="font-family:'DM Sans',sans-serif;">
-              Answer 4 quick questions and find out instantly.
-            </p>
-          </div>
-        </div>
-        <!-- CTA Button -->
-        <a
-          href="/texas/eligibility-tracker"
-          class="flex-shrink-0 bg-[#0667D1] hover:bg-[#0556b3] text-white h-11 px-7 rounded-xl text-sm font-semibold no-underline transition-colors whitespace-nowrap flex items-center gap-2 shadow-[0_4px_12px_rgba(6,103,209,0.25)]"
-          style="font-family:'DM Sans',sans-serif;"
-        >
-          Check My Eligibility
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
       </div>
     </div>

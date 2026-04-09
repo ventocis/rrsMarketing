@@ -1,0 +1,461 @@
+---
+import TexasLayout from '../../../layouts/TexasLayout.astro';
+import courtsData from '../../../data/texas-courts.json';
+
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '#';
+
+export async function getStaticPaths() {
+  return (courtsData as any).courts.map((court: any) => ({
+    params: { slug: court.slug },
+    props: { court },
+  }));
+}
+
+const { court } = Astro.props as any;
+
+// Helper: join array or return 'Unavailable'
+function joinOrNA(arr: string[] | undefined) {
+  return arr && arr.length > 0 ? arr.join(', ') : 'Unavailable';
+}
+---
+
+{!isEnabled && <meta http-equiv="refresh" content="0;url=/" />}
+
+{isEnabled && (
+<TexasLayout
+  title={`${court.county} County ${court.courtType} Court — ${court.courtName} | Driver Safety Course`}
+  description={`Complete your Texas Driver Safety Course for ${court.courtName} in ${court.county} County. Step-by-step instructions to dismiss your traffic ticket.`}
+  keywords={`${court.courtName}, ${court.county} County, Texas driver safety course, defensive driving, traffic school`}
+  url={`/texas/courts/${court.slug}`}
+>
+
+  <section class="pt-8 pb-[112px] px-4 sm:px-6 lg:px-8 bg-[#f9fafb]">
+    <div class="max-w-7xl mx-auto flex flex-col gap-12">
+
+      <!-- Breadcrumbs -->
+      <nav class="flex items-center gap-2 text-sm text-[#616d7b] flex-wrap">
+        <a href="/texas" class="hover:text-[#1e2832] transition-colors no-underline">Texas</a>
+        <span>›</span>
+        <a href="/texas/courts" class="hover:text-[#1e2832] transition-colors no-underline">Courts</a>
+        <span>›</span>
+        <span class="text-[#1e2832] font-medium">{court.courtName}</span>
+      </nav>
+
+      <!-- Header -->
+      <div class="flex flex-col gap-4 items-center w-full">
+        <div class="bg-[#e6f6ff] inline-flex items-center px-4 py-2 rounded-full">
+          <span class="text-sm font-semibold text-[#0967d2]">Driver Safety Course Information</span>
+        </div>
+        <h1 class="text-[40px] lg:text-[48px] font-bold text-[#323f4b] leading-[52px] lg:leading-[60px] text-center w-full">
+          {court.county} County<br />
+          {court.courtType} Court<br />
+          {court.courtName}
+        </h1>
+        <p class="text-lg text-[#3e4c59] leading-7 text-center max-w-3xl">
+          Use this page to see how your court handles Texas Defensive Driving Courses (Driver's Safety Course). Always follow your court's instructions if they differ from what is listed here.
+        </p>
+      </div>
+
+      <!-- Two Column Layout -->
+      <div class="flex flex-col lg:flex-row gap-8 lg:gap-12">
+
+        <!-- Left Column -->
+        <div class="flex-1 flex flex-col gap-8">
+
+          <!-- Court Information Card -->
+          <div class="bg-white border border-[#e4e6ea] rounded-2xl overflow-hidden shadow-sm">
+            <div class="px-6 sm:px-8 py-6 flex items-center gap-4 border-b border-[#e4e6ea]">
+              <div class="bg-[#e6f6ff] flex items-center justify-center rounded-[14px] w-12 h-12 shrink-0">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0967d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                  <polyline points="14 2 14 8 20 8"/>
+                  <line x1="9" y1="15" x2="15" y2="15"/>
+                </svg>
+              </div>
+              <h2 class="text-xl font-bold text-[#323f4b]">Court Information</h2>
+            </div>
+            <div class="px-6 sm:px-8 py-6">
+              <div class="bg-[#f4f4f4] border border-[#e4e7eb] rounded-[14px] p-4 sm:p-6 grid grid-cols-1 md:grid-cols-2 gap-3">
+
+                <!-- Judge -->
+                <div class="bg-white rounded-[10px] p-4 flex items-start gap-3">
+                  <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9 9C10.6569 9 12 7.65685 12 6C12 4.34315 10.6569 3 9 3C7.34315 3 6 4.34315 6 6C6 7.65685 7.34315 9 9 9Z" fill="#616d7b"/>
+                    <path d="M9 10.5C6.51472 10.5 4.5 12.5147 4.5 15V15.75C4.5 16.1642 4.83579 16.5 5.25 16.5H12.75C13.1642 16.5 13.5 16.1642 13.5 15.75V15C13.5 12.5147 11.4853 10.5 9 10.5Z" fill="#616d7b"/>
+                  </svg>
+                  <div class="flex flex-wrap items-center gap-x-2 gap-y-0.5">
+                    <span class="text-sm font-bold text-[#323f4b]">Judge</span>
+                    <span class="text-sm text-[#3e4c59]">{joinOrNA(court.judges)}</span>
+                  </div>
+                </div>
+
+                <!-- Phone -->
+                <div class="bg-white rounded-[10px] p-4 flex items-start gap-3">
+                  <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="4" y="1" width="10" height="16" rx="1.5" stroke="#616d7b" stroke-width="1.5" fill="none"/>
+                    <circle cx="9" cy="13.5" r="0.5" fill="#616d7b"/>
+                  </svg>
+                  <div class="flex flex-wrap items-center gap-x-2 gap-y-0.5">
+                    <span class="text-sm font-bold text-[#323f4b]">Phone</span>
+                    {court.phone && court.phone.length > 0 ? (
+                      court.phone.map((p: string, i: number) => (
+                        <a href={`tel:${p}`} class="text-sm text-[#3e4c59] underline">{p}{i < court.phone.length - 1 ? ',' : ''}</a>
+                      ))
+                    ) : (
+                      <span class="text-sm text-[#3e4c59]">Unavailable</span>
+                    )}
+                  </div>
+                </div>
+
+                <!-- Website -->
+                <div class="bg-white rounded-[10px] p-4 flex items-start gap-3">
+                  <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="9" cy="9" r="7.5" stroke="#616d7b" stroke-width="1.5" fill="none"/>
+                    <path d="M2.25 9h13.5M9 1.5S6 5.25 6 9s3 7.5 3 7.5 3-3.75 3-7.5S9 1.5 9 1.5z" stroke="#616d7b" stroke-width="1.5" fill="none"/>
+                  </svg>
+                  <div class="flex flex-wrap items-center gap-x-2 gap-y-0.5">
+                    <span class="text-sm font-bold text-[#323f4b]">Website</span>
+                    {court.website && court.website.length > 0 ? (
+                      court.website.map((w: string, i: number) => (
+                        <a href={w} target="_blank" rel="noopener noreferrer" class="text-sm text-[#3e4c59] underline break-all">{w}{i < court.website.length - 1 ? ',' : ''}</a>
+                      ))
+                    ) : (
+                      <span class="text-sm text-[#3e4c59]">Unavailable</span>
+                    )}
+                  </div>
+                </div>
+
+                <!-- Email -->
+                <div class="bg-white rounded-[10px] p-4 flex items-start gap-3">
+                  <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="2.25" y="4.5" width="13.5" height="9" rx="0.75" stroke="#616d7b" stroke-width="1.5" fill="none"/>
+                    <path d="M2.25 4.5 9 9.75l6.75-5.25" stroke="#616d7b" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+                  <div class="flex flex-wrap items-center gap-x-2 gap-y-0.5">
+                    <span class="text-sm font-bold text-[#323f4b]">Email</span>
+                    {court.email && court.email.length > 0 ? (
+                      court.email.map((e: string, i: number) => (
+                        <a href={`mailto:${e}`} class="text-sm text-[#3e4c59] underline break-all">{e}{i < court.email.length - 1 ? ',' : ''}</a>
+                      ))
+                    ) : (
+                      <span class="text-sm text-[#3e4c59]">Unavailable</span>
+                    )}
+                  </div>
+                </div>
+
+                <!-- Address (full width) -->
+                <div class="bg-white rounded-[10px] p-4 flex items-start gap-3 md:col-span-2">
+                  <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9 9.75a2.25 2.25 0 1 0 0-4.5 2.25 2.25 0 0 0 0 4.5Z" fill="#616d7b"/>
+                    <path d="M9 1.5C6.515 1.5 4.5 3.515 4.5 6c0 2.25 3.75 7.5 4.5 7.5S13.5 8.25 13.5 6c0-2.485-2.015-4.5-4.5-4.5Z" stroke="#616d7b" stroke-width="1.5" fill="none"/>
+                  </svg>
+                  <div class="flex flex-wrap items-center gap-x-2 gap-y-0.5">
+                    <span class="text-sm font-bold text-[#323f4b]">Address</span>
+                    <span class="text-sm text-[#3e4c59]">{joinOrNA(court.address)}</span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- Steps (native details/summary accordion) -->
+          <div class="flex flex-col gap-4">
+
+            <!-- Step 1 -->
+            <details class="bg-white border border-[#e4e6ea] rounded-2xl overflow-hidden shadow-sm group">
+              <summary class="px-8 py-6 flex items-center gap-4 cursor-pointer list-none hover:bg-gray-50 transition-colors">
+                <div class="bg-[#e6f6ff] flex items-center justify-center rounded-[14px] w-12 h-12 shrink-0">
+                  <span class="text-xl font-bold text-[#03449e]">1</span>
+                </div>
+                <span class="flex-1 text-xl font-bold text-[#323f4b] text-left leading-[30px]">Make Sure You're Eligible</span>
+                <svg class="w-4 h-4 transition-transform group-open:rotate-180 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                </svg>
+              </summary>
+              <div class="px-8 py-6">
+                <div class="bg-[#f4f4f4] border border-[#e4e7eb] rounded-[14px] p-6 flex flex-col gap-6">
+                  <p class="text-sm text-[#3e4c59] leading-5">To qualify for ticket dismissal through a Texas Driver Safety Course (DSC), you must meet all of the following requirements:</p>
+                  <div class="flex flex-col gap-3">
+                    {[
+                      { text: "You must have a valid Texas driver's license", sub: "Your license cannot be expired, suspended, or revoked" },
+                      { text: "You must NOT hold a Commercial Driver License (CDL)", sub: "Even if driving a personal vehicle" },
+                      { text: "You must have current auto insurance" },
+                      { text: "You must NOT have completed a Driver Safety Course within the past 12 months" },
+                    ].map(req => (
+                      <div class="bg-white rounded-[10px] p-4 flex items-start gap-3">
+                        <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <div class="flex flex-col gap-1">
+                          <p class="text-sm font-bold text-[#323f4b] leading-5">{req.text}</p>
+                          {req.sub && <p class="text-xs text-[#3e4c59] leading-[18px]">{req.sub}</p>}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <p class="text-sm text-[#3e4c59] leading-5">Some violations may be ineligible, including:</p>
+                  <div class="flex flex-col gap-3">
+                    {[
+                      "Speeding 25 mph or more over the posted limit",
+                      "Speeding 95 mph or more",
+                      "Passing a stopped school bus",
+                      "Leaving the scene of an accident",
+                      "Certain construction-zone or school-zone violations",
+                    ].map(v => (
+                      <div class="bg-white rounded-[10px] p-4 flex items-start gap-3">
+                        <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#FF3B30" stroke="#FF3B30" stroke-width="1"/><path d="M6 6l6 6M12 6l-6 6" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+                        <p class="text-sm font-bold text-[#323f4b] leading-5">{v}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <p class="text-sm text-[#3e4c59] leading-5">Eligibility is determined by the court. Always confirm eligibility with your court before requesting permission.</p>
+                </div>
+              </div>
+            </details>
+
+            <!-- Step 2 -->
+            <details class="bg-white border border-[#e4e6ea] rounded-2xl overflow-hidden shadow-sm group">
+              <summary class="px-8 py-6 flex items-center gap-4 cursor-pointer list-none hover:bg-gray-50 transition-colors">
+                <div class="bg-[#e6f6ff] flex items-center justify-center rounded-[14px] w-12 h-12 shrink-0">
+                  <span class="text-xl font-bold text-[#03449e]">2</span>
+                </div>
+                <span class="flex-1 text-xl font-bold text-[#323f4b] text-left leading-[30px]">Request Permission From the Court</span>
+                <svg class="w-4 h-4 transition-transform group-open:rotate-180 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                </svg>
+              </summary>
+              <div class="px-8 py-6">
+                <div class="bg-[#f4f4f4] border border-[#e4e7eb] rounded-[14px] p-6 flex flex-col gap-6">
+                  <p class="text-sm text-[#3e4c59] leading-5">You must receive court approval before taking a Driver Safety Course.</p>
+                  <div>
+                    <p class="text-sm text-[#3e4c59] leading-5 mb-3">Most courts require you to:</p>
+                    <div class="flex flex-col gap-3">
+                      {["Visit the court's website", "Search for \"Driver Safety Course\" or \"Defensive Driving\"", "Review the court's specific DSC instructions"].map(s => (
+                        <div class="bg-white rounded-[10px] p-4 flex items-start gap-3">
+                          <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          <p class="text-sm font-bold text-[#323f4b] leading-5">{s}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <p class="text-sm text-[#3e4c59] leading-5 mb-3">You may be asked to:</p>
+                    <div class="flex flex-col gap-3">
+                      {[
+                        "Complete a Driver Safety Course affidavit confirming you have not taken a course in the past 12 months",
+                        "Enter a plea of No Contest or Guilty",
+                        "Pay court costs and any DSC administrative fees",
+                        "Submit your request online, by email, by mail, or in person (varies by court)",
+                      ].map(s => (
+                        <div class="bg-white rounded-[10px] p-4 flex items-start gap-3">
+                          <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#616d7b" stroke="#616d7b" stroke-width="1"/><path d="M9 5v4M9 13h.01" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+                          <p class="text-sm font-bold text-[#323f4b] leading-5">{s}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <p class="text-sm font-semibold text-[#1e2832] leading-5 mb-1">Important:</p>
+                    <p class="text-sm text-[#3e4c59] leading-5">Each court sets its own fees and submission process. Always follow the instructions provided by your court.</p>
+                  </div>
+                </div>
+              </div>
+            </details>
+
+            <!-- Step 3 -->
+            <details class="bg-white border border-[#e4e6ea] rounded-2xl overflow-hidden shadow-sm group">
+              <summary class="px-8 py-6 flex items-center gap-4 cursor-pointer list-none hover:bg-gray-50 transition-colors">
+                <div class="bg-[#e6f6ff] flex items-center justify-center rounded-[14px] w-12 h-12 shrink-0">
+                  <span class="text-xl font-bold text-[#03449e]">3</span>
+                </div>
+                <span class="flex-1 text-xl font-bold text-[#323f4b] text-left leading-[30px]">Wait for Court Approval</span>
+                <svg class="w-4 h-4 transition-transform group-open:rotate-180 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                </svg>
+              </summary>
+              <div class="px-8 py-6">
+                <div class="bg-[#f4f4f4] border border-[#e4e7eb] rounded-[14px] p-6 flex flex-col gap-6">
+                  <p class="text-sm text-[#3e4c59] leading-5">Do not start a Driver Safety Course until the court grants permission.</p>
+                  <div>
+                    <p class="text-sm text-[#3e4c59] leading-5 mb-3">Once approved, the court will provide:</p>
+                    <div class="flex flex-col gap-3">
+                      {[
+                        "Your deadline to complete the course",
+                        "Any additional documents required",
+                        "Instructions on how and where to submit your completion paperwork",
+                      ].map(s => (
+                        <div class="bg-white rounded-[10px] p-4 flex items-start gap-3">
+                          <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          <p class="text-sm font-bold text-[#323f4b] leading-5">{s}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </details>
+
+            <!-- Step 4 -->
+            <details class="bg-white border border-[#e4e6ea] rounded-2xl overflow-hidden shadow-sm group">
+              <summary class="px-8 py-6 flex items-center gap-4 cursor-pointer list-none hover:bg-gray-50 transition-colors">
+                <div class="bg-[#e6f6ff] flex items-center justify-center rounded-[14px] w-12 h-12 shrink-0">
+                  <span class="text-xl font-bold text-[#03449e]">4</span>
+                </div>
+                <span class="flex-1 text-xl font-bold text-[#323f4b] text-left leading-[30px]">Take a TDLR-Approved Driver Safety Course</span>
+                <svg class="w-4 h-4 transition-transform group-open:rotate-180 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                </svg>
+              </summary>
+              <div class="px-8 py-6">
+                <div class="bg-[#f4f4f4] border border-[#e4e7eb] rounded-[14px] p-6 flex flex-col gap-6">
+                  <div>
+                    <p class="text-sm text-[#3e4c59] leading-5 mb-3">After receiving court approval:</p>
+                    <div class="flex flex-col gap-3">
+                      {[
+                        "Enroll with a Texas-approved Driver Safety Course provider",
+                        "Complete the online course",
+                        "Receive a Certificate of Completion after finishing",
+                      ].map(s => (
+                        <div class="bg-white rounded-[10px] p-4 flex items-start gap-3">
+                          <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          <p class="text-sm font-bold text-[#323f4b] leading-5">{s}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </details>
+
+            <!-- Step 5 -->
+            <details class="bg-white border border-[#e4e6ea] rounded-2xl overflow-hidden shadow-sm group">
+              <summary class="px-8 py-6 flex items-center gap-4 cursor-pointer list-none hover:bg-gray-50 transition-colors">
+                <div class="bg-[#e6f6ff] flex items-center justify-center rounded-[14px] w-12 h-12 shrink-0">
+                  <span class="text-xl font-bold text-[#03449e]">5</span>
+                </div>
+                <span class="flex-1 text-xl font-bold text-[#323f4b] text-left leading-[30px]">Get Your Certified Type 3A Driving Record</span>
+                <svg class="w-4 h-4 transition-transform group-open:rotate-180 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                </svg>
+              </summary>
+              <div class="px-8 py-6">
+                <div class="bg-[#f4f4f4] border border-[#e4e7eb] rounded-[14px] p-6 flex flex-col gap-6">
+                  <p class="text-sm text-[#3e4c59] leading-5">Texas law requires you to submit a certified driving record with your certificate.</p>
+                  <div>
+                    <p class="text-sm text-[#3e4c59] leading-5 mb-3">To obtain it:</p>
+                    <div class="flex flex-col gap-3">
+                      {[
+                        { text: <Fragment>Visit <a href="https://www.texas.gov/driver-record" target="_blank" rel="noopener noreferrer" class="text-[#0667d1] hover:underline">https://www.texas.gov/driver-record</a></Fragment> },
+                        { text: 'Select "Type 3A Certified Driving Record"' },
+                        { text: "Download or print the record once received" },
+                      ].map(s => (
+                        <div class="bg-white rounded-[10px] p-4 flex items-start gap-3">
+                          <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          <p class="text-sm font-bold text-[#323f4b] leading-5">{s.text}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </details>
+
+            <!-- Step 6 -->
+            <details class="bg-white border border-[#e4e6ea] rounded-2xl overflow-hidden shadow-sm group">
+              <summary class="px-8 py-6 flex items-center gap-4 cursor-pointer list-none hover:bg-gray-50 transition-colors">
+                <div class="bg-[#e6f6ff] flex items-center justify-center rounded-[14px] w-12 h-12 shrink-0">
+                  <span class="text-xl font-bold text-[#03449e]">6</span>
+                </div>
+                <span class="flex-1 text-xl font-bold text-[#323f4b] text-left leading-[30px]">Submit Your Completion Packet to the Court</span>
+                <svg class="w-4 h-4 transition-transform group-open:rotate-180 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                </svg>
+              </summary>
+              <div class="px-8 py-6">
+                <div class="bg-[#f4f4f4] border border-[#e4e7eb] rounded-[14px] p-6 flex flex-col gap-6">
+                  <div>
+                    <p class="text-sm text-[#3e4c59] leading-5 mb-3">Before your court deadline, submit:</p>
+                    <div class="flex flex-col gap-3">
+                      {[
+                        "Your Certificate of Completion",
+                        "Your Type 3A Certified Driving Record",
+                        "Any additional court-specific documents (affidavit, compliance form, etc.)",
+                      ].map(s => (
+                        <div class="bg-white rounded-[10px] p-4 flex items-start gap-3">
+                          <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          <p class="text-sm font-bold text-[#323f4b] leading-5">{s}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <p class="text-sm text-[#3e4c59] leading-5 mb-3">Submit everything exactly how your court requires:</p>
+                    <div class="flex flex-col gap-3">
+                      {["Online portal", "Email", "Mail", "In person"].map(s => (
+                        <div class="bg-white rounded-[10px] p-4 flex items-start gap-3">
+                          <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          <p class="text-sm font-bold text-[#323f4b] leading-5">{s}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </details>
+
+          </div><!-- /steps -->
+        </div><!-- /left col -->
+
+        <!-- Right Column — Buy Box -->
+        <div class="lg:w-[300px] flex-shrink-0">
+          <div class="bg-white border border-[#e4e6ea] rounded-[20px] shadow-[0px_1px_3px_0px_rgba(17,23,34,0.04),0px_6px_16px_0px_rgba(17,23,34,0.06)] p-5 lg:sticky lg:top-[88px] flex flex-col">
+            <div class="flex items-start justify-between mb-3">
+              <h3 class="text-lg font-semibold text-[#1e2832] leading-6 pr-2">Texas Defensive Driving Course 6hr</h3>
+              <div class="bg-[#e5f6fe] px-2 py-0.5 rounded-2xl flex-shrink-0">
+                <span class="text-xs font-semibold text-[#0667d1]">Great Value</span>
+              </div>
+            </div>
+            <div class="flex items-baseline gap-1 mb-1">
+              <span class="text-[32px] font-bold text-[#1e2832] leading-9">$25</span>
+              <span class="text-xs text-[#616d7b]">.00</span>
+              <span class="text-lg font-medium text-[#616d7b] line-through ml-2">$35.00</span>
+            </div>
+            <p class="text-xs text-[#616d7b] mb-3">+ $3.00 state processing fee</p>
+            <div class="flex gap-1 items-center mb-4">
+              {[...Array(5)].map(() => (
+                <img src="/assets/icons/texas/star-pricing.svg" alt="" class="w-3.5 h-3.5" />
+              ))}
+              <span class="text-xs font-medium text-[#1e2832] ml-1">4.9 out of 5</span>
+            </div>
+            <a
+              href={enrollUrl}
+              class="w-full h-11 bg-[#0667d1] hover:bg-[#0556b3] text-white rounded-2xl text-sm font-semibold flex items-center justify-center gap-2 no-underline transition-colors mb-3 shadow-sm"
+            >
+              Enroll Now
+              <img src="/assets/icons/texas/arrow-enroll.svg" alt="" class="w-3 h-3" />
+            </a>
+            <div class="flex flex-col gap-2">
+              {[
+                "Secure checkout",
+                "TDLR-approved provider",
+                "100% money-back guarantee",
+                "Instant Certificate Download",
+                "Compatible with any device",
+              ].map(item => (
+                <div class="flex gap-2 items-center">
+                  <div class="bg-[#e5f6fe] rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0">
+                    <img src="/assets/icons/texas/checkmark-feature.svg" alt="" class="w-3 h-3" />
+                  </div>
+                  <span class="text-xs text-[#616d7b]">{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /two col -->
+    </div>
+  </section>
+
+</TexasLayout>
+)}

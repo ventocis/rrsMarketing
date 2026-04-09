@@ -1,0 +1,26 @@
+---
+/**
+ * /support — redirect to the external contact/help center URL.
+ * Uses a meta refresh + JS redirect so it works in SSG without server-side redirects.
+ */
+const contactUrl = import.meta.env.VITE_CONTACT_US_URL || 'https://roadreadysafety.com/support';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta http-equiv="refresh" content={`0; url=${contactUrl}`} />
+    <title>Redirecting…</title>
+    <script define:vars={{ contactUrl }}>
+      window.location.replace(contactUrl);
+    </script>
+  </head>
+  <body>
+    <p style="font-family: sans-serif; padding: 2rem; color: #616d7b;">
+      Redirecting to Help Center…
+      <a href={contactUrl} style="color: #0667D1;">Click here if you are not redirected.</a>
+    </p>
+  </body>
+</html>

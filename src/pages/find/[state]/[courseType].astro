@@ -1,0 +1,145 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import CourseCard from '../../../components/CourseCard.astro';
+import coursesData from '../../../data/courses.json';
+import finderMap from '../../../data/finder-map.json';
+import resultsCopy from '../../../copy/results.json';
+import { stateNames } from '../../../utils/states';
+
+const courses = coursesData as any[];
+const map = finderMap as Record<string, string[]>;
+
+export function getStaticPaths() {
+  const allCourses = coursesData as any[];
+  const paths: { params: { state: string; courseType: string } }[] = [];
+
+  // 1. Generate a page for each state/courseType combo that has 2+ courses
+  const combos = new Map<string, number>();
+  for (const c of allCourses) {
+    const key = `${c.state}__${c.course_type}`;
+    combos.set(key, (combos.get(key) ?? 0) + 1);
+  }
+  for (const [key, count] of combos) {
+    if (count >= 2) {
+      const [state, courseType] = key.split('__');
+      paths.push({ params: { state, courseType } });
+    }
+  }
+
+  // 2. Generate state/multi for every state that has courses
+  const states = new Set(allCourses.map(c => c.state));
+  for (const state of states) {
+    paths.push({ params: { state, courseType: 'multi' } });
+  }
+
+  return paths;
+}
+
+const { state, courseType } = Astro.params;
+
+const stateFull = stateNames[state] || state;
+const isMulti = courseType === 'multi';
+
+// Determine which course types to show
+const courseTypesToShow: string[] = isMulti
+  ? Array.from(new Set(courses.filter(c => c.state === state).map(c => c.course_type)))
+  : [courseType];
+
+// Filter courses
+const filtered = courses.filter(c =>
+  c.state === state && courseTypesToShow.includes(c.course_type)
+);
+
+const courseTypeLabel = isMulti ? 'Courses' : courseType;
+const heroTitle = `${stateFull} — ${courseTypeLabel}`;
+const pageDescription = `Find state-approved ${isMulti ? 'traffic courses' : courseType.toLowerCase()} in ${stateFull}. Compare prices, duration, and certificate details.`;
+---
+
+<Layout
+  title={`${stateFull} ${courseTypeLabel}`}
+  description={pageDescription}
+  keywords={`${stateFull}, ${courseTypeLabel}, traffic school, defensive driving, online course`}
+  url={`/find/${state}/${courseType}`}
+>
+  <Header />
+
+  <main class="bg-[#F9FAFB] min-h-screen pb-12">
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 py-8 md:py-12">
+
+      <!-- Breadcrumb -->
+      <nav aria-label="Breadcrumb" class="mb-8">
+        <ol class="flex flex-wrap items-center gap-2 text-sm text-[#616d7b]" style="font-family: 'DM Sans', sans-serif;">
+          <li class="flex items-center gap-2">
+            <a href="/" class="hover:text-[#0667D1] transition-colors">Home</a>
+          </li>
+          <li class="flex items-center gap-2">
+            <span aria-hidden="true">›</span>
+            <a href="/courses" class="hover:text-[#0667D1] transition-colors">Courses</a>
+          </li>
+          <li class="flex items-center gap-2">
+            <span aria-hidden="true">›</span>
+            <span class="text-[#1e2832] font-medium">{stateFull}</span>
+          </li>
+          {!isMulti && (
+            <li class="flex items-center gap-2">
+              <span aria-hidden="true">›</span>
+              <span class="text-[#1e2832] font-medium">{courseType}</span>
+            </li>
+          )}
+        </ol>
+      </nav>
+
+      <!-- Hero -->
+      <div class="mb-8 md:mb-10">
+        <h1 class="text-3xl md:text-4xl font-bold text-[#1e2832] mb-3" style="font-family: 'Outfit', sans-serif;">
+          {heroTitle}
+        </h1>
+        <p class="text-lg text-[#616d7b]" style="font-family: 'DM Sans', sans-serif;">
+          {resultsCopy.hero.sub}
+        </p>
+      </div>
+
+      <!-- Results grid or empty state -->
+      {filtered.length === 0 ? (
+        <div class="text-center py-16">
+          <div class="max-w-md mx-auto">
+            <svg class="w-12 h-12 text-[#616d7b] mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <h2 class="text-xl font-bold text-[#1e2832] mb-2" style="font-family: 'Outfit', sans-serif;">No courses found</h2>
+            <p class="text-[#616d7b] mb-6" style="font-family: 'DM Sans', sans-serif;">
+              We don't currently have courses for this combination. Try a different state or check back soon.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-3 justify-center">
+              <a
+                href="/"
+                class="py-2.5 px-5 rounded-[12px] bg-[#0667D1] hover:bg-[#0556b3] text-white text-sm font-semibold transition-colors"
+                style="font-family: 'DM Sans', sans-serif;"
+              >
+                Find another course
+              </a>
+              <a
+                href="/courses"
+                class="py-2.5 px-5 rounded-[12px] border border-[#e5e5e5] bg-white text-[#1e2832] text-sm font-semibold hover:bg-gray-50 transition-colors"
+                style="font-family: 'DM Sans', sans-serif;"
+              >
+                Browse all courses
+              </a>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div class="grid grid-cols-1 gap-6 md:gap-8 lg:grid-cols-2">
+          {filtered.map((course: any) => (
+            <CourseCard course={course} />
+          ))}
+        </div>
+      )}
+
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

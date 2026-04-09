@@ -1,0 +1,179 @@
+---
+/**
+ * DocLayout — shared layout for markdown-based pages (privacy, terms, partners, how-to-submit).
+ * Renders markdown content with consistent prose styling.
+ * Uses scoped CSS instead of @tailwindcss/typography (not installed).
+ */
+import Layout from './Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface BreadcrumbItem {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  keywords?: string;
+  url: string;
+  breadcrumbs?: BreadcrumbItem[];
+}
+
+const { title, description, keywords, url, breadcrumbs = [] } = Astro.props;
+---
+
+<Layout title={title} description={description} keywords={keywords} url={url}>
+  <Header />
+
+  <main class="bg-[#f9fafb] min-h-screen">
+    <div class="max-w-[768px] mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
+
+      {breadcrumbs.length > 0 && (
+        <nav aria-label="Breadcrumb" class="mb-8">
+          <ol class="flex flex-wrap items-center gap-2 text-sm text-[#616d7b]" style="font-family: 'DM Sans', sans-serif;">
+            {breadcrumbs.map((crumb, i) => (
+              <li class="flex items-center gap-2">
+                {i > 0 && <span aria-hidden="true">›</span>}
+                {crumb.href
+                  ? <a href={crumb.href} class="hover:text-[#0667D1] transition-colors">{crumb.label}</a>
+                  : <span class="text-[#1e2832] font-medium">{crumb.label}</span>
+                }
+              </li>
+            ))}
+          </ol>
+        </nav>
+      )}
+
+      <div class="bg-white border border-[#e4e6ea] rounded-[20px] p-8 lg:p-12 doc-content">
+        <slot />
+      </div>
+
+    </div>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style is:global>
+  /* ── Markdown prose styles scoped to .doc-content ── */
+
+  .doc-content {
+    font-family: 'DM Sans', sans-serif;
+    color: #616d7b;
+  }
+
+  .doc-content h1 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1e2832;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+
+  .doc-content h2 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.375rem;
+    font-weight: 700;
+    color: #1e2832;
+    line-height: 1.35;
+    letter-spacing: -0.3px;
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e4e6ea;
+  }
+
+  .doc-content h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #1e2832;
+    line-height: 1.4;
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .doc-content p {
+    font-size: 0.9375rem;
+    line-height: 1.75;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: #616d7b;
+  }
+
+  .doc-content p:last-child {
+    margin-bottom: 0;
+  }
+
+  .doc-content ul,
+  .doc-content ol {
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+    color: #616d7b;
+  }
+
+  .doc-content ul {
+    list-style-type: disc;
+  }
+
+  .doc-content ol {
+    list-style-type: decimal;
+  }
+
+  .doc-content li {
+    font-size: 0.9375rem;
+    line-height: 1.75;
+    margin-bottom: 0.375rem;
+  }
+
+  .doc-content a {
+    color: #0667D1;
+    text-decoration: none;
+  }
+
+  .doc-content a:hover {
+    text-decoration: underline;
+  }
+
+  .doc-content strong {
+    font-weight: 600;
+    color: #1e2832;
+  }
+
+  .doc-content em {
+    font-style: italic;
+  }
+
+  .doc-content hr {
+    border: none;
+    border-top: 1px solid #e4e6ea;
+    margin: 2rem 0;
+  }
+
+  .doc-content blockquote {
+    border-left: 3px solid #0667D1;
+    padding-left: 1rem;
+    margin-left: 0;
+    color: #616d7b;
+    font-style: italic;
+  }
+
+  .doc-content code {
+    background: #f0f2f4;
+    border-radius: 4px;
+    padding: 0.15em 0.4em;
+    font-size: 0.875em;
+    color: #1e2832;
+  }
+
+  /* First h1 needs no top margin */
+  .doc-content > h1:first-child,
+  .doc-content > p:first-child {
+    margin-top: 0;
+  }
+</style>

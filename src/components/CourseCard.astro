@@ -26,6 +26,7 @@ const { course } = Astro.props;
 const portalUrl = import.meta.env.VITE_PORTAL_URL || 'https://app.roadreadysafety.com';
 const isQa = import.meta.env.VITE_IS_QA === 'true';
 const isTexasEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const texasEnrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || 'https://app.roadreadysafety.com/public/checkout?sku=tx-bdi';
 const TEXAS_SLUG = 'tx-defensive';
 
 function getLearnMoreHref(slug: string) {
@@ -34,7 +35,8 @@ function getLearnMoreHref(slug: string) {
 }
 
 function getSignUpHref(course: Course) {
-  if (isTexasEnabled && course.slug === TEXAS_SLUG) return '/texas';
+  // TX: "Sign up" goes straight to checkout, not the /texas marketing page
+  if (isTexasEnabled && course.slug === TEXAS_SLUG) return isQa && course.qa_link ? course.qa_link : texasEnrollUrl;
   if (isQa && course.qa_link) return course.qa_link;
   if (course.provider_type === 'Partner' && course.affiliate_link) return course.affiliate_link;
   return portalUrl;

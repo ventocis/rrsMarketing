@@ -79,6 +79,7 @@ jobs:
           make deploy ENV=${{ inputs.environment }}
 
       - name: Invalidate CloudFront cache
+        continue-on-error: true
         run: |
           if [ "${{ inputs.environment }}" = "prod" ]; then
             DOMAIN="roadreadysafety.com"

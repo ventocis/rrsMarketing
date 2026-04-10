@@ -20,10 +20,10 @@ const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
 >
 
   <!-- Hero Section -->
-  <section class="bg-gradient-to-b from-[#e5f6fe] to-white pt-8 pb-16 lg:pt-16 lg:pb-[128px] relative overflow-hidden">
+  <section class="bg-gradient-to-b from-info to-white pt-8 pb-16 lg:pt-16 lg:pb-[128px] relative overflow-hidden">
     <!-- Background blur effects -->
     <div class="absolute inset-0 opacity-30 pointer-events-none">
-      <div class="absolute bg-[#7cc3f9] blur-[32px] rounded-full w-64 h-64 left-10 top-[150px]"></div>
+      <div class="absolute bg-info-border blur-[32px] rounded-full w-64 h-64 left-10 top-[150px]"></div>
       <div class="absolute bg-[#b9e2fe] blur-[32px] rounded-full w-96 h-96 bottom-20 right-10"></div>
     </div>
 
@@ -32,23 +32,23 @@ const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
       <div class="flex flex-col lg:flex-row gap-8 lg:gap-12 xl:gap-16 items-center justify-center">
         <!-- Left Column -->
         <div class="w-full lg:w-[544px] flex flex-col gap-[24px] items-center lg:items-start">
-          <h1 class="text-[36px] lg:text-[60px] font-bold text-[#021954] leading-[36px] lg:leading-[74px] tracking-[-2px] text-center lg:text-left w-full max-w-[343px] lg:max-w-none">
+          <h1 class="text-[36px] lg:text-[60px] font-bold text-primary-navy leading-[36px] lg:leading-[74px] tracking-[-2px] text-center lg:text-left w-full max-w-[343px] lg:max-w-none">
             <span class="font-normal">#1</span> <span class="font-semibold">Texas Driver Safety Course:</span> <span class="font-normal">Fast, Convenient, &amp; Online</span>
           </h1>
-          <p class="text-[18px] lg:text-xl text-[#616d7b] leading-[28px] lg:leading-7 max-w-[576px] text-center lg:text-left">
+          <p class="text-[18px] lg:text-xl text-text-body leading-[28px] lg:leading-7 max-w-[576px] text-center lg:text-left">
             Complete your Texas-approved 6-hour defensive driving course from any device. Dismiss your ticket or reduce insurance rates &mdash; it&apos;s never been easier. Get your certificate instantly after completing.
           </p>
           <div class="flex flex-col sm:flex-row gap-[16px] pt-[8px] w-full items-center lg:items-start">
             <a
               href={enrollUrl}
-              class="bg-[#0667D1] hover:bg-[#0556b3] text-white h-[56px] px-[40px] rounded-[16px] shadow-[0px_20px_25px_-5px_rgba(17,23,34,0.10),0px_8px_10px_-6px_rgba(17,23,34,0.05)] text-[18px] font-semibold flex items-center justify-center leading-[28px] no-underline text-center w-full sm:w-auto"
+              class="bg-primary hover:bg-primary-hover text-white h-[56px] px-[40px] rounded-[16px] shadow-[0px_20px_25px_-5px_rgba(17,23,34,0.10),0px_8px_10px_-6px_rgba(17,23,34,0.05)] text-[18px] font-semibold flex items-center justify-center leading-[28px] no-underline text-center w-full sm:w-auto"
               style="font-family: 'DM Sans', sans-serif;"
             >
               Start Course &mdash; $25
             </a>
             <a
               href="#pricing"
-              class="bg-white border border-[#e4e6ea] text-[#1e2832] h-[56px] px-[40px] rounded-[16px] shadow-[0px_4px_6px_-1px_rgba(17,23,34,0.07),0px_2px_4px_-2px_rgba(17,23,34,0.05)] text-[18px] font-semibold flex items-center justify-center leading-[28px] no-underline text-center w-full sm:w-auto"
+              class="bg-white border border-border text-text h-[56px] px-[40px] rounded-[16px] shadow-[0px_4px_6px_-1px_rgba(17,23,34,0.07),0px_2px_4px_-2px_rgba(17,23,34,0.05)] text-[18px] font-semibold flex items-center justify-center leading-[28px] no-underline text-center w-full sm:w-auto"
               style="font-family: 'DM Sans', sans-serif;"
             >
               Learn More
@@ -60,45 +60,45 @@ const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
         <div class="relative w-full lg:w-[544px] flex items-start justify-center lg:justify-end">
           <div class="relative w-full max-w-[240px] mx-auto lg:mx-0 scale-75 lg:scale-100">
             <!-- Phone Frame -->
-            <div class="aspect-[320/675.55] bg-[#1e2832] rounded-[48px] p-2 shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)]">
+            <div class="aspect-[320/675.55] bg-surface-dark rounded-[48px] p-2 shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)]">
               <div class="bg-white rounded-[40px] h-full overflow-hidden">
                 <!-- Status Bar -->
-                <div class="bg-[#f0f2f4] h-8 flex items-center justify-center">
-                  <div class="bg-[#1e2832] h-5 w-20 rounded-full"></div>
+                <div class="bg-surface-muted h-8 flex items-center justify-center">
+                  <div class="bg-surface-dark h-5 w-20 rounded-full"></div>
                 </div>
                 <!-- Phone Content -->
                 <div class="p-4 space-y-4">
                   <div class="flex gap-2 items-center">
-                    <div class="bg-[#03449e] rounded-xl w-8 h-8 flex-shrink-0"></div>
+                    <div class="bg-primary-deep rounded-xl w-8 h-8 flex-shrink-0"></div>
                     <div class="flex flex-col gap-1 flex-1">
-                      <div class="bg-[#e5e8eb] border border-[#e4e6ea] h-3 rounded w-20"></div>
-                      <div class="bg-[#f0f2f4] h-2 rounded w-14"></div>
+                      <div class="bg-[#e5e8eb] border border-border h-3 rounded w-20"></div>
+                      <div class="bg-surface-muted h-2 rounded w-14"></div>
                     </div>
                   </div>
                   <!-- Course Progress Card -->
-                  <div class="bg-[#e5f6fe] rounded-2xl p-4 relative h-[84px]">
-                    <p class="text-[#03449e] text-xs font-semibold mb-2">Course Progress</p>
-                    <div class="absolute left-4 right-4 top-10 bg-[#7cc3f9] h-2 rounded-full overflow-hidden">
-                      <div class="bg-[#0351b4] h-full w-1/3 rounded-full"></div>
+                  <div class="bg-info rounded-2xl p-4 relative h-[84px]">
+                    <p class="text-primary-deep text-xs font-semibold mb-2">Course Progress</p>
+                    <div class="absolute left-4 right-4 top-10 bg-info-border h-2 rounded-full overflow-hidden">
+                      <div class="bg-info-text h-full w-1/3 rounded-full"></div>
                     </div>
-                    <p class="absolute left-4 right-4 top-[52px] text-[#0351b4] text-xs">4 of 6 modules complete</p>
+                    <p class="absolute left-4 right-4 top-[52px] text-info-text text-xs">4 of 6 modules complete</p>
                   </div>
                   <!-- Module Items -->
                   <div class="space-y-2">
                     {[1, 2, 3].map((i) => (
-                      <div class="bg-[#f9fafb] rounded-xl p-3 flex gap-3 items-center">
-                        <div class={`rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 ${i <= 2 ? 'bg-[#0967d2]' : 'bg-[#e5e8eb] border border-[#e4e6ea]'}`}>
+                      <div class="bg-surface-muted rounded-xl p-3 flex gap-3 items-center">
+                        <div class={`rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 ${i <= 2 ? 'bg-primary' : 'bg-[#e5e8eb] border border-border'}`}>
                           {i <= 2 && (
                             <img src="/assets/icons/texas/checkmark-white.svg" alt="" class="w-3 h-3" />
                           )}
                         </div>
-                        <div class="bg-[#e5e8eb] border border-[#e4e6ea] h-2.5 rounded w-24 flex-1"></div>
+                        <div class="bg-[#e5e8eb] border border-border h-2.5 rounded w-24 flex-1"></div>
                       </div>
                     ))}
                   </div>
                   <a
                     href={enrollUrl}
-                    class="w-full bg-[#0667d1] text-white rounded-xl py-[14.8px] pb-[13.2px] text-sm font-semibold flex items-center justify-center leading-5 no-underline"
+                    class="w-full bg-primary text-white rounded-xl py-[14.8px] pb-[13.2px] text-sm font-semibold flex items-center justify-center leading-5 no-underline"
                   >
                     Continue Module
                   </a>
@@ -108,12 +108,12 @@ const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
 
             <!-- Floating Badge - Court Approved -->
             <div class="absolute bg-white rounded-2xl shadow-[0px_20px_25px_-5px_rgba(17,23,34,0.1),0px_8px_10px_-6px_rgba(17,23,34,0.05)] p-4 right-[-17px] top-16 flex gap-3 items-center">
-              <div class="bg-[#e5f6fe] rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0">
+              <div class="bg-info rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0">
                 <img src="/assets/icons/texas/check-circle.svg" alt="" class="w-5 h-5" />
               </div>
               <div>
-                <p class="text-sm font-semibold text-[#1e2832] leading-5">Court Approved</p>
-                <p class="text-xs text-[#616d7b] leading-4">All Texas courts</p>
+                <p class="text-sm font-semibold text-text leading-5">Court Approved</p>
+                <p class="text-xs text-text-body leading-4">All Texas courts</p>
               </div>
             </div>
 
@@ -125,7 +125,7 @@ const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
                     <img src="/assets/icons/texas/star-rating.svg" alt="" class="w-4 h-4" />
                   ))}
                 </div>
-                <p class="text-sm font-semibold text-[#1e2832] leading-5">4.9/5</p>
+                <p class="text-sm font-semibold text-text leading-5">4.9/5</p>
               </div>
             </div>
           </div>
@@ -148,14 +148,14 @@ const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
         <!-- TDLR-Approved -->
         <div class="relative flex-1 max-w-[282px] w-full flex flex-col gap-6 items-center px-3 py-8 rounded-[20px]">
           <div class="relative flex items-center justify-center w-[78px] h-[80px]">
-            <div class="absolute inset-0 border border-[#e8e8e8] rounded-2xl"></div>
+            <div class="absolute inset-0 border border-border rounded-2xl"></div>
             <div class="relative w-10 h-10 flex items-center justify-center z-10 py-5">
               <img src="/assets/icons/texas/tdlr-approved-icon.svg" alt="" class="w-10 h-10" />
             </div>
           </div>
           <div class="flex flex-col gap-3 items-center w-full max-md:text-center">
-            <h3 class="text-2xl font-semibold text-[#151515] leading-[32px] max-md:text-center">TDLR- Approved</h3>
-            <p class="text-sm text-[#4a5565] leading-5 text-center">
+            <h3 class="text-2xl font-semibold text-text leading-[32px] max-md:text-center">TDLR- Approved</h3>
+            <p class="text-sm text-text-body leading-5 text-center">
               State-certified course accepted by all<br />
               Texas courts
             </p>
@@ -165,14 +165,14 @@ const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
         <!-- Mobile Friendly -->
         <div class="relative flex-1 max-w-[282px] w-full flex flex-col gap-6 items-center px-3 py-8 rounded-[20px]">
           <div class="relative flex items-center justify-center w-[78px] h-[80px]">
-            <div class="absolute inset-0 border border-[#e8e8e8] rounded-2xl"></div>
+            <div class="absolute inset-0 border border-border rounded-2xl"></div>
             <div class="relative w-10 h-10 flex items-center justify-center z-10 py-5">
               <img src="/assets/icons/texas/mobile-friendly-icon.svg" alt="" class="w-10 h-10" />
             </div>
           </div>
           <div class="flex flex-col gap-3 items-center w-full max-md:text-center">
-            <h3 class="text-2xl font-semibold text-[#151515] leading-[32px] max-md:text-center">Mobile Friendly</h3>
-            <p class="text-sm text-[#4a5565] leading-5 text-center">
+            <h3 class="text-2xl font-semibold text-text leading-[32px] max-md:text-center">Mobile Friendly</h3>
+            <p class="text-sm text-text-body leading-5 text-center">
               Complete on any device - phone,<br />
               tablet, or computer
             </p>
@@ -182,14 +182,14 @@ const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
         <!-- Super Easy -->
         <div class="relative flex-1 max-w-[282px] w-full flex flex-col gap-6 items-center px-3 py-8 rounded-[20px]">
           <div class="relative flex items-center justify-center w-[78px] h-[80px]">
-            <div class="absolute inset-0 border border-[#e8e8e8] rounded-2xl"></div>
+            <div class="absolute inset-0 border border-border rounded-2xl"></div>
             <div class="relative w-10 h-10 flex items-center justify-center z-10 py-5">
               <img src="/assets/icons/texas/super-easy-icon.svg" alt="" class="w-10 h-10" />
             </div>
           </div>
           <div class="flex flex-col gap-3 items-center w-full max-md:text-center">
-            <h3 class="text-2xl font-semibold text-[#151515] leading-[32px] max-md:text-center">Super Easy</h3>
-            <p class="text-sm text-[#4a5565] leading-5 text-center">
+            <h3 class="text-2xl font-semibold text-text leading-[32px] max-md:text-center">Super Easy</h3>
+            <p class="text-sm text-text-body leading-5 text-center">
               Simple lessons, unlimited quiz<br />
               attempts, auto-save progress
             </p>
@@ -199,14 +199,14 @@ const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
         <!-- 100% Guarantee -->
         <div class="relative flex-1 max-w-[282px] w-full flex flex-col gap-6 items-center px-3 py-8 rounded-[20px]">
           <div class="relative flex items-center justify-center w-[78px] h-[80px]">
-            <div class="absolute inset-0 border border-[#e8e8e8] rounded-2xl"></div>
+            <div class="absolute inset-0 border border-border rounded-2xl"></div>
             <div class="relative w-10 h-10 flex items-center justify-center z-10 py-5">
               <img src="/assets/icons/texas/guarantee-icon.svg" alt="" class="w-10 h-10" />
             </div>
           </div>
           <div class="flex flex-col gap-3 items-center w-full max-md:text-center">
-            <h3 class="text-2xl font-semibold text-[#151515] leading-[32px] max-md:text-center">100% Guarantee</h3>
-            <p class="text-sm text-[#4a5565] leading-5 text-center">
+            <h3 class="text-2xl font-semibold text-text leading-[32px] max-md:text-center">100% Guarantee</h3>
+            <p class="text-sm text-text-body leading-5 text-center">
               Not a fit? Get a full refund before you complete the course.
             </p>
           </div>
@@ -222,14 +222,14 @@ const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
       <div class="flex flex-col lg:flex-row gap-16 lg:gap-20 items-start justify-center">
         <!-- Left Column -->
         <div class="flex flex-col gap-[24px] items-start w-full lg:w-[536px] pb-8 lg:pb-0">
-          <div class="bg-[#e5f6fe] inline-flex items-center px-4 py-2 rounded-full">
-            <span class="text-sm font-semibold text-[#0351b4] leading-5">Dismiss Your Texas Traffic Ticket Online</span>
+          <div class="bg-info inline-flex items-center px-4 py-2 rounded-full">
+            <span class="text-sm font-semibold text-info-text leading-5">Dismiss Your Texas Traffic Ticket Online</span>
           </div>
-          <h2 class="text-[30px] lg:text-[48px] font-bold text-[#1e2832] leading-[36px] lg:leading-[48px] tracking-[-0.75px] lg:tracking-[-1.2px]">
+          <h2 class="text-[30px] lg:text-[48px] font-bold text-text leading-[36px] lg:leading-[48px] tracking-[-0.75px] lg:tracking-[-1.2px]">
             Texas Defensive Driving<br />
-            <span class="text-[#03449e]">Course (6 hr)</span>
+            <span class="text-primary-deep">Course (6 hr)</span>
           </h2>
-          <p class="text-[18px] lg:text-lg text-[#616d7b] leading-[28px] lg:leading-7">
+          <p class="text-[18px] lg:text-lg text-text-body leading-[28px] lg:leading-7">
             Everything you need to dismiss your<br class="lg:hidden" />
             <span class="hidden lg:inline"> </span>Texas traffic ticket or<br class="lg:hidden" />
             <span class="hidden lg:inline"> </span>reduce insurance<br class="lg:hidden" />
@@ -247,26 +247,26 @@ const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
               'Customer Support',
             ].map((feature) => (
               <div class="flex gap-[12px] items-center">
-                <div class="bg-[#e5f6fe] rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0">
+                <div class="bg-info rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0">
                   <img src="/assets/icons/texas/checkmark-feature.svg" alt="" class="w-3.5 h-3.5" />
                 </div>
-                <span class="text-[16px] font-medium text-[#1e2832] leading-[24px]">{feature}</span>
+                <span class="text-[16px] font-medium text-text leading-[24px]">{feature}</span>
               </div>
             ))}
           </div>
         </div>
 
         <!-- Right Column - Pricing Card -->
-        <div class="bg-white border border-[#e4e6ea] rounded-[20px] shadow-[0px_1px_3px_0px_rgba(17,23,34,0.04),0px_6px_16px_0px_rgba(17,23,34,0.06)] p-[34px] lg:sticky lg:top-0 w-full lg:w-[536px] h-auto lg:h-[520px] flex flex-col">
+        <div class="bg-white border border-border rounded-[20px] shadow-[0px_1px_3px_0px_rgba(17,23,34,0.04),0px_6px_16px_0px_rgba(17,23,34,0.06)] p-[34px] lg:sticky lg:top-0 w-full lg:w-[536px] h-auto lg:h-[520px] flex flex-col">
           <!-- Price -->
           <div class="mb-2">
             <div class="flex items-baseline gap-2">
-              <span class="text-[48px] font-bold text-[#1e2832] leading-[48px]">$25</span>
-              <span class="text-base text-[#616d7b] leading-6">.00</span>
-              <span class="text-2xl font-medium text-[#616d7b] leading-[48px] line-through ml-4">$35.00</span>
+              <span class="text-[48px] font-bold text-text leading-[48px]">$25</span>
+              <span class="text-base text-text-body leading-6">.00</span>
+              <span class="text-2xl font-medium text-text-body leading-[48px] line-through ml-4">$35.00</span>
             </div>
           </div>
-          <div class="text-sm text-[#616d7b] leading-5 mb-4">+ $3.00 state processing fee</div>
+          <div class="text-sm text-text-body leading-5 mb-4">+ $3.00 state processing fee</div>
 
           <!-- Star Rating -->
           <div class="flex gap-3 items-center pb-6 pt-4 mb-6">
@@ -275,13 +275,13 @@ const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
                 <img src="/assets/icons/texas/star-pricing.svg" alt="" class="w-5 h-5" />
               ))}
             </div>
-            <span class="text-sm font-medium text-[#1e2832] leading-5">4.9 out of 5</span>
+            <span class="text-sm font-medium text-text leading-5">4.9 out of 5</span>
           </div>
 
           <!-- Enroll Button -->
           <a
             href={enrollUrl}
-            class="w-full h-[56px] bg-[#0667d1] hover:bg-[#0556b3] text-white rounded-2xl shadow-[0px_10px_15px_-3px_rgba(17,23,34,0.08),0px_4px_6px_-4px_rgba(17,23,34,0.05)] text-lg font-semibold flex items-center justify-center gap-2 mb-6 no-underline"
+            class="w-full h-[56px] bg-primary hover:bg-primary-hover text-white rounded-2xl shadow-[0px_10px_15px_-3px_rgba(17,23,34,0.08),0px_4px_6px_-4px_rgba(17,23,34,0.05)] text-lg font-semibold flex items-center justify-center gap-2 mb-6 no-underline"
           >
             Start Course &mdash; $25
             <img src="/assets/icons/texas/arrow-enroll.svg" alt="" class="w-4 h-4" />
@@ -291,15 +291,15 @@ const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
           <div class="flex flex-col gap-3 pt-4">
             <div class="flex gap-2 items-center">
               <img src="/assets/icons/texas/secure-checkout-icon.svg" alt="" class="w-4 h-4" />
-              <span class="text-sm text-[#616d7b] leading-5">Secure checkout</span>
+              <span class="text-sm text-text-body leading-5">Secure checkout</span>
             </div>
             <div class="flex gap-2 items-center">
               <img src="/assets/icons/texas/tdlr-provider-icon.svg" alt="" class="w-4 h-4" />
-              <span class="text-sm text-[#616d7b] leading-5">TDLR-approved provider</span>
+              <span class="text-sm text-text-body leading-5">TDLR-approved provider</span>
             </div>
             <div class="flex gap-2 items-center">
               <img src="/assets/icons/texas/money-back-icon.svg" alt="" class="w-4 h-4" />
-              <span class="text-sm text-[#616d7b] leading-5">100% risk-free guarantee</span>
+              <span class="text-sm text-text-body leading-5">100% risk-free guarantee</span>
             </div>
           </div>
         </div>
@@ -308,14 +308,14 @@ const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
   </section>
 
   <!-- What to Expect Accordion -->
-  <section class="py-16 lg:py-24 bg-gradient-to-b from-[#f9fafb] to-white">
+  <section class="py-16 lg:py-24 bg-gradient-to-b from-surface-muted to-white">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <!-- Header -->
       <div class="flex flex-col gap-4 items-center mb-12">
-        <h2 class="text-4xl lg:text-[48px] font-bold text-[#101828] text-center leading-[48px]">
+        <h2 class="text-4xl lg:text-[48px] font-bold text-text text-center leading-[48px]">
           What to Expect
         </h2>
-        <p class="text-lg text-[#4a5565] text-center leading-7">
+        <p class="text-lg text-text-body text-center leading-7">
           Everything you need to know about the Texas defensive driving process
         </p>
       </div>
@@ -324,15 +324,15 @@ const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
       <div class="flex flex-col gap-4">
 
         <!-- Texas Requirements -->
-        <details class="group bg-white rounded-2xl overflow-hidden border border-[#e5e7eb] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.1),0px_1px_2px_-1px_rgba(0,0,0,0.1)] open:border-2 open:border-[#03449e] open:shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.1),0px_4px_6px_-4px_rgba(0,0,0,0.1)]">
+        <details class="group bg-white rounded-2xl overflow-hidden border border-border shadow-[0px_1px_3px_0px_rgba(0,0,0,0.1),0px_1px_2px_-1px_rgba(0,0,0,0.1)] open:border-2 open:border-primary-deep open:shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.1),0px_4px_6px_-4px_rgba(0,0,0,0.1)]">
           <summary class="w-full h-[100px] relative rounded-2xl cursor-pointer list-none flex items-center">
             <div class="absolute left-8 top-6 flex gap-4 items-center">
-              <div class="bg-[#f9fafb] group-open:bg-[#e5f6fe] rounded-2xl w-12 h-12 flex items-center justify-center transition-colors">
+              <div class="bg-surface-muted group-open:bg-info rounded-2xl w-12 h-12 flex items-center justify-center transition-colors">
                 <img src="/assets/icons/texas/texas-requirements-active.svg" alt="" class="w-6 h-6" />
               </div>
               <div class="flex flex-col gap-1 items-start">
-                <h3 class="text-xl font-bold text-[#101828] leading-7">Texas Requirements</h3>
-                <p class="text-sm text-[#4a5565] leading-5">Everything Texas law requires for ticket dismissal</p>
+                <h3 class="text-xl font-bold text-text leading-7">Texas Requirements</h3>
+                <p class="text-sm text-text-body leading-5">Everything Texas law requires for ticket dismissal</p>
               </div>
             </div>
             <div class="absolute right-8 top-6 w-4 h-4 flex items-center justify-center">
@@ -340,73 +340,73 @@ const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
             </div>
           </summary>
           <div class="px-8 pb-6 pt-0">
-            <div class="bg-[#fafafa] border border-[#e4e6ea] rounded-2xl p-6 flex flex-col gap-6">
-              <p class="text-sm text-[#364153] leading-6 mb-2">
+            <div class="bg-surface-muted border border-border rounded-2xl p-6 flex flex-col gap-6">
+              <p class="text-sm text-text-body leading-6 mb-2">
                 Texas doesn't just say "take a course." To dismiss a ticket with defensive driving, most Texas courts require you to:
               </p>
               <div class="flex flex-col gap-4">
                 <!-- Be Eligible -->
-                <div class="bg-white border border-[#f3f4f6] rounded-[10px] p-4">
+                <div class="bg-white border border-border rounded-[10px] p-4">
                   <div class="flex gap-3 items-start">
                     <div class="pt-0.5 flex-shrink-0">
                       <img src="/assets/icons/texas/requirement-check-clipboard.svg" alt="" class="w-[18px] h-[18px]" />
                     </div>
                     <div class="flex flex-col gap-1 flex-1">
-                      <h4 class="text-sm font-bold text-[#101828] leading-5 mb-1">Be Eligible</h4>
-                      <p class="text-sm text-[#4a5565] leading-5">In general, you must not hold a commercial driver license, must not have been going 25 mph or more over the posted limit, and you usually can't have taken a Texas defensive driving course for ticket dismissal in the last 12 months.</p>
+                      <h4 class="text-sm font-bold text-text leading-5 mb-1">Be Eligible</h4>
+                      <p class="text-sm text-text-body leading-5">In general, you must not hold a commercial driver license, must not have been going 25 mph or more over the posted limit, and you usually can't have taken a Texas defensive driving course for ticket dismissal in the last 12 months.</p>
                     </div>
                   </div>
                 </div>
                 <!-- Get Permission -->
-                <div class="bg-white border border-[#f3f4f6] rounded-[10px] p-4">
+                <div class="bg-white border border-border rounded-[10px] p-4">
                   <div class="flex gap-3 items-start">
                     <div class="pt-0.5 flex-shrink-0">
                       <img src="/assets/icons/texas/requirement-check-clipboard.svg" alt="" class="w-[18px] h-[18px]" />
                     </div>
                     <div class="flex flex-col gap-1 flex-1">
-                      <h4 class="text-sm font-bold text-[#101828] leading-5 mb-1">Get Permission</h4>
-                      <p class="text-sm text-[#4a5565] leading-5">Before your deadline, your judge or court clerk must approve you to take a 6-hour state-approved defensive driving course for ticket dismissal.</p>
+                      <h4 class="text-sm font-bold text-text leading-5 mb-1">Get Permission</h4>
+                      <p class="text-sm text-text-body leading-5">Before your deadline, your judge or court clerk must approve you to take a 6-hour state-approved defensive driving course for ticket dismissal.</p>
                     </div>
                   </div>
                 </div>
                 <!-- Complete a Course -->
-                <div class="bg-white border border-[#f3f4f6] rounded-[10px] p-4">
+                <div class="bg-white border border-border rounded-[10px] p-4">
                   <div class="flex gap-3 items-start">
                     <div class="pt-0.5 flex-shrink-0">
                       <img src="/assets/icons/texas/requirement-check-clipboard.svg" alt="" class="w-[18px] h-[18px]" />
                     </div>
                     <div class="flex flex-col gap-1 flex-1">
-                      <h4 class="text-sm font-bold text-[#101828] leading-5 mb-1">Complete a Course</h4>
-                      <p class="text-sm text-[#4a5565] leading-5">You must finish every lesson, pass the required quizzes, and certify that you&mdash;not someone else&mdash;completed the course.</p>
+                      <h4 class="text-sm font-bold text-text leading-5 mb-1">Complete a Course</h4>
+                      <p class="text-sm text-text-body leading-5">You must finish every lesson, pass the required quizzes, and certify that you&mdash;not someone else&mdash;completed the course.</p>
                     </div>
                   </div>
                 </div>
                 <!-- Get a Copy of Your Driving Record -->
-                <div class="bg-white border border-[#f3f4f6] rounded-[10px] p-4">
+                <div class="bg-white border border-border rounded-[10px] p-4">
                   <div class="flex gap-3 items-start">
                     <div class="pt-0.5 flex-shrink-0">
                       <img src="/assets/icons/texas/requirement-check-clipboard.svg" alt="" class="w-[18px] h-[18px]" />
                     </div>
                     <div class="flex flex-col gap-1 flex-1">
-                      <h4 class="text-sm font-bold text-[#101828] leading-5 mb-1">Get a Copy of Your Driving Record</h4>
-                      <p class="text-sm text-[#4a5565] leading-5">Many Texas courts require a copy of your 3A driving record along with your course certificate.</p>
+                      <h4 class="text-sm font-bold text-text leading-5 mb-1">Get a Copy of Your Driving Record</h4>
+                      <p class="text-sm text-text-body leading-5">Many Texas courts require a copy of your 3A driving record along with your course certificate.</p>
                     </div>
                   </div>
                 </div>
                 <!-- Turn Everything In -->
-                <div class="bg-white border border-[#f3f4f6] rounded-[10px] p-4">
+                <div class="bg-white border border-border rounded-[10px] p-4">
                   <div class="flex gap-3 items-start">
                     <div class="pt-0.5 flex-shrink-0">
                       <img src="/assets/icons/texas/requirement-check-clipboard.svg" alt="" class="w-[18px] h-[18px]" />
                     </div>
                     <div class="flex flex-col gap-1 flex-1">
-                      <h4 class="text-sm font-bold text-[#101828] leading-5 mb-1">Turn Everything In</h4>
-                      <p class="text-sm text-[#4a5565] leading-5">You'll submit your Certificate of Course Completion to the court by the deadline they give you.</p>
+                      <h4 class="text-sm font-bold text-text leading-5 mb-1">Turn Everything In</h4>
+                      <p class="text-sm text-text-body leading-5">You'll submit your Certificate of Course Completion to the court by the deadline they give you.</p>
                     </div>
                   </div>
                 </div>
               </div>
-              <p class="text-sm text-[#364153] leading-6 mt-2">
+              <p class="text-sm text-text-body leading-6 mt-2">
                 Every court and precinct can have slightly different instructions, so always follow your local court's rules first.
               </p>
             </div>
@@ -414,15 +414,15 @@ const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
         </details>
 
         <!-- Topics Covered -->
-        <details class="group bg-white rounded-2xl overflow-hidden border border-[#e5e7eb] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.1),0px_1px_2px_-1px_rgba(0,0,0,0.1)] open:border-2 open:border-[#03449e] open:shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.1),0px_4px_6px_-4px_rgba(0,0,0,0.1)]">
+        <details class="group bg-white rounded-2xl overflow-hidden border border-border shadow-[0px_1px_3px_0px_rgba(0,0,0,0.1),0px_1px_2px_-1px_rgba(0,0,0,0.1)] open:border-2 open:border-primary-deep open:shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.1),0px_4px_6px_-4px_rgba(0,0,0,0.1)]">
           <summary class="w-full h-[100px] relative rounded-2xl cursor-pointer list-none flex items-center">
             <div class="absolute left-8 top-6 flex gap-4 items-center">
-              <div class="bg-[#f9fafb] rounded-2xl w-12 h-12 flex items-center justify-center">
+              <div class="bg-surface-muted rounded-2xl w-12 h-12 flex items-center justify-center">
                 <img src="/assets/icons/texas/topics-covered.svg" alt="" class="w-6 h-6" />
               </div>
               <div class="flex flex-col gap-1 items-start">
-                <h3 class="text-xl font-bold text-[#101828] leading-7">Topics Covered</h3>
-                <p class="text-sm text-[#4a5565] leading-5">Comprehensive curriculum required by Texas</p>
+                <h3 class="text-xl font-bold text-text leading-7">Topics Covered</h3>
+                <p class="text-sm text-text-body leading-5">Comprehensive curriculum required by Texas</p>
               </div>
             </div>
             <div class="absolute right-8 top-6 w-4 h-4 flex items-center justify-center">
@@ -430,78 +430,78 @@ const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
             </div>
           </summary>
           <div class="px-8 pb-6 pt-0">
-            <div class="bg-[#fafafa] border border-[#e4e6ea] rounded-2xl p-6 flex flex-col gap-6">
-              <p class="text-sm text-[#364153] leading-6">
+            <div class="bg-surface-muted border border-border rounded-2xl p-6 flex flex-col gap-6">
+              <p class="text-sm text-text-body leading-6">
                 In 6 hours (the Texas state minimum, with two built-in breaks instead of extra fluff), we cover:
               </p>
               <div class="flex flex-col gap-4">
-                <div class="bg-white border border-[#f3f4f6] rounded-[10px] p-4">
+                <div class="bg-white border border-border rounded-[10px] p-4">
                   <div class="flex gap-3 items-start">
                     <div class="pt-0.5 flex-shrink-0"><img src="/assets/icons/texas/requirement-check-clipboard.svg" alt="" class="w-[18px] h-[18px]" /></div>
                     <div class="flex flex-col gap-1 flex-1">
-                      <h4 class="text-sm font-bold text-[#101828] leading-5 mb-1">Texas traffic laws &amp; ticket dismissal basics</h4>
-                      <p class="text-sm text-[#4a5565] leading-5">Why the laws exist, how tickets work, and what courts actually care about.</p>
+                      <h4 class="text-sm font-bold text-text leading-5 mb-1">Texas traffic laws &amp; ticket dismissal basics</h4>
+                      <p class="text-sm text-text-body leading-5">Why the laws exist, how tickets work, and what courts actually care about.</p>
                     </div>
                   </div>
                 </div>
-                <div class="bg-white border border-[#f3f4f6] rounded-[10px] p-4">
+                <div class="bg-white border border-border rounded-[10px] p-4">
                   <div class="flex gap-3 items-start">
                     <div class="pt-0.5 flex-shrink-0"><img src="/assets/icons/texas/requirement-check-clipboard.svg" alt="" class="w-[18px] h-[18px]" /></div>
                     <div class="flex flex-col gap-1 flex-1">
-                      <h4 class="text-sm font-bold text-[#101828] leading-5 mb-1">Real-world defensive driving</h4>
-                      <p class="text-sm text-[#4a5565] leading-5">The 5 pillars of defensive driving, high-risk situations, crash dynamics, and how to avoid or reduce crash severity.</p>
+                      <h4 class="text-sm font-bold text-text leading-5 mb-1">Real-world defensive driving</h4>
+                      <p class="text-sm text-text-body leading-5">The 5 pillars of defensive driving, high-risk situations, crash dynamics, and how to avoid or reduce crash severity.</p>
                     </div>
                   </div>
                 </div>
-                <div class="bg-white border border-[#f3f4f6] rounded-[10px] p-4">
+                <div class="bg-white border border-border rounded-[10px] p-4">
                   <div class="flex gap-3 items-start">
                     <div class="pt-0.5 flex-shrink-0"><img src="/assets/icons/texas/requirement-check-clipboard.svg" alt="" class="w-[18px] h-[18px]" /></div>
                     <div class="flex flex-col gap-1 flex-1">
-                      <h4 class="text-sm font-bold text-[#101828] leading-5 mb-1">Driver mindset &amp; psychology</h4>
-                      <p class="text-sm text-[#4a5565] leading-5">Attitude, road rage, distraction, multitasking myths, and how your emotions silently change the way you drive.</p>
+                      <h4 class="text-sm font-bold text-text leading-5 mb-1">Driver mindset &amp; psychology</h4>
+                      <p class="text-sm text-text-body leading-5">Attitude, road rage, distraction, multitasking myths, and how your emotions silently change the way you drive.</p>
                     </div>
                   </div>
                 </div>
-                <div class="bg-white border border-[#f3f4f6] rounded-[10px] p-4">
+                <div class="bg-white border border-border rounded-[10px] p-4">
                   <div class="flex gap-3 items-start">
                     <div class="pt-0.5 flex-shrink-0"><img src="/assets/icons/texas/requirement-check-clipboard.svg" alt="" class="w-[18px] h-[18px]" /></div>
                     <div class="flex flex-col gap-1 flex-1">
-                      <h4 class="text-sm font-bold text-[#101828] leading-5 mb-1">Alcohol, drugs &amp; DWI</h4>
-                      <p class="text-sm text-[#4a5565] leading-5">How substances affect your brain and body, key Texas laws, and real-life consequences (and how to avoid them).</p>
+                      <h4 class="text-sm font-bold text-text leading-5 mb-1">Alcohol, drugs &amp; DWI</h4>
+                      <p class="text-sm text-text-body leading-5">How substances affect your brain and body, key Texas laws, and real-life consequences (and how to avoid them).</p>
                     </div>
                   </div>
                 </div>
-                <div class="bg-white border border-[#f3f4f6] rounded-[10px] p-4">
+                <div class="bg-white border border-border rounded-[10px] p-4">
                   <div class="flex gap-3 items-start">
                     <div class="pt-0.5 flex-shrink-0"><img src="/assets/icons/texas/requirement-check-clipboard.svg" alt="" class="w-[18px] h-[18px]" /></div>
                     <div class="flex flex-col gap-1 flex-1">
-                      <h4 class="text-sm font-bold text-[#101828] leading-5 mb-1">Vulnerable road users &amp; big vehicles</h4>
-                      <p class="text-sm text-[#4a5565] leading-5">Pedestrians, cyclists, motorcyclists, school buses, emergency vehicles, large trucks, and work zones.</p>
+                      <h4 class="text-sm font-bold text-text leading-5 mb-1">Vulnerable road users &amp; big vehicles</h4>
+                      <p class="text-sm text-text-body leading-5">Pedestrians, cyclists, motorcyclists, school buses, emergency vehicles, large trucks, and work zones.</p>
                     </div>
                   </div>
                 </div>
-                <div class="bg-white border border-[#f3f4f6] rounded-[10px] p-4">
+                <div class="bg-white border border-border rounded-[10px] p-4">
                   <div class="flex gap-3 items-start">
                     <div class="pt-0.5 flex-shrink-0"><img src="/assets/icons/texas/requirement-check-clipboard.svg" alt="" class="w-[18px] h-[18px]" /></div>
                     <div class="flex flex-col gap-1 flex-1">
-                      <h4 class="text-sm font-bold text-[#101828] leading-5 mb-1">Modern Texas road issues</h4>
-                      <p class="text-sm text-[#4a5565] leading-5">Street racing awareness, human trafficking prevention, litter prevention, organ donation awareness, and traffic stop protocols.</p>
+                      <h4 class="text-sm font-bold text-text leading-5 mb-1">Modern Texas road issues</h4>
+                      <p class="text-sm text-text-body leading-5">Street racing awareness, human trafficking prevention, litter prevention, organ donation awareness, and traffic stop protocols.</p>
                     </div>
                   </div>
                 </div>
-                <div class="bg-white border border-[#f3f4f6] rounded-[10px] p-4">
+                <div class="bg-white border border-border rounded-[10px] p-4">
                   <div class="flex gap-3 items-start">
                     <div class="pt-0.5 flex-shrink-0"><img src="/assets/icons/texas/requirement-check-clipboard.svg" alt="" class="w-[18px] h-[18px]" /></div>
                     <div class="flex flex-col gap-1 flex-1">
-                      <h4 class="text-sm font-bold text-[#101828] leading-5 mb-1">Special programs &amp; recovery</h4>
-                      <p class="text-sm text-[#4a5565] leading-5">Driving with disabilities indicators, oversize/overweight vehicle awareness, insurance, SR-22, and Texas support resources.</p>
+                      <h4 class="text-sm font-bold text-text leading-5 mb-1">Special programs &amp; recovery</h4>
+                      <p class="text-sm text-text-body leading-5">Driving with disabilities indicators, oversize/overweight vehicle awareness, insurance, SR-22, and Texas support resources.</p>
                     </div>
                   </div>
                 </div>
               </div>
               <div class="mt-4">
-                <h4 class="text-sm font-bold text-[#101828] leading-5 mb-2">Testing</h4>
-                <p class="text-sm text-[#364153] leading-6">
+                <h4 class="text-sm font-bold text-text leading-5 mb-2">Testing</h4>
+                <p class="text-sm text-text-body leading-6">
                   And don't stress about testing: instead of a giant scary exam, you'll see short 3-question knowledge checks along the way. You always get unlimited retries, so the goal is learning&mdash;not tricking you.
                 </p>
               </div>
@@ -510,15 +510,15 @@ const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
         </details>
 
         <!-- Support Details -->
-        <details class="group bg-white rounded-2xl overflow-hidden border border-[#e5e7eb] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.1),0px_1px_2px_-1px_rgba(0,0,0,0.1)] open:border-2 open:border-[#03449e] open:shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.1),0px_4px_6px_-4px_rgba(0,0,0,0.1)]">
+        <details class="group bg-white rounded-2xl overflow-hidden border border-border shadow-[0px_1px_3px_0px_rgba(0,0,0,0.1),0px_1px_2px_-1px_rgba(0,0,0,0.1)] open:border-2 open:border-primary-deep open:shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.1),0px_4px_6px_-4px_rgba(0,0,0,0.1)]">
           <summary class="w-full h-[100px] relative rounded-2xl cursor-pointer list-none flex items-center">
             <div class="absolute left-8 top-6 flex gap-4 items-center">
-              <div class="bg-[#f9fafb] rounded-2xl w-12 h-12 flex items-center justify-center">
+              <div class="bg-surface-muted rounded-2xl w-12 h-12 flex items-center justify-center">
                 <img src="/assets/icons/texas/support-details.svg" alt="" class="w-6 h-6" />
               </div>
               <div class="flex flex-col gap-1 items-start">
-                <h3 class="text-xl font-bold text-[#101828] leading-7">Support Details</h3>
-                <p class="text-sm text-[#4a5565] leading-5">We&apos;re here to help throughout your course</p>
+                <h3 class="text-xl font-bold text-text leading-7">Support Details</h3>
+                <p class="text-sm text-text-body leading-5">We&apos;re here to help throughout your course</p>
               </div>
             </div>
             <div class="absolute right-8 top-6 w-4 h-4 flex items-center justify-center">
@@ -526,13 +526,13 @@ const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
             </div>
           </summary>
           <div class="px-8 pb-6 pt-0">
-            <div class="bg-[#fafafa] border border-[#e4e6ea] rounded-2xl p-6 flex flex-col gap-6">
-              <p class="text-sm text-[#364153] leading-6">
+            <div class="bg-surface-muted border border-border rounded-2xl p-6 flex flex-col gap-6">
+              <p class="text-sm text-text-body leading-6">
                 Our friendly support team is here to help with anything from questions about topics covered to technical issues like login or account access. You can browse our help articles and resources anytime, and if you still need assistance, email us and a real person will typically respond within one business day.
               </p>
               <a
                 href={contactUrl}
-                class="h-12 px-6 border-2 border-[#03449e] text-[#03449e] hover:bg-[#03449e] hover:text-white rounded-2xl text-base font-semibold flex items-center justify-center gap-2 w-fit no-underline transition-colors"
+                class="h-12 px-6 border-2 border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-2xl text-base font-semibold flex items-center justify-center gap-2 w-fit no-underline transition-colors"
               >
                 Contact Support
                 <img src="/assets/icons/texas/arrow-contact-support.svg" alt="" class="w-4 h-4" />
@@ -542,15 +542,15 @@ const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
         </details>
 
         <!-- After Taking Course -->
-        <details class="group bg-white rounded-2xl overflow-hidden border border-[#e5e7eb] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.1),0px_1px_2px_-1px_rgba(0,0,0,0.1)] open:border-2 open:border-[#03449e] open:shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.1),0px_4px_6px_-4px_rgba(0,0,0,0.1)]">
+        <details class="group bg-white rounded-2xl overflow-hidden border border-border shadow-[0px_1px_3px_0px_rgba(0,0,0,0.1),0px_1px_2px_-1px_rgba(0,0,0,0.1)] open:border-2 open:border-primary-deep open:shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.1),0px_4px_6px_-4px_rgba(0,0,0,0.1)]">
           <summary class="w-full h-[100px] relative rounded-2xl cursor-pointer list-none flex items-center">
             <div class="absolute left-8 top-6 flex gap-4 items-center">
-              <div class="bg-[#f9fafb] rounded-2xl w-12 h-12 flex items-center justify-center">
+              <div class="bg-surface-muted rounded-2xl w-12 h-12 flex items-center justify-center">
                 <img src="/assets/icons/texas/after-taking-course.svg" alt="" class="w-6 h-6" />
               </div>
               <div class="flex flex-col gap-1 items-start">
-                <h3 class="text-xl font-bold text-[#101828] leading-7">After Taking Course</h3>
-                <p class="text-sm text-[#4a5565] leading-5">What happens once you complete the course</p>
+                <h3 class="text-xl font-bold text-text leading-7">After Taking Course</h3>
+                <p class="text-sm text-text-body leading-5">What happens once you complete the course</p>
               </div>
             </div>
             <div class="absolute right-8 top-6 w-4 h-4 flex items-center justify-center">
@@ -558,26 +558,26 @@ const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
             </div>
           </summary>
           <div class="px-8 pb-6 pt-0">
-            <div class="bg-[#fafafa] border border-[#e4e6ea] rounded-2xl p-6 flex flex-col gap-6">
-              <p class="text-sm text-[#364153] leading-6">
+            <div class="bg-surface-muted border border-border rounded-2xl p-6 flex flex-col gap-6">
+              <p class="text-sm text-text-body leading-6">
                 Once you finish and pass, you'll get your Certificate of Completion right away.
               </p>
-              <p class="text-sm text-[#364153] leading-6">
+              <p class="text-sm text-text-body leading-6">
                 Most Texas courts also require you to submit two additional items along with your certificate:
               </p>
-              <ul class="list-disc list-inside space-y-2 text-sm text-[#364153] leading-6 ml-4">
+              <ul class="list-disc list-inside space-y-2 text-sm text-text-body leading-6 ml-4">
                 <li>Your Texas Driver Record (DPS &ldquo;Type 3A&rdquo;)</li>
                 <li>A court affidavit (if your court requires one)</li>
               </ul>
-              <div class="bg-white border border-[#e4e6ea] rounded-[10px] p-4">
-                <p class="text-sm font-semibold text-[#101828] leading-5 mb-2">Important:</p>
-                <p class="text-sm text-[#364153] leading-6">
+              <div class="bg-white border border-border rounded-[10px] p-4">
+                <p class="text-sm font-semibold text-text leading-5 mb-2">Important:</p>
+                <p class="text-sm text-text-body leading-6">
                   Every court is a little different. Always follow your court's exact submission instructions and deadline. Your county page will tell you where to send it and what to include.
                 </p>
               </div>
               <div>
-                <h4 class="text-sm font-bold text-[#101828] leading-5 mb-3">Typical next steps</h4>
-                <ol class="list-decimal list-inside space-y-2 text-sm text-[#364153] leading-6 ml-4">
+                <h4 class="text-sm font-bold text-text leading-5 mb-3">Typical next steps</h4>
+                <ol class="list-decimal list-inside space-y-2 text-sm text-text-body leading-6 ml-4">
                   <li>Download your certificate</li>
                   <li>Request your DPS Type 3A driver record</li>
                   <li>Complete any required court affidavit</li>
@@ -597,13 +597,13 @@ const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
     <div class="max-w-7xl mx-auto flex flex-col gap-16">
       <!-- Header -->
       <div class="flex flex-col gap-6 items-center">
-        <div class="bg-[#e5f6fe] inline-flex items-center px-4 py-2 rounded-full">
-          <span class="text-sm font-semibold text-[#0351b4] leading-5">Trusted by Texas Drivers</span>
+        <div class="bg-info inline-flex items-center px-4 py-2 rounded-full">
+          <span class="text-sm font-semibold text-info-text leading-5">Trusted by Texas Drivers</span>
         </div>
-        <h2 class="text-4xl lg:text-[48px] font-bold text-[#1e2832] text-center leading-[48px] tracking-[-1.2px]">
+        <h2 class="text-4xl lg:text-[48px] font-bold text-text text-center leading-[48px] tracking-[-1.2px]">
           What Our Customers Say
         </h2>
-        <p class="text-lg text-[#616d7b] text-center leading-7 max-w-[672px]">
+        <p class="text-lg text-text-body text-center leading-7 max-w-[672px]">
           Join thousands of Texas drivers who have successfully dismissed their tickets<br />
           with Road Ready Safety.
         </p>
@@ -612,88 +612,88 @@ const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
       <!-- Testimonials Grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12 w-full">
         <!-- Testimonial 1 - Sam V. -->
-        <div class="bg-[#f9fafb] rounded-[20px] p-8 flex flex-col gap-4 items-start">
+        <div class="bg-surface-muted rounded-[20px] p-8 flex flex-col gap-4 items-start">
           <div class="flex gap-1 items-start">
             {[...Array(5)].map((_, i) => (
               <img src="/assets/icons/texas/star-testimonial.svg" alt="" class="w-5 h-5" />
             ))}
           </div>
-          <p class="text-lg text-[#1e2832] leading-[28px]">
+          <p class="text-lg text-text leading-[28px]">
             &ldquo;Easiest course I&apos;ve taken online. Finished everything at my own pace and had my certificate downloaded within minutes of completing.&rdquo;
           </p>
           <div class="flex gap-3 items-center pt-2">
-            <div class="bg-[#e5f6fe] rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0">
-              <span class="text-sm font-semibold text-[#03449e]">SV</span>
+            <div class="bg-info rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0">
+              <span class="text-sm font-semibold text-primary-deep">SV</span>
             </div>
             <div class="flex flex-col">
-              <span class="text-base font-semibold text-[#1e2832] leading-6">Sam V.</span>
+              <span class="text-base font-semibold text-text leading-6">Sam V.</span>
             </div>
           </div>
         </div>
 
         <!-- Testimonial 2 - Jackson M. -->
-        <div class="bg-[#f9fafb] rounded-[20px] p-8 pb-[60px] flex flex-col gap-4 items-start">
+        <div class="bg-surface-muted rounded-[20px] p-8 pb-[60px] flex flex-col gap-4 items-start">
           <div class="flex gap-1 items-start">
             {[...Array(5)].map((_, i) => (
               <img src="/assets/icons/texas/star-testimonial.svg" alt="" class="w-5 h-5" />
             ))}
           </div>
-          <p class="text-lg text-[#1e2832] leading-[28px]">
+          <p class="text-lg text-text leading-[28px]">
             &ldquo;I was dreading this, but Road Ready made it painless. The court accepted my certificate right away. No issues at all.&rdquo;
           </p>
           <div class="flex gap-3 items-center pt-2">
-            <div class="bg-[#e5f6fe] rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0">
-              <span class="text-sm font-semibold text-[#03449e]">JM</span>
+            <div class="bg-info rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0">
+              <span class="text-sm font-semibold text-primary-deep">JM</span>
             </div>
             <div class="flex flex-col">
-              <span class="text-base font-semibold text-[#1e2832] leading-6">Jackson M.</span>
+              <span class="text-base font-semibold text-text leading-6">Jackson M.</span>
             </div>
           </div>
         </div>
 
         <!-- Testimonial 3 - Kenzie M. -->
-        <div class="bg-[#f9fafb] rounded-[20px] p-8 flex flex-col gap-4 items-start">
+        <div class="bg-surface-muted rounded-[20px] p-8 flex flex-col gap-4 items-start">
           <div class="flex gap-1 items-start">
             {[...Array(5)].map((_, i) => (
               <img src="/assets/icons/texas/star-testimonial.svg" alt="" class="w-5 h-5" />
             ))}
           </div>
-          <p class="text-lg text-[#1e2832] leading-[28px]">
+          <p class="text-lg text-text leading-[28px]">
             &ldquo;Best $25 I&apos;ve spent. Clear instructions, easy modules, and my insurance actually went down. Wish I knew about this sooner.&rdquo;
           </p>
           <div class="flex gap-3 items-center pt-2">
-            <div class="bg-[#e5f6fe] rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0">
-              <span class="text-sm font-semibold text-[#03449e]">KM</span>
+            <div class="bg-info rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0">
+              <span class="text-sm font-semibold text-primary-deep">KM</span>
             </div>
             <div class="flex flex-col">
-              <span class="text-base font-semibold text-[#1e2832] leading-6">Kenzie M.</span>
+              <span class="text-base font-semibold text-text leading-6">Kenzie M.</span>
             </div>
           </div>
         </div>
 
         <!-- Testimonial 4 - Luis V. -->
-        <div class="bg-[#f9fafb] rounded-[20px] p-8 pb-[60px] flex flex-col gap-4 items-start">
+        <div class="bg-surface-muted rounded-[20px] p-8 pb-[60px] flex flex-col gap-4 items-start">
           <div class="flex gap-1 items-start">
             {[...Array(5)].map((_, i) => (
               <img src="/assets/icons/texas/star-testimonial.svg" alt="" class="w-5 h-5" />
             ))}
           </div>
-          <p class="text-lg text-[#1e2832] leading-[28px]">
+          <p class="text-lg text-text leading-[28px]">
             &ldquo;Did the whole thing on my phone during lunch breaks. The progress saving feature is a lifesaver. Highly recommend!&rdquo;
           </p>
           <div class="flex gap-3 items-center pt-2">
-            <div class="bg-[#e5f6fe] rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0">
-              <span class="text-sm font-semibold text-[#03449e]">LV</span>
+            <div class="bg-info rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0">
+              <span class="text-sm font-semibold text-primary-deep">LV</span>
             </div>
             <div class="flex flex-col">
-              <span class="text-base font-semibold text-[#1e2832] leading-6">Luis V.</span>
+              <span class="text-base font-semibold text-text leading-6">Luis V.</span>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Statistics Banner -->
-      <div class="bg-[#03449e] rounded-[20px] p-12 flex flex-col md:flex-row items-center justify-center gap-8 w-full">
+      <div class="bg-primary-deep rounded-[20px] p-12 flex flex-col md:flex-row items-center justify-center gap-8 w-full">
         <div class="flex flex-col gap-2 items-center w-[240px]">
           <div class="text-[36px] font-bold text-white text-center leading-[40px]">Unlimited</div>
           <div class="text-sm text-white text-center leading-[20px]">Quiz Attempts</div>
@@ -715,17 +715,17 @@ const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
   </section>
 
   <!-- Frequently Asked Questions -->
-  <section class="py-[112px] px-4 sm:px-6 lg:px-8 bg-[#f9fafb]">
+  <section class="py-[112px] px-4 sm:px-6 lg:px-8 bg-surface-muted">
     <div class="max-w-4xl mx-auto flex flex-col gap-12">
       <!-- Header -->
       <div class="flex flex-col gap-4 items-center">
-        <div class="bg-[#e5f6fe] inline-flex items-center px-4 py-2 rounded-full">
-          <span class="text-sm font-semibold text-[#0351b4] leading-5">Got Questions?</span>
+        <div class="bg-info inline-flex items-center px-4 py-2 rounded-full">
+          <span class="text-sm font-semibold text-info-text leading-5">Got Questions?</span>
         </div>
-        <h2 class="text-[36px] font-bold text-[#1e2832] text-center leading-[40px] tracking-[-0.9px]">
+        <h2 class="text-[36px] font-bold text-text text-center leading-[40px] tracking-[-0.9px]">
           Frequently Asked Questions
         </h2>
-        <p class="text-base text-[#616d7b] text-center leading-6">
+        <p class="text-base text-text-body text-center leading-6">
           Everything you need to know about our Texas defensive driving course.
         </p>
       </div>
@@ -733,85 +733,85 @@ const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
       <!-- FAQ Items -->
       <div class="flex flex-col gap-4">
 
-        <details class="group bg-white border border-[#e4e6ea] rounded-2xl overflow-hidden">
+        <details class="group bg-white border border-border rounded-2xl overflow-hidden">
           <summary class="w-full px-6 py-5 flex items-center justify-between cursor-pointer list-none">
-            <span class="text-base font-semibold text-[#1e2832] leading-6 tracking-[-0.4px] text-left">Is this accepted by all Texas courts?</span>
+            <span class="text-base font-semibold text-text leading-6 tracking-[-0.4px] text-left">Is this accepted by all Texas courts?</span>
             <img src="/assets/icons/texas/chevron-faq.svg" alt="" class="w-4 h-4 transition-transform group-open:rotate-180 flex-shrink-0 ml-4" />
           </summary>
           <div class="px-6 pb-5">
-            <p class="text-base text-[#616d7b] leading-6">
+            <p class="text-base text-text-body leading-6">
               Yes! We are a TDLR-approved provider, and our certificates are accepted by every court in Texas for ticket dismissal.
             </p>
           </div>
         </details>
 
-        <details class="group bg-white border border-[#e4e6ea] rounded-2xl overflow-hidden">
+        <details class="group bg-white border border-border rounded-2xl overflow-hidden">
           <summary class="w-full px-6 py-5 flex items-center justify-between cursor-pointer list-none">
-            <span class="text-base font-semibold text-[#1e2832] leading-6 tracking-[-0.4px] text-left">Are there extra fees after completing the course?</span>
+            <span class="text-base font-semibold text-text leading-6 tracking-[-0.4px] text-left">Are there extra fees after completing the course?</span>
             <img src="/assets/icons/texas/chevron-faq.svg" alt="" class="w-4 h-4 transition-transform group-open:rotate-180 flex-shrink-0 ml-4" />
           </summary>
           <div class="px-6 pb-5">
-            <p class="text-base text-[#616d7b] leading-6">
+            <p class="text-base text-text-body leading-6">
               No hidden fees. The $25 + $3 is all you pay. However, some courts may require you to submit a copy of your driving record (DPS Type 3A), which has a separate fee paid directly to the DPS.
             </p>
           </div>
         </details>
 
-        <details class="group bg-white border border-[#e4e6ea] rounded-2xl overflow-hidden">
+        <details class="group bg-white border border-border rounded-2xl overflow-hidden">
           <summary class="w-full px-6 py-5 flex items-center justify-between cursor-pointer list-none">
-            <span class="text-base font-semibold text-[#1e2832] leading-6 tracking-[-0.4px] text-left">How do I get my certificate?</span>
+            <span class="text-base font-semibold text-text leading-6 tracking-[-0.4px] text-left">How do I get my certificate?</span>
             <img src="/assets/icons/texas/chevron-faq.svg" alt="" class="w-4 h-4 transition-transform group-open:rotate-180 flex-shrink-0 ml-4" />
           </summary>
           <div class="px-6 pb-5">
-            <p class="text-base text-[#616d7b] leading-6">
+            <p class="text-base text-text-body leading-6">
               Your certificate is available immediately upon course completion. You can download it right away from your account dashboard to submit to your court.
             </p>
           </div>
         </details>
 
-        <details class="group bg-white border border-[#e4e6ea] rounded-2xl overflow-hidden">
+        <details class="group bg-white border border-border rounded-2xl overflow-hidden">
           <summary class="w-full px-6 py-5 flex items-center justify-between cursor-pointer list-none">
-            <span class="text-base font-semibold text-[#1e2832] leading-6 tracking-[-0.4px] text-left">How long do I have to complete the course?</span>
+            <span class="text-base font-semibold text-text leading-6 tracking-[-0.4px] text-left">How long do I have to complete the course?</span>
             <img src="/assets/icons/texas/chevron-faq.svg" alt="" class="w-4 h-4 transition-transform group-open:rotate-180 flex-shrink-0 ml-4" />
           </summary>
           <div class="px-6 pb-5">
-            <p class="text-base text-[#616d7b] leading-6">
+            <p class="text-base text-text-body leading-6">
               You have up to 90 days from enrollment to complete the course. However, you must finish before your court's deadline for ticket dismissal.
             </p>
           </div>
         </details>
 
-        <details class="group bg-white border border-[#e4e6ea] rounded-2xl overflow-hidden">
+        <details class="group bg-white border border-border rounded-2xl overflow-hidden">
           <summary class="w-full px-6 py-5 flex items-center justify-between cursor-pointer list-none">
-            <span class="text-base font-semibold text-[#1e2832] leading-6 tracking-[-0.4px] text-left">Can I take the course on my phone?</span>
+            <span class="text-base font-semibold text-text leading-6 tracking-[-0.4px] text-left">Can I take the course on my phone?</span>
             <img src="/assets/icons/texas/chevron-faq.svg" alt="" class="w-4 h-4 transition-transform group-open:rotate-180 flex-shrink-0 ml-4" />
           </summary>
           <div class="px-6 pb-5">
-            <p class="text-base text-[#616d7b] leading-6">
+            <p class="text-base text-text-body leading-6">
               Yes! The course is fully mobile-friendly. You can take it on any device &mdash; phone, tablet, or computer. Your progress automatically saves, so you can switch devices anytime.
             </p>
           </div>
         </details>
 
-        <details class="group bg-white border border-[#e4e6ea] rounded-2xl overflow-hidden">
+        <details class="group bg-white border border-border rounded-2xl overflow-hidden">
           <summary class="w-full px-6 py-5 flex items-center justify-between cursor-pointer list-none">
-            <span class="text-base font-semibold text-[#1e2832] leading-6 tracking-[-0.4px] text-left">What if I fail the final exam?</span>
+            <span class="text-base font-semibold text-text leading-6 tracking-[-0.4px] text-left">What if I fail the final exam?</span>
             <img src="/assets/icons/texas/chevron-faq.svg" alt="" class="w-4 h-4 transition-transform group-open:rotate-180 flex-shrink-0 ml-4" />
           </summary>
           <div class="px-6 pb-5">
-            <p class="text-base text-[#616d7b] leading-6">
+            <p class="text-base text-text-body leading-6">
               You get unlimited retakes on all unit quizzes. There is no final exam. The goal is learning, not tricking you. Take your time and review the material as needed.
             </p>
           </div>
         </details>
 
-        <details class="group bg-white border border-[#e4e6ea] rounded-2xl overflow-hidden">
+        <details class="group bg-white border border-border rounded-2xl overflow-hidden">
           <summary class="w-full px-6 py-5 flex items-center justify-between cursor-pointer list-none">
-            <span class="text-base font-semibold text-[#1e2832] leading-6 tracking-[-0.4px] text-left">Are refunds available?</span>
+            <span class="text-base font-semibold text-text leading-6 tracking-[-0.4px] text-left">Are refunds available?</span>
             <img src="/assets/icons/texas/chevron-faq.svg" alt="" class="w-4 h-4 transition-transform group-open:rotate-180 flex-shrink-0 ml-4" />
           </summary>
           <div class="px-6 pb-5">
-            <p class="text-base text-[#616d7b] leading-6">
+            <p class="text-base text-text-body leading-6">
               Yes! If you're not satisfied, you can request a full refund before you complete the course or receive your certificate.
             </p>
           </div>
@@ -820,16 +820,16 @@ const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
       </div>
 
       <!-- Still have questions? CTA -->
-      <div class="bg-white border border-[#e4e6ea] rounded-[20px] p-8 flex flex-col gap-3 items-center">
-        <h3 class="text-xl font-semibold text-[#1e2832] text-center leading-7 tracking-[-0.5px]">
+      <div class="bg-white border border-border rounded-[20px] p-8 flex flex-col gap-3 items-center">
+        <h3 class="text-xl font-semibold text-text text-center leading-7 tracking-[-0.5px]">
           Still have questions?
         </h3>
-        <p class="text-base text-[#616d7b] text-center leading-6 pb-3">
+        <p class="text-base text-text-body text-center leading-6 pb-3">
           Our support team is here to help.
         </p>
         <a
           href={contactUrl}
-          class="h-12 px-8 border-2 border-[#03449e] text-[#03449e] hover:bg-[#03449e] hover:text-white rounded-2xl text-base font-semibold flex items-center justify-center gap-2 no-underline transition-colors"
+          class="h-12 px-8 border-2 border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-2xl text-base font-semibold flex items-center justify-center gap-2 no-underline transition-colors"
         >
           Contact Support
           <img src="/assets/icons/texas/arrow-contact-support.svg" alt="" class="w-4 h-4" />
@@ -841,7 +841,7 @@ const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
   <!-- Final CTA -->
   <section class="py-[112px] px-4 sm:px-6 lg:px-8 bg-white">
     <div class="max-w-7xl mx-auto">
-      <div class="bg-[#03449e] rounded-[24px] px-8 lg:px-16 xl:px-24 py-16 relative overflow-hidden">
+      <div class="bg-primary-deep rounded-[24px] px-8 lg:px-16 xl:px-24 py-16 relative overflow-hidden">
         <!-- Background blur effects -->
         <div class="absolute inset-0 opacity-10 pointer-events-none">
           <div class="absolute bg-[#46a2f2] blur-[32px] rounded-full w-[384px] h-[384px] -right-48 -top-48"></div>
@@ -864,7 +864,7 @@ const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
           <!-- Primary CTA -->
           <a
             href={enrollUrl}
-            class="w-full sm:w-auto sm:min-w-[320px] h-[60px] px-10 bg-white hover:bg-[#f0f9ff] text-[#03449e] rounded-full text-[18px] font-bold flex items-center justify-center gap-2 leading-[28px] no-underline shadow-[0px_8px_24px_rgba(0,0,0,0.18)] transition-colors"
+            class="w-full sm:w-auto sm:min-w-[320px] h-[60px] px-10 bg-white hover:bg-surface-muted text-primary-deep rounded-full text-[18px] font-bold flex items-center justify-center gap-2 leading-[28px] no-underline shadow-[0px_8px_24px_rgba(0,0,0,0.18)] transition-colors"
             style="font-family: 'DM Sans', sans-serif;"
           >
             Start Course &mdash; $28

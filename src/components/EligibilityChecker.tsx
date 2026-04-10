@@ -60,49 +60,49 @@ const RESULT_DATA: Record<
 > = {
   'ineligible-serious': {
     badge: 'Not Eligible',
-    badgeClass: 'inline-flex items-center gap-2 bg-[#fee2e2] text-[#dc2626] text-sm font-semibold px-3 py-1.5 rounded-full',
+    badgeClass: 'inline-flex items-center gap-2 bg-error-bg text-error text-sm font-semibold px-3 py-1.5 rounded-full',
     heading: "Serious violations can't be dismissed through defensive driving",
     body: "Texas law does not allow criminal or serious traffic violations to be dismissed through a Driver Safety Course. You'll need to address this charge differently.",
     isEligible: false,
   },
   'ineligible-speed': {
     badge: 'Likely Not Eligible',
-    badgeClass: 'inline-flex items-center gap-2 bg-[#fee2e2] text-[#dc2626] text-sm font-semibold px-3 py-1.5 rounded-full',
+    badgeClass: 'inline-flex items-center gap-2 bg-error-bg text-error text-sm font-semibold px-3 py-1.5 rounded-full',
     heading: 'Speeds 25+ mph over the limit are rarely approved',
     body: 'Texas courts have discretion to deny DSC for high-speed violations. You may still ask your court, but approval is uncommon at this speed.',
     isEligible: false,
   },
   'ineligible-cdl': {
     badge: 'Not Eligible',
-    badgeClass: 'inline-flex items-center gap-2 bg-[#fee2e2] text-[#dc2626] text-sm font-semibold px-3 py-1.5 rounded-full',
+    badgeClass: 'inline-flex items-center gap-2 bg-error-bg text-error text-sm font-semibold px-3 py-1.5 rounded-full',
     heading: 'CDL holders cannot use defensive driving for ticket dismissal',
     body: 'Texas law prohibits CDL holders from dismissing violations through a Driver Safety Course, even when driving a personal vehicle.',
     isEligible: false,
   },
   'ineligible-prior': {
     badge: 'Not Eligible',
-    badgeClass: 'inline-flex items-center gap-2 bg-[#fee2e2] text-[#dc2626] text-sm font-semibold px-3 py-1.5 rounded-full',
+    badgeClass: 'inline-flex items-center gap-2 bg-error-bg text-error text-sm font-semibold px-3 py-1.5 rounded-full',
     heading: "You've already used a dismissal in the past 12 months",
     body: "Texas only allows one ticket dismissal via defensive driving per 12-month period. You'll need to wait until 12 months have passed from your last dismissal.",
     isEligible: false,
   },
   'ineligible-denied': {
     badge: 'Not Eligible',
-    badgeClass: 'inline-flex items-center gap-2 bg-[#fee2e2] text-[#dc2626] text-sm font-semibold px-3 py-1.5 rounded-full',
+    badgeClass: 'inline-flex items-center gap-2 bg-error-bg text-error text-sm font-semibold px-3 py-1.5 rounded-full',
     heading: 'Court has denied your request',
     body: 'Courts have full discretion to deny DSC requests. A denial is generally final, though you may consult an attorney about your options.',
     isEligible: false,
   },
   'eligible-pending': {
     badge: 'Likely Eligible',
-    badgeClass: 'inline-flex items-center gap-2 bg-[#dcfce7] text-[#16a34a] text-sm font-semibold px-3 py-1.5 rounded-full',
+    badgeClass: 'inline-flex items-center gap-2 bg-success-bg text-success text-sm font-semibold px-3 py-1.5 rounded-full',
     heading: 'Likely Eligible — Request Court Approval First',
     body: 'Based on your answers, you should qualify to have this ticket dismissed through a TDLR-approved defensive driving course. However, you must get court approval before signing up for the course. Taking the course before approval is granted is a common and costly mistake.',
     isEligible: true,
   },
   eligible: {
     badge: 'Eligible',
-    badgeClass: 'inline-flex items-center gap-2 bg-[#dcfce7] text-[#16a34a] text-sm font-semibold px-3 py-1.5 rounded-full',
+    badgeClass: 'inline-flex items-center gap-2 bg-success-bg text-success text-sm font-semibold px-3 py-1.5 rounded-full',
     heading: 'You Appear Eligible for Dismissal',
     body: 'Based on your answers, you qualify to dismiss this ticket through a TDLR-approved defensive driving course. Complete the steps below to get your ticket dismissed.',
     isEligible: true,
@@ -181,19 +181,19 @@ export default function EligibilityChecker({ courts }: Props) {
     : STEP_HEADERS[step as Exclude<Step, 'result'>]?.subtitle ?? '';
 
   const selectClass =
-    'w-full border border-[#e4e6ea] rounded-xl px-4 py-3 text-sm text-[#1e2832] focus:outline-none focus:ring-2 focus:ring-[#0667d1] bg-white disabled:bg-[#f9fafb] disabled:text-[#adb5bd] transition-colors';
+    'w-full border border-border rounded-xl px-4 py-3 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary bg-white disabled:bg-surface-muted disabled:text-text-subtle transition-colors';
 
   const optionButtonClass =
-    'w-full text-left px-5 py-4 rounded-xl border border-[#e4e6ea] bg-white hover:border-[#0667D1] hover:bg-[#e5f6fe] transition-all text-sm font-semibold text-[#1e2832] flex items-center gap-3';
+    'w-full text-left px-5 py-4 rounded-xl border border-border bg-white hover:border-primary hover:bg-info transition-all text-sm font-semibold text-text flex items-center gap-3';
 
   const startOverButtonClass =
-    'border border-[#e4e6ea] text-[#616d7b] rounded-xl px-6 py-3 text-sm font-medium hover:bg-[#f9fafb] transition-colors';
+    'border border-border text-text-body rounded-xl px-6 py-3 text-sm font-medium hover:bg-surface-muted transition-colors';
 
   const primaryButtonClass =
-    'bg-[#0667D1] hover:bg-[#0556b3] text-white rounded-xl px-6 py-3 text-sm font-semibold transition-colors';
+    'bg-primary hover:bg-primary-hover text-white rounded-xl px-6 py-3 text-sm font-semibold transition-colors';
 
   const backButtonClass =
-    'text-sm text-[#616d7b] hover:text-[#1e2832] flex items-center gap-1 transition-colors mb-6';
+    'text-sm text-text-body hover:text-text flex items-center gap-1 transition-colors mb-6';
 
   return (
     <div className="max-w-2xl mx-auto">
@@ -221,13 +221,13 @@ export default function EligibilityChecker({ courts }: Props) {
         )}
 
         <h2
-          className="text-3xl lg:text-4xl font-bold text-[#1e2832] leading-tight mb-3"
+          className="text-3xl lg:text-4xl font-bold text-text leading-tight mb-3"
           style={{ fontFamily: "'Outfit', sans-serif" }}
         >
           {headerHeading}
         </h2>
         <p
-          className="text-base text-[#616d7b] leading-7"
+          className="text-base text-text-body leading-7"
           style={{ fontFamily: "'DM Sans', sans-serif" }}
         >
           {headerSubtitle}
@@ -235,31 +235,31 @@ export default function EligibilityChecker({ courts }: Props) {
       </div>
 
       {/* ── Card ── */}
-      <div className="bg-white rounded-2xl border border-[#e4e6ea] shadow-sm p-8">
+      <div className="bg-white rounded-2xl border border-border shadow-sm p-8">
 
         {/* Progress bar */}
         {step !== 'result' ? (
           <div className="mb-8">
-            <p className="text-xs text-[#616d7b] mb-2" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+            <p className="text-xs text-text-body mb-2" style={{ fontFamily: "'DM Sans', sans-serif" }}>
               Step {currentStepNum - 1} of {totalSteps}
             </p>
-            <div className="h-1.5 w-full bg-[#f0f2f4] rounded-full overflow-hidden">
+            <div className="h-1.5 w-full bg-surface-muted rounded-full overflow-hidden">
               <div
-                className="h-full bg-[#0667D1] rounded-full transition-all duration-300"
+                className="h-full bg-primary rounded-full transition-all duration-300"
                 style={{ width: `${progressPct}%` }}
               />
             </div>
           </div>
         ) : (
           <div className="mb-8">
-            <p className="text-xs text-[#616d7b] mb-2 flex items-center gap-1" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+            <p className="text-xs text-text-body mb-2 flex items-center gap-1" style={{ fontFamily: "'DM Sans', sans-serif" }}>
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
                 <circle cx="7" cy="7" r="7" fill="#16a34a" />
                 <path d="M4 7l2 2 4-4" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
               Done!
             </p>
-            <div className="h-1.5 w-full bg-[#0667D1] rounded-full" />
+            <div className="h-1.5 w-full bg-primary rounded-full" />
           </div>
         )}
 
@@ -471,27 +471,27 @@ export default function EligibilityChecker({ courts }: Props) {
 
               {/* Buy box — fully eligible (has court approval) */}
               {result === 'eligible' && (
-                <div className="border border-[#e4e6ea] rounded-2xl p-5 mb-6 shadow-sm">
+                <div className="border border-border rounded-2xl p-5 mb-6 shadow-sm">
                   {/* Header row */}
                   <div className="flex items-start justify-between gap-2 mb-3">
                     <h3
-                      className="text-base font-semibold text-[#1e2832] leading-snug"
+                      className="text-base font-semibold text-text leading-snug"
                       style={{ fontFamily: "'Outfit', sans-serif" }}
                     >
                       Texas Defensive Driving Course 6hr
                     </h3>
-                    <span className="bg-[#e5f6fe] text-[#0667d1] text-xs font-semibold px-2 py-0.5 rounded-full flex-shrink-0">
+                    <span className="bg-info text-primary text-xs font-semibold px-2 py-0.5 rounded-full flex-shrink-0">
                       Recommended
                     </span>
                   </div>
 
                   {/* Price */}
                   <div className="flex items-baseline gap-1 mb-0.5">
-                    <span className="text-[28px] font-bold text-[#1e2832] leading-none">$25</span>
-                    <span className="text-xs text-[#616d7b]">.00</span>
-                    <span className="text-base font-medium text-[#616d7b] line-through ml-2">$35.00</span>
+                    <span className="text-[28px] font-bold text-text leading-none">$25</span>
+                    <span className="text-xs text-text-body">.00</span>
+                    <span className="text-base font-medium text-text-body line-through ml-2">$35.00</span>
                   </div>
-                  <p className="text-xs text-[#616d7b] mb-3" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                  <p className="text-xs text-text-body mb-3" style={{ fontFamily: "'DM Sans', sans-serif" }}>
                     + $3.00 state processing fee
                   </p>
 
@@ -502,7 +502,7 @@ export default function EligibilityChecker({ courts }: Props) {
                         <path d="M7 1l1.8 3.6L13 5.3l-3 2.9.7 4.1L7 10.4l-3.7 1.9.7-4.1-3-2.9 4.2-.7L7 1z"/>
                       </svg>
                     ))}
-                    <span className="text-xs font-medium text-[#1e2832] ml-1" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                    <span className="text-xs font-medium text-text ml-1" style={{ fontFamily: "'DM Sans', sans-serif" }}>
                       4.9 out of 5
                     </span>
                   </div>
@@ -510,7 +510,7 @@ export default function EligibilityChecker({ courts }: Props) {
                   {/* Enroll CTA */}
                   <a
                     href={enrollUrl}
-                    className="w-full h-11 bg-[#0667d1] hover:bg-[#0556b3] text-white rounded-2xl text-sm font-semibold flex items-center justify-center gap-2 no-underline transition-colors mb-3 shadow-sm"
+                    className="w-full h-11 bg-primary hover:bg-primary-hover text-white rounded-2xl text-sm font-semibold flex items-center justify-center gap-2 no-underline transition-colors mb-3 shadow-sm"
                     style={{ fontFamily: "'DM Sans', sans-serif" }}
                   >
                     Start Your Course
@@ -523,12 +523,12 @@ export default function EligibilityChecker({ courts }: Props) {
                   <div className="flex flex-col gap-2">
                     {TRUST_ITEMS.map(item => (
                       <div key={item} className="flex items-center gap-2">
-                        <div className="bg-[#e5f6fe] rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0">
+                        <div className="bg-info rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0">
                           <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
                             <path d="M2 5l2 2 4-4" stroke="#0667d1" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                           </svg>
                         </div>
-                        <span className="text-xs text-[#616d7b]" style={{ fontFamily: "'DM Sans', sans-serif" }}>{item}</span>
+                        <span className="text-xs text-text-body" style={{ fontFamily: "'DM Sans', sans-serif" }}>{item}</span>
                       </div>
                     ))}
                   </div>
@@ -537,17 +537,17 @@ export default function EligibilityChecker({ courts }: Props) {
 
               {/* Court finder — eligible-pending (needs court approval first) */}
               {result === 'eligible-pending' && (
-                <div className="border border-[#e4e6ea] rounded-xl p-6 mb-6">
+                <div className="border border-border rounded-xl p-6 mb-6">
                   <div className="flex items-start justify-between gap-4">
                     <div>
                       <h3
-                        className="text-base font-bold text-[#1e2832] mb-1"
+                        className="text-base font-bold text-text mb-1"
                         style={{ fontFamily: "'Outfit', sans-serif" }}
                       >
                         Want step-by-step instructions for your court?
                       </h3>
                       <p
-                        className="text-sm text-[#616d7b]"
+                        className="text-sm text-text-body"
                         style={{ fontFamily: "'DM Sans', sans-serif" }}
                       >
                         Find your court to get a tailored dismissal guide.
@@ -570,7 +570,7 @@ export default function EligibilityChecker({ courts }: Props) {
                       <div>
                         <label
                           htmlFor="ec-county"
-                          className="block text-xs font-semibold text-[#616d7b] uppercase tracking-wide mb-1.5"
+                          className="block text-xs font-semibold text-text-body uppercase tracking-wide mb-1.5"
                           style={{ fontFamily: "'DM Sans', sans-serif" }}
                         >
                           County
@@ -597,7 +597,7 @@ export default function EligibilityChecker({ courts }: Props) {
                       <div>
                         <label
                           htmlFor="ec-court-type"
-                          className="block text-xs font-semibold text-[#616d7b] uppercase tracking-wide mb-1.5"
+                          className="block text-xs font-semibold text-text-body uppercase tracking-wide mb-1.5"
                           style={{ fontFamily: "'DM Sans', sans-serif" }}
                         >
                           Court Type
@@ -624,7 +624,7 @@ export default function EligibilityChecker({ courts }: Props) {
                       <div>
                         <label
                           htmlFor="ec-court-name"
-                          className="block text-xs font-semibold text-[#616d7b] uppercase tracking-wide mb-1.5"
+                          className="block text-xs font-semibold text-text-body uppercase tracking-wide mb-1.5"
                           style={{ fontFamily: "'DM Sans', sans-serif" }}
                         >
                           Court Name

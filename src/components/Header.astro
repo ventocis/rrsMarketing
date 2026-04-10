@@ -9,17 +9,17 @@ const loginUrl = import.meta.env.VITE_LOGIN_URL || '';
     <a href="/" class="flex items-center gap-2 hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded flex-shrink-0" aria-label="Road Ready Safety — home">
       <img src="/assets/icons/texas/logo-shield.svg" alt="" class="h-[39.633px] w-9" width="36" height="40" />
       <div class="flex flex-col">
-        <span class="text-[18px] font-bold text-[#1e2832] leading-[22.5px]" style="font-family: 'Outfit', sans-serif;">Road Ready</span>
-        <span class="text-xs font-medium text-[#616d7b] leading-4" style="font-family: 'DM Sans', sans-serif;">Safety</span>
+        <span class="text-[18px] font-bold text-text leading-[22.5px]" style="font-family: 'Outfit', sans-serif;">Road Ready</span>
+        <span class="text-xs font-medium text-text-body leading-4" style="font-family: 'DM Sans', sans-serif;">Safety</span>
       </div>
     </a>
 
     <!-- Desktop nav links -->
     <div class="hidden md:flex items-center gap-8 flex-shrink-0">
-      <a href="/#how-it-works" class="text-sm font-medium text-[#616d7b] hover:text-[#1e2832] transition-colors" style="font-family: 'DM Sans', sans-serif;">How It Works</a>
-      <a href="/courses" class="text-sm font-medium text-[#616d7b] hover:text-[#1e2832] transition-colors" style="font-family: 'DM Sans', sans-serif;">Courses</a>
-      <a href="/faq" class="text-sm font-medium text-[#616d7b] hover:text-[#1e2832] transition-colors" style="font-family: 'DM Sans', sans-serif;">FAQ</a>
-      <a href="/support" class="text-sm font-medium text-[#616d7b] hover:text-[#1e2832] transition-colors" style="font-family: 'DM Sans', sans-serif;">Help Center</a>
+      <a href="/#how-it-works" class="text-sm font-medium text-text-body hover:text-text transition-colors" style="font-family: 'DM Sans', sans-serif;">How It Works</a>
+      <a href="/courses" class="text-sm font-medium text-text-body hover:text-text transition-colors" style="font-family: 'DM Sans', sans-serif;">Courses</a>
+      <a href="/faq" class="text-sm font-medium text-text-body hover:text-text transition-colors" style="font-family: 'DM Sans', sans-serif;">FAQ</a>
+      <a href="/support" class="text-sm font-medium text-text-body hover:text-text transition-colors" style="font-family: 'DM Sans', sans-serif;">Help Center</a>
     </div>
 
     <!-- Desktop buttons -->
@@ -27,7 +27,7 @@ const loginUrl = import.meta.env.VITE_LOGIN_URL || '';
       {loginUrl && (
         <a
           href={loginUrl}
-          class="h-10 px-5 border border-[#e4e6ea] rounded-[10px] text-sm font-semibold text-[#1e2832] flex items-center justify-center hover:bg-[#f9fafb] transition-colors no-underline"
+          class="h-10 px-5 border border-border rounded-[10px] text-sm font-semibold text-text flex items-center justify-center hover:bg-surface-muted transition-colors no-underline"
           style="font-family: 'DM Sans', sans-serif;"
         >
           Log In
@@ -35,7 +35,7 @@ const loginUrl = import.meta.env.VITE_LOGIN_URL || '';
       )}
       <a
         href="/courses"
-        class="bg-[#0667D1] hover:bg-[#0556b3] text-white pt-[11.6px] pb-[12.4px] px-[20px] rounded-[16px] text-sm font-semibold flex items-center justify-center leading-[20px] no-underline text-center transition-colors"
+        class="bg-primary hover:bg-primary-hover text-white pt-[11.6px] pb-[12.4px] px-[20px] rounded-[16px] text-sm font-semibold flex items-center justify-center leading-[20px] no-underline text-center transition-colors"
         style="font-family: 'DM Sans', sans-serif; min-height: 44px; box-shadow: 0 20px 25px -5px rgba(17,23,34,0.10), 0 8px 10px -6px rgba(17,23,34,0.05);"
       >
         Start Course
@@ -45,7 +45,7 @@ const loginUrl = import.meta.env.VITE_LOGIN_URL || '';
     <!-- Mobile hamburger button -->
     <button
       id="mobile-menu-btn"
-      class="md:hidden p-2 rounded-lg text-[#616d7b] hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      class="md:hidden p-2 rounded-lg text-text-body hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
       aria-label="Toggle navigation menu"
       aria-expanded="false"
       aria-controls="mobile-menu"
@@ -60,17 +60,17 @@ const loginUrl = import.meta.env.VITE_LOGIN_URL || '';
   </nav>
 
   <!-- Mobile menu -->
-  <div id="mobile-menu" class="hidden md:hidden border-t border-[#e5e5e5] bg-white">
+  <div id="mobile-menu" class="hidden md:hidden border-t border-border bg-white">
     <div class="px-4 py-6 space-y-4">
-      <a href="/#how-it-works" class="block text-lg font-medium text-[#1e2832] text-center py-2" style="font-family: 'DM Sans', sans-serif;">How It Works</a>
-      <a href="/courses" class="block text-lg font-medium text-[#1e2832] text-center py-2" style="font-family: 'DM Sans', sans-serif;">Courses</a>
-      <a href="/faq" class="block text-lg font-medium text-[#1e2832] text-center py-2" style="font-family: 'DM Sans', sans-serif;">FAQ</a>
-      <a href="/support" class="block text-lg font-medium text-[#1e2832] text-center py-2" style="font-family: 'DM Sans', sans-serif;">Help Center</a>
+      <a href="/#how-it-works" class="block text-lg font-medium text-text text-center py-2" style="font-family: 'DM Sans', sans-serif;">How It Works</a>
+      <a href="/courses" class="block text-lg font-medium text-text text-center py-2" style="font-family: 'DM Sans', sans-serif;">Courses</a>
+      <a href="/faq" class="block text-lg font-medium text-text text-center py-2" style="font-family: 'DM Sans', sans-serif;">FAQ</a>
+      <a href="/support" class="block text-lg font-medium text-text text-center py-2" style="font-family: 'DM Sans', sans-serif;">Help Center</a>
       <div class="pt-4 space-y-3">
         {loginUrl && (
           <a
             href={loginUrl}
-            class="block w-full h-12 px-4 rounded-[10px] text-[18px] font-semibold text-[#1e2832] border border-[#e5e5e5] bg-white hover:bg-gray-50 transition-colors text-center leading-[48px]"
+            class="block w-full h-12 px-4 rounded-[10px] text-[18px] font-semibold text-text border border-border bg-white hover:bg-gray-50 transition-colors text-center leading-[48px]"
             style="font-family: 'DM Sans', sans-serif;"
           >
             Log In
@@ -78,7 +78,7 @@ const loginUrl = import.meta.env.VITE_LOGIN_URL || '';
         )}
         <a
           href="/courses"
-          class="block w-full h-12 px-4 rounded-[10px] bg-[#0667D1] text-white text-[18px] font-semibold hover:bg-[#0556b3] transition-colors text-center leading-[48px]"
+          class="block w-full h-12 px-4 rounded-[10px] bg-primary text-white text-[18px] font-semibold hover:bg-primary-hover transition-colors text-center leading-[48px]"
           style="font-family: 'DM Sans', sans-serif; box-shadow: 0 20px 25px -5px rgba(17,23,34,0.10), 0 8px 10px -6px rgba(17,23,34,0.05);"
         >
           Start Course

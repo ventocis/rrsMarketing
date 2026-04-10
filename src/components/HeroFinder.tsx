@@ -47,10 +47,10 @@ export default function HeroFinder({ variant = 'hero' }: Props) {
   const languageOptions = Array.from(new Set(filteredCourses.map(c => c.language)));
 
   const selectClass = isCta
-    ? 'text-sm leading-5 py-3 px-4 min-h-[44px] w-full border border-[#7cc3f9] rounded-[16px] bg-white text-[#262626] focus:ring-2 focus:ring-[#7cc3f9] focus:border-[#7cc3f9] outline-none transition-colors disabled:bg-[#efefef] disabled:text-[#7c7c7c]'
-    : 'text-sm leading-5 py-3 px-4 min-h-[44px] w-full border border-[#e5e5e5] rounded-[8px] bg-white text-[#262626] focus:ring-2 focus:ring-[#fe915c] focus:border-[#fe915c] outline-none transition-colors disabled:bg-[#efefef] disabled:text-[#7c7c7c]';
+    ? 'text-sm leading-5 py-3 px-4 min-h-[44px] w-full border border-info-border rounded-[16px] bg-white text-text focus:ring-2 focus:ring-info-border focus:border-info-border outline-none transition-colors disabled:bg-surface-muted disabled:text-text-muted'
+    : 'text-sm leading-5 py-3 px-4 min-h-[44px] w-full border border-border rounded-[8px] bg-white text-text focus:ring-2 focus:ring-accent focus:border-accent outline-none transition-colors disabled:bg-surface-muted disabled:text-text-muted';
 
-  const labelClass = `block text-sm font-medium mb-2 ${isCta ? 'text-white' : 'text-[#262626]'}`;
+  const labelClass = `block text-sm font-medium mb-2 ${isCta ? 'text-white' : 'text-text'}`;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -88,16 +88,16 @@ export default function HeroFinder({ variant = 'hero' }: Props) {
   return (
     <div
       className={isCta
-        ? 'bg-[#0667D1] p-6 rounded-[12px]'
-        : 'bg-[#F9FAFB] border border-[#e5e5e5] p-6 rounded-[12px]'}
+        ? 'bg-primary p-6 rounded-[12px]'
+        : 'bg-surface-muted border border-border p-6 rounded-[12px]'}
       style={{ boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)' }}
     >
       <form className="grid grid-cols-1 lg:grid-cols-2 gap-6" onSubmit={handleSubmit}>
         <div className="col-span-1 lg:col-span-2">
-          <h2 className={`text-xl leading-[30px] font-medium mb-4 ${isCta ? 'text-white' : 'text-[#464646]'}`}>
+          <h2 className={`text-xl leading-[30px] font-medium mb-4 ${isCta ? 'text-white' : 'text-text'}`}>
             Find the right course
           </h2>
-          <p className={`text-xs leading-4 mb-4 ${isCta ? 'text-white/80' : 'text-[#616d7b]'}`}>
+          <p className={`text-xs leading-4 mb-4 ${isCta ? 'text-white/80' : 'text-text-body'}`}>
             Select your state and reason. If there are multiple options, we'll show you the choices.
           </p>
         </div>
@@ -153,7 +153,7 @@ export default function HeroFinder({ variant = 'hero' }: Props) {
                   <option key={name} value={name}>{name}</option>
                 ))}
               </select>
-              <p className={`text-xs leading-4 mt-2 ${isCta ? 'text-white/80' : 'text-[#616d7b]'}`} style={{ fontFamily: "'Inter', sans-serif" }}>
+              <p className={`text-xs leading-4 mt-2 ${isCta ? 'text-white/80' : 'text-text-body'}`} style={{ fontFamily: "'Inter', sans-serif" }}>
                 Leave "Course" as 'Best option' and we'll recommend the right one.
               </p>
             </div>
@@ -181,8 +181,8 @@ export default function HeroFinder({ variant = 'hero' }: Props) {
             type="submit"
             className={`w-full mt-2 text-sm font-semibold py-3 px-4 rounded-[16px] min-h-[44px] flex items-center justify-center transition-colors ${
               isCta
-                ? 'bg-white hover:bg-gray-50 text-[#0667D1] hover:text-[#0556b3]'
-                : 'bg-[#0667D1] hover:bg-[#0556b3] text-white'
+                ? 'bg-white hover:bg-gray-50 text-primary hover:text-primary-hover'
+                : 'bg-primary hover:bg-primary-hover text-white'
             }`}
             style={{ fontFamily: "'Inter', sans-serif", boxShadow: '0 20px 25px -5px rgba(17,23,34,0.10), 0 8px 10px -6px rgba(17,23,34,0.05)' }}
           >
@@ -190,7 +190,7 @@ export default function HeroFinder({ variant = 'hero' }: Props) {
           </button>
           {emptyState && (
             <div
-              className={`text-sm mt-2 ${isCta ? 'text-white bg-red-500/20 border border-red-500/50 rounded-[8px] px-4 py-2' : 'text-[#ef4444]'}`}
+              className={`text-sm mt-2 ${isCta ? 'text-white bg-red-500/20 border border-red-500/50 rounded-[8px] px-4 py-2' : 'text-error'}`}
               style={{ fontFamily: "'Inter', sans-serif" }}
             >
               No courses found for your selection.

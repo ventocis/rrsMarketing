@@ -6,7 +6,7 @@ const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
 
 export const GET: APIRoute = () => {
   const content = isProd
-    ? `User-agent: *\nAllow: /\n\nSitemap: ${siteUrl}/sitemap-index.xml\n`
+    ? `User-agent: *\nAllow: /\n\nSitemap: ${siteUrl}/sitemap.xml\n`
     : `User-agent: *\nDisallow: /\n`;
 
   return new Response(content, {

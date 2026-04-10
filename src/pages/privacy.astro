@@ -4,7 +4,7 @@ import { marked } from 'marked';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 
-const md = readFileSync(join(process.cwd(), 'src/content/privacy.md'), 'utf-8');
+const md = readFileSync(join(process.cwd(), 'src/content/docs/privacy.md'), 'utf-8');
 const html = marked(md);
 ---
 

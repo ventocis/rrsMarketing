@@ -39,7 +39,10 @@ export default {
           DEFAULT: 'var(--color-error)',
           bg: 'var(--color-error-bg)',
         },
-        announcement: 'var(--color-announcement)',
+        announcement: {
+          DEFAULT: 'var(--color-announcement)',
+          tx: 'var(--color-announcement-tx)',
+        },
       },
       fontFamily: {
         sans: ["'DM Sans'", 'sans-serif'],

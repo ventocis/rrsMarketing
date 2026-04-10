@@ -12,21 +12,21 @@ import Footer from '../components/Footer.astro';
 >
   <Header />
 
-  <main class="bg-[#f9fafb] min-h-screen flex items-center justify-center px-4 py-20">
+  <main class="bg-surface-muted min-h-screen flex items-center justify-center px-4 py-20">
     <div class="max-w-md w-full text-center">
 
       <!-- Error code -->
-      <p class="text-8xl font-extrabold text-[#e4e6ea] leading-none mb-4" style="font-family: 'Outfit', sans-serif;">
+      <p class="text-8xl font-extrabold text-border leading-none mb-4" style="font-family: 'Outfit', sans-serif;">
         404
       </p>
 
       <!-- Heading -->
-      <h1 class="text-2xl md:text-3xl font-bold text-[#1e2832] mb-3 leading-tight" style="font-family: 'Outfit', sans-serif;">
+      <h1 class="text-2xl md:text-3xl font-bold text-text mb-3 leading-tight" style="font-family: 'Outfit', sans-serif;">
         Page not found
       </h1>
 
       <!-- Subtext -->
-      <p class="text-base text-[#616d7b] leading-relaxed mb-8" style="font-family: 'DM Sans', sans-serif;">
+      <p class="text-base text-text-body leading-relaxed mb-8" style="font-family: 'DM Sans', sans-serif;">
         The page you're looking for doesn't exist or may have moved. Let's get you back on the road.
       </p>
 
@@ -34,14 +34,14 @@ import Footer from '../components/Footer.astro';
       <div class="flex flex-col sm:flex-row gap-3 justify-center">
         <a
           href="/"
-          class="inline-flex items-center justify-center h-11 px-6 bg-[#0667D1] hover:bg-[#0556b3] text-white text-sm font-semibold rounded-xl transition-colors"
+          class="inline-flex items-center justify-center h-11 px-6 bg-primary hover:bg-primary-hover text-white text-sm font-semibold rounded-xl transition-colors"
           style="font-family: 'DM Sans', sans-serif;"
         >
           Go to Homepage
         </a>
         <a
           href="/courses"
-          class="inline-flex items-center justify-center h-11 px-6 border border-[#e4e6ea] bg-white hover:bg-[#f9fafb] text-[#1e2832] text-sm font-semibold rounded-xl transition-colors"
+          class="inline-flex items-center justify-center h-11 px-6 border border-border bg-white hover:bg-surface-muted text-text text-sm font-semibold rounded-xl transition-colors"
           style="font-family: 'DM Sans', sans-serif;"
         >
           Browse Courses

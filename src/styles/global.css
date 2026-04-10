@@ -29,23 +29,46 @@
   size-adjust: 100%;
 }
 
-/* Brand color tokens — change here, propagates everywhere */
+/* Brand color tokens — change here, propagates everywhere.
+   Source of truth: template1/blueprint/design-tokens.json */
 :root {
-  --color-primary: #0667D1;
-  --color-primary-hover: #0556b3;
+  /* Primary blue */
+  --color-primary: #2454E6;
+  --color-primary-hover: #1D46BF;
   --color-primary-deep: #03449e;
-  --color-primary-badge: #0351b4;
+  --color-primary-navy: #021954;
 
+  /* Surfaces */
   --color-surface: #ffffff;
-  --color-surface-muted: #F9FAFB;
+  --color-surface-muted: #F7F9FC;
+  --color-surface-dark: #0E1324;
 
-  --color-text: #1e2832;
-  --color-text-muted: #616d7b;
-  --color-text-subtle: #262626;
+  /* Text */
+  --color-text: #0E1324;
+  --color-text-body: #3B4250;
+  --color-text-muted: #64748B;
+  --color-text-subtle: #9aa3af;
   --color-text-inverse: #f6f6f9;
 
-  --color-border: #e5e5e5;
+  /* Border */
+  --color-border: #E6EAF0;
+
+  /* Accent */
   --color-accent: #FE915C;
+
+  /* Info — chip/badge/highlight backgrounds */
+  --color-info-bg: #e5f6fe;
+  --color-info-border: #7cc3f9;
+  --color-info-text: #0351b4;
+
+  /* Status */
+  --color-success: #16A34A;
+  --color-success-bg: #dcfce7;
+  --color-error: #dc2626;
+  --color-error-bg: #fee2e2;
+
+  /* Announcement bar */
+  --color-announcement: #1D46BF;
 }
 
 /* Typography utilities */

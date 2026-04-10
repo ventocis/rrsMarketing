@@ -67,7 +67,7 @@ const articleSchema = JSON.stringify({
       <nav class="mb-8">
         <a
           href="/blog"
-          class="inline-flex items-center text-[#0667D1] hover:text-[#0556b3] font-medium transition-colors"
+          class="inline-flex items-center text-primary hover:text-primary-hover font-medium transition-colors"
           style="font-family: 'DM Sans', sans-serif;"
         >
           <svg class="mr-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -80,20 +80,20 @@ const articleSchema = JSON.stringify({
       <!-- Article header -->
       <header class="mb-10">
         <time
-          class="text-sm text-[#616d7b] block mb-4"
+          class="text-sm text-text-body block mb-4"
           datetime={post.date}
           style="font-family: 'DM Sans', sans-serif;"
         >
           {formatDate(post.date)}
         </time>
         <h1
-          class="text-3xl md:text-4xl font-bold text-[#1e2832] mb-4 leading-tight"
+          class="text-3xl md:text-4xl font-bold text-text mb-4 leading-tight"
           style="font-family: 'Outfit', sans-serif;"
         >
           {post.title}
         </h1>
         <p
-          class="text-xl text-[#616d7b] leading-relaxed"
+          class="text-xl text-text-body leading-relaxed"
           style="font-family: 'DM Sans', sans-serif;"
         >
           {post.description}
@@ -104,10 +104,10 @@ const articleSchema = JSON.stringify({
       <article class="blog-content" set:html={htmlContent} />
 
       <!-- Footer nav -->
-      <footer class="mt-12 pt-8 border-t border-[#e5e5e5]">
+      <footer class="mt-12 pt-8 border-t border-border">
         <a
           href="/blog"
-          class="inline-flex items-center text-[#0667D1] hover:text-[#0556b3] font-medium transition-colors"
+          class="inline-flex items-center text-primary hover:text-primary-hover font-medium transition-colors"
           style="font-family: 'DM Sans', sans-serif;"
         >
           <svg class="mr-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">

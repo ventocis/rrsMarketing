@@ -3,7 +3,7 @@ const contactUrl = import.meta.env.VITE_CONTACT_US_URL || 'https://app.roadready
 const year = new Date().getFullYear();
 ---
 
-<footer class="bg-[#1e2832]">
+<footer class="bg-surface-dark">
   <div class="max-w-[1200px] mx-auto px-6 py-16">
     <div class="flex flex-col lg:flex-row gap-12 lg:gap-[48px] items-start justify-center">
 
@@ -13,22 +13,22 @@ const year = new Date().getFullYear();
           <img src="/assets/icons/texas/logo-shield.svg" alt="" class="h-[39.633px] w-9" width="36" height="40" />
           <div class="flex flex-col">
             <span class="text-[18px] font-bold text-white leading-[22.5px]" style="font-family: 'Outfit', sans-serif;">Road Ready</span>
-            <span class="text-xs font-medium text-[#616d7b] leading-4" style="font-family: 'DM Sans', sans-serif;">Safety</span>
+            <span class="text-xs font-medium text-text-body leading-4" style="font-family: 'DM Sans', sans-serif;">Safety</span>
           </div>
         </a>
-        <p class="text-[14px] text-[#f6f6f9] leading-[20px] max-w-[384px]" style="font-family: 'DM Sans', sans-serif;">
+        <p class="text-[14px] text-text-inverse leading-[20px] max-w-[384px]" style="font-family: 'DM Sans', sans-serif;">
           Trusted and approved. Built for simplicity.
         </p>
         <div class="flex flex-col gap-[11.6px]">
           <div class="flex gap-[12px] items-center">
             <img src="/assets/icons/texas/email-icon.svg" alt="" class="w-4 h-4" width="16" height="16" />
-            <a href="mailto:info@roadreadysafety.com" class="text-[14px] text-[#f6f6f9] leading-[20px] hover:text-white transition-colors" style="font-family: 'DM Sans', sans-serif;">
+            <a href="mailto:info@roadreadysafety.com" class="text-[14px] text-text-inverse leading-[20px] hover:text-white transition-colors" style="font-family: 'DM Sans', sans-serif;">
               info@roadreadysafety.com
             </a>
           </div>
           <div class="flex gap-[12px] items-center">
             <img src="/assets/icons/texas/location-icon.svg" alt="" class="w-4 h-4" width="16" height="16" />
-            <a href="tel:+18888855707" class="text-[14px] text-[#f6f6f9] leading-[20px] hover:text-white transition-colors" style="font-family: 'DM Sans', sans-serif;">
+            <a href="tel:+18888855707" class="text-[14px] text-text-inverse leading-[20px] hover:text-white transition-colors" style="font-family: 'DM Sans', sans-serif;">
               (888) 885-5707
             </a>
           </div>
@@ -39,8 +39,8 @@ const year = new Date().getFullYear();
       <div class="flex flex-col gap-4 items-start w-full lg:w-[192px]">
         <h4 class="text-[16px] font-semibold text-white leading-6 tracking-[-0.4px]" style="font-family: 'Outfit', sans-serif;">Course</h4>
         <div class="flex flex-col gap-[12px]">
-          <a href="/courses" class="text-[14px] text-[#f6f6f9] leading-[20px] hover:text-white transition-colors" style="font-family: 'DM Sans', sans-serif;">Courses</a>
-          <a href="/faq" class="text-[14px] text-[#f6f6f9] leading-[20px] hover:text-white transition-colors" style="font-family: 'DM Sans', sans-serif;">FAQ</a>
+          <a href="/courses" class="text-[14px] text-text-inverse leading-[20px] hover:text-white transition-colors" style="font-family: 'DM Sans', sans-serif;">Courses</a>
+          <a href="/faq" class="text-[14px] text-text-inverse leading-[20px] hover:text-white transition-colors" style="font-family: 'DM Sans', sans-serif;">FAQ</a>
         </div>
       </div>
 
@@ -48,9 +48,9 @@ const year = new Date().getFullYear();
       <div class="flex flex-col gap-4 items-start w-full lg:w-[192px]">
         <h4 class="text-[16px] font-semibold text-white leading-6 tracking-[-0.4px]" style="font-family: 'Outfit', sans-serif;">Support</h4>
         <div class="flex flex-col gap-[12px]">
-          <a href="/support" class="text-[14px] text-[#f6f6f9] leading-[20px] hover:text-white transition-colors" style="font-family: 'DM Sans', sans-serif;">Help Center</a>
-          <a href={contactUrl} class="text-[14px] text-[#f6f6f9] leading-[20px] hover:text-white transition-colors" style="font-family: 'DM Sans', sans-serif;">Contact Us</a>
-          <a href="/partners" class="text-[14px] text-[#f6f6f9] leading-[20px] hover:text-white transition-colors" style="font-family: 'DM Sans', sans-serif;">Become a Partner</a>
+          <a href="/support" class="text-[14px] text-text-inverse leading-[20px] hover:text-white transition-colors" style="font-family: 'DM Sans', sans-serif;">Help Center</a>
+          <a href={contactUrl} class="text-[14px] text-text-inverse leading-[20px] hover:text-white transition-colors" style="font-family: 'DM Sans', sans-serif;">Contact Us</a>
+          <a href="/partners" class="text-[14px] text-text-inverse leading-[20px] hover:text-white transition-colors" style="font-family: 'DM Sans', sans-serif;">Become a Partner</a>
         </div>
       </div>
 
@@ -58,22 +58,22 @@ const year = new Date().getFullYear();
       <div class="flex flex-col gap-4 items-start w-full lg:w-[192px]">
         <h4 class="text-[16px] font-semibold text-white leading-6 tracking-[-0.4px]" style="font-family: 'Outfit', sans-serif;">Legal</h4>
         <div class="flex flex-col gap-[12px]">
-          <a href="/privacy" class="text-[14px] text-[#f6f6f9] leading-[20px] hover:text-white transition-colors" style="font-family: 'DM Sans', sans-serif;">Privacy Policy</a>
-          <a href="/terms" class="text-[14px] text-[#f6f6f9] leading-[20px] hover:text-white transition-colors" style="font-family: 'DM Sans', sans-serif;">Terms of Service</a>
+          <a href="/privacy" class="text-[14px] text-text-inverse leading-[20px] hover:text-white transition-colors" style="font-family: 'DM Sans', sans-serif;">Privacy Policy</a>
+          <a href="/terms" class="text-[14px] text-text-inverse leading-[20px] hover:text-white transition-colors" style="font-family: 'DM Sans', sans-serif;">Terms of Service</a>
         </div>
       </div>
     </div>
 
-    <div class="border-t border-[#1c2331] pt-[32.8px] mt-12">
+    <div class="border-t border-surface-dark pt-[32.8px] mt-12">
       <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
-        <p class="text-[14px] text-[#616d7b] leading-[20px]" style="font-family: 'DM Sans', sans-serif;">
+        <p class="text-[14px] text-text-body leading-[20px]" style="font-family: 'DM Sans', sans-serif;">
           © {year} Road Ready Safety. All rights reserved.
         </p>
         <div class="flex items-center gap-4">
-          <a href="https://facebook.com/roadreadysafety" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="text-[#616d7b] hover:text-white transition-colors">
+          <a href="https://facebook.com/roadreadysafety" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="text-text-body hover:text-white transition-colors">
             <img src="/assets/social/facebook.svg" alt="" class="w-5 h-5" width="20" height="20" />
           </a>
-          <a href="https://www.youtube.com/@RoadReadySafety" target="_blank" rel="noopener noreferrer" aria-label="YouTube" class="text-[#616d7b] hover:text-white transition-colors">
+          <a href="https://www.youtube.com/@RoadReadySafety" target="_blank" rel="noopener noreferrer" aria-label="YouTube" class="text-text-body hover:text-white transition-colors">
             <img src="/assets/social/youtube.svg" alt="" class="w-5 h-5" width="20" height="20" />
           </a>
         </div>

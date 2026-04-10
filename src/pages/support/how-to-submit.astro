@@ -35,26 +35,26 @@ const coursesByState = Object.entries(grouped).sort(([a], [b]) =>
 
   <!-- State course requirements — pure static, no JS needed -->
   <div class="mt-8 not-prose">
-    <h3 class="text-xl font-bold text-[#1e2832] mb-4" style="font-family: 'Outfit', sans-serif;">
+    <h3 class="text-xl font-bold text-text mb-4" style="font-family: 'Outfit', sans-serif;">
       Course Requirements by State
     </h3>
-    <p class="text-sm text-[#616d7b] mb-4" style="font-family: 'DM Sans', sans-serif;">
+    <p class="text-sm text-text-body mb-4" style="font-family: 'DM Sans', sans-serif;">
       Click your state for detailed requirements:
     </p>
     <div class="space-y-2">
       {coursesByState.map(([stateCode, courses]) => (
-        <details class="border border-[#e5e5e5] rounded-lg overflow-hidden">
-          <summary class="flex items-center justify-between px-4 py-3 bg-[#F9FAFB] hover:bg-gray-100 cursor-pointer list-none text-sm font-medium text-[#1e2832] transition-colors">
+        <details class="border border-border rounded-lg overflow-hidden">
+          <summary class="flex items-center justify-between px-4 py-3 bg-surface-muted hover:bg-gray-100 cursor-pointer list-none text-sm font-medium text-text transition-colors">
             {stateNames[stateCode] || stateCode} ({courses.length})
-            <svg class="w-4 h-4 text-[#616d7b] transition-transform duration-200 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <svg class="w-4 h-4 text-text-body transition-transform duration-200 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
             </svg>
           </summary>
-          <div class="px-4 py-3 border-t border-[#e5e5e5] bg-white space-y-1">
+          <div class="px-4 py-3 border-t border-border bg-white space-y-1">
             {courses.map((course) => (
               <a
                 href={`/courses/${course.slug}/requirements`}
-                class="block text-sm text-[#0667D1] hover:text-[#0556b3] hover:underline leading-tight py-0.5"
+                class="block text-sm text-primary hover:text-primary-hover hover:underline leading-tight py-0.5"
               >
                 {course.course_name}
               </a>

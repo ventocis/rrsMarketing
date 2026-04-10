@@ -24,28 +24,28 @@ function formatDate(dateStr: string) {
   <main class="bg-white min-h-screen">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 py-16">
       <header class="text-center mb-12">
-        <h1 class="text-4xl font-bold text-[#1e2832] mb-4" style="font-family: 'Outfit', sans-serif;">Drive Smart Blog</h1>
-        <p class="text-xl text-[#616d7b]" style="font-family: 'DM Sans', sans-serif;">Tips, insights, and advice for safer driving</p>
+        <h1 class="text-4xl font-bold text-text mb-4" style="font-family: 'Outfit', sans-serif;">Drive Smart Blog</h1>
+        <p class="text-xl text-text-body" style="font-family: 'DM Sans', sans-serif;">Tips, insights, and advice for safer driving</p>
       </header>
 
       {posts.length > 0 ? (
         <div class="grid gap-8">
           {posts.map((post: any) => (
-            <article class="border-b border-[#e5e5e5] pb-8 last:border-b-0">
-              <time class="text-sm text-[#616d7b] block mb-3" datetime={post.date} style="font-family: 'DM Sans', sans-serif;">
+            <article class="border-b border-border pb-8 last:border-b-0">
+              <time class="text-sm text-text-body block mb-3" datetime={post.date} style="font-family: 'DM Sans', sans-serif;">
                 {formatDate(post.date)}
               </time>
-              <h2 class="text-2xl font-bold text-[#1e2832] mb-3" style="font-family: 'Outfit', sans-serif;">
-                <a href={`/blog/${post.slug}`} class="hover:text-[#0667D1] transition-colors">
+              <h2 class="text-2xl font-bold text-text mb-3" style="font-family: 'Outfit', sans-serif;">
+                <a href={`/blog/${post.slug}`} class="hover:text-primary transition-colors">
                   {post.title}
                 </a>
               </h2>
-              <p class="text-[#616d7b] mb-4 leading-relaxed" style="font-family: 'DM Sans', sans-serif;">
+              <p class="text-text-body mb-4 leading-relaxed" style="font-family: 'DM Sans', sans-serif;">
                 {post.description}
               </p>
               <a
                 href={`/blog/${post.slug}`}
-                class="inline-flex items-center text-[#0667D1] hover:text-[#0556b3] font-medium transition-colors"
+                class="inline-flex items-center text-primary hover:text-primary-hover font-medium transition-colors"
                 style="font-family: 'DM Sans', sans-serif;"
               >
                 Read more
@@ -58,7 +58,7 @@ function formatDate(dateStr: string) {
         </div>
       ) : (
         <div class="text-center py-12">
-          <p class="text-[#616d7b] text-lg" style="font-family: 'DM Sans', sans-serif;">No blog posts available yet. Check back soon!</p>
+          <p class="text-text-body text-lg" style="font-family: 'DM Sans', sans-serif;">No blog posts available yet. Check back soon!</p>
         </div>
       )}
     </div>

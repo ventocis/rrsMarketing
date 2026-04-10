@@ -22,42 +22,42 @@ const currentYear = new Date().getFullYear();
 
 <Layout title={title} description={description} keywords={keywords} url={url}>
   <!-- Announcement Banner -->
-  <div class="bg-[#2e7d32] text-white text-sm font-semibold text-center py-3 px-4 leading-5">
+  <div class="bg-announcement text-white text-sm font-semibold text-center py-3 px-4 leading-5">
     $28 Total, No Hidden Fees &mdash; No Surprises at Checkout
   </div>
 
   <!-- Header -->
-  <header class="sticky top-0 z-50 bg-white border-b border-[#e4e6ea] shadow-[0px_1px_3px_0px_rgba(17,23,34,0.04)]">
+  <header class="sticky top-0 z-50 bg-white border-b border-border shadow-[0px_1px_3px_0px_rgba(17,23,34,0.04)]">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
         <!-- Logo -->
         <a href="/texas" class="flex items-center gap-2 no-underline flex-shrink-0">
           <img src="/assets/icons/texas/logo-shield.svg" alt="Road Ready Safety" class="w-9 h-9 flex-shrink-0" />
           <div class="flex flex-col leading-none">
-            <span class="text-[14px] font-bold text-[#021954] leading-tight">Road Ready</span>
-            <span class="text-[10px] font-medium text-[#616d7b] leading-tight">Safety TDLR: CP#1234</span>
+            <span class="text-[14px] font-bold text-primary-navy leading-tight">Road Ready</span>
+            <span class="text-[10px] font-medium text-text-body leading-tight">Safety TDLR: CP#1234</span>
           </div>
         </a>
 
         <!-- Desktop Nav -->
         <nav class="hidden lg:flex items-center gap-8">
-          <a href="/texas/pricing" class="text-sm font-medium text-[#616d7b] hover:text-[#1e2832] no-underline transition-colors">Pricing</a>
-          <a href="/texas/faq" class="text-sm font-medium text-[#616d7b] hover:text-[#1e2832] no-underline transition-colors">FAQ</a>
-          <a href="/texas/helpcenter" class="text-sm font-medium text-[#616d7b] hover:text-[#1e2832] no-underline transition-colors">Help Center</a>
-          <a href="/texas/eligibility-tracker" class="text-sm font-medium text-[#616d7b] hover:text-[#1e2832] no-underline transition-colors">Eligibility Checker</a>
+          <a href="/texas/pricing" class="text-sm font-medium text-text-body hover:text-text no-underline transition-colors">Pricing</a>
+          <a href="/texas/faq" class="text-sm font-medium text-text-body hover:text-text no-underline transition-colors">FAQ</a>
+          <a href="/texas/helpcenter" class="text-sm font-medium text-text-body hover:text-text no-underline transition-colors">Help Center</a>
+          <a href="/texas/eligibility-tracker" class="text-sm font-medium text-text-body hover:text-text no-underline transition-colors">Eligibility Checker</a>
         </nav>
 
         <!-- Desktop CTA Buttons -->
         <div class="hidden lg:flex items-center gap-3">
           <a
             href={loginUrl}
-            class="h-10 px-5 border border-[#e4e6ea] text-[#1e2832] rounded-xl text-sm font-semibold flex items-center justify-center no-underline hover:bg-[#f9fafb] transition-colors"
+            class="h-10 px-5 border border-border text-text rounded-xl text-sm font-semibold flex items-center justify-center no-underline hover:bg-surface-muted transition-colors"
           >
             Log In
           </a>
           <a
             href={enrollUrl}
-            class="h-10 px-5 bg-[#0667D1] hover:bg-[#0556b3] text-white rounded-xl text-sm font-semibold flex items-center justify-center no-underline transition-colors shadow-[0px_4px_6px_-1px_rgba(17,23,34,0.1)]"
+            class="h-10 px-5 bg-primary hover:bg-primary-hover text-white rounded-xl text-sm font-semibold flex items-center justify-center no-underline transition-colors shadow-[0px_4px_6px_-1px_rgba(17,23,34,0.1)]"
           >
             Start Course
           </a>
@@ -66,7 +66,7 @@ const currentYear = new Date().getFullYear();
         <!-- Mobile Hamburger -->
         <button
           id="mobile-menu-btn"
-          class="lg:hidden flex items-center justify-center w-10 h-10 rounded-lg border border-[#e4e6ea] text-[#616d7b] hover:bg-[#f9fafb] transition-colors"
+          class="lg:hidden flex items-center justify-center w-10 h-10 rounded-lg border border-border text-text-body hover:bg-surface-muted transition-colors"
           aria-label="Open menu"
           aria-expanded="false"
         >
@@ -81,23 +81,23 @@ const currentYear = new Date().getFullYear();
     </div>
 
     <!-- Mobile Menu -->
-    <div id="mobile-menu" class="hidden lg:hidden border-t border-[#e4e6ea] bg-white">
+    <div id="mobile-menu" class="hidden lg:hidden border-t border-border bg-white">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex flex-col gap-4">
-        <a href="/texas/pricing" class="text-sm font-medium text-[#616d7b] hover:text-[#1e2832] no-underline py-2">Pricing</a>
-        <a href="/texas/faq" class="text-sm font-medium text-[#616d7b] hover:text-[#1e2832] no-underline py-2">FAQ</a>
-        <a href="/texas/helpcenter" class="text-sm font-medium text-[#616d7b] hover:text-[#1e2832] no-underline py-2">Help Center</a>
-        <a href="/texas/eligibility-tracker" class="text-sm font-medium text-[#616d7b] hover:text-[#1e2832] no-underline py-2">Eligibility Checker</a>
-        <hr class="border-[#e4e6ea]" />
+        <a href="/texas/pricing" class="text-sm font-medium text-text-body hover:text-text no-underline py-2">Pricing</a>
+        <a href="/texas/faq" class="text-sm font-medium text-text-body hover:text-text no-underline py-2">FAQ</a>
+        <a href="/texas/helpcenter" class="text-sm font-medium text-text-body hover:text-text no-underline py-2">Help Center</a>
+        <a href="/texas/eligibility-tracker" class="text-sm font-medium text-text-body hover:text-text no-underline py-2">Eligibility Checker</a>
+        <hr class="border-border" />
         <div class="flex flex-col gap-3">
           <a
             href={loginUrl}
-            class="h-10 px-5 border border-[#e4e6ea] text-[#1e2832] rounded-xl text-sm font-semibold flex items-center justify-center no-underline hover:bg-[#f9fafb] transition-colors"
+            class="h-10 px-5 border border-border text-text rounded-xl text-sm font-semibold flex items-center justify-center no-underline hover:bg-surface-muted transition-colors"
           >
             Log In
           </a>
           <a
             href={enrollUrl}
-            class="h-10 px-5 bg-[#0667D1] hover:bg-[#0556b3] text-white rounded-xl text-sm font-semibold flex items-center justify-center no-underline transition-colors"
+            class="h-10 px-5 bg-primary hover:bg-primary-hover text-white rounded-xl text-sm font-semibold flex items-center justify-center no-underline transition-colors"
           >
             Start Course
           </a>
@@ -112,7 +112,7 @@ const currentYear = new Date().getFullYear();
   </main>
 
   <!-- Footer -->
-  <footer class="bg-[#1e2832] text-white">
+  <footer class="bg-surface-dark text-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
 
@@ -123,19 +123,19 @@ const currentYear = new Date().getFullYear();
             <img src="/assets/icons/texas/logo-shield-footer.svg" alt="Road Ready Safety" class="w-10 h-10 flex-shrink-0" />
             <div class="flex flex-col leading-none">
               <span class="text-[14px] font-bold text-white leading-tight">Road Ready</span>
-              <span class="text-[10px] font-medium text-[#a0aec0] leading-tight">Safety</span>
+              <span class="text-[10px] font-medium text-text-subtle leading-tight">Safety</span>
             </div>
           </a>
-          <p class="text-sm text-[#a0aec0] leading-6">
+          <p class="text-sm text-text-subtle leading-6">
             Texas's simplest TDLR-approved defensive driving course. Dismiss your ticket or reduce insurance rates — fast, easy, and online.
           </p>
-          <a href="mailto:support@roadreadysafety.com" class="text-sm text-[#7cc3f9] hover:text-white no-underline transition-colors">
+          <a href="mailto:support@roadreadysafety.com" class="text-sm text-info-border hover:text-white no-underline transition-colors">
             support@roadreadysafety.com
           </a>
           <!-- TDLR Badge -->
-          <div class="inline-flex items-center gap-2 bg-[#2d3748] rounded-full px-3 py-2 w-fit">
+          <div class="inline-flex items-center gap-2 bg-surface-dark rounded-full px-3 py-2 w-fit">
             <img src="/assets/icons/texas/tdlr-badge-footer.svg" alt="" class="w-4 h-4" />
-            <span class="text-xs font-semibold text-[#7cc3f9]">TDLR Approved CP#1234</span>
+            <span class="text-xs font-semibold text-info-border">TDLR Approved CP#1234</span>
           </div>
         </div>
 
@@ -143,10 +143,10 @@ const currentYear = new Date().getFullYear();
         <div class="flex flex-col gap-4">
           <h3 class="text-sm font-semibold text-white uppercase tracking-wider">Course</h3>
           <nav class="flex flex-col gap-3">
-            <a href="/texas" class="text-sm text-[#a0aec0] hover:text-white no-underline transition-colors">Texas Defensive Driving</a>
-            <a href="/texas/pricing" class="text-sm text-[#a0aec0] hover:text-white no-underline transition-colors">Pricing</a>
-            <a href="/texas/faq" class="text-sm text-[#a0aec0] hover:text-white no-underline transition-colors">FAQ</a>
-            <a href={enrollUrl} class="text-sm text-[#a0aec0] hover:text-white no-underline transition-colors">Start Course</a>
+            <a href="/texas" class="text-sm text-text-subtle hover:text-white no-underline transition-colors">Texas Defensive Driving</a>
+            <a href="/texas/pricing" class="text-sm text-text-subtle hover:text-white no-underline transition-colors">Pricing</a>
+            <a href="/texas/faq" class="text-sm text-text-subtle hover:text-white no-underline transition-colors">FAQ</a>
+            <a href={enrollUrl} class="text-sm text-text-subtle hover:text-white no-underline transition-colors">Start Course</a>
           </nav>
         </div>
 
@@ -154,9 +154,9 @@ const currentYear = new Date().getFullYear();
         <div class="flex flex-col gap-4">
           <h3 class="text-sm font-semibold text-white uppercase tracking-wider">Support</h3>
           <nav class="flex flex-col gap-3">
-            <a href="/texas/helpcenter" class="text-sm text-[#a0aec0] hover:text-white no-underline transition-colors">Help Center</a>
-            <a href={import.meta.env.VITE_CONTACT_US_URL || '/contact'} class="text-sm text-[#a0aec0] hover:text-white no-underline transition-colors">Contact Us</a>
-            <a href={loginUrl} class="text-sm text-[#a0aec0] hover:text-white no-underline transition-colors">Log In</a>
+            <a href="/texas/helpcenter" class="text-sm text-text-subtle hover:text-white no-underline transition-colors">Help Center</a>
+            <a href={import.meta.env.VITE_CONTACT_US_URL || '/contact'} class="text-sm text-text-subtle hover:text-white no-underline transition-colors">Contact Us</a>
+            <a href={loginUrl} class="text-sm text-text-subtle hover:text-white no-underline transition-colors">Log In</a>
           </nav>
         </div>
 
@@ -164,21 +164,21 @@ const currentYear = new Date().getFullYear();
         <div class="flex flex-col gap-4">
           <h3 class="text-sm font-semibold text-white uppercase tracking-wider">Legal</h3>
           <nav class="flex flex-col gap-3">
-            <a href="/privacy" class="text-sm text-[#a0aec0] hover:text-white no-underline transition-colors">Privacy</a>
-            <a href="/texas/terms" class="text-sm text-[#a0aec0] hover:text-white no-underline transition-colors">Terms</a>
-            <a href="/texas/refund" class="text-sm text-[#a0aec0] hover:text-white no-underline transition-colors">Refund</a>
-            <a href="/texas/accessibility" class="text-sm text-[#a0aec0] hover:text-white no-underline transition-colors">Accessibility</a>
+            <a href="/privacy" class="text-sm text-text-subtle hover:text-white no-underline transition-colors">Privacy</a>
+            <a href="/texas/terms" class="text-sm text-text-subtle hover:text-white no-underline transition-colors">Terms</a>
+            <a href="/texas/refund" class="text-sm text-text-subtle hover:text-white no-underline transition-colors">Refund</a>
+            <a href="/texas/accessibility" class="text-sm text-text-subtle hover:text-white no-underline transition-colors">Accessibility</a>
           </nav>
         </div>
 
       </div>
 
       <!-- Footer Bottom -->
-      <div class="border-t border-[#2d3748] mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-        <p class="text-sm text-[#718096]">
+      <div class="border-t border-surface-dark mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+        <p class="text-sm text-text-muted">
           &copy; {currentYear} Road Ready Driver Instruction LLC d/b/a Road Ready Safety. All rights reserved.
         </p>
-        <p class="text-xs text-[#718096]">
+        <p class="text-xs text-text-muted">
           TDLR-Licensed Driving Safety Provider &middot; CP#1234
         </p>
       </div>

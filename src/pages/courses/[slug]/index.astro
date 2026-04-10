@@ -90,40 +90,40 @@ const courseSchema = JSON.stringify({
   <script type="application/ld+json" set:html={courseSchema} />
   <Header />
 
-  <main class="bg-[#f9fafb] min-h-screen pb-20 lg:pb-0">
+  <main class="bg-surface-muted min-h-screen pb-20 lg:pb-0">
 
     <!-- Breadcrumb + Hero header -->
-    <div class="bg-white border-b border-[#e4e6ea]">
+    <div class="bg-white border-b border-border">
       <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-8">
 
         <!-- Breadcrumb -->
         <nav aria-label="Breadcrumb" class="mb-5">
-          <ol class="flex flex-wrap items-center gap-2 text-sm text-[#616d7b]" style="font-family: 'DM Sans', sans-serif;">
+          <ol class="flex flex-wrap items-center gap-2 text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">
             <li class="flex items-center gap-2">
-              <a href="/" class="hover:text-[#0667D1] transition-colors">Home</a>
+              <a href="/" class="hover:text-primary transition-colors">Home</a>
             </li>
             <li class="flex items-center gap-2">
               <span aria-hidden="true">›</span>
-              <a href="/courses" class="hover:text-[#0667D1] transition-colors">Courses</a>
+              <a href="/courses" class="hover:text-primary transition-colors">Courses</a>
             </li>
             <li class="flex items-center gap-2">
               <span aria-hidden="true">›</span>
-              <span class="text-[#1e2832] font-medium">{course.course_name}</span>
+              <span class="text-text font-medium">{course.course_name}</span>
             </li>
           </ol>
         </nav>
 
         <!-- H1 + subhead + badge -->
-        <h1 class="text-3xl md:text-4xl font-bold text-[#1e2832] mb-3 leading-tight" style="font-family: 'Outfit', sans-serif;">
+        <h1 class="text-3xl md:text-4xl font-bold text-text mb-3 leading-tight" style="font-family: 'Outfit', sans-serif;">
           {course.course_name}
         </h1>
         {course.subhead && (
-          <p class="text-lg text-[#616d7b] leading-relaxed mb-4" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-lg text-text-body leading-relaxed mb-4" style="font-family: 'DM Sans', sans-serif;">
             {course.subhead}
           </p>
         )}
         {isPartner && course.partner_badge && (
-          <span class="inline-flex items-center gap-1.5 rounded-full border border-[#7cc3f9] bg-[#e6f4fd] px-3 py-1 text-xs font-semibold text-[#0667D1]" style="font-family: 'DM Sans', sans-serif;">
+          <span class="inline-flex items-center gap-1.5 rounded-full border border-info-border bg-info px-3 py-1 text-xs font-semibold text-primary" style="font-family: 'DM Sans', sans-serif;">
             {course.partner_badge}
           </span>
         )}
@@ -139,19 +139,19 @@ const courseSchema = JSON.stringify({
 
           <!-- Quick Facts Row (2 items: state + duration) -->
           <div class="flex flex-wrap gap-4 mb-8">
-            <div class="flex items-center gap-2.5 bg-white border border-[#e4e6ea] rounded-xl px-4 py-3 flex-1 min-w-[140px]">
+            <div class="flex items-center gap-2.5 bg-white border border-border rounded-xl px-4 py-3 flex-1 min-w-[140px]">
               <span class="text-xl leading-none" aria-hidden="true">📍</span>
               <div>
-                <div class="text-[10px] text-[#616d7b] uppercase tracking-wider font-semibold" style="font-family: 'DM Sans', sans-serif;">State</div>
-                <div class="text-sm font-semibold text-[#1e2832]" style="font-family: 'Outfit', sans-serif;">{stateFull}</div>
+                <div class="text-[10px] text-text-body uppercase tracking-wider font-semibold" style="font-family: 'DM Sans', sans-serif;">State</div>
+                <div class="text-sm font-semibold text-text" style="font-family: 'Outfit', sans-serif;">{stateFull}</div>
               </div>
             </div>
             {duration && (
-              <div class="flex items-center gap-2.5 bg-white border border-[#e4e6ea] rounded-xl px-4 py-3 flex-1 min-w-[140px]">
+              <div class="flex items-center gap-2.5 bg-white border border-border rounded-xl px-4 py-3 flex-1 min-w-[140px]">
                 <span class="text-xl leading-none" aria-hidden="true">⏱</span>
                 <div>
-                  <div class="text-[10px] text-[#616d7b] uppercase tracking-wider font-semibold" style="font-family: 'DM Sans', sans-serif;">Duration</div>
-                  <div class="text-sm font-semibold text-[#1e2832]" style="font-family: 'Outfit', sans-serif;">{duration}</div>
+                  <div class="text-[10px] text-text-body uppercase tracking-wider font-semibold" style="font-family: 'DM Sans', sans-serif;">Duration</div>
+                  <div class="text-sm font-semibold text-text" style="font-family: 'Outfit', sans-serif;">{duration}</div>
                 </div>
               </div>
             )}
@@ -159,8 +159,8 @@ const courseSchema = JSON.stringify({
 
           <!-- Course Details — flat list, no accordions -->
           {details.length > 0 && (
-            <section class="bg-white border border-[#e4e6ea] rounded-2xl p-6 lg:p-8 mb-6">
-              <h3 class="text-lg font-bold text-[#1e2832] mb-5" style="font-family: 'Outfit', sans-serif;">
+            <section class="bg-white border border-border rounded-2xl p-6 lg:p-8 mb-6">
+              <h3 class="text-lg font-bold text-text mb-5" style="font-family: 'Outfit', sans-serif;">
                 What to Know Before You Enroll
               </h3>
               <ul class="space-y-4">
@@ -170,8 +170,8 @@ const courseSchema = JSON.stringify({
                     <li class="flex gap-3">
                       <span class="text-base leading-relaxed flex-shrink-0 mt-0.5" aria-hidden="true">{icon}</span>
                       <div>
-                        <span class="text-sm font-semibold text-[#1e2832]" style="font-family: 'DM Sans', sans-serif;">{item.title}: </span>
-                        <span class="text-sm text-[#616d7b] leading-relaxed" style="font-family: 'DM Sans', sans-serif;">{item.body}</span>
+                        <span class="text-sm font-semibold text-text" style="font-family: 'DM Sans', sans-serif;">{item.title}: </span>
+                        <span class="text-sm text-text-body leading-relaxed" style="font-family: 'DM Sans', sans-serif;">{item.body}</span>
                       </div>
                     </li>
                   );
@@ -181,7 +181,7 @@ const courseSchema = JSON.stringify({
           )}
 
           <!-- Disclaimer -->
-          <p class="text-xs text-[#9aa3af] leading-relaxed" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-xs text-text-subtle leading-relaxed" style="font-family: 'DM Sans', sans-serif;">
             Acceptance varies by court and insurer. Always confirm requirements with your court, insurer, or the relevant state agency before enrolling.
           </p>
         </div>
@@ -191,39 +191,39 @@ const courseSchema = JSON.stringify({
           <div class="sticky top-6 space-y-3">
 
             <!-- Enrollment Card -->
-            <div class="bg-white border border-[#e4e6ea] rounded-2xl shadow-sm p-6">
+            <div class="bg-white border border-border rounded-2xl shadow-sm p-6">
 
-              <h3 class="text-xl font-bold text-[#1e2832] mb-1 leading-snug" style="font-family: 'Outfit', sans-serif;">
+              <h3 class="text-xl font-bold text-text mb-1 leading-snug" style="font-family: 'Outfit', sans-serif;">
                 {course.headline || course.course_name}
               </h3>
 
               <!-- Price -->
               <div class="flex items-baseline gap-1.5 mt-3 mb-5">
-                <span class="text-4xl font-bold text-[#1e2832]" style="font-family: 'Outfit', sans-serif;">{price}</span>
-                <span class="text-sm text-[#616d7b]" style="font-family: 'DM Sans', sans-serif;">one-time</span>
+                <span class="text-4xl font-bold text-text" style="font-family: 'Outfit', sans-serif;">{price}</span>
+                <span class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">one-time</span>
               </div>
 
               <!-- Trust checkmarks -->
               <ul class="space-y-2 mb-6">
                 {course.stateApproved && (
-                  <li class="flex items-center gap-2 text-sm text-[#1e2832]" style="font-family: 'DM Sans', sans-serif;">
-                    <svg class="w-4 h-4 text-[#0667D1] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                  <li class="flex items-center gap-2 text-sm text-text" style="font-family: 'DM Sans', sans-serif;">
+                    <svg class="w-4 h-4 text-primary flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                       <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
                     </svg>
                     State Approved
                   </li>
                 )}
                 {course.mobileFriendly && (
-                  <li class="flex items-center gap-2 text-sm text-[#1e2832]" style="font-family: 'DM Sans', sans-serif;">
-                    <svg class="w-4 h-4 text-[#0667D1] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                  <li class="flex items-center gap-2 text-sm text-text" style="font-family: 'DM Sans', sans-serif;">
+                    <svg class="w-4 h-4 text-primary flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                       <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
                     </svg>
                     Mobile Friendly
                   </li>
                 )}
                 {course.instantCertificate && (
-                  <li class="flex items-center gap-2 text-sm text-[#1e2832]" style="font-family: 'DM Sans', sans-serif;">
-                    <svg class="w-4 h-4 text-[#0667D1] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                  <li class="flex items-center gap-2 text-sm text-text" style="font-family: 'DM Sans', sans-serif;">
+                    <svg class="w-4 h-4 text-primary flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                       <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
                     </svg>
                     Instant PDF Certificate
@@ -238,7 +238,7 @@ const courseSchema = JSON.stringify({
                   target="_blank"
                   rel="noopener noreferrer"
                   data-affiliate="true"
-                  class="block w-full text-center py-4 px-5 rounded-[14px] bg-[#0667D1] hover:bg-[#0556b3] text-white font-bold text-base transition-colors"
+                  class="block w-full text-center py-4 px-5 rounded-[14px] bg-primary hover:bg-primary-hover text-white font-bold text-base transition-colors"
                   style="font-family: 'DM Sans', sans-serif; box-shadow: 0 4px 12px rgba(6,103,209,0.3);"
                 >
                   {course.hero_cta_label || 'Enroll Now'} →
@@ -246,7 +246,7 @@ const courseSchema = JSON.stringify({
               ) : (
                 <a
                   href={enrollHref}
-                  class="block w-full text-center py-4 px-5 rounded-[14px] bg-[#0667D1] hover:bg-[#0556b3] text-white font-bold text-base transition-colors"
+                  class="block w-full text-center py-4 px-5 rounded-[14px] bg-primary hover:bg-primary-hover text-white font-bold text-base transition-colors"
                   style="font-family: 'DM Sans', sans-serif; box-shadow: 0 4px 12px rgba(6,103,209,0.3);"
                 >
                   {course.hero_cta_label || 'Enroll Now'} →
@@ -255,17 +255,17 @@ const courseSchema = JSON.stringify({
 
               <!-- Affiliate small print -->
               {isPartner && course.provider_name && (
-                <p class="text-xs text-[#9aa3af] text-center mt-3 leading-relaxed" style="font-family: 'DM Sans', sans-serif;">
+                <p class="text-xs text-text-subtle text-center mt-3 leading-relaxed" style="font-family: 'DM Sans', sans-serif;">
                   You'll complete enrollment on {course.provider_name}'s secure site. Road Ready Safety is a trusted affiliate.
                 </p>
               )}
             </div>
 
             <!-- Secondary links -->
-            <div class="bg-white border border-[#e4e6ea] rounded-2xl px-5 py-4 space-y-3">
+            <div class="bg-white border border-border rounded-2xl px-5 py-4 space-y-3">
               <a
                 href={`/courses/${course.slug}/requirements`}
-                class="flex items-center justify-between text-sm text-[#0667D1] hover:text-[#0556b3] font-medium transition-colors group"
+                class="flex items-center justify-between text-sm text-primary hover:text-primary-hover font-medium transition-colors group"
                 style="font-family: 'DM Sans', sans-serif;"
               >
                 <span>Complete course requirements</span>
@@ -278,7 +278,7 @@ const courseSchema = JSON.stringify({
                   href={stateReqs.sources[0].url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="flex items-center justify-between text-sm text-[#0667D1] hover:text-[#0556b3] font-medium transition-colors group"
+                  class="flex items-center justify-between text-sm text-primary hover:text-primary-hover font-medium transition-colors group"
                   style="font-family: 'DM Sans', sans-serif;"
                 >
                   <span>Official {stateFull} state requirements</span>
@@ -295,10 +295,10 @@ const courseSchema = JSON.stringify({
     </div>
 
     <!-- Mobile sticky enroll bar -->
-    <div class="fixed bottom-0 inset-x-0 z-40 lg:hidden bg-white border-t border-[#e4e6ea] px-4 py-3 flex items-center gap-3" style="box-shadow: 0 -4px 12px rgba(0,0,0,0.06);">
+    <div class="fixed bottom-0 inset-x-0 z-40 lg:hidden bg-white border-t border-border px-4 py-3 flex items-center gap-3" style="box-shadow: 0 -4px 12px rgba(0,0,0,0.06);">
       <div class="flex-1 min-w-0">
-        <p class="text-xs text-[#616d7b] truncate" style="font-family: 'DM Sans', sans-serif;">{course.course_name}</p>
-        <p class="text-base font-bold text-[#1e2832]" style="font-family: 'Outfit', sans-serif;">{price}</p>
+        <p class="text-xs text-text-body truncate" style="font-family: 'DM Sans', sans-serif;">{course.course_name}</p>
+        <p class="text-base font-bold text-text" style="font-family: 'Outfit', sans-serif;">{price}</p>
       </div>
       {isPartner ? (
         <a
@@ -306,7 +306,7 @@ const courseSchema = JSON.stringify({
           target="_blank"
           rel="noopener noreferrer"
           data-affiliate="true"
-          class="flex-shrink-0 py-2.5 px-5 rounded-[12px] bg-[#0667D1] hover:bg-[#0556b3] text-white text-sm font-bold transition-colors"
+          class="flex-shrink-0 py-2.5 px-5 rounded-[12px] bg-primary hover:bg-primary-hover text-white text-sm font-bold transition-colors"
           style="font-family: 'DM Sans', sans-serif;"
         >
           {course.hero_cta_label || 'Enroll Now'} →
@@ -314,7 +314,7 @@ const courseSchema = JSON.stringify({
       ) : (
         <a
           href={enrollHref}
-          class="flex-shrink-0 py-2.5 px-5 rounded-[12px] bg-[#0667D1] hover:bg-[#0556b3] text-white text-sm font-bold transition-colors"
+          class="flex-shrink-0 py-2.5 px-5 rounded-[12px] bg-primary hover:bg-primary-hover text-white text-sm font-bold transition-colors"
           style="font-family: 'DM Sans', sans-serif;"
         >
           {course.hero_cta_label || 'Enroll Now'} →

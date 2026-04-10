@@ -77,25 +77,3 @@ jobs:
             export VITE_GOOGLE_ADS_ID=
           fi
           make deploy ENV=${{ inputs.environment }}
-
-      - name: Invalidate CloudFront cache
-        continue-on-error: true
-        run: |
-          if [ "${{ inputs.environment }}" = "prod" ]; then
-            DOMAIN="roadreadysafety.com"
-          else
-            DOMAIN="qa.roadreadysafety.com"
-          fi
-          DIST_ID=$(aws cloudfront list-distributions \
-            --region us-east-1 \
-            --query "DistributionList.Items[?Aliases.Items[?@=='${DOMAIN}']].Id | [0]" \
-            --output text)
-          if [ -z "$DIST_ID" ] || [ "$DIST_ID" = "None" ]; then
-            echo "No CloudFront distribution found for ${DOMAIN}, skipping invalidation"
-            exit 0
-          fi
-          echo "Invalidating CloudFront distribution ${DIST_ID} for ${DOMAIN}"
-          aws cloudfront create-invalidation \
-            --region us-east-1 \
-            --distribution-id "$DIST_ID" \
-            --paths "/*"

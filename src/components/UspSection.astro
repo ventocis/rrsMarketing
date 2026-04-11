@@ -14,16 +14,16 @@ const icons = [
 ];
 ---
 
-<section class="bg-[#F9FAFB] py-16 lg:py-24 border-b border-[#e5e5e5]" style="font-family: 'Inter', sans-serif;">
+<section class="bg-surface-muted py-16 lg:py-24 border-b border-border" style="font-family: 'Inter', sans-serif;">
   <div class="max-w-[1152px] mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex flex-col gap-6 items-center mb-12">
-      <div class="bg-[#e5f6fe] inline-flex items-center px-4 py-2 rounded-full">
-        <span class="text-sm font-semibold text-[#0351b4] leading-5">Why Choose Us</span>
+      <div class="bg-info inline-flex items-center px-4 py-2 rounded-full">
+        <span class="text-sm font-semibold text-info-text leading-5">Why Choose Us</span>
       </div>
-      <h2 class="text-[28px] lg:text-[36px] font-bold text-center text-[#1e2832] tracking-[-0.02em] lg:tracking-[-0.9px] leading-[150%] lg:leading-[40px]">
+      <h2 class="text-[28px] lg:text-[36px] font-bold text-center text-text tracking-[-0.02em] lg:tracking-[-0.9px] leading-[150%] lg:leading-[40px]">
         {heading}
       </h2>
-      <p class="text-base text-center text-[#616d7b] leading-6">
+      <p class="text-base text-center text-text-body leading-6">
         Everything you need to complete your course with confidence.
       </p>
     </div>
@@ -32,14 +32,14 @@ const icons = [
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
         {items.map((item, i) => (
           <div
-            class="bg-white rounded-[12px] border border-[#e5e5e5] p-8 hover:shadow-md transition-shadow relative"
+            class="bg-white rounded-[12px] border border-border p-8 hover:shadow-md transition-shadow relative"
             style="box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);"
           >
-            <div class="absolute top-8 right-8 text-[#0667D1]" aria-hidden="true" set:html={icons[i]} />
-            <h3 class="text-xl font-medium text-[#262626] mb-3 tracking-[-0.02em] pr-8" style="line-height: 30px;">
+            <div class="absolute top-8 right-8 text-primary" aria-hidden="true" set:html={icons[i]} />
+            <h3 class="text-xl font-medium text-text mb-3 tracking-[-0.02em] pr-8" style="line-height: 30px;">
               {item.title}
             </h3>
-            <p class="text-base leading-[22px] text-[#616d7b]">{item.body}</p>
+            <p class="text-base leading-[22px] text-text-body">{item.body}</p>
           </div>
         ))}
       </div>

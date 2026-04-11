@@ -17,7 +17,7 @@ const icons = [
 const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/support';
 ---
 
-<section class="bg-white py-16 lg:py-24 border-b border-[#e5e5e5]">
+<section class="bg-white py-16 lg:py-24 border-b border-border">
   <div class="max-w-[1152px] mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex flex-col gap-6 items-center mb-12">
       <!-- 5 stars -->
@@ -28,25 +28,25 @@ const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/support';
           </svg>
         ))}
       </div>
-      <h2 class="text-[28px] lg:text-[36px] font-bold text-center text-[#1e2832] tracking-[-0.02em] lg:tracking-[-0.9px] leading-[150%] lg:leading-[40px]">
+      <h2 class="text-[28px] lg:text-[36px] font-bold text-center text-text tracking-[-0.02em] lg:tracking-[-0.9px] leading-[150%] lg:leading-[40px]">
         {heading}
       </h2>
-      <p class="text-base text-center text-[#616d7b] leading-6">100% online, 100% secure.</p>
+      <p class="text-base text-center text-text-body leading-6">100% online, 100% secure.</p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       {items.map((item, i) => (
         <div
-          class="bg-[#F9FAFB] rounded-[20px] border border-[#e5e5e5] p-6 hover:shadow-md transition-shadow"
+          class="bg-surface-muted rounded-[20px] border border-border p-6 hover:shadow-md transition-shadow"
           style="box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);"
         >
           <div class="h-full flex items-start gap-4">
-            <span class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#e5f6fe] text-[#0667D1]">
+            <span class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-info text-primary">
               <Fragment set:html={icons[i]} />
             </span>
             <div class="space-y-1">
-              <h3 class="text-xl font-medium text-[#262626] mb-1 tracking-[-0.02em]" style="line-height: 30px;">{item.title}</h3>
-              <p class="text-base leading-[22px] text-[#616d7b]">{item.body}</p>
+              <h3 class="text-xl font-medium text-text mb-1 tracking-[-0.02em]" style="line-height: 30px;">{item.title}</h3>
+              <p class="text-base leading-[22px] text-text-body">{item.body}</p>
             </div>
           </div>
         </div>
@@ -56,7 +56,7 @@ const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/support';
     <div class="mt-10 flex flex-col items-center">
       <a
         href={contactUrl}
-        class="bg-transparent border border-[#e5e5e5] hover:border-[#0667D1] text-[#0667D1] hover:text-[#0556b3] text-sm font-semibold py-3 px-6 rounded-[16px] min-h-[44px] flex items-center justify-center transition-colors"
+        class="bg-transparent border border-border hover:border-primary text-primary hover:text-primary-hover text-sm font-semibold py-3 px-6 rounded-[16px] min-h-[44px] flex items-center justify-center transition-colors"
         style="font-family: 'DM Sans', sans-serif;"
       >
         Need help? Contact Support

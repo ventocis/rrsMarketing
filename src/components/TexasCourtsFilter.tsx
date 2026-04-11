@@ -62,13 +62,13 @@ export default function TexasCourtsFilter({ courts }: Props) {
   const courtTypeBadge = (courtType: string) => {
     if (courtType === "Municipal") {
       return (
-        <span className="inline-block text-xs font-medium px-2 py-0.5 rounded-full bg-[#E6F6FF] text-[#0351b4]">
+        <span className="inline-block text-xs font-medium px-2 py-0.5 rounded-full bg-info text-info-text">
           {courtType}
         </span>
       );
     }
     return (
-      <span className="inline-block text-xs font-medium px-2 py-0.5 rounded-full bg-[#F0F4F8] text-[#475569]">
+      <span className="inline-block text-xs font-medium px-2 py-0.5 rounded-full bg-surface-muted text-text-muted">
         {courtType}
       </span>
     );
@@ -77,19 +77,19 @@ export default function TexasCourtsFilter({ courts }: Props) {
   return (
     <div>
       {/* Filter box */}
-      <div className="bg-white rounded-2xl border border-[#e4e6ea] shadow-sm p-6 mb-8">
+      <div className="bg-white rounded-2xl border border-border shadow-sm p-6 mb-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <input
             type="text"
             placeholder="Search by court name, county, or judge..."
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
-            className="w-full px-4 py-2 border border-[#e4e6ea] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0667d1]"
+            className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
           />
           <select
             value={selectedCounty}
             onChange={(e) => setSelectedCounty(e.target.value)}
-            className="w-full px-4 py-2 border border-[#e4e6ea] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0667d1]"
+            className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
           >
             <option value="">All Counties</option>
             {counties.map((county) => (
@@ -101,7 +101,7 @@ export default function TexasCourtsFilter({ courts }: Props) {
           <select
             value={selectedCourtType}
             onChange={(e) => setSelectedCourtType(e.target.value)}
-            className="w-full px-4 py-2 border border-[#e4e6ea] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0667d1]"
+            className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
           >
             <option value="">All Court Types</option>
             {courtTypes.map((type) => (
@@ -114,34 +114,34 @@ export default function TexasCourtsFilter({ courts }: Props) {
       </div>
 
       {/* Result count */}
-      <p className="text-sm text-[#616d7b] mb-6">
+      <p className="text-sm text-text-body mb-6">
         Showing {filteredCourts.length} of 1742 courts
       </p>
 
       {/* Results */}
       {filteredCourts.length === 0 ? (
-        <div className="bg-white rounded-2xl border border-[#e4e6ea] shadow-sm p-6 text-center text-[#616d7b]">
+        <div className="bg-white rounded-2xl border border-border shadow-sm p-6 text-center text-text-body">
           No courts found matching your search criteria.
         </div>
       ) : (
         groupedByCounty.map(({ county, courts: countyCourts }) => (
           <div key={county}>
-            <h2 className="text-lg font-normal text-[#616d7b] mb-4">{county} County</h2>
+            <h2 className="text-lg font-normal text-text-body mb-4">{county} County</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
               {countyCourts.map((court) => (
                 <a
                   key={court.slug}
                   href={`/texas/courts/${court.slug}`}
-                  className="bg-white rounded-2xl border border-[#e4e6ea] shadow-sm p-6 hover:shadow-md transition-shadow flex flex-col no-underline"
+                  className="bg-white rounded-2xl border border-border shadow-sm p-6 hover:shadow-md transition-shadow flex flex-col no-underline"
                 >
                   <div className="flex-1">
                     <div className="mb-2">{courtTypeBadge(court.courtType)}</div>
-                    <h3 className="text-base font-semibold text-[#1a1a1a] mb-1 leading-snug">
+                    <h3 className="text-base font-semibold text-text mb-1 leading-snug">
                       {court.courtName}
                     </h3>
-                    <p className="text-sm text-[#616d7b]">{court.county} County</p>
+                    <p className="text-sm text-text-body">{court.county} County</p>
                   </div>
-                  <div className="mt-4 text-sm text-[#0667d1] font-medium">
+                  <div className="mt-4 text-sm text-primary font-medium">
                     View Details →
                   </div>
                 </a>

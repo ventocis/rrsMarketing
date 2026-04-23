@@ -1,4 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import LeadCaptureModal from './LeadCaptureModal';
+
+const LEAD_CAPTURE_SESSION_KEY = 'rrs_ec_lead_captured';
 
 interface Court {
   slug: string;
@@ -139,6 +142,15 @@ export default function EligibilityChecker({ courts }: Props) {
   const [selectedCounty, setSelectedCounty] = useState('');
   const [selectedCourtType, setSelectedCourtType] = useState('');
   const [selectedCourtName, setSelectedCourtName] = useState('');
+  const [showModal, setShowModal] = useState(false);
+
+  // Show lead capture modal 1.5s after any result — skip if already captured this session
+  useEffect(() => {
+    if (result === '') return;
+    if (typeof sessionStorage !== 'undefined' && sessionStorage.getItem(LEAD_CAPTURE_SESSION_KEY)) return;
+    const t = setTimeout(() => setShowModal(true), 1500);
+    return () => clearTimeout(t);
+  }, [result]);
 
   const isSpeedingPath = violation === 'speeding';
   const totalSteps = getTotalSteps(isSpeedingPath);
@@ -153,6 +165,7 @@ export default function EligibilityChecker({ courts }: Props) {
     setSelectedCounty('');
     setSelectedCourtType('');
     setSelectedCourtName('');
+    setShowModal(false);
   };
 
   // Court dropdown data (used for eligible-pending result)
@@ -196,6 +209,7 @@ export default function EligibilityChecker({ courts }: Props) {
     'text-sm text-text-body hover:text-text flex items-center gap-1 transition-colors mb-6';
 
   return (
+    <>
     <div className="max-w-2xl mx-auto">
 
       {/* ── Dynamic header above card ── */}
@@ -675,5 +689,14 @@ export default function EligibilityChecker({ courts }: Props) {
 
       </div>
     </div>
+
+    {/* Lead capture modal — shown 1.5s after result, once per session */}
+    {showModal && result !== '' && (
+      <LeadCaptureModal
+        result={result as any}
+        onClose={() => setShowModal(false)}
+      />
+    )}
+    </>
   );
 }

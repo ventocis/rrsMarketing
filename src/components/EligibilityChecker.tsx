@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import LeadCaptureModal from './LeadCaptureModal';
 
 const LEAD_CAPTURE_SESSION_KEY = 'rrs_ec_lead_captured';
@@ -138,19 +138,23 @@ export default function EligibilityChecker({ courts }: Props) {
   const [step, setStep] = useState<Step>('step1');
   const [violation, setViolation] = useState<ViolationType>('');
   const [result, setResult] = useState<ResultType>('');
+  const [pendingResult, setPendingResult] = useState<ResultType>('');
   const [courtSectionOpen, setCourtSectionOpen] = useState(false);
   const [selectedCounty, setSelectedCounty] = useState('');
   const [selectedCourtType, setSelectedCourtType] = useState('');
   const [selectedCourtName, setSelectedCourtName] = useState('');
   const [showModal, setShowModal] = useState(false);
 
-  // Show lead capture modal 1.5s after any result — skip if already captured this session
-  useEffect(() => {
-    if (result === '') return;
-    if (typeof sessionStorage !== 'undefined' && sessionStorage.getItem(LEAD_CAPTURE_SESSION_KEY)) return;
-    const t = setTimeout(() => setShowModal(true), 1500);
-    return () => clearTimeout(t);
-  }, [result]);
+  // Gate: show email capture before revealing result; skip if already captured this session
+  const goToResult = (r: ResultType) => {
+    if (typeof sessionStorage !== 'undefined' && sessionStorage.getItem(LEAD_CAPTURE_SESSION_KEY)) {
+      setResult(r);
+      setStep('result');
+    } else {
+      setPendingResult(r);
+      setShowModal(true);
+    }
+  };
 
   const isSpeedingPath = violation === 'speeding';
   const totalSteps = getTotalSteps(isSpeedingPath);
@@ -161,6 +165,7 @@ export default function EligibilityChecker({ courts }: Props) {
     setStep('step1');
     setViolation('');
     setResult('');
+    setPendingResult('');
     setCourtSectionOpen(false);
     setSelectedCounty('');
     setSelectedCourtType('');
@@ -295,8 +300,7 @@ export default function EligibilityChecker({ courts }: Props) {
                 onClick={() => {
                   setViolation(opt.value);
                   if (opt.value === 'serious') {
-                    setResult('ineligible-serious');
-                    setStep('result');
+                    goToResult('ineligible-serious');
                   } else if (opt.value === 'speeding') {
                     setStep('step1b');
                   } else {
@@ -333,10 +337,7 @@ export default function EligibilityChecker({ courts }: Props) {
               <button
                 className={optionButtonClass}
                 style={{ fontFamily: "'DM Sans', sans-serif" }}
-                onClick={() => {
-                  setResult('ineligible-speed');
-                  setStep('result');
-                }}
+                onClick={() => goToResult('ineligible-speed')}
               >
                 <span className="text-lg leading-none">⛔</span>
                 25 mph or more over
@@ -359,10 +360,7 @@ export default function EligibilityChecker({ courts }: Props) {
               <button
                 className={optionButtonClass}
                 style={{ fontFamily: "'DM Sans', sans-serif" }}
-                onClick={() => {
-                  setResult('ineligible-cdl');
-                  setStep('result');
-                }}
+                onClick={() => goToResult('ineligible-cdl')}
               >
                 <span className="text-lg leading-none">🚛</span>
                 Yes, I have a CDL
@@ -393,10 +391,7 @@ export default function EligibilityChecker({ courts }: Props) {
               <button
                 className={optionButtonClass}
                 style={{ fontFamily: "'DM Sans', sans-serif" }}
-                onClick={() => {
-                  setResult('ineligible-prior');
-                  setStep('result');
-                }}
+                onClick={() => goToResult('ineligible-prior')}
               >
                 <span className="text-lg leading-none">📅</span>
                 Yes
@@ -435,10 +430,7 @@ export default function EligibilityChecker({ courts }: Props) {
               <button
                 className={optionButtonClass}
                 style={{ fontFamily: "'DM Sans', sans-serif" }}
-                onClick={() => {
-                  setResult('eligible');
-                  setStep('result');
-                }}
+                onClick={() => goToResult('eligible')}
               >
                 <span className="text-lg leading-none">✅</span>
                 Yes, I have court approval
@@ -446,10 +438,7 @@ export default function EligibilityChecker({ courts }: Props) {
               <button
                 className={optionButtonClass}
                 style={{ fontFamily: "'DM Sans', sans-serif" }}
-                onClick={() => {
-                  setResult('eligible-pending');
-                  setStep('result');
-                }}
+                onClick={() => goToResult('eligible-pending')}
               >
                 <span className="text-lg leading-none">⏳</span>
                 Not yet — I haven't asked yet
@@ -457,10 +446,7 @@ export default function EligibilityChecker({ courts }: Props) {
               <button
                 className={optionButtonClass}
                 style={{ fontFamily: "'DM Sans', sans-serif" }}
-                onClick={() => {
-                  setResult('ineligible-denied');
-                  setStep('result');
-                }}
+                onClick={() => goToResult('ineligible-denied')}
               >
                 <span className="text-lg leading-none">❌</span>
                 The court denied my request
@@ -690,11 +676,15 @@ export default function EligibilityChecker({ courts }: Props) {
       </div>
     </div>
 
-    {/* Lead capture modal — shown 1.5s after result, once per session */}
-    {showModal && result !== '' && (
+    {/* Lead capture gate — shown before result is revealed */}
+    {showModal && pendingResult !== '' && (
       <LeadCaptureModal
-        result={result as any}
-        onClose={() => setShowModal(false)}
+        result={pendingResult as any}
+        onClose={() => {
+          setResult(pendingResult);
+          setStep('result');
+          setShowModal(false);
+        }}
       />
     )}
     </>

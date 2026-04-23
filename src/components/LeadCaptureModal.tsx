@@ -30,19 +30,19 @@ const ELIGIBILITY_LABEL: Record<EligibilityResult, string> = {
 
 const COPY: Record<string, { title: string; body: string; cta: string }> = {
   eligible: {
-    title: 'Get Your Enrollment Checklist',
-    body: "You're eligible — we'll email you exactly what to do after you finish the course to get your ticket dismissed.",
-    cta: 'Send My Checklist →',
+    title: 'See Your Eligibility Result',
+    body: "Enter your email to unlock your result — we'll also send you a step-by-step guide on exactly what to do next.",
+    cta: 'See My Results →',
   },
   'eligible-pending': {
-    title: 'Get Your Court Approval Template',
-    body: "We'll send you a ready-to-use request template for your court plus next steps once you're approved.",
-    cta: 'Send My Template →',
+    title: 'See Your Eligibility Result',
+    body: "Enter your email to unlock your result — we'll also send you a personalized guide on your next steps.",
+    cta: 'See My Results →',
   },
   ineligible: {
-    title: 'Know Your Options',
-    body: "DSC may not be available for your ticket, but you may still have options. We'll send you what to do next.",
-    cta: 'Send My Options →',
+    title: 'See Your Eligibility Result',
+    body: "Enter your email to unlock your result — you may still have options, and we'll send you what to explore next.",
+    cta: 'See My Results →',
   },
 };
 
@@ -177,9 +177,9 @@ export default function LeadCaptureModal({ result, onClose }: Props) {
               </svg>
             </div>
             <h3 className="text-xl font-bold text-text mb-2" style={{ fontFamily: "'Outfit', sans-serif" }}>
-              Check your inbox!
+              Here's your result!
             </h3>
-            <p className="text-sm text-text-body">Your personalized guide is on its way.</p>
+            <p className="text-sm text-text-body">Your guide is on its way to your inbox.</p>
           </div>
         ) : (
           <>
@@ -203,7 +203,7 @@ export default function LeadCaptureModal({ result, onClose }: Props) {
                     <path d="M6 4v3M6 8.5v.5" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
                   </svg>
                 )}
-                {isEligible ? 'Almost there' : 'Next steps available'}
+                {isEligible ? 'Almost there' : 'Your result is ready'}
               </span>
             </div>
 

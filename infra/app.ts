@@ -20,12 +20,14 @@ const appConfig: Record<AppEnv, Omit<stacks.AppStackProps & stacks.CertificateSt
     appEnv: AppEnv.QA,
     env: CdkEnvironments[AppEnv.QA],
     domainName: Constants.environments[AppEnv.QA].rootDomain,
+    existingHostedZoneId: "Z009071939B0Q3E2MM52E",
     ...defaultConfig,
   },
   [AppEnv.PROD]: {
     appEnv: AppEnv.PROD,
     env: CdkEnvironments[AppEnv.PROD],
     domainName: Constants.environments[AppEnv.PROD].rootDomain,
+    existingHostedZoneId: "Z0399913IJK7XVMDZHQS",
     ...defaultConfig,
   },
 };

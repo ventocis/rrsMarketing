@@ -59,21 +59,5 @@ jobs:
         working-directory: infra
         run: npm ci
 
-      # Prod: VITE_ENABLE_ANALYTICS=true; optional secrets override GA IDs (if unset, build uses .env.production).
-      # QA: force analytics off; empty IDs so loadEnv does not inherit prod from a stray env.
       - name: Deploy to AWS
-        run: |
-          if [ "${{ inputs.environment }}" = "prod" ]; then
-            export VITE_ENABLE_ANALYTICS=true
-            if [ -n "${{ secrets.VITE_GA4_ID }}" ]; then
-              export VITE_GA4_ID='${{ secrets.VITE_GA4_ID }}'
-            fi
-            if [ -n "${{ secrets.VITE_GOOGLE_ADS_ID }}" ]; then
-              export VITE_GOOGLE_ADS_ID='${{ secrets.VITE_GOOGLE_ADS_ID }}'
-            fi
-          else
-            export VITE_ENABLE_ANALYTICS=false
-            export VITE_GA4_ID=
-            export VITE_GOOGLE_ADS_ID=
-          fi
-          make deploy ENV=${{ inputs.environment }}
+        run: make deploy ENV=${{ inputs.environment }}

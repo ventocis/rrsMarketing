@@ -1,4 +1,5 @@
 name: Deploy stack on tag push
+run-name: "Deploy ${{ github.ref_name }} → qa by @${{ github.actor }}"
 
 on:
   push:

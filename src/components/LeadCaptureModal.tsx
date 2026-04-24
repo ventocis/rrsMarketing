@@ -54,43 +54,50 @@ function getCopy(result: EligibilityResult) {
 
 async function subscribeToKlaviyo(email: string, result: EligibilityResult) {
   const publicKey = (import.meta as any).env?.VITE_KLAVIYO_PUBLIC_KEY ?? 'U3BbdX';
-  const res = await fetch(
-    `https://a.klaviyo.com/client/subscriptions/?company_id=${publicKey}`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'revision': '2024-10-15',
+  const headers = {
+    'Content-Type': 'application/json',
+    'revision': '2024-10-15',
+  };
+  const base = `https://a.klaviyo.com/client`;
+
+  // Step 1: subscribe email to list
+  const subRes = await fetch(`${base}/subscriptions/?company_id=${publicKey}`, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({
+      data: {
+        type: 'subscription',
+        attributes: {
+          list_id: KLAVIYO_LIST_ID,
+          email,
+          custom_source: 'TX Eligibility Checker',
+        },
       },
-      body: JSON.stringify({
-        data: {
-          type: 'subscription',
-          attributes: {
-            list_id: KLAVIYO_LIST_ID,
-            email,
-            custom_source: 'TX Eligibility Checker',
-            profile: {
-              data: {
-                type: 'profile',
-                attributes: {
-                  email,
-                  properties: {
-                    eligibility_status: ELIGIBILITY_LABEL[result],
-                    lead_source: 'TX Eligibility Checker',
-                  },
-                },
-              },
-            },
+    }),
+  });
+  if (!subRes.ok) {
+    const body = await subRes.text().catch(() => '');
+    console.error('Klaviyo subscribe error', subRes.status, body);
+    throw new Error(`Klaviyo subscribe error: ${subRes.status}`);
+  }
+
+  // Step 2: set eligibility properties on the profile (fire-and-forget — don't block on this)
+  fetch(`${base}/profiles/?company_id=${publicKey}`, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({
+      data: {
+        type: 'profile',
+        attributes: {
+          email,
+          properties: {
+            eligibility_status: ELIGIBILITY_LABEL[result],
+            lead_source: 'TX Eligibility Checker',
           },
         },
-      }),
-    }
-  );
-  if (!res.ok) {
-    const body = await res.text().catch(() => '');
-    console.error('Klaviyo error', res.status, body);
-    throw new Error(`Klaviyo error: ${res.status}`);
-  }
+      },
+    }),
+  }).catch(() => {}); // best-effort, don't fail the UX if this errors
 }
 
 export default function LeadCaptureModal({ result, onClose }: Props) {

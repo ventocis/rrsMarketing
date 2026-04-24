@@ -67,6 +67,7 @@ async function subscribeToKlaviyo(email: string, result: EligibilityResult) {
           type: 'subscription',
           attributes: {
             list_id: KLAVIYO_LIST_ID,
+            email,
             custom_source: 'TX Eligibility Checker',
             profile: {
               data: {
@@ -85,7 +86,9 @@ async function subscribeToKlaviyo(email: string, result: EligibilityResult) {
       }),
     }
   );
-  if (!res.ok && res.status !== 202) {
+  if (!res.ok) {
+    const body = await res.text().catch(() => '');
+    console.error('Klaviyo error', res.status, body);
     throw new Error(`Klaviyo error: ${res.status}`);
   }
 }

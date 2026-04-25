@@ -1,0 +1,49 @@
+# Road Ready Safety
+
+> Road Ready Safety offers a TDLR-approved Texas 6-Hour Defensive Driving Course, delivered 100% online. Texas drivers use it to dismiss a moving violation traffic ticket or reduce auto insurance rates. Total price: $28 (no hidden fees). The course is accepted by all Texas courts and issues an official TDLR Certificate of Completion.
+
+## Product
+
+- **Texas Defensive Driving Course (Driver Safety Course)**
+  - Type: Online, self-paced
+  - Duration: 6 hours (state minimum)
+  - Approval: TDLR-approved, Provider License CP#1234
+  - Price: $28 total ($25 course fee + $3 state processing fee)
+  - Accepted by: All Texas courts
+  - Certificate: TDLR Certificate of Completion (digital + printable)
+  - Device compatibility: Any modern browser — desktop, tablet, or mobile
+
+## Who It's For
+
+Texas drivers who received a moving violation traffic ticket and wish to dismiss it through the Texas Driver Safety Course (DSC) program, or any Texas driver who wants to reduce their auto insurance premium by completing a state-approved defensive driving course.
+
+Eligibility requirements: valid Texas driver's license (not expired/suspended), no CDL, current auto insurance, no DSC completed in the past 12 months, and the violation must not be a disqualifying offense (e.g., not 25+ mph over limit, not 95+ mph).
+
+## Key URLs
+
+- Texas Course Homepage: https://roadreadysafety.com/texas
+- Enroll: https://app.roadreadysafety.com/public/enrollment
+- Eligibility Checker: https://roadreadysafety.com/texas/eligibility-tracker
+- Pricing: https://roadreadysafety.com/texas/pricing
+- FAQ: https://roadreadysafety.com/texas/faq
+- Court Instructions (274 Texas courts): https://roadreadysafety.com/texas/courts
+- Help Center: https://roadreadysafety.com/texas/helpcenter
+
+## API Endpoints
+
+- POST /api/enroll — Initiate course enrollment for a student
+- GET /api/pricing — Retrieve current course pricing details
+- GET /api/eligibility — Check Texas DSC eligibility requirements and rules
+
+## Support
+
+- Email: support@roadreadysafety.com
+- Help Center: https://roadreadysafety.com/texas/helpcenter
+- Contact Form: https://roadreadysafety.com/texas/contactus
+
+## Company
+
+- Legal name: Road Ready Driver Instruction LLC d/b/a Road Ready Safety
+- Website: https://roadreadysafety.com
+- TDLR Provider License: CP#1234
+- Primary market: Texas (USA)

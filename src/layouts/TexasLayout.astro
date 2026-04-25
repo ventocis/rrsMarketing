@@ -21,6 +21,46 @@ const currentYear = new Date().getFullYear();
 ---
 
 <Layout title={title} description={description} keywords={keywords} url={url}>
+  <!-- JSON-LD: Texas Defensive Driving Course -->
+  <Fragment slot="head">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Course",
+        "name": "Texas 6-Hour Defensive Driving Course",
+        "description": "TDLR-approved online Texas Driver Safety Course. Complete your 6-hour course to dismiss a traffic ticket or reduce auto insurance rates. Accepted by all Texas courts.",
+        "url": "https://roadreadysafety.com/texas",
+        "provider": {
+          "@type": "Organization",
+          "name": "Road Ready Safety",
+          "url": "https://roadreadysafety.com",
+          "logo": "https://roadreadysafety.com/assets/icons/texas/logo-shield.svg"
+        },
+        "courseMode": "online",
+        "educationalCredentialAwarded": "TDLR Certificate of Completion",
+        "timeRequired": "PT6H",
+        "inLanguage": "en-US",
+        "isAccessibleForFree": false,
+        "offers": {
+          "@type": "Offer",
+          "price": "28",
+          "priceCurrency": "USD",
+          "availability": "https://schema.org/InStock",
+          "url": "https://roadreadysafety.com/texas"
+        },
+        "hasCourseInstance": {
+          "@type": "CourseInstance",
+          "courseMode": "online",
+          "courseSchedule": {
+            "@type": "Schedule",
+            "repeatFrequency": "P1D",
+            "repeatCount": -1
+          }
+        }
+      }
+    </script>
+  </Fragment>
+
   <!-- Announcement Banner -->
   <div class="bg-announcement-tx text-white text-sm font-semibold text-center py-3 px-4 leading-5">
     $28 Total, No Hidden Fees &mdash; No Surprises at Checkout

@@ -64,6 +64,7 @@ function joinOrNA(arr: string[] | undefined) {
         <div class="flex-1 flex flex-col gap-8">
 
           <!-- Court Information Card -->
+          {court.slug !== 'harris-municipal-houston' && (
           <div class="bg-white border border-border rounded-2xl overflow-hidden shadow-sm">
             <div class="px-6 sm:px-8 py-6 flex items-center gap-4 border-b border-border">
               <div class="bg-info flex items-center justify-center rounded-[14px] w-12 h-12 shrink-0">
@@ -159,8 +160,10 @@ function joinOrNA(arr: string[] | undefined) {
               </div>
             </div>
           </div>
+          )}
 
           <!-- Steps (native details/summary accordion) -->
+          {court.slug !== 'harris-municipal-houston' && (<Fragment>
           <div class="flex flex-col gap-4">
 
             <!-- Step 1 -->
@@ -404,6 +407,541 @@ function joinOrNA(arr: string[] | undefined) {
             </details>
 
           </div><!-- /steps -->
+          </Fragment>)}
+
+          <!-- ══════════════════════════════════════════
+               AUSTIN MUNICIPAL COURT — Court-Specific DSC Info
+               ══════════════════════════════════════════ -->
+          {court.slug === 'travis-municipal-austin' && (
+            <div class="bg-white border border-border rounded-2xl overflow-hidden shadow-sm">
+              <div class="px-6 sm:px-8 py-6 flex items-center gap-4 border-b border-border">
+                <div class="bg-info flex items-center justify-center rounded-[14px] w-12 h-12 shrink-0">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0967d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                  </svg>
+                </div>
+                <h2 class="text-xl font-bold text-text-body">Austin Municipal Court — DSC Instructions</h2>
+              </div>
+              <div class="px-6 sm:px-8 py-6 flex flex-col gap-6">
+
+                <!-- Fees -->
+                <div>
+                  <p class="text-sm font-semibold text-text mb-3">DSC Court Fees</p>
+                  <div class="bg-surface-muted border border-border rounded-[14px] p-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                      <span class="text-xs text-text-body font-medium uppercase tracking-wide">Standard Violation</span>
+                      <span class="text-xl font-bold text-text">$144</span>
+                    </div>
+                    <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                      <span class="text-xs text-text-body font-medium uppercase tracking-wide">School Zone Violation</span>
+                      <span class="text-xl font-bold text-text">$169</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- How to Request -->
+                <div>
+                  <p class="text-sm font-semibold text-text mb-3">How to Request DSC Approval</p>
+                  <div class="flex flex-col gap-3">
+                    {[
+                      { label: "Online form", detail: "Download the DSC Request Form at austin.widen.net/view/pdf/dxifzuhcxd/Driver_Safety_Request_form.pdf (Spanish version also available)", link: "https://austin.widen.net/view/pdf/dxifzuhcxd/Driver_Safety_Request_form.pdf" },
+                      { label: "Email", detail: "court@austintexas.gov — attach your completed request form" },
+                      { label: "Fax", detail: "(512) 974-4882" },
+                      { label: "Mail", detail: "P.O. Box 2135, Austin TX 78768" },
+                      { label: "In person — Main", detail: "6800 Burleson Road, Bldg 310, Suite 175" },
+                      { label: "In person — North", detail: "2121 West Parmer Lane, Suite 116" },
+                    ].map(item => (
+                      <div class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-start gap-3">
+                        <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <div class="flex flex-col gap-0.5">
+                          <span class="text-sm font-bold text-text-body">{item.label}</span>
+                          <span class="text-sm text-text-body">{item.detail}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <!-- Important notes -->
+                <div class="bg-amber-50 border border-amber-200 rounded-[14px] p-4 flex flex-col gap-2">
+                  <p class="text-sm font-semibold text-amber-800">Important Deadlines &amp; Rules</p>
+                  <ul class="flex flex-col gap-1.5 list-none m-0 p-0">
+                    {[
+                      "Submit your DSC request form before your appearance date — do NOT take the course first.",
+                      "You have 90 days from the court's processing date (not your submission date) to complete the course.",
+                      "Look up your case at austintexas.gov/amcpublicinquiry to confirm your case status.",
+                    ].map(note => (
+                      <li class="text-sm text-amber-900 flex items-start gap-2">
+                        <span class="mt-1 shrink-0">•</span><span>{note}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <!-- Court hours & phone -->
+                <div class="bg-surface-muted border border-border rounded-[14px] p-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Court Hours</span>
+                    <span class="text-sm font-semibold text-text-body">Mon–Fri, 8:00 AM – 5:00 PM</span>
+                  </div>
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Phone</span>
+                    <a href="tel:5129744800" class="text-sm font-semibold text-primary hover:underline">(512) 974-4800</a>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          )}
+
+          <!-- ══════════════════════════════════════════
+               DALLAS MUNICIPAL COURT — Court-Specific DSC Info
+               ══════════════════════════════════════════ -->
+          {court.slug === 'dallas-municipal-dallas' && (
+            <div class="bg-white border border-border rounded-2xl overflow-hidden shadow-sm">
+              <div class="px-6 sm:px-8 py-6 flex items-center gap-4 border-b border-border">
+                <div class="bg-info flex items-center justify-center rounded-[14px] w-12 h-12 shrink-0">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0967d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                  </svg>
+                </div>
+                <h2 class="text-xl font-bold text-text-body">Dallas Municipal Court — DSC Instructions</h2>
+              </div>
+              <div class="px-6 sm:px-8 py-6 flex flex-col gap-6">
+
+                <!-- Fees -->
+                <div>
+                  <p class="text-sm font-semibold text-text mb-3">DSC Court Fees</p>
+                  <div class="bg-surface-muted border border-border rounded-[14px] p-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                      <span class="text-xs text-text-body font-medium uppercase tracking-wide">Standard Violation</span>
+                      <span class="text-xl font-bold text-text">$144</span>
+                    </div>
+                    <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                      <span class="text-xs text-text-body font-medium uppercase tracking-wide">School Zone Violation</span>
+                      <span class="text-xl font-bold text-text">$169</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- How to Request -->
+                <div>
+                  <p class="text-sm font-semibold text-text mb-3">How to Request DSC Approval</p>
+                  <div class="flex flex-col gap-3">
+                    {[
+                      { label: "Online", detail: "Apply at dallascityhall.com — search for Driver Safety Course under Court & Detention Services", link: "https://www.dallascityhall.com" },
+                      { label: "In Person or Mail", detail: "2014 Main St, Dallas TX 75201" },
+                    ].map(item => (
+                      <div class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-start gap-3">
+                        <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <div class="flex flex-col gap-0.5">
+                          <span class="text-sm font-bold text-text-body">{item.label}</span>
+                          <span class="text-sm text-text-body">{item.detail}</span>
+                        </div>
+                      </div>
+                    ))}
+                    <div class="bg-red-50 border border-red-200 rounded-[10px] p-4 flex items-start gap-3">
+                      <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#FF3B30" stroke="#FF3B30" stroke-width="1"/><path d="M6 6l6 6M12 6l-6 6" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+                      <div class="flex flex-col gap-0.5">
+                        <span class="text-sm font-bold text-red-800">No Fax, Email, or Live Chat</span>
+                        <span class="text-sm text-red-700">Dallas Municipal Court does not accept DSC document submissions by fax, email, or live chat. Use online, mail, or in-person only.</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- What to Submit After Completion -->
+                <div>
+                  <p class="text-sm font-semibold text-text mb-3">What to Submit After Completing the Course</p>
+                  <div class="flex flex-col gap-3">
+                    {[
+                      "Certificate of Completion — Court Copy (signed)",
+                      "Type 3A Certified Driving Record",
+                      "Notarized DSC Affidavit (mailed to you by the court after approval)",
+                    ].map(item => (
+                      <div class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-start gap-3">
+                        <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <span class="text-sm font-bold text-text-body">{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <!-- Important notes -->
+                <div class="bg-amber-50 border border-amber-200 rounded-[14px] p-4 flex flex-col gap-2">
+                  <p class="text-sm font-semibold text-amber-800">Important Deadlines &amp; Rules</p>
+                  <ul class="flex flex-col gap-1.5 list-none m-0 p-0">
+                    {[
+                      "You must request DSC within 21 days of your citation date — missing this window may result in higher fees or losing the option entirely.",
+                      "Wait for written approval from the court before taking the course. Approval is mailed within 5–7 business days.",
+                      "You have 90 days from court approval to complete the course. No extensions are granted.",
+                      "Download the DSC Application Form at dallascityhall.com (search DSC Application under Court & Detention Services forms).",
+                    ].map(note => (
+                      <li class="text-sm text-amber-900 flex items-start gap-2">
+                        <span class="mt-1 shrink-0">•</span><span>{note}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <!-- Phone -->
+                <div class="bg-surface-muted border border-border rounded-[14px] p-4">
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Court Phone</span>
+                    <a href="tel:2146700109" class="text-sm font-semibold text-primary hover:underline">214-670-0109</a>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          )}
+
+          <!-- ══════════════════════════════════════════
+               HOUSTON MUNICIPAL COURT — Court-Specific DSC Info
+               ══════════════════════════════════════════ -->
+          {court.slug === 'harris-municipal-houston' && (
+            <div class="bg-white border border-border rounded-2xl overflow-hidden shadow-sm">
+              <div class="px-6 sm:px-8 py-6 flex items-center gap-4 border-b border-border">
+                <div class="bg-info flex items-center justify-center rounded-[14px] w-12 h-12 shrink-0">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0967d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                  </svg>
+                </div>
+                <h2 class="text-xl font-bold text-text-body">Houston Municipal Court — DSC Instructions</h2>
+              </div>
+              <div class="px-6 sm:px-8 py-6 flex flex-col gap-6">
+
+                <!-- Fee Types -->
+                <div>
+                  <p class="text-sm font-semibold text-text mb-3">DSC Court Fees</p>
+                  <div class="bg-surface-muted border border-border rounded-[14px] p-4 flex flex-col gap-4">
+
+                    <!-- Standard DSC -->
+                    <div>
+                      <p class="text-xs font-semibold text-text-body uppercase tracking-wide mb-2">Standard DSC (requested on time)</p>
+                      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                          <span class="text-xs text-text-body">Moving Violation</span>
+                          <span class="text-xl font-bold text-text">$144</span>
+                        </div>
+                        <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                          <span class="text-xs text-text-body">School Zone Violation</span>
+                          <span class="text-xl font-bold text-text">$169</span>
+                        </div>
+                      </div>
+                      <p class="text-xs text-text-body mt-2">Requires: Certificate of Completion + Type 3A Driving Record + Notarized DSC Affidavit</p>
+                    </div>
+
+                    <!-- Discretionary DSC -->
+                    <div>
+                      <p class="text-xs font-semibold text-text-body uppercase tracking-wide mb-2">Discretionary DSC (missed court date — judge's approval required)</p>
+                      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                          <span class="text-xs text-text-body">Moving Violation</span>
+                          <span class="text-xl font-bold text-text">$184</span>
+                        </div>
+                        <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                          <span class="text-xs text-text-body">School Zone Violation</span>
+                          <span class="text-xl font-bold text-text">$209</span>
+                        </div>
+                      </div>
+                      <p class="text-xs text-text-body mt-2">Requires: Certificate of Completion only</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- How to Submit -->
+                <div>
+                  <p class="text-sm font-semibold text-text mb-3">How to Submit Your DSC Request &amp; Paperwork</p>
+                  <div class="flex flex-col gap-3">
+                    <div class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-start gap-3">
+                      <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      <div class="flex flex-col gap-0.5">
+                        <span class="text-sm font-bold text-text-body">Email (DSC Application only)</span>
+                        <span class="text-sm text-text-body"><a href="mailto:mcd@houstontx.gov" class="text-primary hover:underline">mcd@houstontx.gov</a> — for submitting your DSC application form only</span>
+                      </div>
+                    </div>
+                    <div class="bg-red-50 border border-red-200 rounded-[10px] p-4 flex items-start gap-3">
+                      <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#FF3B30" stroke="#FF3B30" stroke-width="1"/><path d="M6 6l6 6M12 6l-6 6" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+                      <div class="flex flex-col gap-0.5">
+                        <span class="text-sm font-bold text-red-800">Do NOT email your Certificate of Completion</span>
+                        <span class="text-sm text-red-700">The Certificate of Completion must be submitted by mail or in person — never by email.</span>
+                      </div>
+                    </div>
+                    <div class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-start gap-3">
+                      <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      <div class="flex flex-col gap-0.5">
+                        <span class="text-sm font-bold text-text-body">Mail</span>
+                        <span class="text-sm text-text-body">P.O. Box 4996, Houston TX 77210-4996</span>
+                      </div>
+                    </div>
+                    <div class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-start gap-3">
+                      <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      <div class="flex flex-col gap-0.5">
+                        <span class="text-sm font-bold text-text-body">In Person — 6 Court Locations</span>
+                        <span class="text-sm text-text-body">Visit any Houston Municipal Court location. A clerk can notarize your DSC Affidavit for $10.</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Forms -->
+                <div>
+                  <p class="text-sm font-semibold text-text mb-3">Required Forms</p>
+                  <div class="flex flex-col gap-3">
+                    <a href="https://www.houstontx.gov/courts/forms/DSC-Application.pdf" target="_blank" rel="noopener noreferrer" class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-center gap-3 no-underline hover:bg-gray-50 transition-colors group">
+                      <svg class="w-[18px] h-[18px] shrink-0 text-primary" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M10.5 2.25H5.25A1.5 1.5 0 0 0 3.75 3.75v10.5a1.5 1.5 0 0 0 1.5 1.5h7.5a1.5 1.5 0 0 0 1.5-1.5V6.75L10.5 2.25z"/>
+                        <polyline points="10.5 2.25 10.5 6.75 14.25 6.75"/>
+                      </svg>
+                      <span class="text-sm font-semibold text-primary group-hover:underline">DSC Application Form (PDF)</span>
+                    </a>
+                    <a href="https://www.houstontx.gov/courts/forms/DSC-Affidavit.pdf" target="_blank" rel="noopener noreferrer" class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-center gap-3 no-underline hover:bg-gray-50 transition-colors group">
+                      <svg class="w-[18px] h-[18px] shrink-0 text-primary" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M10.5 2.25H5.25A1.5 1.5 0 0 0 3.75 3.75v10.5a1.5 1.5 0 0 0 1.5 1.5h7.5a1.5 1.5 0 0 0 1.5-1.5V6.75L10.5 2.25z"/>
+                        <polyline points="10.5 2.25 10.5 6.75 14.25 6.75"/>
+                      </svg>
+                      <span class="text-sm font-semibold text-primary group-hover:underline">DSC Affidavit Form (PDF)</span>
+                    </a>
+                  </div>
+                </div>
+
+                <!-- Phone & Website -->
+                <div class="bg-surface-muted border border-border rounded-[14px] p-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Court Phone</span>
+                    <a href="tel:7138370311" class="text-sm font-semibold text-primary hover:underline">713.837.0311</a>
+                  </div>
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Court Website</span>
+                    <a href="http://www.houstontx.gov/courts/" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-primary hover:underline break-all">houstontx.gov/courts</a>
+                  </div>
+                </div>
+
+                <!-- Always verify statement -->
+                <div class="bg-surface-muted border border-border rounded-[14px] p-4 flex items-start gap-3">
+                  <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#0967d2" stroke="#0967d2" stroke-width="1"/><path d="M9 5v4M9 13h.01" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+                  <p class="text-sm text-text-body leading-relaxed">Always verify DSC requirements directly with Houston Municipal Court before submitting anything. Court fees, deadlines, and submission procedures can change. When in doubt, call <a href="tel:7138370311" class="text-primary hover:underline font-medium">713.837.0311</a> or visit <a href="http://www.houstontx.gov/courts/" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">houstontx.gov/courts</a>.</p>
+                </div>
+
+                <!-- Last updated -->
+                <p class="text-xs text-text-subtle text-right">Court information last verified: April 2025</p>
+
+              </div>
+            </div>
+          )}
+
+          <!-- ══════════════════════════════════════════
+               SAN ANTONIO MUNICIPAL COURT — Court-Specific DSC Info
+               ══════════════════════════════════════════ -->
+          {court.slug === 'bexar-municipal-san-antonio' && (
+            <div class="bg-white border border-border rounded-2xl overflow-hidden shadow-sm">
+              <div class="px-6 sm:px-8 py-6 flex items-center gap-4 border-b border-border">
+                <div class="bg-info flex items-center justify-center rounded-[14px] w-12 h-12 shrink-0">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0967d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                  </svg>
+                </div>
+                <h2 class="text-xl font-bold text-text-body">San Antonio Municipal Court — DSC Instructions</h2>
+              </div>
+              <div class="px-6 sm:px-8 py-6 flex flex-col gap-6">
+
+                <!-- Fees note -->
+                <div class="bg-amber-50 border border-amber-200 rounded-[14px] p-4 flex items-start gap-3">
+                  <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#F59E0B" stroke="#F59E0B" stroke-width="1"/><path d="M9 5v4M9 13h.01" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+                  <div>
+                    <p class="text-sm font-semibold text-amber-800 mb-1">DSC Fees Not Published Online</p>
+                    <p class="text-sm text-amber-900">San Antonio Municipal Court does not publish DSC court fees publicly. Call <a href="tel:2102078970" class="text-amber-800 font-semibold hover:underline">210-207-8970</a> or check the online citation portal to confirm your specific fees.</p>
+                  </div>
+                </div>
+
+                <!-- How to Request -->
+                <div>
+                  <p class="text-sm font-semibold text-text mb-3">How to Request DSC Approval</p>
+                  <div class="flex flex-col gap-3">
+                    <div class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-start gap-3">
+                      <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      <div class="flex flex-col gap-0.5">
+                        <span class="text-sm font-bold text-text-body">Online Citation Portal</span>
+                        <span class="text-sm text-text-body"><a href="https://6.municipal.cc/sanantoniocosatx/citationwebportal/" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">6.municipal.cc/sanantoniocosatx/citationwebportal/</a></span>
+                      </div>
+                    </div>
+                    <div class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-start gap-3">
+                      <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      <div class="flex flex-col gap-0.5">
+                        <span class="text-sm font-bold text-text-body">In Person</span>
+                        <span class="text-sm text-text-body">401 S. Frio St, San Antonio TX 78207</span>
+                      </div>
+                    </div>
+                    <div class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-start gap-3">
+                      <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      <div class="flex flex-col gap-0.5">
+                        <span class="text-sm font-bold text-text-body">Online Contact Form</span>
+                        <span class="text-sm text-text-body"><a href="https://www.sanantonio.gov/Municipal-Court/Contact" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">sanantonio.gov/Municipal-Court/Contact</a></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Important notes -->
+                <div class="bg-amber-50 border border-amber-200 rounded-[14px] p-4 flex flex-col gap-2">
+                  <p class="text-sm font-semibold text-amber-800">Important</p>
+                  <ul class="flex flex-col gap-1.5 list-none m-0 p-0">
+                    {[
+                      "You must receive court approval before taking the Driver Safety Course.",
+                      "Contact the court to confirm their specific submission requirements — they may update their process.",
+                    ].map(note => (
+                      <li class="text-sm text-amber-900 flex items-start gap-2">
+                        <span class="mt-1 shrink-0">•</span><span>{note}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <!-- Hours & Phone -->
+                <div class="bg-surface-muted border border-border rounded-[14px] p-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Court Hours</span>
+                    <span class="text-sm font-semibold text-text-body">Mon–Fri, 8:00 AM – 4:30 PM</span>
+                    <span class="text-xs text-text-body">Closed city holidays</span>
+                  </div>
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Phone</span>
+                    <a href="tel:2102078970" class="text-sm font-semibold text-primary hover:underline">210-207-8970</a>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          )}
+
+          <!-- ══════════════════════════════════════════
+               HARRIS COUNTY JUSTICE OF THE PEACE — General DSC Note
+               ══════════════════════════════════════════ -->
+          {court.county === 'Harris' && court.courtType === 'Justice of the Peace' && (
+            <div class="bg-white border border-border rounded-2xl overflow-hidden shadow-sm">
+              <div class="px-6 sm:px-8 py-6 flex items-center gap-4 border-b border-border">
+                <div class="bg-info flex items-center justify-center rounded-[14px] w-12 h-12 shrink-0">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0967d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                  </svg>
+                </div>
+                <h2 class="text-xl font-bold text-text-body">Harris County JP Courts — DSC Instructions</h2>
+              </div>
+              <div class="px-6 sm:px-8 py-6 flex flex-col gap-6">
+
+                <!-- Find your precinct -->
+                <div class="bg-info border border-blue-200 rounded-[14px] p-5 flex flex-col gap-3">
+                  <p class="text-sm font-semibold text-primary-deep">Find Your Specific Precinct Court</p>
+                  <p class="text-sm text-text-body leading-relaxed">Harris County has multiple Justice of the Peace precincts — each handles its own cases separately. You must work with your specific precinct court. Use the link below to find your precinct and case details.</p>
+                  <a href="https://jp.hctx.net" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-primary hover:bg-primary-hover text-white rounded-xl px-4 py-2.5 text-sm font-semibold no-underline transition-colors self-start">
+                    Find My Case &amp; Precinct Court at jp.hctx.net
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7h9M7 2.5L11.5 7 7 11.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </a>
+                </div>
+
+                <!-- DSC Fee -->
+                <div>
+                  <p class="text-sm font-semibold text-text mb-3">DSC Court Fee</p>
+                  <div class="bg-surface-muted border border-border rounded-[14px] p-4">
+                    <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                      <span class="text-xs text-text-body font-medium uppercase tracking-wide">Standard DSC Fee (offenses on or after Jan 1, 2020)</span>
+                      <span class="text-xl font-bold text-text">$144</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- How to apply -->
+                <div>
+                  <p class="text-sm font-semibold text-text mb-3">How to Request DSC Approval</p>
+                  <div class="flex flex-col gap-3">
+                    <div class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-start gap-3">
+                      <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      <div class="flex flex-col gap-0.5">
+                        <span class="text-sm font-bold text-text-body">Online</span>
+                        <span class="text-sm text-text-body">Apply at <a href="https://jp.hctx.net" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">jp.hctx.net</a> through your precinct court's portal</span>
+                      </div>
+                    </div>
+                    <div class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-start gap-3">
+                      <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      <div class="flex flex-col gap-0.5">
+                        <span class="text-sm font-bold text-text-body">By Mail</span>
+                        <span class="text-sm text-text-body">Mail your DSC Request Form to your specific precinct court address (found at jp.hctx.net). There is no central office.</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- What to submit -->
+                <div>
+                  <p class="text-sm font-semibold text-text mb-3">Required Documents</p>
+                  <div class="flex flex-col gap-2">
+                    <p class="text-xs text-text-body font-medium uppercase tracking-wide">With your DSC Request:</p>
+                    <div class="flex flex-col gap-2 mb-3">
+                      {["DSC Request Form", "Copy of Driver's License", "Proof of Insurance"].map(item => (
+                        <div class="bg-surface-muted border border-border rounded-[10px] p-3 flex items-center gap-3">
+                          <svg class="w-[16px] h-[16px] shrink-0" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          <span class="text-sm text-text-body">{item}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <p class="text-xs text-text-body font-medium uppercase tracking-wide">After completing the course:</p>
+                    <div class="flex flex-col gap-2">
+                      {[
+                        "Certificate of Completion — Court Copy",
+                        "Type 3A Certified Driving Record",
+                        "Notarized DSC Affidavit",
+                      ].map(item => (
+                        <div class="bg-surface-muted border border-border rounded-[10px] p-3 flex items-center gap-3">
+                          <svg class="w-[16px] h-[16px] shrink-0" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          <span class="text-sm text-text-body">{item}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Forms download -->
+                <div>
+                  <p class="text-sm font-semibold text-text mb-3">Download Forms</p>
+                  <div class="flex flex-col gap-3">
+                    <a href="https://jp.hctx.net/traffic/DSC.pdf" target="_blank" rel="noopener noreferrer" class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-center gap-3 no-underline hover:bg-gray-50 transition-colors group">
+                      <svg class="w-[18px] h-[18px] shrink-0 text-primary" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M10.5 2.25H5.25A1.5 1.5 0 0 0 3.75 3.75v10.5a1.5 1.5 0 0 0 1.5 1.5h7.5a1.5 1.5 0 0 0 1.5-1.5V6.75L10.5 2.25z"/>
+                        <polyline points="10.5 2.25 10.5 6.75 14.25 6.75"/>
+                      </svg>
+                      <span class="text-sm font-semibold text-primary group-hover:underline">DSC Request Form (PDF) — jp.hctx.net</span>
+                    </a>
+                    <a href="https://jp.hctx.net/traffic/DSC-Aff.pdf" target="_blank" rel="noopener noreferrer" class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-center gap-3 no-underline hover:bg-gray-50 transition-colors group">
+                      <svg class="w-[18px] h-[18px] shrink-0 text-primary" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M10.5 2.25H5.25A1.5 1.5 0 0 0 3.75 3.75v10.5a1.5 1.5 0 0 0 1.5 1.5h7.5a1.5 1.5 0 0 0 1.5-1.5V6.75L10.5 2.25z"/>
+                        <polyline points="10.5 2.25 10.5 6.75 14.25 6.75"/>
+                      </svg>
+                      <span class="text-sm font-semibold text-primary group-hover:underline">DSC Affidavit Form (PDF) — jp.hctx.net</span>
+                    </a>
+                  </div>
+                </div>
+
+                <!-- 90-day deadline note -->
+                <div class="bg-amber-50 border border-amber-200 rounded-[14px] p-4 flex flex-col gap-2">
+                  <p class="text-sm font-semibold text-amber-800">Important</p>
+                  <ul class="flex flex-col gap-1.5 list-none m-0 p-0">
+                    {[
+                      "You have 90 days from court approval to complete the course and submit your paperwork.",
+                      "Submit all documents to your specific precinct court — there is no central Harris County JP office.",
+                      "A specialized DSC process exists for child safety seat violations — contact your precinct court for details.",
+                    ].map(note => (
+                      <li class="text-sm text-amber-900 flex items-start gap-2">
+                        <span class="mt-1 shrink-0">•</span><span>{note}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+              </div>
+            </div>
+          )}
+
         </div><!-- /left col -->
 
         <!-- Right Column — Buy Box -->

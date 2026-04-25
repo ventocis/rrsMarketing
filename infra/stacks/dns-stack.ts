@@ -1,11 +1,9 @@
 import * as cdk from 'aws-cdk-lib'
 import * as r53 from 'aws-cdk-lib/aws-route53'
-import { DnsZone } from '@roadreadysafety/cdk-infrastructure/constructs'
 import { Construct } from 'constructs'
 
 export interface DnsStackProps extends cdk.StackProps {
     domainName: string
-    existingHostedZoneId?: string
 }
 
 export class DnsStack extends cdk.Stack {
@@ -14,10 +12,9 @@ export class DnsStack extends cdk.Stack {
     constructor(scope: Construct, id: string, props: DnsStackProps) {
         super(scope, id, props)
 
-        const dnsZone = new DnsZone(this, 'DnsZone', {
-            zoneName: props.domainName,
-            existingHostedZoneId: props.existingHostedZoneId,
+        this.hostedZone = r53.HostedZone.fromLookup(this, 'HostedZone', {
+            domainName: props.domainName,
+            privateZone: false,
         })
-        this.hostedZone = dnsZone.hostedZone
     }
 }

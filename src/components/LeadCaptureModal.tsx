@@ -54,20 +54,20 @@ function getCopy(result: EligibilityResult) {
 
 async function subscribeToKlaviyo(email: string, result: EligibilityResult) {
   const publicKey = (import.meta as any).env?.VITE_KLAVIYO_PUBLIC_KEY ?? 'U3BbdX';
+  const headers = {
+    'Content-Type': 'application/vnd.api+json',
+    'revision': '2024-10-15',
+  };
+
   const res = await fetch(
     `https://a.klaviyo.com/client/subscriptions/?company_id=${publicKey}`,
     {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'revision': '2024-10-15',
-      },
+      headers,
       body: JSON.stringify({
         data: {
           type: 'subscription',
           attributes: {
-            list_id: KLAVIYO_LIST_ID,
-            email,
             custom_source: 'TX Eligibility Checker',
             profile: {
               data: {
@@ -82,11 +82,20 @@ async function subscribeToKlaviyo(email: string, result: EligibilityResult) {
               },
             },
           },
+          relationships: {
+            list: {
+              data: {
+                type: 'list',
+                id: KLAVIYO_LIST_ID,
+              },
+            },
+          },
         },
       }),
     }
   );
-  if (!res.ok) {
+
+  if (!res.ok && res.status !== 202) {
     const body = await res.text().catch(() => '');
     console.error('Klaviyo error', res.status, body);
     throw new Error(`Klaviyo error: ${res.status}`);

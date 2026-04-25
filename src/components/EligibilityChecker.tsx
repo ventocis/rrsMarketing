@@ -170,7 +170,6 @@ export default function EligibilityChecker({ courts }: Props) {
     setSelectedCounty('');
     setSelectedCourtType('');
     setSelectedCourtName('');
-    setShowModal(false);
   };
 
   // Court dropdown data (used for eligible-pending result)
@@ -214,7 +213,6 @@ export default function EligibilityChecker({ courts }: Props) {
     'text-sm text-text-body hover:text-text flex items-center gap-1 transition-colors mb-6';
 
   return (
-    <>
     <div className="max-w-2xl mx-auto">
 
       {/* ── Dynamic header above card ── */}

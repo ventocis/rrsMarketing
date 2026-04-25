@@ -64,6 +64,7 @@ function joinOrNA(arr: string[] | undefined) {
         <div class="flex-1 flex flex-col gap-8">
 
           <!-- Court Information Card -->
+          {court.slug !== 'harris-municipal-houston' && (
           <div class="bg-white border border-border rounded-2xl overflow-hidden shadow-sm">
             <div class="px-6 sm:px-8 py-6 flex items-center gap-4 border-b border-border">
               <div class="bg-info flex items-center justify-center rounded-[14px] w-12 h-12 shrink-0">
@@ -159,8 +160,10 @@ function joinOrNA(arr: string[] | undefined) {
               </div>
             </div>
           </div>
+          )}
 
           <!-- Steps (native details/summary accordion) -->
+          {court.slug !== 'harris-municipal-houston' && (<Fragment>
           <div class="flex flex-col gap-4">
 
             <!-- Step 1 -->
@@ -404,6 +407,7 @@ function joinOrNA(arr: string[] | undefined) {
             </details>
 
           </div><!-- /steps -->
+          </Fragment>)}
 
           <!-- ══════════════════════════════════════════
                AUSTIN MUNICIPAL COURT — Court-Specific DSC Info
@@ -702,13 +706,26 @@ function joinOrNA(arr: string[] | undefined) {
                   </div>
                 </div>
 
-                <!-- Phone -->
-                <div class="bg-surface-muted border border-border rounded-[14px] p-4">
+                <!-- Phone & Website -->
+                <div class="bg-surface-muted border border-border rounded-[14px] p-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
                     <span class="text-xs text-text-body font-medium uppercase tracking-wide">Court Phone</span>
                     <a href="tel:7138370311" class="text-sm font-semibold text-primary hover:underline">713.837.0311</a>
                   </div>
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Court Website</span>
+                    <a href="http://www.houstontx.gov/courts/" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-primary hover:underline break-all">houstontx.gov/courts</a>
+                  </div>
                 </div>
+
+                <!-- Always verify statement -->
+                <div class="bg-surface-muted border border-border rounded-[14px] p-4 flex items-start gap-3">
+                  <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#0967d2" stroke="#0967d2" stroke-width="1"/><path d="M9 5v4M9 13h.01" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+                  <p class="text-sm text-text-body leading-relaxed">Always verify DSC requirements directly with Houston Municipal Court before submitting anything. Court fees, deadlines, and submission procedures can change. When in doubt, call <a href="tel:7138370311" class="text-primary hover:underline font-medium">713.837.0311</a> or visit <a href="http://www.houstontx.gov/courts/" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">houstontx.gov/courts</a>.</p>
+                </div>
+
+                <!-- Last updated -->
+                <p class="text-xs text-text-subtle text-right">Court information last verified: April 2025</p>
 
               </div>
             </div>

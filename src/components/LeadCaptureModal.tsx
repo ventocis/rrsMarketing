@@ -68,7 +68,6 @@ async function subscribeToKlaviyo(email: string, result: EligibilityResult) {
         data: {
           type: 'subscription',
           attributes: {
-            list_id: KLAVIYO_LIST_ID,
             custom_source: 'TX Eligibility Checker',
             profile: {
               data: {
@@ -80,6 +79,14 @@ async function subscribeToKlaviyo(email: string, result: EligibilityResult) {
                     lead_source: 'TX Eligibility Checker',
                   },
                 },
+              },
+            },
+          },
+          relationships: {
+            list: {
+              data: {
+                type: 'list',
+                id: KLAVIYO_LIST_ID,
               },
             },
           },

@@ -654,7 +654,7 @@ function joinOrNA(arr: string[] | undefined) {
 
                     <!-- Standard DSC -->
                     <div>
-                      <p class="text-xs font-semibold text-text-body uppercase tracking-wide mb-2">Standard DSC (requested on time)</p>
+                      <p class="text-xs font-semibold text-text-body uppercase tracking-wide mb-2">Mandatory DSC (requested on time)</p>
                       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
                           <span class="text-xs text-text-body">Moving Violation</span>
@@ -665,12 +665,22 @@ function joinOrNA(arr: string[] | undefined) {
                           <span class="text-xl font-bold text-text">$169</span>
                         </div>
                       </div>
-                      <p class="text-xs text-text-body mt-2">Requires: Certificate of Completion + Type 3A Driving Record + Notarized DSC Affidavit</p>
+                      <div class="mt-3 flex flex-col gap-1.5">
+                        <p class="text-xs font-semibold text-text-body">To apply, submit:</p>
+                        <ul class="flex flex-col gap-1 list-none m-0 p-0">
+                          {["Signed DSC Application form", "Copy of valid Texas Driver's License", "Copy of current auto insurance (listing you as insured)", "Payment of the court fee"].map(item => (
+                            <li class="text-xs text-text-body flex items-start gap-1.5"><span class="mt-0.5 shrink-0">•</span><span>{item}</span></li>
+                          ))}
+                        </ul>
+                        <p class="text-xs font-semibold text-text-body mt-1">After completing the course, submit:</p>
+                        <p class="text-xs text-text-body">Certificate of Completion + Type 3A Driving Record + Notarized DSC Affidavit</p>
+                      </div>
                     </div>
 
                     <!-- Discretionary DSC -->
                     <div>
-                      <p class="text-xs font-semibold text-text-body uppercase tracking-wide mb-2">Discretionary DSC (missed court date — judge's approval required)</p>
+                      <p class="text-xs font-semibold text-text-body uppercase tracking-wide mb-2">Discretionary DSC — subject to court approval</p>
+                      <p class="text-xs text-text-body mb-3">Applies if you missed the mandatory request deadline <em>or</em> have taken a DSC course within the last 12 months.</p>
                       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
                           <span class="text-xs text-text-body">Moving Violation</span>
@@ -681,7 +691,16 @@ function joinOrNA(arr: string[] | undefined) {
                           <span class="text-xl font-bold text-text">$209</span>
                         </div>
                       </div>
-                      <p class="text-xs text-text-body mt-2">Requires: Certificate of Completion only</p>
+                      <div class="mt-3 flex flex-col gap-1.5">
+                        <p class="text-xs font-semibold text-text-body">To apply, submit:</p>
+                        <ul class="flex flex-col gap-1 list-none m-0 p-0">
+                          {["Signed DSC Application form", "Copy of valid Texas Driver's License", "Copy of current auto insurance (listing you as insured)", "Payment of the court fee"].map(item => (
+                            <li class="text-xs text-text-body flex items-start gap-1.5"><span class="mt-0.5 shrink-0">•</span><span>{item}</span></li>
+                          ))}
+                        </ul>
+                        <p class="text-xs font-semibold text-text-body mt-1">After completing the course, submit:</p>
+                        <p class="text-xs text-text-body">Certificate of Completion only</p>
+                      </div>
                     </div>
                   </div>
                 </div>

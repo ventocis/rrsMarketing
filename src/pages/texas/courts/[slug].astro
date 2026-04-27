@@ -64,7 +64,7 @@ function joinOrNA(arr: string[] | undefined) {
         <div class="flex-1 flex flex-col gap-8">
 
           <!-- Court Information Card -->
-          {court.slug !== 'harris-municipal-houston' && (
+          {court.slug !== 'harris-municipal-houston' && court.slug !== 'travis-municipal-austin' && (
           <div class="bg-white border border-border rounded-2xl overflow-hidden shadow-sm">
             <div class="px-6 sm:px-8 py-6 flex items-center gap-4 border-b border-border">
               <div class="bg-info flex items-center justify-center rounded-[14px] w-12 h-12 shrink-0">
@@ -163,7 +163,7 @@ function joinOrNA(arr: string[] | undefined) {
           )}
 
           <!-- Steps (native details/summary accordion) -->
-          {court.slug !== 'harris-municipal-houston' && (<Fragment>
+          {court.slug !== 'harris-municipal-houston' && court.slug !== 'travis-municipal-austin' && (<Fragment>
           <div class="flex flex-col gap-4">
 
             <!-- Step 1 -->
@@ -420,7 +420,7 @@ function joinOrNA(arr: string[] | undefined) {
                     <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
                   </svg>
                 </div>
-                <h2 class="text-xl font-bold text-text-body">Austin Municipal Court — DSC Instructions</h2>
+                <h2 class="text-xl font-bold text-text-body">Austin Municipal Court — Driver Safety Course Instructions</h2>
               </div>
               <div class="px-6 sm:px-8 py-6 flex flex-col gap-6">
 
@@ -443,8 +443,14 @@ function joinOrNA(arr: string[] | undefined) {
                 <div>
                   <p class="text-sm font-semibold text-text mb-3">How to Request DSC Approval</p>
                   <div class="flex flex-col gap-3">
+                    <div class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-start gap-3">
+                      <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      <div class="flex flex-col gap-0.5">
+                        <span class="text-sm font-bold text-text-body">Online form</span>
+                        <span class="text-sm text-text-body">Download the DSC Request Form at <a href="https://austin.widen.net/view/pdf/dxifzuhcxd/Driver_Safety_Request_form.pdf" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">austin.widen.net/view/pdf/dxifzuhcxd/Driver_Safety_Request_form.pdf</a> (Spanish version also available)</span>
+                      </div>
+                    </div>
                     {[
-                      { label: "Online form", detail: "Download the DSC Request Form at austin.widen.net/view/pdf/dxifzuhcxd/Driver_Safety_Request_form.pdf (Spanish version also available)", link: "https://austin.widen.net/view/pdf/dxifzuhcxd/Driver_Safety_Request_form.pdf" },
                       { label: "Email", detail: "court@austintexas.gov — attach your completed request form" },
                       { label: "Fax", detail: "(512) 974-4882" },
                       { label: "Mail", detail: "P.O. Box 2135, Austin TX 78768" },
@@ -478,7 +484,7 @@ function joinOrNA(arr: string[] | undefined) {
                   </ul>
                 </div>
 
-                <!-- Court hours & phone -->
+                <!-- Court hours, phone, website & email -->
                 <div class="bg-surface-muted border border-border rounded-[14px] p-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
                     <span class="text-xs text-text-body font-medium uppercase tracking-wide">Court Hours</span>
@@ -488,7 +494,24 @@ function joinOrNA(arr: string[] | undefined) {
                     <span class="text-xs text-text-body font-medium uppercase tracking-wide">Phone</span>
                     <a href="tel:5129744800" class="text-sm font-semibold text-primary hover:underline">(512) 974-4800</a>
                   </div>
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Website</span>
+                    <a href="https://www.austintexas.gov/municipal-court" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-primary hover:underline break-all">austintexas.gov/municipal-court</a>
+                  </div>
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Email</span>
+                    <a href="mailto:court@austintexas.gov" class="text-sm font-semibold text-primary hover:underline break-all">court@austintexas.gov</a>
+                  </div>
                 </div>
+
+                <!-- Always verify statement -->
+                <div class="bg-surface-muted border border-border rounded-[14px] p-4 flex items-start gap-3">
+                  <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#0967d2" stroke="#0967d2" stroke-width="1"/><path d="M9 5v4M9 13h.01" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+                  <p class="text-sm text-text-body leading-relaxed">Always verify DSC requirements directly with Austin Municipal Court before submitting anything. Court fees, deadlines, and submission procedures can change. When in doubt, call <a href="tel:5129744800" class="text-primary hover:underline font-medium">(512) 974-4800</a>, email <a href="mailto:court@austintexas.gov" class="text-primary hover:underline">court@austintexas.gov</a>, or visit <a href="https://www.austintexas.gov/municipal-court" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">austintexas.gov/municipal-court</a>.</p>
+                </div>
+
+                <!-- Last updated -->
+                <p class="text-xs text-text-subtle text-right">Court information last verified: April 2025</p>
 
               </div>
             </div>

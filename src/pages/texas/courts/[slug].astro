@@ -475,7 +475,8 @@ function joinOrNA(arr: string[] | undefined) {
                     {[
                       "Submit your DSC request form before your appearance date — do NOT take the course first.",
                       "You have 90 days from the court's processing date (not your submission date) to complete the course.",
-                      "Look up your case at austintexas.gov/amcpublicinquiry to confirm your case status.",
+                      "Completion documents may be submitted in person, by mail, fax, or email.",
+                      "Look up your case at austin-portal.ecourt.com to confirm your case status.",
                     ].map(note => (
                       <li class="text-sm text-amber-900 flex items-start gap-2">
                         <span class="mt-1 shrink-0">•</span><span>{note}</span>
@@ -486,9 +487,14 @@ function joinOrNA(arr: string[] | undefined) {
 
                 <!-- Court hours, phone, website & email -->
                 <div class="bg-surface-muted border border-border rounded-[14px] p-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
-                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Court Hours</span>
-                    <span class="text-sm font-semibold text-text-body">Mon–Fri, 8:00 AM – 5:00 PM</span>
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1 sm:col-span-2">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Court Hours — Main (6800 Burleson Rd)</span>
+                    <span class="text-sm font-semibold text-text-body">Mon–Wed &amp; Fri: 8:00 AM – 6:00 PM</span>
+                    <span class="text-sm font-semibold text-text-body">Thu: 8:00 AM – 8:00 PM</span>
+                  </div>
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1 sm:col-span-2">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Court Hours — North (2121 W Parmer Ln)</span>
+                    <span class="text-sm font-semibold text-text-body">Mon–Fri: 8:00 AM – 4:30 PM</span>
                   </div>
                   <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
                     <span class="text-xs text-text-body font-medium uppercase tracking-wide">Phone</span>
@@ -995,7 +1001,7 @@ function joinOrNA(arr: string[] | undefined) {
                   <p class="text-sm font-semibold text-amber-800">Important</p>
                   <ul class="flex flex-col gap-1.5 list-none m-0 p-0">
                     {[
-                      "You have 90 days from court approval to complete the course and submit your paperwork.",
+                      "You have 90 days from court approval to complete the course and submit your paperwork. Extensions may be granted for good cause at the court's discretion — contact your precinct court if you need more time.",
                       "Submit all documents to your specific precinct court — there is no central Harris County JP office.",
                       "A specialized DSC process exists for child safety seat violations — contact your precinct court for details.",
                     ].map(note => (

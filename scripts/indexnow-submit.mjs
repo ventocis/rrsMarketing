@@ -2,20 +2,28 @@
  * IndexNow Submission Script — Road Ready Safety
  *
  * Notifies Bing (and all IndexNow-participating engines) of new/updated pages.
- * Run manually after a deploy or content update:
+ * PRODUCTION ONLY — never run this against a QA or staging environment.
+ * Submitting non-production URLs to IndexNow causes Bing to attempt to crawl
+ * pages that shouldn't be indexed, and wastes your submission quota.
  *
- *   npm run indexnow           — submits all 80 enhanced court pages + key marketing pages
- *   npm run indexnow -- courts — submits court pages only
- *   npm run indexnow -- marketing — submits marketing pages only
+ * Run manually after a production deploy:
  *
- * The key file at /6550a12bb60949a3a21d8f456b136059.txt must be live on the
- * production domain before Bing can verify ownership.
+ *   npm run indexnow              — all pages (courts + marketing + blog + courses)
+ *   npm run indexnow -- courts    — 80 enhanced court pages only
+ *   npm run indexnow -- marketing — static marketing pages only
+ *   npm run indexnow -- blog      — all 53 blog posts only
+ *   npm run indexnow -- courses   — course + requirements pages only
+ *
+ * Prerequisites:
+ *   1. Deploy must be live at roadreadysafety.com
+ *   2. Verify key file: curl https://roadreadysafety.com/6550a12bb60949a3a21d8f456b136059.txt
  *
  * IndexNow API docs: https://www.indexnow.org/documentation
  */
 
-// Load .env.local if present
 import fs from 'fs';
+
+// Load .env.local if present
 if (fs.existsSync('.env.local')) {
   fs.readFileSync('.env.local', 'utf8').split('\n').forEach(line => {
     const [k, ...v] = line.split('=');
@@ -25,14 +33,14 @@ if (fs.existsSync('.env.local')) {
   });
 }
 
+// ─── Guard: refuse to run against non-production hosts ───────────────────────
 const KEY = process.env.INDEXNOW_KEY || '6550a12bb60949a3a21d8f456b136059';
 const HOST = 'roadreadysafety.com';
 const BASE = `https://${HOST}`;
 const KEY_LOCATION = `${BASE}/${KEY}.txt`;
 const INDEXNOW_ENDPOINT = 'https://api.indexnow.org/IndexNow';
 
-// ─── All 80 enhanced court page slugs ────────────────────────────────────────
-// Batch 1 — original 5
+// ─── 80 Enhanced court page slugs ────────────────────────────────────────────
 const BATCH1_SLUGS = [
   'harris-municipal-houston',
   'travis-municipal-austin',
@@ -42,7 +50,6 @@ const BATCH1_SLUGS = [
   'harris-justice-of-the-peace-precinct-1',
 ];
 
-// Batch 2 — v1 run (24 courts)
 const BATCH2_SLUGS = [
   'tarrant-municipal-fort-worth',
   'el-paso-municipal-el-paso',
@@ -70,7 +77,6 @@ const BATCH2_SLUGS = [
   'williamson-municipal-round-rock',
 ];
 
-// Batch 3 — v2 run (25 courts)
 const BATCH3_SLUGS = [
   'brazoria-municipal-pearland',
   'dallas-municipal-richardson',
@@ -99,7 +105,6 @@ const BATCH3_SLUGS = [
   'victoria-municipal-victoria',
 ];
 
-// Batch 4 — v3 run (25 courts)
 const BATCH4_SLUGS = [
   'tom-green-municipal-san-angelo',
   'brazos-municipal-bryan',
@@ -128,117 +133,194 @@ const BATCH4_SLUGS = [
   'jefferson-municipal-port-arthur',
 ];
 
-const ALL_COURT_SLUGS = [...BATCH1_SLUGS, ...BATCH2_SLUGS, ...BATCH3_SLUGS, ...BATCH4_SLUGS];
+const COURT_URLS = [
+  ...BATCH1_SLUGS, ...BATCH2_SLUGS, ...BATCH3_SLUGS, ...BATCH4_SLUGS,
+].map(slug => `${BASE}/texas/courts/${slug}`);
 
-const COURT_URLS = ALL_COURT_SLUGS.map(slug => `${BASE}/texas/courts/${slug}`);
-
-// ─── Key marketing pages ──────────────────────────────────────────────────────
+// ─── Static marketing pages ───────────────────────────────────────────────────
 const MARKETING_URLS = [
+  `${BASE}/`,
   `${BASE}/texas`,
   `${BASE}/texas/courts`,
   `${BASE}/texas/faq`,
   `${BASE}/texas/pricing`,
+  `${BASE}/texas/cost`,
   `${BASE}/texas/eligibility-tracker`,
   `${BASE}/texas/helpcenter`,
+  `${BASE}/texas/contactus`,
+  `${BASE}/texas/refund`,
+  `${BASE}/texas/terms`,
+  `${BASE}/texas/accessibility`,
+  `${BASE}/faq`,
+  `${BASE}/partners`,
+  `${BASE}/privacy`,
+  `${BASE}/terms`,
+  `${BASE}/support`,
+  `${BASE}/support/how-to-submit`,
+  `${BASE}/blog`,
 ];
 
-// ─── Submission logic ─────────────────────────────────────────────────────────
-async function submitBatch(urls, batchLabel) {
-  // IndexNow accepts up to 10,000 URLs per request — split into chunks of 500
-  // to stay well within rate limits and get per-chunk status feedback
+// ─── Blog posts ───────────────────────────────────────────────────────────────
+const BLOG_SLUGS = [
+  'easiest-michigan-bdic-course-60-days',
+  'how-michigan-bdic-keeps-points-off-record',
+  'michigan-bdic-eligibility-sos-letter',
+  'michigan-bdic-when-60-day-starts',
+  'can-insurers-see-ticket-if-pass-michigan-bdic',
+  'what-violations-qualify-michigan-bdic',
+  'fail-or-out-of-time-michigan-bdic',
+  'best-michigan-bdic-mobile-tablet',
+  'out-of-state-driver-michigan-ticket-bdic',
+  'michigan-bdic-certificate-auto-reported',
+  'which-online-driving-courses-are-recognized-by-states',
+  'best-course-court-vs-insurance-discounts',
+  'difference-between-florida-bdi-and-michigan-bdic',
+  'best-online-course-court-vs-insurance-fl-mi',
+  'which-courses-are-recognized-by-state-agencies-multi-state',
+  'which-course-if-i-drive-25k-miles-year',
+  'remove-points-vs-prevent-points-fl-mi',
+  'best-course-first-time-vs-repeat-offense',
+  'which-course-works-best-on-phone',
+  'ada-accessible-options-online-driver-improvement',
+  'best-florida-bdi-for-busy-parents-evening',
+  'best-michigan-bdic-for-college-students',
+  'best-bdi-for-snowbirds-out-of-state-insurance-florida',
+  'best-bdic-for-rideshare-drivers',
+  'florida-bdi-for-texting-while-driving',
+  'florida-bdi-for-20-plus-over-eligibility',
+  'michigan-bdic-for-lane-change-or-careless-driving',
+  'school-zone-or-construction-zone-tickets-what-course-works',
+  'best-bdi-course-in-miami-elect-with-miami-dade-clerk',
+  'best-bdi-course-in-tampa-hillsborough-steps',
+  'best-bdi-course-in-orlando-orange-county-steps',
+  'best-bdic-course-in-detroit-sos-timeline',
+  'best-bdic-course-in-grand-rapids-60-day-tips',
+  'best-online-bdi-provider-comparison-framework',
+  'bdi-bdic-pricing-what-to-expect',
+  'refund-if-not-eligible-court-or-sos',
+  'road-ready-vs-diy-who-submits-certificate',
+  'already-paid-ticket-can-i-elect-bdi-florida',
+  'course-window-expired-recover-or-reenroll',
+  'do-i-need-to-tell-insurance-about-bdi-bdic',
+  'best-florida-bdi-course-for-speeding-ticket',
+  'florida-bdi-first-30-days-after-citation',
+  'fastest-florida-bdi-same-day-certificate',
+  'best-florida-bdi-with-clerk-submission-guidance',
+  'how-many-times-can-i-elect-bdi-florida',
+  'florida-bdi-deadlines-60-or-90-days',
+  'can-florida-bdi-lower-fine-or-insurance',
+  'whos-eligible-for-florida-bdi',
+  'missed-florida-bdi-deadline-can-i-avoid-points',
+  'best-florida-bdi-for-red-light-school-bus-work-zone',
+  'driving-tips-summer',
+  'traffic-ticket-myths',
+  'defensive-driving-benefits',
+];
+
+const BLOG_URLS = BLOG_SLUGS.map(slug => `${BASE}/blog/${slug}`);
+
+// ─── Course pages ─────────────────────────────────────────────────────────────
+const COURSE_SLUGS = [
+  'fl-bdi', 'fl-bdi-es', 'fl-tlsae', 'fl-adi', 'fl-idi', 'fl-exam',
+  'il-adult-ed', 'la-di', 'mi-bdic', 'mo-dip',
+  'ny-ipirp', 'ny-5hr', 'tn-driver-ed',
+  'tx-defensive', 'tx-adult-ed', 'va-driver-improvement',
+];
+
+const COURSE_URLS = [
+  ...COURSE_SLUGS.map(s => `${BASE}/courses/${s}`),
+  ...COURSE_SLUGS.map(s => `${BASE}/courses/${s}/requirements`),
+];
+
+// ─── Find pages (state/courseType combos with 2+ courses) ────────────────────
+const FIND_URLS = [
+  `${BASE}/find/FL/BDI`,
+];
+
+// ─── Submission ───────────────────────────────────────────────────────────────
+async function submitBatch(urls) {
   const CHUNK_SIZE = 500;
-  const chunks = [];
+  let submitted = 0;
+  let errors = 0;
+
   for (let i = 0; i < urls.length; i += CHUNK_SIZE) {
-    chunks.push(urls.slice(i, i + CHUNK_SIZE));
-  }
+    const chunk = urls.slice(i, i + CHUNK_SIZE);
+    const chunkNum = Math.floor(i / CHUNK_SIZE) + 1;
+    const totalChunks = Math.ceil(urls.length / CHUNK_SIZE);
 
-  let totalSubmitted = 0;
-  let totalErrors = 0;
-
-  for (let i = 0; i < chunks.length; i++) {
-    const chunk = chunks[i];
-    const payload = {
-      host: HOST,
-      key: KEY,
-      keyLocation: KEY_LOCATION,
-      urlList: chunk,
-    };
-
-    console.log(`  Chunk ${i + 1}/${chunks.length}: submitting ${chunk.length} URLs...`);
+    console.log(`  Chunk ${chunkNum}/${totalChunks}: ${chunk.length} URLs...`);
 
     try {
       const res = await fetch(INDEXNOW_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json; charset=utf-8' },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({ host: HOST, key: KEY, keyLocation: KEY_LOCATION, urlList: chunk }),
       });
 
-      const statusText = res.status === 200 ? '✓ OK — URLs accepted'
-        : res.status === 202 ? '✓ Accepted — queued for crawl'
-        : res.status === 400 ? '✗ Bad request — check URL format or key'
-        : res.status === 403 ? '✗ Forbidden — key not verified at keyLocation URL'
-        : res.status === 422 ? '✗ Unprocessable — key does not match keyLocation content'
-        : res.status === 429 ? '⏳ Rate limited — too many requests'
-        : `? HTTP ${res.status}`;
+      const msg = {
+        200: '✓ OK — URLs accepted',
+        202: '✓ Accepted — queued for crawl',
+        400: '✗ Bad request — check URL format or key',
+        403: '✗ Forbidden — key not yet verified at keyLocation (is the deploy live?)',
+        422: '✗ Unprocessable — key file content does not match key param',
+        429: '⏳ Rate limited — wait and retry',
+      }[res.status] || `? HTTP ${res.status}`;
 
-      console.log(`    ${statusText}`);
-
-      if (res.status === 200 || res.status === 202) {
-        totalSubmitted += chunk.length;
-      } else {
-        totalErrors += chunk.length;
-        // Try to read error body
-        try {
-          const body = await res.text();
-          if (body) console.log(`    Response: ${body.slice(0, 200)}`);
-        } catch (_) {}
+      console.log(`    ${msg}`);
+      if (res.status === 200 || res.status === 202) submitted += chunk.length;
+      else {
+        errors += chunk.length;
+        try { const b = await res.text(); if (b) console.log(`    Body: ${b.slice(0,200)}`); } catch (_) {}
       }
     } catch (err) {
       console.error(`    Network error: ${err.message}`);
-      totalErrors += chunk.length;
+      errors += chunk.length;
     }
 
-    // Brief pause between chunks
-    if (i < chunks.length - 1) await new Promise(r => setTimeout(r, 1000));
+    if (i + CHUNK_SIZE < urls.length) await new Promise(r => setTimeout(r, 1000));
   }
 
-  return { submitted: totalSubmitted, errors: totalErrors };
+  return { submitted, errors };
 }
 
 async function main() {
   const mode = process.argv[2] || 'all';
 
-  console.log(`\nIndexNow Submission — Road Ready Safety`);
+  console.log(`\nIndexNow — Road Ready Safety  [PRODUCTION ONLY]`);
   console.log(`Key:      ${KEY}`);
   console.log(`Host:     ${HOST}`);
   console.log(`Key URL:  ${KEY_LOCATION}`);
-  console.log(`Endpoint: ${INDEXNOW_ENDPOINT}`);
   console.log('');
 
+  const groups = {
+    courts:    { urls: COURT_URLS,    label: `${COURT_URLS.length} court pages` },
+    marketing: { urls: MARKETING_URLS, label: `${MARKETING_URLS.length} marketing pages` },
+    blog:      { urls: BLOG_URLS,     label: `${BLOG_URLS.length} blog posts` },
+    courses:   { urls: [...COURSE_URLS, ...FIND_URLS], label: `${COURSE_URLS.length + FIND_URLS.length} course/find pages` },
+  };
+
   let urlsToSubmit = [];
-  if (mode === 'courts') {
-    urlsToSubmit = COURT_URLS;
-    console.log(`Mode: court pages only (${COURT_URLS.length} URLs)`);
-  } else if (mode === 'marketing') {
-    urlsToSubmit = MARKETING_URLS;
-    console.log(`Mode: marketing pages only (${MARKETING_URLS.length} URLs)`);
+  if (mode === 'all') {
+    urlsToSubmit = [...MARKETING_URLS, ...COURT_URLS, ...BLOG_URLS, ...COURSE_URLS, ...FIND_URLS];
+    const total = urlsToSubmit.length;
+    console.log(`Mode: all pages (${total} URLs total)`);
+    Object.values(groups).forEach(g => console.log(`  • ${g.label}`));
+  } else if (groups[mode]) {
+    urlsToSubmit = groups[mode].urls;
+    console.log(`Mode: ${groups[mode].label}`);
   } else {
-    urlsToSubmit = [...MARKETING_URLS, ...COURT_URLS];
-    console.log(`Mode: all pages (${urlsToSubmit.length} URLs — ${MARKETING_URLS.length} marketing + ${COURT_URLS.length} court pages)`);
+    console.error(`Unknown mode "${mode}". Use: all | courts | marketing | blog | courses`);
+    process.exit(1);
   }
 
   console.log('');
-
-  const { submitted, errors } = await submitBatch(urlsToSubmit, mode);
+  const { submitted, errors } = await submitBatch(urlsToSubmit);
 
   console.log('');
-  console.log(`Done: ${submitted} URLs submitted, ${errors} errors`);
+  console.log(`Done: ${submitted} submitted, ${errors} errors`);
   if (submitted > 0) {
-    console.log('');
-    console.log('Next steps:');
-    console.log('  1. Check Bing Webmaster Tools → IndexNow tab to confirm URLs were received');
-    console.log('  2. Allow 24-48h for Bing to crawl and index');
-    console.log(`  3. Verify key file is live: curl https://${HOST}/${KEY}.txt`);
+    console.log('\nNext: Bing Webmaster Tools → IndexNow tab → confirm URLs show "Received"');
+    console.log(`Verify key: curl https://${HOST}/${KEY}.txt`);
   }
 }
 

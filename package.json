@@ -12,7 +12,9 @@
     "astro": "astro",
     "indexnow": "node scripts/indexnow-submit.mjs",
     "indexnow:courts": "node scripts/indexnow-submit.mjs courts",
-    "indexnow:marketing": "node scripts/indexnow-submit.mjs marketing"
+    "indexnow:marketing": "node scripts/indexnow-submit.mjs marketing",
+    "indexnow:blog": "node scripts/indexnow-submit.mjs blog",
+    "indexnow:courses": "node scripts/indexnow-submit.mjs courses"
   },
   "dependencies": {
     "@astrojs/react": "^3.6.0",

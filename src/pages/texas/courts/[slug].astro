@@ -64,6 +64,82 @@ function joinOrNA(arr: string[] | undefined) {
   url={`/texas/courts/${court.slug}`}
 >
 
+  {isEnhanced && (() => {
+    const addr = court.address?.[0] ?? '';
+    const addrParts = addr.split(',').map((s: string) => s.trim());
+    const siteUrl = 'https://roadreadysafety.com';
+    const courtCity = addrParts[1] || court.county;
+    const schema = {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "GovernmentService",
+          "name": `${court.courtName} — Texas Driver Safety Course (DSC)`,
+          "description": `How to request and complete a Texas Driver Safety Course (defensive driving) to dismiss a traffic ticket at ${court.courtName} in ${court.county} County. Includes court fees, submission methods, required documents, and deadlines.`,
+          "serviceType": "Driver Safety Course Request",
+          "termsOfService": `${siteUrl}/texas/courts/${court.slug}`,
+          "provider": {
+            "@type": "GovernmentOrganization",
+            "name": court.courtName,
+            ...(court.phone?.[0] ? { "telephone": court.phone[0] } : {}),
+            ...(court.email?.[0] ? { "email": court.email[0] } : {}),
+            ...(court.website?.[0] ? { "url": court.website[0] } : {}),
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": addrParts[0] || undefined,
+              "addressLocality": courtCity,
+              "addressRegion": "TX",
+              "addressCountry": "US"
+            }
+          },
+          "areaServed": {
+            "@type": "City",
+            "name": `${courtCity}, Texas`
+          },
+          "url": `${siteUrl}/texas/courts/${court.slug}`
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Texas", "item": `${siteUrl}/texas` },
+            { "@type": "ListItem", "position": 2, "name": "Texas Courts", "item": `${siteUrl}/texas/courts` },
+            { "@type": "ListItem", "position": 3, "name": court.courtName, "item": `${siteUrl}/texas/courts/${court.slug}` }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": `How do I request a Driver Safety Course at ${court.courtName}?`,
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": `Contact ${court.courtName} before your citation due date to request DSC approval. Do not take the course before receiving court approval. Once approved, complete a TDLR-approved 6-hour course and submit your Certificate of Completion along with a certified Type 3A Driving Record from Texas DPS.`
+              }
+            },
+            {
+              "@type": "Question",
+              "name": `What documents do I need to submit to ${court.courtName} after completing defensive driving?`,
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": `After completing your course, you typically need to submit: a signed DSC Certificate of Completion from a TDLR-approved provider, a certified Type 3A Driving Record from Texas DPS, and a notarized DSC Affidavit. Requirements may vary — verify directly with ${court.courtName} at ${court.phone?.[0] || 'the court'}.`
+              }
+            },
+            {
+              "@type": "Question",
+              "name": `What is the Driver Safety Course fee at ${court.courtName}?`,
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": `Texas municipal courts typically charge $144 for standard moving violations and $169 for school zone violations for a Driver Safety Course dismissal. Contact ${court.courtName} at ${court.phone?.[0] || court.website?.[0] || 'the court directly'} to confirm the current fee for your specific citation.`
+              }
+            }
+          ]
+        }
+      ]
+    };
+    return <script type="application/ld+json" set:html={JSON.stringify(schema)} />;
+  })()}
+
   <section class="pt-8 pb-[112px] px-4 sm:px-6 lg:px-8 bg-surface-muted">
     <div class="max-w-7xl mx-auto flex flex-col gap-12">
 

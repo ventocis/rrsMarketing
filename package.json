@@ -9,7 +9,10 @@
     "build:prod": "astro build --mode production",
     "preview": "astro preview",
     "preview:qa": "astro preview --port 4174",
-    "astro": "astro"
+    "astro": "astro",
+    "indexnow": "node scripts/indexnow-submit.mjs",
+    "indexnow:courts": "node scripts/indexnow-submit.mjs courts",
+    "indexnow:marketing": "node scripts/indexnow-submit.mjs marketing"
   },
   "dependencies": {
     "@astrojs/react": "^3.6.0",

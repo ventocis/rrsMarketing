@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import LeadCaptureModal from './LeadCaptureModal';
 
-const LEAD_CAPTURE_SESSION_KEY = 'rrs_ec_lead_captured';
 
 interface Court {
   slug: string;
@@ -146,16 +145,11 @@ export default function EligibilityChecker({ courts }: Props) {
   const [selectedCourtName, setSelectedCourtName] = useState('');
   const [showModal, setShowModal] = useState(false);
 
-  // Gate: show email capture before revealing result; skip if already captured this session
+  // Gate: always show email capture before revealing result
   const goToResult = (r: ResultType) => {
-    if (typeof sessionStorage !== 'undefined' && sessionStorage.getItem(LEAD_CAPTURE_SESSION_KEY)) {
-      setResult(r);
-      setStep('result');
-    } else {
-      setPreviousStep(step); // remember where to go back if user dismisses
-      setPendingResult(r);
-      setShowModal(true);
-    }
+    setPreviousStep(step); // remember where to go back if user dismisses
+    setPendingResult(r);
+    setShowModal(true);
   };
 
   const isSpeedingPath = violation === 'speeding';

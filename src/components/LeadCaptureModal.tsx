@@ -15,7 +15,6 @@ interface Props {
   onDismiss: () => void; // called when user closes without submitting (X, No thanks, overlay)
 }
 
-const SESSION_KEY = 'rrs_ec_lead_captured';
 const KLAVIYO_LIST_ID = 'UHAu4n';
 
 // Map result → Klaviyo segment-friendly label
@@ -128,9 +127,8 @@ export default function LeadCaptureModal({ result, onClose, onDismiss }: Props) 
     }
   }, [status]);
 
-  // Called only after successful email submission — unlocks result for this session
+  // Called only after successful email submission — reveals result
   function handleClose() {
-    sessionStorage.setItem(SESSION_KEY, '1');
     setVisible(false);
     setTimeout(onClose, 250);
   }
@@ -147,7 +145,6 @@ export default function LeadCaptureModal({ result, onClose, onDismiss }: Props) 
     setStatus('loading');
     try {
       await subscribeToKlaviyo(email, result);
-      sessionStorage.setItem(SESSION_KEY, '1');
       setStatus('success');
     } catch {
       setStatus('error');

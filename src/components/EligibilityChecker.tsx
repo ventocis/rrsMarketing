@@ -139,6 +139,7 @@ export default function EligibilityChecker({ courts }: Props) {
   const [violation, setViolation] = useState<ViolationType>('');
   const [result, setResult] = useState<ResultType>('');
   const [pendingResult, setPendingResult] = useState<ResultType>('');
+  const [previousStep, setPreviousStep] = useState<Step>('step1');
   const [courtSectionOpen, setCourtSectionOpen] = useState(false);
   const [selectedCounty, setSelectedCounty] = useState('');
   const [selectedCourtType, setSelectedCourtType] = useState('');
@@ -151,6 +152,7 @@ export default function EligibilityChecker({ courts }: Props) {
       setResult(r);
       setStep('result');
     } else {
+      setPreviousStep(step); // remember where to go back if user dismisses
       setPendingResult(r);
       setShowModal(true);
     }
@@ -680,9 +682,16 @@ export default function EligibilityChecker({ courts }: Props) {
       <LeadCaptureModal
         result={pendingResult as any}
         onClose={() => {
+          // Email submitted — reveal result
           setResult(pendingResult);
           setStep('result');
           setShowModal(false);
+        }}
+        onDismiss={() => {
+          // User closed without submitting — go back to previous step
+          setShowModal(false);
+          setPendingResult('');
+          setStep(previousStep);
         }}
       />
     )}

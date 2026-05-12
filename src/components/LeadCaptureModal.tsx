@@ -11,7 +11,8 @@ export type EligibilityResult =
 
 interface Props {
   result: EligibilityResult;
-  onClose: () => void;
+  onClose: () => void;   // called after successful email submission
+  onDismiss: () => void; // called when user closes without submitting (X, No thanks, overlay)
 }
 
 const SESSION_KEY = 'rrs_ec_lead_captured';
@@ -102,7 +103,7 @@ async function subscribeToKlaviyo(email: string, result: EligibilityResult) {
   }
 }
 
-export default function LeadCaptureModal({ result, onClose }: Props) {
+export default function LeadCaptureModal({ result, onClose, onDismiss }: Props) {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [visible, setVisible] = useState(false);
@@ -127,10 +128,17 @@ export default function LeadCaptureModal({ result, onClose }: Props) {
     }
   }, [status]);
 
+  // Called only after successful email submission — unlocks result for this session
   function handleClose() {
     sessionStorage.setItem(SESSION_KEY, '1');
     setVisible(false);
     setTimeout(onClose, 250);
+  }
+
+  // Called when user dismisses without submitting — sends them back to previous step
+  function handleDismiss() {
+    setVisible(false);
+    setTimeout(onDismiss, 250);
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -154,7 +162,7 @@ export default function LeadCaptureModal({ result, onClose }: Props) {
         backgroundColor: `rgba(14, 19, 36, ${visible ? '0.55' : '0'})`,
         transition: 'background-color 0.25s ease',
       }}
-      onClick={(e) => { if (e.target === e.currentTarget) handleClose(); }}
+      onClick={(e) => { if (e.target === e.currentTarget) handleDismiss(); }}
       role="dialog"
       aria-modal="true"
       aria-label="Get your personalized next steps"
@@ -171,7 +179,7 @@ export default function LeadCaptureModal({ result, onClose }: Props) {
       >
         {/* Close */}
         <button
-          onClick={handleClose}
+          onClick={handleDismiss}
           className="absolute top-4 right-4 text-text-muted hover:text-text transition-colors"
           aria-label="Close"
         >
@@ -270,7 +278,7 @@ export default function LeadCaptureModal({ result, onClose }: Props) {
 
             {/* Dismiss */}
             <button
-              onClick={handleClose}
+              onClick={handleDismiss}
               className="mt-4 w-full text-center text-xs text-text-subtle hover:text-text-body transition-colors"
               style={{ fontFamily: "'DM Sans', sans-serif" }}
             >

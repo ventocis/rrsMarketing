@@ -51,9 +51,48 @@ for (const state of states) {
   findRoutes.push(`/find/${state}/multi`);
 }
 
-// Texas courts routes
+// Texas courts routes — only the 80 enhanced court pages with full DSC content
+// Non-enhanced courts (~1,662 pages) are excluded to focus crawl budget on high-quality pages
 const texasCourtsRoutes = ['/texas/courts'];
-const courtSlugRoutes = ((courtsData as any).courts as Array<{ slug: string }>).map(c => `/texas/courts/${c.slug}`);
+const enhancedCourtSlugs = new Set([
+  // Batch 1 — original 5
+  'harris-municipal-houston', 'travis-municipal-austin', 'dallas-municipal-dallas',
+  'bexar-municipal-san-antonio', 'dallas-municipal-garland',
+  // Batch 2 — 24 courts (v1 run)
+  'tarrant-municipal-fort-worth', 'el-paso-municipal-el-paso', 'tarrant-municipal-arlington',
+  'nueces-municipal-corpus-christi', 'collin-municipal-plano', 'lubbock-municipal-lubbock',
+  'webb-municipal-laredo', 'dallas-municipal-irving', 'collin-municipal-frisco',
+  'collin-municipal-mckinney', 'potter-municipal-amarillo', 'dallas-municipal-grand-prairie',
+  'bell-municipal-killeen', 'cameron-municipal-brownsville', 'harris-municipal-pasadena',
+  'dallas-municipal-mesquite', 'hidalgo-municipal-mcallen', 'denton-municipal-denton',
+  'mclennan-municipal-waco', 'dallas-municipal-carrollton', 'midland-municipal-midland',
+  'taylor-municipal-abilene', 'jefferson-municipal-beaumont', 'williamson-municipal-round-rock',
+  // Batch 3 — 25 courts (v2 run)
+  'brazoria-municipal-pearland', 'dallas-municipal-richardson', 'ector-municipal-odessa',
+  'denton-municipal-lewisville', 'collin-municipal-allen', 'galveston-municipal-league-city',
+  'fort-bend-municipal-sugar-land', 'smith-municipal-tyler', 'brazos-municipal-college-station',
+  'hays-municipal-san-marcos', 'wichita-municipal-wichita-falls', 'gregg-municipal-longview',
+  'denton-municipal-flower-mound', 'montgomery-municipal-conroe', 'williamson-municipal-cedar-park',
+  'comal-municipal-new-braunfels', 'hidalgo-municipal-edinburg', 'harris-municipal-baytown',
+  'bell-municipal-temple', 'hidalgo-municipal-pharr', 'hidalgo-municipal-mission',
+  'cameron-municipal-harlingen', 'williamson-municipal-georgetown', 'travis-municipal-pflugerville',
+  'victoria-municipal-victoria',
+  // Batch 4 — 25 courts (v3 run)
+  'tom-green-municipal-san-angelo', 'brazos-municipal-bryan', 'fort-bend-municipal-missouri-city',
+  'tarrant-municipal-mansfield', 'williamson-municipal-leander', 'hays-municipal-kyle',
+  'tarrant-municipal-north-richland-hills', 'dallas-municipal-rowlett', 'tarrant-municipal-euless',
+  'collin-municipal-wylie', 'rockwall-municipal-rockwall', 'tarrant-municipal-grapevine',
+  'tarrant-municipal-bedford', 'dallas-municipal-desoto', 'dallas-municipal-cedar-hill',
+  'johnson-municipal-burleson', 'galveston-municipal-galveston', 'galveston-municipal-texas-city',
+  'guadalupe-municipal-schertz', 'tarrant-municipal-haltom-city', 'tarrant-municipal-hurst',
+  'dallas-municipal-duncanville', 'ellis-municipal-waxahachie', 'parker-municipal-weatherford',
+  'jefferson-municipal-port-arthur',
+  // Harris County JP courts (covered by isEnhanced county/type check)
+  'harris-justice-of-the-peace-precinct-1',
+]);
+const courtSlugRoutes = ((courtsData as any).courts as Array<{ slug: string }>)
+  .filter(c => enhancedCourtSlugs.has(c.slug))
+  .map(c => `/texas/courts/${c.slug}`);
 
 const allRoutes = [...staticRoutes, ...courseRoutes, ...courseRequirementsRoutes, ...blogRoutes, ...findRoutes, ...texasCourtsRoutes, ...courtSlugRoutes];
 

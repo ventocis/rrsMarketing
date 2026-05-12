@@ -112,8 +112,12 @@ function joinOrNA(arr: string[] | undefined) {
 
 {isEnabled && (
 <TexasLayout
-  title={`${court.county} County ${court.courtType} Court — ${court.courtName} | Driver Safety Course`}
-  description={`Complete your Texas Driver Safety Course for ${court.courtName} in ${court.county} County. Step-by-step instructions to dismiss your traffic ticket.`}
+  title={isEnhanced
+    ? `${court.courtName} Driver Safety Course — Dismiss Your Ticket | Road Ready Safety`
+    : `${court.county} County ${court.courtType} Court — ${court.courtName} | Driver Safety Course`}
+  description={isEnhanced
+    ? `Step-by-step DSC instructions for ${court.courtName}: fees, submission portal, required documents, and deadlines to dismiss your traffic ticket in ${court.city}, Texas.`
+    : `Complete your Texas Driver Safety Course for ${court.courtName} in ${court.county} County. Step-by-step instructions to dismiss your traffic ticket.`}
   keywords={`${court.courtName}, ${court.county} County, Texas driver safety course, defensive driving, traffic school`}
   url={`/texas/courts/${court.slug}`}
 >

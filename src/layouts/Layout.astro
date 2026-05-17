@@ -24,8 +24,7 @@ const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
 const canonicalUrl = `${siteUrl}${url}`;
 const fullImageUrl = image.startsWith('http') ? image : `${siteUrl}${image}`;
 const enableAnalytics = import.meta.env.VITE_ENABLE_ANALYTICS === 'true';
-const ga4Id = import.meta.env.VITE_GA4_ID;
-const googleAdsId = import.meta.env.VITE_GOOGLE_ADS_ID;
+const gtmId = import.meta.env.VITE_GTM_ID;
 // Disable indexing in non-prod environments
 const isNoindex = noindex || import.meta.env.VITE_ENABLE_ANALYTICS !== 'true';
 const pageTitle = title.includes('Road Ready') ? title : `${title} | Road Ready Safety`;
@@ -101,21 +100,24 @@ const pageTitle = title.includes('Road Ready') ? title : `${title} | Road Ready 
       }
     </script>
 
-    <!-- Google Analytics — production only -->
-    {enableAnalytics && ga4Id && (
-      <>
-        <script async src={`https://www.googletagmanager.com/gtag/js?id=${ga4Id}`}></script>
-        <script define:vars={{ ga4Id, googleAdsId }}>
-          window.dataLayer = window.dataLayer || [];
-          function gtag() { dataLayer.push(arguments); }
-          gtag('js', new Date());
-          gtag('config', ga4Id);
-          if (googleAdsId) gtag('config', googleAdsId);
-        </script>
-      </>
+    <!-- Google Tag Manager (via GTM Gateway) -->
+    {enableAnalytics && gtmId && (
+      <script define:vars={{ gtmId }}>
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        '/gtm/?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer',gtmId);
+      </script>
     )}
   </head>
   <body class="w-full overflow-x-hidden m-0 p-0 bg-white text-text" style="font-family: 'DM Sans', sans-serif;">
+    <!-- Google Tag Manager (noscript) -->
+    {enableAnalytics && gtmId && (
+      <noscript>
+        <iframe src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`} height="0" width="0" style="display:none;visibility:hidden"></iframe>
+      </noscript>
+    )}
     <slot />
   </body>
 </html>

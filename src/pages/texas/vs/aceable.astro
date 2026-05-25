@@ -1,0 +1,193 @@
+---
+import TexasLayout from '../../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Road Ready Safety vs Aceable Defensive Driving Texas (2026)',
+  dateModified: '2026-05-25',
+  datePublished: '2026-05-25',
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+});
+
+const faqs = [
+  {
+    q: 'How much does Aceable defensive driving cost in Texas?',
+    a: "As of May 2026, Aceable's standard Texas defensive driving course costs $49.00 all-in — $34 course fee plus $15 for instant certificate delivery. The audio version costs $59.00 all-in. These reflect current checkout totals including active promotional pricing.",
+  },
+  {
+    q: 'Does Aceable include the certificate in the price?',
+    a: 'The $15 instant certificate delivery fee is added at checkout as a line item. It is included in the final total shown above, but it is not bundled into the base course price.',
+  },
+  {
+    q: "Is Aceable's base course video or text?",
+    a: 'The base course is text-only. The audio course is a separate, higher-priced option at $59 all-in.',
+  },
+  {
+    q: 'Is Road Ready Safety TDLR-approved like Aceable?',
+    a: 'Yes. Road Ready Safety is TDLR-approved under CP1234. Aceable is approved under CP262. Both satisfy Texas court requirements for ticket dismissal.',
+  },
+];
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Road Ready Safety vs Aceable Defensive Driving Texas (2026)"
+    description="Aceable is well-rated and has an app. It also costs $49–$59 all-in vs $28 at Road Ready Safety. Here's what that difference actually buys you."
+    url="/texas/vs/aceable"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/texas/cost" class="text-primary-deep font-medium hover:underline">Compare providers</a>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          Road Ready Safety vs Aceable — Texas Defensive Driving (2026)
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Road Ready Safety costs $28 all-in, including a free instant certificate download. Aceable's current Texas defensive driving course costs $49 all-in for the standard course or $59 for the audio version — both include a $15 certificate delivery fee. Both are TDLR-approved. The difference is $21 to $31 depending on which Aceable course you choose.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">If you just got a ticket, here's what you need to know</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Aceable is one of the most recognized names in Texas defensive driving. They've earned it — the course works on your phone, and a lot of people genuinely like it. If you're comparing them to Road Ready Safety, you're not comparing good vs bad. You're comparing $49 vs $28.</p>
+          <p>The question is what that $21 buys you — and whether it matters for what you're actually trying to do, which is dismiss a ticket and move on.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Side-by-side comparison</h2>
+
+        <div class="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 mb-4 rounded-xl border border-border">
+          <table class="w-full text-sm border-collapse">
+            <thead>
+              <tr class="bg-surface-muted text-left border-b border-border">
+                <th class="py-3 px-4 font-semibold text-text" style="font-family: 'DM Sans', sans-serif;"></th>
+                <th class="py-3 px-4 font-semibold text-primary" style="font-family: 'DM Sans', sans-serif;">Road Ready Safety</th>
+                <th class="py-3 px-4 font-semibold text-text" style="font-family: 'DM Sans', sans-serif;">Aceable (standard)</th>
+                <th class="py-3 px-4 font-semibold text-text" style="font-family: 'DM Sans', sans-serif;">Aceable (audio)</th>
+              </tr>
+            </thead>
+            <tbody style="font-family: 'DM Sans', sans-serif;">
+              {[
+                { label: 'Base price', rrs: '$25.00', them1: '$34.00', them2: '$44.00' },
+                { label: 'Certificate fee', rrs: '$0.00', them1: '$15.00', them2: '$15.00' },
+                { label: 'Total all-in', rrs: '$28.00', them1: '$49.00', them2: '$59.00' },
+                { label: 'Instant certificate', rrs: 'Free', them1: 'Included at $15', them2: 'Included at $15' },
+                { label: 'Mobile app', rrs: 'No', them1: 'Yes', them2: 'Yes' },
+                { label: 'TDLR approved', rrs: 'Yes (CP1234)', them1: 'Yes (CP262)', them2: 'Yes (CP262)' },
+                { label: 'Language', rrs: 'English', them1: 'English', them2: 'English' },
+              ].map((row, i) => (
+                <tr class={`border-b border-border ${i % 2 === 0 ? '' : 'bg-surface-muted/40'}`}>
+                  <td class="py-3 px-4 font-semibold text-text">{row.label}</td>
+                  <td class="py-3 px-4 text-primary font-medium">{row.rrs}</td>
+                  <td class="py-3 px-4 text-text-body">{row.them1}</td>
+                  <td class="py-3 px-4 text-text-body">{row.them2}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <p class="text-xs text-text-subtle mb-10" style="font-family: 'DM Sans', sans-serif;">Aceable pricing reflects current checkout totals including active promo codes as of May 2026.</p>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What customers say about Aceable</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <p>Most people who like Aceable point to the course structure and the app experience:</p>
+        </div>
+
+        <div class="flex flex-col gap-4 mb-6">
+          {[
+            { text: 'The videos provided were refreshing for those of us who are visual learners. The main menu with key chapters and sub-chapters gave me a gauge that was very helpful and motivating.', author: 'Diana', date: 'May 2026' },
+            { text: 'Price is fair. Progress is graded as you go. Readings are clear. Learned a couple of Texas laws I didn\'t know.', author: 'Dolores', date: 'May 2026' },
+          ].map(r => (
+            <div class="bg-surface-muted border border-border rounded-xl p-5">
+              <p class="text-text-body text-base leading-7 mb-2" style="font-family: 'DM Sans', sans-serif;">"{r.text}"</p>
+              <p class="text-sm text-text-subtle" style="font-family: 'DM Sans', sans-serif;">— {r.author}, {r.date}</p>
+            </div>
+          ))}
+        </div>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <p>The more common complaint is about what's included at the base price vs what costs extra:</p>
+        </div>
+
+        <div class="flex flex-col gap-4 mb-10">
+          {[
+            { text: "A couple of years ago I used Aceable for a $25 driving safety course and it was great. Now it's text only and extremely boring. They charge an extra $10–$15 for the video course. Use other online courses unless you want to be bored to death.", author: 'Baris', source: 'Trustpilot', date: 'May 2026' },
+          ].map(r => (
+            <div class="bg-error-bg border border-red-200 rounded-xl p-5">
+              <p class="text-text-body text-base leading-7 mb-2" style="font-family: 'DM Sans', sans-serif;">"{r.text}"</p>
+              <p class="text-sm text-text-subtle" style="font-family: 'DM Sans', sans-serif;">— {r.author}, {r.source}, {r.date}</p>
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Where Aceable wins</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">Mobile app.</strong> Aceable has a native app for iPhone and Android. If you want to complete the course in chunks on your phone — commuting, on a break, wherever — the app experience is smoother than a mobile browser.</p>
+          <p><strong class="text-text">Highly rated.</strong> Aceable has a large, established customer base and consistently positive reviews. If volume of reviews and name recognition matter to you, they have both.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Where Road Ready Safety wins</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">$21 less.</strong> The standard Aceable course with certificate delivery is $49. Road Ready Safety is $28 with the same instant certificate included. That's a real difference for a course you're taking because you got a ticket — not exactly a discretionary purchase.</p>
+          <p><strong class="text-text">No certificate fee.</strong> Aceable charges $15 for instant certificate delivery as a separate line item. At Road Ready Safety the certificate is included. Same result — you finish, you download, you submit to your court — but you're not paying extra for it.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Who should choose which</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">Choose Road Ready Safety</strong> if you want to pay $28, get it done, and have your certificate the same day. You're not paying for an app — you're dismissing a ticket.</p>
+          <p><strong class="text-text">Choose Aceable</strong> if the mobile app experience matters to you and you're comfortable paying $49–$59 for a polished, well-reviewed course. It's a legitimate product at a higher price point — just make sure you're paying for features you'll actually use across a 6-hour course.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;">{item.a}</p>
+            </div>
+          ))}
+        </div>
+
+        <div class="space-y-6 text-text-body text-base leading-7 pt-4 border-t border-border" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-lg font-semibold text-text" style="font-family: 'Outfit', sans-serif;">$28. Free instant certificate. No app required.</p>
+          <div>
+            <a
+              href={enrollUrl}
+              class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+              style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+            >
+              Start the Course →
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

@@ -8,49 +8,31 @@ const comparisons = [
     slug: 'defensivedriving',
     title: 'Road Ready Safety vs DefensiveDriving.com — Texas Defensive Driving (2026)',
     description: "Both start at $28. DefensiveDriving.com charges $25 more for your certificate after you finish the course. Here's the full breakdown before you start.",
-    rrsPrice: '$28',
-    themPrice: '$53',
-    themLabel: 'DefensiveDriving.com',
   },
   {
     slug: 'onlinetxdefensivedriving',
     title: 'Road Ready Safety vs OnlineTXDefensiveDrivingCourse.com — Texas Defensive Driving (2026)',
     description: "Both advertise $25. One charges $49.95 extra to email you your certificate. Here's the full breakdown before you pay.",
-    rrsPrice: '$28',
-    themPrice: '$77.95',
-    themLabel: 'OnlineTXDefensiveDriving',
   },
   {
     slug: 'aceable',
     title: 'Road Ready Safety vs Aceable — Texas Defensive Driving (2026)',
     description: "Aceable is well-rated and has an app. It also costs $49–$59 all-in vs $28 at Road Ready Safety. Here's what that difference actually buys you.",
-    rrsPrice: '$28',
-    themPrice: '$49–$59',
-    themLabel: 'Aceable',
   },
   {
     slug: 'improv',
     title: 'Road Ready Safety vs IMPROV Defensive Driving Texas (2026)',
     description: "IMPROV's course is entertaining and includes comedy club tickets. It's also $28.95 with recurring technical complaints. Here's what to know before you sign up.",
-    rrsPrice: '$28',
-    themPrice: '$28.95',
-    themLabel: 'IMPROV',
   },
   {
     slug: 'comedydriving',
     title: 'Road Ready Safety vs Comedy Driving Texas (2026)',
     description: "Comedy Driving promises a funny defensive driving course. Reviews say it's less funny than advertised, and the certificate costs extra. Here's the full breakdown.",
-    rrsPrice: '$28',
-    themPrice: '$28+',
-    themLabel: 'Comedy Driving',
   },
   {
     slug: 'safemotorist',
     title: 'Road Ready Safety vs SafeMotorist Texas Defensive Driving (2026)',
     description: "SafeMotorist's free certificate takes 5 days before you can download it. Instant delivery is $9.95 extra. All-in: $34.95 vs $28. Here's the full breakdown.",
-    rrsPrice: '$28',
-    themPrice: '$34.95',
-    themLabel: 'SafeMotorist',
   },
 ];
 ---
@@ -82,31 +64,11 @@ const comparisons = [
           {comparisons.map(c => (
             <a
               href={`/texas/vs/${c.slug}`}
-              class="group bg-white border border-border rounded-2xl overflow-hidden hover:border-primary hover:shadow-sm transition-all no-underline"
+              class="group bg-white border border-border rounded-2xl px-6 py-5 hover:border-primary hover:shadow-sm transition-all no-underline"
             >
-              <div class="flex flex-col sm:flex-row">
-                <!-- Price strip -->
-                <div class="flex sm:flex-col items-center justify-center sm:justify-start gap-3 sm:gap-1 px-6 py-4 sm:py-5 sm:w-44 sm:border-r border-b sm:border-b-0 border-border bg-surface-muted/50 flex-shrink-0">
-                  <div class="text-center">
-                    <p class="text-[10px] font-semibold text-text-subtle uppercase tracking-widest mb-0.5" style="font-family: 'DM Sans', sans-serif;">Road Ready</p>
-                    <p class="text-2xl font-bold text-primary leading-none" style="font-family: 'Outfit', sans-serif;">{c.rrsPrice}</p>
-                  </div>
-                  <span class="text-xs font-semibold text-text-subtle sm:my-1">vs</span>
-                  <div class="text-center">
-                    <p class="text-[10px] font-semibold text-text-subtle uppercase tracking-widest mb-0.5" style="font-family: 'DM Sans', sans-serif;">{c.themLabel}</p>
-                    <p class="text-2xl font-bold text-text leading-none" style="font-family: 'Outfit', sans-serif;">{c.themPrice}</p>
-                  </div>
-                </div>
-
-                <!-- Content -->
-                <div class="flex flex-col justify-center gap-2 px-6 py-5 flex-1">
-                  <p class="text-base font-semibold text-text leading-snug tracking-[-0.3px]" style="font-family: 'Outfit', sans-serif;">{c.title}</p>
-                  <p class="text-sm text-text-body leading-6" style="font-family: 'DM Sans', sans-serif;">{c.description}</p>
-                  <span class="text-sm font-semibold text-primary group-hover:underline mt-1" style="font-family: 'DM Sans', sans-serif;">
-                    See full breakdown →
-                  </span>
-                </div>
-              </div>
+              <p class="text-base font-semibold text-text leading-snug tracking-[-0.3px] mb-2" style="font-family: 'Outfit', sans-serif;">{c.title}</p>
+              <p class="text-sm text-text-body leading-6 mb-3" style="font-family: 'DM Sans', sans-serif;">{c.description}</p>
+              <span class="text-sm font-semibold text-primary group-hover:underline" style="font-family: 'DM Sans', sans-serif;">See full breakdown →</span>
             </a>
           ))}
         </div>

@@ -113,10 +113,21 @@ const currentYear = new Date().getFullYear();
   )}
 
   <script>
-    (function () {
+    var _promoInterval: ReturnType<typeof setInterval> | null = null;
+
+    function initPromoCountdown() {
+      // Clear any previous interval from a prior page load
+      if (_promoInterval !== null) {
+        clearInterval(_promoInterval);
+        _promoInterval = null;
+      }
+
+      var banner = document.getElementById('promo-banner');
+      if (!banner) return; // showPromo is false on this page — nothing to do
+
       // June 1 2026 00:00:00 CST = UTC-6 = June 1 2026 06:00:00 UTC
       var deadline = new Date('2026-06-01T06:00:00Z').getTime();
-      var banner = document.getElementById('promo-banner');
+
       var elD  = document.getElementById('cd-d');
       var elH  = document.getElementById('cd-h');
       var elM  = document.getElementById('cd-m');
@@ -125,12 +136,15 @@ const currentYear = new Date().getFullYear();
       var elHm = document.getElementById('cd-h-m');
       var elMm = document.getElementById('cd-m-m');
       var elSm = document.getElementById('cd-s-m');
-      function pad(n) { return n < 10 ? '0' + n : '' + n; }
+
+      function pad(n: number) { return n < 10 ? '0' + n : '' + n; }
+
       function tick() {
         var now = Date.now();
         var diff = deadline - now;
         if (diff <= 0) {
           if (banner) banner.innerHTML = '<p class="text-sm font-semibold leading-5 text-center" style="font-family:\'DM Sans\',sans-serif;">$28 Total, No Hidden Fees — No Surprises at Checkout</p>';
+          if (_promoInterval !== null) clearInterval(_promoInterval);
           return;
         }
         var days = Math.floor(diff / 86400000);
@@ -146,9 +160,12 @@ const currentYear = new Date().getFullYear();
         if (elMm) elMm.textContent = pad(mins);
         if (elSm) elSm.textContent = pad(secs);
       }
+
       tick();
-      setInterval(tick, 1000);
-    })();
+      _promoInterval = setInterval(tick, 1000);
+    }
+
+    document.addEventListener('astro:page-load', initPromoCountdown);
   </script>
 
   <!-- Header -->

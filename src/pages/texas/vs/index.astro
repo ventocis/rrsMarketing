@@ -8,7 +8,6 @@ const comparisons = [
     slug: 'defensivedriving',
     title: 'Road Ready Safety vs DefensiveDriving.com — Texas Defensive Driving (2026)',
     description: "Both start at $28. DefensiveDriving.com charges $25 more for your certificate after you finish the course. Here's the full breakdown before you start.",
-    badge: 'Cert fee after completion',
     rrsPrice: '$28',
     themPrice: '$53',
     themLabel: 'DefensiveDriving.com',
@@ -17,7 +16,6 @@ const comparisons = [
     slug: 'onlinetxdefensivedriving',
     title: 'Road Ready Safety vs OnlineTXDefensiveDrivingCourse.com — Texas Defensive Driving (2026)',
     description: "Both advertise $25. One charges $49.95 extra to email you your certificate. Here's the full breakdown before you pay.",
-    badge: '$49.95 cert fee',
     rrsPrice: '$28',
     themPrice: '$77.95',
     themLabel: 'OnlineTXDefensiveDriving',
@@ -26,7 +24,6 @@ const comparisons = [
     slug: 'aceable',
     title: 'Road Ready Safety vs Aceable — Texas Defensive Driving (2026)',
     description: "Aceable is well-rated and has an app. It also costs $49–$59 all-in vs $28 at Road Ready Safety. Here's what that difference actually buys you.",
-    badge: '$21–$31 more expensive',
     rrsPrice: '$28',
     themPrice: '$49–$59',
     themLabel: 'Aceable',
@@ -35,7 +32,6 @@ const comparisons = [
     slug: 'improv',
     title: 'Road Ready Safety vs IMPROV Defensive Driving Texas (2026)',
     description: "IMPROV's course is entertaining and includes comedy club tickets. It's also $28.95 with recurring technical complaints. Here's what to know before you sign up.",
-    badge: 'Technical issues reported',
     rrsPrice: '$28',
     themPrice: '$28.95',
     themLabel: 'IMPROV',
@@ -44,7 +40,6 @@ const comparisons = [
     slug: 'comedydriving',
     title: 'Road Ready Safety vs Comedy Driving Texas (2026)',
     description: "Comedy Driving promises a funny defensive driving course. Reviews say it's less funny than advertised, and the certificate costs extra. Here's the full breakdown.",
-    badge: 'Cert fee + less funny than advertised',
     rrsPrice: '$28',
     themPrice: '$28+',
     themLabel: 'Comedy Driving',
@@ -53,15 +48,9 @@ const comparisons = [
     slug: 'safemotorist',
     title: 'Road Ready Safety vs SafeMotorist Texas Defensive Driving (2026)',
     description: "SafeMotorist's free certificate takes 5 days before you can download it. Instant delivery is $9.95 extra. All-in: $34.95 vs $28. Here's the full breakdown.",
-    badge: '5-day cert hold',
     rrsPrice: '$28',
     themPrice: '$34.95',
     themLabel: 'SafeMotorist',
-  },
-  {
-    slug: 'safemotorist',
-    title: 'Road Ready Safety vs SafeMotorist Texas Defensive Driving (2026)',
-    description: "SafeMotorist's free certificate takes 5 days before you can download it. Instant delivery is $9.95 extra. All-in: $34.95 vs $28. Here's the full breakdown.",
   },
 ];
 ---
@@ -72,385 +61,104 @@ const comparisons = [
     description="Side-by-side breakdowns of Road Ready Safety vs other TDLR-approved Texas defensive driving providers. See verified all-in prices before you enroll."
     url="/texas/vs"
   >
-    <style>
-      .vs-page {
-        background: #fff;
-        padding-bottom: 80px;
-      }
-      .vs-inner {
-        max-width: 860px;
-        margin: 0 auto;
-        padding: 48px 24px 0;
-      }
+    <section class="py-[112px] px-4 sm:px-6 lg:px-8 bg-surface-muted">
+      <div class="max-w-4xl mx-auto flex flex-col gap-12">
 
-      /* Breadcrumb */
-      .vs-breadcrumb {
-        font-family: 'DM Sans', sans-serif;
-        font-size: 13px;
-        color: #64748b;
-        margin-bottom: 28px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-      .vs-breadcrumb a { color: #1B2B5E; font-weight: 500; text-decoration: none; }
-      .vs-breadcrumb a:hover { text-decoration: underline; }
-      .vs-breadcrumb-sep { color: #94a3b8; }
+        <!-- Header -->
+        <div class="flex flex-col gap-4 items-center">
+          <div class="bg-info inline-flex items-center px-4 py-2 rounded-full">
+            <span class="text-sm font-semibold text-info-text leading-5" style="font-family: 'DM Sans', sans-serif;">Provider Comparisons</span>
+          </div>
+          <h1 class="text-[36px] font-bold text-text text-center leading-[40px] tracking-[-0.9px]" style="font-family: 'Outfit', sans-serif;">
+            Road Ready Safety vs Other<br/>Texas Defensive Driving Providers
+          </h1>
+          <p class="text-base text-text-body text-center leading-6 max-w-2xl" style="font-family: 'DM Sans', sans-serif;">
+            Most Texas defensive driving providers advertise the same $25 starting price. What you actually pay at checkout — and when you find out — varies significantly. These pages show verified all-in totals, real customer complaints, and a straight answer on who each provider is right for.
+          </p>
+        </div>
 
-      /* H1 */
-      .vs-h1 {
-        font-family: 'Outfit', sans-serif;
-        font-size: clamp(28px, 5vw, 44px);
-        font-weight: 800;
-        color: #1B2B5E;
-        line-height: 1.15;
-        letter-spacing: -0.03em;
-        margin: 0 0 20px;
-      }
-
-      /* Intro */
-      .vs-intro {
-        font-family: 'DM Sans', sans-serif;
-        font-size: 16px;
-        line-height: 1.75;
-        color: #475569;
-        margin-bottom: 48px;
-        max-width: 680px;
-        border-left: 3px solid #1B2B5E;
-        padding-left: 18px;
-      }
-
-      /* Cards */
-      .vs-cards {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-        margin-bottom: 48px;
-      }
-      .vs-card {
-        display: block;
-        text-decoration: none;
-        background: #fff;
-        border: 1.5px solid #e2e8f0;
-        border-radius: 14px;
-        padding: 24px 28px;
-        transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
-        position: relative;
-        overflow: hidden;
-      }
-      .vs-card::before {
-        content: '';
-        position: absolute;
-        left: 0; top: 0; bottom: 0;
-        width: 4px;
-        background: #1B2B5E;
-        border-radius: 14px 0 0 14px;
-        opacity: 0;
-        transition: opacity 0.18s ease;
-      }
-      .vs-card:hover {
-        border-color: #1B2B5E;
-        box-shadow: 0 4px 20px rgba(27, 43, 94, 0.10);
-        transform: translateY(-2px);
-      }
-      .vs-card:hover::before { opacity: 1; }
-
-      /* Card top row */
-      .vs-card-top {
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-        gap: 12px;
-        margin-bottom: 16px;
-      }
-      .vs-badge {
-        font-family: 'DM Sans', sans-serif;
-        font-size: 11px;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.06em;
-        color: #E02020;
-        background: #fff0f0;
-        border: 1px solid #fecaca;
-        padding: 4px 10px;
-        border-radius: 20px;
-        white-space: nowrap;
-      }
-      .vs-arrow {
-        color: #94a3b8;
-        flex-shrink: 0;
-        margin-top: 2px;
-        transition: color 0.18s ease, transform 0.18s ease;
-      }
-      .vs-card:hover .vs-arrow { color: #1B2B5E; transform: translateX(4px); }
-
-      /* Price strip */
-      .vs-prices {
-        display: flex;
-        align-items: center;
-        margin-bottom: 14px;
-        background: #f8fafc;
-        border: 1px solid #e2e8f0;
-        border-radius: 10px;
-        overflow: hidden;
-        font-family: 'DM Sans', sans-serif;
-      }
-      .vs-price-rrs {
-        flex: 1;
-        padding: 10px 16px;
-        background: #1B2B5E;
-        text-align: center;
-      }
-      .vs-price-rrs-label {
-        font-size: 10px;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        color: rgba(255,255,255,0.6);
-        display: block;
-        margin-bottom: 2px;
-      }
-      .vs-price-rrs-amount {
-        font-family: 'Outfit', sans-serif;
-        font-size: 22px;
-        font-weight: 800;
-        color: #fff;
-        line-height: 1;
-      }
-      .vs-price-vs {
-        padding: 0 12px;
-        font-size: 11px;
-        font-weight: 700;
-        color: #94a3b8;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        flex-shrink: 0;
-      }
-      .vs-price-them {
-        flex: 1;
-        padding: 10px 16px;
-        text-align: center;
-      }
-      .vs-price-them-label {
-        font-size: 10px;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        color: #94a3b8;
-        display: block;
-        margin-bottom: 2px;
-      }
-      .vs-price-them-amount {
-        font-family: 'Outfit', sans-serif;
-        font-size: 22px;
-        font-weight: 800;
-        color: #1e293b;
-        line-height: 1;
-      }
-
-      /* Card body */
-      .vs-card-title {
-        font-family: 'Outfit', sans-serif;
-        font-size: 17px;
-        font-weight: 700;
-        color: #1B2B5E;
-        line-height: 1.35;
-        margin: 0 0 10px;
-      }
-      .vs-card-desc {
-        font-family: 'DM Sans', sans-serif;
-        font-size: 14px;
-        line-height: 1.65;
-        color: #64748b;
-        margin: 0 0 14px;
-      }
-      .vs-read-more {
-        font-family: 'DM Sans', sans-serif;
-        font-size: 13px;
-        font-weight: 600;
-        color: #1B2B5E;
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-      }
-
-      /* Crosslink block */
-      .vs-crosslink {
-        background: #f1f5f9;
-        border: 1.5px solid #cbd5e1;
-        border-radius: 14px;
-        padding: 24px 28px;
-        margin-bottom: 56px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 24px;
-        flex-wrap: wrap;
-      }
-      .vs-crosslink-eyebrow {
-        font-family: 'DM Sans', sans-serif;
-        font-size: 11px;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        color: #94a3b8;
-        margin-bottom: 6px;
-      }
-      .vs-crosslink-body {
-        font-family: 'DM Sans', sans-serif;
-        font-size: 14px;
-        line-height: 1.6;
-        color: #475569;
-        max-width: 520px;
-      }
-      .vs-crosslink-body a { color: #1B2B5E; font-weight: 600; text-decoration: none; }
-      .vs-crosslink-body a:hover { text-decoration: underline; }
-      .vs-crosslink-btn {
-        font-family: 'DM Sans', sans-serif;
-        font-size: 14px;
-        font-weight: 700;
-        color: #1B2B5E;
-        text-decoration: none;
-        white-space: nowrap;
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        padding: 10px 20px;
-        border: 2px solid #1B2B5E;
-        border-radius: 10px;
-        transition: background 0.15s ease, color 0.15s ease;
-        flex-shrink: 0;
-      }
-      .vs-crosslink-btn:hover { background: #1B2B5E; color: #fff; }
-
-      /* CTA block */
-      .vs-cta {
-        background: #1B2B5E;
-        border-radius: 20px;
-        padding: 48px 40px;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 20px;
-      }
-      .vs-cta-price {
-        font-family: 'Outfit', sans-serif;
-        font-size: clamp(36px, 6vw, 56px);
-        font-weight: 900;
-        color: #fff;
-        line-height: 1;
-        letter-spacing: -0.03em;
-      }
-      .vs-cta-price-accent { color: #22C55E; }
-      .vs-cta-sub {
-        font-family: 'DM Sans', sans-serif;
-        font-size: 16px;
-        color: rgba(255,255,255,0.7);
-        margin-top: -8px;
-      }
-      .vs-cta-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        background: #22C55E;
-        color: #fff;
-        font-family: 'DM Sans', sans-serif;
-        font-size: 17px;
-        font-weight: 700;
-        text-decoration: none;
-        padding: 16px 36px;
-        border-radius: 14px;
-        transition: background 0.15s ease, transform 0.15s ease;
-        box-shadow: 0 4px 16px rgba(34, 197, 94, 0.35);
-      }
-      .vs-cta-btn:hover { background: #16a34a; transform: translateY(-2px); }
-      .vs-cta-fine {
-        font-family: 'DM Sans', sans-serif;
-        font-size: 12px;
-        color: rgba(255,255,255,0.4);
-      }
-
-      @media (max-width: 560px) {
-        .vs-inner { padding: 32px 16px 0; }
-        .vs-card { padding: 20px 18px; }
-        .vs-price-vs { padding: 0 8px; }
-        .vs-badge { white-space: normal; }
-        .vs-cta { padding: 36px 24px; }
-        .vs-crosslink { flex-direction: column; gap: 16px; }
-        .vs-crosslink-btn { width: 100%; justify-content: center; }
-      }
-    </style>
-
-    <div class="vs-page">
-      <div class="vs-inner">
-
-        <p class="vs-breadcrumb">
-          <a href="/texas">Texas defensive driving</a>
-          <span class="vs-breadcrumb-sep">›</span>
-          <a href="/texas/cost">Compare providers</a>
-        </p>
-
-        <h1 class="vs-h1">Road Ready Safety vs Other Texas<br/>Defensive Driving Providers</h1>
-
-        <p class="vs-intro">Most Texas defensive driving providers advertise the same $25 starting price. What you actually pay at checkout — and when you find out — varies significantly. These pages show verified all-in totals, real customer complaints, and a straight answer on who each provider is right for.</p>
-
-        <div class="vs-cards">
+        <!-- Comparison cards -->
+        <div class="flex flex-col gap-4">
           {comparisons.map(c => (
-            <a href={`/texas/vs/${c.slug}`} class="vs-card">
-              <div class="vs-card-top">
-                <span class="vs-badge">{c.badge}</span>
-                <svg class="vs-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                  <path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-
-              <div class="vs-prices">
-                <div class="vs-price-rrs">
-                  <span class="vs-price-rrs-label">Road Ready Safety</span>
-                  <span class="vs-price-rrs-amount">{c.rrsPrice}</span>
+            <a
+              href={`/texas/vs/${c.slug}`}
+              class="group bg-white border border-border rounded-2xl overflow-hidden hover:border-primary hover:shadow-sm transition-all no-underline"
+            >
+              <div class="flex flex-col sm:flex-row">
+                <!-- Price strip -->
+                <div class="flex sm:flex-col items-center justify-center sm:justify-start gap-3 sm:gap-1 px-6 py-4 sm:py-5 sm:w-44 sm:border-r border-b sm:border-b-0 border-border bg-surface-muted/50 flex-shrink-0">
+                  <div class="text-center">
+                    <p class="text-[10px] font-semibold text-text-subtle uppercase tracking-widest mb-0.5" style="font-family: 'DM Sans', sans-serif;">Road Ready</p>
+                    <p class="text-2xl font-bold text-primary leading-none" style="font-family: 'Outfit', sans-serif;">{c.rrsPrice}</p>
+                  </div>
+                  <span class="text-xs font-semibold text-text-subtle sm:my-1">vs</span>
+                  <div class="text-center">
+                    <p class="text-[10px] font-semibold text-text-subtle uppercase tracking-widest mb-0.5" style="font-family: 'DM Sans', sans-serif;">{c.themLabel}</p>
+                    <p class="text-2xl font-bold text-text leading-none" style="font-family: 'Outfit', sans-serif;">{c.themPrice}</p>
+                  </div>
                 </div>
-                <span class="vs-price-vs">vs</span>
-                <div class="vs-price-them">
-                  <span class="vs-price-them-label">{c.themLabel}</span>
-                  <span class="vs-price-them-amount">{c.themPrice}</span>
+
+                <!-- Content -->
+                <div class="flex flex-col justify-center gap-2 px-6 py-5 flex-1">
+                  <p class="text-base font-semibold text-text leading-snug tracking-[-0.3px]" style="font-family: 'Outfit', sans-serif;">{c.title}</p>
+                  <p class="text-sm text-text-body leading-6" style="font-family: 'DM Sans', sans-serif;">{c.description}</p>
+                  <span class="text-sm font-semibold text-primary group-hover:underline mt-1" style="font-family: 'DM Sans', sans-serif;">
+                    See full breakdown →
+                  </span>
                 </div>
               </div>
-
-              <p class="vs-card-title">{c.title}</p>
-              <p class="vs-card-desc">{c.description}</p>
-              <span class="vs-read-more">
-                See full breakdown
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                  <path d="M2 7h10M7.5 3l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
             </a>
           ))}
         </div>
 
-        <div class="vs-crosslink">
-          <div>
-            <p class="vs-crosslink-eyebrow">Full provider table</p>
-            <p class="vs-crosslink-body">The <a href="/texas/cost">/texas/cost</a> page shows manually verified all-in checkout totals for 10 TDLR-approved providers side by side — including processing fees and certificate delivery.</p>
+        <!-- Crosslink block -->
+        <div class="bg-white border border-border rounded-[20px] p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
+          <div class="flex flex-col gap-1">
+            <p class="text-base font-semibold text-text leading-6 tracking-[-0.4px]" style="font-family: 'Outfit', sans-serif;">See every TDLR-approved provider in one table</p>
+            <p class="text-sm text-text-body leading-6" style="font-family: 'DM Sans', sans-serif;">Verified all-in checkout totals for 10 providers — including processing fees and certificate delivery costs.</p>
           </div>
-          <a href="/texas/cost" class="vs-crosslink-btn">
-            See all provider prices
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path d="M2 7h10M7.5 3l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+          <a
+            href="/texas/cost"
+            class="h-12 px-6 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-2xl text-sm font-semibold inline-flex items-center justify-center gap-2 no-underline transition-colors flex-shrink-0"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            Compare all prices
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 8h10M8.5 4L13 8l-4.5 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </a>
         </div>
 
-        <div class="vs-cta">
-          <div class="vs-cta-price"><span class="vs-cta-price-accent">$28</span> all-in</div>
-          <p class="vs-cta-sub">Free instant certificate. No surprises at checkout.</p>
-          <a href={enrollUrl} class="vs-cta-btn">Start the Course →</a>
-          <p class="vs-cta-fine">TDLR-approved · CP1234 · Accepted by all Texas courts</p>
+        <!-- CTA block — matches /texas landing page pattern -->
+        <div class="bg-primary-deep rounded-[24px] px-8 lg:px-16 py-16 relative overflow-hidden">
+          <div class="absolute inset-0 opacity-10 pointer-events-none">
+            <div class="absolute bg-[#46a2f2] blur-[32px] rounded-full w-[384px] h-[384px] -right-48 -top-48"></div>
+            <div class="absolute bg-[#46a2f2] blur-[32px] rounded-full w-[256px] h-[256px] -bottom-32 -left-32"></div>
+          </div>
+          <div class="relative flex flex-col gap-6 items-center max-w-lg mx-auto text-center">
+            <div class="flex flex-col gap-3 items-center">
+              <h2 class="text-4xl font-bold text-white leading-[1.1] tracking-[-1.2px]" style="font-family: 'Outfit', sans-serif;">
+                Ready to Dismiss Your Texas Ticket?
+              </h2>
+              <p class="text-lg text-[#b9e2fe] leading-7" style="font-family: 'DM Sans', sans-serif;">
+                Join thousands of Texas drivers who've cleared their record with Road Ready Safety — TDLR-approved, instant certificate.
+              </p>
+            </div>
+            <a
+              href={enrollUrl}
+              class="w-full sm:w-auto sm:min-w-[280px] h-[60px] px-10 bg-white hover:bg-surface-muted text-primary-deep rounded-full text-[18px] font-bold flex items-center justify-center gap-2 leading-[28px] no-underline shadow-[0px_8px_24px_rgba(0,0,0,0.18)] transition-colors"
+              style="font-family: 'DM Sans', sans-serif;"
+            >
+              Start Course — $28
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                <path d="M3.5 9h11M10 4.5L14.5 9 10 13.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
         </div>
 
       </div>
-    </div>
+    </section>
   </TexasLayout>
 ) : (
   <meta http-equiv="refresh" content="0; url=/" />

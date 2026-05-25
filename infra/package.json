@@ -2,12 +2,13 @@
   "devDependencies": {
     "@types/jest": "^29.5.14",
     "@types/node": "^24.10.1",
-    "aws-cdk": "^2.1101.0",
+    "aws-cdk": "^2.1121.0",
     "ts-node": "^10.9.2",
     "typescript": "~5.9.3"
   },
   "dependencies": {
-    "@roadreadysafety/cdk-infrastructure": "^0.17.0",
+    "@roadreadysafety/cdk-infrastructure": "^0.36.0",
+    "aws-cdk-lib": "^2.253.1",
     "constructs": "^10.0.0"
   }
 }

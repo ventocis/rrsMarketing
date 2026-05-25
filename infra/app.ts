@@ -21,6 +21,8 @@ const appConfig: Record<AppEnv, Omit<stacks.AppStackProps & stacks.CertificateSt
     env: CdkEnvironments[AppEnv.QA],
     domainName: Constants.environments[AppEnv.QA].rootDomain,
     existingHostedZoneId: "Z009071939B0Q3E2MM52E",
+    //if you update gtmContainerId, also update it in env.*
+    gtmContainerId: "GTM-TMFCTDRW",
     ...defaultConfig,
   },
   [AppEnv.PROD]: {
@@ -28,6 +30,8 @@ const appConfig: Record<AppEnv, Omit<stacks.AppStackProps & stacks.CertificateSt
     env: CdkEnvironments[AppEnv.PROD],
     domainName: Constants.environments[AppEnv.PROD].rootDomain,
     existingHostedZoneId: "Z0399913IJK7XVMDZHQS",
+    //if you update gtmContainerId, also update it in env.*
+    gtmContainerId: "GTM-WR3LFPW5",
     ...defaultConfig,
   },
 };

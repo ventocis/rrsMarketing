@@ -16,7 +16,7 @@ const {
   keywords = 'Texas driver safety course, defensive driving, traffic school, online course, Texas approved',
   url = '/texas',
   banner = '$28 Total, No Hidden Fees — No Surprises at Checkout',
-  showPromo = false,
+  showPromo = true,
 } = Astro.props;
 
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '#';
@@ -98,7 +98,7 @@ const currentYear = new Date().getFullYear();
             var now = Date.now();
             var diff = deadline - now;
             if (diff <= 0) {
-              if (banner) banner.innerHTML = '<p class="text-sm font-semibold" style="font-family:\'DM Sans\',sans-serif;">Offer Expired — Course is $28 all-in, free instant certificate.</p>';
+              if (banner) banner.innerHTML = '<p class="text-sm font-semibold leading-5" style="font-family:\'DM Sans\',sans-serif;">$28 Total, No Hidden Fees — No Surprises at Checkout</p>';
               return;
             }
             var days = Math.floor(diff / 86400000);

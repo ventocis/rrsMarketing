@@ -6,30 +6,28 @@ const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defe
 const comparisons = [
   {
     slug: 'defensivedriving',
-    competitor: 'DefensiveDriving.com',
-    tagline: 'Both start at $28. One charges $25 more after you finish the course.',
-    rrsPrice: '$28',
-    themPrice: '$53',
-    themLabel: 'text course, instant cert',
-    verdict: 'Certificate fee revealed only after completion',
+    title: 'Road Ready Safety vs DefensiveDriving.com — Texas Defensive Driving (2026)',
+    description: "Both start at $28. DefensiveDriving.com charges $25 more for your certificate after you finish the course. Here's the full breakdown before you start.",
   },
   {
     slug: 'onlinetxdefensivedriving',
-    competitor: 'OnlineTXDefensiveDrivingCourse.com',
-    tagline: 'Both advertise $25. One charges $49.95 to email you your certificate.',
-    rrsPrice: '$28',
-    themPrice: '$77.95',
-    themLabel: 'with instant cert',
-    verdict: 'Certificate fee revealed before you start',
+    title: 'Road Ready Safety vs OnlineTXDefensiveDrivingCourse.com — Texas Defensive Driving (2026)',
+    description: "Both advertise $25. One charges $49.95 extra to email you your certificate. Here's the full breakdown before you pay.",
   },
   {
     slug: 'aceable',
-    competitor: 'Aceable',
-    tagline: 'Aceable has an app and great reviews. It also costs $49–$59 vs $28.',
-    rrsPrice: '$28',
-    themPrice: '$49–$59',
-    themLabel: 'standard or audio',
-    verdict: '$15 certificate fee itemized at checkout',
+    title: 'Road Ready Safety vs Aceable — Texas Defensive Driving (2026)',
+    description: "Aceable is well-rated and has an app. It also costs $49–$59 all-in vs $28 at Road Ready Safety. Here's what that difference actually buys you.",
+  },
+  {
+    slug: 'improv',
+    title: 'Road Ready Safety vs IMPROV Defensive Driving Texas (2026)',
+    description: "IMPROV's course is entertaining and includes comedy club tickets. It's also $28.95 with recurring technical complaints. Here's what to know before you sign up.",
+  },
+  {
+    slug: 'comedydriving',
+    title: 'Road Ready Safety vs Comedy Driving Texas (2026)',
+    description: "Comedy Driving promises a funny defensive driving course. Reviews say it's less funny than advertised, and the certificate costs extra. Here's the full breakdown.",
   },
 ];
 ---
@@ -57,50 +55,17 @@ const comparisons = [
           <p>Most Texas defensive driving providers advertise the same $25 starting price. What you actually pay at checkout — and when you find out — varies significantly. These pages show verified all-in totals, real customer complaints, and a straight answer on who each provider is right for.</p>
         </div>
 
-        <div class="flex flex-col gap-5 mb-12">
+        <div class="flex flex-col gap-4 mb-12">
           {comparisons.map(c => (
-            <a
-              href={`/texas/vs/${c.slug}`}
-              class="group block border border-border rounded-xl p-6 hover:border-primary hover:shadow-sm transition-all no-underline"
-              style="font-family: 'DM Sans', sans-serif;"
-            >
-              <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
-                <div class="flex-1 min-w-0">
-                  <p class="text-xs font-semibold text-text-subtle uppercase tracking-wide mb-1">Road Ready Safety vs</p>
-                  <h2 class="text-xl font-bold text-text group-hover:text-primary transition-colors mb-2" style="font-family: 'Outfit', sans-serif;">
-                    {c.competitor}
-                  </h2>
-                  <p class="text-text-body text-sm leading-6 mb-3">{c.tagline}</p>
-                  <span class="inline-flex items-center gap-1.5 text-xs text-text-subtle bg-surface-muted px-3 py-1.5 rounded-full">
-                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                      <circle cx="6" cy="6" r="5.5" stroke="currentColor" stroke-opacity="0.5"/>
-                      <path d="M6 4v3M6 8.5v.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                    </svg>
-                    {c.verdict}
-                  </span>
-                </div>
-
-                <div class="flex sm:flex-col gap-4 sm:gap-2 sm:text-right flex-shrink-0">
-                  <div>
-                    <p class="text-[11px] font-semibold text-text-subtle uppercase tracking-wide mb-0.5">Road Ready Safety</p>
-                    <p class="text-2xl font-bold text-primary" style="font-family: 'Outfit', sans-serif;">{c.rrsPrice}</p>
-                    <p class="text-xs text-text-subtle">all-in</p>
-                  </div>
-                  <div>
-                    <p class="text-[11px] font-semibold text-text-subtle uppercase tracking-wide mb-0.5">{c.competitor}</p>
-                    <p class="text-2xl font-bold text-text" style="font-family: 'Outfit', sans-serif;">{c.themPrice}</p>
-                    <p class="text-xs text-text-subtle">{c.themLabel}</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="mt-4 flex items-center gap-1 text-sm font-semibold text-primary">
-                See full breakdown
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                  <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-            </a>
+            <div class="border border-border rounded-xl p-6" style="font-family: 'DM Sans', sans-serif;">
+              <h2 class="text-lg font-bold text-text mb-2" style="font-family: 'Outfit', sans-serif;">
+                <a href={`/texas/vs/${c.slug}`} class="hover:text-primary transition-colors no-underline">{c.title}</a>
+              </h2>
+              <p class="text-text-body text-base leading-7 mb-4">{c.description}</p>
+              <a href={`/texas/vs/${c.slug}`} class="inline-flex items-center gap-1 text-sm font-semibold text-primary hover:underline no-underline">
+                See full breakdown →
+              </a>
+            </div>
           ))}
         </div>
 

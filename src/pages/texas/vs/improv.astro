@@ -1,0 +1,201 @@
+---
+import TexasLayout from '../../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Road Ready Safety vs IMPROV Defensive Driving Texas (2026)',
+  dateModified: '2026-05-25',
+  datePublished: '2026-05-25',
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+});
+
+const faqs = [
+  {
+    q: "Is IMPROV's certificate free?",
+    a: 'Yes. The electronic certificate is included in the $28.95 course price.',
+  },
+  {
+    q: 'What happens if you get a security question wrong on IMPROV?',
+    a: 'Based on consistent customer reports, a failed security question can lock your account and require you to restart the entire course from the beginning, regardless of how much progress you had made.',
+  },
+  {
+    q: 'Does IMPROV require face scanning?',
+    a: 'Yes. IMPROV uses biometric face scanning as a verification step during the course. Multiple customers report being required to scan their face dozens of times due to technical failures.',
+  },
+  {
+    q: "What is Road Ready Safety's refund policy?",
+    a: "100% refund as long as you haven't completed the course and downloaded your certificate. Hit the request refund button in the portal — no call required.",
+  },
+  {
+    q: 'Are both courses TDLR-approved?',
+    a: 'Yes. Both Road Ready Safety and IMPROV are TDLR-approved and accepted by all Texas courts for ticket dismissal.',
+  },
+];
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Road Ready Safety vs IMPROV Defensive Driving Texas (2026)"
+    description="IMPROV's course is entertaining and includes comedy club tickets. It's also $28.95 with recurring technical complaints. Here's what to know before you sign up."
+    url="/texas/vs/improv"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/texas/cost" class="text-primary-deep font-medium hover:underline">Compare providers</a>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          Road Ready Safety vs IMPROV Defensive Driving Texas (2026)
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Road Ready Safety costs $28.00 all-in with a free instant certificate. IMPROV's Texas defensive driving course costs $28.95 all-in with the electronic certificate included. Both are TDLR-approved. The price difference is negligible. The real difference is what the course experience is like.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">If you just got a ticket, here's what you need to know</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>IMPROV is the only Texas defensive driving provider built around comedy. The course is created in partnership with IMPROV Comedy Club and is genuinely designed to be more entertaining than a standard text course. For a lot of people that sounds appealing — six hours is six hours, and at least one of those hours could make you laugh.</p>
+          <p>The catch is what a significant number of recent customers report actually happens: technical issues that turn a 6-hour course into a much longer ordeal. Face scanning that loops, sections that reset, courses that log you out mid-question, and security question failures that restart the entire course from zero.</p>
+          <p>Here's the full picture before you decide.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Side-by-side comparison</h2>
+
+        <div class="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 mb-10 rounded-xl border border-border">
+          <table class="w-full text-sm border-collapse">
+            <thead>
+              <tr class="bg-surface-muted text-left border-b border-border">
+                <th class="py-3 px-4 font-semibold text-text" style="font-family: 'DM Sans', sans-serif;"></th>
+                <th class="py-3 px-4 font-semibold text-primary" style="font-family: 'DM Sans', sans-serif;">Road Ready Safety</th>
+                <th class="py-3 px-4 font-semibold text-text" style="font-family: 'DM Sans', sans-serif;">IMPROV</th>
+              </tr>
+            </thead>
+            <tbody style="font-family: 'DM Sans', sans-serif;">
+              {[
+                { label: 'Total all-in', rrs: '$28.00', them: '$28.95' },
+                { label: 'Certificate', rrs: 'Free instant download', them: 'Electronic, within 30 min, included' },
+                { label: 'Money-back guarantee', rrs: '100% refund, portal button', them: '100% if certificate not yet issued' },
+                { label: 'Entertainment angle', rrs: 'Straightforward', them: 'Comedy Club partnership' },
+                { label: 'Face scan / biometrics', rrs: 'No', them: 'Yes' },
+                { label: 'TDLR approved', rrs: 'Yes (CP1234)', them: 'Yes' },
+                { label: 'Language', rrs: 'English', them: 'English' },
+              ].map((row, i) => (
+                <tr class={`border-b border-border ${i % 2 === 0 ? '' : 'bg-surface-muted/40'}`}>
+                  <td class="py-3 px-4 font-semibold text-text">{row.label}</td>
+                  <td class="py-3 px-4 text-primary font-medium">{row.rrs}</td>
+                  <td class="py-3 px-4 text-text-body">{row.them}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What customers say about IMPROV</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <p>The reviews split clearly. People who finish the course without technical issues often enjoy it:</p>
+        </div>
+
+        <div class="flex flex-col gap-4 mb-6">
+          {[
+            { text: 'The course was entertaining, quick, and easy to follow.', author: 'Francisco', date: 'April 2026' },
+            { text: 'The course was actually pretty good.', author: 'Deborah Sutton', date: 'April 2026' },
+          ].map(r => (
+            <div class="bg-surface-muted border border-border rounded-xl p-5">
+              <p class="text-text-body text-base leading-7 mb-2" style="font-family: 'DM Sans', sans-serif;">"{r.text}"</p>
+              <p class="text-sm text-text-subtle" style="font-family: 'DM Sans', sans-serif;">— {r.author}, {r.date}</p>
+            </div>
+          ))}
+        </div>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <p>The complaints aren't about the content — they're about the technical experience and what happens when something goes wrong:</p>
+        </div>
+
+        <div class="flex flex-col gap-4 mb-10">
+          {[
+            { text: "The course logs you out for inactivity while you're literally in the middle of answering questions. I have spent five hours on this course and am only through 25% of it.", author: 'Whiplash', date: 'April 2026' },
+            { text: "I was forced to scan my face at least 30 times during orientation alone. I answered a security question incorrectly out of fatigue and my account was locked — I had to restart the entire course from the beginning after four hours of work.", author: "Matthew O'Connor", date: 'April 2026' },
+            { text: "I got a security question wrong and they made me take the course from the beginning when I already put hours into it.", author: 'Alynn Azouly', date: 'April 2026' },
+            { text: "I called the court because IMPROV had not sent the certificate and we were three days from the due date.", author: 'Francisco', date: 'April 2026' },
+            { text: "My certificate had the wrong date of birth on it. My insurance company didn't acknowledge it was really me.", author: 'Deborah Sutton', date: 'April 2026' },
+          ].map(r => (
+            <div class="bg-error-bg border border-red-200 rounded-xl p-5">
+              <p class="text-text-body text-base leading-7 mb-2" style="font-family: 'DM Sans', sans-serif;">"{r.text}"</p>
+              <p class="text-sm text-text-subtle" style="font-family: 'DM Sans', sans-serif;">— {r.author}, {r.date}</p>
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Where IMPROV wins</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">The entertainment angle is real.</strong> If you're going to spend six hours on a course you'd rather not be taking, a comedy-based format is a legitimate differentiator. Students who complete it without issues generally find it more engaging than a standard text course.</p>
+          <p><strong class="text-text">Four comedy club tickets.</strong> Included with the course. If you're in a city with an IMPROV location, that's a tangible add-on.</p>
+          <p><strong class="text-text">100% money-back guarantee.</strong> Available as long as your certificate hasn't been issued yet.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Where Road Ready Safety wins</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">No biometric face scanning.</strong> Road Ready Safety does not require face scanning, security questions that can lock your account, or any verification step that could reset your progress. You take the course and you finish it.</p>
+          <p><strong class="text-text">No restart risk.</strong> Getting a security question wrong at IMPROV can mean restarting the entire course from zero — after hours of work. That risk doesn't exist at Road Ready Safety.</p>
+          <p><strong class="text-text">$28.00 flat.</strong> The combination of lower price, no technical friction, and free instant certificate makes the math simple.</p>
+          <p><strong class="text-text">100% refund, one button.</strong> As long as you haven't completed the course and downloaded your certificate, you can request a full refund directly in the portal. No call, no email, no hold music.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Who should choose which</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">Choose Road Ready Safety</strong> if you want to take the course once, finish it in six hours without technical interruptions, get your certificate instantly, and move on.</p>
+          <p><strong class="text-text">Choose IMPROV</strong> if the comedy format genuinely appeals to you and you're prepared for the possibility that technical issues may extend your course time. If you get through it without problems — which many people do — it's the more entertaining option.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;">{item.a}</p>
+            </div>
+          ))}
+        </div>
+
+        <div class="space-y-6 text-text-body text-base leading-7 pt-4 border-t border-border" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-lg font-semibold text-text" style="font-family: 'Outfit', sans-serif;">$28. Free instant certificate.</p>
+          <div>
+            <a
+              href={enrollUrl}
+              class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+              style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+            >
+              Start the Course →
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

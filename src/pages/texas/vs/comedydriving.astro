@@ -1,0 +1,206 @@
+---
+import TexasLayout from '../../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Road Ready Safety vs Comedy Driving Texas (2026)',
+  dateModified: '2026-05-25',
+  datePublished: '2026-05-25',
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+});
+
+const faqs = [
+  {
+    q: "Is Comedy Driving's certificate free?",
+    a: 'Free delivery is available by USPS mail, taking 5–9 business days. Instant download costs extra. Verify the current fee at checkout before enrolling.',
+  },
+  {
+    q: 'Does Comedy Driving require vehicle information?',
+    a: 'Yes. Based on customer reports, Comedy Driving requires you to attach a vehicle to your student profile during registration.',
+  },
+  {
+    q: 'Is the course actually funny?',
+    a: 'Based on recent Trustpilot reviews, the comedy is present but understated. Multiple recent customers describe the course as adequate rather than notably entertaining — less than the name implies.',
+  },
+  {
+    q: "What is Road Ready Safety's refund policy?",
+    a: "100% refund as long as you haven't completed the course and downloaded your certificate. Hit the request refund button in the portal — no call required.",
+  },
+  {
+    q: 'Are both courses TDLR-approved?',
+    a: 'Yes. Both Road Ready Safety and Comedy Driving are TDLR-approved and accepted by all Texas courts for ticket dismissal.',
+  },
+];
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Road Ready Safety vs Comedy Driving Texas (2026)"
+    description="Comedy Driving promises a funny defensive driving course. Reviews say it's less funny than advertised, and the certificate costs extra. Here's the full breakdown."
+    url="/texas/vs/comedydriving"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/texas/cost" class="text-primary-deep font-medium hover:underline">Compare providers</a>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          Road Ready Safety vs Comedy Driving Texas (2026)
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Road Ready Safety costs $28.00 all-in with a free instant certificate. Comedy Driving's Texas defensive driving course starts at $28.00 — the same base price — but charges an additional fee to download your certificate instantly. Free delivery is available by USPS mail. Both are TDLR-approved.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">If you just got a ticket, here's what you need to know</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Comedy Driving's entire pitch is that defensive driving doesn't have to be boring. That's a reasonable promise — six hours is six hours, and humor makes anything easier to sit through.</p>
+          <p>The problem is that a consistent thread in their reviews says the course is less funny than the name suggests. Multiple recent customers describe it as fine but not particularly entertaining. And like several other Texas providers, the certificate fee only becomes clear once you're already in the checkout process.</p>
+          <p>Here's the full picture before you sign up.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Side-by-side comparison</h2>
+
+        <div class="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 mb-4 rounded-xl border border-border">
+          <table class="w-full text-sm border-collapse">
+            <thead>
+              <tr class="bg-surface-muted text-left border-b border-border">
+                <th class="py-3 px-4 font-semibold text-text" style="font-family: 'DM Sans', sans-serif;"></th>
+                <th class="py-3 px-4 font-semibold text-primary" style="font-family: 'DM Sans', sans-serif;">Road Ready Safety</th>
+                <th class="py-3 px-4 font-semibold text-text" style="font-family: 'DM Sans', sans-serif;">Comedy Driving</th>
+              </tr>
+            </thead>
+            <tbody style="font-family: 'DM Sans', sans-serif;">
+              {[
+                { label: 'Base price', rrs: '$28.00', them: '$28.00' },
+                { label: 'Instant certificate', rrs: 'Free', them: 'Extra fee' },
+                { label: 'Free certificate option', rrs: 'Instant download', them: 'USPS mail, 5–9 business days' },
+                { label: 'Entertainment angle', rrs: 'Straightforward', them: 'Comedy-based course' },
+                { label: 'TDLR approved', rrs: 'Yes (CP1234)', them: 'Yes' },
+                { label: 'Money-back guarantee', rrs: '100% refund, portal button', them: '100% ticket dismissal guarantee' },
+                { label: 'Language', rrs: 'English', them: 'English' },
+              ].map((row, i) => (
+                <tr class={`border-b border-border ${i % 2 === 0 ? '' : 'bg-surface-muted/40'}`}>
+                  <td class="py-3 px-4 font-semibold text-text">{row.label}</td>
+                  <td class="py-3 px-4 text-primary font-medium">{row.rrs}</td>
+                  <td class="py-3 px-4 text-text-body">{row.them}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <p class="text-xs text-text-subtle mb-10" style="font-family: 'DM Sans', sans-serif;">Comedy Driving instant certificate fee: verify current amount at checkout before enrolling.</p>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What customers say about Comedy Driving</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <p>The reviews split between people who found it tolerable and people who expected more from a course called Comedy Driving:</p>
+        </div>
+
+        <div class="flex flex-col gap-4 mb-6">
+          {[
+            { text: 'Not too boring. The hillbilly was a bit too animated.', source: 'Trustpilot', date: 'March 2026' },
+            { text: "The course itself is well done. There really wasn't too much that was funny as I was expecting from the company title. There was a bit of humor.", author: 'Sharon', date: 'November 2025' },
+            { text: 'Was really not funny.', author: 'Marilyn Horner', date: 'November 2025' },
+            { text: 'A lot of your material is outdated.', author: 'Delisha C', date: 'November 2025' },
+          ].map(r => (
+            <div class="bg-surface-muted border border-border rounded-xl p-5">
+              <p class="text-text-body text-base leading-7 mb-2" style="font-family: 'DM Sans', sans-serif;">"{r.text}"</p>
+              <p class="text-sm text-text-subtle" style="font-family: 'DM Sans', sans-serif;">— {r.author || r.source}, {r.date}</p>
+            </div>
+          ))}
+        </div>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <p>The complaints about pricing follow the same pattern seen across other providers:</p>
+        </div>
+
+        <div class="flex flex-col gap-4 mb-6">
+          {[
+            { text: "Extra fees to email the certificate when it costs your company nothing to do. I could see mailing and express options but email? Why charge extra for downloading — it should just be included with the course fee.", author: 'Amy A Foy', date: 'February 2023' },
+            { text: "Keep asking me for money — went from $25 to $44.95 and still haven't gotten my certificate.", author: 'John', date: 'February 2023' },
+          ].map(r => (
+            <div class="bg-error-bg border border-red-200 rounded-xl p-5">
+              <p class="text-text-body text-base leading-7 mb-2" style="font-family: 'DM Sans', sans-serif;">"{r.text}"</p>
+              <p class="text-sm text-text-subtle" style="font-family: 'DM Sans', sans-serif;">— {r.author}, {r.date}</p>
+            </div>
+          ))}
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">One additional detail worth knowing: Comedy Driving requires you to attach a vehicle to your student profile during registration. If you don't have your vehicle information on hand — or are driving a car that isn't registered to you — that step creates friction before you even start the course.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Where Comedy Driving wins</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">Comedy-based format.</strong> If the entertainment angle works for you, it's a genuine differentiator. Some students find it more engaging than a standard text course.</p>
+          <p><strong class="text-text">100% ticket dismissal guarantee.</strong> They'll pay your ticket if it isn't dismissed after completing the course, provided you submitted correctly and on time.</p>
+          <p><strong class="text-text">Established provider.</strong> Comedy Driving has been operating in Texas for a long time and is accepted by all Texas courts.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Where Road Ready Safety wins</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">Free instant certificate.</strong> $28 is the total. No additional fee to download your certificate the moment you finish.</p>
+          <p><strong class="text-text">No vehicle profile requirement.</strong> Road Ready Safety doesn't require you to register a vehicle to take the course.</p>
+          <p><strong class="text-text">100% refund, one button.</strong> As long as you haven't completed the course and downloaded your certificate, you can request a full refund directly in the portal. No call, no wait.</p>
+          <p><strong class="text-text">Straightforward pricing.</strong> The price shown is the price you pay. No certificate delivery menu to navigate at checkout.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Who should choose which</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">Choose Road Ready Safety</strong> if you want to pay $28, get your certificate instantly, and take the course without a vehicle registration requirement or certificate delivery fees.</p>
+          <p><strong class="text-text">Choose Comedy Driving</strong> if the comedy format is genuinely appealing to you and you're comfortable paying extra for instant certificate delivery. Based on recent reviews, go in with calibrated expectations on how funny the course actually is.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;">{item.a}</p>
+            </div>
+          ))}
+        </div>
+
+        <div class="space-y-6 text-text-body text-base leading-7 pt-4 border-t border-border" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-lg font-semibold text-text" style="font-family: 'Outfit', sans-serif;">$28. Free instant certificate.</p>
+          <div>
+            <a
+              href={enrollUrl}
+              class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+              style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+            >
+              Start the Course →
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

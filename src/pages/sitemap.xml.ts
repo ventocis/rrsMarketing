@@ -24,6 +24,7 @@ const staticRoutes = [
   '/texas/accessibility',
   '/texas/cost',
   '/texas/eligibility-tracker',
+  '/texas/vs',
   '/texas/vs/onlinetxdefensivedriving',
   '/texas/vs/aceable',
   '/texas/vs/defensivedriving',

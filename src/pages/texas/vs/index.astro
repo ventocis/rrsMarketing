@@ -1,0 +1,131 @@
+---
+import TexasLayout from '../../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const comparisons = [
+  {
+    slug: 'defensivedriving',
+    competitor: 'DefensiveDriving.com',
+    tagline: 'Both start at $28. One charges $25 more after you finish the course.',
+    rrsPrice: '$28',
+    themPrice: '$53',
+    themLabel: 'text course, instant cert',
+    verdict: 'Certificate fee revealed only after completion',
+  },
+  {
+    slug: 'onlinetxdefensivedriving',
+    competitor: 'OnlineTXDefensiveDrivingCourse.com',
+    tagline: 'Both advertise $25. One charges $49.95 to email you your certificate.',
+    rrsPrice: '$28',
+    themPrice: '$77.95',
+    themLabel: 'with instant cert',
+    verdict: 'Certificate fee revealed before you start',
+  },
+  {
+    slug: 'aceable',
+    competitor: 'Aceable',
+    tagline: 'Aceable has an app and great reviews. It also costs $49–$59 vs $28.',
+    rrsPrice: '$28',
+    themPrice: '$49–$59',
+    themLabel: 'standard or audio',
+    verdict: '$15 certificate fee itemized at checkout',
+  },
+];
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Texas Defensive Driving — Provider Comparisons (2026)"
+    description="Side-by-side breakdowns of Road Ready Safety vs other TDLR-approved Texas defensive driving providers. See verified all-in prices before you enroll."
+    url="/texas/vs"
+  >
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/texas/cost" class="text-primary-deep font-medium hover:underline">Compare providers</a>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          Road Ready Safety vs Other Texas Defensive Driving Providers
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Most Texas defensive driving providers advertise the same $25 starting price. What you actually pay at checkout — and when you find out — varies significantly. These pages show verified all-in totals, real customer complaints, and a straight answer on who each provider is right for.</p>
+        </div>
+
+        <div class="flex flex-col gap-5 mb-12">
+          {comparisons.map(c => (
+            <a
+              href={`/texas/vs/${c.slug}`}
+              class="group block border border-border rounded-xl p-6 hover:border-primary hover:shadow-sm transition-all no-underline"
+              style="font-family: 'DM Sans', sans-serif;"
+            >
+              <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+                <div class="flex-1 min-w-0">
+                  <p class="text-xs font-semibold text-text-subtle uppercase tracking-wide mb-1">Road Ready Safety vs</p>
+                  <h2 class="text-xl font-bold text-text group-hover:text-primary transition-colors mb-2" style="font-family: 'Outfit', sans-serif;">
+                    {c.competitor}
+                  </h2>
+                  <p class="text-text-body text-sm leading-6 mb-3">{c.tagline}</p>
+                  <span class="inline-flex items-center gap-1.5 text-xs text-text-subtle bg-surface-muted px-3 py-1.5 rounded-full">
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                      <circle cx="6" cy="6" r="5.5" stroke="currentColor" stroke-opacity="0.5"/>
+                      <path d="M6 4v3M6 8.5v.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                    {c.verdict}
+                  </span>
+                </div>
+
+                <div class="flex sm:flex-col gap-4 sm:gap-2 sm:text-right flex-shrink-0">
+                  <div>
+                    <p class="text-[11px] font-semibold text-text-subtle uppercase tracking-wide mb-0.5">Road Ready Safety</p>
+                    <p class="text-2xl font-bold text-primary" style="font-family: 'Outfit', sans-serif;">{c.rrsPrice}</p>
+                    <p class="text-xs text-text-subtle">all-in</p>
+                  </div>
+                  <div>
+                    <p class="text-[11px] font-semibold text-text-subtle uppercase tracking-wide mb-0.5">{c.competitor}</p>
+                    <p class="text-2xl font-bold text-text" style="font-family: 'Outfit', sans-serif;">{c.themPrice}</p>
+                    <p class="text-xs text-text-subtle">{c.themLabel}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-4 flex items-center gap-1 text-sm font-semibold text-primary">
+                See full breakdown
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </a>
+          ))}
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-6 mb-10">
+          <p class="text-sm font-semibold text-text mb-1" style="font-family: 'Outfit', sans-serif;">Looking for the full provider comparison?</p>
+          <p class="text-sm text-text-body leading-6 mb-3" style="font-family: 'DM Sans', sans-serif;">The <a href="/texas/cost" class="text-primary font-medium hover:underline">/texas/cost</a> page shows manually verified all-in checkout totals for 10 TDLR-approved providers side by side — including processing fees and certificate delivery.</p>
+          <a href="/texas/cost" class="text-sm font-semibold text-primary hover:underline" style="font-family: 'DM Sans', sans-serif;">See all provider prices →</a>
+        </div>
+
+        <div class="space-y-6 text-text-body text-base leading-7 pt-4 border-t border-border" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-lg font-semibold text-text" style="font-family: 'Outfit', sans-serif;">$28. Free instant certificate. No surprises at checkout.</p>
+          <div>
+            <a
+              href={enrollUrl}
+              class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+              style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+            >
+              Start the Course →
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

@@ -67,59 +67,89 @@ const currentYear = new Date().getFullYear();
 
   <!-- Announcement Banner -->
   {showPromo ? (
-    <div id="promo-banner" class="bg-announcement-tx text-white text-center py-3 px-4">
-      <div class="flex items-center justify-center gap-3 flex-wrap" style="font-family: 'DM Sans', sans-serif;">
-        <span class="text-sm font-semibold leading-5">Limited Time:</span>
-        <code id="promo-code" class="text-xs font-bold tracking-widest bg-white/20 border border-white/30 rounded px-2 py-0.5" style="font-family: 'DM Mono', 'Courier New', monospace;">SAVE3</code>
-        <span class="text-sm font-semibold leading-5">drops your total to $25 — no hidden fees.</span>
-        <span class="text-white/60 hidden sm:inline">·</span>
-        <span class="text-sm font-medium leading-5 hidden sm:inline">Ends in</span>
-        <span id="promo-countdown" class="inline-flex items-center gap-2 text-xs font-semibold tabular-nums">
-          <span class="flex flex-col items-center leading-none"><span id="cd-d">--</span><span class="text-[9px] font-normal text-white/70 mt-0.5">days</span></span>
-          <span class="text-white/50">:</span>
-          <span class="flex flex-col items-center leading-none"><span id="cd-h">--</span><span class="text-[9px] font-normal text-white/70 mt-0.5">hrs</span></span>
-          <span class="text-white/50">:</span>
-          <span class="flex flex-col items-center leading-none"><span id="cd-m">--</span><span class="text-[9px] font-normal text-white/70 mt-0.5">min</span></span>
-          <span class="text-white/50">:</span>
-          <span class="flex flex-col items-center leading-none"><span id="cd-s">--</span><span class="text-[9px] font-normal text-white/70 mt-0.5">sec</span></span>
+    <div id="promo-banner" class="bg-announcement-tx text-white text-center py-2.5 px-4" style="font-family: 'DM Sans', sans-serif;">
+
+      <!-- Desktop: single row -->
+      <div class="hidden sm:flex items-center justify-center gap-2.5">
+        <span class="text-sm font-semibold leading-5">Limited Time: Use code</span>
+        <code class="text-xs font-bold tracking-widest bg-white/20 border border-white/30 rounded px-2 py-0.5" style="font-family: 'DM Mono', 'Courier New', monospace;">SAVE3</code>
+        <span class="text-sm font-semibold leading-5">and pay only $25.</span>
+        <span class="text-white/50">·</span>
+        <span class="text-sm font-medium leading-5 text-white/80">Ends in</span>
+        <span id="promo-countdown" class="inline-flex items-center gap-1.5 text-xs font-bold tabular-nums">
+          <span class="flex flex-col items-center leading-none"><span id="cd-d">--</span><span class="text-[9px] font-normal text-white/60 mt-0.5">days</span></span>
+          <span class="text-white/40 mb-2">:</span>
+          <span class="flex flex-col items-center leading-none"><span id="cd-h">--</span><span class="text-[9px] font-normal text-white/60 mt-0.5">hrs</span></span>
+          <span class="text-white/40 mb-2">:</span>
+          <span class="flex flex-col items-center leading-none"><span id="cd-m">--</span><span class="text-[9px] font-normal text-white/60 mt-0.5">min</span></span>
+          <span class="text-white/40 mb-2">:</span>
+          <span class="flex flex-col items-center leading-none"><span id="cd-s">--</span><span class="text-[9px] font-normal text-white/60 mt-0.5">sec</span></span>
         </span>
       </div>
-      <script>
-        (function () {
-          // June 1 2026 00:00:00 CST = UTC-6 = June 1 2026 06:00:00 UTC
-          var deadline = new Date('2026-06-01T06:00:00Z').getTime();
-          var banner = document.getElementById('promo-banner');
-          var elD = document.getElementById('cd-d');
-          var elH = document.getElementById('cd-h');
-          var elM = document.getElementById('cd-m');
-          var elS = document.getElementById('cd-s');
-          function pad(n) { return n < 10 ? '0' + n : '' + n; }
-          function tick() {
-            var now = Date.now();
-            var diff = deadline - now;
-            if (diff <= 0) {
-              if (banner) banner.innerHTML = '<p class="text-sm font-semibold leading-5" style="font-family:\'DM Sans\',sans-serif;">$28 Total, No Hidden Fees — No Surprises at Checkout</p>';
-              return;
-            }
-            var days = Math.floor(diff / 86400000);
-            var hrs  = Math.floor((diff % 86400000) / 3600000);
-            var mins = Math.floor((diff % 3600000) / 60000);
-            var secs = Math.floor((diff % 60000) / 1000);
-            if (elD) elD.textContent = pad(days);
-            if (elH) elH.textContent = pad(hrs);
-            if (elM) elM.textContent = pad(mins);
-            if (elS) elS.textContent = pad(secs);
-          }
-          tick();
-          setInterval(tick, 1000);
-        })();
-      </script>
+
+      <!-- Mobile: two tight lines -->
+      <div class="flex sm:hidden flex-col items-center gap-1">
+        <div class="flex items-center gap-1.5">
+          <span class="text-xs font-semibold leading-4">Use code</span>
+          <code class="text-[11px] font-bold tracking-widest bg-white/20 border border-white/30 rounded px-1.5 py-0.5" style="font-family: 'DM Mono', 'Courier New', monospace;">SAVE3</code>
+          <span class="text-xs font-semibold leading-4">— pay only $25. Ends in:</span>
+        </div>
+        <span id="promo-countdown-mobile" class="inline-flex items-center gap-2 text-xs font-bold tabular-nums">
+          <span class="flex flex-col items-center leading-none"><span id="cd-d-m">--</span><span class="text-[9px] font-normal text-white/60 mt-0.5">days</span></span>
+          <span class="text-white/40 mb-2">:</span>
+          <span class="flex flex-col items-center leading-none"><span id="cd-h-m">--</span><span class="text-[9px] font-normal text-white/60 mt-0.5">hrs</span></span>
+          <span class="text-white/40 mb-2">:</span>
+          <span class="flex flex-col items-center leading-none"><span id="cd-m-m">--</span><span class="text-[9px] font-normal text-white/60 mt-0.5">min</span></span>
+          <span class="text-white/40 mb-2">:</span>
+          <span class="flex flex-col items-center leading-none"><span id="cd-s-m">--</span><span class="text-[9px] font-normal text-white/60 mt-0.5">sec</span></span>
+        </span>
+      </div>
+
     </div>
   ) : (
     <div class="bg-announcement-tx text-white text-sm font-semibold text-center py-3 px-4 leading-5">
       {banner}
     </div>
   )}
+
+  <script>
+    (function () {
+      // June 1 2026 00:00:00 CST = UTC-6 = June 1 2026 06:00:00 UTC
+      var deadline = new Date('2026-06-01T06:00:00Z').getTime();
+      var banner = document.getElementById('promo-banner');
+      var elD  = document.getElementById('cd-d');
+      var elH  = document.getElementById('cd-h');
+      var elM  = document.getElementById('cd-m');
+      var elS  = document.getElementById('cd-s');
+      var elDm = document.getElementById('cd-d-m');
+      var elHm = document.getElementById('cd-h-m');
+      var elMm = document.getElementById('cd-m-m');
+      var elSm = document.getElementById('cd-s-m');
+      function pad(n) { return n < 10 ? '0' + n : '' + n; }
+      function tick() {
+        var now = Date.now();
+        var diff = deadline - now;
+        if (diff <= 0) {
+          if (banner) banner.innerHTML = '<p class="text-sm font-semibold leading-5 text-center" style="font-family:\'DM Sans\',sans-serif;">$28 Total, No Hidden Fees — No Surprises at Checkout</p>';
+          return;
+        }
+        var days = Math.floor(diff / 86400000);
+        var hrs  = Math.floor((diff % 86400000) / 3600000);
+        var mins = Math.floor((diff % 3600000) / 60000);
+        var secs = Math.floor((diff % 60000) / 1000);
+        if (elD)  elD.textContent  = pad(days);
+        if (elH)  elH.textContent  = pad(hrs);
+        if (elM)  elM.textContent  = pad(mins);
+        if (elS)  elS.textContent  = pad(secs);
+        if (elDm) elDm.textContent = pad(days);
+        if (elHm) elHm.textContent = pad(hrs);
+        if (elMm) elMm.textContent = pad(mins);
+        if (elSm) elSm.textContent = pad(secs);
+      }
+      tick();
+      setInterval(tick, 1000);
+    })();
+  </script>
 
   <!-- Header -->
   <header class="sticky top-0 z-50 bg-white border-b border-border shadow-[0px_1px_3px_0px_rgba(17,23,34,0.04)]">

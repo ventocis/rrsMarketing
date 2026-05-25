@@ -1,6 +1,7 @@
 ---
 import TexasLayout from '../../../layouts/TexasLayout.astro';
 import courtsData from '../../../data/texas-courts.json';
+import courtFaqData from '../../../data/court-faq-data.json';
 
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '#';
@@ -488,35 +489,98 @@ function joinOrNA(arr: string[] | undefined) {
             { "@type": "ListItem", "position": 3, "name": court.courtName, "item": `${siteUrl}/texas/courts/${court.slug}` }
           ]
         },
-        {
-          "@type": "FAQPage",
-          "mainEntity": [
-            {
+        (() => {
+          const faq = (courtFaqData as any)[court.slug];
+          if (!faq) return null;
+          const questions: any[] = [];
+
+          // Q1 — always present
+          questions.push({
+            "@type": "Question",
+            "name": `Does ${court.courtName} accept defensive driving courses for ticket dismissal?`,
+            "acceptedAnswer": { "@type": "Answer", "text": `Yes. ${court.courtName} accepts TDLR-approved Driver Safety Courses to dismiss eligible moving violations. You must request court approval before taking the course — do not enroll first.` }
+          });
+
+          // Q2 — how to submit
+          if (faq.submissionMethods?.length) {
+            const methods = faq.submissionMethods.join(', ');
+            questions.push({
               "@type": "Question",
-              "name": `How do I request a Driver Safety Course at ${court.courtName}?`,
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": `Contact ${court.courtName} before your citation due date to request DSC approval. Do not take the course before receiving court approval. Once approved, complete a TDLR-approved 6-hour course and submit your Certificate of Completion along with a certified Type 3A Driving Record from Texas DPS.`
-              }
-            },
-            {
+              "name": `How do I submit my DSC request to ${court.courtName}?`,
+              "acceptedAnswer": { "@type": "Answer", "text": `You can submit your DSC request to ${court.courtName} ${methods.toLowerCase()}. Request approval before taking the course, then submit your completion documents using the same methods.` }
+            });
+          }
+
+          // Q3 — required documents
+          if (faq.requiredDocs?.length) {
+            const docs = faq.requiredDocs.join('; ');
+            questions.push({
               "@type": "Question",
               "name": `What documents do I need to submit to ${court.courtName} after completing defensive driving?`,
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": `After completing your course, you typically need to submit: a signed DSC Certificate of Completion from a TDLR-approved provider, a certified Type 3A Driving Record from Texas DPS, and a notarized DSC Affidavit. Requirements may vary — verify directly with ${court.courtName} at ${court.phone?.[0] || 'the court'}.`
-              }
-            },
-            {
-              "@type": "Question",
-              "name": `What is the Driver Safety Course fee at ${court.courtName}?`,
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": `Texas municipal courts typically charge $144 for standard moving violations and $169 for school zone violations for a Driver Safety Course dismissal. Contact ${court.courtName} at ${court.phone?.[0] || court.website?.[0] || 'the court directly'} to confirm the current fee for your specific citation.`
-              }
+              "acceptedAnswer": { "@type": "Answer", "text": `After completing your course, submit the following to ${court.courtName}: ${docs}.` }
+            });
+          }
+
+          // Q4 — fee
+          questions.push({
+            "@type": "Question",
+            "name": `How much does ${court.courtName} charge for a Driver Safety Course?`,
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": faq.feeKnown
+                ? `${court.courtName} charges ${faq.fee} for a Driver Safety Course dismissal.`
+                : `Fees are not currently posted online. Contact ${court.courtName} directly for current DSC court fees.`
             }
-          ]
-        }
+          });
+
+          // Q5 — email accepted (only if definitive answer exists)
+          if (faq.emailAccepted === true) {
+            questions.push({
+              "@type": "Question",
+              "name": `Can I email my DSC documents to ${court.courtName}?`,
+              "acceptedAnswer": { "@type": "Answer", "text": `Yes. ${court.courtName} accepts DSC documents by email.` }
+            });
+          } else if (faq.emailAccepted === false) {
+            questions.push({
+              "@type": "Question",
+              "name": `Can I email my DSC documents to ${court.courtName}?`,
+              "acceptedAnswer": { "@type": "Answer", "text": `No. ${court.courtName} does not accept DSC documents by email. Use the available submission methods: ${faq.submissionMethods?.join(', ') || 'contact the court for options'}.` }
+            });
+          } else if (faq.emailAccepted === 'application-only') {
+            questions.push({
+              "@type": "Question",
+              "name": `Can I email my DSC documents to ${court.courtName}?`,
+              "acceptedAnswer": { "@type": "Answer", "text": `Partially. ${court.courtName} accepts the DSC application by email, but the Certificate of Completion must be submitted by mail or in person — not by email.` }
+            });
+          }
+
+          // Q6 — notarized affidavit (only if required)
+          if (faq.requiresNotarizedAffidavit) {
+            questions.push({
+              "@type": "Question",
+              "name": `Does ${court.courtName} require a notarized affidavit?`,
+              "acceptedAnswer": { "@type": "Answer", "text": `Yes. ${court.courtName} requires a notarized DSC affidavit. You must have it notarized before submitting — many drivers miss this step and miss their deadline.` }
+            });
+          }
+
+          // Q7 — Type 3A driving record (only if required)
+          if (faq.requiresType3A) {
+            questions.push({
+              "@type": "Question",
+              "name": `Does ${court.courtName} require a Type 3A driving record?`,
+              "acceptedAnswer": { "@type": "Answer", "text": `Yes. ${court.courtName} requires a certified Type 3A driving record from the Texas Department of Public Safety (DPS). Order it at texas.gov before your submission deadline.` }
+            });
+          }
+
+          // Q8 — always present
+          questions.push({
+            "@type": "Question",
+            "name": `How long do I have to complete defensive driving after getting a ticket in ${court.city}?`,
+            "acceptedAnswer": { "@type": "Answer", "text": `Texas law gives you 90 days from the date ${court.courtName} approves your DSC request to complete the course and submit your certificate. The clock starts on approval, not your citation date.` }
+          });
+
+          return { "@type": "FAQPage", "mainEntity": questions };
+        })()
       ]
     };
     return <script type="application/ld+json" set:html={JSON.stringify(schema)} />;

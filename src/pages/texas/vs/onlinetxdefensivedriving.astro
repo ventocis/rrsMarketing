@@ -1,0 +1,205 @@
+---
+import TexasLayout from '../../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Road Ready Safety vs OnlineTXDefensiveDrivingCourse.com (2026)',
+  dateModified: '2026-05-25',
+  datePublished: '2026-05-25',
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+});
+
+const faqs = [
+  {
+    q: 'Does OnlineTXDefensiveDrivingCourse.com really charge extra for the certificate?',
+    a: 'Yes. After purchasing the course, you are shown a certificate delivery screen before starting. Email delivery costs $49.95 on top of the $28 course fee. The free option is USPS mail with an 11–30 day window and no tracking. If you need your certificate quickly, the total comes to $77.95.',
+  },
+  {
+    q: 'Are both courses actually TDLR-approved?',
+    a: 'Yes. Road Ready Safety is approved under CP1234. OnlineTXDefensiveDrivingCourse.com is approved under CP995. Both satisfy the Texas court requirement for ticket dismissal.',
+  },
+  {
+    q: 'Is the $25 advertised price what I actually pay?',
+    a: 'No, for either provider. Texas law requires a $25 minimum plus a $3 administrative fee, making the base $28 for both. Certificate delivery is additional at OnlineTXDefensiveDrivingCourse.com. Road Ready Safety includes the certificate in the $28.',
+  },
+  {
+    q: 'Which course is faster to complete?',
+    a: 'Both meet the Texas legal minimum of 6 hours. Neither can be shorter than that by law.',
+  },
+  {
+    q: 'What if I need a driving record too?',
+    a: 'OnlineTXDefensiveDrivingCourse.com offers a $24.95 driving record add-on after purchasing the course, or a bundled course + record package for $44.95. Road Ready Safety does not currently offer this — you would need to obtain your Type 3A driving record separately through the DPS portal.',
+  },
+];
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Road Ready Safety vs OnlineTXDefensiveDrivingCourse.com (2026)"
+    description="Both advertise $25. One charges $49.95 extra to email you your certificate. Here's the full breakdown before you pay."
+    url="/texas/vs/onlinetxdefensivedriving"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/texas/cost" class="text-primary-deep font-medium hover:underline">Compare providers</a>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          Road Ready Safety vs OnlineTXDefensiveDrivingCourse.com — Texas Defensive Driving (2026)
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Both courses start at $28 all-in. Road Ready Safety includes a free instant certificate download. OnlineTXDefensiveDrivingCourse.com charges $49.95 to email you your certificate after you purchase — free delivery is available but takes 11–30 days by USPS with no tracking. Both are TDLR-approved online Texas defensive driving courses.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">If you just got a ticket, here's what you need to know</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>You found a course that says $25. You clicked through. You paid. Then — before you even start the course — you get to a certificate delivery screen with a $49.95 charge to have it emailed to you. The free option takes 11 to 30 days by mail with no tracking. If your court deadline is in two weeks, that's a problem.</p>
+          <p>Here's the full side-by-side so you know what you're actually paying before you start.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Side-by-side comparison</h2>
+
+        <div class="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 mb-10 rounded-xl border border-border">
+          <table class="w-full text-sm border-collapse">
+            <thead>
+              <tr class="bg-surface-muted text-left border-b border-border">
+                <th class="py-3 px-4 font-semibold text-text" style="font-family: 'DM Sans', sans-serif;"></th>
+                <th class="py-3 px-4 font-semibold text-primary" style="font-family: 'DM Sans', sans-serif;">Road Ready Safety</th>
+                <th class="py-3 px-4 font-semibold text-text" style="font-family: 'DM Sans', sans-serif;">OnlineTXDefensiveDriving.com</th>
+              </tr>
+            </thead>
+            <tbody style="font-family: 'DM Sans', sans-serif;">
+              {[
+                { label: 'Base price', rrs: '$28.00', them: '$28.00' },
+                { label: 'Email certificate', rrs: 'Free, instant', them: '$49.95 extra' },
+                { label: 'Free certificate option', rrs: 'Instant download', them: 'USPS mail, 11–30 days, no tracking' },
+                { label: 'True all-in (with instant cert)', rrs: '$28.00', them: '$77.95' },
+                { label: 'TDLR approved', rrs: 'Yes (CP1234)', them: 'Yes (CP995)' },
+                { label: 'Format', rrs: 'Online', them: 'Online' },
+                { label: 'Language', rrs: 'English', them: 'English + Spanish' },
+                { label: 'Driving record available', rrs: 'Coming soon', them: '$24.95 add-on or $44.95 course + record combo' },
+                { label: 'Years in business', rrs: 'New (2026)', them: 'Established' },
+              ].map((row, i) => (
+                <tr class={`border-b border-border ${i % 2 === 0 ? '' : 'bg-surface-muted/40'}`}>
+                  <td class="py-3 px-4 font-semibold text-text">{row.label}</td>
+                  <td class="py-3 px-4 text-primary font-medium">{row.rrs}</td>
+                  <td class="py-3 px-4 text-text-body">{row.them}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What customers say about OnlineTXDefensiveDrivingCourse.com</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <p>Not everyone has a bad experience. Some customers find the course easy to navigate and straightforward to complete:</p>
+        </div>
+
+        <div class="flex flex-col gap-4 mb-6">
+          {[
+            { text: 'It was easy to navigate and a good price.', author: 'Lizbeth Gonzalez', date: 'April 2026' },
+            { text: 'It was very easy.', author: 'James Drury', date: 'April 2026' },
+            { text: 'Easy to complete.', author: 'Linda Peeples', date: 'April 2026' },
+          ].map(r => (
+            <div class="bg-surface-muted border border-border rounded-xl p-5">
+              <p class="text-text-body text-base leading-7 mb-2" style="font-family: 'DM Sans', sans-serif;">"{r.text}"</p>
+              <p class="text-sm text-text-subtle" style="font-family: 'DM Sans', sans-serif;">— {r.author}, {r.date}</p>
+            </div>
+          ))}
+        </div>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <p>The course itself generally works. The complaints are almost entirely about one thing — finding out what the certificate costs after the course has been purchased:</p>
+        </div>
+
+        <div class="flex flex-col gap-4 mb-10">
+          {[
+            { text: "Don't purchase the course if you need your certificate in a timely manner. The extra price to be able to print the certificate instantly is $45. Other courses only charge $7 to print the certificate instantly.", source: 'Trustpilot', date: 'April 2026' },
+            { text: 'Not telling you about the delivery fee of the certificate until you have purchased the course is 100% scammy.', author: 'Troy Davis Jr.', date: 'April 2026' },
+            { text: 'Too many add-ons to the price make it very difficult to just order the course.', author: 'Karl Myers', date: 'April 2026' },
+            { text: '$50 for delivery of your certificate? What a ripoff.', author: 'Shawn McMahon', date: 'April 2026' },
+          ].map(r => (
+            <div class="bg-error-bg border border-red-200 rounded-xl p-5">
+              <p class="text-text-body text-base leading-7 mb-2" style="font-family: 'DM Sans', sans-serif;">"{r.text}"</p>
+              <p class="text-sm text-text-subtle" style="font-family: 'DM Sans', sans-serif;">— {r.author || r.source}, {r.date}</p>
+            </div>
+          ))}
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">The pattern in the negative reviews is consistent — the course itself is fine, the certificate pricing is the issue.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Where Road Ready Safety wins</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">The certificate is free and instant.</strong> You finish the course, you download your certificate, you submit it to your court the same day. $28 is what you see, $28 is what you pay.</p>
+          <p><strong class="text-text">No upsell screen after you pay.</strong> The certificate is included. There's no delivery option menu to navigate before you start.</p>
+          <p><strong class="text-text">Built specifically for Texas.</strong> Road Ready Safety is a Texas-focused company, not a national platform with a Texas checkbox.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Where OnlineTXDefensiveDrivingCourse.com wins</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">4.4 million customers served.</strong> They've been doing this for years. If track record matters most to you, that's a real advantage.</p>
+          <p><strong class="text-text">Driving record options.</strong> They offer the driving record as a $24.95 add-on after purchasing the course, or as a bundled package with the course for $44.95. Most ticket dismissal cases require a Type 3A driving record submitted alongside your certificate — having both in one place is genuinely convenient. Road Ready Safety doesn't offer this yet.</p>
+          <p><strong class="text-text">Bilingual.</strong> The course is available in Spanish. Road Ready Safety is English only.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Who should choose which</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">Choose Road Ready Safety</strong> if you want to pay $28, get your certificate the same day you finish, and submit it to your court without any additional fees or decisions after you pay.</p>
+          <p><strong class="text-text">Choose OnlineTXDefensiveDrivingCourse.com</strong> if you need the driving record bundled with your course, you need the course in Spanish, or you want a provider with a long track record and are prepared to navigate the certificate delivery pricing upfront.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;">{item.a}</p>
+            </div>
+          ))}
+        </div>
+
+        <div class="space-y-6 text-text-body text-base leading-7 pt-4 border-t border-border" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-lg font-semibold text-text" style="font-family: 'Outfit', sans-serif;">$28. Free instant certificate. No surprises.</p>
+          <div>
+            <a
+              href={enrollUrl}
+              class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+              style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+            >
+              Start the Course →
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

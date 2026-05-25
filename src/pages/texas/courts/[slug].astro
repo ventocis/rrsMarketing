@@ -102,6 +102,330 @@ const enhancedCourtSlugs = new Set([
 ]);
 const isEnhanced = enhancedCourtSlugs.has(court.slug) || (court.county === 'Harris' && court.courtType === 'Justice of the Peace');
 
+// Per-court SEO titles and descriptions for the 80 enhanced pages
+const courtSeoData: Record<string, { title: string; description: string }> = {
+  'harris-municipal-houston': {
+    title: "Got a Houston Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS to submit with your certificate. Court fee: $144. $28 course, certificate ready same day.",
+  },
+  'travis-municipal-austin': {
+    title: "Got an Austin Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready. $28 course, certificate ready same day.",
+  },
+  'dallas-municipal-dallas': {
+    title: "Got a Dallas Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS to submit with your certificate. Court fee: $144. $28 course, certificate ready same day.",
+  },
+  'bexar-municipal-san-antonio': {
+    title: "San Antonio Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready. $28 course, certificate ready same day.",
+  },
+  'dallas-municipal-garland': {
+    title: "Got a Garland Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS to submit with your certificate. Court fee: $144. $28 course, certificate ready same day.",
+  },
+  'harris-justice-of-the-peace-precinct-1': {
+    title: "Got a Houston Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready. $28 course, certificate ready same day.",
+  },
+  'tarrant-municipal-fort-worth': {
+    title: "Fort Worth Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready. $28 course, certificate ready same day.",
+  },
+  'el-paso-municipal-el-paso': {
+    title: "Got an El Paso Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready. $28 course, certificate ready same day.",
+  },
+  'tarrant-municipal-arlington': {
+    title: "Arlington Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready. $28 course, certificate ready same day.",
+  },
+  'nueces-municipal-corpus-christi': {
+    title: "Corpus Christi Traffic Ticket? Dismiss It",
+    description: "Corpus Christi requires a signed DSC affidavit before you enroll — most drivers miss this step. Court fee: $144. $28 course, certificate ready same day.",
+  },
+  'collin-municipal-plano': {
+    title: "Got a Plano Traffic Ticket? How to Dismiss It",
+    description: "Plano requires a notarized DSC affidavit before you enroll — most drivers miss this step. Court fee: $114.10. $28 course, certificate ready same day.",
+  },
+  'lubbock-municipal-lubbock': {
+    title: "Got a Lubbock Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready. $28 course, certificate ready same day.",
+  },
+  'webb-municipal-laredo': {
+    title: "Got a Laredo Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready. $28 course, certificate ready same day.",
+  },
+  'dallas-municipal-irving': {
+    title: "Got an Irving Traffic Ticket? How to Dismiss It",
+    description: "Irving requires a signed DSC affidavit before you can enroll — most drivers miss this until it is too late. $28 course, certificate ready same day.",
+  },
+  'collin-municipal-frisco': {
+    title: "Got a Frisco Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS to submit with your certificate. Court fee: $144. $28 course, certificate ready same day.",
+  },
+  'collin-municipal-mckinney': {
+    title: "Got a McKinney Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready. $28 course, certificate ready same day.",
+  },
+  'potter-municipal-amarillo': {
+    title: "Amarillo Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready. $28 course, certificate ready same day.",
+  },
+  'dallas-municipal-grand-prairie': {
+    title: "Grand Prairie Traffic Ticket? Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready. $28 course, certificate ready same day.",
+  },
+  'bell-municipal-killeen': {
+    title: "Got a Killeen Traffic Ticket? How to Dismiss It",
+    description: "Killeen requires a notarized DSC affidavit before you enroll — most drivers miss this step. Court fee: $144. $28 course, certificate ready same day.",
+  },
+  'cameron-municipal-brownsville': {
+    title: "Brownsville Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready. $28 course, certificate ready same day.",
+  },
+  'harris-municipal-pasadena': {
+    title: "Pasadena Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready. $28 course, certificate ready same day.",
+  },
+  'dallas-municipal-mesquite': {
+    title: "Got a Mesquite Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS to submit with your certificate. Court fee: $144. $28 course, certificate ready same day.",
+  },
+  'hidalgo-municipal-mcallen': {
+    title: "Got a McAllen Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready. $28 course, certificate ready same day.",
+  },
+  'denton-municipal-denton': {
+    title: "Got a Denton Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready. $28 course, certificate ready same day.",
+  },
+  'mclennan-municipal-waco': {
+    title: "Got a Waco Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready. $28 course, certificate ready same day.",
+  },
+  'dallas-municipal-carrollton': {
+    title: "Carrollton Traffic Ticket? How to Dismiss It",
+    description: "Take a $28 TDLR-approved defensive driving course online. Certificate downloads instantly so you can submit to Carrollton Municipal Court the same day.",
+  },
+  'midland-municipal-midland': {
+    title: "Got a Midland Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready. $28 course, certificate ready same day.",
+  },
+  'taylor-municipal-abilene': {
+    title: "Got an Abilene Traffic Ticket? How to Dismiss It",
+    description: "Abilene requires a signed DSC affidavit before you can enroll — most drivers miss this until it is too late. $28 course, certificate ready same day.",
+  },
+  'jefferson-municipal-beaumont': {
+    title: "Beaumont Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready. $28 course, certificate ready same day.",
+  },
+  'williamson-municipal-round-rock': {
+    title: "Round Rock Traffic Ticket? How to Dismiss It",
+    description: "Round Rock requires a signed DSC affidavit before you enroll — most drivers miss this step. Court fee: $144. $28 course, certificate ready same day.",
+  },
+  'brazoria-municipal-pearland': {
+    title: "Got a Pearland Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready. $28 course, certificate ready same day.",
+  },
+  'dallas-municipal-richardson': {
+    title: "Richardson Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS to submit with your certificate. Court fee: $144. $28 course, certificate ready same day.",
+  },
+  'ector-municipal-odessa': {
+    title: "Got an Odessa Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready. $28 course, certificate ready same day.",
+  },
+  'denton-municipal-lewisville': {
+    title: "Lewisville Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS to submit with your certificate. Court fee: $144. $28 course, certificate ready same day.",
+  },
+  'collin-municipal-allen': {
+    title: "Got an Allen Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready. $28 course, certificate ready same day.",
+  },
+  'galveston-municipal-league-city': {
+    title: "League City Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready. $28 course, certificate ready same day.",
+  },
+  'fort-bend-municipal-sugar-land': {
+    title: "Sugar Land Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS to submit with your certificate. Court fee: $144. $28 course, certificate ready same day.",
+  },
+  'smith-municipal-tyler': {
+    title: "Got a Tyler Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready. $28 course, certificate ready same day.",
+  },
+  'brazos-municipal-college-station': {
+    title: "College Station Traffic Ticket? Dismiss It",
+    description: "College Station requires a signed DSC affidavit before you enroll — most drivers miss this step. Court fee: $144. $28 course, certificate ready same day.",
+  },
+  'hays-municipal-san-marcos': {
+    title: "San Marcos Traffic Ticket? How to Dismiss It",
+    description: "San Marcos requires a signed DSC affidavit before you enroll — most drivers miss this step. Court fee: $144. $28 course, certificate ready same day.",
+  },
+  'wichita-municipal-wichita-falls': {
+    title: "Wichita Falls Traffic Ticket? Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS to submit with your certificate. Court fee: $144. $28 course, certificate ready same day.",
+  },
+  'gregg-municipal-longview': {
+    title: "Got a Longview Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready. $28 course, certificate ready same day.",
+  },
+  'denton-municipal-flower-mound': {
+    title: "Flower Mound Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS to submit with your certificate. Court fee: $144. $28 course, certificate ready same day.",
+  },
+  'montgomery-municipal-conroe': {
+    title: "Got a Conroe Traffic Ticket? How to Dismiss It",
+    description: "Conroe requires a notarized DSC affidavit before you enroll — most drivers miss this step. Court fee: $144. $28 course, certificate ready same day.",
+  },
+  'williamson-municipal-cedar-park': {
+    title: "Cedar Park Traffic Ticket? How to Dismiss It",
+    description: "Cedar Park requires a signed DSC affidavit before you can enroll — most drivers miss this until it is too late. $28 course, certificate ready same day.",
+  },
+  'comal-municipal-new-braunfels': {
+    title: "New Braunfels Traffic Ticket? Dismiss It",
+    description: "New Braunfels requires a signed DSC affidavit before you enroll — most drivers miss this step. Court fee: $184. $28 course, certificate ready same day.",
+  },
+  'hidalgo-municipal-edinburg': {
+    title: "Got an Edinburg Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready. $28 course, certificate ready same day.",
+  },
+  'harris-municipal-baytown': {
+    title: "Got a Baytown Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready. $28 course, certificate ready same day.",
+  },
+  'bell-municipal-temple': {
+    title: "Got a Temple Traffic Ticket? How to Dismiss It",
+    description: "Temple requires a signed DSC affidavit before you can enroll — most drivers miss this until it is too late. $28 course, certificate ready same day.",
+  },
+  'hidalgo-municipal-pharr': {
+    title: "Got a Pharr Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready. $28 course, certificate ready same day.",
+  },
+  'hidalgo-municipal-mission': {
+    title: "Got a Mission Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready. $28 course, certificate ready same day.",
+  },
+  'cameron-municipal-harlingen': {
+    title: "Harlingen Traffic Ticket? How to Dismiss It",
+    description: "Harlingen requires a signed DSC affidavit before you can enroll — most drivers miss this until it is too late. $28 course, certificate ready same day.",
+  },
+  'williamson-municipal-georgetown': {
+    title: "Georgetown Traffic Ticket? How to Dismiss It",
+    description: "Georgetown requires a signed DSC affidavit before you enroll — most drivers miss this step. Court fee: $144. $28 course, certificate ready same day.",
+  },
+  'travis-municipal-pflugerville': {
+    title: "Pflugerville Traffic Ticket? Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready. $28 course, certificate ready same day.",
+  },
+  'victoria-municipal-victoria': {
+    title: "Got a Victoria Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready. $28 course, certificate ready same day.",
+  },
+  'tom-green-municipal-san-angelo': {
+    title: "San Angelo Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready. $28 course, certificate ready same day.",
+  },
+  'brazos-municipal-bryan': {
+    title: "Got a Bryan Traffic Ticket? How to Dismiss It",
+    description: "Bryan requires a notarized DSC affidavit before you enroll — most drivers miss this step. Court fee: $144. $28 course, certificate ready same day.",
+  },
+  'fort-bend-municipal-missouri-city': {
+    title: "Missouri City Traffic Ticket? Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready. $28 course, certificate ready same day.",
+  },
+  'tarrant-municipal-mansfield': {
+    title: "Mansfield Traffic Ticket? How to Dismiss It",
+    description: "Mansfield requires a signed DSC affidavit before you enroll — most drivers miss this step. Court fee: $144. $28 course, certificate ready same day.",
+  },
+  'williamson-municipal-leander': {
+    title: "Got a Leander Traffic Ticket? How to Dismiss It",
+    description: "Leander's court fee is $144 for most violations. Take a $28 TDLR-approved defensive driving course online. Certificate downloads the same day.",
+  },
+  'hays-municipal-kyle': {
+    title: "Got a Kyle Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready. $28 course, certificate ready same day.",
+  },
+  'tarrant-municipal-north-richland-hills': {
+    title: "North Richland Hills Traffic Ticket? Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready. $28 course, certificate ready same day.",
+  },
+  'dallas-municipal-rowlett': {
+    title: "Got a Rowlett Traffic Ticket? How to Dismiss It",
+    description: "Rowlett requires a notarized DSC affidavit before you enroll — most drivers miss this until it is too late. $28 course, certificate ready same day.",
+  },
+  'tarrant-municipal-euless': {
+    title: "Got an Euless Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready. $28 course, certificate ready same day.",
+  },
+  'collin-municipal-wylie': {
+    title: "Got a Wylie Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready. $28 course, certificate ready same day.",
+  },
+  'rockwall-municipal-rockwall': {
+    title: "Rockwall Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS to submit with your certificate. Court fee: $144. $28 course, certificate ready same day.",
+  },
+  'tarrant-municipal-grapevine': {
+    title: "Grapevine Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS to submit with your certificate. Court fee: $144. $28 course, certificate ready same day.",
+  },
+  'tarrant-municipal-bedford': {
+    title: "Got a Bedford Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready. $28 course, certificate ready same day.",
+  },
+  'dallas-municipal-desoto': {
+    title: "Got a DeSoto Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS to submit with your certificate. Court fee: $144. $28 course, certificate ready same day.",
+  },
+  'dallas-municipal-cedar-hill': {
+    title: "Cedar Hill Traffic Ticket? How to Dismiss It",
+    description: "Cedar Hill requires a signed DSC affidavit before you enroll — most drivers miss this step. Court fee: $144. $28 course, certificate ready same day.",
+  },
+  'johnson-municipal-burleson': {
+    title: "Got a Burleson Traffic Ticket? How to Dismiss It",
+    description: "Burleson requires a signed DSC affidavit before you can enroll — most drivers miss this until it is too late. $28 course, certificate ready same day.",
+  },
+  'galveston-municipal-galveston': {
+    title: "Galveston Traffic Ticket? How to Dismiss It",
+    description: "Galveston requires a signed DSC affidavit before you can enroll — most drivers miss this until it is too late. $28 course, certificate ready same day.",
+  },
+  'galveston-municipal-texas-city': {
+    title: "Texas City Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready. $28 course, certificate ready same day.",
+  },
+  'guadalupe-municipal-schertz': {
+    title: "Got a Schertz Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready. $28 course, certificate ready same day.",
+  },
+  'tarrant-municipal-haltom-city': {
+    title: "Haltom City Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready. $28 course, certificate ready same day.",
+  },
+  'tarrant-municipal-hurst': {
+    title: "Got a Hurst Traffic Ticket? How to Dismiss It",
+    description: "Hurst's court fee is $144 for most violations. Take a $28 TDLR-approved defensive driving course online. Certificate downloads the same day.",
+  },
+  'dallas-municipal-duncanville': {
+    title: "Duncanville Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready. $28 course, certificate ready same day.",
+  },
+  'ellis-municipal-waxahachie': {
+    title: "Waxahachie Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready. $28 course, certificate ready same day.",
+  },
+  'parker-municipal-weatherford': {
+    title: "Weatherford Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready. $28 course, certificate ready same day.",
+  },
+  'jefferson-municipal-port-arthur': {
+    title: "Port Arthur Traffic Ticket? How to Dismiss It",
+    description: "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready. $28 course, certificate ready same day.",
+  },
+};
+
 // Helper: join array or return 'Unavailable'
 function joinOrNA(arr: string[] | undefined) {
   return arr && arr.length > 0 ? arr.join(', ') : 'Unavailable';
@@ -112,11 +436,11 @@ function joinOrNA(arr: string[] | undefined) {
 
 {isEnabled && (
 <TexasLayout
-  title={isEnhanced
-    ? `${court.courtName} Driver Safety Course — Dismiss Your Ticket | Road Ready Safety`
+  title={isEnhanced && courtSeoData[court.slug]
+    ? courtSeoData[court.slug].title
     : `${court.county} County ${court.courtType} Court — ${court.courtName} | Driver Safety Course`}
-  description={isEnhanced
-    ? `Step-by-step DSC instructions for ${court.courtName}: fees, submission portal, required documents, and deadlines to dismiss your traffic ticket in ${court.city}, Texas.`
+  description={isEnhanced && courtSeoData[court.slug]
+    ? courtSeoData[court.slug].description
     : `Complete your Texas Driver Safety Course for ${court.courtName} in ${court.county} County. Step-by-step instructions to dismiss your traffic ticket.`}
   keywords={`${court.courtName}, ${court.county} County, Texas driver safety course, defensive driving, traffic school`}
   url={`/texas/courts/${court.slug}`}

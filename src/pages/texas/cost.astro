@@ -16,15 +16,18 @@ const articleSchema = JSON.stringify({
 });
 
 const comparisonRows = [
-  { provider: 'Aware Driver', cp: 'CP995', coursePrice: '$25.00', processingFee: '$3.00', minCertCost: '$0.00', total: '$28.00', certificate: 'Paid', format: 'Online', language: 'English' },
-  { provider: 'DefensiveDriving.com', cp: 'CP284', coursePrice: '$25.00', processingFee: '$3.00', minCertCost: '$0.00', total: '$28.00', certificate: 'Mail', format: 'Online', language: 'English' },
-  { provider: 'I Drive Safely', cp: 'CP022', coursePrice: '$29.00', processingFee: '$0.00', minCertCost: '$0.00', total: '$29.00', certificate: 'Free', format: 'Online', language: 'English' },
-  { provider: 'GetDefensive.com', cp: 'CP021', coursePrice: '$30.00', processingFee: '$0.00', minCertCost: '$0.00', total: '$30.00', certificate: 'Free', format: 'Online / In-Person', language: 'Eng / Spanish' },
-  { provider: 'DrivingQuest', cp: 'CP020', coursePrice: '$25.00', processingFee: '$0.00', minCertCost: '$6.00', total: '$31.00', certificate: 'Paid', format: 'Online', language: 'Eng / Spanish' },
-  { provider: 'J&T Adult Driving School', cp: 'CP1158', coursePrice: '$29.99', processingFee: '$3.99', minCertCost: '$3.99', total: '$37.97', certificate: 'Paid', format: 'Online / In-Person', language: 'Eng / Spanish' },
-  { provider: 'DriversEd.com', cp: 'CP019', coursePrice: '$34.00', processingFee: '$0.00', minCertCost: '$15.00', total: '$49.00', certificate: 'Paid', format: 'Online', language: 'English' },
-  { provider: 'Aceable Defensive Driving', cp: 'CP262', coursePrice: '$49.00', processingFee: '$0.00', minCertCost: '$15.00', total: '$64.00', certificate: 'Paid', format: 'Online', language: 'English' },
-  { provider: 'Excellent Driving School', cp: 'CP1010', coursePrice: '$65.00', processingFee: '$3.99', minCertCost: '$3.99', total: '$72.98', certificate: 'Paid', format: 'Online / In-Person', language: 'Eng / Spanish' },
+  { provider: 'OnlineTXDefensiveDrivingCourse.com', cp: 'CP995',  coursePrice: '$25.00', processingFee: '$3.00', minCertCost: '$0.00',  total: '$28.00', instantCertFee: '$49.95',          certificate: 'USPS mail, 11–30 days',         format: 'Online',           language: 'English' },
+  { provider: 'DefensiveDriving.com',               cp: 'CP284',  coursePrice: '$25.00', processingFee: '$3.00', minCertCost: '$0.00',  total: '$28.00', instantCertFee: '$25.00',          certificate: 'Mail (free)',                   format: 'Online',           language: 'English' },
+  { provider: 'Comedy Driving',                     cp: 'C1965',  coursePrice: '$25.00', processingFee: '$3.00', minCertCost: '$0.00',  total: '$28.00', instantCertFee: '$7.95',           certificate: 'USPS mail, 5–9 days',           format: 'Online',           language: 'English' },
+  { provider: 'IMPROV',                             cp: 'CP342',  coursePrice: '$25.95', processingFee: '$3.00', minCertCost: '$0.00',  total: '$28.95', instantCertFee: '$0.00',           certificate: 'Electronic, included',          format: 'Online',           language: 'English' },
+  { provider: 'I Drive Safely',                     cp: 'CP022',  coursePrice: '$29.00', processingFee: '$0.00', minCertCost: '$0.00',  total: '$29.00', instantCertFee: '—',               certificate: 'Free',                          format: 'Online',           language: 'English' },
+  { provider: 'GetDefensive.com',                   cp: 'CP021',  coursePrice: '$30.00', processingFee: '$0.00', minCertCost: '$0.00',  total: '$30.00', instantCertFee: '—',               certificate: 'Free',                          format: 'Online / In-Person', language: 'Eng / Spanish' },
+  { provider: 'DrivingQuest',                       cp: 'CP020',  coursePrice: '$25.00', processingFee: '$0.00', minCertCost: '$6.00',  total: '$31.00', instantCertFee: '—',               certificate: 'Paid',                          format: 'Online',           language: 'Eng / Spanish' },
+  { provider: 'SafeMotorist',                       cp: 'CP520',  coursePrice: '$25.00', processingFee: '$0.00', minCertCost: '$0.00',  total: '$25.00', instantCertFee: '$9.95',           certificate: '5-day hold, then download',     format: 'Online',           language: 'English' },
+  { provider: 'J&T Adult Driving School',           cp: 'CP1158', coursePrice: '$29.99', processingFee: '$3.99', minCertCost: '$3.99',  total: '$37.97', instantCertFee: '—',               certificate: 'Paid',                          format: 'Online / In-Person', language: 'Eng / Spanish' },
+  { provider: 'Aceable*',                           cp: 'CP262',  coursePrice: '$34.00', processingFee: '$0.00', minCertCost: '$15.00', total: '$49.00', instantCertFee: 'Included in $15', certificate: 'Paid ($15, only option)',       format: 'Online',           language: 'English' },
+  { provider: 'DriversEd.com',                      cp: 'CP019',  coursePrice: '$34.00', processingFee: '$0.00', minCertCost: '$15.00', total: '$49.00', instantCertFee: '—',               certificate: 'Paid',                          format: 'Online',           language: 'English' },
+  { provider: 'Excellent Driving School',           cp: 'CP1010', coursePrice: '$65.00', processingFee: '$3.99', minCertCost: '$3.99',  total: '$72.98', instantCertFee: '—',               certificate: 'Paid',                          format: 'Online / In-Person', language: 'Eng / Spanish' },
 ];
 
 const faqs = [
@@ -85,10 +88,10 @@ const faqs = [
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">All-in price comparison — TDLR-approved online courses</h2>
 
         <div class="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 mb-4 rounded-xl border border-border">
-          <table class="w-full min-w-[1000px] text-sm border-collapse">
+          <table class="w-full min-w-[1100px] text-sm border-collapse">
             <thead>
               <tr class="bg-surface-muted text-left border-b border-border">
-                {['Provider','CP#','Course Price','Processing Fee','Min. Certificate Cost','Total','Certificate','Format','Language'].map(h => (
+                {['Provider','CP#','Course Price','Processing Fee','Min. Cert Cost','Total','Instant Cert Fee','Certificate (free option)','Format','Language'].map(h => (
                   <th class="py-3 px-3 font-semibold text-text" style="font-family: 'DM Sans', sans-serif;">{h}</th>
                 ))}
               </tr>
@@ -101,6 +104,7 @@ const faqs = [
                 <td class="py-3 px-3">$3.00</td>
                 <td class="py-3 px-3">$0.00</td>
                 <td class="py-3 px-3 font-bold text-primary-deep">$28.00</td>
+                <td class="py-3 px-3">$0.00</td>
                 <td class="py-3 px-3">Free instant download</td>
                 <td class="py-3 px-3">Online</td>
                 <td class="py-3 px-3">English</td>
@@ -113,6 +117,7 @@ const faqs = [
                   <td class="py-3 px-3 text-text-body">{row.processingFee}</td>
                   <td class="py-3 px-3 text-text-body">{row.minCertCost}</td>
                   <td class="py-3 px-3 font-bold text-text">{row.total}</td>
+                  <td class="py-3 px-3 text-text-body">{row.instantCertFee}</td>
                   <td class="py-3 px-3 text-text-body">{row.certificate}</td>
                   <td class="py-3 px-3 text-text-body">{row.format}</td>
                   <td class="py-3 px-3 text-text-body">{row.language}</td>
@@ -123,10 +128,11 @@ const faqs = [
         </div>
 
         <p class="text-text-body text-base leading-7 mb-4" style="font-family: 'DM Sans', sans-serif;">
-          The Certificate column shows how each provider delivers your completion certificate. 'Free instant download' means you can print or email your certificate the same day you finish — no waiting, no extra charge. 'Paid' means the provider charges an additional delivery fee. 'Mail' means the provider mails a physical certificate, which typically adds several business days and may cost extra. If your court deadline is close, certificate delivery method matters as much as price.
+          The Instant Cert Fee column shows the additional cost to receive your certificate immediately upon course completion. Providers marked — have not been verified through checkout for this fee. Road Ready Safety's instant certificate is included in the $28 total at no extra charge. Aceable has no free certificate option — the $15 fee is mandatory. SafeMotorist's free option is a 5-day hold before download is available.
         </p>
 
-        <p class="text-sm text-text-body mb-2" style="font-family: 'DM Sans', sans-serif;">Last verified: May 25, 2026 — Road Ready Safety editorial team, verified against TDLR provider records</p>
+        <p class="text-sm text-text-body mb-2" style="font-family: 'DM Sans', sans-serif;">Last verified: May 2026 — Road Ready Safety editorial team, verified against TDLR provider records and direct checkout confirmation</p>
+        <p class="text-sm text-text-body mb-2" style="font-family: 'DM Sans', sans-serif;">* Aceable price reflects current checkout total with active promotional pricing as of May 2026. Standard price without promotion is $49.00.</p>
         <p class="text-sm text-text-body mb-10" style="font-family: 'DM Sans', sans-serif;">Note: Prices shown reflect TDLR-published provider records verified by Road Ready Safety on May 25, 2026. Course fees are set independently by each provider and may change. Verify current pricing at checkout before enrolling.</p>
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What affects the final price at checkout?</h2>

@@ -24,6 +24,13 @@ const staticRoutes = [
   '/texas/accessibility',
   '/texas/cost',
   '/texas/eligibility-tracker',
+  '/texas/vs',
+  '/texas/vs/onlinetxdefensivedriving',
+  '/texas/vs/aceable',
+  '/texas/vs/defensivedriving',
+  '/texas/vs/improv',
+  '/texas/vs/comedydriving',
+  '/texas/vs/safemotorist',
 ];
 
 const courseRoutes = (coursesData as Array<{ slug: string }>).map(c => `/courses/${c.slug}`);

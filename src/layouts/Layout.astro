@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import ViewTransitions from 'astro/components/ViewTransitions.astro';
+import { version } from '../../package.json';
 
 interface Props {
   title: string;
@@ -119,5 +120,12 @@ const pageTitle = title.includes('Road Ready') ? title : `${title} | Road Ready 
       </noscript>
     )}
     <slot />
+    <script define:vars={{ version }}>
+      console.log(
+        '%c Road Ready Safety %c v' + version + ' ',
+        'background:#1B2B5E;color:#fff;font-weight:700;padding:2px 6px;border-radius:3px 0 0 3px;font-family:monospace;',
+        'background:#2563EB;color:#fff;font-weight:700;padding:2px 6px;border-radius:0 3px 3px 0;font-family:monospace;'
+      );
+    </script>
   </body>
 </html>

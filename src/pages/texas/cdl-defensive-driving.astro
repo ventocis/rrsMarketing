@@ -1,0 +1,155 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    q: 'Can a CDL holder take defensive driving to dismiss a ticket in Texas?',
+    a: 'No. Texas law excludes anyone who holds a CDL — or held one when the offense was committed — from driving-safety-course dismissal (Tex. Code Crim. Proc. art. 45A.351(c)), and from deferred disposition too (art. 45A.301(2)). This implements the federal anti-masking rule, 49 CFR 384.226.',
+  },
+  {
+    q: 'What if the ticket was in my personal car, not a commercial vehicle?',
+    a: 'It makes no difference. The federal masking rule explicitly covers a CDL holder\'s conviction "for any violation, in any type of motor vehicle" — personal pickup included. The license you hold, not the vehicle you were driving, is what controls.',
+  },
+  {
+    q: 'Can I surrender or downgrade my CDL after the ticket so I qualify?',
+    a: 'No. The statute looks at whether you held a CDL when the offense was committed — past tense, fixed at the moment of the ticket. Downgrading afterward doesn\'t restore eligibility for that citation (and would cost you the CDL for nothing).',
+  },
+  {
+    q: 'Do I have to tell my employer about a Texas traffic ticket conviction?',
+    a: 'If you\'re convicted, yes. Federal rule 49 CFR 383.31 requires CDL drivers to notify their employer of any traffic conviction (other than parking) within 30 days — regardless of what vehicle you were driving. There\'s also a self-report-to-your-licensing-state rule for out-of-state convictions, though in practice it\'s satisfied automatically through the state-to-state CDL reporting system.',
+  },
+  {
+    q: 'So what CAN a CDL holder do about a Texas ticket?',
+    a: 'Fight it or negotiate it. You always have the right to plead not guilty and take the case to trial, and a traffic attorney who works that court can sometimes negotiate a reduction to a non-moving violation or a dismissal on the merits. What\'s off the table are the masking tools — course dismissal and deferred disposition. Many CDL drivers find the attorney fee well worth it given what a conviction does to a driving career.',
+  },
+  {
+    q: 'Can a CDL holder still take the course for an insurance discount?',
+    a: 'Yes. Nothing prohibits taking the course itself — it just can\'t dismiss the ticket. TDLR lists insurance discounts as a recognized use of the same 6-hour course, and whether your insurer offers one (and how much) is the insurer\'s choice. Ask your agent before enrolling.',
+  },
+  {
+    q: 'Does the CDL bar apply to a commercial learner\'s permit (CLP)?',
+    a: 'It\'s genuinely unsettled in the Texas statute\'s text. The federal masking rule expressly covers CLP holders, but the Texas exclusion names only a "commercial driver\'s license," and Texas defines a CLP as a separate credential. If you hold a CLP, don\'t assume either way — ask the court directly, and expect many courts to treat you as covered to stay consistent with federal law.',
+  },
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'CDL Holders and Defensive Driving in Texas: Why You Can\'t Dismiss the Ticket — and What You Can Do',
+  description: 'Texas bars CDL holders from defensive-driving dismissal and deferred disposition, even for tickets in a personal vehicle. The federal masking rule behind it, the employer-notification duty, and the options that remain.',
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-11',
+  dateModified: '2026-06-11',
+  mainEntityOfPage: `${siteUrl}/texas/cdl-defensive-driving`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="CDL and Defensive Driving in Texas: Why Ticket Dismissal Is Off-Limits & What to Do Instead (2026)"
+    description="Texas bars CDL holders from defensive-driving dismissal and deferred disposition — even for tickets in your personal car. The federal masking rule behind it, the 30-day employer notification duty, and the options that remain."
+    keywords="cdl defensive driving texas, cdl ticket dismissal texas, cdl holder speeding ticket texas, 49 cfr 384.226 masking, cdl deferred disposition texas, commercial license traffic ticket"
+    url="/texas/cdl-defensive-driving"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">Speeding ticket guide</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">CDL holders</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          CDL Holders and Defensive Driving in Texas: Why Dismissal Is Off-Limits, and What You Can Actually Do
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>If you hold a commercial driver's license, <strong class="text-text">you cannot use a defensive driving course to dismiss a Texas traffic ticket — and you can't use deferred disposition either.</strong> That's true even if the ticket came in your personal car on your day off, and it stays true even if you give up the CDL afterward. It isn't your court being strict; it's federal law, and every Texas court applies it the same way.</p>
+          <p>Here's the rule, the two duties most CDL drivers don't know they have, and the options that are still on the table.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. For a CDL, a conviction can have career consequences a webpage can't weigh — for anything serious, talk to a traffic attorney who works the court on your citation.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The rule: federal anti-masking, implemented by Texas law</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>The source is 49 CFR §384.226, the federal "masking" prohibition. It orders every state not to "mask, defer imposition of judgment, or allow an individual to enter into a diversion program that would prevent a CLP or CDL holder's conviction for any violation, <strong class="text-text">in any type of motor vehicle</strong>," from appearing on the commercial driver record. Note that phrase — <em>any type of motor vehicle</em>. The rule follows your license, not your truck.</p>
+          <p>Texas implements it with two exclusions in the Code of Criminal Procedure: the defensive-driving dismissal subchapter "does not apply to an offense committed by a person who holds a commercial driver's license or held a commercial driver's license when the offense was committed" (art. 45A.351(c)), and deferred disposition carries the same bar (art. 45A.301(2)). Both of the tools ordinary drivers use to keep a ticket off their record are closed.</p>
+          <p>And because the statute is written in the past tense — <em>held</em> a CDL <em>when the offense was committed</em> — surrendering or downgrading the license after the ticket changes nothing for that citation. Eligibility froze at the moment of the stop.</p>
+          <p>One genuinely unsettled corner: the federal rule covers commercial <em>learner's permit</em> holders too, but the Texas exclusion names only the CDL, and Texas defines the CLP as a separate credential. If you hold a CLP, ask your court how it treats you — and don't be surprised if the answer is "same as a CDL."</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The duty most drivers miss: telling your employer within 30 days</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>If the ticket becomes a conviction, 49 CFR §383.31 requires you to <strong class="text-text">notify your employer within 30 days</strong> — any traffic conviction except parking, in any vehicle. There's a second, self-report-to-your-licensing-state duty for out-of-state convictions, though in practice it's satisfied automatically through the state-to-state CDL reporting system. The employer notice is not automatic. Missing it is its own violation, separate from the ticket.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What a CDL holder can actually do about a Texas ticket</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">Fight it.</strong> The right to plead not guilty and take the case to trial — bench or jury — survives everything above. The state still has to prove the violation, and for a professional driver the stakes often justify making them.</p>
+          <p><strong class="text-text">Negotiate it.</strong> A local traffic attorney can't get you into a masked dismissal, but they can sometimes negotiate the charge itself — a reduction to a non-moving violation, or a dismissal on the merits — which isn't masking, because the conviction never happens. For most CDL drivers facing a moving violation, a flat-fee attorney who knows that court's prosecutor is the single highest-value move available.</p>
+          <p><strong class="text-text">Pay it knowingly.</strong> If you pay, it's a conviction: it goes on your record, your employer must be told within 30 days, and your CSA/insurance picture absorbs it. Sometimes that's still the rational call for a minor violation — just make it a decision, not a default.</p>
+          <p><strong class="text-text">Take the course anyway — for insurance.</strong> Nothing bars a CDL holder from taking the 6-hour course voluntarily; it just can't dismiss the ticket. TDLR recognizes insurance discounts as a use of the same course, and whether your insurer offers one is the insurer's call — <a href="/texas/insurance-discount" class="text-primary-deep font-medium hover:underline">here's how that works in Texas</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;">{item.a}</p>
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Not a CDL holder? Then the course probably works for you</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>If you've never held a CDL — or you're a CDL driver taking the course voluntarily for an insurance discount — our TDLR-approved course is <strong class="text-text">$28 all-in, online, with a free instant certificate</strong> (insurance copy included). And if you're not sure which side of the line you're on, the eligibility checker sorts it in 30 seconds.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="/texas/eligibility-tracker"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            Check your eligibility
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation and, for CDL matters, consider consulting a traffic attorney.</p>
+          <p class="text-xs text-text-subtle">Last updated June 11, 2026 — verified by the Road Ready Safety editorial team against 49 CFR §§383.31 &amp; 384.226, Tex. Code Crim. Proc. arts. 45A.301 &amp; 45A.351, Tex. Transp. Code ch. 522, and TDLR course guidance.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

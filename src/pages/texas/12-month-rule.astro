@@ -1,0 +1,158 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    q: 'How many times can you take defensive driving in Texas?',
+    a: 'For ticket dismissal, once every 12 months — and the clock is measured from the date of the new offense, looking back. If you completed a course for dismissal within the 12 months before the date of your new ticket, you don\'t have the automatic right to use one again. There\'s no lifetime limit; the window just has to have passed.',
+  },
+  {
+    q: 'Is the 12-month rule based on the citation date, request date, or completion date?',
+    a: 'The statute measures from the date of the new offense, looking back at when you completed the previous course (Tex. Code Crim. Proc. art. 45A.352(a)(3)). So the question is: on the day of your new ticket, had you completed a dismissal course within the previous 12 months? Your course completion date — not when you requested it or when the old ticket was dismissed — is what lands on your driving record and gets counted.',
+  },
+  {
+    q: 'How does the court know I took a course last year?',
+    a: 'Your Type 3A certified driving record shows it — checking the 12-month history is one of the main reasons courts require the record with your certificate. Completion of a dismissal course is reported and appears on the record, so don\'t plan on the court not noticing.',
+  },
+  {
+    q: 'Can a judge let me take a second course within 12 months?',
+    a: 'Sometimes. The 12-month rule conditions your automatic right to the course, but Texas law preserves a discretionary path — a judge may grant the course in circumstances where the mandatory conditions aren\'t met. Some courts will for a sympathetic case; many won\'t. It costs nothing to ask the clerk, but don\'t bank on it.',
+  },
+  {
+    q: 'I got two tickets in one stop — does that count as two courses?',
+    a: 'No, and this changed recently in your favor. Since September 1, 2025 (S.B. 296), every eligible charge from the same stop can be dismissed with a single course completion. Separate stops are a different story: a second ticket from a different day is where the 12-month rule bites.',
+  },
+  {
+    q: 'I\'m inside the 12-month window and got another ticket — what are my options?',
+    a: 'Ask about deferred disposition first: it\'s a court-supervised probation ending in dismissal, it has no 12-month limit of its own, and most everyday tickets qualify. Beyond that: negotiate (an attorney can sometimes get a reduction), fight it at trial, or pay it knowing it becomes a conviction. The worst option is assuming a second course will work and finding out at submission time that it didn\'t.',
+  },
+  {
+    q: 'Does a voluntary insurance-discount course count against the 12-month rule?',
+    a: 'The statutory bar is on courses completed for dismissal — but the safe practice is to tell the court about any recent course completion, because the completion appears on your record either way and the court will see it. If you took a course voluntarily for insurance and now have a ticket, raise it with the clerk up front rather than letting it surface as a surprise.',
+  },
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'The Texas Defensive Driving 12-Month Rule: How Often You Can Dismiss a Ticket, Exactly How the Clock Runs',
+  description: 'Texas lets you dismiss a ticket with defensive driving once every 12 months — measured from the offense date, looking back at your course completion. How the clock actually runs, how courts check, and what to do if you\'re inside the window.',
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-11',
+  dateModified: '2026-06-11',
+  mainEntityOfPage: `${siteUrl}/texas/12-month-rule`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="The Texas Defensive Driving 12-Month Rule: How Often Can You Dismiss a Ticket? (2026)"
+    description="Texas allows defensive-driving dismissal once every 12 months — measured from your new offense date, looking back at your course completion date. How the clock actually runs, how courts check, and your options inside the window."
+    keywords="how many times defensive driving texas, 12 month rule defensive driving, defensive driving once a year texas, second ticket defensive driving texas, how often can you take defensive driving"
+    url="/texas/12-month-rule"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">Speeding ticket guide</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">The 12-month rule</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          The 12-Month Rule: How Often Texas Lets You Dismiss a Ticket with Defensive Driving
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Texas lets you use a driving safety course to dismiss a ticket <strong class="text-text">once every 12 months</strong> — and the way the clock runs surprises people. The law asks one question: <strong class="text-text">on the date of your new offense, had you completed a dismissal course within the previous 12 months?</strong> (Tex. Code Crim. Proc. art. 45A.352(a)(3).) Not when the old ticket was dismissed, not when you requested the course — when you <em>completed</em> it, measured back from the day of the new ticket.</p>
+          <p>Here's how the clock actually runs, how courts check, the discretionary exception almost nobody mentions, and what to do when you're inside the window.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How the clock runs — a concrete example</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Say you completed a course on <strong class="text-text">March 10, 2025</strong> to dismiss an old ticket. You get a new ticket on <strong class="text-text">February 20, 2026</strong> — that's inside 12 months of your completion date, so the automatic right to a second course isn't there. Get the same ticket on <strong class="text-text">March 15, 2026</strong> instead, and the window has passed: you're eligible again, full stop.</p>
+          <p>Two details people miss. First, the lookback also counts a <strong class="text-text">motorcycle operator training course</strong> used for dismissal — the statute treats them the same. Second, the offense date is what anchors the comparison, so a ticket that sits unresolved for months doesn't change the math: it's the day you were cited that matters.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How the court knows — and why you shouldn't test it</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>The <a href="/texas/type-3a-driving-record" class="text-primary-deep font-medium hover:underline">Type 3A certified driving record</a> courts require with your certificate exists largely for this check: dismissal-course completions are reported and appear on your record. Several courts also require an affidavit swearing you haven't completed a course in the window — signing that falsely is its own, much bigger problem. If you're inside 12 months, say so; there are legitimate paths below.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The exception almost nobody mentions: judicial discretion</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>The 12-month rule conditions your <em>automatic right</em> to the course — the track where the judge "shall" grant it. But Texas law preserves a separate discretionary track: a judge <em>may</em> grant the course even when some mandatory conditions, including the 12-month history, aren't met. In practice this is genuinely judge-by-judge — some courts entertain it for a clean record and a sympathetic story, many flatly don't. It costs nothing to ask the clerk whether the judge will consider a discretionary grant. Just don't build your plan on it.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Two tickets, one stop: the 2025 change that helps you</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>If one stop produced multiple eligible charges, that's no longer a 12-month-rule problem: since September 1, 2025, <strong class="text-text">one course completion can dismiss every eligible charge from the same stop</strong> (S.B. 296). The rule bites on the <em>second stop</em> — a new citation on a different day inside the window. Details in our <a href="/texas/ticket-law-changes-2025" class="text-primary-deep font-medium hover:underline">2025 law changes guide</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Inside the window with a new ticket? Your real options</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">Deferred disposition — ask about this first.</strong> It's a court-supervised probation of up to 180 days that ends in dismissal, it has <strong class="text-text">no 12-month limit of its own</strong>, and most everyday violations qualify (the statutory exclusions are work-zone offenses and CDL holders — not repeat course-takers). For the second-ticket-this-year driver, this is usually the answer.</p>
+          <p><strong class="text-text">Negotiate or fight.</strong> A traffic attorney can sometimes get a reduction or dismissal on the merits, and trial remains your right — same as for <a href="/texas/speeding-25-over" class="text-primary-deep font-medium hover:underline">drivers barred by the high-speed exclusions</a>.</p>
+          <p><strong class="text-text">Pay it, knowingly.</strong> A conviction with insurance consequences and a tick toward the habitual-violator thresholds. Sometimes still the rational choice — but make it deliberately.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;">{item.a}</p>
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Outside the window? Use it well</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>If your last course was more than 12 months before this ticket — or you've never taken one — the dismissal path is open, and it's the best deal in Texas traffic law. Our TDLR-approved course is <strong class="text-text">$28 all-in, online, free instant certificate</strong>. Check your eligibility first, request court permission, then enroll.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="/texas/eligibility-tracker"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            Check your eligibility
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; eligibility decisions belong to your court — confirm with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated June 11, 2026 — verified by the Road Ready Safety editorial team against Tex. Code Crim. Proc. arts. 45A.301–.305 &amp; 45A.351–.359 (including the S.B. 296 amendments effective Sept. 1, 2025).</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

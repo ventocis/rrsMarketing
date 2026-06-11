@@ -1,0 +1,208 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    q: 'Why would a Texas court reject my defensive driving certificate?',
+    a: 'The most common reasons: the course was taken before the court granted permission, the 90-day deadline passed, the certificate arrived without the required Type 3A driving record, the personal information on the certificate doesn\'t match the citation, the wrong record type was submitted, or the driver wasn\'t eligible in the first place (CDL, 25+ mph over, or a course already used in the prior 12 months).',
+  },
+  {
+    q: 'I took the course before getting court approval — is my certificate useless?',
+    a: 'For that ticket, usually yes. Texas courts consistently require the request to come first, and many state outright that certificates dated before approval will not be accepted. Call your court and ask — but expect to need another path, like deferred disposition. The course itself isn\'t wasted if your insurer offers a discount for it.',
+  },
+  {
+    q: 'What if the name or birthday on my certificate is wrong?',
+    a: 'Don\'t resubmit it and hope — courts match the certificate against the citation, and mismatched identity details are a common avoidable rejection. With us, you can\'t self-edit sensitive fields like your name, date of birth, or court name; contact our support team, we verify who you are, and we correct and reissue the certificate. That verification step exists to protect your identity.',
+  },
+  {
+    q: 'I missed the 90-day deadline — can I still submit?',
+    a: 'Contact the court immediately. The statute allows a judge to extend the window for good cause (Tex. Code Crim. Proc. art. 45A.355), and several courts hold a show-cause hearing before convicting — but none of that happens automatically, and ignoring the deadline typically ends in a conviction, the fine, and possibly a warrant. The earlier you call, the more options the clerk has.',
+  },
+  {
+    q: 'Do I send the court the whole certificate or just part of it?',
+    a: 'Your certificate has a court copy and an insurance copy. The court gets the court copy — signed if your court requires a signature — and the insurance copy goes to your insurer if you\'re pursuing a discount. Sending the wrong copy, or an unsigned one where a signature is required, is an easy rejection to avoid.',
+  },
+  {
+    q: 'My certificate was rejected — what do I do right now?',
+    a: 'First, get the exact reason from the clerk — courts will tell you. If it\'s a document problem (missing Type 3A, wrong copy, unsigned), you can usually cure it before your deadline. If it\'s an identity mismatch, get the certificate corrected and reissued by your provider. If it\'s an eligibility or timing problem, ask the clerk about deferred disposition or a good-cause extension. Speed matters more than anything: every fix is easier before the deadline than after.',
+  },
+];
+
+const rejectionReasons = [
+  {
+    n: 1,
+    title: 'You took the course before the court said yes',
+    body: 'The single most damaging mistake, because it usually can\'t be cured. Texas law makes the request the first step (Tex. Code Crim. Proc. art. 45A.352), and courts enforce it bluntly — Buda\'s instructions say certificates dated before court approval will not be accepted; Prosper\'s form is in all caps: "DO NOT TAKE THE COURSE… UNTIL YOU HAVE RECEIVED NOTICE FROM THE COURT THAT YOUR APPLICATION / REQUEST HAS BEEN APPROVED." Request first. Always.',
+  },
+  {
+    n: 2,
+    title: 'The 90-day deadline passed',
+    body: 'The court defers your case 90 days to finish the course and submit your documents (art. 45A.356). Miss it and most courts set a show-cause hearing; miss that and you\'re looking at a conviction, the fine, and possibly a warrant. A judge can extend for good cause (art. 45A.355) — but you have to ask before it\'s a crisis. Don\'t book the course for week 11 of 13.',
+  },
+  {
+    n: 3,
+    title: 'Certificate arrived without the Type 3A driving record',
+    body: 'Most courts require both documents, and several insist they arrive together — Deer Park\'s instructions state one form will not be accepted without the other. The Type 3A is the certified complete record from DPS ($12 online, instant). Submitting the certificate alone doesn\'t start a partial dismissal; it starts a rejection.',
+  },
+  {
+    n: 4,
+    title: 'Wrong driving record type',
+    body: 'Type 3 looks identical but isn\'t certified. Type 2A says "certified" but only covers three years — DPS marks it not acceptable for defensive driving. Courts want the Type 3A specifically. Our full guide covers the differences and ordering steps.',
+  },
+  {
+    n: 5,
+    title: 'Your name, birthday, or court name was entered wrong at registration',
+    body: 'This is the number-one issue our own Texas support team sees. The certificate must match your citation and your DPS record — a misspelled name, wrong date of birth, or the wrong court selected at checkout means the court can\'t connect your documents, and fixing it after the fact takes time you may not have. Sensitive fields can\'t be self-edited (that protects you from someone else altering your certificate), so corrections go through support with identity verification. Sixty seconds of care at registration — legal name exactly as it appears on your license, correct DOB, the exact court named on your citation — saves all of it.',
+  },
+  {
+    n: 6,
+    title: 'The course provider wasn\'t TDLR-approved — or its license had lapsed',
+    body: 'Only a certificate from a TDLR-approved provider counts, and approval isn\'t forever: TDLR\'s own records currently list more than a dozen driving safety providers as EXPIRED, some with websites still taking payments. Check the provider\'s CP number against our directory of all TDLR-approved providers before you pay.',
+  },
+  {
+    n: 7,
+    title: 'You weren\'t eligible in the first place',
+    body: 'A certificate can\'t fix an ineligible ticket: speeding 25+ mph over or 95+ mph, CDL holders (current or at the time of the offense), or a driver who already used a course for dismissal in the 12 months before the offense. Courts check the 12-month history against your Type 3A — it\'s literally what the record is for. If that\'s you, deferred disposition is usually the path to ask about.',
+  },
+  {
+    n: 8,
+    title: 'You paid the ticket first',
+    body: 'Paying the fine in full is a plea — and at most courts it converts your case to a conviction on the spot, ending the dismissal option. Several court websites warn about this exact trap on their online payment pages: La Porte\'s says a no-contest plea is entered automatically when you pay by phone. If you want the course, request it; don\'t pay the fine.',
+  },
+  {
+    n: 9,
+    title: 'Documents went to the wrong court',
+    body: 'Texas has roughly 1,700 municipal and JP courts, and cities commonly have both a municipal court and a county JP court with similar names. Your paperwork must go to the exact court on your citation — a Harris County JP precinct won\'t forward your certificate to Houston Municipal. The citation names the court; our court directory has the addresses and submission methods.',
+  },
+  {
+    n: 10,
+    title: 'Unsigned certificate, or the wrong copy',
+    body: 'The standard certificate has a court copy and an insurance copy. Courts want the court copy, and a number of them require your signature on it — The Colony, for example, requires the certificate be signed and name the court. Sending the insurance copy to the court (or vice versa) is a small mix-up with a real cost.',
+  },
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Why Texas Courts Reject Defensive Driving Certificates — the 10 Real Reasons, and How to Avoid Every One',
+  description: 'The actual reasons Texas courts reject defensive driving submissions — from taking the course before approval to identity mismatches — with the statute behind each rule and how to cure a rejection.',
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-11',
+  dateModified: '2026-06-11',
+  mainEntityOfPage: `${siteUrl}/texas/certificate-rejected`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Why Texas Courts Reject Defensive Driving Certificates — 10 Real Reasons & How to Avoid Them (2026)"
+    description="The actual reasons Texas courts reject defensive driving submissions — taking the course before approval, missing the Type 3A record, identity mismatches, and more — with the rule behind each one and how to fix a rejection."
+    keywords="defensive driving certificate rejected texas, court rejected defensive driving, texas driving safety course rejected, defensive driving mistakes texas, certificate not accepted court"
+    url="/texas/certificate-rejected"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">Speeding ticket guide</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Why certificates get rejected</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          Why Texas Courts Reject Defensive Driving Certificates — the 10 Real Reasons
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Completing the course is the easy part. Where Texas drivers actually lose their dismissal is in the paperwork around it: certificates dated before the court said yes, submissions missing the Type 3A record, names that don't match the citation, deadlines that quietly expired. Every reason below comes from the statute, from the submission rules of the 129 Texas courts whose procedures we've verified directly, or from what our own support team sees Texas students get wrong — and every one of them is avoidable.</p>
+          <p>If you've already been rejected, skip to the <a href="#fix" class="text-primary-deep font-medium hover:underline">what to do right now</a> section — several of these can be cured if you move fast.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Each court applies its own procedures — when in doubt, the clerk's office on your citation is the authority on why a submission was refused and what cures it.</p>
+        </div>
+
+        <div class="flex flex-col gap-5 mb-12">
+          {rejectionReasons.map(r => (
+            <div class="bg-white border border-border rounded-2xl p-6">
+              <div class="flex items-start gap-4">
+                <div class="bg-info flex items-center justify-center rounded-full w-9 h-9 shrink-0">
+                  <span class="text-sm font-bold text-primary" style="font-family: 'Outfit', sans-serif;">{r.n}</span>
+                </div>
+                <div>
+                  <h2 class="text-lg font-bold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{r.title}</h2>
+                  <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;">{r.body}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <h2 id="fix" class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Rejected? Do this, in this order</h2>
+        <ol class="list-decimal pl-6 space-y-3 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <li><strong class="text-text">Call the clerk and get the exact reason.</strong> Courts will tell you precisely what was wrong, and most rejections are document problems, not final decisions.</li>
+          <li><strong class="text-text">If it's a missing or wrong document</strong> (no Type 3A, wrong record type, wrong copy, unsigned) — cure it. The <a href="/texas/type-3a-driving-record" class="text-primary-deep font-medium hover:underline">Type 3A is $12 and instant online</a>; a corrected certificate is a reissue away.</li>
+          <li><strong class="text-text">If it's an identity mismatch</strong> — get the certificate corrected by your provider before resubmitting. (Our students contact support; we verify identity and reissue.)</li>
+          <li><strong class="text-text">If it's timing</strong> — ask the clerk about a good-cause extension (art. 45A.355) before the deadline, or about the show-cause hearing if it's already passed. Show up; non-appearance is what converts problems into convictions.</li>
+          <li><strong class="text-text">If it's eligibility</strong> — ask about <a href="/texas/speeding-25-over" class="text-primary-deep font-medium hover:underline">deferred disposition</a>, which has no speed bar and survives most of the problems that kill the course option.</li>
+        </ol>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;">{item.a}</p>
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">A course built so the paperwork doesn't fail you</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Half this list is why we run things the way we do: your certificate downloads instantly the moment you finish (court copy and insurance copy included), so the 90-day clock never beats the mail; your registration details are checked against what you enter once and protected from silent edits afterward; and there's no fee at the end standing between you and the document your court is waiting on. <strong class="text-text">$28 all-in, TDLR CP1234.</strong></p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="/texas/courts"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            Find your court's rules
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; rejection and cure procedures are set by each court — confirm with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated June 11, 2026 — legal citations verified by the Road Ready Safety editorial team against Tex. Code Crim. Proc. arts. 45A.351–.359; court-specific rules verified directly against the published instructions of the individual courts named; registration-error patterns drawn from Road Ready Safety's own Texas student support experience.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

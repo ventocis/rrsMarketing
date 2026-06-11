@@ -1,0 +1,152 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    q: 'Does defensive driving lower your car insurance in Texas?',
+    a: 'Often, but it\'s the insurer\'s choice, not a state mandate. The Texas Department of Insurance says it plainly: "Companies often offer discounts for completing a defensive driving or driver education course. Each company sets its own discount terms." Industry-typical discounts run a few percent and commonly last around three years — but the only number that matters is the one your insurer quotes you.',
+  },
+  {
+    q: 'Isn\'t Texas insurance required to give a 10% defensive driving discount?',
+    a: 'Not anymore — and most sites that say so are citing dead law. The mandatory 10% discount belonged to Texas\'s old benchmark-rate system, which ended when the state moved to "file and use" rating in 2003–2004. Under current law each insurer files its own rates and sets its own discounts. If a page promises you a guaranteed 10%, it hasn\'t been updated in twenty years.',
+  },
+  {
+    q: 'Can I take the course just for the insurance discount, without a ticket?',
+    a: 'Yes. TDLR explicitly recognizes the 6-hour driving safety course for "ticket dismissal or insurance discounts" — same course, no citation required, no court involvement. You enroll, complete it, and send the certificate to your insurer.',
+  },
+  {
+    q: 'How do I actually claim the discount?',
+    a: 'Ask your agent before enrolling — confirm the insurer offers a defensive-driving discount, how much, how long it lasts, and what documentation they want. Then complete the course and submit your certificate\'s insurance copy. There\'s no state-prescribed process; the insurer decides the paperwork.',
+  },
+  {
+    q: 'Does a course taken to dismiss a ticket also earn the discount?',
+    a: 'Frequently yes — the certificate has both a court copy and an insurance copy precisely so the same completion can serve both purposes. Submit the court copy to the court for the dismissal and ask your insurer whether the insurance copy qualifies you for their discount. Two benefits, one six-hour course.',
+  },
+  {
+    q: 'Can a CDL holder or someone with an ineligible ticket still get the discount?',
+    a: 'Yes — the discount path has nothing to do with court eligibility. CDL holders, drivers cited 25+ mph over, and drivers inside the 12-month rule can all take the course voluntarily; it just can\'t dismiss their ticket. Whether the discount applies is still the insurer\'s call.',
+  },
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Does Defensive Driving Lower Your Insurance in Texas? The Honest Answer',
+  description: 'Texas no longer mandates a defensive-driving insurance discount — the old 10% rule died with the benchmark rate system. What TDI actually says, what insurers typically offer, and how to claim it.',
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-11',
+  dateModified: '2026-06-11',
+  mainEntityOfPage: `${siteUrl}/texas/insurance-discount`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Does Defensive Driving Lower Your Insurance in Texas? The Honest Answer (2026)"
+    description="Texas no longer mandates a defensive-driving discount — the old 10% rule died with the benchmark rate system in 2004. What TDI actually says today, what insurers typically offer, and exactly how to claim it."
+    keywords="defensive driving insurance discount texas, does defensive driving lower insurance texas, texas auto insurance discount course, defensive driving 10 percent discount, voluntary defensive driving texas"
+    url="/texas/insurance-discount"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">Speeding ticket guide</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Insurance discount</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          Does Defensive Driving Lower Your Insurance in Texas? The Honest Answer
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">Often yes — but it's your insurer's choice, and anyone promising you a guaranteed 10% is quoting a law that died twenty years ago.</strong> The Texas Department of Insurance puts it this way: "Companies often offer discounts for completing a defensive driving or driver education course. Each company sets its own discount terms." That one sentence is the real rule, and everything below is the practical detail around it.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The "mandatory 10%" myth — where it came from, why it's dead</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>You'll find pages all over the internet — some on course-provider sites — saying Texas insurers <em>must</em> give a 10% defensive-driving discount for three years. That was once true: under Texas's old benchmark rating system, the Consumer Bill of Rights required it. But the Legislature moved auto insurance to a <strong class="text-text">"file and use" system in 2003 (S.B. 14)</strong>, the benchmark era ended in 2004, and with it went the mandate. Today every insurer files its own rates and decides its own discounts — including whether to offer this one at all.</p>
+          <p>Why we lead with this: a page still promising the mandatory 10% is telling you its information predates 2004. (It's the same tell as a site promising to "remove points" — <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">Texas hasn't had points since 2019</a>.) The discount is real at many insurers; the guarantee is not.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What insurers typically offer</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Industry practice — and this is insurer marketing, not law — typically runs <strong class="text-text">a few percent, commonly cited as 2–10%, lasting around three years</strong>. Some insurers apply it to specific coverages rather than the whole premium; some don't offer it at all; a few restrict it to certain ages. The spread is wide enough that the only meaningful step is asking your own insurer the four questions below before you spend six hours on a course.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How to claim it — four questions, then the course</h2>
+        <ol class="list-decimal pl-6 space-y-3 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <li><strong class="text-text">"Do you offer a defensive driving discount, and how much?"</strong> Get the number, and which coverages it applies to.</li>
+          <li><strong class="text-text">"How long does it last, and when do I have to renew the course?"</strong> Three years is common; confirm yours.</li>
+          <li><strong class="text-text">"What documentation do you need?"</strong> Usually the certificate's insurance copy — there's no state-prescribed process, so the insurer decides.</li>
+          <li><strong class="text-text">"Does the course need to be TDLR-approved?"</strong> Most Texas insurers expect the standard 6-hour TDLR-approved course — the same one used for ticket dismissal. (Verify any provider's approval in our <a href="/texas/providers" class="text-primary-deep font-medium hover:underline">TDLR provider directory</a>.)</li>
+        </ol>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Then enroll, complete the 6 hours, and send your insurer the <strong class="text-text">insurance copy</strong> of your certificate. With our course the certificate — court copy and insurance copy — downloads instantly when you finish.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">No ticket required — and ticket-takers get both benefits</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>TDLR recognizes the same 6-hour course for "<strong class="text-text">ticket dismissal or insurance discounts</strong>" — you don't need a citation or a court's permission to take it voluntarily. And if you <em>are</em> dismissing a ticket, the same completion can do double duty: court copy to the court, insurance copy to your agent. That's also the consolation path for drivers who can't use the course on their ticket — <a href="/texas/cdl-defensive-driving" class="text-primary-deep font-medium hover:underline">CDL holders</a>, <a href="/texas/speeding-25-over" class="text-primary-deep font-medium hover:underline">25-over citations</a>, or a <a href="/texas/12-month-rule" class="text-primary-deep font-medium hover:underline">second ticket inside 12 months</a>: the dismissal door may be closed, but the discount door isn't.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;">{item.a}</p>
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Six hours, two possible payoffs</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Confirm the discount with your agent first — we'd rather you spend five minutes on the phone than six hours on a maybe. When it checks out, our TDLR-approved course (CP1234) is <strong class="text-text">$28 all-in, online, with the insurance copy of your certificate included in the free instant download</strong>.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="/texas/transparency"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            See exactly what we charge
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational, not insurance advice — discount availability, size, and terms are determined solely by your insurer.</p>
+          <p class="text-xs text-text-subtle">Last updated June 11, 2026 — verified by the Road Ready Safety editorial team against current Texas Department of Insurance consumer guidance, the S.B. 14 (2003) file-and-use transition, and TDLR course-use guidance. Typical discount ranges are industry practice, not state requirements.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

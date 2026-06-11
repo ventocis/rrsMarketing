@@ -24,6 +24,8 @@ const staticRoutes = [
   '/texas/accessibility',
   '/texas/cost',
   '/texas/speeding-ticket',
+  '/texas/speeding-25-over',
+  '/texas/ticket-law-changes-2025',
   '/texas/eligibility-tracker',
   '/texas/vs',
   '/texas/vs/onlinetxdefensivedriving',

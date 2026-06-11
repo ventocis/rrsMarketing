@@ -1,0 +1,142 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    "q": "Can you take defensive driving for a texting ticket in Texas?",
+    "a": "Yes — the statewide texting offense (§545.4251) is a rules-of-the-road moving violation with no special exclusion, so it's dismissible with a driving safety course under the normal conditions: valid Texas license, timely request, no course used for dismissal in the prior 12 months."
+  },
+  {
+    "q": "How much is a texting while driving ticket in Texas?",
+    "a": "First offense: $25–$99. Repeat offenses: $100–$200. Court costs ride on top. The bigger number is the conviction's insurance impact — distracted-driving convictions are rated increasingly hard, for about three years — which is what the dismissal path avoids."
+  },
+  {
+    "q": "Is a hands-free city ordinance ticket the same as the state texting ticket?",
+    "a": "Not exactly. City hands-free ordinances (Austin, San Antonio, and many others) ban all handheld use and are prosecuted as city-ordinance violations in municipal court. Courts commonly allow the same dismissal and deferred tools, but confirm with the specific court — the statutory hook differs from a state-law moving violation."
+  },
+  {
+    "q": "Does a phone ticket in a school zone cost more?",
+    "a": "Yes, two ways: the school-zone handheld offense itself, and the $25 municipal child safety fund fine for offenses in a school crossing zone — the reason dismissal totals run $169 instead of $144 at most courts. Eligibility for the course is unchanged."
+  },
+  {
+    "q": "Will a texting ticket raise my insurance?",
+    "a": "A texting conviction will — insurers have moved distracted driving toward the top of their rating concerns, and a conviction typically affects pricing for about three years. A dismissed charge never reaches your record, which is the entire argument for the course."
+  },
+  {
+    "q": "I was using GPS, not texting — should I fight it instead?",
+    "a": "The statute targets reading, writing, and sending electronic messages; navigation use is a recognized defense, and these cases are genuinely winnable when the facts support it. Weigh trial against the certain outcome of dismissal-by-course — and remember a not-guilty plea and a course request can't both be your opening move. Ask the clerk about your court's process before choosing."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: "Got a Texting Ticket in Texas? Defensive Driving Usually Erases It",
+  description: "Texas texting-while-driving tickets (§545.4251) and school-zone phone tickets (§545.425) are moving violations dismissible with defensive driving. The rules, the city-ordinance wrinkle, and how to clear it.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-11',
+  dateModified: '2026-06-11',
+  mainEntityOfPage: `${siteUrl}/texas/cell-phone-ticket`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Texting / Cell Phone Ticket in Texas: Yes, Defensive Driving Can Dismiss It (2026)"
+    description="Texas texting-while-driving tickets (§545.4251) and school-zone phone tickets (§545.425) are moving violations dismissible with defensive driving. The rules, the city-ordinance wrinkle, and how to clear it."
+    keywords="texting ticket texas, cell phone ticket texas dismiss, texting while driving ticket defensive driving, 545.4251 texas, hands free ticket texas"
+    url="/texas/cell-phone-ticket"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">Speeding ticket guide</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Cell phone tickets</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          Got a Texting Ticket in Texas? Defensive Driving Usually Erases It
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Texas's statewide texting ban (Transp. Code §545.4251 — reading, writing, or sending an electronic message while driving) and the school-zone handheld ban (§545.425) are both rules-of-the-road offenses — which means both are <strong class="text-text">generally dismissible with a defensive driving course</strong> under the normal conditions. No special exclusion applies to phone offenses.</p>
+          <p>Here's how the dismissal works for this ticket, plus the local-ordinance wrinkle that confuses people.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Procedures vary by court and judge — confirm with the court listed on your citation.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The dismissal play, applied to a phone ticket</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Standard sequence: <a href="/texas/request-defensive-driving" class="text-primary-deep font-medium hover:underline">request the course</a> from the court on your citation by the answer date, with your plea, license copy, insurance proof, and the court's fee. After the court's order, complete the 6-hour course, then submit the certificate and your <a href="/texas/type-3a-driving-record" class="text-primary-deep font-medium hover:underline">Type 3A record</a> within 90 days. Dismissed — and by law the charge "may not be part of a person's driving record or used for any purpose."</p>
+          <p>First-offense texting fines are modest ($25–$99; repeat offenses $100–$200), which tempts people to just pay. The math says otherwise: paying is a conviction that insurers increasingly rate as distracted driving — one of the fastest-hardening categories in underwriting — for about three years. The dismissal path costs more upfront (court fee plus $28 course) and saves multiples of that at renewal.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The wrinkle: city ordinances and school zones</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Dozens of Texas cities (Austin, San Antonio, and others) run their own <strong class="text-text">hands-free ordinances</strong> stricter than state law — banning all handheld use, not just messaging. An ordinance ticket is still a fine-only offense in municipal court, and courts commonly extend the same dismissal and deferred options; but because it's a city ordinance rather than a Subtitle C state offense, confirm with that court which tools it offers. Our <a href="/texas/courts" class="text-primary-deep font-medium hover:underline">court directory</a> has the contacts.</p>
+          <p>In a school zone, the state handheld ban (§545.425) applies statewide — and a school-crossing-zone offense adds the $25 child safety fund fine in municipal courts, which is why <a href="/texas/school-zone-ticket" class="text-primary-deep font-medium hover:underline">school-zone totals run $25 higher</a>. Same eligibility, slightly higher check.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Six hours now, or three years of distracted-driver pricing</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>If your phone ticket qualifies, the course removes it from existence: <strong class="text-text">$28 all-in, online, free instant certificate</strong> — finished the same day you start.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="/texas/eligibility-tracker"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            Check your eligibility
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated June 11, 2026 — verified by the Road Ready Safety editorial team against Tex. Transp. Code §§545.425 &amp; 545.4251, Tex. Code Crim. Proc. arts. 45A.351–.353 &amp; 102.014.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

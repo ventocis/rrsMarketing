@@ -1,0 +1,143 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    "q": "How do I get an expired registration ticket dismissed in Texas?",
+    "a": "Register the vehicle (paying the delinquent registration fees) within 20 working days of the offense or before your first court appearance, whichever is later, then show the court proof and pay a reimbursement fee of up to $20. The court may then dismiss the charge under Transp. Code §502.407 — no course, no conviction."
+  },
+  {
+    "q": "How long do I have to renew after an expired registration ticket?",
+    "a": "The statute's window is 20 working days after the offense date or before your first scheduled court appearance — whichever is later. Working days exclude weekends and legal holidays. Don't cut it close: renew this week and deliver proof early."
+  },
+  {
+    "q": "How much does the dismissal cost?",
+    "a": "The court's reimbursement fee is capped at $20 by statute (some courts charge less). You'll separately owe the normal registration renewal plus the delinquency amounts to the county — those aren't court fees, they're the registration you already owed."
+  },
+  {
+    "q": "Is the dismissal guaranteed?",
+    "a": "The statute says the court \"may\" dismiss — it's discretionary in form, routine in practice when you've genuinely remedied it in time and bring clean proof. Show up late, without the delinquency paid, or after paying the citation, and the routine answer can become no."
+  },
+  {
+    "q": "Can I take defensive driving for an expired registration ticket instead?",
+    "a": "It's the wrong tool — expired registration isn't a moving violation, and the compliance dismissal costs at most $20 versus roughly $172 for the course path. Use §502.407 for the registration; save defensive driving for an eligible moving violation."
+  },
+  {
+    "q": "What if I already paid the expired registration ticket?",
+    "a": "Payment is a conviction, and the compliance dismissal only works on a pending charge. Your only realistic undo is a motion for new trial within 5 days of the judgment — see our already-paid guide — after which the §502.407 fix could apply to the reopened case at the court's discretion."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: "Expired Registration Ticket in Texas: Fix It, Pay Up to $20, Ask for Dismissal",
+  description: "Texas law lets courts dismiss an expired-registration ticket if you register within 20 working days and pay a fee capped at $20 (Transp. Code §502.407). The exact deadline, the catch, and why defensive driving is the wrong tool here.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-11',
+  dateModified: '2026-06-11',
+  mainEntityOfPage: `${siteUrl}/texas/expired-registration-ticket`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Expired Registration Ticket in Texas: The $20 Fix-It Dismissal, Step by Step (2026)"
+    description="Texas law lets courts dismiss an expired-registration ticket if you register within 20 working days and pay a fee capped at $20 (Transp. Code §502.407). The exact deadline, the catch, and why defensive driving is the wrong tool here."
+    keywords="expired registration ticket texas, dismiss expired registration ticket, 502.407 texas, fix it ticket texas registration, expired tags ticket texas"
+    url="/texas/expired-registration-ticket"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">Speeding ticket guide</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Expired registration</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          Expired Registration Ticket in Texas: Fix It, Pay Up to $20, Ask for Dismissal
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>An expired-registration ticket is the cheapest ticket in Texas to make disappear — if you move fast. Transp. Code §502.407 lets the court <strong class="text-text">dismiss the charge once you register the vehicle (paying the late registration fees) within 20 working days of the offense or before your first court appearance, whichever is later</strong>, plus a court reimbursement fee capped at <strong class="text-text">$20</strong>.</p>
+          <p>No course, no probation, no record entry. Here's the exact sequence and the two details people miss.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Procedures vary by court and judge — confirm with the court listed on your citation.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The three steps</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">1. Register the vehicle now.</strong> Renew at your county tax office or online — you'll pay the normal registration plus the delinquency amounts. The statute requires the defect remedied <em>and</em> the late fees paid; a renewal that skips the delinquency doesn't qualify.</p>
+          <p><strong class="text-text">2. Bring proof to the court before the deadline.</strong> The window is 20 <em>working</em> days from the offense (weekends and holidays don't count) or your first appearance date, whichever is later. Take or send the court your renewal receipt showing the registration and late fees paid.</p>
+          <p><strong class="text-text">3. Pay the dismissal fee — capped at $20.</strong> The statute says the court "may" dismiss and may assess a reimbursement fee up to $20; in practice, courts dismiss these routinely when the paperwork is in order. Note the "may": it's discretionary on paper, so be polite, be timely, and be complete.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The two details people miss</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">Don't pay the ticket — pay the registration.</strong> Paying the citation is a conviction, and a convicted charge can't be compliance-dismissed. The money goes to the county for registration and to the court only for the small fee. If the court's online portal shows a "pay now" amount, that's the conviction path — call the clerk instead and say you're seeking the §502.407 dismissal.</p>
+          <p><strong class="text-text">Defensive driving is the wrong tool here.</strong> Expired registration isn't a moving violation, and even if a court entertained it, why pay ~$144 in court costs plus a $28 course when the statute prices this fix at $20? Save the course for a <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">moving violation that needs it</a> — and if the same stop produced one, handle both: the registration with §502.407, the moving violation with the course.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Got a moving violation in the same stop?</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Stops that catch expired tags often catch a moving violation too. Fix the registration for $20 under the statute — and clear the eligible moving violation with our <strong class="text-text">$28 course and free instant certificate</strong>.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="/texas/expired-license-ticket"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            Expired license? Same idea
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated June 11, 2026 — verified by the Road Ready Safety editorial team against Tex. Transp. Code §502.407 and Tex. Code Crim. Proc. ch. 45A.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

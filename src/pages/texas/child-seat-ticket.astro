@@ -1,0 +1,143 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    "q": "Do I have to take a special 4-hour child seat course for a Texas car seat ticket?",
+    "a": "Not anymore — the specialized-course requirement (former §545.412(g)) was repealed effective June 1, 2023 by H.B. 1560. Pages and even court websites still describing it are citing repealed law. Current practice runs through deferred disposition with judge-set conditions, often including proof of a properly installed seat."
+  },
+  {
+    "q": "How much is a child seat ticket in Texas?",
+    "a": "The fine ranges from $100 to $250, plus court costs. The better outcome is deferred disposition ending in dismissal — no conviction, and the money goes toward costs and conditions rather than a fine on your record."
+  },
+  {
+    "q": "Can a car seat ticket be dismissed in Texas?",
+    "a": "Yes, most commonly through deferred disposition: plead, pay costs, complete the judge's conditions — typically proof of an appropriate, properly installed seat, sometimes an installation check or child-passenger-safety instruction — and the charge is dismissed under CCP art. 45A.305."
+  },
+  {
+    "q": "Where can I get my car seat installation checked for free?",
+    "a": "Free checks by certified child passenger safety technicians are widely available — many fire departments, children's hospitals, and Safe Kids coalition events offer them, and some Texas courts (Harker Heights, for example) run their own. Bring documentation of the check to court; it's your strongest evidence of compliance."
+  },
+  {
+    "q": "Does a child seat conviction go on my driving record?",
+    "a": "A conviction would be reported like other traffic convictions — which is exactly why deferred disposition matters here: complete it and there's no final conviction and nothing to report. Insurers also treat child-restraint convictions unkindly, making the dismissal path doubly worth it."
+  },
+  {
+    "q": "Can I use a regular defensive driving course for a child seat ticket?",
+    "a": "The judge can order the regular course as a deferred condition (and must, if you're under 25 and it's treated as a moving violation), but there's no longer any statutory course-for-dismissal mechanism specific to child seat tickets. The path is deferred disposition; the course is one possible condition within it."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: "Child Car Seat Ticket in Texas: The Special-Course Rule Is Dead — Here's the 2026 Path",
+  description: "Most websites still cite a special 4-hour child-passenger-safety course for Texas child seat tickets — that law was repealed in June 2023. The current path is deferred disposition with judge-set conditions. What actually works in 2026.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-11',
+  dateModified: '2026-06-11',
+  mainEntityOfPage: `${siteUrl}/texas/child-seat-ticket`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Child Car Seat Ticket in Texas: The 4-Hour Course Rule Was Repealed — Here's What Works Now (2026)"
+    description="Most websites still cite a special 4-hour child-passenger-safety course for Texas child seat tickets — that law was repealed in June 2023. The current path is deferred disposition with judge-set conditions. What actually works in 2026."
+    keywords="child seat ticket texas, car seat ticket texas dismiss, 545.412 texas, child restraint ticket texas, child passenger safety course repealed"
+    url="/texas/child-seat-ticket"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">Speeding ticket guide</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Child seat tickets</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          Child Car Seat Ticket in Texas: The Special-Course Rule Is Dead — Here's the 2026 Path
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>If you've been searching, you've probably read that a Texas child-restraint ticket (Transp. Code §545.412) requires a <strong class="text-text">special driving safety course with 4 hours of child passenger safety instruction</strong>. Here's what those pages don't know: <strong class="text-text">that requirement was repealed effective June 1, 2023</strong> (H.B. 1560 repealed §545.412(g)) — and many court websites still cite it.</p>
+          <p>The current path runs through <strong class="text-text">deferred disposition</strong>, where the judge sets reasonable conditions — frequently including proof you've obtained and learned to install a proper seat. Here's how it works now, verified against current law and the state's own court-education materials.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Procedures vary by court and judge — confirm with the court listed on your citation.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What the law says in 2026</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>The offense: a driver transporting a child under 8 (and under 4'9") who isn't secured in a proper child passenger safety seat (§545.412), with fines of $100–$250 plus costs. The old subsection (g) that mandated the specialized 4-hour course for dismissal is gone — repealed by H.B. 1560 in 2023 along with its seat-belt cousin.</p>
+          <p>Today, per the Texas Municipal Courts Education Center's current guidance, courts resolve these through <strong class="text-text">ordinary deferred disposition</strong> (CCP art. 45A.302), with the judge's broad power to impose "any reasonable condition" (art. 45A.303(b)(10)) doing the work the special course used to: judges commonly require proof of an appropriate seat, a car-seat installation check, or one-on-one child passenger safety instruction. Complete the conditions, charge dismissed, no conviction.</p>
+          <p>Why we're confident telling you this when other sites say otherwise: we verify against the enrolled bills and current court-education materials, not against other websites. A page citing "§545.412(g)" or a "4-hour specialized course" is citing law that stopped existing in June 2023 — the same way pages citing "Art. 45.0511" predate 2025.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How to handle the ticket, practically</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">Fix the seat situation first.</strong> Before you contact the court, get the right seat properly installed — free installation checks are widely available (many fire departments, hospitals, and Safe Kids coalitions do them, and some Texas courts run their own child passenger safety technician programs). Walking into court with the problem already solved transforms the conversation.</p>
+          <p><strong class="text-text">Then ask the court for deferred disposition</strong> by your appearance date, and expect seat-related conditions. Bring documentation of the seat and the installation check. The fine-only stakes are real ($100–$250) but the judge's real interest is the child's safety — demonstrated compliance is the strongest card you hold. If you're under 25, expect the standard driving safety course as an additional mandatory condition of any deferred (art. 45A.304); for everyone else the ordinary course can also be offered, but it's the judge's choice, not a statutory requirement anymore.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Solve the seat, then the ticket</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Get the seat installed and checked, ask the court for deferred, and if the judge orders a driving safety course as a condition — ours satisfies it: <strong class="text-text">$28 all-in, online, free instant certificate</strong>.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="/texas/deferred-disposition"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            How deferred disposition works
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated June 11, 2026 — verified by the Road Ready Safety editorial team against Tex. Transp. Code §545.412 (former subsec. (g) repealed by H.B. 1560, 87th Leg., eff. June 1, 2023), Tex. Code Crim. Proc. arts. 45A.302–.305, and current TMCEC dismissal guidance.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

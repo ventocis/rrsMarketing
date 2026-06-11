@@ -1,0 +1,144 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    "q": "Is there a warrant for me if I missed my Texas court date?",
+    "a": "Possibly — courts can issue one any time after the missed appearance, but many send a reminder or delinquency notice first. The only way to know is to ask: call the court clerk on your citation, or check the court's online warrant search if it has one."
+  },
+  {
+    "q": "Will I be arrested if I go to the court to fix it?",
+    "a": "At many courts, no — \"safe harbor\" policies mean you won't be arrested on that court's warrants while appearing to resolve them. But it's a local policy, not a law. Call the clerk first and ask directly: \"If I come in to resolve this, will I be arrested?\""
+  },
+  {
+    "q": "Why won't DPS renew my license?",
+    "a": "An unresolved failure-to-appear was reported under Transportation Code chapter 706 — the OmniBase program. DPS denies renewal (it does not suspend your current license) until the court clears the report, which happens when you resolve the underlying case and pay the program's $10 reimbursement fee per violation."
+  },
+  {
+    "q": "Can I still take defensive driving after missing my court date?",
+    "a": "Sometimes. The statutory deadline to request the course is your answer date, but a judge retains discretion to grant it any time before the case reaches final disposition (art. 45A.352(c)). The earlier you contact the court, the more likely the answer is yes — once a conviction is entered, the option is gone."
+  },
+  {
+    "q": "Does the failure-to-appear charge go away if the original ticket is dismissed?",
+    "a": "No — it's a separate offense that exists \"regardless of the disposition\" of the original charge (Transp. Code §543.009(b)). You can win the speeding ticket and still owe the FTA. Some prosecutors will dismiss it as part of resolving everything; ask."
+  },
+  {
+    "q": "How much will it all cost now?",
+    "a": "The original fine and costs, plus the FTA charge's fine and costs, plus a warrant fee (commonly $50) if one issued, plus $10 per violation for the OmniBase report. Missing a $200 ticket commonly turns it into a $400–$500 problem — which is why the call to the clerk today is the cheapest thing you'll do all week."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: "Missed Your Court Date for a Texas Ticket? Here's What Happens — and What to Do Today",
+  description: "Missing a Texas ticket appearance can add a failure-to-appear charge, a warrant, and a DPS renewal hold through OmniBase. What actually happens, in what order, and how to fix it — fastest first.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-11',
+  dateModified: '2026-06-11',
+  mainEntityOfPage: `${siteUrl}/texas/missed-court-date`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Missed Your Court Date for a Texas Traffic Ticket? Do This Now (2026)"
+    description="Missing a Texas ticket appearance can add a failure-to-appear charge, a warrant, and a DPS renewal hold through OmniBase. What actually happens, in what order, and how to fix it — fastest first."
+    keywords="missed court date traffic ticket texas, failure to appear texas ticket, traffic ticket warrant texas, omnibase texas, violate promise to appear texas"
+    url="/texas/missed-court-date"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">Speeding ticket guide</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Missed court date</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          Missed Your Court Date for a Texas Ticket? Here's What Happens — and What to Do Today
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Missing the appearance date on a Texas citation starts a cascade: the court can add a separate <strong class="text-text">failure-to-appear charge</strong>, issue an <strong class="text-text">arrest warrant</strong>, and report you to a DPS program that <strong class="text-text">blocks your license renewal</strong> until the case is resolved. None of it gets better by waiting — and almost all of it is fixable by contacting the court.</p>
+          <p>Here's exactly what each consequence is, in the order it usually arrives, and the fastest way out.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. If a warrant is active, the safest move is contacting the court (or an attorney) before driving anywhere — procedures vary by court.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What actually happens when you miss the date</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">A second charge.</strong> Signing a citation is a promise to appear. Willfully missing the date is its own misdemeanor — "violation of promise to appear" (Transp. Code §543.009(b)) or failure to appear (Penal Code §38.10, a Class C when the underlying offense is fine-only) — and it sticks <em>regardless of what happens to the original ticket</em>. Beat the speeding charge later and the FTA can still stand.</p>
+          <p><strong class="text-text">A warrant.</strong> The court can issue an arrest warrant, with a warrant reimbursement fee (commonly $50, CCP art. 102.011) added to what you owe. Most people aren't hunted down for a traffic warrant — but it surfaces at the worst times: a routine stop, a renewal, an apartment background check.</p>
+          <p><strong class="text-text">A license-renewal hold.</strong> Under the Failure to Appear program (Transp. Code ch. 706, administered by the vendor OmniBase), the court reports the unresolved case to DPS, which then refuses to renew your license until it's cleared, plus a $10 reimbursement fee per violation. Important distinction: the hold <strong class="text-text">blocks renewal — it does not suspend</strong> your current license. You're legal to drive until your license expires; after that, you're driving unlicensed.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How to fix it — fastest first</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">Call the court clerk today.</strong> Tell them you missed the date and ask what your options are. Most courts will tell you exactly how to get back on the docket — appearing in person, posting a bond, or paying to lift the warrant. Some courts run periodic warrant-amnesty periods; ask.</p>
+          <p><strong class="text-text">Appear — many courts make it safe to.</strong> A number of Texas courts follow "safe harbor" policies: you will not be arrested on the court's own outstanding warrants while you're there to resolve them (La Porte Municipal Court advertises exactly this). It's a local policy, not a statewide right — confirm with your clerk before walking in, and our <a href="/texas/courts" class="text-primary-deep font-medium hover:underline">court directory</a> notes it where courts publish it.</p>
+          <p><strong class="text-text">Ask whether dismissal options survived.</strong> If the case hasn't gone to judgment, a judge still has discretion to allow defensive driving even though your answer date passed (art. 45A.352(c) allows a grant any time before final disposition) — and deferred disposition may be on the table too. Missing the date weakens your position; it doesn't always end it. Once the FTA program fee and the case are resolved, the court notifies the program and your renewal hold lifts.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Once you're back on the docket, finish it right</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>If the court lets you back in with the dismissal option intact, don't waste the second chance — our TDLR-approved course is <strong class="text-text">$28 all-in with a free instant certificate</strong>, so the paperwork is never the reason you miss another deadline.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="/texas/courts"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            Find your court's contacts
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated June 11, 2026 — verified by the Road Ready Safety editorial team against Tex. Transp. Code §543.009 &amp; ch. 706, Tex. Penal Code §38.10, Tex. Code Crim. Proc. arts. 102.011 &amp; 45A.352, and published court policies.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

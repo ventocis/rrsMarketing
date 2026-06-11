@@ -1,0 +1,142 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    "q": "Does my child have to go to court for a Texas traffic ticket?",
+    "a": "If they're under 17, yes — the plea must be taken in open court, and the court summons a parent, guardian, or managing conservator to be present (CCP art. 45A.452). Mail-in and online resolution aren't available to minors; the appearance is statutory."
+  },
+  {
+    "q": "Do parents have to appear with a minor for a traffic ticket?",
+    "a": "The court issues a summons compelling a parent's presence, so plan on it. The statute lets the court proceed without the parent only when it can't secure their appearance — treating that as a loophole rather than a fallback is a bad idea for everyone involved."
+  },
+  {
+    "q": "Can a 16-year-old take defensive driving to dismiss a ticket in Texas?",
+    "a": "Yes — a minor with a valid license or learner permit who meets the standard conditions can request course dismissal; the request is typically made at or before the open-court appearance, with the parent present. Completion dismisses the charge exactly as it would for an adult."
+  },
+  {
+    "q": "What happens if a minor ignores a Texas ticket?",
+    "a": "Nothing good — failure to appear for juveniles triggers additional court tools beyond the adult consequences, and unresolved juvenile cases can follow into adulthood (including license holds). The open-court appearance is mandatory; missing it converts a $28-course problem into a much bigger one."
+  },
+  {
+    "q": "Will my teen's ticket raise our family insurance?",
+    "a": "A conviction on the teen's record will, and teen surcharges are the steepest in the market. A dismissal through the course never reaches the record, which is why the course path is close to mandatory financial planning for a family with a newly licensed driver and a ticket."
+  },
+  {
+    "q": "My teen has a learner permit — does that change anything?",
+    "a": "A permit satisfies the license requirement for course dismissal. If the route ends up being deferred instead, the under-25 mandatory course condition applies, plus the required DPS examination for permit/provisional holders ($10 fee). The straight dismissal avoids the exam step."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: "Your Teenager Got a Texas Ticket: The Open-Court Rule, and What Happens After",
+  description: "Texas defendants under 17 must plead in open court with a parent summoned to appear (art. 45A.452) — no mail-in resolution. What that means practically, and how the dismissal options work for teen drivers.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-11',
+  dateModified: '2026-06-11',
+  mainEntityOfPage: `${siteUrl}/texas/minor-traffic-ticket`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Minor (Under 17) with a Texas Traffic Ticket: Open Court, Parent Required, Then the Options (2026)"
+    description="Texas defendants under 17 must plead in open court with a parent summoned to appear (art. 45A.452) — no mail-in resolution. What that means practically, and how the dismissal options work for teen drivers."
+    keywords="minor traffic ticket texas, under 17 ticket texas, juvenile traffic ticket texas, teen ticket court parent texas, 16 year old speeding ticket texas"
+    url="/texas/minor-traffic-ticket"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">Speeding ticket guide</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Minors (under 17)</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          Your Teenager Got a Texas Ticket: The Open-Court Rule, and What Happens After
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>A Texas traffic defendant <strong class="text-text">younger than 17 can't resolve a ticket by mail or online</strong> — the law requires the plea to be taken in <strong class="text-text">open court</strong>, and the court summons a <strong class="text-text">parent, guardian, or managing conservator</strong> to be present (CCP art. 45A.452). That's why court websites tell teens to appear in person with a parent: it's statute, not policy.</p>
+          <p>After the courtroom formality, the dismissal toolbox looks familiar — course dismissal, deferred — applied with a parent in the room. Here's what to expect, from a parent's seat.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Procedures vary by court and judge — confirm with the court listed on your citation.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What the appearance actually looks like</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>The court sets an appearance date; the minor pleads in open court, and the judge will have issued a summons compelling a parent or guardian to be there too. (If the court genuinely can't secure a parent's appearance, it may proceed without one — but plan on going; ignoring a parental summons is its own problem.) Expect the judge to address the teen directly — these dockets are deliberately a little formal, because the formality is the point.</p>
+          <p>At or before that appearance, the options get requested the same way as for adults: the <strong class="text-text">driving safety course dismissal</strong> if the teen qualifies (valid Texas license or permit — a learner permit counts — and the other standard conditions), or <strong class="text-text">deferred disposition</strong> at the judge's discretion. Since the teen is under 25, any deferred comes with the mandatory course condition (art. 45A.304) — and permit holders add a required DPS exam. Practically: the teen is taking the course on any non-conviction path, so the cleaner ask is usually the straight dismissal.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">A parent's checklist</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">Before the date:</strong> confirm the appearance time with the clerk (and that the parent summons applies to you), bring the teen's license or permit and proof of insurance listing them, and decide which option you'll request. Some courts let you submit the course request paperwork at that first appearance — bring the fee.</p>
+          <p><strong class="text-text">After approval:</strong> the 6-hour course can be done online at home (a parent making it a supervised evening is, in our experience, the version that actually gets finished), then the certificate and <a href="/texas/type-3a-driving-record" class="text-primary-deep font-medium hover:underline">Type 3A record</a> go back to the court inside 90 days. The payoff is identical to an adult's: dismissed charge, nothing on the record — which matters enormously when the driver is 16 and the family insurance policy is already groaning. Failure-to-appear consequences also land differently on minors (courts have additional tools for juveniles who blow off court), so treat the date as immovable.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">After the courtroom: one supervised evening finishes it</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Once the court approves the course, the rest is a kitchen-table evening: <strong class="text-text">$28, online, certificate the moment it's done</strong> — and the family record stays clean.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="/texas/under-25-ticket"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            Driver between 17 and 25?
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated June 11, 2026 — verified by the Road Ready Safety editorial team against Tex. Code Crim. Proc. arts. 45A.452, 45A.304 &amp; 45A.352, and Tex. Transp. Code §521.161(b)(2).</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

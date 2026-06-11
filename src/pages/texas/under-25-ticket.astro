@@ -1,0 +1,142 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    "q": "Do drivers under 25 have to take a driving safety course in Texas?",
+    "a": "If a judge grants deferred disposition for a moving violation, yes — the course is a mandatory condition for defendants under 25 (CCP art. 45A.304). On the straight course-dismissal path, the course is the mechanism itself. Either way, an under-25 driver resolving a moving violation without a conviction is taking the 6 hours."
+  },
+  {
+    "q": "Should a young driver pick defensive driving or deferred disposition?",
+    "a": "When you qualify for the course dismissal, take it: it's a right rather than a judge's favor, typically cheaper, ends when you submit your documents, and carries no probation exposure. Deferred — with its mandatory course condition for under-25s — is the fallback when the course door is closed (25+ over, 12-month rule, out-of-state license)."
+  },
+  {
+    "q": "I'm 22 with a provisional license — what's different?",
+    "a": "On deferred, you'd face the mandatory course plus a required DPS examination (§521.161(b)(2), $10 fee) regardless of any prior exam. On the straight course dismissal, no exam requirement. One more reason the dismissal path is cleaner for permit and provisional holders when it's available."
+  },
+  {
+    "q": "How much does a first ticket raise insurance for a driver under 25?",
+    "a": "Painfully — young drivers already pay the market's highest base rates, and a first moving-violation conviction commonly adds double-digit percentages for about three years. The dismissal path (course completed, charge dismissed, nothing on the record) is worth several times its cost at these ages."
+  },
+  {
+    "q": "Does the under-25 course requirement apply to non-moving violations?",
+    "a": "No — art. 45A.304 triggers on moving violations. A parking or equipment matter resolved through deferred wouldn't carry the mandatory course condition (and equipment tickets have their own cheaper fix — the $10 repair-and-dismiss rule)."
+  },
+  {
+    "q": "I'm 24 and a half — does the rule still apply?",
+    "a": "The statute applies to defendants 'younger than 25 years of age' at the relevant time — so yes at 24. The week you turn 25, the mandatory-course condition stops attaching to deferred; the strategic logic on this page flips to the standard adult analysis."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: "Under 25 with a Texas Ticket? You're Taking the Course Either Way — Here's How to Make It Count",
+  description: "Texas drivers under 25 who take deferred disposition for a moving violation MUST complete a driving safety course (art. 45A.304) — so the course-dismissal path is almost always the smarter ask. The rules, the permit exam catch, and the play.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-11',
+  dateModified: '2026-06-11',
+  mainEntityOfPage: `${siteUrl}/texas/under-25-ticket`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Under 25 with a Texas Ticket: The Course Is Mandatory Either Way — Use That (2026)"
+    description="Texas drivers under 25 who take deferred disposition for a moving violation MUST complete a driving safety course (art. 45A.304) — so the course-dismissal path is almost always the smarter ask. The rules, the permit exam catch, and the play."
+    keywords="under 25 ticket texas, young driver ticket texas, deferred disposition under 25 course, 45A.304 texas, first ticket texas young driver"
+    url="/texas/under-25-ticket"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">Speeding ticket guide</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Under-25 drivers</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          Under 25 with a Texas Ticket? You're Taking the Course Either Way — Here's How to Make It Count
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Texas has a special rule for drivers under 25 that changes the strategy: <strong class="text-text">if a judge grants you deferred disposition for a moving violation, the driving safety course is a mandatory condition</strong> — not optional, not discretionary (CCP art. 45A.304). And if you hold a learner permit or provisional license, add a required DPS examination (with a $10 fee) on top.</p>
+          <p>Read that again strategically: since the under-25 driver takes the course on <em>either</em> path, the question isn't whether to spend the 6 hours — it's which legal wrapper gets you more for them. Usually, that's the straight dismissal.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Procedures vary by court and judge — confirm with the court listed on your citation.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Why the straight course-dismissal usually beats deferred for young drivers</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">Same course, better wrapper.</strong> The course-dismissal path (art. 45A.352) is a statutory right when you qualify — judge must grant it — and it ends the moment you submit your certificate and Type 3A record. Deferred is discretionary, usually costs more (judge-set fine up to the maximum, versus the standard ~$144 costs), adds up to 180 days of stay-clean probation exposure… and then makes you take the same course anyway because you're under 25.</p>
+          <p><strong class="text-text">When deferred is still the right ask:</strong> when the course-dismissal door is closed — cited <a href="/texas/speeding-25-over" class="text-primary-deep font-medium hover:underline">25+ over</a>, inside the <a href="/texas/12-month-rule" class="text-primary-deep font-medium hover:underline">12-month rule</a>, or an <a href="/texas/out-of-state-driver" class="text-primary-deep font-medium hover:underline">out-of-state license</a>. Then deferred (with its mandatory course condition) is the tool. Either way the 6 hours happen; the wrapper decides the cost and the risk.</p>
+          <p><strong class="text-text">The permit/provisional catch:</strong> under-25 deferred with a learner permit or provisional license adds a required DPS examination (Transp. Code §521.161(b)(2)) — regardless of whether you've already been examined — plus a $10 fee. One more small reason the straight dismissal is the cleaner path when it's open. (Under 17? Different procedural world: you plead in open court with a parent summoned — see the <a href="/texas/minor-traffic-ticket" class="text-primary-deep font-medium hover:underline">minors guide</a>.)</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Why this matters more before 25 than after</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Young drivers pay the steepest insurance rates in the market, and a first conviction multiplies a number that's already large — a 19-year-old's 15% surcharge is a much bigger check than a 45-year-old's. Convictions also stack toward the habitual-violator thresholds (4 moving violations in 12 months suspends a license at any age) and, for provisional licenses, DPS scrutiny is tighter. Keeping the record at zero is worth more per conviction avoided in this decade of driving than any other — and Texas hands you the tool for $28 plus court costs.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">You're taking the course anyway — take the $28 one tonight</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Whichever wrapper your court grants, the 6 hours are yours to do. Ours is <strong class="text-text">$28 all-in, on your phone, with the certificate the moment you finish</strong> — built for people with a deadline and a life.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="/texas/eligibility-tracker"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            Check which path is open
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated June 11, 2026 — verified by the Road Ready Safety editorial team against Tex. Code Crim. Proc. arts. 45A.302, 45A.304 &amp; 45A.352, and Tex. Transp. Code §521.161(b)(2).</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

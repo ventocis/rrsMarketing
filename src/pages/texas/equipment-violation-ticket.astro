@@ -1,0 +1,142 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    "q": "Can a broken tail light ticket be dismissed in Texas?",
+    "a": "Yes — fix the defect before your first court appearance and pay a reimbursement fee of up to $10, and the court may dismiss the charge under Transp. Code §547.004(c). It's the cheapest dismissal in Texas traffic law; the catch is the deadline is your appearance date, with no grace window after it."
+  },
+  {
+    "q": "What proof of repair does the court need?",
+    "a": "Courts vary: a repair receipt is the universal answer, and many accept a visual inspection or a corrected-defect form signed by an officer. Call the clerk listed on your citation and ask what they accept and whether you need to appear in person."
+  },
+  {
+    "q": "Does the equipment fix-it rule apply to commercial vehicles?",
+    "a": "No — §547.004(d) expressly excludes commercial motor vehicles from the repair-and-dismiss provision. CMV equipment charges run through ordinary disposition, and CDL holders should read our CDL guide before doing anything else."
+  },
+  {
+    "q": "Can I take defensive driving for an equipment violation?",
+    "a": "It's the wrong tool — equipment defects aren't moving violations, and the statutory fix costs at most $10 versus roughly $172 for the course path. Save the course for an eligible moving violation from the same stop, where it actually works."
+  },
+  {
+    "q": "I got a speeding ticket and an equipment ticket in the same stop — what now?",
+    "a": "Two tracks, simultaneously: repair the defect and seek the §547.004 dismissal before your appearance date, and request defensive driving for the speeding charge by the same date. Since September 2025, one course can dismiss every eligible charge from a single stop — but the equipment charge resolves cheaper through the repair rule."
+  },
+  {
+    "q": "What if I can't afford the repair before the appearance date?",
+    "a": "Contact the court before the date — ask about a continuance (resetting the appearance, which moves the 'before first appearance' deadline with it) or deferred disposition with the repair as a condition. Courts work with people who call ahead; they convict people who don't show."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: "Broken Tail Light? The Texas Equipment Ticket Has a $10 Fix-It Dismissal — With a Tighter Deadline",
+  description: "A Texas defective-equipment ticket can be dismissed if you fix the defect before your first court appearance and pay a fee capped at $10 (Transp. Code §547.004(c)). The deadline is tighter than other fix-it tickets — here's the play.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-11',
+  dateModified: '2026-06-11',
+  mainEntityOfPage: `${siteUrl}/texas/equipment-violation-ticket`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Equipment Violation Ticket in Texas (Broken Light, Defect): The $10 Repair-and-Dismiss Rule (2026)"
+    description="A Texas defective-equipment ticket can be dismissed if you fix the defect before your first court appearance and pay a fee capped at $10 (Transp. Code §547.004(c)). The deadline is tighter than other fix-it tickets — here's the play."
+    keywords="equipment violation ticket texas, broken tail light ticket texas, defective equipment ticket dismissed, fix it ticket texas, 547.004 texas"
+    url="/texas/equipment-violation-ticket"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">Speeding ticket guide</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Equipment violations</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          Broken Tail Light? The Texas Equipment Ticket Has a $10 Fix-It Dismissal — With a Tighter Deadline
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>A defective-equipment ticket — burned-out tail lamp, cracked windshield wiper, dead headlight — has the cheapest dismissal in Texas traffic law: <strong class="text-text">fix the defect, show the court, pay a reimbursement fee capped at $10</strong> (Transp. Code §547.004(c)). But the deadline is different from the other fix-it tickets, and missing the difference costs people the option.</p>
+          <p>Here's the rule, the deadline trap, and what this ticket does and doesn't touch.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Procedures vary by court and judge — confirm with the court listed on your citation.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The rule — and the deadline trap</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>The statute lets the court dismiss an equipment charge if you <strong class="text-text">remedy the defect before your first court appearance</strong> and pay the fee (up to $10). Note what's missing: there's no 20-working-day grace window like the <a href="/texas/expired-registration-ticket" class="text-primary-deep font-medium hover:underline">registration</a> and <a href="/texas/expired-license-ticket" class="text-primary-deep font-medium hover:underline">license</a> versions — the repair must be done <em>before the appearance date</em>, full stop. A $15 bulb replaced this weekend beats a perfect excuse on appearance day.</p>
+          <p>Proof is usually simple: a repair receipt, or many courts accept an officer's or clerk's visual inspection — some police departments will sign off on a corrected-defect form. Call the clerk on your citation and ask what proof they take and whether they want you in person. Two limits worth knowing: the statute is discretionary ("may dismiss"), and it <strong class="text-text">doesn't apply to commercial motor vehicles</strong> (§547.004(d)).</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Where defensive driving fits (it mostly doesn't)</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>An equipment defect isn't a moving violation, and the course path costs an order of magnitude more than the $10 fix — so the repair-and-dismiss route is the right tool every time it's available. Where the course matters is the rest of the stop: equipment defects are classic secondary citations, written alongside the speeding or red-light charge that prompted the stop. Run both tracks — §547.004 for the defect, the <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">course</a> for the eligible moving violation. And since 2025, one course covers every eligible charge from the same stop.</p>
+          <p>If the repair window already slipped past your appearance date, ask the clerk about <a href="/texas/deferred-disposition" class="text-primary-deep font-medium hover:underline">deferred disposition</a> — judges resolve stale equipment tickets through it routinely, often with the repair as the condition.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Fix the bulb for $15 — clear the moving violation for $28</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>The equipment charge wants a receipt; the speeding charge next to it wants the course. Ours is <strong class="text-text">$28 all-in, TDLR-approved, free instant certificate</strong> — and one completion covers every eligible charge from the stop.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="/texas/eligibility-tracker"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            Check the moving violation
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated June 11, 2026 — verified by the Road Ready Safety editorial team against Tex. Transp. Code §547.004 and Tex. Code Crim. Proc. ch. 45A.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

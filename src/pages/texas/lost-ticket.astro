@@ -1,0 +1,143 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    "q": "How do I find my traffic ticket if I lost it in Texas?",
+    "a": "Work out the jurisdiction (city officer → that city's municipal court; deputy or DPS trooper → the county JP court), then search the court's online citation portal by name and date of birth, or call the clerk with your name, DOB, and license number. The clerk can give you the citation number, charge, and answer date."
+  },
+  {
+    "q": "Is there a statewide ticket lookup for Texas?",
+    "a": "No — Texas has roughly 1,700 independent municipal and JP courts and no unified citation database. Recovery is jurisdiction-first: identify the likely court from where the stop happened and who made it, then use that court's portal or clerk. Our court directory covers the contact details."
+  },
+  {
+    "q": "What if I don't remember my citation number?",
+    "a": "You don't need it — courts can find your case by name and date of birth (a driver's license number helps). The citation number speeds things up but is never the only key. The clerk will read you everything that was on the paper."
+  },
+  {
+    "q": "How long do I have before the lost ticket becomes a problem?",
+    "a": "The answer date on the citation — typically 10 to 21 days after the stop. Respond by then (a course request, a plea, or any appearance) and nothing is harmed by the lost paper. Miss it and the case escalates exactly as if you'd ignored it: FTA charge, possible warrant, renewal hold."
+  },
+  {
+    "q": "The stop was yesterday and the court can't find me — why?",
+    "a": "Citations take a few business days to be filed and entered into court systems. Wait two or three days and search again, or call then. Use the gap productively: figure out the right court and how it takes course requests, so you can act the day the case appears."
+  },
+  {
+    "q": "Can I still do defensive driving with a lost ticket?",
+    "a": "Absolutely — the option attaches to the case, not the paper. Recover the case details from the clerk, make your request by the answer date, and the path is identical: approval, course, certificate plus Type 3A record, dismissal. The paper was always just a reminder."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: "Lost the Ticket? The Deadline Didn't Get Lost With It — Here's How to Find Everything",
+  description: "Lost the citation? The deadline didn't get lost with it. How to identify which Texas court has your ticket, recover the citation number, and protect the dismissal option before the answer date passes.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-11',
+  dateModified: '2026-06-11',
+  mainEntityOfPage: `${siteUrl}/texas/lost-ticket`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Lost Your Texas Traffic Ticket? How to Find the Court, Citation Number & Deadline (2026)"
+    description="Lost the citation? The deadline didn't get lost with it. How to identify which Texas court has your ticket, recover the citation number, and protect the dismissal option before the answer date passes."
+    keywords="lost traffic ticket texas, find my ticket texas, lost citation number texas, what court is my ticket texas, look up traffic ticket texas"
+    url="/texas/lost-ticket"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">Speeding ticket guide</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Lost your ticket</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          Lost the Ticket? The Deadline Didn't Get Lost With It — Here's How to Find Everything
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>The paper is gone, but three facts on it still run your life: <strong class="text-text">which court</strong>, <strong class="text-text">what citation number</strong>, and <strong class="text-text">what answer date</strong>. Miss that date because the ticket was in the laundry and the consequences are identical to ignoring it on purpose — failure-to-appear charge, warrant, license-renewal hold.</p>
+          <p>The good news: every fact on that paper is recoverable in a day or two. Here's the recovery sequence, fastest first.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Procedures vary by court and judge — confirm with the court listed on your citation.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Finding your ticket without the ticket</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">1. Reconstruct the jurisdiction.</strong> Who stopped you decides which court has the case: a city police officer means that city's <strong class="text-text">municipal court</strong>; a sheriff's deputy or DPS trooper on a highway usually means a county <strong class="text-text">justice of the peace</strong> court. City + agency narrows it to one or two courts immediately — and our <a href="/texas/courts" class="text-primary-deep font-medium hover:underline">directory of 1,700+ Texas courts</a> has the phone numbers.</p>
+          <p><strong class="text-text">2. Search online, then call.</strong> Most municipal courts and many JP courts run citation-search portals — searchable by name and date of birth, no citation number needed. No luck online? Call the clerk with your name, DOB, and driver's license number; they'll pull the case, give you the citation number and answer date, and tell you how to respond. Tickets can take a few days to appear in court systems after the stop, so if the stop was yesterday, try again Thursday.</p>
+          <p><strong class="text-text">3. If you genuinely can't find it</strong> — wrong-city guesses, nothing on portals — call the law-enforcement agency's records division (they can read you the citation from their copy), and as a backstop, run the DPS eligibility check on yourself a few weeks later: an unresolved citation that's gone to FTA will surface as an <a href="/texas/missed-court-date" class="text-primary-deep font-medium hover:underline">OmniBase hold</a>. Better to find it before it finds you.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Protecting the dismissal option while you search</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>The defensive-driving request is due <strong class="text-text">on or before the answer date</strong> — typically 10 to 21 days after the stop. If you're hunting for the court with that window closing, don't wait for perfect information: when you reach the right clerk, explain you lost the citation and ask to (a) confirm the answer date and (b) make your course request on the spot or get the court's form that day. Clerks handle lost tickets constantly; the request is what stops the clock.</p>
+          <p>Once you have the case in hand, everything proceeds normally: <a href="/texas/request-defensive-driving" class="text-primary-deep font-medium hover:underline">request</a>, approval, course, <a href="/texas/type-3a-driving-record" class="text-primary-deep font-medium hover:underline">Type 3A</a>, dismissed. The lost paper costs you a phone call — only the lost <em>deadline</em> costs you the option.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Found the case? Lock the option in today</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Once the clerk confirms your answer date, make the request that same day — then the course is the easy part: <strong class="text-text">$28, online, certificate the moment you finish</strong>.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="/texas/courts"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            Find your court's contacts
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated June 11, 2026 — verified by the Road Ready Safety editorial team against Tex. Code Crim. Proc. ch. 45A, Tex. Transp. Code §543.009 &amp; ch. 706, and the published citation-search procedures of Texas municipal and JP courts.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

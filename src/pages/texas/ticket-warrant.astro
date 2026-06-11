@@ -1,0 +1,142 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    "q": "How do I check if I have a warrant from a traffic ticket in Texas?",
+    "a": "Call the court on the citation — clerks tell you what's pending and what's in warrant status. Many cities offer online warrant searches, and a DPS renewal-denial letter identifies the court behind an OmniBase hold. There's no statewide public warrant database; it's court by court."
+  },
+  {
+    "q": "Will I be arrested if I go to the courthouse to fix it?",
+    "a": "At many courts, no — safe-harbor policies mean you won't be arrested on that court's own warrants while appearing to resolve them. But it's a local policy that varies: call the clerk first and ask the question directly. Appearing voluntarily, before a traffic stop finds the warrant for you, is always the better order."
+  },
+  {
+    "q": "What's the difference between an FTA warrant and a capias pro fine?",
+    "a": "An FTA (failure-to-appear) warrant issues before judgment — the case is still open, and dismissal options may survive at the judge's discretion. A capias pro fine issues after a judgment for nonpayment — the conviction exists, and the conversation is about satisfying it: payment, a payment plan, community service, or indigency reduction."
+  },
+  {
+    "q": "Can I still take defensive driving if there's a warrant?",
+    "a": "Sometimes — if the case hasn't reached final judgment, the judge retains discretion to allow the course even though your answer date passed (art. 45A.352(c)). Lift the warrant, get back on the docket, and ask. Once a conviction has been entered, the course option is gone and the capias math applies."
+  },
+  {
+    "q": "What is a warrant roundup?",
+    "a": "An annual coordinated enforcement push (many Texas cities run them, often in late winter) where agencies actively serve outstanding Class C warrants — at homes and workplaces. Courts typically pair them with amnesty windows beforehand, when fees get waived for people who come in voluntarily. If you're reading this near roundup season, the amnesty window is your moment."
+  },
+  {
+    "q": "Can I just pay the warrant online and be done?",
+    "a": "Often yes — many courts let you pay the judgment and fees online, which recalls the warrant. Know what you're buying: paying a pre-judgment case in full is a conviction with the usual record and insurance consequences. If keeping the conviction off your record matters, lift the warrant and ask about the dismissal options first; pay-in-full is the irreversible button."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: "There Might Be a Warrant on That Old Ticket. Here's How to Find Out — and Get Out",
+  description: "Unpaid Texas tickets become arrest warrants — and renewal holds, $50 warrant fees, and collection add-ons. How to find out if you have one, the safe-harbor courts that won't arrest you for showing up, and the fastest path out.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-11',
+  dateModified: '2026-06-11',
+  mainEntityOfPage: `${siteUrl}/texas/ticket-warrant`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Warrant from a Texas Traffic Ticket: How to Check, How to Lift It, What It Costs (2026)"
+    description="Unpaid Texas tickets become arrest warrants — and renewal holds, $50 warrant fees, and collection add-ons. How to find out if you have one, the safe-harbor courts that won't arrest you for showing up, and the fastest path out."
+    keywords="traffic ticket warrant texas, check for warrant texas ticket, lift warrant traffic ticket, capias pro fine texas, warrant roundup texas"
+    url="/texas/ticket-warrant"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">Speeding ticket guide</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Ticket warrants</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          There Might Be a Warrant on That Old Ticket. Here's How to Find Out — and Get Out
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>An ignored Texas ticket doesn't expire — it escalates. The court can issue an <strong class="text-text">arrest warrant</strong> (before judgment for failure to appear; after judgment, a <em>capias pro fine</em> for nonpayment), add a <strong class="text-text">$50 warrant fee</strong> (CCP art. 102.011), report you to the <strong class="text-text">OmniBase program that blocks license renewal</strong>, and many cities run annual "warrant roundup" enforcement pushes where those warrants briefly become very real.</p>
+          <p>The way out is almost always cheaper and easier than people fear. Here's how to check, and the sequence that clears it.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. If a warrant is active, contact the court (or an attorney) before driving to the courthouse — and ask the clerk directly whether you can appear safely.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Step one: find out what's actually outstanding</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">Call the court on the citation</strong> — clerks will tell you exactly what's pending, what's in warrant status, and the total owed. Many cities also run online warrant searches, and if your license renewal was refused, the DPS denial letter names the court and case that triggered the <a href="/texas/missed-court-date" class="text-primary-deep font-medium hover:underline">OmniBase hold</a>. If years have passed and you've moved, start with the city where the ticket happened; our <a href="/texas/courts" class="text-primary-deep font-medium hover:underline">court directory</a> has the phone numbers.</p>
+          <p>Know which kind of warrant you're dealing with: a <strong class="text-text">pre-judgment FTA warrant</strong> means the case is still open — which, counterintuitively, is better news, because open cases still have options. A <strong class="text-text">capias pro fine</strong> means you were convicted (often by default) and owe the judgment; the conversation is then about payment, payment plans, or — if the fine would be a genuine hardship — the court's ability to convert to community service or reduce for indigency.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Clearing it: the sequence that works</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">Ask the clerk two questions:</strong> "What do I need to do to lift the warrant?" and "If I come in, will I be arrested?" Many courts follow <strong class="text-text">safe-harbor policies</strong> — you won't be arrested on that court's warrants while appearing to resolve them (La Porte advertises exactly this) — but it's local policy, not law, so get the answer from your court before walking in. Posting a bond or paying a portion typically recalls the warrant and puts you back on the docket.</p>
+          <p><strong class="text-text">Then resolve the underlying case.</strong> If it's pre-judgment, ask what options survived: judges retain discretion to allow defensive driving any time before final disposition, and deferred disposition may be available — a warrant makes courts less generous, not powerless. Pay the OmniBase fee ($10 per violation) and the court clears the renewal hold once the case resolves. Total damage for a typical neglected ticket: original fine and costs, FTA fine and costs, $50 warrant fee, $10 hold fee — call it two to three times the original ticket. Still cheaper this month than next.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Case reopened with the course option intact? Don't waste it</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>If the clerk puts you back on the docket and the judge allows the course, finish it the same week: <strong class="text-text">$28 all-in, free instant certificate</strong> — the cheapest part of the entire cleanup.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="/texas/missed-court-date"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            Just missed the date?
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated June 11, 2026 — verified by the Road Ready Safety editorial team against Tex. Code Crim. Proc. arts. 102.011 &amp; 45A.352, Tex. Transp. Code §543.009 &amp; ch. 706, Tex. Penal Code §38.10, and published court warrant policies.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

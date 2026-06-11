@@ -1,0 +1,143 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    "q": "Can an expired license ticket be dismissed in Texas?",
+    "a": "Yes — a judge may dismiss it if you remedy the defect (renew your license) within 20 working days or before your first court appearance, whichever is later, and pay a reimbursement fee of up to $20 (Transp. Code §521.026). It's discretionary by statute but routinely granted with timely proof."
+  },
+  {
+    "q": "How long can my Texas license be expired before it's a bigger problem?",
+    "a": "For the ticket itself, the dismissal turns on fixing it within the statutory window, not on how long it was expired. For renewal mechanics: licenses expired more than two years generally require starting over with testing rather than renewing — which makes the quick-renewal window even more valuable."
+  },
+  {
+    "q": "Is driving with an expired license the same as driving with a suspended license?",
+    "a": "No — and the difference is the whole ballgame. Expired is a fix-it ticket with a $20 dismissal path. Driving while license invalid (suspended/revoked, §521.457) is a more serious charge with no compliance dismissal and potential escalating penalties. Check the exact charge on your citation."
+  },
+  {
+    "q": "Can I take defensive driving for an expired license ticket?",
+    "a": "No — it isn't a moving violation, and you don't need it: the compliance dismissal costs at most $20. There's also a quiet catch: an expired license makes you ineligible for course dismissal on any other ticket, since the statute requires a valid Texas license — renew first, then handle any moving violation."
+  },
+  {
+    "q": "What proof does the court want?",
+    "a": "Evidence the license was renewed within the window — your new license or the DPS renewal confirmation. Courts vary on delivery (window, mail, email); call the clerk listed on your citation and ask how they want it and what their fee is."
+  },
+  {
+    "q": "What if I miss the 20-working-day window?",
+    "a": "If your first court appearance hasn't happened yet, you're still in time — the statute uses whichever is later. Past both? The compliance dismissal lapses, but ask the clerk about deferred disposition; judges can still resolve these without a conviction at their discretion."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: "Expired License Ticket in Texas: Renew Fast, Show the Court, Pay Up to $20",
+  description: "Texas judges may dismiss a driving-with-expired-license ticket if you renew within 20 working days or before your first court appearance (Transp. Code §521.026), with a fee capped at $20. The steps, the deadline math, and the traps.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-11',
+  dateModified: '2026-06-11',
+  mainEntityOfPage: `${siteUrl}/texas/expired-license-ticket`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Expired Driver's License Ticket in Texas: Renew in 20 Working Days, Dismiss for $20 (2026)"
+    description="Texas judges may dismiss a driving-with-expired-license ticket if you renew within 20 working days or before your first court appearance (Transp. Code §521.026), with a fee capped at $20. The steps, the deadline math, and the traps."
+    keywords="expired license ticket texas, expired drivers license ticket dismissed, 521.026 texas, renew license after ticket texas, driving with expired license texas"
+    url="/texas/expired-license-ticket"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">Speeding ticket guide</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Expired license</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          Expired License Ticket in Texas: Renew Fast, Show the Court, Pay Up to $20
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Caught driving on an expired license? Texas gives you a clean exit: <strong class="text-text">a judge may dismiss the charge if you renew your license within 20 working days or before your first court appearance, whichever is later</strong>, with a court reimbursement fee capped at <strong class="text-text">$20</strong> (Transp. Code §521.026). Like the registration version, it's a fix-it dismissal: remedy the defect, prove it, small fee, done.</p>
+          <p>Here's the sequence, the deadline math, and the difference between this ticket and its more serious cousins.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Procedures vary by court and judge — confirm with the court listed on your citation.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The fix, step by step</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">1. Renew immediately.</strong> Online at Texas.gov if you're eligible (most renewals within two years of expiration are), or at a DPS office. The renewal itself is the remedy the statute wants.</p>
+          <p><strong class="text-text">2. Get proof to the court before the deadline.</strong> 20 <em>working</em> days from the offense or your first appearance date, whichever is later. Bring or send the renewal confirmation or your new license; ask the clerk whether they want it in person, by mail, or by email.</p>
+          <p><strong class="text-text">3. Pay the fee — capped at $20 — and ask for the §521.026 dismissal by name.</strong> The statute is discretionary ("a judge may dismiss"), but with timely renewal and clean proof these are granted routinely. As with every dismissal on this site: don't pay the citation itself, because payment is a conviction and ends the option.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Know which ticket you actually have</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>This fix applies to <strong class="text-text">driving with an expired license</strong> — a license that lapsed and can be renewed. It does not cover driving while suspended or revoked (a different, more serious charge under §521.457), driving without ever being licensed, or an expired <em>commercial</em> situation. If your citation says "DWLI" or references a suspension, talk to the clerk or an attorney — the $20 path isn't yours.</p>
+          <p>And the recurring theme: defensive driving isn't the tool here either. An expired license isn't a moving violation, and the compliance route is faster and twenty times cheaper. If the same stop also produced a moving violation, run both tracks — §521.026 for the license, the <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">course</a> for the eligible moving charge. (Worth knowing: an expired license also blocks the course path independently, since the dismissal statute requires a valid Texas license — renewing fixes both problems at once.)</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">License renewed? Now handle the moving violation properly</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>With a valid license back in your pocket, you're eligible for course dismissal again. If the stop left you a speeding or other eligible ticket, ours is <strong class="text-text">$28 all-in with a free instant certificate</strong>.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="/texas/expired-registration-ticket"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            Expired registration too?
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated June 11, 2026 — verified by the Road Ready Safety editorial team against Tex. Transp. Code §§521.026 &amp; 521.457 and Tex. Code Crim. Proc. art. 45A.352(a)(2).</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

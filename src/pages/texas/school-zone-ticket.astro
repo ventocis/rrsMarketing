@@ -1,0 +1,143 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    "q": "Can you take defensive driving for a school zone ticket in Texas?",
+    "a": "Usually yes. School-zone speeding is a rules-of-the-road offense eligible for driving-safety-course dismissal under the normal conditions. The exceptions are the standard speed bars — 25+ mph over the (low) school-zone limit or 95+ mph — and the usual exclusions like CDL holders and the 12-month rule."
+  },
+  {
+    "q": "Why does the court charge $169 instead of $144 for a school zone ticket?",
+    "a": "The extra $25 is the child safety fund fine under Code of Criminal Procedure art. 102.014, assessed in municipal courts for rules-of-the-road offenses committed in a school crossing zone. It rides on top of the court's standard defensive-driving total — hence $169 where the standard is $144."
+  },
+  {
+    "q": "Are school zone speeding fines doubled in Texas?",
+    "a": "In most cities, yes — municipal fine schedules typically double speeding fines for offenses in an active school zone. That's the cost of paying outright; a dismissal through defensive driving avoids the fine entirely (you pay the court's dismissal total instead)."
+  },
+  {
+    "q": "Is 15 over in a school zone too fast to dismiss?",
+    "a": "No — 15 over is under the 25-over bar, so it's eligible if you otherwise qualify. The math to watch: school-zone limits are low, so 45 mph in a 20-mph zone is already 25 over and ineligible. Check your citation's alleged speed against the posted zone limit."
+  },
+  {
+    "q": "Does a school zone ticket carry more insurance impact?",
+    "a": "A conviction is a conviction to most insurers — but school-zone convictions are speeding convictions with an aggravating flavor some carriers rate harder. The cleaner answer: dismiss it, and there's no conviction for any insurer to price."
+  },
+  {
+    "q": "What about a phone-in-school-zone ticket?",
+    "a": "Using a handheld device in a school zone (Transp. Code §545.425) is a rules-of-the-road offense and generally eligible for course dismissal under the normal conditions. Passing a stopped school bus is the school-related offense that is never course-eligible."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: "School Zone Speeding Ticket in Texas: Yes, You Can Usually Dismiss It — Here's the Catch",
+  description: "Most Texas school-zone speeding tickets can be dismissed with defensive driving — but the court total runs $25 higher, and the speed bars still apply. The rules, the child safety fund fee, and how to handle it.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-11',
+  dateModified: '2026-06-11',
+  mainEntityOfPage: `${siteUrl}/texas/school-zone-ticket`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="School Zone Speeding Ticket in Texas: Can You Dismiss It? Costs & Rules (2026)"
+    description="Most Texas school-zone speeding tickets can be dismissed with defensive driving — but the court total runs $25 higher, and the speed bars still apply. The rules, the child safety fund fee, and how to handle it."
+    keywords="school zone speeding ticket texas, school zone ticket defensive driving, dismiss school zone ticket texas, school zone ticket cost texas, 169 school zone fee texas"
+    url="/texas/school-zone-ticket"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">Speeding ticket guide</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">School zone tickets</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          School Zone Speeding Ticket in Texas: Yes, You Can Usually Dismiss It — Here's the Catch
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>A school-zone speeding ticket feels worse than a regular one, and courts price it that way — but for dismissal purposes it's <strong class="text-text">usually still eligible for defensive driving</strong>, as long as you weren't 25+ mph over the limit and meet the normal conditions. The differences are money and stakes: the court total typically runs <strong class="text-text">$25 higher</strong>, and the fine if you just pay is usually doubled by city ordinance.</p>
+          <p>Here's exactly what changes in a school zone, what doesn't, and the mistake that turns an eligible ticket into an ineligible one.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Procedures vary by court and judge — confirm with the court listed on your citation.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What's different about a school-zone ticket</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">The extra $25 is real and statutory.</strong> A conviction for a rules-of-the-road offense committed in a school crossing zone carries a $25 fine for the municipal child safety fund (Code of Criminal Procedure art. 102.014) — which is why courts that charge $144 for a standard defensive-driving dismissal charge $169 for a school-zone one. Note it applies in municipal courts for offenses inside a marked school crossing zone; JP courts and ordinary streets don't carry it.</p>
+          <p><strong class="text-text">Fines are typically doubled.</strong> Most Texas cities double the speeding fine schedule in active school zones, so paying outright costs more — on top of the conviction reaching your record and your insurer.</p>
+          <p><strong class="text-text">Eligibility is the same — including the speed bars.</strong> School zones have low limits (usually 20 mph), which makes the 25-over disqualifier easier to hit than people think: 45 in a 20 school zone is 25 over, and the dismissal statute simply doesn't apply (art. 45A.352(a)(5)). Under that line, a school-zone speeding ticket is as dismissible as any other.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How to handle it</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Same sequence as any eligible ticket: <a href="/texas/request-defensive-driving" class="text-primary-deep font-medium hover:underline">request the course from your court</a> on or before the answer date, pay the court's school-zone total (commonly $169), wait for the order, complete the 6-hour course, and submit your certificate with your <a href="/texas/type-3a-driving-record" class="text-primary-deep font-medium hover:underline">Type 3A driving record</a> inside 90 days. The dismissal wipes the charge — by law it may not be part of your driving record or used for any purpose.</p>
+          <p>If you were 25+ over in the zone, the course is off the table, but <a href="/texas/deferred-disposition" class="text-primary-deep font-medium hover:underline">deferred disposition</a> has no speed cap and is worth requesting — judges weigh school-zone facts harder, so be ready for conditions. One adjacent trap: a ticket for using a handheld phone in a school zone (Transp. Code §545.425) is also generally course-eligible, but passing a stopped school bus (§545.066) never is.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Eligible? Clear it before it costs you three years of premiums</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>If your school-zone ticket is under the speed bars, the path is the same as any ticket: court approval, the 6-hour course, two documents. Ours is <strong class="text-text">$28 all-in with a free instant certificate</strong>.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="/texas/eligibility-tracker"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            Check your eligibility
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated June 11, 2026 — verified by the Road Ready Safety editorial team against Tex. Code Crim. Proc. arts. 45A.351–.359 &amp; 102.014, and Tex. Transp. Code §§541.302, 545.425 &amp; 545.066.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

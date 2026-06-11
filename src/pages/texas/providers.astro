@@ -1,0 +1,283 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+import providerData from '../../data/tdlr-providers.json';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+const { stats, providers } = providerData as any;
+
+// Curated brand → CP# map for the providers people actually search by brand name.
+// CP#s/status verified against the official TDLR licensing export (June 2026).
+const popular = [
+  { brand: 'Road Ready Safety', cp: 'CP1234', status: 'CURRENT', us: true },
+  { brand: 'Safe2Drive', cp: 'CP577', status: 'CURRENT' },
+  { brand: 'DefensiveDriving.com', cp: 'CP284', status: 'CURRENT' },
+  { brand: 'Aceable', cp: 'CP262', status: 'CURRENT' },
+  { brand: 'Improv (Comedy) Defensive Driving', cp: 'CP342', status: 'CURRENT' },
+  { brand: 'American Safety Council', cp: 'CP520', status: 'CURRENT' },
+  { brand: 'Aware Driver / OnlineTXDefensiveDrivingCourse.com', cp: 'CP995', status: 'CURRENT' },
+];
+
+const faqs = [
+  {
+    q: 'How many TDLR-approved driving safety providers are there in Texas?',
+    a: `As of June 2026, TDLR's licensing records list ${stats.total} driving safety course providers — ${stats.current} with a current license and ${stats.expired} expired. This directory is built directly from those official records.`,
+  },
+  {
+    q: 'How do I check if a Texas defensive driving course is TDLR-approved?',
+    a: 'Find the provider by name or CP number in the directory below and confirm its license shows CURRENT. Then, after you finish the course, validate your completion certificate at TDLR\'s official DESSearch tool — the certificate number is formatted CP###-########. A current CP license plus a certificate that validates is all the assurance you need.',
+  },
+  {
+    q: 'What does an EXPIRED status mean — can I still use that course?',
+    a: 'An expired status means the provider\'s TDLR license has lapsed. A certificate from a provider that wasn\'t licensed when you completed the course may not validate and may not be accepted by the court. Some expired providers keep their websites live and continue taking payments, so always confirm CURRENT status before paying.',
+  },
+  {
+    q: 'Why don\'t the names in the directory match the website names I see?',
+    a: 'TDLR lists each provider under its legal business name, which is often different from the consumer brand or website. For example, the OnlineTXDefensiveDrivingCourse.com brand is licensed under "Aware Driver" (CP995). The "popular providers" table above maps common brands to their official CP numbers.',
+  },
+  {
+    q: 'Does being TDLR-approved mean a course is better?',
+    a: 'No. Every TDLR-approved 6-hour course satisfies the Texas court requirement identically — approval is a floor, not a ranking. What differs between approved providers is price and checkout honesty. The statutory minimum is $28 ($25 course + $3 materials), so any price above that is the provider\'s margin or add-ons.',
+  },
+];
+
+const collectionSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'CollectionPage',
+      name: 'TDLR-Approved Driving Safety Course Providers in Texas',
+      description: `Full directory of all ${stats.total} TDLR-licensed driving safety (defensive driving) course providers in Texas, with CP numbers and current license status.`,
+      url: `${siteUrl}/texas/providers`,
+      isPartOf: { '@type': 'WebSite', name: 'Road Ready Safety', url: siteUrl },
+    },
+    {
+      '@type': 'Dataset',
+      name: 'Texas TDLR Driving Safety Provider Directory',
+      description: `${stats.current} current and ${stats.expired} expired TDLR-licensed driving safety course providers in Texas, identified by CP course-provider number.`,
+      creator: { '@type': 'GovernmentOrganization', name: 'Texas Department of Licensing and Regulation', url: 'https://www.tdlr.texas.gov' },
+      isBasedOn: 'https://www.tdlr.texas.gov/dessearch',
+      dateModified: '2026-06-11',
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+    },
+  ],
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title={`All ${stats.total} TDLR-Approved Driving Safety Providers in Texas — CP# Directory (2026)`}
+    description={`Searchable directory of every TDLR-licensed Texas driving safety course provider, with CP numbers and current vs. expired license status — built from official TDLR records. ${stats.current} current providers.`}
+    keywords="tdlr approved driving safety course texas, tdlr approved providers list, texas defensive driving providers, CP number lookup texas, tdlr course provider directory"
+    url="/texas/providers"
+  >
+    <script type="application/ld+json" set:html={collectionSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[980px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/texas/tdlr-approved" class="text-primary-deep font-medium hover:underline">TDLR-approved courses</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Provider directory</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          Every TDLR-Approved Driving Safety Provider in Texas
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>This is the complete, searchable list of <strong class="text-text">all {stats.total} driving safety (defensive driving) course providers licensed by the Texas Department of Licensing and Regulation</strong> — {stats.current} with a current license, {stats.expired} expired — each identified by its official <strong class="text-text">CP course-provider number</strong>. We built it directly from TDLR's licensing records, not from marketing pages, so you can confirm any course is genuinely approved <em>before</em> you pay.</p>
+          <p>Search by provider name or CP number, check the license status, then validate your completion certificate after the course at TDLR's <a href="https://www.tdlr.texas.gov/dessearch" target="_blank" rel="noopener noreferrer" class="text-primary-deep font-medium hover:underline">DESSearch</a> tool. New here? Start with <a href="/texas/tdlr-approved" class="text-primary-deep font-medium hover:underline">what "TDLR-approved" actually means</a>.</p>
+        </div>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-3 gap-3 mb-10">
+          <div class="bg-surface-muted border border-border rounded-[14px] p-4 text-center">
+            <p class="text-2xl font-bold text-text" style="font-family: 'Outfit', sans-serif;">{stats.current}</p>
+            <p class="text-xs text-text-body uppercase tracking-wide">Current providers</p>
+          </div>
+          <div class="bg-surface-muted border border-border rounded-[14px] p-4 text-center">
+            <p class="text-2xl font-bold text-text" style="font-family: 'Outfit', sans-serif;">{stats.expired}</p>
+            <p class="text-xs text-text-body uppercase tracking-wide">Expired</p>
+          </div>
+          <div class="bg-surface-muted border border-border rounded-[14px] p-4 text-center">
+            <p class="text-2xl font-bold text-text" style="font-family: 'Outfit', sans-serif;">{stats.total}</p>
+            <p class="text-xs text-text-body uppercase tracking-wide">Total on file</p>
+          </div>
+        </div>
+
+        <!-- Popular providers -->
+        <h2 class="text-2xl font-bold text-text mt-2 mb-4" style="font-family: 'Outfit', sans-serif;">Most-searched providers, by CP number</h2>
+        <div class="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 mb-4 rounded-xl border border-border">
+          <table class="w-full text-sm border-collapse">
+            <thead>
+              <tr class="bg-surface-muted text-left border-b border-border">
+                <th class="py-3 px-4 font-semibold text-text" style="font-family: 'DM Sans', sans-serif;">Brand / website</th>
+                <th class="py-3 px-4 font-semibold text-text" style="font-family: 'DM Sans', sans-serif;">CP # (TDLR)</th>
+                <th class="py-3 px-4 font-semibold text-text" style="font-family: 'DM Sans', sans-serif;">License</th>
+              </tr>
+            </thead>
+            <tbody style="font-family: 'DM Sans', sans-serif;">
+              {popular.map(p => (
+                <tr class={`border-b border-border ${p.us ? 'bg-info/40' : ''}`}>
+                  <td class={`py-3 px-4 ${p.us ? 'text-primary font-semibold' : 'text-text font-medium'}`}>{p.brand}</td>
+                  <td class="py-3 px-4 text-text-body font-mono">{p.cp}</td>
+                  <td class="py-3 px-4"><span class="inline-flex items-center rounded-full bg-green-100 text-green-800 text-xs font-semibold px-2 py-0.5">CURRENT</span></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p class="text-xs text-text-subtle mb-12" style="font-family: 'DM Sans', sans-serif;">TDLR lists providers under their legal business name, which often differs from the consumer brand — this table maps the common ones. The full official list is below.</p>
+
+        <!-- Full directory -->
+        <h2 class="text-2xl font-bold text-text mt-2 mb-4" style="font-family: 'Outfit', sans-serif;">The complete TDLR provider list</h2>
+
+        <div class="flex flex-col sm:flex-row gap-3 mb-4">
+          <input
+            id="provider-search"
+            type="text"
+            placeholder="Search by provider name or CP number…"
+            class="flex-1 h-11 px-4 border border-border rounded-xl text-sm focus:outline-none focus:border-primary"
+            style="font-family: 'DM Sans', sans-serif;"
+            aria-label="Search providers"
+          />
+          <div class="flex gap-2" role="group" aria-label="Filter by license status">
+            <button data-filter="all" class="provider-filter h-11 px-4 border border-primary bg-primary text-white rounded-xl text-sm font-semibold" style="font-family: 'DM Sans', sans-serif;">All</button>
+            <button data-filter="CURRENT" class="provider-filter h-11 px-4 border border-border text-text-body rounded-xl text-sm font-semibold hover:bg-surface-muted" style="font-family: 'DM Sans', sans-serif;">Current</button>
+            <button data-filter="EXPIRED" class="provider-filter h-11 px-4 border border-border text-text-body rounded-xl text-sm font-semibold hover:bg-surface-muted" style="font-family: 'DM Sans', sans-serif;">Expired</button>
+          </div>
+        </div>
+        <p id="provider-count" class="text-xs text-text-subtle mb-3" style="font-family: 'DM Sans', sans-serif;">Showing all {stats.total} providers</p>
+
+        <div class="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 mb-3 rounded-xl border border-border">
+          <table class="w-full text-sm border-collapse">
+            <thead>
+              <tr class="bg-surface-muted text-left border-b border-border">
+                <th class="py-3 px-4 font-semibold text-text" style="font-family: 'DM Sans', sans-serif;">CP #</th>
+                <th class="py-3 px-4 font-semibold text-text" style="font-family: 'DM Sans', sans-serif;">Provider (legal name)</th>
+                <th class="py-3 px-4 font-semibold text-text" style="font-family: 'DM Sans', sans-serif;">License</th>
+                <th class="py-3 px-4 font-semibold text-text" style="font-family: 'DM Sans', sans-serif;">Expires</th>
+                <th class="py-3 px-4 font-semibold text-text" style="font-family: 'DM Sans', sans-serif;">Location</th>
+              </tr>
+            </thead>
+            <tbody id="provider-tbody" style="font-family: 'DM Sans', sans-serif;">
+              {providers.map((p: any) => (
+                <tr class={`provider-row border-b border-border ${p.cp === 'CP1234' ? 'bg-info/40' : ''}`} data-name={p.name.toLowerCase()} data-cp={p.cp.toLowerCase()} data-status={p.status}>
+                  <td class={`py-2.5 px-4 font-mono ${p.cp === 'CP1234' ? 'text-primary font-semibold' : 'text-text-body'}`}>{p.cp}</td>
+                  <td class={`py-2.5 px-4 ${p.cp === 'CP1234' ? 'text-primary font-semibold' : 'text-text'}`}>{p.name}</td>
+                  <td class="py-2.5 px-4">
+                    {p.status === 'CURRENT' ? (
+                      <span class="inline-flex items-center rounded-full bg-green-100 text-green-800 text-xs font-semibold px-2 py-0.5">CURRENT</span>
+                    ) : (
+                      <span class="inline-flex items-center rounded-full bg-red-100 text-red-800 text-xs font-semibold px-2 py-0.5">EXPIRED</span>
+                    )}
+                  </td>
+                  <td class="py-2.5 px-4 text-text-body whitespace-nowrap">{p.expires}</td>
+                  <td class="py-2.5 px-4 text-text-body">{p.city ? `${p.city}, ${p.state}` : p.state}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p id="provider-empty" class="hidden text-sm text-text-body py-6 text-center" style="font-family: 'DM Sans', sans-serif;">No providers match your search. Check the CP number on the course site, or try the provider's legal business name.</p>
+
+        <p class="text-xs text-text-subtle mb-12 mt-2" style="font-family: 'DM Sans', sans-serif;">Source: official TDLR Driving Safety Provider licensing records, retrieved June 2026. License statuses change — always re-confirm a current license and validate your certificate at TDLR DESSearch before relying on it.</p>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;">{item.a}</p>
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The honest one on the list</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>You can find us above: <strong class="text-text">Road Ready Safety, CP1234, current.</strong> We're the statutory-minimum <strong class="text-text">$28 all-in</strong>, 6 hours, fully online, free instant certificate — the same court-accepted course as every approved provider, without the checkout surprises. Verify us, then enroll.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="/texas/cost"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            Compare all-in prices
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated June 11, 2026 — provider names, CP numbers, and license statuses transcribed from the official TDLR Driving Safety Provider licensing export. Statuses change; re-verify at TDLR DESSearch.</p>
+        </div>
+
+      </div>
+    </article>
+
+    <script>
+      function initProviderDirectory() {
+        var search = document.getElementById('provider-search');
+        if (!search) return;
+        var rows = Array.prototype.slice.call(document.querySelectorAll('.provider-row'));
+        var buttons = Array.prototype.slice.call(document.querySelectorAll('.provider-filter'));
+        var countEl = document.getElementById('provider-count');
+        var emptyEl = document.getElementById('provider-empty');
+        var total = rows.length;
+        var activeFilter = 'all';
+
+        function apply() {
+          var q = (search.value || '').trim().toLowerCase();
+          var shown = 0;
+          for (var i = 0; i < rows.length; i++) {
+            var r = rows[i];
+            var matchText = q === '' || r.getAttribute('data-name').indexOf(q) !== -1 || r.getAttribute('data-cp').indexOf(q) !== -1;
+            var matchFilter = activeFilter === 'all' || r.getAttribute('data-status') === activeFilter;
+            if (matchText && matchFilter) { r.style.display = ''; shown++; } else { r.style.display = 'none'; }
+          }
+          if (countEl) {
+            countEl.textContent = (q === '' && activeFilter === 'all')
+              ? 'Showing all ' + total + ' providers'
+              : 'Showing ' + shown + ' of ' + total + ' providers';
+          }
+          if (emptyEl) emptyEl.classList.toggle('hidden', shown !== 0);
+        }
+
+        search.addEventListener('input', apply);
+        buttons.forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            activeFilter = btn.getAttribute('data-filter');
+            buttons.forEach(function (b) {
+              var on = b === btn;
+              b.classList.toggle('bg-primary', on);
+              b.classList.toggle('text-white', on);
+              b.classList.toggle('border-primary', on);
+              b.classList.toggle('border-border', !on);
+              b.classList.toggle('text-text-body', !on);
+            });
+            apply();
+          });
+        });
+      }
+      document.addEventListener('astro:page-load', initProviderDirectory);
+    </script>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

@@ -40,6 +40,26 @@ const faqs = [
     q: 'Does being TDLR-approved mean a course is better?',
     a: 'No. Every TDLR-approved 6-hour course satisfies the Texas court requirement identically — approval is a floor, not a ranking. What differs between approved providers is price and checkout honesty. The statutory minimum is $28 ($25 course + $3 materials), so any price above that is the provider\'s margin or add-ons.',
   },
+  {
+    q: 'Can I use any provider on this list, or does my court assign one?',
+    a: 'You can use any TDLR-approved provider on this list — Texas courts accept a certificate from any approved provider statewide and do not assign or restrict you to a specific one. The court controls whether you\'re eligible and must grant permission before you start, but it does not dictate which approved provider you choose.',
+  },
+  {
+    q: 'Why are some providers located outside Texas?',
+    a: `A provider doesn't have to be physically in Texas to hold a TDLR license. Of the ${stats.total} providers on file, ${stats.tx} are in Texas and ${stats.total - stats.tx} are out of state (California, Florida, and others). An out-of-state provider with a current CP license is just as valid — what matters is the TDLR license, not the headquarters. Road Ready Safety, for example, is licensed under CP1234 and based in Michigan.`,
+  },
+  {
+    q: 'Is an online course as good as a classroom course for dismissing a ticket?',
+    a: 'Yes. A TDLR-approved driving safety course can be taken online or in a classroom, and courts accept both equally for ticket dismissal — the delivery format doesn\'t change court acceptance. Online is simply more convenient: self-paced, on any device, with an instant certificate from providers that offer one.',
+  },
+  {
+    q: 'What\'s the difference between "TEA-approved" and "TDLR-approved"?',
+    a: 'They mean the same thing — "TEA-approved" is just the outdated label. Texas driver education and driving safety courses were regulated by the Texas Education Agency (TEA) until September 1, 2015, when House Bill 1786 transferred that authority to TDLR. A site still advertising "TEA-approved" isn\'t wrong about being approved, but it\'s using a name that\'s been outdated for years.',
+  },
+  {
+    q: 'How often is this directory updated?',
+    a: `This directory was transcribed from TDLR's official licensing records in June 2026. Provider licenses are issued, renewed, and allowed to expire on a rolling basis, so statuses can change between our updates. For a real-time check on a single provider, validate the certificate number at TDLR's DESSearch tool — that's always current. We refresh the full list periodically against TDLR's records.`,
+  },
 ];
 
 const collectionSchema = JSON.stringify({
@@ -110,6 +130,26 @@ const collectionSchema = JSON.stringify({
           <div class="bg-surface-muted border border-border rounded-[14px] p-4 text-center">
             <p class="text-2xl font-bold text-text" style="font-family: 'Outfit', sans-serif;">{stats.total}</p>
             <p class="text-xs text-text-body uppercase tracking-wide">Total on file</p>
+          </div>
+        </div>
+
+        <!-- How to use -->
+        <h2 class="text-2xl font-bold text-text mt-2 mb-4" style="font-family: 'Outfit', sans-serif;">How to use this directory in three steps</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12">
+          <div class="bg-surface-muted border border-border rounded-[14px] p-5">
+            <div class="bg-info w-8 h-8 rounded-full flex items-center justify-center mb-3"><span class="text-sm font-bold text-primary">1</span></div>
+            <p class="text-sm font-semibold text-text mb-1" style="font-family: 'Outfit', sans-serif;">Find the provider</p>
+            <p class="text-sm text-text-body leading-6" style="font-family: 'DM Sans', sans-serif;">Search by the brand name on the course site or by its CP number. Names on the official list are legal business names, so use the brand map below if a name doesn't match.</p>
+          </div>
+          <div class="bg-surface-muted border border-border rounded-[14px] p-5">
+            <div class="bg-info w-8 h-8 rounded-full flex items-center justify-center mb-3"><span class="text-sm font-bold text-primary">2</span></div>
+            <p class="text-sm font-semibold text-text mb-1" style="font-family: 'Outfit', sans-serif;">Check the status</p>
+            <p class="text-sm text-text-body leading-6" style="font-family: 'DM Sans', sans-serif;">Confirm the license reads <span class="font-semibold text-green-700">CURRENT</span>, not <span class="font-semibold text-red-700">EXPIRED</span>. An expired provider's certificate may not validate or be accepted. Do this before you pay.</p>
+          </div>
+          <div class="bg-surface-muted border border-border rounded-[14px] p-5">
+            <div class="bg-info w-8 h-8 rounded-full flex items-center justify-center mb-3"><span class="text-sm font-bold text-primary">3</span></div>
+            <p class="text-sm font-semibold text-text mb-1" style="font-family: 'Outfit', sans-serif;">Validate the certificate</p>
+            <p class="text-sm text-text-body leading-6" style="font-family: 'DM Sans', sans-serif;">After you finish, confirm your certificate (format <span class="font-mono">CP###-########</span>) at TDLR's <a href="https://www.tdlr.texas.gov/dessearch" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">DESSearch</a>. It can take up to 5 days to appear.</p>
           </div>
         </div>
 
@@ -190,6 +230,44 @@ const collectionSchema = JSON.stringify({
         <p id="provider-empty" class="hidden text-sm text-text-body py-6 text-center" style="font-family: 'DM Sans', sans-serif;">No providers match your search. Check the CP number on the course site, or try the provider's legal business name.</p>
 
         <p class="text-xs text-text-subtle mb-12 mt-2" style="font-family: 'DM Sans', sans-serif;">Source: official TDLR Driving Safety Provider licensing records, retrieved June 2026. License statuses change — always re-confirm a current license and validate your certificate at TDLR DESSearch before relying on it.</p>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What "TDLR-approved" actually regulates</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>TDLR — the Texas Department of Licensing and Regulation — licenses the company that runs your course, approves the course itself, and issues the certificate numbers providers hand out. Before September 1, 2015, that job belonged to the Texas Education Agency, which is why you'll still see old course sites advertising "<strong class="text-text">TEA-approved</strong>." House Bill 1786 moved the program to TDLR that year, so the current, correct label is <strong class="text-text">TDLR-approved</strong> — the two mean the same thing.</p>
+          <p>Two things TDLR approval does <em>not</em> cover, and people constantly conflate: it doesn't issue your <strong class="text-text">driving record</strong> (that's Texas DPS — the Type 3A record), and it doesn't grant you <strong class="text-text">court permission</strong> to take the course (that's your JP or municipal court). Approval just means the course and certificate will be accepted once you've cleared those other two steps.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Any approved provider works — online or classroom, in-state or out</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Three things this list quietly proves, that save you from overthinking the choice:</p>
+          <p><strong class="text-text">Any provider on the list is accepted statewide.</strong> Texas courts take a certificate from any TDLR-approved provider — your court doesn't assign you one or restrict you by county. It only decides whether you're eligible and grants permission.</p>
+          <p><strong class="text-text">Online and classroom count the same.</strong> A TDLR-approved course satisfies the court identically whether you take it in a room or on your phone. Online just adds convenience and, with the right provider, an instant certificate.</p>
+          <p><strong class="text-text">Out-of-state is fine.</strong> {stats.tx} of these {stats.total} providers are based in Texas and {stats.total - stats.tx} are elsewhere — a current CP license is valid no matter where the company sits. The headquarters on the list tells you nothing about whether the certificate will be accepted; the CURRENT status does.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Key terms, decoded</h2>
+        <div class="flex flex-col gap-3 mb-10">
+          {[
+            { t: 'CP number', d: 'The course-provider license number TDLR assigns each approved provider (e.g., CP1234). It\'s also the prefix of every certificate that provider issues.' },
+            { t: 'Certificate number (CP###-########)', d: 'The number on your completion certificate. You submit it to the court and validate it at DESSearch.' },
+            { t: 'DESSearch', d: 'TDLR\'s public tool to validate a completion certificate (tdlr.texas.gov/dessearch). It confirms a certificate is real; it is not a provider directory.' },
+            { t: 'DESCerts', d: 'TDLR\'s provider-only portal where licensed providers order certificate numbers. Not consumer-facing. Since Aug 19, 2024 it runs on TDLR\'s Online Licensing System.' },
+            { t: 'DS-230', d: 'The order form providers use to buy driving safety certificate numbers — not the number on your certificate. Some help articles get this wrong.' },
+            { t: 'DE-964', d: 'The driver-education certificate (teen/adult licensing) — a different document from the driving safety certificate used for ticket dismissal.' },
+            { t: 'Type 3A driving record', d: 'The certified 3-year driving record from Texas DPS that many courts require with your certificate. About $12 online; comes from DPS, not your course provider.' },
+            { t: 'CURRENT vs EXPIRED', d: 'A provider\'s TDLR license status. Only use a provider whose license is CURRENT; an expired provider\'s certificate may not validate.' },
+          ].map(item => (
+            <div class="bg-surface-muted border border-border rounded-[12px] p-4 flex flex-col sm:flex-row sm:gap-4">
+              <p class="text-sm font-semibold text-text shrink-0 sm:w-56 mb-1 sm:mb-0" style="font-family: 'Outfit', sans-serif;">{item.t}</p>
+              <p class="text-sm text-text-body leading-6" style="font-family: 'DM Sans', sans-serif;">{item.d}</p>
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How current is this list?</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>We transcribe this directory from TDLR's official licensing records and refresh it periodically — the date at the bottom of the page tells you when it was last verified. Licenses are issued, renewed, and expire on a rolling basis, so a status can change between our refreshes. For a single provider you're about to pay, the fastest live check is to validate a certificate number at <a href="https://www.tdlr.texas.gov/dessearch" target="_blank" rel="noopener noreferrer" class="text-primary-deep font-medium hover:underline">DESSearch</a>, which is always real-time. We'd rather point you to the official source than pretend a static list is live.</p>
+        </div>
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
         <div class="space-y-8 mb-12">

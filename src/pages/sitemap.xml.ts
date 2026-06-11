@@ -23,6 +23,7 @@ const staticRoutes = [
   '/texas/refund',
   '/texas/accessibility',
   '/texas/cost',
+  '/texas/speeding-ticket',
   '/texas/eligibility-tracker',
   '/texas/vs',
   '/texas/vs/onlinetxdefensivedriving',

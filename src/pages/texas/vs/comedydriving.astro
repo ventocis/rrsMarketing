@@ -9,7 +9,7 @@ const articleSchema = JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'Article',
   headline: 'Road Ready Safety vs Comedy Driving Texas (2026)',
-  dateModified: '2026-05-25',
+  dateModified: '2026-06-11',
   datePublished: '2026-05-25',
   author: { '@type': 'Organization', name: 'Road Ready Safety' },
   publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
@@ -18,7 +18,7 @@ const articleSchema = JSON.stringify({
 const faqs = [
   {
     q: "Is Comedy Driving's certificate free?",
-    a: 'Free delivery is available by USPS mail, taking 5–9 business days. Instant download costs extra. Verify the current fee at checkout before enrolling.',
+    a: 'As of June 2026, Comedy Driving offers same-day certificate processing with a free download and emailed copy on completion. Physical mail and overnight delivery options may cost extra — verify at checkout.',
   },
   {
     q: 'Does Comedy Driving require vehicle information?',
@@ -52,7 +52,7 @@ const faqSchema = JSON.stringify({
 {isEnabled ? (
   <TexasLayout
     title="Road Ready Safety vs Comedy Driving Texas (2026)"
-    description="Comedy Driving promises a funny defensive driving course. Reviews say it's less funny than advertised, and the certificate costs extra. Here's the full breakdown."
+    description="Comedy Driving promises a funny defensive driving course. Reviews say it's less funny than advertised. Here's the full breakdown before you sign up."
     url="/texas/vs/comedydriving"
   >
     <script type="application/ld+json" set:html={articleSchema} />
@@ -96,7 +96,7 @@ const faqSchema = JSON.stringify({
             <tbody style="font-family: 'DM Sans', sans-serif;">
               {[
                 { label: 'Base price', rrs: '$28.00', them: '$28.00' },
-                { label: 'Instant certificate', rrs: 'Free', them: 'Extra fee' },
+                { label: 'Instant certificate', rrs: 'Free', them: 'Free download (mail extra)' },
                 { label: 'Free certificate option', rrs: 'Instant download', them: 'USPS mail, 5–9 business days' },
                 { label: 'Entertainment angle', rrs: 'Straightforward', them: 'Comedy-based course' },
                 { label: 'TDLR approved', rrs: 'Yes (CP1234)', them: 'Yes' },
@@ -172,7 +172,7 @@ const faqSchema = JSON.stringify({
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Who should choose which</h2>
         <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
           <p><strong class="text-text">Choose Road Ready Safety</strong> if you want to pay $28, get your certificate instantly, and take the course without a vehicle registration requirement or certificate delivery fees.</p>
-          <p><strong class="text-text">Choose Comedy Driving</strong> if the comedy format is genuinely appealing to you and you're comfortable paying extra for instant certificate delivery. Based on recent reviews, go in with calibrated expectations on how funny the course actually is.</p>
+          <p><strong class="text-text">Choose Comedy Driving</strong> if the comedy format is genuinely appealing to you. Based on recent reviews, go in with calibrated expectations on how funny the course actually is.</p>
         </div>
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>

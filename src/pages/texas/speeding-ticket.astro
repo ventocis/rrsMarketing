@@ -1,0 +1,240 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    q: 'Can you dismiss a speeding ticket in Texas?',
+    a: 'Yes. Most everyday Texas speeding tickets can be dismissed by getting the court’s permission and completing a 6-hour TDLR-approved driver safety course, as long as you hold a valid Texas license, request the course by the answer date on your citation, and haven’t completed a course for dismissal in the 12 months before the offense.',
+  },
+  {
+    q: 'How much over the speed limit disqualifies you in Texas?',
+    a: 'A ticket for going 25 mph or more over the posted limit cannot be dismissed with a driver safety course, and neither can a citation for driving 95 mph or faster. Most tickets under those thresholds remain eligible.',
+  },
+  {
+    q: 'Does Texas have a point system for traffic tickets?',
+    a: 'No. Texas eliminated its surcharge points when the Driver Responsibility Program was repealed on September 1, 2019. There are no points on a Texas license today — but DPS still counts moving-violation convictions, and four or more in 12 months (or seven in 24) can trigger a license suspension. What matters is keeping convictions off your record.',
+  },
+  {
+    q: 'Will a speeding ticket raise my insurance in Texas?',
+    a: 'A speeding conviction usually raises your insurance, often for about three years. Dismissing the ticket through a driver safety course keeps the conviction off your driving record, so it never reaches your insurer.',
+  },
+  {
+    q: 'How long do I have to take the course?',
+    a: 'You must request the course on or before the answer date on your citation, and the court then gives you 90 days to complete it and submit your certificate. Courts can extend that window for good cause, but don’t count on it.',
+  },
+  {
+    q: 'Can a CDL holder dismiss a ticket with defensive driving in Texas?',
+    a: 'No. Federal rules (49 CFR 384.226) prohibit masking convictions on a commercial license — even for tickets received in a personal vehicle — so CDL holders can’t dismiss a ticket this way. They can still take the course voluntarily for a possible insurance discount.',
+  },
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Speeding Ticket in Texas: How to Dismiss It, What It Costs, and What It Really Does to Your Record',
+  description: 'How to dismiss a Texas speeding ticket with a TDLR-approved driver safety course, who qualifies, what it costs, and the truth about Texas points.',
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-11',
+  dateModified: '2026-06-11',
+  mainEntityOfPage: `${siteUrl}/texas/speeding-ticket`,
+});
+
+const howToSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'How to dismiss a speeding ticket in Texas',
+  step: [
+    { '@type': 'HowToStep', name: 'Request the course', text: 'Request permission from your court on or before the answer date on your citation — before you take the course.' },
+    { '@type': 'HowToStep', name: 'Provide documents', text: 'Provide a valid Texas license, proof of insurance, and your driving record if the court requires you to supply it.' },
+    { '@type': 'HowToStep', name: 'Take the course', text: 'Complete the 6-hour TDLR-approved online driver safety course.' },
+    { '@type': 'HowToStep', name: 'Submit your certificate', text: 'Submit your completion certificate to the court within the 90-day window.' },
+    { '@type': 'HowToStep', name: 'Charge dismissed', text: 'The court dismisses the charge. By law, a dismissed charge may not be part of your driving record or used for any purpose.' },
+  ],
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Speeding Ticket in Texas: How to Dismiss It, What It Costs, and What It Really Does to Your Record (2026)"
+    description="Got a speeding ticket in Texas? Here's how to dismiss it with a driver safety course, who qualifies, what it costs, and the truth about Texas 'points' (there aren't any anymore)."
+    keywords="speeding ticket texas, dismiss speeding ticket texas, texas defensive driving speeding ticket, texas traffic ticket dismissal, texas points system, texas driver safety course"
+    url="/texas/speeding-ticket"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={howToSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Speeding ticket guide</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          Speeding Ticket in Texas: How to Dismiss It, What It Costs, and What It Really Does to Your Record
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>If you got a speeding ticket in Texas, you usually have three options: pay it, fight it, or — for most everyday speeding tickets — <strong class="text-text">dismiss it by completing a TDLR-approved driver safety course</strong>. Dismissing the ticket is the only option that keeps the violation off your driving record entirely, which is what protects you from years of higher insurance. This guide walks through exactly how it works, who qualifies, what it costs, and the deadlines that can cost you the option if you miss them.</p>
+          <p>A quick, important truth first, because almost every other website still gets it wrong: <strong class="text-text">Texas no longer has a "points" system.</strong> You'll see course providers promise to "keep points off your record." There are no points to keep off. We'll explain what actually matters below.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Eligibility and procedures vary by court, judge, and the specific charge on your citation. Always confirm with the court listed on your ticket before enrolling.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What happens if you get a speeding ticket in Texas?</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>A Texas speeding ticket is a criminal traffic offense handled by a justice of the peace (JP) or municipal court. If you simply pay it, that counts as a <strong class="text-text">guilty plea and a conviction</strong>, and the conviction is reported to the Texas Department of Public Safety and added to your driving record — where insurers and some employers can see it. A single conviction can raise your insurance premium for years.</p>
+          <p>You have until the <strong class="text-text">answer date printed on your citation</strong> to choose how to respond. Doing nothing is the worst option: missing your date can lead to a "failure to appear," additional charges, and a hold that blocks your license renewal. (Failure-to-appear holds are separate from everything below and are not cleared by taking a course.)</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Does Texas have a points system? (No — and that changes your strategy)</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">Texas does not assign points to your license, and hasn't since September 1, 2019.</strong> That's when the Legislature repealed the Driver Responsibility Program under H.B. 2048, which eliminated the surcharge point system and the annual surcharges that came with it. At the time of repeal, more than 1.4 million Texas drivers were under DRP suspensions — and those suspensions were waived the same day.</p>
+          <p>So when a course site advertises that it "removes points" or "keeps points off your Texas record," that benefit doesn't exist anymore — there are no points to remove. Many people and even some insurance agents still say "points" out of habit, but they really mean <em>convictions</em>.</p>
+          <p>Here's what actually matters now. A speeding <strong class="text-text">conviction</strong> still lands on your driving record, and two things flow from that record:</p>
+          <p><strong class="text-text">Insurance.</strong> Your insurer prices your policy off your record, and a conviction typically raises premiums for about three years.</p>
+          <p><strong class="text-text">Your license.</strong> Even without points, DPS still counts convictions: four or more moving-violation convictions within 12 months (or seven within 24 months) can trigger a habitual-violator license suspension under Texas Transportation Code §521.292.</p>
+          <p>The real value of dismissing your ticket is that a dismissed charge, by law, <strong class="text-text">"may not be part of a person's driving record or used for any purpose"</strong> (Tex. Code Crim. Proc. art. 45A.357 — the dismissal statute formerly known as art. 45.0511). No conviction, no record entry, no insurance trigger, nothing counting toward a suspension. That's the whole game in Texas today.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How do you get a speeding ticket dismissed in Texas?</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <p>You dismiss an eligible Texas speeding ticket by getting the court's permission and then completing a 6-hour TDLR-approved driver safety course (also called defensive driving). The steps:</p>
+        </div>
+        <ol class="list-decimal pl-6 space-y-3 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <li><strong class="text-text">Request permission from your court on or before the answer date on your citation.</strong> You can usually do this in writing on the citation, by certified mail, in person, or — at many courts — by email or an online portal. You must request the course <em>before</em> you take it.</li>
+          <li><strong class="text-text">Provide what the court requires</strong> — typically proof of a valid Texas driver's license, proof of insurance (financial responsibility), and your driving record (some courts pull it for you for a small fee).</li>
+          <li><strong class="text-text">Take the 6-hour course.</strong> It's online and self-paced; you can start, stop, and finish on your phone.</li>
+          <li><strong class="text-text">Submit your completion certificate to the court within the 90-day window</strong>, along with anything else the court asked for.</li>
+          <li><strong class="text-text">The court dismisses the charge.</strong> By law, the dismissed charge may not be part of your driving record or used for any purpose — it never becomes a conviction.</li>
+        </ol>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Am I eligible to dismiss my Texas speeding ticket?</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <p>To dismiss a speeding ticket with a driver safety course, all of the following generally must be true (per Tex. Code Crim. Proc. arts. 45A.351–.352):</p>
+        </div>
+        <ul class="list-disc pl-6 space-y-2 text-text-body text-base leading-7 mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <li>You hold a <strong class="text-text">valid Texas driver's license or permit</strong> (active-duty military and their spouses/dependent children also qualify with any state's license).</li>
+          <li>You <strong class="text-text">request the course on or before the answer date</strong> on your citation.</li>
+          <li>You <strong class="text-text">have not completed a driver safety course for dismissal in the 12 months</strong> before the date of this offense.</li>
+          <li>You provide <strong class="text-text">proof of insurance</strong> and your <strong class="text-text">driving record</strong> (or pay the court to retrieve it electronically).</li>
+        </ul>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <p>Some tickets <strong class="text-text">cannot</strong> be dismissed this way, even if you have a clean record. You are <strong class="text-text">not eligible</strong> if the citation is for:</p>
+        </div>
+        <ul class="list-disc pl-6 space-y-2 text-text-body text-base leading-7 mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <li>Speeding <strong class="text-text">25 mph or more over</strong> the posted limit.</li>
+          <li>Speeding <strong class="text-text">95 mph or faster</strong>.</li>
+          <li>An offense in a <strong class="text-text">construction or maintenance work zone while workers are present</strong> (Tex. Transp. Code §472.022(f)).</li>
+          <li><strong class="text-text">Passing a stopped school bus</strong> that's loading or unloading (§545.066).</li>
+          <li><strong class="text-text">Leaving the scene</strong> of an accident / failure to give information and render aid (§§550.022–.023).</li>
+          <li>A <strong class="text-text">serious traffic violation</strong> as defined for commercial vehicles.</li>
+        </ul>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <p>Cited at 25 over or faster? You still have real options — deferred disposition has no speed limit attached. See <a href="/texas/speeding-25-over" class="text-primary-deep font-medium hover:underline">what to do when you're 25+ mph over in Texas</a>.</p>
+          <p><strong class="text-text">Commercial driver's license (CDL) holders cannot dismiss a ticket</strong> with a driver safety course — even for tickets received in a personal vehicle. Federal anti-masking rules (49 CFR 384.226) require moving violations to stay on a CDL record, and Texas law excludes anyone who holds a CDL now or held one when the offense was committed (art. 45A.351(c)). CDL holders can still take the course voluntarily for a possible insurance discount.</p>
+          <p>Not sure if your specific ticket qualifies? Use our free <a href="/texas/eligibility-tracker" class="text-primary-deep font-medium hover:underline">Texas Eligibility Checker</a> — four questions, no sign-up.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How much does it cost to dismiss a speeding ticket in Texas?</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Dismissing a speeding ticket has up to three costs: the course, the court's fee, and (sometimes) your driving record.</p>
+          <p><strong class="text-text">The course.</strong> Texas law sets a statutory floor for every approved driver safety course: at least $25 for the course plus at least $3 for course materials and administration (Tex. Educ. Code §1001.352). That means <strong class="text-text">$28 is the legal minimum any provider can charge</strong> — anything above that is margin or extras. Road Ready Safety is <strong class="text-text">$28 all-in</strong> — the statutory minimum — with a <strong class="text-text">free instant certificate</strong> and no hidden delivery charge. (Use code <code class="text-sm bg-surface-muted border border-border rounded px-1.5 py-0.5">TAKE3</code> for $25.)</p>
+          <p><strong class="text-text">Your court's fee.</strong> The court charges its own fee when it grants the course — commonly $144 for standard violations and $169 for school-zone violations, but it's set locally and varies by court.</p>
+          <p><strong class="text-text">Your driving record</strong>, if the court requires you to submit one yourself ($12 online from DPS) rather than pulling it for you.</p>
+          <p>We keep a continuously verified, all-in price comparison of TDLR-approved providers — including the fees most of them hide until checkout — on our <a href="/texas/cost" class="text-primary-deep font-medium hover:underline">Texas defensive driving cost page</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Does a speeding ticket raise your insurance in Texas — and does dismissal help?</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>A speeding <strong class="text-text">conviction</strong> typically raises your insurance, often for three years, because insurers price your policy off your driving record. Dismissing the ticket prevents the conviction from ever reaching that record, so there's nothing for your insurer to react to.</p>
+          <p>Separately, <strong class="text-text">many Texas insurers offer a discount for completing an approved driver safety course</strong> even when you're not dismissing a ticket — the Texas Department of Insurance lists it among common optional discounts, typically a few percent for about three years. Each insurer decides whether and how much, so check your specific policy. Either way, the same 6 hours can both clear an eligible ticket and potentially lower your rate.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What's the deadline to take care of a Texas speeding ticket?</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>You must notify the court that you intend to take the course <strong class="text-text">on or before the answer date</strong> on your citation — miss that window and you can lose the dismissal option. Once the court approves you, you have <strong class="text-text">90 days to complete the course and present your certificate</strong> (courts may extend for good cause, but don't plan on it). Because that clock is real, a provider that delivers your certificate as a <strong class="text-text">free instant download</strong> (rather than mailing it days later) removes the risk of missing your deadline.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Did Texas change its ticket dismissal law recently? (2025 updates)</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Yes — two changes worth knowing. First, the dismissal statute was reorganized effective January 1, 2025: the rules that lived in art. 45.0511 for two decades now live in Code of Criminal Procedure chapter 45A (arts. 45A.351–.359). The substance carried over, but if a website still cites "Article 45.0511," its information predates 2025.</p>
+          <p>Second, a 2025 amendment (S.B. 296, effective September 1, 2025) modernized how you can request the course — expressly allowing requests by certified mail, email, or a court's online portal where offered — and now lets one course dismiss multiple eligible charges from the same stop. Courts are still rolling out these mechanics, so ask your court how it handles requests today. For the full breakdown of both changes, see <a href="/texas/ticket-law-changes-2025" class="text-primary-deep font-medium hover:underline">what changed in Texas traffic ticket law in 2025</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How does dismissal work with my specific Texas court?</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Texas has hundreds of justice of the peace and municipal courts, and the details — how you request the course, what documents they want, and how you submit your certificate — vary from court to court. Most accept the certificate by email, online upload, or in person; some take a digital PDF, others want a physical copy. In our experience researching individual courts, deadlines vary too: some courts give you only 15 or 20 days from the citation to request the course, and at least one West Texas court gives you 180 days to finish it.</p>
+          <p>We maintain court-specific DSC instructions — fees, deadlines, forms, and submission methods we've verified directly — for over a hundred Texas courts. Start at our <a href="/texas/courts" class="text-primary-deep font-medium hover:underline">Texas courts directory</a> and find the JP or municipal court named on your citation. When in doubt, call the clerk's office listed on your ticket and confirm before you enroll.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Dismiss the ticket vs. just paying it vs. deferred disposition</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">Pay the ticket</strong> — fastest, but it's a guilty plea and a conviction that goes on your record and can raise your insurance for years. Usually the most expensive choice over time.</p>
+          <p><strong class="text-text">Driver safety course dismissal</strong> — the ticket is dismissed and never hits your record, for the price of a $25–$28 course plus court fees. Best for most eligible everyday speeding tickets. Limited to once every 12 months.</p>
+          <p><strong class="text-text">Deferred disposition</strong> — a court-supervised probation of up to 180 days (Tex. Code Crim. Proc. art. 45A.302). Stay violation-free and the charge is dismissed without a course; rules and fees are set by each court, and CDL holders are excluded here too. Useful when you're not eligible for the course (for example, a second ticket within 12 months). Ask your court whether it's offered.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;">{item.a}</p>
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Dismiss your Texas speeding ticket today</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>I built Road Ready Safety to be the simplest, most honest way to handle a Texas ticket — no upsells, no mailed-certificate games, no "we'll remove your points" nonsense. If your ticket qualifies, our TDLR-approved course is 6 hours, fully online, <strong class="text-text">$28 all-in with a free instant certificate</strong> you can submit the same day.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="/texas/eligibility-tracker"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            Check if your ticket qualifies
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated June 11, 2026 — verified by the Road Ready Safety editorial team against Tex. Code Crim. Proc. ch. 45A (arts. 45A.351–.359), Tex. Educ. Code §1001.352, Tex. Transp. Code §§472.022 &amp; 521.292, 49 CFR 384.226, Texas DPS, and the Texas Department of Insurance.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

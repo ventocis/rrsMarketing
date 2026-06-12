@@ -1,0 +1,145 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    "q": "How long does it take to dismiss a ticket with defensive driving in Texas?",
+    "a": "Calendar time: typically two to six weeks end to end — request by your answer date, a one-to-three-week wait for the court's order, the 6-hour course, then days for the court to process your documents. Your time invested: about seven hours, most of it the course itself."
+  },
+  {
+    "q": "How long is the defensive driving course?",
+    "a": "Six hours of instruction, set by state rule — no provider can legally sell a shorter one. Online courses are self-paced: one evening for the determined, a few sittings for everyone else. The timed modules mean speed-clicking doesn't shorten it."
+  },
+  {
+    "q": "How long do I have to complete the course after the court approves?",
+    "a": "90 days from the grant to complete the course and present your certificate and Type 3A record (art. 45A.356). Courts can extend for good cause (art. 45A.355) but treat that as an emergency valve, not a plan. The window is generous; squandering 80 days of it is the only real danger."
+  },
+  {
+    "q": "How fast can I get the certificate after finishing?",
+    "a": "Provider-dependent: with us it downloads the instant you finish, free. Mail-based providers take days to weeks, and several charge extra for expedited delivery. One caveat from TDLR: a new certificate can take up to 5 days to appear in the DESSearch validation system, so build a small cushion before your deadline."
+  },
+  {
+    "q": "When does the dismissal actually happen?",
+    "a": "After you submit the certificate and record, the court verifies and enters the dismissal — at many courts within days. The charge is then, by law, never part of your driving record. If you want confirmation, ask the clerk for a case-status check or a dismissal notice."
+  },
+  {
+    "q": "What's the fastest possible end-to-end time?",
+    "a": "With a responsive court: request on day 1, order inside a week, course that evening, record ordered online the same night, documents submitted the next morning, dismissal entered within days — under two weeks total. The sequence can't compress further because the court's approval must precede the course."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: "From Ticket to Dismissed: The Real Texas Timeline, Week by Week",
+  description: "From citation to dismissed: the realistic week-by-week timeline for dismissing a Texas ticket with defensive driving — the deadlines that are real, the waits you can't control, and where people lose days they need.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-11',
+  dateModified: '2026-06-11',
+  mainEntityOfPage: `${siteUrl}/texas/dismissal-timeline`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Texas Ticket Dismissal Timeline: How Long Defensive Driving Actually Takes, Start to Finish (2026)"
+    description="From citation to dismissed: the realistic week-by-week timeline for dismissing a Texas ticket with defensive driving — the deadlines that are real, the waits you can't control, and where people lose days they need."
+    keywords="how long does defensive driving take texas, ticket dismissal timeline texas, 90 days defensive driving texas, defensive driving deadline texas, how long to dismiss ticket texas"
+    url="/texas/dismissal-timeline"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">Speeding ticket guide</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">The timeline</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          From Ticket to Dismissed: The Real Texas Timeline, Week by Week
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>The whole dismissal, done right, takes <strong class="text-text">two to six weeks of calendar time and about seven hours of your attention</strong> — but it's governed by two hard deadlines (the answer date and the 90-day completion window) and a couple of waits you don't control. People don't lose dismissals to the work; they lose them to sequencing.</p>
+          <p>Here's the realistic timeline, what's fixed versus flexible, and the three places days quietly disappear.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Procedures vary by court and judge — confirm with the court listed on your citation.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The timeline, stage by stage</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">Days 0–14: request by the answer date.</strong> Your citation gives you roughly 10–21 days to respond. Send the <a href="/texas/request-defensive-driving" class="text-primary-deep font-medium hover:underline">complete request</a> — plea, license copy, insurance, fee — as early as you can. This deadline is the one that kills the most dismissals; it cannot be cured later except by a judge's grace.</p>
+          <p><strong class="text-text">Days 7–30: wait for the court's order.</strong> Courts process requests in days to a few weeks (Prosper, for example, commits to a 10-business-day reply). You cannot take the course in this window — certificates dated before approval get rejected. If two weeks pass silently, call the clerk.</p>
+          <p><strong class="text-text">Order day + 90: the completion window.</strong> The statute gives you 90 days from the grant to complete the course and deliver the certificate and <a href="/texas/type-3a-driving-record" class="text-primary-deep font-medium hover:underline">Type 3A record</a>. The course itself is 6 hours — one evening or a lazy weekend. The record is $12 and instant online. Functionally, the 90-day window needs about three days of it.</p>
+          <p><strong class="text-text">Submission to dismissal: days to weeks.</strong> Once your documents are in, dismissal is administrative — many courts process within days; you can confirm with the clerk. The charge then never reaches your record at all.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Where the days disappear</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">Mail-based certificates.</strong> Providers that mail certificates eat one to three weeks of your 90 — and the paid "instant" upgrade at the end is priced against your panic. An instant-download certificate (ours is free) removes the wait entirely. Related, from TDLR itself: new certificates can take up to 5 days to appear in the state's validation system, so don't submit on the literal last day.</p>
+          <p><strong class="text-text">Record-timing rules.</strong> Some courts want the Type 3A dated after approval (Sherman), some want both documents together (Deer Park). Order the record at the wrong moment and you're buying it twice. Check your court's rule first — it's in our <a href="/texas/courts" class="text-primary-deep font-medium hover:underline">directory</a> for over a hundred courts.</p>
+          <p><strong class="text-text">The day-80 course start.</strong> The 90-day window forgives almost everything except being started too late. Life happens — do the course in the first month, not the last week. Extensions for good cause exist (art. 45A.355) but are a request, not a right.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The only stage you fully control is the course — make it instant</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Every other stage has a wait built in. The course doesn't have to: <strong class="text-text">$28, online, finish tonight, certificate in hand the moment you do</strong>.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="/texas/request-defensive-driving"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            Start with the request
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated June 11, 2026 — verified by the Road Ready Safety editorial team against Tex. Code Crim. Proc. arts. 45A.352, 45A.355–.356, TDLR course and certificate-validation guidance, and the published processing commitments of the Texas courts referenced.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

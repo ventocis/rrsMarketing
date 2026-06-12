@@ -1,0 +1,142 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    "q": "Can you take defensive driving for a no insurance ticket in Texas?",
+    "a": "No. The driving-safety-course statute covers rules-of-the-road offenses under Transportation Code Subtitle C, and the insurance requirement (§601.191) sits in Subtitle D — outside the statute's reach. No Texas court can dismiss an FMFR charge with a course."
+  },
+  {
+    "q": "I had insurance but couldn't show it — will the ticket be dismissed?",
+    "a": "Yes, and it's mandatory: produce proof to the court that your coverage was valid at the time of the offense, and once the court verifies it, §601.193 says the court shall dismiss the charge. Get a coverage letter or declarations page from your insurer showing the policy period and bring it before your appearance date."
+  },
+  {
+    "q": "What's the fine for no insurance in Texas?",
+    "a": "First conviction: $175–$350. Repeat convictions run higher and can bring license and registration consequences. The infamous three-year annual surcharges ended when the Driver Responsibility Program was repealed in 2019, but the conviction itself remains expensive — especially once your insurer sees it."
+  },
+  {
+    "q": "Can I get deferred disposition for a no insurance ticket?",
+    "a": "Often, yes. FMFR is a fine-only misdemeanor and deferred disposition has no subtitle restriction — judges commonly grant it with a condition that you obtain and maintain coverage. It's discretionary, so ask the court; showing up already insured helps enormously."
+  },
+  {
+    "q": "Will a no-insurance conviction raise my insurance?",
+    "a": "Almost certainly, and often more than a speeding conviction — insurers treat an uninsured-driving conviction as a serious underwriting signal, and some will move you into a higher-risk tier. It's another reason to use the §601.193 dismissal if you had coverage, or deferred if you didn't."
+  },
+  {
+    "q": "The officer said I can 'just show insurance to the court' — is that real?",
+    "a": "Yes — that's the §601.193 defense in plain clothes. But it only works if the policy was valid on the day of the stop, the court has to verify the document, and you must do it before the case is disposed. Don't pay the ticket first; payment converts it to a conviction and ends the option."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: "The Texas No-Insurance Ticket: Why Defensive Driving Can't Touch It — and the Statute That Can",
+  description: "A Texas no-insurance (FMFR) ticket can't be dismissed with defensive driving — but if you actually had coverage on the day, the court SHALL dismiss it on proof. The mandatory dismissal, the surcharge history, and what to do if you were truly uninsured.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-11',
+  dateModified: '2026-06-11',
+  mainEntityOfPage: `${siteUrl}/texas/no-insurance-ticket`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="No Insurance Ticket in Texas: Defensive Driving Won't Fix It — But This Statute Might (2026)"
+    description="A Texas no-insurance (FMFR) ticket can't be dismissed with defensive driving — but if you actually had coverage on the day, the court SHALL dismiss it on proof. The mandatory dismissal, the surcharge history, and what to do if you were truly uninsured."
+    keywords="no insurance ticket texas, fmfr ticket texas, failure to maintain financial responsibility texas, dismiss no insurance ticket, show proof of insurance court texas"
+    url="/texas/no-insurance-ticket"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">Speeding ticket guide</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">No insurance tickets</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          The Texas No-Insurance Ticket: Why Defensive Driving Can't Touch It — and the Statute That Can
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>A ticket for driving without insurance — "failure to maintain financial responsibility," Transp. Code §601.191 — is the ticket defensive driving <strong class="text-text">cannot dismiss</strong>, and the reason is structural: the dismissal statute covers rules-of-the-road offenses in Subtitle C of the Transportation Code, and the insurance requirement lives in Subtitle D. Different subtitle, no course option. Courts list it as ineligible because the statute never reaches it.</p>
+          <p>But there's a better tool hiding in plain sight: <strong class="text-text">if you actually had valid coverage on the day of the stop, the court is required to dismiss the charge</strong> — not may, <em>shall</em> (§601.193). Here's both halves.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Procedures vary by court and judge — confirm with the court listed on your citation.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Had insurance, just couldn't show it? The mandatory dismissal</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>If your policy was in force at the time of the offense — you just couldn't pull it up at the roadside, the app wouldn't load, the card in the glovebox was the old one — gather proof that the policy was <strong class="text-text">valid on the citation date</strong> (your insurer can print a letter or declarations page showing the coverage period) and present it to the court before your appearance date. Under §601.193, once the court verifies the document, it "shall dismiss the charge." No fee is set by the statute, no course, no probation — verified proof, mandatory dismissal.</p>
+          <p>Make sure the proof covers <em>you</em> and <em>that date</em>: a card that started the day after your stop proves the opposite. And handle it before paying anything — payment is a conviction, and a conviction can't be un-dismissed.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Actually uninsured that day? Here's the honest picture</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>A first FMFR conviction carries a fine of $175 to $350, and repeat offenses run higher with possible license-and-registration consequences. The old $250-a-year-for-three-years surcharge died with the Driver Responsibility Program in 2019 — but a related cost survived: Texas assesses a <strong class="text-text">"fine for certain offenses"</strong> on no-insurance convictions under the program that replaced part of the DRP structure, and insurers treat the conviction itself as a major rating event.</p>
+          <p>Your realistic options: ask the court about <a href="/texas/deferred-disposition" class="text-primary-deep font-medium hover:underline">deferred disposition</a> — FMFR is a fine-only misdemeanor and deferred has no subtitle restriction, so judges can and often do grant it, frequently with a condition that you obtain and keep insurance; get insured immediately (it strengthens every conversation with the court); or negotiate. What you shouldn't do is take a defensive driving course expecting it to help this charge — it can't, and you'll have spent six hours fixing the wrong problem.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Have a regular moving violation too?</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Traffic stops often produce two tickets — and since 2025, one course can dismiss every eligible charge from the same stop. The insurance charge needs §601.193 or deferred; the speeding charge next to it may need exactly our <strong class="text-text">$28 course</strong>.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="/texas/eligibility-tracker"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            Check the other ticket
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated June 11, 2026 — verified by the Road Ready Safety editorial team against Tex. Transp. Code §§601.191–.193 (Subtitle D placement) and Tex. Code Crim. Proc. arts. 45A.301–.305 &amp; 45A.351.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

@@ -1,0 +1,142 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    "q": "Can I take defensive driving for running a red light in Texas?",
+    "a": "Yes — an officer-issued red light citation (Transp. Code §544.007(d)) is a rules-of-the-road moving violation eligible for course dismissal under the normal conditions: valid Texas license, request by your answer date, no course used in the 12 months before the offense, and none of the standard exclusions."
+  },
+  {
+    "q": "Are red light cameras still legal in Texas?",
+    "a": "No — H.B. 1631 banned photographic traffic-signal enforcement in June 2019. A grandfather clause let a few cities finish existing vendor contracts, but those have largely expired. New camera tickets shouldn't be arriving; treat any that do with healthy suspicion and verify the source."
+  },
+  {
+    "q": "Do I have to pay an old red light camera ticket?",
+    "a": "Camera penalties were civil, never went on your driving record, and after the 2019 ban most enforcement teeth (like registration holds) were pulled. If you're being dunned for an old one, verify who's actually asking and what authority they claim before paying — and know it isn't a criminal matter."
+  },
+  {
+    "q": "How much does a red light conviction raise insurance?",
+    "a": "Insurers rate red-light convictions among the most serious routine violations because they predict intersection crashes — increases of 15–25% at renewal aren't unusual, lasting about three years. Dismissal through the course keeps the conviction off your record entirely, so there's nothing to rate."
+  },
+  {
+    "q": "Is 'disregarding a traffic control device' the same thing?",
+    "a": "It's the broader cousin (§544.004) — covering signals, signs, and devices generally — and it's also a rules-of-the-road offense eligible for course dismissal under the same conditions. The exact section on your citation doesn't change the playbook."
+  },
+  {
+    "q": "What if I ran the light and there was a crash?",
+    "a": "Accident-related charges change things: failing to stop and give information or render aid are excluded from course dismissal by statute, and a crash makes judges less generous with everything else. If your red-light ticket came with a collision, talk to the clerk about what's available — and consider an attorney."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: "Red Light Ticket in Texas: First Question — Officer or Camera?",
+  description: "An officer-issued red light ticket in Texas is a moving violation you can usually dismiss with defensive driving. Camera tickets were banned in 2019. Which one you have, and exactly what to do about it.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-11',
+  dateModified: '2026-06-11',
+  mainEntityOfPage: `${siteUrl}/texas/red-light-ticket`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Red Light Ticket in Texas: Officer Tickets Are Dismissible — Camera Tickets Are Dead (2026)"
+    description="An officer-issued red light ticket in Texas is a moving violation you can usually dismiss with defensive driving. Camera tickets were banned in 2019. Which one you have, and exactly what to do about it."
+    keywords="red light ticket texas, run red light ticket dismiss, red light camera texas banned, 544.007 texas, disregard traffic signal ticket texas"
+    url="/texas/red-light-ticket"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">Speeding ticket guide</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Red light tickets</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          Red Light Ticket in Texas: First Question — Officer or Camera?
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Two completely different things share the name "red light ticket" in Texas. A citation an <strong class="text-text">officer</strong> handed you for running a light (Transp. Code §544.007(d), or disregarding a traffic control device, §544.004) is a criminal moving violation — and usually <strong class="text-text">dismissible with defensive driving</strong>. A notice that arrived in the <strong class="text-text">mail from a camera</strong> was a civil penalty under a program <strong class="text-text">Texas banned in 2019</strong> (H.B. 1631) — those programs are effectively gone.</p>
+          <p>Sort out which you have, and the path is clear.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Procedures vary by court and judge — confirm with the court listed on your citation.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Officer-issued: a normal, dismissible moving violation</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Running a red light is a rules-of-the-road offense squarely inside the defensive-driving statute's coverage — no special exclusion applies. If you hold a valid Texas license, haven't used a course for dismissal in the 12 months before the offense, and aren't otherwise barred (CDL, etc.), the standard play works: <a href="/texas/request-defensive-driving" class="text-primary-deep font-medium hover:underline">request the course</a> by your answer date, complete the 6 hours after approval, submit your certificate and <a href="/texas/type-3a-driving-record" class="text-primary-deep font-medium hover:underline">Type 3A record</a> inside 90 days, and the charge is dismissed — off your record by law.</p>
+          <p>Worth knowing: red-light convictions are among the moving violations insurers rate hardest, since they correlate with intersection crashes. The gap between "dismissed" and "convicted" on this particular ticket is often hundreds of dollars a year in premium.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Camera notice: a different, mostly extinct animal</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Red-light camera tickets were never criminal — they were civil penalties against the vehicle owner under former Transportation Code chapter 707. In June 2019, H.B. 1631 <strong class="text-text">banned photographic traffic-signal enforcement statewide</strong>; a narrow grandfather clause let a handful of cities run out existing vendor contracts, and those have largely lapsed. Today you should essentially never receive a new Texas red-light camera ticket.</p>
+          <p>If something camera-flavored shows up in your mail anyway: it was always civil (no driving record entry, no license points — which don't exist anyway), defensive driving never applied to it, and old unpaid camera fines couldn't block registration renewal in most cases after the ban. Treat any new "camera notice" with suspicion — verify it's from a real Texas authority before paying anyone, since the genre is also a favorite of scammers.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Officer ticket? Six hours beats three years of higher premiums</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>A red-light conviction is one of the most expensive routine convictions to carry. If yours is eligible, the course makes it disappear: <strong class="text-text">$28 all-in, free instant certificate, court copy included</strong>.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="/texas/request-defensive-driving"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            How to request the course
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated June 11, 2026 — verified by the Road Ready Safety editorial team against Tex. Transp. Code §§544.004 &amp; 544.007, H.B. 1631 (86th Leg., 2019), and Tex. Code Crim. Proc. arts. 45A.351–.353.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

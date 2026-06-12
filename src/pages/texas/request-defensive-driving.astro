@@ -1,0 +1,145 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    "q": "How do I ask a Texas court for defensive driving?",
+    "a": "On or before the answer date on your citation, send the court a plea of guilty or no contest, a request to take a driving safety course, a copy of your valid Texas driver's license, proof of insurance, and the court's fee — in person, by certified mail, or by the court's email or online portal where offered. Use the court's own request form if it has one."
+  },
+  {
+    "q": "Can I request defensive driving online in Texas?",
+    "a": "At many courts, yes — the statute now expressly allows court-authorized email and online-portal requests (since September 2025), and a growing number of courts run portals or web forms. It's court-by-court: check your court's listed method in our directory or call the clerk."
+  },
+  {
+    "q": "What happens after I send the request?",
+    "a": "The court reviews it and sends back an order granting (or denying) the course, with your 90-day completion deadline. Don't start the course until that order arrives — certificates dated before approval are routinely rejected. No response in two weeks? Call the clerk."
+  },
+  {
+    "q": "How much does it cost to request defensive driving?",
+    "a": "The court's fee — commonly $144, or $169 for school-zone violations, set locally — is due with the request at most courts. The course itself ($28 statutory minimum) and the Type 3A driving record ($12 from DPS) come later. Some courts collect the fee only after granting the request; your court's page or clerk will say."
+  },
+  {
+    "q": "Do I need a notarized affidavit to request the course?",
+    "a": "Depends on the court. Some require a notarized affidavit with mailed requests (Boerne, Buda, and Prosper, for example) but waive notarization if you appear in person; others bundle a sworn statement into their form with no notary needed. Check your court's instructions before mailing."
+  },
+  {
+    "q": "What if my answer date is tomorrow?",
+    "a": "Call the clerk first thing and ask how to make a same-day request — many courts accept in-person requests through the appearance date, and courts with portals can take them up to the deadline. If the date has already passed, ask anyway: a judge has discretion to accept a late request any time before final disposition, and clerks will tell you whether yours will."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: "How to Request Defensive Driving from a Texas Court, Step by Step",
+  description: "The exact steps to request court permission for defensive driving in Texas — what to send, when, by which method, and what the court sends back. Includes what to write and the mistakes that get requests denied.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-11',
+  dateModified: '2026-06-11',
+  mainEntityOfPage: `${siteUrl}/texas/request-defensive-driving`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="How to Request Defensive Driving from a Texas Court: Step-by-Step, with What to Say (2026)"
+    description="The exact steps to request court permission for defensive driving in Texas — what to send, when, by which method, and what the court sends back. Includes what to write and the mistakes that get requests denied."
+    keywords="how to request defensive driving texas, ask court for defensive driving, driving safety course request texas, dsc request letter texas, court permission defensive driving"
+    url="/texas/request-defensive-driving"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">Speeding ticket guide</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">How to request</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          How to Request Defensive Driving from a Texas Court, Step by Step
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Requesting the course is the step everything else depends on — and the step people get wrong most. The rule: <strong class="text-text">ask the court on or before the answer date printed on your citation, before you take any course.</strong> Since September 2025 the statute expressly allows requests in person, by your attorney, by certified mail, or — where the court offers it — by email or online portal (art. 45A.352(a)(4)).</p>
+          <p>Here's the whole sequence, what to actually say, and what comes back from the court.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Procedures vary by court and judge — confirm with the court listed on your citation.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The five steps</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">1. Find your court and its method.</strong> The citation names the exact court. Methods vary more than anything else court to court — some take a web form, some require certified mail, a few require appearing in person. Our <a href="/texas/courts" class="text-primary-deep font-medium hover:underline">court directory</a> lists the verified request method, fees, and forms for over a hundred Texas courts.</p>
+          <p><strong class="text-text">2. Send the request by your answer date.</strong> A complete request includes: a plea of guilty or no contest, the request for a driving safety course, a copy of your valid Texas driver's license, proof of insurance listing you as a driver, and the court's fee (commonly $144, or $169 in a school zone). Many courts have their own one-page form that bundles the plea, request, and affidavit — use the court's form when one exists. Mailing it? Certified mail, return receipt, postmarked by the answer date.</p>
+          <p><strong class="text-text">3. Wait for the order — do not start the course.</strong> The court reviews eligibility and sends back an order granting the course with your deadline (90 days). Courts are blunt about sequence: certificates dated before approval are routinely refused. If you haven't heard back within two weeks, call.</p>
+          <p><strong class="text-text">4. Take the course and order your record.</strong> Any TDLR-approved provider works — <a href="/texas/providers" class="text-primary-deep font-medium hover:underline">verify the CP number</a> — and order your <a href="/texas/type-3a-driving-record" class="text-primary-deep font-medium hover:underline">Type 3A driving record</a> from DPS ($12 online, instant), checking first whether your court wants it dated after approval.</p>
+          <p><strong class="text-text">5. Submit certificate + record before day 90.</strong> Court copy of the certificate (signed if your court requires it) plus the Type 3A, by the method your court accepts. Leave a cushion — TDLR notes new certificates can take up to 5 days to appear in its validation system.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What to write if there's no form</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Keep it to five sentences on one page: your full name exactly as on your license, citation number, the charge and date; a sentence entering a plea of no contest; a sentence requesting permission to take a driving safety course for dismissal under Code of Criminal Procedure chapter 45A; a sentence affirming you hold a valid Texas license, have insurance (copies enclosed), and have not completed a course for dismissal in the 12 months before the offense date; your mailing address, email, and phone. Enclose the fee. That's the entire genre — courts process thousands of these; clarity beats formality.</p>
+          <p>The three request-killers, per the courts' own instructions: sending it <strong class="text-text">after the answer date</strong>, sending an <strong class="text-text">incomplete packet</strong> (Prosper's form says it plainly: incomplete requests will be denied), and <strong class="text-text">taking the course before the order arrives</strong>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Approved? The rest takes one evening</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Once the court's order arrives, the remaining work is the 6-hour course and two documents. Ours is <strong class="text-text">$28 all-in with the certificate downloadable the moment you finish</strong> — court copy and insurance copy included.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="/texas/courts"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            Find your court's method
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated June 11, 2026 — verified by the Road Ready Safety editorial team against Tex. Code Crim. Proc. arts. 45A.351–.359 (incl. the S.B. 296 request-method amendments) and the published instructions of the individual Texas courts referenced.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

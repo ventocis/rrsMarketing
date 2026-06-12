@@ -1,0 +1,144 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    "q": "Can an out-of-state driver take defensive driving for a Texas ticket?",
+    "a": "No — the dismissal statute requires a Texas driver's license or permit (art. 45A.352(a)(2)). The only exception is active-duty military members and their spouses and dependent children, who qualify with any state's license. For everyone else, the course can't dismiss a Texas ticket."
+  },
+  {
+    "q": "So what CAN an out-of-state driver do about a Texas ticket?",
+    "a": "Ask for deferred disposition — it has no license-state requirement, and we verified that nothing in the deferred statute (arts. 45A.301–.305) conditions it on a Texas license. Plead, pay, stay clean up to 180 days, charge dismissed. Many courts process the entire request by mail or online portal."
+  },
+  {
+    "q": "Will a Texas ticket show up on my home state license?",
+    "a": "If it becomes a conviction, almost certainly — Texas is a Driver License Compact member and reports convictions to your home state, which typically posts them under its own rules (including assigning its own points, if it's a points state). A dismissal through deferred disposition never becomes a conviction, so there's nothing to report."
+  },
+  {
+    "q": "Do I have to come back to Texas for court?",
+    "a": "Usually not. Most courts accept written pleas and deferred requests by mail (the statute now also recognizes email and portals where courts offer them), and an attorney can appear for you. Call or check the court's website — our court directory lists contact info and methods for over a hundred Texas courts."
+  },
+  {
+    "q": "Can I take my home state's defensive driving course instead?",
+    "a": "Not for the Texas ticket — Texas courts dismiss only under the Texas statute, which requires the Texas license you don't have. Your home state's course may help with your home record or insurance under your state's rules, but it does nothing to the Texas citation. Deferred is the tool for the ticket itself."
+  },
+  {
+    "q": "What happens if I just ignore a Texas ticket from out of state?",
+    "a": "It grows: a failure-to-appear charge, a possible warrant, collections — and through interstate agreements, unresolved tickets can trigger license consequences at home. The fix is cheap relative to the alternative: one call to the court and a deferred request by mail."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: "Texas Ticket, Out-of-State License: The Door That's Closed — and the One Nobody Tells You About",
+  description: "Texas defensive-driving dismissal requires a Texas license (military excepted) — but deferred disposition has no license-state requirement, and out-of-state drivers can use it. The verified rules and how your home state finds out.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-11',
+  dateModified: '2026-06-11',
+  mainEntityOfPage: `${siteUrl}/texas/out-of-state-driver`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Out-of-State Driver with a Texas Ticket: Defensive Driving Is Closed — But Deferred Isn't (2026)"
+    description="Texas defensive-driving dismissal requires a Texas license (military excepted) — but deferred disposition has no license-state requirement, and out-of-state drivers can use it. The verified rules and how your home state finds out."
+    keywords="out of state driver texas ticket, texas ticket out of state license, defensive driving out of state texas, texas ticket colorado license, driver license compact texas"
+    url="/texas/out-of-state-driver"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">Speeding ticket guide</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Out-of-state drivers</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          Texas Ticket, Out-of-State License: The Door That's Closed — and the One Nobody Tells You About
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>If you got a Texas ticket on an out-of-state license, the standard advice ends fast: defensive-driving dismissal requires a <strong class="text-text">Texas driver's license or permit</strong> (CCP art. 45A.352(a)(2)) — the only exception is active-duty military and their spouses and dependent children, who can use any state's license. A Colorado or Oklahoma license doesn't qualify, full stop.</p>
+          <p>What almost nobody adds: <strong class="text-text">deferred disposition has no license-state requirement at all.</strong> We verified Subchapter G end to end — nothing in it conditions deferral on a Texas license. That's your real path. Here's the whole picture, including how the ticket follows you home.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Procedures vary by court and judge — confirm with the court listed on your citation.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Your actual options, ranked</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">1. Deferred disposition.</strong> Ask the court for it by your appearance date — plead, pay costs and the judge-set fine, stay violation-free up to 180 days, and the charge is <a href="/texas/deferred-disposition" class="text-primary-deep font-medium hover:underline">dismissed</a> with no final conviction. It's the judge's discretion, and the two statutory exclusions (work zones with workers present, CDL holders) apply — but your license state is irrelevant. Many courts handle the whole thing by mail or portal, so you don't have to return to Texas.</p>
+          <p><strong class="text-text">2. Negotiate or fight.</strong> A local traffic attorney can appear for you — often without you ever returning — and negotiate a reduction or dismissal. For a serious speed or a CDL situation, this is the move.</p>
+          <p><strong class="text-text">3. Pay it — knowing it follows you.</strong> Texas is a member of the Driver License Compact (Transp. Code ch. 523), which obligates Texas to report your conviction to your home state's licensing authority. Most states then post it to your record under their own rules — points states assign their points, and your insurer prices accordingly. "It's just Texas, it won't follow me" is a myth that costs people three years of premiums.</p>
+          <p>One more door: if you're <strong class="text-text">active-duty military</strong> (or a spouse/dependent child of someone who is), the Texas-license requirement is waived and the course is fully available — with one extra condition: no dismissal course completed in another state in the prior 12 months.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What NOT to waste time on</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Don't buy a Texas defensive driving course hoping the court will bend — the license requirement is statutory, not local policy, and the course can't dismiss your ticket without it. (Your home state may accept a course for its own point-reduction program — that's a different product under your state's rules; check with your home DMV before buying anything.)</p>
+          <p>And don't ignore it because you live far away. An unresolved Texas citation grows the same way it does for Texans: failure-to-appear charge, warrant, collections — and under the Compact and the federal nonresident violator framework, unresolved out-of-state tickets can trigger license action <em>at home</em>. Resolving it by mail through deferred costs an afternoon; ignoring it costs much more — see <a href="/texas/missed-court-date" class="text-primary-deep font-medium hover:underline">what happens when you miss the date</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Texan reading this with a Texas license? You have the better tool</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>The course path is the surer, cheaper one when you qualify — a statutory right, not a judge's favor. <strong class="text-text">$28 all-in, online, free instant certificate</strong>, TDLR CP1234.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="/texas/deferred-disposition"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            How deferred works
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated June 11, 2026 — verified by the Road Ready Safety editorial team against Tex. Code Crim. Proc. arts. 45A.301–.305 &amp; 45A.352(a)(2)–(3), and Tex. Transp. Code ch. 523 (Driver License Compact).</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

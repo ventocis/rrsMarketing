@@ -1,0 +1,143 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    "q": "Can you take defensive driving for a seat belt ticket in Texas?",
+    "a": "Generally yes, when the ticket was issued to the driver — a driver's belt violation under §545.413 is a Subtitle C offense involving operation of a vehicle, eligible under the normal conditions. Passenger tickets are murkier, and many courts route belt tickets to deferred disposition instead; ask your court which tool it uses."
+  },
+  {
+    "q": "How much is a seat belt ticket in Texas?",
+    "a": "Fines run $25–$50 for an adult belt violation, plus court costs. Child-restraint violations run higher ($100–$250 range) and have their own statute and considerations — see our child seat ticket guide for those."
+  },
+  {
+    "q": "Does a seat belt ticket affect insurance in Texas?",
+    "a": "Usually less than you'd fear — most insurers treat belt convictions as non-moving violations and rate them lightly or not at all, though a minority do count them. Call your insurer and ask how they treat §545.413 before deciding whether the dismissal machinery is worth it for this ticket."
+  },
+  {
+    "q": "Is there a special seat belt course in Texas?",
+    "a": "Not anymore — the old specialized-course provision in the belt statute was repealed effective June 2023 (H.B. 1560). Any site describing a special seat-belt dismissal course is citing repealed law. Today's tools are the ordinary driving safety course or deferred disposition."
+  },
+  {
+    "q": "I got a seat belt ticket as a passenger — what do I do?",
+    "a": "Ask the clerk what that court offers — passenger belt tickets are the passenger's own offense, the course-dismissal fit is legally murkier, and most courts handle them through deferred disposition or payment. Don't buy a course for a passenger ticket before the clerk confirms it would count."
+  },
+  {
+    "q": "Seat belt ticket plus a speeding ticket in one stop — now what?",
+    "a": "That changes the math: since September 2025 one course completion can dismiss every eligible charge from the same stop. Request the course for both charges by your answer date and confirm with the court that each qualifies — the speeding charge alone usually justifies the course, and the belt ticket rides along."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: "Seat Belt Ticket in Texas: Usually Dismissible — With Two Honest Caveats",
+  description: "A Texas driver's seat belt ticket (§545.413) is generally eligible for defensive driving dismissal — but courts treat belt tickets unevenly, and passengers are a different story. The real rules, 2023 changes included.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-11',
+  dateModified: '2026-06-11',
+  mainEntityOfPage: `${siteUrl}/texas/seat-belt-ticket`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Seat Belt Ticket in Texas: Can Defensive Driving Dismiss It? The Honest Answer (2026)"
+    description="A Texas driver's seat belt ticket (§545.413) is generally eligible for defensive driving dismissal — but courts treat belt tickets unevenly, and passengers are a different story. The real rules, 2023 changes included."
+    keywords="seat belt ticket texas, seatbelt ticket defensive driving texas, 545.413 texas, dismiss seat belt ticket, no seatbelt fine texas"
+    url="/texas/seat-belt-ticket"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">Speeding ticket guide</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Seat belt tickets</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          Seat Belt Ticket in Texas: Usually Dismissible — With Two Honest Caveats
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>A seat belt ticket (Transp. Code §545.413) sits in the rules-of-the-road chapter, and when it's written to the <strong class="text-text">driver</strong> — you unbelted, or you allowing an unbelted passenger under 17 — it's generally <strong class="text-text">eligible for defensive driving dismissal</strong> under the normal conditions. But this is a ticket courts treat less uniformly than speeding, and the law around it changed quietly in 2023.</p>
+          <p>Here's the eligible case, the caveats, and the cheaper question to ask your court first.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Procedures vary by court and judge — confirm with the court listed on your citation.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">When the course works — and the two caveats</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">The driver's ticket is the clean case.</strong> The dismissal statute covers Subtitle C offenses "involving the operation of a motor vehicle" — and a driver's belt violation involves exactly that. Request by the answer date, course after approval, certificate plus Type 3A within 90 days, dismissed.</p>
+          <p><strong class="text-text">Caveat one: passengers.</strong> An adult passenger's own belt ticket is the passenger's offense, and whether it "involves the operation of a motor vehicle" for dismissal purposes is genuinely murkier — many courts simply route passenger tickets to <a href="/texas/deferred-disposition" class="text-primary-deep font-medium hover:underline">deferred disposition</a> instead. If you were the passenger, ask the clerk which tool that court uses.</p>
+          <p><strong class="text-text">Caveat two: court variation.</strong> Belt tickets are cheap ($25–$50 fines plus costs), and some courts steer them to deferred or simple dismissal-with-conditions rather than the full course machinery. A 2023 cleanup (H.B. 1560) also repealed an old specialized-course provision that used to live in the belt statute — so if a website tells you a special seat-belt course exists, it's citing repealed law. Ordinary DSC or deferred are today's tools.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Is the course even worth it for a $25 fine?</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Run the numbers honestly. Paying a belt ticket means a conviction — but belt convictions are <em>non-moving</em> in most insurers' eyes and often rated lightly or not at all, unlike speeding. Against that: the course path costs the court fee (commonly $144) plus $28. For many drivers, deferred disposition — often cheaper for minor offenses — or even paying is the rational call <em>for this specific ticket</em>.</p>
+          <p>When the course clearly wins: when the same stop produced a moving violation too (one course now clears every eligible charge from the stop), when your insurer does rate belt convictions (a few do), or when you're protecting a spotless record. Ask your insurer how they treat §545.413 convictions before spending the $144 — it's a five-minute call that decides the question. Child-passenger tickets are a different statute with different stakes: see the <a href="/texas/child-seat-ticket" class="text-primary-deep font-medium hover:underline">child seat guide</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Make the five-minute call, then decide</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Ask your insurer how they rate belt convictions, and ask your clerk what the court offers. If the course is the right tool — or there's a moving violation in the same stop — ours is <strong class="text-text">$28 all-in with a free instant certificate</strong>.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="/texas/child-seat-ticket"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            Child seat ticket instead?
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated June 11, 2026 — verified by the Road Ready Safety editorial team against Tex. Transp. Code §545.413 (as amended — H.B. 1560 repeal of former subsec. (i), eff. June 2023) and Tex. Code Crim. Proc. arts. 45A.301–.305 &amp; 45A.351.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

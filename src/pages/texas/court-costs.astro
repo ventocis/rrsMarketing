@@ -1,0 +1,144 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    "q": "Why does the court charge $144 for defensive driving in Texas?",
+    "a": "It's a stack, not a single fee: a $62 state consolidated court cost, a $14 local consolidated court cost, a DSC fee capped at $10, and court-set amounts making up the difference — the statute allows courts to require all or part of the fine plus costs as a condition of granting the course. About $86 of the $144 is fixed by state law; the rest is your court's convention."
+  },
+  {
+    "q": "Is the $144 defensive driving fee the same at every Texas court?",
+    "a": "It's remarkably common but not universal — it's a convention, not a statute. In our court-by-court research we've verified totals of $109 (Nacogdoches), $134 (Forney), and $139 (Lancaster), among others. Your court's number is on its website or one phone call away — and in our court directory."
+  },
+  {
+    "q": "Why is a school zone dismissal $169 instead of $144?",
+    "a": "Exactly one added item: the $25 child safety fund fine under CCP art. 102.014, assessed in municipal courts for offenses committed in a school crossing zone. It's the cleanest piece of the whole stack — $144 plus $25."
+  },
+  {
+    "q": "What's the total real cost to dismiss a ticket with defensive driving?",
+    "a": "Typically about $184: roughly $144 to the court, $28 to the course provider (the statutory minimum — that's our price), and $12 to DPS for the Type 3A driving record. Against a conviction's fine plus costs plus about three years of higher insurance, it's usually the cheapest path by a wide margin."
+  },
+  {
+    "q": "Do I pay court costs if my ticket is dismissed through the course?",
+    "a": "Yes — paying the court's costs (the $144-style total) is a condition of being granted the course; the dismissal spares you the conviction and usually the fine, not the costs. What never gets charged: the fine on your record, the insurance surcharge, and the suspension-threshold tick."
+  },
+  {
+    "q": "My ticket is from 2019 — why is my court quoting a different number?",
+    "a": "Costs attach by offense date. The 2020 consolidation (the $62 + $14 structure) applies to offenses on or after January 1, 2020; earlier offenses carry the older schedules, which is why courts publish pre-2020 totals like $134/$159 for old tickets. The court's quote for your specific offense date is the controlling one."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: "Where the $144 Goes: The Real Anatomy of Texas Defensive-Driving Court Costs",
+  description: "The $144 defensive-driving total isn't one statutory number — it's state costs ($62), local costs ($14), a capped $10 DSC fee, and court-set amounts. The verified breakdown from the official OCA cost charts.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-11',
+  dateModified: '2026-06-11',
+  mainEntityOfPage: `${siteUrl}/texas/court-costs`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Why Texas Courts Charge ~$144 for Defensive Driving: Where the Money Actually Goes (2026)"
+    description="The $144 defensive-driving total isn't one statutory number — it's state costs ($62), local costs ($14), a capped $10 DSC fee, and court-set amounts. The verified breakdown from the official OCA cost charts."
+    keywords="texas court costs defensive driving, why 144 dollars defensive driving, court fee breakdown texas ticket, state consolidated court cost texas, dsc fee texas court"
+    url="/texas/court-costs"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">Speeding ticket guide</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Court costs</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          Where the $144 Goes: The Real Anatomy of Texas Defensive-Driving Court Costs
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Almost every Texas court quotes the same number for a defensive-driving dismissal — <strong class="text-text">$144, or $169 in a school zone</strong> — and almost nobody explains it. We pulled the official Office of Court Administration cost charts and the statutes to find out. The honest answer: <strong class="text-text">$144 is not a single statutory number.</strong> It's a stack — about $86 of it set by state law, the rest set by your court.</p>
+          <p>Here's the verified breakdown, why the school-zone version is exactly $25 more, and why your offense date can change the bill.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Procedures vary by court and judge — confirm with the court listed on your citation.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The stack, line by line</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">State Consolidated Court Cost — $62</strong> (Local Gov't Code §133.102). One combined cost that replaced a dozen older line items in the 2020 court-cost consolidation; it funds statewide accounts from law enforcement training to victim services. Every Class C conviction or DSC disposition pays it.</p>
+          <p><strong class="text-text">Local Consolidated Court Cost — $14</strong> (Local Gov't Code §134.103). The municipal counterpart, funding local court technology, building security, and jury operations.</p>
+          <p><strong class="text-text">Driving safety course fee — up to $10</strong> (CCP art. 45A.358). The one cost specific to the dismissal itself, capped by statute — and since September 2025, chargeable per dismissed offense when one course clears multiple charges from the same stop.</p>
+          <p><strong class="text-text">The rest — court-set.</strong> Those statutory items total roughly $86. The gap between $86 and your court's $144 is composed locally: the statute lets a court require payment of "all or part" of the fine plus costs as a condition of granting the course, and courts have settled on similar conventional totals. That's why the number is so uniform across Texas while not appearing in any statute — and why a handful of courts charge different amounts entirely (we've verified courts at $109, $134, and $139 in our <a href="/texas/courts" class="text-primary-deep font-medium hover:underline">court directory</a>).</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The $25 school-zone add-on, and the offense-date wrinkle</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>The $169 school-zone total is the same stack plus exactly one verified item: the <strong class="text-text">$25 child safety fund fine</strong> (CCP art. 102.014) assessed in municipal courts for rules-of-the-road offenses committed in a school crossing zone. $144 + $25 = $169 — the one piece of this arithmetic that's perfectly clean.</p>
+          <p>And a wrinkle that surprises people with old tickets: court costs attach by <strong class="text-text">offense date</strong>, not payment date. The 2020 cost consolidation applies to offenses committed on or after January 1, 2020; older offenses carry the older (generally lower) schedules, which is why some court websites still list pre-2020 totals for pre-2020 tickets. None of this stack, by the way, includes the course itself ($28, paid to the provider) or the <a href="/texas/type-3a-driving-record" class="text-primary-deep font-medium hover:underline">Type 3A record</a> ($12, paid to DPS) — the true all-in for a standard dismissal is typically $184.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The one line item you control is the course</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Court costs are the court's; the record fee is DPS's. The course is the piece you choose — and the statutory minimum is <strong class="text-text">$28, which is exactly what we charge</strong>, instant certificate included.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="/texas/cost"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            Compare provider prices
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated June 11, 2026 — verified by the Road Ready Safety editorial team against the Office of Court Administration municipal and justice court cost charts (txcourts.gov), Tex. Local Gov't Code §§133.102 &amp; 134.103, and Tex. Code Crim. Proc. arts. 45A.358 &amp; 102.014.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

@@ -1,0 +1,142 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    "q": "Can I dismiss a motorcycle ticket with defensive driving in Texas?",
+    "a": "Yes — a rider cited for an eligible moving violation can use the standard 6-hour driving safety course, or elect a motorcycle operator training course under Transportation Code chapter 662 instead. Once you elect, the judge orders the course you chose, and completion dismisses the charge the same way."
+  },
+  {
+    "q": "Is the motorcycle course required, or can I take the regular online course?",
+    "a": "Your choice — the statute makes the course you elect the one the judge orders. The standard online course is cheaper ($28) and faster (finish the same day); the motorcycle course is range-based training that costs more and takes longer but teaches actual riding skills. Both satisfy the dismissal."
+  },
+  {
+    "q": "Does a motorcycle ticket follow the same eligibility rules?",
+    "a": "Identical: request by the answer date on your citation, valid Texas license, no dismissal course completed in the 12 months before the offense (motorcycle and standard courses both count against the lookback), and the usual exclusions — 25+ mph over, 95+, work zones with workers, CDL holders."
+  },
+  {
+    "q": "How much does the motorcycle safety course cost versus the online course?",
+    "a": "DPS-approved rider courses typically run well north of $200 and require scheduling range sessions; the standard online driving safety course has a statutory floor of $28 and finishes in an evening. For pure ticket-dismissal economics, the online course wins; for riding skill, the range course is the real thing."
+  },
+  {
+    "q": "I ride but the ticket came in my car — which course applies?",
+    "a": "The election language is tied to the dismissal generally; practically, courts expect the standard driving safety course for a car citation, and the motorcycle-course option matters when you were operating a motorcycle. Either way, ask your court which it will order — and the online course is accepted everywhere."
+  },
+  {
+    "q": "Does my motorcycle insurance drop after the course?",
+    "a": "Possibly — Texas insurers set their own discounts, and several offer them for completed safety courses (especially the range-based rider courses). It's insurer-by-insurer: ask yours, and see our insurance discount guide for how the voluntary-course discount works."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: "Motorcycle Ticket in Texas: You Get a Choice the Car Drivers Don't",
+  description: "Cited while riding in Texas? You can elect a motorcycle operator training course instead of the standard 6-hour defensive driving course — same dismissal, same rules. How the election works and which course to pick.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-11',
+  dateModified: '2026-06-11',
+  mainEntityOfPage: `${siteUrl}/texas/motorcycle-ticket`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Motorcycle Ticket in Texas: Dismiss It with the Motorcycle Safety Course Instead (2026)"
+    description="Cited while riding in Texas? You can elect a motorcycle operator training course instead of the standard 6-hour defensive driving course — same dismissal, same rules. How the election works and which course to pick."
+    keywords="motorcycle ticket texas dismiss, motorcycle operator training course ticket, motorcycle defensive driving texas, msb course ticket dismissal texas, motorcycle safety course texas ticket"
+    url="/texas/motorcycle-ticket"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">Speeding ticket guide</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Motorcycle tickets</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          Motorcycle Ticket in Texas: You Get a Choice the Car Drivers Don't
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Cited while riding? Texas gives motorcyclists an option car drivers don't have: you can <strong class="text-text">elect a motorcycle operator training course</strong> — the Chapter 662 safety program — <strong class="text-text">instead of the standard 6-hour defensive driving course</strong>, and once you elect it, the judge is required to order it for your dismissal (CCP art. 45A.352). Same dismissal effect, same paperwork, but training actually built for two wheels.</p>
+          <p>Here's how the election works, which course makes sense for whom, and what doesn't change.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Procedures vary by court and judge — confirm with the court listed on your citation.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The election: standard course or motorcycle course</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>The statute reads that the judge "shall require" completion of a driving safety course <strong class="text-text">or</strong> a motorcycle operator training course "if the defendant elects" the dismissal — meaning the choice of which course belongs to you, and the mandate kicks in once you choose. The motorcycle option is the state-approved rider training program under Transportation Code chapter 662 (the courses run through DPS-approved rider training providers).</p>
+          <p>Which to pick? The <strong class="text-text">standard 6-hour online course is cheaper and finishes tonight</strong> — $28, on your phone, instant certificate. The <strong class="text-text">motorcycle course costs more and takes a weekend</strong>, but it's range time on a bike, and for newer riders it's genuinely worth taking regardless of any ticket. Both produce a completion document your court accepts for the same dismissal. Most riders with a deadline pick the online course; riders who wanted the range course anyway use the ticket as the excuse.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Everything else stays the same</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>The eligibility rules don't care about your vehicle: request by the <strong class="text-text">answer date</strong>, valid Texas license (a Class M endorsement situation doesn't change the analysis), no course used for dismissal in the <a href="/texas/12-month-rule" class="text-primary-deep font-medium hover:underline">12 months before the offense</a> — and note the lookback counts <em>both</em> kinds: a motorcycle operator course used for dismissal last spring blocks a standard course this winter, and vice versa.</p>
+          <p>The exclusions also apply on two wheels: 25+ mph over or 95+ mph, work zones with workers present, school bus passing, and CDL holders. And the documents are identical — completion certificate plus <a href="/texas/type-3a-driving-record" class="text-primary-deep font-medium hover:underline">Type 3A record</a> to the court within 90 days. If the speed on your citation kills eligibility, the <a href="/texas/speeding-25-over" class="text-primary-deep font-medium hover:underline">25-over playbook</a> applies to riders too.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Deadline this month? The online course finishes tonight</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>If you've elected the standard course — or your court expects it — ours is <strong class="text-text">$28 all-in, fully online, with the certificate downloadable the moment you finish</strong>. TDLR CP1234.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="/texas/12-month-rule"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            Used a course recently?
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated June 11, 2026 — verified by the Road Ready Safety editorial team against Tex. Code Crim. Proc. art. 45A.352, Tex. Transp. Code ch. 662, and Tex. Code Crim. Proc. arts. 45A.351–.353.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

@@ -1,0 +1,148 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    "q": "What does the Texas defensive driving certificate look like?",
+    "a": "It's the uniform certificate of course completion issued under TDLR's certificate-number system — your name, the provider and its CP license number, the course completion date, and a certificate number formatted CP###-########. The standard certificate includes a court copy and an insurance copy."
+  },
+  {
+    "q": "What's the difference between the court copy and the insurance copy?",
+    "a": "Same completion, two destinations. The court copy is submitted to the court (with your Type 3A driving record) to finish the dismissal — signed if your court requires it. The insurance copy goes to your insurer if you're claiming a discount. One completion can serve both purposes."
+  },
+  {
+    "q": "How do courts know a certificate is real?",
+    "a": "They can validate the certificate number at TDLR's DESSearch tool, which confirms the certificate against the state's issuance records. That's also why a course from a non-approved or expired provider is worthless for dismissal — there's nothing in the system to validate."
+  },
+  {
+    "q": "How fast do I get my certificate after finishing the course?",
+    "a": "Depends entirely on the provider. With Road Ready Safety it downloads instantly when you complete the final module, free. Providers that mail certificates take days to weeks, and several charge extra for instant delivery — a fee that exists only because the deadline pressure is real."
+  },
+  {
+    "q": "What if I lose my certificate before submitting it?",
+    "a": "With us: re-download it from your portal, free, forever. With mail-based providers: contact them for a replacement, usually for a fee and another wait. Either way, don't let a lost PDF run you past the 90-day deadline — replacements are always faster than excuses."
+  },
+  {
+    "q": "Can I submit the certificate to my court by email?",
+    "a": "Many Texas courts accept the certificate as a PDF by email or portal upload; others want it in person or by mail. It's the single most variable detail across courts — check your court's verified submission methods in our directory before you finish the course."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: "The Texas Defensive Driving Certificate, Explained: Copies, Numbers, Validation, and Replacements",
+  description: "What the Texas driving safety course certificate actually is — the CP###-######## number, court copy vs. insurance copy, how courts validate it, replacements, and the submission mistakes to avoid.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-11',
+  dateModified: '2026-06-11',
+  mainEntityOfPage: `${siteUrl}/texas/defensive-driving-certificate`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="The Texas Defensive Driving Certificate: What It Is, Court vs. Insurance Copy, and What to Do With It (2026)"
+    description="What the Texas driving safety course certificate actually is — the CP###-######## number, court copy vs. insurance copy, how courts validate it, replacements, and the submission mistakes to avoid."
+    keywords="texas defensive driving certificate, driving safety course certificate texas, court copy insurance copy certificate, certificate of completion defensive driving, replace lost defensive driving certificate"
+    url="/texas/defensive-driving-certificate"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">Speeding ticket guide</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">The certificate</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          The Texas Defensive Driving Certificate, Explained: Copies, Numbers, Validation, and Replacements
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>The certificate of completion is the document the entire dismissal turns on — and it's more regulated than most students realize. Every certificate is issued under a TDLR-controlled <strong class="text-text">certificate number in the format CP###-########</strong> (the prefix is your provider's TDLR license number), the standard certificate comes with a <strong class="text-text">court copy and an insurance copy</strong>, and courts can validate any certificate against TDLR's database.</p>
+          <p>Here's what each piece is for, how to keep it from being rejected, and what to do if it's lost or wrong.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Procedures vary by court and judge — confirm with the court listed on your citation.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Court copy vs. insurance copy — who gets what</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>The standard certificate is really two documents. The <strong class="text-text">court copy</strong> goes to the court that approved your request, with your Type 3A driving record, before your 90-day deadline — signed, where your court requires a signature (The Colony, for example, requires the certificate be signed and name the court). The <strong class="text-text">insurance copy</strong> goes to your insurer if you're claiming a <a href="/texas/insurance-discount" class="text-primary-deep font-medium hover:underline">discount</a>. Sending the wrong copy to the wrong place is one of the avoidable rejections on our <a href="/texas/certificate-rejected" class="text-primary-deep font-medium hover:underline">rejection list</a>.</p>
+          <p>Delivery varies by provider and it matters more than price differences: some mail certificates (days to weeks against a 90-day deadline), some charge $10–$25 for "instant" delivery as an upsell after you've paid for the course. With us the certificate — both copies — is a <strong class="text-text">free instant download the moment you finish</strong>, and it stays in your portal for free re-download forever.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The certificate number, and how validation works</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Your certificate carries a number formatted <strong class="text-text">CP###-########</strong> — the provider's TDLR license, a dash, and the issued certificate digits. Anyone (you, the clerk, your insurer) can validate it at TDLR's <a href="https://www.tdlr.texas.gov/dessearch" target="_blank" rel="noopener noreferrer" class="text-primary-deep font-medium hover:underline">DESSearch</a> tool. One quirk straight from TDLR: a new certificate "may take up to 5 days after the issuance date to appear in the validation system" — so submit with a few days of cushion, not on deadline day.</p>
+          <p>This is also why provider choice matters before you ever enroll: a certificate is only as good as the license behind its prefix. TDLR's records currently list more than a dozen providers as expired — check any provider against our <a href="/texas/providers" class="text-primary-deep font-medium hover:underline">full TDLR directory</a> before paying.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Lost it? Wrong name on it? Here's the fix</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">Lost or deleted:</strong> with us, log back into your portal and download it again — free, unlimited. Providers that mail certificates typically charge a replacement fee and make you wait again; ask before you buy.</p>
+          <p><strong class="text-text">Wrong name, birthday, or court:</strong> don't resubmit and hope — courts match the certificate against the citation, and identity mismatches are the most common problem our own support team handles. Contact your provider's support to correct and reissue. With us those fields are deliberately not self-editable: we verify your identity first, because nobody but you should be able to alter a document headed for a court.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">A certificate with no fee, no wait, and no games</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>The certificate is the product — so we made ours instant, free, and permanent: <strong class="text-text">download both copies the moment you finish, re-download anytime</strong>. $28 all-in, TDLR CP1234.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="/texas/tdlr-approved"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            How to verify any certificate
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated June 11, 2026 — verified by the Road Ready Safety editorial team against TDLR DESSearch and certificate-issuance records, and the published submission rules of the Texas courts referenced.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

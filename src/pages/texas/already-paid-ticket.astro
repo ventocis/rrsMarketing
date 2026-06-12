@@ -1,0 +1,148 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    "q": "I paid my ticket online — can I still take defensive driving?",
+    "a": "Generally no. Payment is a plea and a final conviction, and the dismissal statute only operates before final disposition. Your one realistic opening is a motion for new trial filed within 5 days of the judgment — if the judge grants it, the case reopens and the judge may (discretion, not a right) then allow the course. Call the clerk immediately if you're inside that window."
+  },
+  {
+    "q": "How long do I have to undo a paid Texas ticket?",
+    "a": "Two clocks, both short: a motion for new trial must be filed by the 5th day after judgment (the judge has through the 10th day to grant it, or it's automatically denied), and an appeal to county court must be perfected with a bond within 10 days. After that, the conviction is final."
+  },
+  {
+    "q": "Does a paid ticket go on my driving record?",
+    "a": "Yes. Paying is a conviction, it's reported to DPS, and it appears on your record where insurers can see it — typically affecting rates for about three years. It also counts toward the habitual-violator suspension thresholds (four moving violations in 12 months, seven in 24)."
+  },
+  {
+    "q": "What is 'good cause' for a new trial on a paid ticket?",
+    "a": "The statute leaves it to the judge — \"for good cause shown if the justice or judge considers that justice has not been done.\" In practice, paying online without understanding it was a guilty plea is a story clerks hear often; some judges are receptive within the window, others aren't. It is genuinely discretionary."
+  },
+  {
+    "q": "Can I get a refund and switch to defensive driving instead?",
+    "a": "Not as a right. The mechanism isn't a refund — it's a motion for new trial that vacates the judgment, after which the court decides what happens next, including whether to allow the course and how your payment is applied. The clerk will explain that court's process if the judge grants the motion."
+  },
+  {
+    "q": "The court hasn't processed my payment yet — am I still okay?",
+    "a": "Maybe — if no judgment has been entered, the case may not be finally disposed. Call the clerk before the payment posts and tell them you want to request defensive driving or deferred disposition instead. Timing is everything here; do it today, not Friday."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: "Already Paid the Ticket? What That Did — and the Narrow Window That Might Undo It",
+  description: "Paying a Texas traffic ticket is a guilty plea and a conviction — and it usually ends the defensive driving option. But a motion for new trial within 5 days, or an appeal within 10, can sometimes reopen the case. The honest rules.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-11',
+  dateModified: '2026-06-11',
+  mainEntityOfPage: `${siteUrl}/texas/already-paid-ticket`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Already Paid Your Texas Ticket? What That Means — and the 5-Day Window That Might Save You (2026)"
+    description="Paying a Texas traffic ticket is a guilty plea and a conviction — and it usually ends the defensive driving option. But a motion for new trial within 5 days, or an appeal within 10, can sometimes reopen the case. The honest rules."
+    keywords="paid ticket can i still take defensive driving texas, undo paid traffic ticket texas, motion for new trial texas ticket, paid citation conviction texas, reverse traffic ticket payment texas"
+    url="/texas/already-paid-ticket"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">Speeding ticket guide</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Already paid</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          Already Paid the Ticket? What That Did — and the Narrow Window That Might Undo It
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Paying a Texas traffic ticket in full is not like paying a bill — it's a <strong class="text-text">plea of guilty or no contest and a final conviction</strong>. The conviction goes on your driving record, your insurer can price off it for about three years, and the defensive driving option you could have requested is gone with it.</p>
+          <p>Gone — usually. Texas law leaves two short windows to reopen a just-paid case, and they're measured in <em>days</em>. If you paid recently, read this now.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Procedures vary by court and judge — confirm with the court listed on your citation.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Why payment ends the dismissal option</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>The defensive driving statute requires you to enter your plea and request the course on or before the answer date — and a judge's discretion to grant it late runs only "before the final disposition of the case" (art. 45A.352(c)). Payment in full <em>is</em> the final disposition: a conviction is entered, the case closes, and there's nothing left for a course to dismiss. The same logic ends deferred disposition and the compliance dismissals.</p>
+          <p>This is why so many court websites — and our own pages — repeat the same warning: <strong class="text-text">if you want any dismissal option, don't pay the fine first.</strong> Some payment portals warn you mid-checkout that paying enters a plea; many don't.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The 5-day window: motion for new trial</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Texas law lets a defendant in municipal or JP court file a <strong class="text-text">motion for new trial within 5 days of the judgment</strong> (Tex. Code Crim. Proc. art. 45A.201 — note: the motion is due by day 5; the judge then has through day 10 to grant it, and if not granted by then it's automatically denied). The judge may grant it "for good cause shown if... justice has not been done." You get at most one per case.</p>
+          <p>If granted, the judgment is set aside and the case reopens — and a reopened case hasn't reached final disposition, so the judge <em>may</em>, at their discretion, allow a defensive driving request under art. 45A.352(c). Be honest with yourself about the odds: this is two layers of discretion (grant the new trial, then grant the course), not a right. But for a same-week mistake — you paid online not realizing it was a plea — clerks and judges see it regularly, and asking costs you a phone call.</p>
+          <p>There's also a second path: an <strong class="text-text">appeal to county court within 10 days</strong> of judgment, perfected by filing an appeal bond of at least twice the fine and costs or $50, whichever is greater (arts. 45A.202–.203). It restarts the case from scratch — but for a routine ticket, the bond and effort usually outweigh the benefit. The 5-day motion is the practical tool.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Past the window? What's actually left</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>If more than 10 days have passed, the conviction stands. What you can still do: take the course <strong class="text-text">voluntarily for an insurance discount</strong> (the same 6 hours — <a href="/texas/insurance-discount" class="text-primary-deep font-medium hover:underline">insurer's choice, ask your agent</a>), drive clean so the conviction ages off insurance pricing in about three years, and watch the conviction count — four moving violations in 12 months can trigger a license suspension (Transp. Code §521.292). And next ticket, request the course <em>before</em> any money changes hands.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Next ticket: request first, pay never</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>The order of operations is the whole game: request the course by your answer date, get the court's approval, then complete it — <strong class="text-text">$28 all-in, free instant certificate</strong>. The fine never gets paid, because the charge never becomes a conviction.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="/texas/speeding-ticket"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            How dismissal works
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated June 11, 2026 — verified by the Road Ready Safety editorial team against Tex. Code Crim. Proc. arts. 45A.201–.203 &amp; 45A.352, and Tex. Transp. Code §521.292.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

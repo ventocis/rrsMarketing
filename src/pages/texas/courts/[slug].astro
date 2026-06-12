@@ -204,6 +204,16 @@ const enhancedCourtSlugs = new Set([
   'montgomery-municipal-magnolia',
   'liberty-municipal-cleveland',
   'washington-municipal-brenham',
+  // Batch 9 (partial) — 9 courts (June 2026, Fable research)
+  'waller-municipal-hempstead',
+  'gillespie-municipal-fredericksburg',
+  'montgomery-municipal-willis',
+  'liberty-municipal-dayton',
+  'atascosa-municipal-pleasanton',
+  'aransas-municipal-rockport',
+  'wilson-municipal-floresville',
+  'comal-municipal-bulverde',
+  'tarrant-municipal-forest-hill',
 ]);
 const isEnhanced = enhancedCourtSlugs.has(court.slug) || (court.county === 'Harris' && court.courtType === 'Justice of the Peace');
 
@@ -928,6 +938,42 @@ const courtSeoData: Record<string, { title: string; description: string }> = {
   'washington-municipal-brenham': {
     title: "Brenham Traffic Ticket? How to Dismiss It",
     description: "Brenham gives you 10 working days to reply, takes money order or cashier's check only, and requires a notarized affidavit. $28 course, same-day certificate.",
+  },
+  'waller-municipal-hempstead': {
+    title: "Hempstead Traffic Ticket? How to Dismiss It",
+    description: "Hempstead (US-290) charges $144 ($169 school zone), gives no extension on 90 days, and mail requests need a notarized affidavit. $28 course, same-day certificate.",
+  },
+  'gillespie-municipal-fredericksburg': {
+    title: "Fredericksburg Traffic Ticket? How to Dismiss It",
+    description: "Fredericksburg became a Court of Record in 2024 and doesn't post its DSC fee — request by your appearance date. $28 course, certificate ready same day.",
+  },
+  'montgomery-municipal-willis': {
+    title: "Willis Traffic Ticket? How to Dismiss It",
+    description: "Willis (I-45) requires a written request and sworn affidavit by your appearance date, fee due at request. $28 course, certificate ready same day.",
+  },
+  'liberty-municipal-dayton': {
+    title: "Dayton, TX Traffic Ticket? How to Dismiss It",
+    description: "Dayton charges $144 ($169 school zone); a not-guilty plea isn't eligible, so request DSC in writing first. $28 course, certificate ready same day.",
+  },
+  'atascosa-municipal-pleasanton': {
+    title: "Pleasanton Traffic Ticket? How to Dismiss It",
+    description: "Pleasanton rejects late or incomplete DSC requests and notarizes your affidavit free if you appear in person. $144 fee. $28 course, same-day certificate.",
+  },
+  'aransas-municipal-rockport': {
+    title: "Rockport Traffic Ticket? How to Dismiss It",
+    description: "Rockport requires a written plea (no verbal pleas) and a Type 3A record — fee set by the court. $28 course, certificate ready same day.",
+  },
+  'wilson-municipal-floresville': {
+    title: "Floresville Traffic Ticket? How to Dismiss It",
+    description: "Floresville charges $144 ($169 school zone), needs a notarized affidavit by mail, and gives no extensions. $28 course, same-day certificate.",
+  },
+  'comal-municipal-bulverde': {
+    title: "Bulverde Traffic Ticket? How to Dismiss It",
+    description: "Bulverde's email DSC request needs a notarized application and payment within 3 days of approval. $144 fee. $28 course, certificate ready same day.",
+  },
+  'tarrant-municipal-forest-hill': {
+    title: "Forest Hill Traffic Ticket? How to Dismiss It",
+    description: "Forest Hill takes DSC requests by email or fax and charges $144 ($169 school zone). $28 course, certificate ready same day.",
   },
 };
 
@@ -24303,6 +24349,1152 @@ function joinOrNA(arr: string[] | undefined) {
                 <div class="bg-surface-muted border border-border rounded-[14px] p-4 flex items-start gap-3">
                   <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#0967d2" stroke="#0967d2" stroke-width="1"/><path d="M9 5v4M9 13h.01" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
                   <p class="text-sm text-text-body leading-relaxed">Always verify DSC requirements directly with Brenham Municipal Court before submitting anything. Court fees, deadlines, and procedures can change. Call <a href="tel:9793377599" class="text-primary hover:underline font-medium">(979) 337-7599</a> or visit <a href="https://www.cityofbrenham.org/city_government/municipal_court/index.php" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">www.cityofbrenham.org/city_government/municipal_court/index.php</a>.</p>
+                </div>
+
+                <p class="text-xs text-text-subtle text-right">Court information last verified: June 2026</p>
+              </div>
+            </div>
+          )}
+
+          <!-- ══════════════════════════════════════════
+               HEMPSTEAD MUNICIPAL COURT — Court-Specific DSC Info
+               ══════════════════════════════════════════ -->
+          {court.slug === 'waller-municipal-hempstead' && (
+            <div class="bg-white border border-border rounded-2xl overflow-hidden shadow-sm">
+              <div class="px-6 sm:px-8 py-6 flex items-center gap-4 border-b border-border">
+                <div class="bg-info flex items-center justify-center rounded-[14px] w-12 h-12 shrink-0">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0967d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                </div>
+                <h2 class="text-xl font-bold text-text-body">Hempstead Municipal Court — Driver Safety Course Instructions</h2>
+              </div>
+              <div class="px-6 sm:px-8 py-6 flex flex-col gap-6">
+
+                <!-- Fees -->
+                <div>
+                  <p class="text-sm font-semibold text-text mb-3">DSC Court Fees</p>
+                  <div class="bg-surface-muted border border-border rounded-[14px] p-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                      <span class="text-xs text-text-body font-medium uppercase tracking-wide">Standard Violation</span>
+                      <span class="text-xl font-bold text-text">$144.00</span>
+                    </div>
+                    <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                      <span class="text-xs text-text-body font-medium uppercase tracking-wide">School Zone Violation</span>
+                      <span class="text-xl font-bold text-text">$169.00</span>
+                    </div>
+                  </div>
+                  <p class="text-xs text-amber-800 mt-2 font-medium">⚠ Payable by cash, money order, or cashier's check to 'The City of Hempstead'; online payments via municipalonlinepayments.com/hempsteadtx carry a 5% credit card processing fee.</p>
+                </div>
+
+                <!-- How to Request -->
+                <div>
+                  <p class="text-sm font-semibold text-text mb-3">How to Request DSC Approval</p>
+                  <div class="flex flex-col gap-3">
+                    <div class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-start gap-3">
+                        <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <div class="flex flex-col gap-0.5">
+                          <span class="text-sm font-bold text-text-body">In-person</span>
+                          <span class="text-sm text-text-body">Submit Plea Reply Form with DL copy, insurance copy, and court costs at 1015 11th Street, Hempstead, TX 77445, on or before the court date on the citation</span>
+                        </div>
+                      </div>
+                    <div class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-start gap-3">
+                        <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <div class="flex flex-col gap-0.5">
+                          <span class="text-sm font-bold text-text-body">Mail</span>
+                          <span class="text-sm text-text-body">Mail Plea Reply Form, copy of valid TX driver's license, copy of insurance, and court costs to Hempstead Municipal Court, 1015 11th Street, Hempstead, TX 77445; mail requesters must later return a signed, notarized DSC affidavit</span>
+                        </div>
+                      </div>
+                    <div class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-start gap-3">
+                        <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <div class="flex flex-col gap-0.5">
+                          <span class="text-sm font-bold text-text-body">Email</span>
+                          <span class="text-sm text-text-body">Plea Reply Form may be submitted by email to municipalcourt@hempsteadcitytx.gov</span>
+                        </div>
+                      </div>
+                    <div class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-start gap-3">
+                        <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <div class="flex flex-col gap-0.5">
+                          <span class="text-sm font-bold text-text-body">Fax</span>
+                          <span class="text-sm text-text-body">Plea Reply Form may be submitted by fax to (979) 921-0456</span>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+
+                <!-- Required Documents -->
+                <div class="bg-surface-muted border border-border rounded-[14px] p-4 flex flex-col gap-4">
+                  <div>
+                    <p class="text-xs font-semibold text-text-body uppercase tracking-wide mb-2">To Request Approval — Submit These</p>
+                    <ul class="flex flex-col gap-1.5 list-none m-0 p-0">
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Completed Plea Reply Form requesting DSC</span></li>
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Copy of valid Texas driver's license</span></li>
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Copy of valid insurance (proof of financial responsibility)</span></li>
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Court costs payment ($144 standard / $169 school zone)</span></li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p class="text-xs font-semibold text-text-body uppercase tracking-wide mb-2">After Completing the Course — Submit These</p>
+                    <ul class="flex flex-col gap-1.5 list-none m-0 p-0">
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>TEA/TDLR-approved DSC certificate of completion</span></li>
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>certified copy of driving record (Type 3A from Texas DPS, $10 fee)</span></li>
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>signed and notarized DSC affidavit (required for those who requested by mail)</span></li>
+                    </ul>
+                  </div>
+                </div>
+
+                <!-- Important Notes -->
+                <div class="bg-amber-50 border border-amber-200 rounded-[14px] p-4 flex flex-col gap-2">
+                  <p class="text-sm font-semibold text-amber-800">Important Deadlines &amp; Local Rules</p>
+                  <ul class="flex flex-col gap-1.5 list-none m-0 p-0">
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Request deadline: On or before the court (appearance) date written on the citation</span></li>
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Completion window: 90 days from the date DSC is granted to submit certificate, certified driving record, and notarized affidavit.</span></li>
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Do NOT complete the course until the court has granted permission.</span></li>
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>No extensions on the 90-day window — failure to comply makes the fine immediately payable and requires appearance at a Show Cause Hearing.</span></li>
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Not eligible if cited for 25+ mph over the limit, if you hold a CDL, if you completed a DSC within the prior 12 months, or for construction-zone violations with workers present.</span></li>
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Court convenes Tuesday mornings at 10:00am; juvenile court is the second Tuesday of each month at 9:00am.</span></li>
+                  </ul>
+                </div>
+
+                <!-- Forms -->
+                <div>
+                  <p class="text-sm font-semibold text-text mb-3">Court Forms &amp; Resources</p>
+                  <div class="flex flex-col gap-2">
+                    <a href="https://cms5.revize.com/revize/hempstead/Document%20Center/Plea%20Form.pdf" target="_blank" rel="noopener noreferrer" class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-center gap-3 no-underline hover:bg-gray-50 transition-colors group">
+                      <svg class="w-[18px] h-[18px] shrink-0 text-primary" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 2.25H5.25A1.5 1.5 0 0 0 3.75 3.75v10.5a1.5 1.5 0 0 0 1.5 1.5h7.5a1.5 1.5 0 0 0 1.5-1.5V6.75L10.5 2.25z"/><polyline points="10.5 2.25 10.5 6.75 14.25 6.75"/></svg>
+                      <span class="text-sm font-semibold text-primary group-hover:underline">Plea Reply Form (PDF)</span>
+                    </a>
+                    <a href="https://www.hempsteadcitytx.gov/city_government/departments/municipal_court/driving_safety_course_(dsc).php" target="_blank" rel="noopener noreferrer" class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-center gap-3 no-underline hover:bg-gray-50 transition-colors group">
+                      <svg class="w-[18px] h-[18px] shrink-0 text-primary" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 2.25H5.25A1.5 1.5 0 0 0 3.75 3.75v10.5a1.5 1.5 0 0 0 1.5 1.5h7.5a1.5 1.5 0 0 0 1.5-1.5V6.75L10.5 2.25z"/><polyline points="10.5 2.25 10.5 6.75 14.25 6.75"/></svg>
+                      <span class="text-sm font-semibold text-primary group-hover:underline">Driving Safety Course (DSC) page</span>
+                    </a>
+                  </div>
+                </div>
+
+                <!-- Contact -->
+                <div class="bg-surface-muted border border-border rounded-[14px] p-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1 sm:col-span-2">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Court Hours</span>
+                    <span class="text-sm font-semibold text-text-body">Monday–Friday 8:00am–5:00pm (closed 12:00pm–1:00pm for lunch); court held Tuesdays at 10:00am</span>
+                  </div>
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Phone</span>
+                    <a href="tel:9798268838" class="text-sm font-semibold text-primary hover:underline">(979) 826-8838</a>
+                  </div>
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Email</span>
+                    <a href="mailto:municipalcourt@hempsteadcitytx.gov" class="text-sm font-semibold text-primary hover:underline break-all">municipalcourt@hempsteadcitytx.gov</a>
+                  </div>
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1 sm:col-span-2">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Website</span>
+                    <a href="https://www.hempsteadcitytx.gov/city_government/departments/municipal_court/index.php" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-primary hover:underline break-all">www.hempsteadcitytx.gov/city_government/departments/municipal_court/index.php</a>
+                  </div>
+                </div>
+
+                <!-- Always verify -->
+                <div class="bg-surface-muted border border-border rounded-[14px] p-4 flex items-start gap-3">
+                  <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#0967d2" stroke="#0967d2" stroke-width="1"/><path d="M9 5v4M9 13h.01" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+                  <p class="text-sm text-text-body leading-relaxed">Always verify DSC requirements directly with Hempstead Municipal Court before submitting anything. Court fees, deadlines, and procedures can change. Call <a href="tel:9798268838" class="text-primary hover:underline font-medium">(979) 826-8838</a> or visit <a href="https://www.hempsteadcitytx.gov/city_government/departments/municipal_court/index.php" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">www.hempsteadcitytx.gov/city_government/departments/municipal_court/index.php</a>.</p>
+                </div>
+
+                <p class="text-xs text-text-subtle text-right">Court information last verified: June 2026</p>
+              </div>
+            </div>
+          )}
+
+          <!-- ══════════════════════════════════════════
+               FREDERICKSBURG MUNICIPAL COURT — Court-Specific DSC Info
+               ══════════════════════════════════════════ -->
+          {court.slug === 'gillespie-municipal-fredericksburg' && (
+            <div class="bg-white border border-border rounded-2xl overflow-hidden shadow-sm">
+              <div class="px-6 sm:px-8 py-6 flex items-center gap-4 border-b border-border">
+                <div class="bg-info flex items-center justify-center rounded-[14px] w-12 h-12 shrink-0">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0967d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                </div>
+                <h2 class="text-xl font-bold text-text-body">Fredericksburg Municipal Court — Driver Safety Course Instructions</h2>
+              </div>
+              <div class="px-6 sm:px-8 py-6 flex flex-col gap-6">
+
+                <!-- Fees -->
+                <div class="bg-amber-50 border border-amber-200 rounded-[14px] p-4 flex flex-col gap-2">
+                  <p class="text-sm font-semibold text-amber-800">DSC Court Fees</p>
+                  <p class="text-sm text-amber-900">This court does not publish its DSC fee schedule online. Call <a href="tel:8309979935" class="font-medium hover:underline">(830) 997-9935</a> to confirm the exact amount before submitting payment.</p>
+                  <p class="text-xs text-amber-700">Standard Texas DSC fee is typically $144 for moving violations and $169 for school zone violations, but varies by court.</p>
+                </div>
+
+                <!-- How to Request -->
+                <div>
+                  <p class="text-sm font-semibold text-text mb-3">How to Request DSC Approval</p>
+                  <div class="flex flex-col gap-3">
+                    <div class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-start gap-3">
+                        <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <div class="flex flex-col gap-0.5">
+                          <span class="text-sm font-bold text-text-body">In-person</span>
+                          <span class="text-sm text-text-body">Hand-deliver the Municipal Court Reply Form to the Court Clerk's window at 103 Industrial Loop, Ste. 1000, Fredericksburg, TX 78624 (after-hours drop box at the building entrance)</span>
+                        </div>
+                      </div>
+                    <div class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-start gap-3">
+                        <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <div class="flex flex-col gap-0.5">
+                          <span class="text-sm font-bold text-text-body">Mail</span>
+                          <span class="text-sm text-text-body">Mail the completed Municipal Court Reply Form to Fredericksburg Municipal Court, 103 Industrial Loop, Ste. 1000, Fredericksburg, TX 78624</span>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+
+                <!-- Required Documents -->
+                <div class="bg-surface-muted border border-border rounded-[14px] p-4 flex flex-col gap-4">
+                  <div>
+                    <p class="text-xs font-semibold text-text-body uppercase tracking-wide mb-2">To Request Approval — Submit These</p>
+                    <ul class="flex flex-col gap-1.5 list-none m-0 p-0">
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Municipal Court Reply Form requesting the driving safety course</span></li>
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Valid Texas driver's license (standard requirement — confirm with court)</span></li>
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Proof of insurance (standard requirement — confirm with court)</span></li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p class="text-xs font-semibold text-text-body uppercase tracking-wide mb-2">After Completing the Course — Submit These</p>
+                    <ul class="flex flex-col gap-1.5 list-none m-0 p-0">
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>DSC certificate of completion and certified Type 3A driving record (standard requirements — confirm with court)</span></li>
+                    </ul>
+                  </div>
+                </div>
+
+                <!-- Important Notes -->
+                <div class="bg-amber-50 border border-amber-200 rounded-[14px] p-4 flex flex-col gap-2">
+                  <p class="text-sm font-semibold text-amber-800">Important Deadlines &amp; Local Rules</p>
+                  <ul class="flex flex-col gap-1.5 list-none m-0 p-0">
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Request deadline: Notice of your DSC request must be given to the court on or before the appearance date listed on your citation; you may lose the right to take the course if you miss this deadline</span></li>
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Completion window: Not published by court — Texas standard is typically 90 days; confirm with the clerk.</span></li>
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>DSC requests are made using the court's Municipal Court Reply Form, linked from the DSC page.</span></li>
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Fredericksburg Municipal Court became a Court of Record effective July 16, 2024; telephone calls do not count as an appearance.</span></li>
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Fine/fee payments accepted online at allpaid.com (Pay Location Code A0009R) or by phone at 1-888-604-7888; card payments incur a processing fee.</span></li>
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Minors under 17 must appear in person with a parent or guardian.</span></li>
+                  </ul>
+                </div>
+
+                <!-- Forms -->
+                <div>
+                  <p class="text-sm font-semibold text-text mb-3">Court Forms &amp; Resources</p>
+                  <div class="flex flex-col gap-2">
+                    <a href="https://www.fbgtx.org/422/Drivers-Safety-Course-DSC" target="_blank" rel="noopener noreferrer" class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-center gap-3 no-underline hover:bg-gray-50 transition-colors group">
+                      <svg class="w-[18px] h-[18px] shrink-0 text-primary" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 2.25H5.25A1.5 1.5 0 0 0 3.75 3.75v10.5a1.5 1.5 0 0 0 1.5 1.5h7.5a1.5 1.5 0 0 0 1.5-1.5V6.75L10.5 2.25z"/><polyline points="10.5 2.25 10.5 6.75 14.25 6.75"/></svg>
+                      <span class="text-sm font-semibold text-primary group-hover:underline">Driver's Safety Course (DSC) page</span>
+                    </a>
+                  </div>
+                </div>
+
+                <!-- Contact -->
+                <div class="bg-surface-muted border border-border rounded-[14px] p-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1 sm:col-span-2">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Court Hours</span>
+                    <span class="text-sm font-semibold text-text-body">Monday-Thursday 8 a.m.-4 p.m.; closed Friday-Sunday and city/county holidays</span>
+                  </div>
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Phone</span>
+                    <a href="tel:8309979935" class="text-sm font-semibold text-primary hover:underline">(830) 997-9935</a>
+                  </div>
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Email</span>
+                    <a href="mailto:municipalcourt@fbgtx.org" class="text-sm font-semibold text-primary hover:underline break-all">municipalcourt@fbgtx.org</a>
+                  </div>
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1 sm:col-span-2">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Website</span>
+                    <a href="https://www.fbgtx.org/154/Municipal-Court" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-primary hover:underline break-all">www.fbgtx.org/154/Municipal-Court</a>
+                  </div>
+                </div>
+
+                <!-- Always verify -->
+                <div class="bg-surface-muted border border-border rounded-[14px] p-4 flex items-start gap-3">
+                  <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#0967d2" stroke="#0967d2" stroke-width="1"/><path d="M9 5v4M9 13h.01" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+                  <p class="text-sm text-text-body leading-relaxed">Always verify DSC requirements directly with Fredericksburg Municipal Court before submitting anything. Court fees, deadlines, and procedures can change. Call <a href="tel:8309979935" class="text-primary hover:underline font-medium">(830) 997-9935</a> or visit <a href="https://www.fbgtx.org/154/Municipal-Court" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">www.fbgtx.org/154/Municipal-Court</a>.</p>
+                </div>
+
+                <p class="text-xs text-text-subtle text-right">Court information last verified: June 2026</p>
+              </div>
+            </div>
+          )}
+
+          <!-- ══════════════════════════════════════════
+               WILLIS MUNICIPAL COURT — Court-Specific DSC Info
+               ══════════════════════════════════════════ -->
+          {court.slug === 'montgomery-municipal-willis' && (
+            <div class="bg-white border border-border rounded-2xl overflow-hidden shadow-sm">
+              <div class="px-6 sm:px-8 py-6 flex items-center gap-4 border-b border-border">
+                <div class="bg-info flex items-center justify-center rounded-[14px] w-12 h-12 shrink-0">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0967d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                </div>
+                <h2 class="text-xl font-bold text-text-body">Willis Municipal Court — Driver Safety Course Instructions</h2>
+              </div>
+              <div class="px-6 sm:px-8 py-6 flex flex-col gap-6">
+
+                <!-- Fees -->
+                <div class="bg-amber-50 border border-amber-200 rounded-[14px] p-4 flex flex-col gap-2">
+                  <p class="text-sm font-semibold text-amber-800">DSC Court Fees</p>
+                  <p class="text-sm text-amber-900">This court does not publish its DSC fee schedule online. Call <a href="tel:9368564611" class="font-medium hover:underline">(936) 856-4611 Ext. 111</a> to confirm the exact amount before submitting payment.</p>
+                  <p class="text-xs text-amber-700">Standard Texas DSC fee is typically $144 for moving violations and $169 for school zone violations, but varies by court.</p>
+                </div>
+
+                <!-- How to Request -->
+                <div>
+                  <p class="text-sm font-semibold text-text mb-3">How to Request DSC Approval</p>
+                  <div class="flex flex-col gap-3">
+                    <div class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-start gap-3">
+                        <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <div class="flex flex-col gap-0.5">
+                          <span class="text-sm font-bold text-text-body">In-person</span>
+                          <span class="text-sm text-text-body">Request must be made in writing and submitted with court costs/fees on or before your appearance date; 501 W Montgomery St, Willis, TX 77378</span>
+                        </div>
+                      </div>
+                    <div class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-start gap-3">
+                        <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <div class="flex flex-col gap-0.5">
+                          <span class="text-sm font-bold text-text-body">Mail</span>
+                          <span class="text-sm text-text-body">Written request with required documents to Willis Municipal Court, 501 W Montgomery St, Willis, TX 77378 (court requires the request in writing; call to confirm mail acceptance)</span>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+
+                <!-- Required Documents -->
+                <div class="bg-surface-muted border border-border rounded-[14px] p-4 flex flex-col gap-4">
+                  <div>
+                    <p class="text-xs font-semibold text-text-body uppercase tracking-wide mb-2">To Request Approval — Submit These</p>
+                    <ul class="flex flex-col gap-1.5 list-none m-0 p-0">
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Written request for the driving safety course</span></li>
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Valid Texas driver's license</span></li>
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Proof of financial responsibility (auto liability insurance listing you as a covered driver)</span></li>
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Plea of guilty or nolo contendere in writing</span></li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p class="text-xs font-semibold text-text-body uppercase tracking-wide mb-2">After Completing the Course — Submit These</p>
+                    <ul class="flex flex-col gap-1.5 list-none m-0 p-0">
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Signed affidavit stating you are not currently taking a DSC and have not taken one not shown on your driving record</span></li>
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>court copy of the DSC certificate of completion AND certified copy of your TX DPS driving record showing no DSC in the preceding 12 months</span></li>
+                    </ul>
+                  </div>
+                </div>
+
+                <!-- Important Notes -->
+                <div class="bg-amber-50 border border-amber-200 rounded-[14px] p-4 flex flex-col gap-2">
+                  <p class="text-sm font-semibold text-amber-800">Important Deadlines &amp; Local Rules</p>
+                  <ul class="flex flex-col gap-1.5 list-none m-0 p-0">
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Request deadline: On or before your initial appearance date (or at the time of your court appearance), with court costs and fees paid at the time of the request</span></li>
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Completion window: 90 days — case is postponed for 90 days to complete the course and obtain the certified driving record.</span></li>
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Eligibility: offense must involve operating a motor vehicle under Transportation Code Subtitle C (Chapters 541–600) or Sec. 472.022 (disobeying warning signs/barricades).</span></li>
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Not eligible if you hold a commercial driver's license or completed a DSC/motorcycle operator course within the preceding 12 months.</span></li>
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Course must be TEA/TDLR-approved.</span></li>
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Failure to submit the completion certificate and driving record within the 90-day window results in a show cause hearing.</span></li>
+                  </ul>
+                </div>
+
+
+                <!-- Contact -->
+                <div class="bg-surface-muted border border-border rounded-[14px] p-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1 sm:col-span-2">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Court Hours</span>
+                    <span class="text-sm font-semibold text-text-body">Monday–Friday, 8:00 AM – 4:30 PM</span>
+                  </div>
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Phone</span>
+                    <a href="tel:9368564611" class="text-sm font-semibold text-primary hover:underline">(936) 856-4611 Ext. 111</a>
+                  </div>
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Email</span>
+                    <a href="mailto:cdahse@willistx.gov" class="text-sm font-semibold text-primary hover:underline break-all">cdahse@willistx.gov</a>
+                  </div>
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1 sm:col-span-2">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Website</span>
+                    <a href="http://www.ci.willis.tx.us/193/Municipal-Court" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-primary hover:underline break-all">www.ci.willis.tx.us/193/Municipal-Court</a>
+                  </div>
+                </div>
+
+                <!-- Always verify -->
+                <div class="bg-surface-muted border border-border rounded-[14px] p-4 flex items-start gap-3">
+                  <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#0967d2" stroke="#0967d2" stroke-width="1"/><path d="M9 5v4M9 13h.01" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+                  <p class="text-sm text-text-body leading-relaxed">Always verify DSC requirements directly with Willis Municipal Court before submitting anything. Court fees, deadlines, and procedures can change. Call <a href="tel:9368564611" class="text-primary hover:underline font-medium">(936) 856-4611 Ext. 111</a> or visit <a href="http://www.ci.willis.tx.us/193/Municipal-Court" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">www.ci.willis.tx.us/193/Municipal-Court</a>.</p>
+                </div>
+
+                <p class="text-xs text-text-subtle text-right">Court information last verified: June 2026</p>
+              </div>
+            </div>
+          )}
+
+          <!-- ══════════════════════════════════════════
+               DAYTON MUNICIPAL COURT — Court-Specific DSC Info
+               ══════════════════════════════════════════ -->
+          {court.slug === 'liberty-municipal-dayton' && (
+            <div class="bg-white border border-border rounded-2xl overflow-hidden shadow-sm">
+              <div class="px-6 sm:px-8 py-6 flex items-center gap-4 border-b border-border">
+                <div class="bg-info flex items-center justify-center rounded-[14px] w-12 h-12 shrink-0">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0967d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                </div>
+                <h2 class="text-xl font-bold text-text-body">Dayton Municipal Court — Driver Safety Course Instructions</h2>
+              </div>
+              <div class="px-6 sm:px-8 py-6 flex flex-col gap-6">
+
+                <!-- Fees -->
+                <div>
+                  <p class="text-sm font-semibold text-text mb-3">DSC Court Fees</p>
+                  <div class="bg-surface-muted border border-border rounded-[14px] p-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                      <span class="text-xs text-text-body font-medium uppercase tracking-wide">Standard Violation</span>
+                      <span class="text-xl font-bold text-text">$144</span>
+                    </div>
+                    <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                      <span class="text-xs text-text-body font-medium uppercase tracking-wide">School Zone Violation</span>
+                      <span class="text-xl font-bold text-text">$169</span>
+                    </div>
+                  </div>
+                  <p class="text-xs text-amber-800 mt-2 font-medium">⚠ Court administrative fee is $144.00, or $169.00 if the violation occurred in a school zone.</p>
+                </div>
+
+                <!-- How to Request -->
+                <div>
+                  <p class="text-sm font-semibold text-text mb-3">How to Request DSC Approval</p>
+                  <div class="flex flex-col gap-3">
+                    <div class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-start gap-3">
+                        <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <div class="flex flex-col gap-0.5">
+                          <span class="text-sm font-bold text-text-body">In-person</span>
+                          <span class="text-sm text-text-body">Request in writing before your appearance date at the Municipal Court Office, 2002 N. Cleveland St., Dayton, TX 77535; clerks available 8 AM–5 PM to discuss options.</span>
+                        </div>
+                      </div>
+                    <div class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-start gap-3">
+                        <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <div class="flex flex-col gap-0.5">
+                          <span class="text-sm font-bold text-text-body">Mail</span>
+                          <span class="text-sm text-text-body">Mail the completed Defensive Driving Request form with required documents and payment to Dayton Municipal Court, 2002 N. Cleveland St., Dayton, TX 77535, before your appearance date.</span>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+
+                <!-- Required Documents -->
+                <div class="bg-surface-muted border border-border rounded-[14px] p-4 flex flex-col gap-4">
+                  <div>
+                    <p class="text-xs font-semibold text-text-body uppercase tracking-wide mb-2">To Request Approval — Submit These</p>
+                    <ul class="flex flex-col gap-1.5 list-none m-0 p-0">
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Written request (Defensive Driving Request form) submitted before the appearance date on your citation</span></li>
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Plea of guilty or no contest (not-guilty pleas are not eligible)</span></li>
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Court administrative fee ($144, or $169 school zone)</span></li>
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Court copy of completion certificate from a state-approved driving safety course, signed by you, showing completion for Dayton Municipal Court</span></li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p class="text-xs font-semibold text-text-body uppercase tracking-wide mb-2">After Completing the Course — Submit These</p>
+                    <ul class="flex flex-col gap-1.5 list-none m-0 p-0">
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Certified copy of your driving record from the Texas Department of Public Safety</span></li>
+                    </ul>
+                  </div>
+                </div>
+
+                <!-- Important Notes -->
+                <div class="bg-amber-50 border border-amber-200 rounded-[14px] p-4 flex flex-col gap-2">
+                  <p class="text-sm font-semibold text-amber-800">Important Deadlines &amp; Local Rules</p>
+                  <ul class="flex flex-col gap-1.5 list-none m-0 p-0">
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Request deadline: Request must be made in writing, by mail or in person, before the appearance date on your citation</span></li>
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Completion window: 90 days from the date of your request to submit the course certificate and certified driving record.</span></li>
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Not eligible if you hold (or held at the time of offense) a commercial driver's license (CDL).</span></li>
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Not eligible if you completed a defensive driving course for ticket dismissal in the preceding 12 months — the court verifies this against your certified driving record.</span></li>
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>If you fail to comply, the court sets a show-cause hearing; the judge may find you guilty and the conviction goes on your record.</span></li>
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>On successful completion the ticket is dismissed and the violation does not appear on your driving record.</span></li>
+                  </ul>
+                </div>
+
+                <!-- Forms -->
+                <div>
+                  <p class="text-sm font-semibold text-text mb-3">Court Forms &amp; Resources</p>
+                  <div class="flex flex-col gap-2">
+                    <a href="https://www.cityofdaytontx.com/government/departments/municipal-court/defensive-driving" target="_blank" rel="noopener noreferrer" class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-center gap-3 no-underline hover:bg-gray-50 transition-colors group">
+                      <svg class="w-[18px] h-[18px] shrink-0 text-primary" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 2.25H5.25A1.5 1.5 0 0 0 3.75 3.75v10.5a1.5 1.5 0 0 0 1.5 1.5h7.5a1.5 1.5 0 0 0 1.5-1.5V6.75L10.5 2.25z"/><polyline points="10.5 2.25 10.5 6.75 14.25 6.75"/></svg>
+                      <span class="text-sm font-semibold text-primary group-hover:underline">Defensive Driving — Dayton Municipal Court</span>
+                    </a>
+                  </div>
+                </div>
+
+                <!-- Contact -->
+                <div class="bg-surface-muted border border-border rounded-[14px] p-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1 sm:col-span-2">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Court Hours</span>
+                    <span class="text-sm font-semibold text-text-body">Monday–Friday, 8:00 AM–5:00 PM</span>
+                  </div>
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Phone</span>
+                    <a href="tel:9362585312" class="text-sm font-semibold text-primary hover:underline">(936) 258-5312</a>
+                  </div>
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Email</span>
+                    <a href="mailto:court@daytontx.org" class="text-sm font-semibold text-primary hover:underline break-all">court@daytontx.org</a>
+                  </div>
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1 sm:col-span-2">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Website</span>
+                    <a href="https://www.cityofdaytontx.com/government/departments/municipal-court" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-primary hover:underline break-all">www.cityofdaytontx.com/government/departments/municipal-court</a>
+                  </div>
+                </div>
+
+                <!-- Always verify -->
+                <div class="bg-surface-muted border border-border rounded-[14px] p-4 flex items-start gap-3">
+                  <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#0967d2" stroke="#0967d2" stroke-width="1"/><path d="M9 5v4M9 13h.01" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+                  <p class="text-sm text-text-body leading-relaxed">Always verify DSC requirements directly with Dayton Municipal Court before submitting anything. Court fees, deadlines, and procedures can change. Call <a href="tel:9362585312" class="text-primary hover:underline font-medium">(936) 258-5312</a> or visit <a href="https://www.cityofdaytontx.com/government/departments/municipal-court" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">www.cityofdaytontx.com/government/departments/municipal-court</a>.</p>
+                </div>
+
+                <p class="text-xs text-text-subtle text-right">Court information last verified: June 2026</p>
+              </div>
+            </div>
+          )}
+
+          <!-- ══════════════════════════════════════════
+               PLEASANTON MUNICIPAL COURT — Court-Specific DSC Info
+               ══════════════════════════════════════════ -->
+          {court.slug === 'atascosa-municipal-pleasanton' && (
+            <div class="bg-white border border-border rounded-2xl overflow-hidden shadow-sm">
+              <div class="px-6 sm:px-8 py-6 flex items-center gap-4 border-b border-border">
+                <div class="bg-info flex items-center justify-center rounded-[14px] w-12 h-12 shrink-0">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0967d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                </div>
+                <h2 class="text-xl font-bold text-text-body">Pleasanton Municipal Court — Driver Safety Course Instructions</h2>
+              </div>
+              <div class="px-6 sm:px-8 py-6 flex flex-col gap-6">
+
+                <!-- Fees -->
+                <div>
+                  <p class="text-sm font-semibold text-text mb-3">DSC Court Fees</p>
+                  <div class="bg-surface-muted border border-border rounded-[14px] p-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                      <span class="text-xs text-text-body font-medium uppercase tracking-wide">Standard Violation</span>
+                      <span class="text-xl font-bold text-text">$144.00</span>
+                    </div>
+                    <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                      <span class="text-xs text-text-body font-medium uppercase tracking-wide">School Zone Violation</span>
+                      <span class="text-xl font-bold text-text">$169.00</span>
+                    </div>
+                  </div>
+                  <p class="text-xs text-amber-800 mt-2 font-medium">⚠ $144.00 for non-school-zone violations or $169.00 for school zone violations, paid in lieu of fine at the time of the request.</p>
+                </div>
+
+                <!-- How to Request -->
+                <div>
+                  <p class="text-sm font-semibold text-text mb-3">How to Request DSC Approval</p>
+                  <div class="flex flex-col gap-3">
+                    <div class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-start gap-3">
+                        <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <div class="flex flex-col gap-0.5">
+                          <span class="text-sm font-bold text-text-body">In-person</span>
+                          <span class="text-sm text-text-body">Appear at the court, 108 Second St, Pleasanton, TX 78064, with your Texas driver's license and proof of insurance; affidavit can be signed in person without a notary</span>
+                        </div>
+                      </div>
+                    <div class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-start gap-3">
+                        <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <div class="flex flex-col gap-0.5">
+                          <span class="text-sm font-bold text-text-body">Mail</span>
+                          <span class="text-sm text-text-body">Send fee, copy of valid Texas driver's license, copy of valid insurance, and the notarized Driving Safety Course Request-Affidavit to P.O. Box 209, Pleasanton, TX 78064, on or before your appearance date</span>
+                        </div>
+                      </div>
+                    <div class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-start gap-3">
+                        <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <div class="flex flex-col gap-0.5">
+                          <span class="text-sm font-bold text-text-body">Email</span>
+                          <span class="text-sm text-text-body">Court's Quick Forms page instructs: email completed forms with identification to MunicipalCourt@pleasantontx.gov</span>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+
+                <!-- Required Documents -->
+                <div class="bg-surface-muted border border-border rounded-[14px] p-4 flex flex-col gap-4">
+                  <div>
+                    <p class="text-xs font-semibold text-text-body uppercase tracking-wide mb-2">To Request Approval — Submit These</p>
+                    <ul class="flex flex-col gap-1.5 list-none m-0 p-0">
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Driving Safety Course Request-Affidavit (no-contest plea; notarized unless submitted in person)</span></li>
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Copy of valid Texas driver's license</span></li>
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Copy of current proof of insurance showing you as a covered driver</span></li>
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Court fee: $144.00 (non-school zone) or $169.00 (school zone)</span></li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p class="text-xs font-semibold text-text-body uppercase tracking-wide mb-2">After Completing the Course — Submit These</p>
+                    <ul class="flex flex-col gap-1.5 list-none m-0 p-0">
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>certificate of completion and certified driving record (standard requirements)</span></li>
+                    </ul>
+                  </div>
+                </div>
+
+                <!-- Important Notes -->
+                <div class="bg-amber-50 border border-amber-200 rounded-[14px] p-4 flex flex-col gap-2">
+                  <p class="text-sm font-semibold text-amber-800">Important Deadlines &amp; Local Rules</p>
+                  <ul class="flex flex-col gap-1.5 list-none m-0 p-0">
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Request deadline: On or before your appearance date — 'LATE OR INCOMPLETE REQUESTS WILL BE REJECTED'</span></li>
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Completion window: Typically 90 days from court approval (standard Texas practice — confirm with court).</span></li>
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Do NOT take the course before obtaining court approval — once approved, instructions are mailed to the address you provide.</span></li>
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>DSC allowed for only ONE violation per request; eligibility requires a Texas driver's license, no DSC dismissal in the prior 12 months, speeding under 25 mph over the limit, no CDL, and no construction-zone-with-workers or school-bus-passing violations.</span></li>
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Mailed affidavits must be notarized; in-person submissions do not require a notary.</span></li>
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>If under 25 at time of offense and requesting deferred disposition, a driving safety course is a mandatory condition of the deferral.</span></li>
+                  </ul>
+                </div>
+
+                <!-- Forms -->
+                <div>
+                  <p class="text-sm font-semibold text-text mb-3">Court Forms &amp; Resources</p>
+                  <div class="flex flex-col gap-2">
+                    <a href="https://www.pleasantontx.gov/quick_forms/index.php" target="_blank" rel="noopener noreferrer" class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-center gap-3 no-underline hover:bg-gray-50 transition-colors group">
+                      <svg class="w-[18px] h-[18px] shrink-0 text-primary" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 2.25H5.25A1.5 1.5 0 0 0 3.75 3.75v10.5a1.5 1.5 0 0 0 1.5 1.5h7.5a1.5 1.5 0 0 0 1.5-1.5V6.75L10.5 2.25z"/><polyline points="10.5 2.25 10.5 6.75 14.25 6.75"/></svg>
+                      <span class="text-sm font-semibold text-primary group-hover:underline">Municipal Court Quick Forms</span>
+                    </a>
+                  </div>
+                </div>
+
+                <!-- Contact -->
+                <div class="bg-surface-muted border border-border rounded-[14px] p-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1 sm:col-span-2">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Court Hours</span>
+                    <span class="text-sm font-semibold text-text-body">Monday–Friday, 8:00 AM–4:30 PM</span>
+                  </div>
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Phone</span>
+                    <a href="tel:8302816828" class="text-sm font-semibold text-primary hover:underline">(830) 281-6828</a>
+                  </div>
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Email</span>
+                    <a href="mailto:municipalcourt@pleasantontx.gov" class="text-sm font-semibold text-primary hover:underline break-all">municipalcourt@pleasantontx.gov</a>
+                  </div>
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1 sm:col-span-2">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Website</span>
+                    <a href="https://www.pleasantontx.gov/departments/municipal_court/index.php" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-primary hover:underline break-all">www.pleasantontx.gov/departments/municipal_court/index.php</a>
+                  </div>
+                </div>
+
+                <!-- Always verify -->
+                <div class="bg-surface-muted border border-border rounded-[14px] p-4 flex items-start gap-3">
+                  <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#0967d2" stroke="#0967d2" stroke-width="1"/><path d="M9 5v4M9 13h.01" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+                  <p class="text-sm text-text-body leading-relaxed">Always verify DSC requirements directly with Pleasanton Municipal Court before submitting anything. Court fees, deadlines, and procedures can change. Call <a href="tel:8302816828" class="text-primary hover:underline font-medium">(830) 281-6828</a> or visit <a href="https://www.pleasantontx.gov/departments/municipal_court/index.php" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">www.pleasantontx.gov/departments/municipal_court/index.php</a>.</p>
+                </div>
+
+                <p class="text-xs text-text-subtle text-right">Court information last verified: June 2026</p>
+              </div>
+            </div>
+          )}
+
+          <!-- ══════════════════════════════════════════
+               ROCKPORT MUNICIPAL COURT — Court-Specific DSC Info
+               ══════════════════════════════════════════ -->
+          {court.slug === 'aransas-municipal-rockport' && (
+            <div class="bg-white border border-border rounded-2xl overflow-hidden shadow-sm">
+              <div class="px-6 sm:px-8 py-6 flex items-center gap-4 border-b border-border">
+                <div class="bg-info flex items-center justify-center rounded-[14px] w-12 h-12 shrink-0">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0967d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                </div>
+                <h2 class="text-xl font-bold text-text-body">Rockport Municipal Court — Driver Safety Course Instructions</h2>
+              </div>
+              <div class="px-6 sm:px-8 py-6 flex flex-col gap-6">
+
+                <!-- Fees -->
+                <div class="bg-amber-50 border border-amber-200 rounded-[14px] p-4 flex flex-col gap-2">
+                  <p class="text-sm font-semibold text-amber-800">DSC Court Fees</p>
+                  <p class="text-sm text-amber-900">This court does not publish its DSC fee schedule online. Call <a href="tel:3617292213" class="font-medium hover:underline">(361) 729-2213 ext. 237</a> to confirm the exact amount before submitting payment.</p>
+                  <p class="text-xs text-amber-700">Standard Texas DSC fee is typically $144 for moving violations and $169 for school zone violations, but varies by court.</p>
+                </div>
+
+                <!-- How to Request -->
+                <div>
+                  <p class="text-sm font-semibold text-text mb-3">How to Request DSC Approval</p>
+                  <div class="flex flex-col gap-3">
+                    <div class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-start gap-3">
+                        <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <div class="flex flex-col gap-0.5">
+                          <span class="text-sm font-bold text-text-body">In-person</span>
+                          <span class="text-sm text-text-body">Rockport Municipal Court, 212 N. Live Oak St., Rockport, TX 78382 (court FAQ also references a 402 E. Laurel St. office — confirm location when calling)</span>
+                        </div>
+                      </div>
+                    <div class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-start gap-3">
+                        <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <div class="flex flex-col gap-0.5">
+                          <span class="text-sm font-bold text-text-body">Email</span>
+                          <span class="text-sm text-text-body">court@cityofrockport.com</span>
+                        </div>
+                      </div>
+                    <div class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-start gap-3">
+                        <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <div class="flex flex-col gap-0.5">
+                          <span class="text-sm font-bold text-text-body">Fax</span>
+                          <span class="text-sm text-text-body">(361) 729-9645</span>
+                        </div>
+                      </div>
+                    <div class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-start gap-3">
+                        <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <div class="flex flex-col gap-0.5">
+                          <span class="text-sm font-bold text-text-body">Mail</span>
+                          <span class="text-sm text-text-body">Rockport Municipal Court, 212 N. Live Oak St., Rockport, TX 78382</span>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+
+                <!-- Required Documents -->
+                <div class="bg-surface-muted border border-border rounded-[14px] p-4 flex flex-col gap-4">
+                  <div>
+                    <p class="text-xs font-semibold text-text-body uppercase tracking-wide mb-2">To Request Approval — Submit These</p>
+                    <ul class="flex flex-col gap-1.5 list-none m-0 p-0">
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Valid Texas Class 'C' driver's license</span></li>
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Proof of valid insurance policy</span></li>
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Payment of the court's administrative fee</span></li>
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Plea Form (verbal pleas not accepted)</span></li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p class="text-xs font-semibold text-text-body uppercase tracking-wide mb-2">After Completing the Course — Submit These</p>
+                    <ul class="flex flex-col gap-1.5 list-none m-0 p-0">
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Texas certified driving record (Type 3A)</span></li>
+                    </ul>
+                  </div>
+                </div>
+
+                <!-- Important Notes -->
+                <div class="bg-amber-50 border border-amber-200 rounded-[14px] p-4 flex flex-col gap-2">
+                  <p class="text-sm font-semibold text-amber-800">Important Deadlines &amp; Local Rules</p>
+                  <ul class="flex flex-col gap-1.5 list-none m-0 p-0">
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Request deadline: On or before the appearance date shown on your citation (standard Texas rule — confirm with court)</span></li>
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Completion window: Typically 90 days from court approval (standard Texas practice — confirm with court).</span></li>
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>DSC is available only for moving violations; the court directs defendants to contact the court clerk at (361) 729-2213 ext. 237 to request Driver's Safety or Deferred Disposition — no online DSC request form is published.</span></li>
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>The cityofrockport.com domain now redirects to rockporttx.gov (official site).</span></li>
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Two addresses appear on official pages — 212 N. Live Oak St. and 402 E. Laurel St.; verify the correct office when contacting the court.</span></li>
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Fine payments accepted online; the payment window does not accept cash.</span></li>
+                  </ul>
+                </div>
+
+                <!-- Forms -->
+                <div>
+                  <p class="text-sm font-semibold text-text mb-3">Court Forms &amp; Resources</p>
+                  <div class="flex flex-col gap-2">
+                    <a href="https://www.rockporttx.gov/DocumentCenter/View/10075" target="_blank" rel="noopener noreferrer" class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-center gap-3 no-underline hover:bg-gray-50 transition-colors group">
+                      <svg class="w-[18px] h-[18px] shrink-0 text-primary" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 2.25H5.25A1.5 1.5 0 0 0 3.75 3.75v10.5a1.5 1.5 0 0 0 1.5 1.5h7.5a1.5 1.5 0 0 0 1.5-1.5V6.75L10.5 2.25z"/><polyline points="10.5 2.25 10.5 6.75 14.25 6.75"/></svg>
+                      <span class="text-sm font-semibold text-primary group-hover:underline">Plea Form (required — verbal pleas not accepted)</span>
+                    </a>
+                  </div>
+                </div>
+
+                <!-- Contact -->
+                <div class="bg-surface-muted border border-border rounded-[14px] p-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1 sm:col-span-2">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Court Hours</span>
+                    <span class="text-sm font-semibold text-text-body">Monday–Friday, 8:00 a.m.–5:00 p.m.</span>
+                  </div>
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Phone</span>
+                    <a href="tel:3617292213" class="text-sm font-semibold text-primary hover:underline">(361) 729-2213 ext. 237</a>
+                  </div>
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Email</span>
+                    <a href="mailto:court@cityofrockport.com" class="text-sm font-semibold text-primary hover:underline break-all">court@cityofrockport.com</a>
+                  </div>
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1 sm:col-span-2">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Website</span>
+                    <a href="https://www.rockporttx.gov/114/Municipal-Court" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-primary hover:underline break-all">www.rockporttx.gov/114/Municipal-Court</a>
+                  </div>
+                </div>
+
+                <!-- Always verify -->
+                <div class="bg-surface-muted border border-border rounded-[14px] p-4 flex items-start gap-3">
+                  <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#0967d2" stroke="#0967d2" stroke-width="1"/><path d="M9 5v4M9 13h.01" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+                  <p class="text-sm text-text-body leading-relaxed">Always verify DSC requirements directly with Rockport Municipal Court before submitting anything. Court fees, deadlines, and procedures can change. Call <a href="tel:3617292213" class="text-primary hover:underline font-medium">(361) 729-2213 ext. 237</a> or visit <a href="https://www.rockporttx.gov/114/Municipal-Court" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">www.rockporttx.gov/114/Municipal-Court</a>.</p>
+                </div>
+
+                <p class="text-xs text-text-subtle text-right">Court information last verified: June 2026</p>
+              </div>
+            </div>
+          )}
+
+          <!-- ══════════════════════════════════════════
+               FLORESVILLE MUNICIPAL COURT — Court-Specific DSC Info
+               ══════════════════════════════════════════ -->
+          {court.slug === 'wilson-municipal-floresville' && (
+            <div class="bg-white border border-border rounded-2xl overflow-hidden shadow-sm">
+              <div class="px-6 sm:px-8 py-6 flex items-center gap-4 border-b border-border">
+                <div class="bg-info flex items-center justify-center rounded-[14px] w-12 h-12 shrink-0">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0967d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                </div>
+                <h2 class="text-xl font-bold text-text-body">Floresville Municipal Court — Driver Safety Course Instructions</h2>
+              </div>
+              <div class="px-6 sm:px-8 py-6 flex flex-col gap-6">
+
+                <!-- Fees -->
+                <div>
+                  <p class="text-sm font-semibold text-text mb-3">DSC Court Fees</p>
+                  <div class="bg-surface-muted border border-border rounded-[14px] p-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                      <span class="text-xs text-text-body font-medium uppercase tracking-wide">Standard Violation</span>
+                      <span class="text-xl font-bold text-text">$144.00</span>
+                    </div>
+                    <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                      <span class="text-xs text-text-body font-medium uppercase tracking-wide">School Zone Violation</span>
+                      <span class="text-xl font-bold text-text">$169.00</span>
+                    </div>
+                  </div>
+                  <p class="text-xs text-amber-800 mt-2 font-medium">⚠ Court cost of $144.00 ($169.00 in a school zone), payable by cash (in person only — do not mail cash), money order, cashier's check, or most major credit/debit cards. Online payment allowed only AFTER the court grants permission to take the course.</p>
+                </div>
+
+                <!-- How to Request -->
+                <div>
+                  <p class="text-sm font-semibold text-text mb-3">How to Request DSC Approval</p>
+                  <div class="flex flex-col gap-3">
+                    <div class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-start gap-3">
+                        <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <div class="flex flex-col gap-0.5">
+                          <span class="text-sm font-bold text-text-body">In-person</span>
+                          <span class="text-sm text-text-body">Request at the court window, 1120 D Street, Floresville, TX 78114 — forms are provided at the window, so the mail packet forms are not needed for in-person requests.</span>
+                        </div>
+                      </div>
+                    <div class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-start gap-3">
+                        <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <div class="flex flex-col gap-0.5">
+                          <span class="text-sm font-bold text-text-body">Mail</span>
+                          <span class="text-sm text-text-body">Mail the completed Request for a Driving Safety Course form (with plea of Guilty or No Contest circled), notarized affidavit, photocopies of Texas driver's license and insurance card, and payment to Floresville Municipal Court, 1120 D Street, Floresville, TX 78114. Do not mail cash.</span>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+
+                <!-- Required Documents -->
+                <div class="bg-surface-muted border border-border rounded-[14px] p-4 flex flex-col gap-4">
+                  <div>
+                    <p class="text-xs font-semibold text-text-body uppercase tracking-wide mb-2">To Request Approval — Submit These</p>
+                    <ul class="flex flex-col gap-1.5 list-none m-0 p-0">
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Completed Request for a Driving Safety Course form with Guilty or No Contest plea, signed and dated</span></li>
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Notarized Affidavit for Driving Safety Course stating you have not taken/completed a DSC in the 12 months preceding the offense</span></li>
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Photocopy of valid Texas driver's license (military exempt from TX license requirement)</span></li>
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Photocopy of current insurance card listing you as a covered driver</span></li>
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Payment of court cost ($144 / $169 school zone)</span></li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p class="text-xs font-semibold text-text-body uppercase tracking-wide mb-2">After Completing the Course — Submit These</p>
+                    <ul class="flex flex-col gap-1.5 list-none m-0 p-0">
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>uniform certificate of completion AND certified copy of DPS driving record (Type 3A) — both due by the 90th day</span></li>
+                    </ul>
+                  </div>
+                </div>
+
+                <!-- Important Notes -->
+                <div class="bg-amber-50 border border-amber-200 rounded-[14px] p-4 flex flex-col gap-2">
+                  <p class="text-sm font-semibold text-amber-800">Important Deadlines &amp; Local Rules</p>
+                  <ul class="flex flex-col gap-1.5 list-none m-0 p-0">
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Request deadline: On or before your initial/court appearance date shown on the citation</span></li>
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Completion window: 90 days from the request — certificate of completion, affidavit, and certified DPS driving record must be received by the court on or before the 90th day; no extensions granted.</span></li>
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>DO NOT take the course before receiving permission from the court, and do not pay online until the court has granted permission.</span></li>
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>The affidavit (no course in past 12 months) must be notarized for mail-in requests; in-person requests are signed at the window.</span></li>
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>If paperwork is turned in early, the case is dismissed early.</span></li>
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Not eligible: CDL holders at time of offense, speeding 25+ mph over limit, passing a school bus, reckless driving, hit and run, construction zone violations, no insurance, or license/plate/inspection violations.</span></li>
+                  </ul>
+                </div>
+
+                <!-- Forms -->
+                <div>
+                  <p class="text-sm font-semibold text-text mb-3">Court Forms &amp; Resources</p>
+                  <div class="flex flex-col gap-2">
+                    <a href="https://www.floresvilletx.gov/wp-content/uploads/2016/07/DSC-RQST-MAIL.pdf" target="_blank" rel="noopener noreferrer" class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-center gap-3 no-underline hover:bg-gray-50 transition-colors group">
+                      <svg class="w-[18px] h-[18px] shrink-0 text-primary" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 2.25H5.25A1.5 1.5 0 0 0 3.75 3.75v10.5a1.5 1.5 0 0 0 1.5 1.5h7.5a1.5 1.5 0 0 0 1.5-1.5V6.75L10.5 2.25z"/><polyline points="10.5 2.25 10.5 6.75 14.25 6.75"/></svg>
+                      <span class="text-sm font-semibold text-primary group-hover:underline">DSC Request by Mail packet (instructions, request form, affidavit, DPS DR-1 application)</span>
+                    </a>
+                  </div>
+                </div>
+
+                <!-- Contact -->
+                <div class="bg-surface-muted border border-border rounded-[14px] p-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1 sm:col-span-2">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Court Hours</span>
+                    <span class="text-sm font-semibold text-text-body">Monday–Friday 8:00 AM–5:00 PM</span>
+                  </div>
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Phone</span>
+                    <a href="tel:8303934232" class="text-sm font-semibold text-primary hover:underline">(830) 393-4232</a>
+                  </div>
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Email</span>
+                    <a href="mailto:muncourt@floresvilletx.gov" class="text-sm font-semibold text-primary hover:underline break-all">muncourt@floresvilletx.gov</a>
+                  </div>
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1 sm:col-span-2">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Website</span>
+                    <a href="https://www.floresvilletx.gov/departments/municipal-court/" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-primary hover:underline break-all">www.floresvilletx.gov/departments/municipal-court</a>
+                  </div>
+                </div>
+
+                <!-- Always verify -->
+                <div class="bg-surface-muted border border-border rounded-[14px] p-4 flex items-start gap-3">
+                  <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#0967d2" stroke="#0967d2" stroke-width="1"/><path d="M9 5v4M9 13h.01" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+                  <p class="text-sm text-text-body leading-relaxed">Always verify DSC requirements directly with Floresville Municipal Court before submitting anything. Court fees, deadlines, and procedures can change. Call <a href="tel:8303934232" class="text-primary hover:underline font-medium">(830) 393-4232</a> or visit <a href="https://www.floresvilletx.gov/departments/municipal-court/" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">www.floresvilletx.gov/departments/municipal-court</a>.</p>
+                </div>
+
+                <p class="text-xs text-text-subtle text-right">Court information last verified: June 2026</p>
+              </div>
+            </div>
+          )}
+
+          <!-- ══════════════════════════════════════════
+               BULVERDE MUNICIPAL COURT — Court-Specific DSC Info
+               ══════════════════════════════════════════ -->
+          {court.slug === 'comal-municipal-bulverde' && (
+            <div class="bg-white border border-border rounded-2xl overflow-hidden shadow-sm">
+              <div class="px-6 sm:px-8 py-6 flex items-center gap-4 border-b border-border">
+                <div class="bg-info flex items-center justify-center rounded-[14px] w-12 h-12 shrink-0">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0967d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                </div>
+                <h2 class="text-xl font-bold text-text-body">Bulverde Municipal Court — Driver Safety Course Instructions</h2>
+              </div>
+              <div class="px-6 sm:px-8 py-6 flex flex-col gap-6">
+
+                <!-- Fees -->
+                <div>
+                  <p class="text-sm font-semibold text-text mb-3">DSC Court Fees</p>
+                  <div class="bg-surface-muted border border-border rounded-[14px] p-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                      <span class="text-xs text-text-body font-medium uppercase tracking-wide">Standard Violation</span>
+                      <span class="text-xl font-bold text-text">$144.00</span>
+                    </div>
+                    <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                      <span class="text-xs text-text-body font-medium uppercase tracking-wide">School Zone Violation</span>
+                      <span class="text-xl font-bold text-text">$169.00</span>
+                    </div>
+                  </div>
+                  <p class="text-xs text-amber-800 mt-2 font-medium">⚠ Court costs plus administrative fee. School-zone violations add $25. No personal checks accepted — pay by cashier's check or money order if mailing; do not send cash.</p>
+                </div>
+
+                <!-- How to Request -->
+                <div>
+                  <p class="text-sm font-semibold text-text mb-3">How to Request DSC Approval</p>
+                  <div class="flex flex-col gap-3">
+                    <div class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-start gap-3">
+                        <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <div class="flex flex-col gap-0.5">
+                          <span class="text-sm font-bold text-text-body">In-person</span>
+                          <span class="text-sm text-text-body">Bulverde Municipal Court, 30360 Cougar Bend, Bulverde, TX 78163 — Mon–Fri 8:00 AM–4:30 PM, BEFORE your assigned court date. Bring valid Texas driver's license (or out-of-state DL plus current military ID), a paper copy of proof of insurance, and the fee. The court generates all required signature forms on the spot.</span>
+                        </div>
+                      </div>
+                    <div class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-start gap-3">
+                        <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <div class="flex flex-col gap-0.5">
+                          <span class="text-sm font-bold text-text-body">Mail</span>
+                          <span class="text-sm text-text-body">Mail to Bulverde Municipal Court, 30360 Cougar Bend, Bulverde, TX 78163: a written statement requesting the DSC, a written plea of Guilty or No Contest, payment (cashier's check or money order only), a copy of your valid driver's license, and a copy of your insurance card. The court mails back an affidavit to sign and return plus course-selection instructions.</span>
+                        </div>
+                      </div>
+                    <div class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-start gap-3">
+                        <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <div class="flex flex-col gap-0.5">
+                          <span class="text-sm font-bold text-text-body">Email</span>
+                          <span class="text-sm text-text-body">Email a notarized Application for Defensive Driving (form on court website), a copy of your valid driver's license, and a copy of your insurance card to court@bulverdetx.gov. Allow up to 3 business days; the court emails approval with a payment link. Payment is due within 3 days of the approval email — no exceptions — and the original notarized copy must still be provided.</span>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+
+                <!-- Required Documents -->
+                <div class="bg-surface-muted border border-border rounded-[14px] p-4 flex flex-col gap-4">
+                  <div>
+                    <p class="text-xs font-semibold text-text-body uppercase tracking-wide mb-2">To Request Approval — Submit These</p>
+                    <ul class="flex flex-col gap-1.5 list-none m-0 p-0">
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Valid Texas driver's license or permit (or valid out-of-state DL plus valid active-duty military ID) — no CDL</span></li>
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Proof of motor vehicle insurance showing you as a named insured driver on the policy</span></li>
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Written plea of Guilty or No Contest (mail requests)</span></li>
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Notarized Application for Defensive Driving (email requests)</span></li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p class="text-xs font-semibold text-text-body uppercase tracking-wide mb-2">After Completing the Course — Submit These</p>
+                    <ul class="flex flex-col gap-1.5 list-none m-0 p-0">
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>signed Court Copy of the Uniform Certificate of Course Completion AND certified Type 3A copy of your driving record from Texas DPS</span></li>
+                    </ul>
+                  </div>
+                </div>
+
+                <!-- Important Notes -->
+                <div class="bg-amber-50 border border-amber-200 rounded-[14px] p-4 flex flex-col gap-2">
+                  <p class="text-sm font-semibold text-amber-800">Important Deadlines &amp; Local Rules</p>
+                  <ul class="flex flex-col gap-1.5 list-none m-0 p-0">
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Request deadline: On or before your initial appearance date (the court date/time stated on your ticket)</span></li>
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Completion window: 90 days to complete the course and return both the signed Court Copy of the Uniform Certificate of Course Completion and the certified Type 3A driving record on or before the 90th day.</span></li>
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Do NOT take a driving safety course or pay the citation before receiving approval and instructions from the court.</span></li>
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>The course cannot be taken until payment is received by the court.</span></li>
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Not eligible if: speeding 25+ mph over the limit, CDL holder, violation in a construction zone with workers present, passing a school bus, accidents, non-moving violations, or a DSC used to dismiss a ticket in any Texas court within the prior 12 months.</span></li>
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Email requests require a notarized application AND payment within 3 days of approval — a notably strict mechanic.</span></li>
+                  </ul>
+                </div>
+
+                <!-- Forms -->
+                <div>
+                  <p class="text-sm font-semibold text-text mb-3">Court Forms &amp; Resources</p>
+                  <div class="flex flex-col gap-2">
+                    <a href="https://www.bulverdetx.gov/DocumentCenter/View/4841/Application-for-DSC" target="_blank" rel="noopener noreferrer" class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-center gap-3 no-underline hover:bg-gray-50 transition-colors group">
+                      <svg class="w-[18px] h-[18px] shrink-0 text-primary" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 2.25H5.25A1.5 1.5 0 0 0 3.75 3.75v10.5a1.5 1.5 0 0 0 1.5 1.5h7.5a1.5 1.5 0 0 0 1.5-1.5V6.75L10.5 2.25z"/><polyline points="10.5 2.25 10.5 6.75 14.25 6.75"/></svg>
+                      <span class="text-sm font-semibold text-primary group-hover:underline">Application for DSC (notarized application for emailed requests)</span>
+                    </a>
+                    <a href="https://www.bulverdetx.gov/DocumentCenter/View/4265/Driving-Safety-Course---WEBPAGE" target="_blank" rel="noopener noreferrer" class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-center gap-3 no-underline hover:bg-gray-50 transition-colors group">
+                      <svg class="w-[18px] h-[18px] shrink-0 text-primary" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 2.25H5.25A1.5 1.5 0 0 0 3.75 3.75v10.5a1.5 1.5 0 0 0 1.5 1.5h7.5a1.5 1.5 0 0 0 1.5-1.5V6.75L10.5 2.25z"/><polyline points="10.5 2.25 10.5 6.75 14.25 6.75"/></svg>
+                      <span class="text-sm font-semibold text-primary group-hover:underline">Driving Safety Course Instructions (PDF)</span>
+                    </a>
+                  </div>
+                </div>
+
+                <!-- Contact -->
+                <div class="bg-surface-muted border border-border rounded-[14px] p-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1 sm:col-span-2">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Court Hours</span>
+                    <span class="text-sm font-semibold text-text-body">Monday–Friday, 8:00 AM–5:00 PM (DSC requests accepted in person 8:00 AM–4:30 PM)</span>
+                  </div>
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Phone</span>
+                    <a href="tel:8304383612" class="text-sm font-semibold text-primary hover:underline">(830) 438-3612</a>
+                  </div>
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Email</span>
+                    <a href="mailto:court@bulverdetx.gov" class="text-sm font-semibold text-primary hover:underline break-all">court@bulverdetx.gov</a>
+                  </div>
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1 sm:col-span-2">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Website</span>
+                    <a href="https://www.bulverdetx.gov/158/Municipal-Court" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-primary hover:underline break-all">www.bulverdetx.gov/158/Municipal-Court</a>
+                  </div>
+                </div>
+
+                <!-- Always verify -->
+                <div class="bg-surface-muted border border-border rounded-[14px] p-4 flex items-start gap-3">
+                  <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#0967d2" stroke="#0967d2" stroke-width="1"/><path d="M9 5v4M9 13h.01" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+                  <p class="text-sm text-text-body leading-relaxed">Always verify DSC requirements directly with Bulverde Municipal Court before submitting anything. Court fees, deadlines, and procedures can change. Call <a href="tel:8304383612" class="text-primary hover:underline font-medium">(830) 438-3612</a> or visit <a href="https://www.bulverdetx.gov/158/Municipal-Court" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">www.bulverdetx.gov/158/Municipal-Court</a>.</p>
+                </div>
+
+                <p class="text-xs text-text-subtle text-right">Court information last verified: June 2026</p>
+              </div>
+            </div>
+          )}
+
+          <!-- ══════════════════════════════════════════
+               FOREST HILL MUNICIPAL COURT — Court-Specific DSC Info
+               ══════════════════════════════════════════ -->
+          {court.slug === 'tarrant-municipal-forest-hill' && (
+            <div class="bg-white border border-border rounded-2xl overflow-hidden shadow-sm">
+              <div class="px-6 sm:px-8 py-6 flex items-center gap-4 border-b border-border">
+                <div class="bg-info flex items-center justify-center rounded-[14px] w-12 h-12 shrink-0">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0967d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                </div>
+                <h2 class="text-xl font-bold text-text-body">Forest Hill Municipal Court — Driver Safety Course Instructions</h2>
+              </div>
+              <div class="px-6 sm:px-8 py-6 flex flex-col gap-6">
+
+                <!-- Fees -->
+                <div>
+                  <p class="text-sm font-semibold text-text mb-3">DSC Court Fees</p>
+                  <div class="bg-surface-muted border border-border rounded-[14px] p-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                      <span class="text-xs text-text-body font-medium uppercase tracking-wide">Standard Violation</span>
+                      <span class="text-xl font-bold text-text">$144</span>
+                    </div>
+                    <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                      <span class="text-xs text-text-body font-medium uppercase tracking-wide">School Zone Violation</span>
+                      <span class="text-xl font-bold text-text">$169</span>
+                    </div>
+                  </div>
+                  <p class="text-xs text-amber-800 mt-2 font-medium">⚠ The court's mail-in DSC request form states court costs of $144 (regular zone) / $169 (school zone). An older court information sheet lists $114 / $139 — call (817) 568-3046 to confirm the current amount before sending payment.</p>
+                </div>
+
+                <!-- How to Request -->
+                <div>
+                  <p class="text-sm font-semibold text-text mb-3">How to Request DSC Approval</p>
+                  <div class="flex flex-col gap-3">
+                    <div class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-start gap-3">
+                        <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <div class="flex flex-col gap-0.5">
+                          <span class="text-sm font-bold text-text-body">In-person</span>
+                          <span class="text-sm text-text-body">Municipal Court office at City Hall, 3219 California Pkwy E., Forest Hill, TX 76119, during office hours</span>
+                        </div>
+                      </div>
+                    <div class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-start gap-3">
+                        <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <div class="flex flex-col gap-0.5">
+                          <span class="text-sm font-bold text-text-body">Mail</span>
+                          <span class="text-sm text-text-body">Mail the Request for Driver Safety Course form with a copy of your valid Texas driver's license, proof of insurance, and a check or money order to Forest Hill Municipal Court, 3219 California Pkwy E., Forest Hill, TX 76119</span>
+                        </div>
+                      </div>
+                    <div class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-start gap-3">
+                        <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <div class="flex flex-col gap-0.5">
+                          <span class="text-sm font-bold text-text-body">Fax</span>
+                          <span class="text-sm text-text-body">Fax the completed form to (817) 984-8254</span>
+                        </div>
+                      </div>
+                    <div class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-start gap-3">
+                        <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#34C759" stroke="#34C759" stroke-width="1"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <div class="flex flex-col gap-0.5">
+                          <span class="text-sm font-bold text-text-body">Email</span>
+                          <span class="text-sm text-text-body">Email the completed, signed form with a copy of your driver's license/picture ID to court@foresthilltx.org</span>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+
+                <!-- Required Documents -->
+                <div class="bg-surface-muted border border-border rounded-[14px] p-4 flex flex-col gap-4">
+                  <div>
+                    <p class="text-xs font-semibold text-text-body uppercase tracking-wide mb-2">To Request Approval — Submit These</p>
+                    <ul class="flex flex-col gap-1.5 list-none m-0 p-0">
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Valid Texas driver's license or permit (non-CDL; military ID accepted)</span></li>
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Proof of financial responsibility (liability insurance in your name or listing you as a covered driver)</span></li>
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Check or money order for the court fee (mail/fax requests)</span></li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p class="text-xs font-semibold text-text-body uppercase tracking-wide mb-2">After Completing the Course — Submit These</p>
+                    <ul class="flex flex-col gap-1.5 list-none m-0 p-0">
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Certified copy of your driving record (TX DPS Type 3A) — due with the completion certificate</span></li>
+                      <li class="text-sm text-text-body flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>TEA-approved driving safety course certificate of completion (original court copy)</span></li>
+                    </ul>
+                  </div>
+                </div>
+
+                <!-- Important Notes -->
+                <div class="bg-amber-50 border border-amber-200 rounded-[14px] p-4 flex flex-col gap-2">
+                  <p class="text-sm font-semibold text-amber-800">Important Deadlines &amp; Local Rules</p>
+                  <ul class="flex flex-col gap-1.5 list-none m-0 p-0">
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Request deadline: Request must be made on or before the appearance date on your citation</span></li>
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Completion window: 90 days from the request to complete the course and present the completion certificate and driving record to the court; failure triggers a show-cause hearing and possible fine/warrant.</span></li>
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Eligibility: at least 17 years old; no DSC dismissal in the last 12 months and not currently taking one for another citation; speeding not more than 24 MPH over the limit; not in a construction zone with workers present; not for passing a school bus; no CDL.</span></li>
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>The request form is a plea of no contest and waiver of jury trial.</span></li>
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>Driving record must be the certified DPS Type 3A report from txapps.texas.gov.</span></li>
+                    <li class="text-sm text-amber-900 flex items-start gap-2"><span class="mt-1 shrink-0">•</span><span>If proof of completion is not submitted within 90 days, the court requires appearance at a show-cause hearing.</span></li>
+                  </ul>
+                </div>
+
+                <!-- Forms -->
+                <div>
+                  <p class="text-sm font-semibold text-text mb-3">Court Forms &amp; Resources</p>
+                  <div class="flex flex-col gap-2">
+                    <a href="https://www.foresthilltx.org/DocumentCenter/View/115/Request-for-Driver-Safety-Course-PDF" target="_blank" rel="noopener noreferrer" class="bg-surface-muted border border-border rounded-[10px] p-4 flex items-center gap-3 no-underline hover:bg-gray-50 transition-colors group">
+                      <svg class="w-[18px] h-[18px] shrink-0 text-primary" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 2.25H5.25A1.5 1.5 0 0 0 3.75 3.75v10.5a1.5 1.5 0 0 0 1.5 1.5h7.5a1.5 1.5 0 0 0 1.5-1.5V6.75L10.5 2.25z"/><polyline points="10.5 2.25 10.5 6.75 14.25 6.75"/></svg>
+                      <span class="text-sm font-semibold text-primary group-hover:underline">Request for Driver Safety Course (PDF)</span>
+                    </a>
+                  </div>
+                </div>
+
+                <!-- Contact -->
+                <div class="bg-surface-muted border border-border rounded-[14px] p-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1 sm:col-span-2">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Court Hours</span>
+                    <span class="text-sm font-semibold text-text-body">Mon, Wed, Thu, Fri 7 AM–5 PM; Tue 7 AM–6 PM</span>
+                  </div>
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Phone</span>
+                    <a href="tel:8175683046" class="text-sm font-semibold text-primary hover:underline">(817) 568-3046</a>
+                  </div>
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Email</span>
+                    <a href="mailto:court@foresthilltx.org" class="text-sm font-semibold text-primary hover:underline break-all">court@foresthilltx.org</a>
+                  </div>
+                  <div class="bg-white rounded-[10px] p-4 flex flex-col gap-1 sm:col-span-2">
+                    <span class="text-xs text-text-body font-medium uppercase tracking-wide">Website</span>
+                    <a href="https://www.foresthilltx.org/166/Municipal-Court" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-primary hover:underline break-all">www.foresthilltx.org/166/Municipal-Court</a>
+                  </div>
+                </div>
+
+                <!-- Always verify -->
+                <div class="bg-surface-muted border border-border rounded-[14px] p-4 flex items-start gap-3">
+                  <svg class="w-[18px] h-[18px] shrink-0 mt-0.5" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#0967d2" stroke="#0967d2" stroke-width="1"/><path d="M9 5v4M9 13h.01" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+                  <p class="text-sm text-text-body leading-relaxed">Always verify DSC requirements directly with Forest Hill Municipal Court before submitting anything. Court fees, deadlines, and procedures can change. Call <a href="tel:8175683046" class="text-primary hover:underline font-medium">(817) 568-3046</a> or visit <a href="https://www.foresthilltx.org/166/Municipal-Court" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">www.foresthilltx.org/166/Municipal-Court</a>.</p>
                 </div>
 
                 <p class="text-xs text-text-subtle text-right">Court information last verified: June 2026</p>

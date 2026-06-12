@@ -1,0 +1,148 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    "q": "Do I have to go to court for a speeding ticket in Texas?",
+    "a": "Usually not. The required 'appearance' is satisfied by responding to the court by your answer date — a written plea, certified mail, many courts' email or online portals, or an attorney. Most defensive-driving dismissals are completed entirely remotely. Exceptions: drivers under 17, some courts' local rules, late requests, and contested trials."
+  },
+  {
+    "q": "Can I handle my Texas ticket entirely online?",
+    "a": "At a growing number of courts, yes — the 2025 statute expressly recognizes court-authorized email and portal requests, and courts like Windcrest, Kilgore, and Cibolo accept the full DSC request electronically. It's court-by-court: check your court's verified methods in our directory before assuming."
+  },
+  {
+    "q": "Does calling the court count as appearing?",
+    "a": "No — and courts say so emphatically in their published instructions ('TELEPHONE CALLS DO NOT CONSTITUTE AN APPEARANCE'). Phone is for questions; appearing requires something in writing or in person. A call the day before your deadline does not protect you."
+  },
+  {
+    "q": "Does my child have to appear for a ticket?",
+    "a": "If they're under 17, yes — minors must plead in open court with a parent or guardian summoned (art. 45A.452). No mail-in option exists for them. Several courts also require minors 16 and under to appear with a parent to request defensive driving."
+  },
+  {
+    "q": "What's a virtual court appearance?",
+    "a": "Many Texas courts now conduct hearings by video (Zoom and similar) — Palestine, Port Isabel, and Del Rio are among the courts we've verified offering it. If a personal appearance is required in your case, ask the clerk whether a virtual option exists before driving across the county."
+  },
+  {
+    "q": "If I request defensive driving, will I ever see a courtroom?",
+    "a": "Almost never. The typical sequence — request by mail or portal, court mails the order, take the course, submit documents by email or mail, dismissal entered — involves zero courtroom time. The courtroom only enters the picture if you miss deadlines, contest the charge, or fall under a must-appear category."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: "Do You Actually Have to Go to Court for a Texas Ticket? Usually No — Here's the Real Rule",
+  description: "Most Texas traffic tickets never require setting foot in a courtroom — the 'appearance' can be written, mailed, or online. Who actually must show up (minors, some courts, some situations), and how to resolve a ticket from your kitchen table.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-11',
+  dateModified: '2026-06-11',
+  mainEntityOfPage: `${siteUrl}/texas/court-appearance`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Do You Have to Go to Court for a Traffic Ticket in Texas? Usually Not — Here's Who Does (2026)"
+    description="Most Texas traffic tickets never require setting foot in a courtroom — the 'appearance' can be written, mailed, or online. Who actually must show up (minors, some courts, some situations), and how to resolve a ticket from your kitchen table."
+    keywords="do i have to go to court for a speeding ticket texas, court appearance traffic ticket texas, appear in court ticket texas, resolve ticket by mail texas, traffic court texas"
+    url="/texas/court-appearance"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">Speeding ticket guide</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Court appearances</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          Do You Actually Have to Go to Court for a Texas Ticket? Usually No — Here's the Real Rule
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>The citation says "you must appear" — but in Texas traffic law, <strong class="text-text">appearing almost never means standing in a courtroom</strong>. An appearance is satisfied by responding to the court by your answer date: a written plea, a mailed request, many courts' online portals, or an attorney acting for you. Most defensive-driving dismissals happen start-to-finish without the driver ever seeing the building.</p>
+          <p>But "usually" isn't "always" — a few categories of people genuinely must show up, and one common mistake converts an optional visit into a mandatory one. Here's the map.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Procedures vary by court and judge — confirm with the court listed on your citation.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What counts as appearing — without going anywhere</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>The statute now spells out the remote options for the course request: in person, <strong class="text-text">by counsel, by certified mail, or — where the court offers it — by email or online portal</strong> (art. 45A.352(a)(4), as amended in 2025). A written plea form mailed by the answer date is an appearance. A deferred-disposition request by mail is an appearance. What is <em>not</em> an appearance, per the published warnings of court after court we've verified: <strong class="text-text">a phone call</strong>. Hutto's instructions say it in capitals; Balcones Heights and Greenville repeat it. Call to ask questions — but resolve in writing.</p>
+          <p>Court-by-court reality varies in the details: some courts take the entire dismissal by email (Kilgore, Cibolo, Windcrest), some require certified mail, a handful require in-person requests (Saginaw flatly mandates personal appearance; Athens requires appearing before enrolling). Your court's verified methods are in our <a href="/texas/courts" class="text-primary-deep font-medium hover:underline">court directory</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Who actually must show up</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">Drivers under 17</strong> — the law requires minors to plead in open court with a parent or guardian summoned (art. 45A.452); no mail option exists. Details in our <a href="/texas/minor-traffic-ticket" class="text-primary-deep font-medium hover:underline">minors guide</a>. Several courts extend similar in-person rules to 16-year-olds requesting the course.</p>
+          <p><strong class="text-text">People past their deadlines.</strong> Miss the answer date, and many courts require an in-person request before the judge (Leon Valley puts late requesters on a twice-monthly docket; Magnolia routes them to the prosecutor). Miss the 90-day completion window, and the <a href="/texas/show-cause-hearing" class="text-primary-deep font-medium hover:underline">show cause hearing</a> is mandatory and personal. The pattern: <em>compliance can be remote; explanations happen in person.</em></p>
+          <p><strong class="text-text">Specific local rules:</strong> a minority of courts simply require in-person DSC requests as policy, accident-involved charges often require appearing before the prosecutor (Katy's rule), and contested cases obviously require attending your own trial. Also worth knowing: many courts now offer <strong class="text-text">virtual appearances</strong> by video (Palestine, Port Isabel, Del Rio among our verified examples) — courtroom obligations without the drive.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The mistake that creates a mandatory appearance</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Ignoring the ticket. Do nothing by the answer date and the optional-appearance world ends: a failure-to-appear charge, a possible warrant, an OmniBase renewal hold — and now courts genuinely do want you in the building, sometimes via a <a href="/texas/missed-court-date" class="text-primary-deep font-medium hover:underline">safe-harbor visit</a> to clear a warrant. The single response that preserves the resolve-from-home world is any timely response at all. Sixty seconds of email beats every consequence on this list.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Resolve it from the kitchen table</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>The whole path is built for remote: request in writing, take the course on your phone, download the certificate the moment you finish — <strong class="text-text">$28 all-in, no courtroom required</strong>.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="/texas/courts"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            Your court's methods
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated June 11, 2026 — verified by the Road Ready Safety editorial team against Tex. Code Crim. Proc. arts. 45A.151, 45A.352(a)(4) &amp; 45A.452 and the published appearance rules of the Texas courts referenced.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

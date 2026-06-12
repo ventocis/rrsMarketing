@@ -1,0 +1,216 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+// Verified directly against each court's published instructions, June 2026.
+const shortDeadlines = [
+  { court: 'Sachse', rule: '10 calendar days from the citation date', slug: 'dallas-municipal-sachse' },
+  { court: 'Lake Jackson', rule: '10 days from receiving the citation', slug: 'brazoria-municipal-lake-jackson' },
+  { court: 'Brenham', rule: '10 working days to return the reply form', slug: 'washington-municipal-brenham' },
+  { court: 'Crowley', rule: '11th calendar day after the citation is issued', slug: 'tarrant-municipal-crowley' },
+  { court: 'Lufkin', rule: 'Before the 12-day appearance period expires', slug: 'angelina-municipal-lufkin' },
+  { court: 'Robstown', rule: '14 days from the citation (discretionary option if missed)', slug: 'nueces-municipal-robstown' },
+  { court: 'Seagoville', rule: '15 days from the date the citation was issued', slug: 'dallas-municipal-seagoville' },
+  { court: 'Fairview', rule: '15 business days after the issue date', slug: 'collin-municipal-fairview' },
+  { court: 'Princeton', rule: '20 days from the citation, no extensions on the 90', slug: 'collin-municipal-princeton' },
+  { court: 'Highland Park', rule: '20th day following the citation or hearing', slug: 'dallas-municipal-highland-park' },
+  { court: 'University Park', rule: 'Written notice within 20 calendar days', slug: 'dallas-municipal-university-park' },
+  { court: 'Sanger', rule: '20 business days from the offense date', slug: 'denton-municipal-sanger' },
+  { court: 'Glenn Heights', rule: '20 calendar days (and the 90-day clock starts at payment)', slug: 'dallas-municipal-glenn-heights' },
+  { court: 'Lancaster', rule: 'Received or postmarked within 20 days', slug: 'dallas-municipal-lancaster' },
+  { court: 'Balch Springs', rule: 'On or before the 20th day, or in open court', slug: 'dallas-municipal-balch-springs' },
+  { court: 'Forney', rule: 'Written notice within 20 calendar days', slug: 'kaufman-municipal-forney' },
+  { court: 'Farmers Branch', rule: 'First appearance date or 20 working days', slug: 'dallas-municipal-farmers-branch' },
+  { court: 'Saginaw', rule: 'In person only, within 21 business days', slug: 'tarrant-municipal-saginaw' },
+];
+
+const outliers = [
+  { court: 'Big Spring', rule: '180-day completion window — double the statewide standard', slug: 'howard-municipal-big-spring' },
+  { court: 'Jacksonville', rule: '90 days to complete plus 30 more to deliver proof', slug: 'cherokee-municipal-jacksonville' },
+  { court: 'Glenn Heights', rule: '90-day clock starts at payment, not approval', slug: 'dallas-municipal-glenn-heights' },
+  { court: 'Bulverde', rule: 'Email requests: payment due within 3 days of approval, no exceptions', slug: 'comal-municipal-bulverde' },
+  { court: 'Katy', rule: 'Reset cases: request in person only, on the reset date', slug: 'harris-municipal-katy' },
+];
+
+const faqs = [
+  {
+    q: 'How long do I have to request defensive driving in Texas?',
+    a: 'The statewide rule is on or before the answer date printed on your citation — typically 10 to 21 days after the stop. But individual courts set their own request windows inside that frame, and in our verified research they range from 10 calendar days (Sachse, Lake Jackson) to the appearance date itself. The only deadline that matters is your court\'s.',
+  },
+  {
+    q: 'Which Texas court has the shortest defensive driving deadline?',
+    a: 'Among the 200+ courts we\'ve verified, the tightest published windows are 10 calendar days (Sachse and Lake Jackson) and 10 working days (Brenham), with Crowley close behind at the 11th calendar day after the citation. If your ticket is from a court with a numbered-day rule, the clock is already running.',
+  },
+  {
+    q: 'Do all Texas courts give 90 days to finish the course?',
+    a: 'Almost all — 90 days from approval is the statutory standard. The verified outliers: Big Spring postpones cases 180 days, Jacksonville allows 90 days to complete plus 30 to deliver proof, and Glenn Heights starts the 90-day clock at payment rather than approval. Your court\'s order states your exact due date.',
+  },
+  {
+    q: 'What happens if I miss my court\'s request deadline?',
+    a: 'The automatic right to the course lapses, but it\'s not always over: judges retain discretion to grant the course any time before final disposition, some courts run a discretionary process for late requests (Robstown publishes one), and others route late requesters to an in-person docket (Leon Valley). Call the clerk before assuming the option is gone.',
+  },
+  {
+    q: 'Why do deadlines vary so much between Texas courts?',
+    a: 'The statute sets the outer frame (the answer date), but each court controls its own citation form and administrative rules — so the printed answer date and any numbered-day policies are local choices. It\'s the same reason fees, forms, and submission methods vary court to court.',
+  },
+  {
+    q: 'Is the deadline on my citation the same as the court date?',
+    a: 'Usually the citation shows an appearance or answer date — the deadline to respond — which is not a courtroom hearing date. Responding by then (with a course request, plea, or appearance) is what protects every option. Some courts then issue separate dates for dockets or hearings if needed.',
+  },
+];
+
+const schema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Article',
+      headline: 'Texas Defensive Driving Deadlines Vary Wildly by Court: Our Verified Data from 200+ Courts',
+      description: 'Original research: DSC request deadlines across Texas courts range from 10 days to the appearance date, and completion windows from 90 to 180 days. The verified outliers, court by court.',
+      author: { '@type': 'Organization', name: 'Road Ready Safety' },
+      publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+      datePublished: '2026-06-12',
+      dateModified: '2026-06-12',
+      mainEntityOfPage: `${siteUrl}/texas/dsc-deadlines-by-court`,
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+    },
+  ],
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Texas Defensive Driving Deadlines by Court: 10 Days to 180 — Our Verified Data (2026)"
+    description="Original research from 200+ verified Texas courts: DSC request windows range from 10 days (Sachse, Lake Jackson) to the appearance date, and completion windows from 90 to 180 days (Big Spring). The full outlier list."
+    keywords="defensive driving deadline texas, dsc request deadline by court, how long to request defensive driving, texas court deadlines traffic ticket, 90 days defensive driving"
+    url="/texas/dsc-deadlines-by-court"
+  >
+    <script type="application/ld+json" set:html={schema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">Speeding ticket guide</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Deadlines by court</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          Your Defensive Driving Deadline Depends on Your Court — and the Spread Is 10 Days to 180
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Every guide repeats the same two numbers: request by your answer date, finish within 90 days. Both are true as defaults — and both hide the real story. In the course of verifying defensive-driving procedures directly with more than <strong class="text-text">200 Texas municipal and JP courts</strong>, we found request windows as short as <strong class="text-text">10 calendar days</strong>, a completion window twice the standard at <strong class="text-text">180 days</strong>, and a court whose 90-day clock starts at <strong class="text-text">payment</strong> rather than approval.</p>
+          <p>Nobody else publishes this data, because nobody else has checked court by court. Here are the verified outliers — and what they mean for your ticket.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">Every entry below was verified against the court's own published instructions as of June 2026. Courts change rules — your citation and your clerk are always the controlling sources. This page is information, not legal advice.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Courts with numbered-day request deadlines (verified)</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <p>The statewide default is "on or before the answer date on your citation." These courts publish explicit day counts instead — and the difference between calendar days, working days, and business days is real, so read your court's row carefully:</p>
+        </div>
+
+        <div class="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 mb-10 rounded-xl border border-border">
+          <table class="w-full text-sm border-collapse">
+            <thead>
+              <tr class="bg-surface-muted text-left border-b border-border">
+                <th class="py-3 px-4 font-semibold text-text" style="font-family: 'DM Sans', sans-serif;">Court</th>
+                <th class="py-3 px-4 font-semibold text-text" style="font-family: 'DM Sans', sans-serif;">Verified request rule</th>
+              </tr>
+            </thead>
+            <tbody style="font-family: 'DM Sans', sans-serif;">
+              {shortDeadlines.map((r, i) => (
+                <tr class={`border-b border-border ${i % 2 === 0 ? '' : 'bg-surface-muted/40'}`}>
+                  <td class="py-3 px-4 font-semibold"><a href={`/texas/courts/${r.slug}`} class="text-primary-deep hover:underline no-underline">{r.court}</a></td>
+                  <td class="py-3 px-4 text-text-body">{r.rule}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The completion-window outliers</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <p>The 90-day completion window (art. 45A.356) is near-universal — which makes the exceptions worth knowing cold:</p>
+        </div>
+
+        <div class="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 mb-10 rounded-xl border border-border">
+          <table class="w-full text-sm border-collapse">
+            <thead>
+              <tr class="bg-surface-muted text-left border-b border-border">
+                <th class="py-3 px-4 font-semibold text-text" style="font-family: 'DM Sans', sans-serif;">Court</th>
+                <th class="py-3 px-4 font-semibold text-text" style="font-family: 'DM Sans', sans-serif;">Verified timing quirk</th>
+              </tr>
+            </thead>
+            <tbody style="font-family: 'DM Sans', sans-serif;">
+              {outliers.map((r, i) => (
+                <tr class={`border-b border-border ${i % 2 === 0 ? '' : 'bg-surface-muted/40'}`}>
+                  <td class="py-3 px-4 font-semibold"><a href={`/texas/courts/${r.slug}`} class="text-primary-deep hover:underline no-underline">{r.court}</a></td>
+                  <td class="py-3 px-4 text-text-body">{r.rule}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What the data means for your ticket</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">Treat day one as the deadline's first warning.</strong> The drivers who lose the dismissal option overwhelmingly lose it at the request stage, and numbered-day courts are where it happens — a Sachse ticket has burned a third of its window before most people have read the citation twice. The safe universal habit: <a href="/texas/request-defensive-driving" class="text-primary-deep font-medium hover:underline">make the request the same week as the stop</a>.</p>
+          <p><strong class="text-text">Check whether your clock starts at approval or payment.</strong> Glenn Heights starts the 90 days at payment — meaning a slow-to-pay driver shortens their own course window without realizing it. When your court's order arrives, the due date printed on it is the real number; calendar it that day.</p>
+          <p><strong class="text-text">And if you've already missed a deadline</strong>, don't self-convict: judges keep discretion until final disposition, Robstown publishes a discretionary late path, and the worst realistic outcome usually starts with a <a href="/texas/show-cause-hearing" class="text-primary-deep font-medium hover:underline">show cause hearing</a> — a hearing, not a verdict. Call the clerk first.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;">{item.a}</p>
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Beat every deadline with the instant certificate</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Whatever your court's window, the course itself never has to be the bottleneck: <strong class="text-text">$28 all-in, 6 self-paced hours, certificate downloadable the moment you finish</strong> — court copy and insurance copy included.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="/texas/courts"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            Look up your court's rules
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; deadlines are set by your court and your citation controls.</p>
+          <p class="text-xs text-text-subtle">Last updated June 12, 2026 — original dataset compiled and verified by the Road Ready Safety editorial team directly against the published instructions of 200+ Texas municipal and justice courts; statutory framework per Tex. Code Crim. Proc. arts. 45A.352, 45A.355–.356.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

@@ -1,0 +1,147 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    "q": "How much is a speeding ticket in Texas?",
+    "a": "The fine itself is $1–$200 by statute (Transp. Code §542.401), set by each court's schedule based on your speed over the limit. With state and local court costs added, typical pay-in-full totals run $200–$300. School zones and active construction zones with workers carry doubled fines."
+  },
+  {
+    "q": "How much is a speeding ticket per mph over in Texas?",
+    "a": "There's no statewide per-mph rate — each city and JP court publishes its own schedule within the $200 statutory cap, typically stepping up a few dollars per mph. The exact number for your ticket is on your court's fine schedule or one call to the clerk away."
+  },
+  {
+    "q": "Is it cheaper to take defensive driving than pay the ticket in Texas?",
+    "a": "Usually, dramatically. Dismissal costs about $184 all-in (≈$144 court costs + $28 course + $12 driving record) and leaves no conviction. Paying costs $200–$300 now plus typically several hundred dollars of insurance increases over three years. Dismissal wins for almost every eligible ticket."
+  },
+  {
+    "q": "How much does a speeding ticket raise insurance in Texas?",
+    "a": "It varies by insurer and your profile, but a first speeding conviction commonly adds 10–15% to premiums for about three years — several hundred to over a thousand dollars for typical Texas premiums. A dismissed ticket never reaches your record, so the answer becomes zero."
+  },
+  {
+    "q": "Do speeding ticket prices vary by city in Texas?",
+    "a": "Yes — the fine schedule is local (within the statutory cap), and court costs vary slightly by city additions. Our court directory documents verified totals across 200+ Texas courts, including the defensive-driving dismissal totals, which also vary (from $109 to $169)."
+  },
+  {
+    "q": "What happens if I just don't pay my speeding ticket?",
+    "a": "It escalates: a failure-to-appear charge, a possible arrest warrant with a $50 fee, and an OmniBase hold that blocks your license renewal — typically doubling or tripling the original cost. If you can't pay, contact the court about payment plans or community service instead of going silent."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: "How Much Is a Speeding Ticket in Texas? The Real Math, Verified",
+  description: "Texas speeding fines are capped at $200 by statute, but court costs push real totals to $200–$300 — and the insurance impact dwarfs both. The verified breakdown, what changes the number, and the cheaper alternative.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-11',
+  dateModified: '2026-06-11',
+  mainEntityOfPage: `${siteUrl}/texas/how-much-is-a-speeding-ticket`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="How Much Is a Speeding Ticket in Texas? Fines, Costs, and the Number Nobody Mentions (2026)"
+    description="Texas speeding fines are capped at $200 by statute, but court costs push real totals to $200–$300 — and the insurance impact dwarfs both. The verified breakdown, what changes the number, and the cheaper alternative."
+    keywords="how much is a speeding ticket in texas, texas speeding ticket cost, speeding fine texas, texas ticket price, average speeding ticket texas"
+    url="/texas/how-much-is-a-speeding-ticket"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">Speeding ticket guide</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Ticket cost</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          How Much Is a Speeding Ticket in Texas? The Real Math, Verified
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>The honest answer has three layers. The <strong class="text-text">fine</strong> for ordinary speeding is set by statute at <strong class="text-text">$1 to $200</strong> (Tex. Transp. Code §542.401), scaled by each court with how far over the limit you were. <strong class="text-text">Court costs</strong> — about $76 of state-mandated charges plus local additions — ride on top, pushing typical pay-the-ticket totals to <strong class="text-text">$200–$300</strong>. And the third layer is the one nobody prints on the citation: a conviction typically raises your <strong class="text-text">insurance for about three years</strong>, which usually costs more than the ticket itself.</p>
+          <p>Here's each layer, what moves the number up, and why most eligible drivers shouldn't pay the ticket at all.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Procedures vary by court and judge — confirm with the court listed on your citation.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Layer one and two: the fine and the costs</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Each city and JP court publishes its own fine schedule within the statutory range — typically stepping up a few dollars per mph over the limit. The verified examples from our court research: small-town schedules commonly start around $97–$130 for low-speed offenses and climb toward the $200 cap above 20 over; Weslaco's published schedule starts speeding at $228 <em>total</em> (fine plus costs). On top of the fine, every Class C conviction carries the consolidated state court cost ($62), local consolidated costs ($14), and any city additions — the anatomy is in our <a href="/texas/court-costs" class="text-primary-deep font-medium hover:underline">court costs breakdown</a>.</p>
+          <p>Multipliers to know: most cities <strong class="text-text">double fines in school zones</strong>, and the state doubles them in <strong class="text-text">construction zones with workers present</strong> (§542.404) — the same trigger that also locks you out of both dismissal tools, as we explain in the <a href="/texas/construction-zone-ticket" class="text-primary-deep font-medium hover:underline">work-zone guide</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Layer three: the conviction is the expensive part</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Paying the ticket is a guilty plea, and the conviction goes on your driving record where your insurer prices it for about three years. For a typical Texas driver paying $1,800–$2,400 a year, even a 10–15% surcharge means <strong class="text-text">$540–$1,080 over three years</strong> — two to four times the ticket itself. Young drivers and drivers with prior convictions get hit harder. The conviction also counts toward the habitual-violator suspension math (four moving violations in 12 months, Transp. Code §521.292).</p>
+          <p>That's the real price comparison: <strong class="text-text">paying ≈ $250 now + several hundred in premiums later</strong>, versus <strong class="text-text">dismissing ≈ $184 total</strong> (about $144 court costs + $28 course + $12 driving record) with nothing on your record and nothing for your insurer to find. For every eligible everyday ticket, dismissal wins the math — usually by hundreds of dollars.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">When the numbers say something different</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Paying can be rational when the dismissal door is closed — you're <a href="/texas/speeding-25-over" class="text-primary-deep font-medium hover:underline">25+ over</a>, inside the <a href="/texas/12-month-rule" class="text-primary-deep font-medium hover:underline">12-month rule</a>, or a <a href="/texas/cdl-defensive-driving" class="text-primary-deep font-medium hover:underline">CDL holder</a> — though even then, deferred disposition or negotiation usually beats straight payment. And never pay by reflex on the portal: payment is final, and it ends every dismissal option in one click, as our <a href="/texas/already-paid-ticket" class="text-primary-deep font-medium hover:underline">already-paid guide</a> explains in painful detail.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The $184 path beats the $800 path</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>If your ticket qualifies, dismissal is the cheapest exit by hundreds of dollars: <strong class="text-text">$28 course, free instant certificate</strong>, court costs to the court, and nothing on your record.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="/texas/court-costs"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            See where the fees go
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated June 11, 2026 — verified by the Road Ready Safety editorial team against Tex. Transp. Code §§521.292, 542.401 &amp; 542.404, Tex. Local Gov't Code §§133.102 &amp; 134.103, and the published fine schedules of the Texas courts referenced.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

@@ -1,0 +1,148 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    "q": "How long does a speeding ticket affect insurance in Texas?",
+    "a": "If it becomes a conviction: typically about three years, because most insurers' rating plans look back roughly 36 months at renewal — an industry convention each carrier sets for itself under Texas's file-and-use system. If the charge is dismissed through defensive driving or deferred disposition, it never reaches your record and never affects insurance at all."
+  },
+  {
+    "q": "How much does insurance go up after a ticket in Texas?",
+    "a": "Carrier-dependent: a first minor speeding conviction commonly adds 10–15%; serious or stacked convictions add more, and lost safe-driver discounts can sting beyond the surcharge. On typical Texas premiums, three years of impact commonly totals $500–$1,000 — several times the ticket itself."
+  },
+  {
+    "q": "Do insurance companies know about my ticket right away?",
+    "a": "They learn at the next record pull — usually your renewal — and only if the ticket became a conviction reported to DPS. A pending case isn't on your record, which is why resolving it through dismissal before it converts to a conviction keeps insurers permanently in the dark."
+  },
+  {
+    "q": "Does a dismissed ticket affect insurance in Texas?",
+    "a": "No. A charge dismissed under the defensive-driving statute may not be part of your driving record or used for any purpose (art. 45A.357), and a completed deferred disposition is likewise not a conviction. There's nothing for an insurer to price."
+  },
+  {
+    "q": "Will my insurance go down after 3 years?",
+    "a": "Generally the conviction stops being rated once it exits your carrier's lookback — typically around the 36-month mark — and your premium recalculates without it at the next renewal. If it doesn't, ask directly when the conviction ages out, and shop competitors whose lookbacks may already exclude it."
+  },
+  {
+    "q": "Should I tell my insurance company about a ticket?",
+    "a": "You're not obligated to volunteer a pending citation, and there's rarely reason to — they rate off the official record, not your disclosures. The productive call is the opposite direction: ask whether they offer a defensive-driving discount, then send the insurance copy of your certificate."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: "How Long a Texas Ticket Haunts Your Insurance — and How to Make the Answer 'Never'",
+  description: "A Texas ticket only touches your insurance if it becomes a conviction — and then typically prices into premiums for about three years. How insurers actually find out, what they charge, and the two ways to keep a ticket off the math entirely.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-11',
+  dateModified: '2026-06-11',
+  mainEntityOfPage: `${siteUrl}/texas/ticket-insurance-impact`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="How Long Does a Ticket Affect Your Insurance in Texas? The 3-Year Reality (2026)"
+    description="A Texas ticket only touches your insurance if it becomes a conviction — and then typically prices into premiums for about three years. How insurers actually find out, what they charge, and the two ways to keep a ticket off the math entirely."
+    keywords="how long does a ticket affect insurance texas, speeding ticket insurance increase texas, ticket on insurance 3 years, texas ticket premium increase, does ticket raise insurance texas"
+    url="/texas/ticket-insurance-impact"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">Speeding ticket guide</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Insurance impact</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          How Long a Texas Ticket Haunts Your Insurance — and How to Make the Answer 'Never'
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Here's the mechanism, plainly: your insurer never hears about the <em>stop</em> — it prices off your <strong class="text-text">driving record</strong>, and a ticket only lands there if it becomes a <strong class="text-text">conviction</strong>. When it does, insurers typically look back about <strong class="text-text">three years</strong> at renewal, surcharging accordingly. When it doesn't — because the charge was dismissed through defensive driving or deferred disposition — there is, by law, nothing on the record for any insurer to find.</p>
+          <p>That single fact reorders every decision about a Texas ticket. Here's how the three years actually work, what they cost, and the two off-ramps.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Procedures vary by court and judge — confirm with the court listed on your citation.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How insurers find out, and what the three years cost</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Insurers pull motor vehicle records at policy purchase and periodically at renewal. A conviction reported to DPS appears on that record, and most carriers' rating plans look back <strong class="text-text">roughly 36 months</strong> — the industry convention, not a statute; under Texas's file-and-use system each insurer sets its own lookback and surcharge. Practical translation: a conviction usually affects the next three annual renewals, then ages out of the rating math (it remains on your record; it just stops being priced by most carriers).</p>
+          <p>The money: a first minor speeding conviction commonly adds 10–15% to premiums; serious convictions (red light, 20+ over, distracted driving) and stacked convictions add more, and some carriers drop safe-driver discounts that were worth more than the surcharge itself. On typical Texas premiums of $1,800–$2,400, three years of even a modest surcharge runs <strong class="text-text">$500–$1,000+</strong> — the silent majority of what a 'cheap' ticket costs, as our <a href="/texas/how-much-is-a-speeding-ticket" class="text-primary-deep font-medium hover:underline">ticket-cost breakdown</a> shows.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The two ways the answer becomes 'never'</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">Dismissal through the course.</strong> A charge dismissed under the defensive-driving statute 'may not be part of a person's driving record or used for any purpose' (art. 45A.357) — the conviction never exists, the record never changes, the renewal math never moves. Cost: about $184 all-in. For any eligible ticket, this is the insurance answer.</p>
+          <p><strong class="text-text">Deferred disposition.</strong> Complete the probation and the complaint is dismissed with no final conviction (art. 45A.305) — same insurance outcome, available even when the course isn't (<a href="/texas/speeding-25-over" class="text-primary-deep font-medium hover:underline">25+ over</a>, <a href="/texas/out-of-state-driver" class="text-primary-deep font-medium hover:underline">out-of-state licenses</a>, second ticket in 12 months).</p>
+          <p>And one bonus that surprises people: the same 6-hour course can <em>lower</em> premiums independent of any ticket — many Texas insurers offer a voluntary-course discount, insurer's choice, typically a few percent for about three years. The full picture, including the dead 'mandatory 10%' myth, is in our <a href="/texas/insurance-discount" class="text-primary-deep font-medium hover:underline">insurance discount guide</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Already convicted? The damage-control version</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>If a conviction is already on your record (you paid the ticket, or lost at trial), the levers left are smaller but real: ask your insurer exactly when the conviction ages out of <em>their</em> lookback (carriers differ); take the voluntary course and claim the discount if offered; shop carriers at renewal, since lookbacks and surcharges vary meaningfully; and drive clean — a second conviction inside the window multiplies surcharges and starts the habitual-violator clock (four moving convictions in 12 months can suspend a license, §521.292). And next ticket: request the course before paying anything.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Make it a ticket your insurer never meets</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>The three-year surcharge only exists if the conviction does. <strong class="text-text">$28 course, free instant certificate, charge dismissed</strong> — and your renewal math never changes.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="/texas/insurance-discount"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            The discount angle too
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated June 11, 2026 — verified by the Road Ready Safety editorial team against Tex. Code Crim. Proc. arts. 45A.305 &amp; 45A.357, Tex. Transp. Code §521.292, and Texas Department of Insurance consumer guidance on file-and-use rating.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

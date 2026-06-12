@@ -2412,5 +2412,460 @@
     ],
     "requiresNotarizedAffidavit": false,
     "requiresType3A": true
+  },
+  "harris-municipal-katy": {
+    "fee": "$114.10",
+    "feeKnown": true,
+    "submissionMethods": [
+      "Online",
+      "In-person",
+      "Mail"
+    ],
+    "requiredDocs": [
+      "Original certificate of completion from the driving safety course",
+      "Certified Type 3A driving record from Texas DPS",
+      "Both must be submitted together in person, by mail, or via the drop box next to the court's front doors by the due date on the driving safety order"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true
+  },
+  "dallas-municipal-sachse": {
+    "fee": "$144",
+    "feeKnown": true,
+    "submissionMethods": [
+      "In-person",
+      "Email",
+      "Mail"
+    ],
+    "requiredDocs": [
+      "Valid Texas Driver's License or permit",
+      "Proof of financial responsibility/vehicle liability insurance in your name or listing you as a driver",
+      "Plea of guilty or no contest with payment of court costs and fees",
+      "After course: course completion certificate",
+      "After course: certified copy of your driving record from the Texas Department of Public Safety"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": true
+  },
+  "collin-municipal-murphy": {
+    "fee": "$144.00",
+    "feeKnown": true,
+    "submissionMethods": [
+      "In-person",
+      "Mail"
+    ],
+    "requiredDocs": [
+      "Copy of valid Texas driver's license",
+      "Proof of insurance showing requester as a listed driver on the policy",
+      "Signed affidavit stating no driver safety course taken in the past 12 months",
+      "Plea of No Contest or Guilty",
+      "Payment of $144.00 court costs/administrative fees ($169.00 if school zone)",
+      "After course: signed certificate of completion of the driver safety course",
+      "After course: certified driving record from Texas DPS"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": false
+  },
+  "collin-municipal-princeton": {
+    "fee": "$144",
+    "feeKnown": true,
+    "submissionMethods": [
+      "In-person",
+      "Mail",
+      "Email",
+      "Fax"
+    ],
+    "requiredDocs": [
+      "Completed 'Request to Take Driver Safety Course' form (required before request is considered)",
+      "Plea of Guilty or No Contest",
+      "Valid Texas driver's license",
+      "Proof of financial responsibility (insurance)",
+      "After course: certificate of completion from a Texas-approved driving safety course",
+      "After course: certified copy of driving record from Texas DPS"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": false
+  },
+  "collin-municipal-anna": {
+    "fee": "$144",
+    "feeKnown": true,
+    "submissionMethods": [
+      "Online",
+      "In-person"
+    ],
+    "requiredDocs": [
+      "Certificate of completion from a TDLR-approved driving safety course",
+      "Certified copy of Texas driving record (Type 3A; $12 instant online via Texas DPS, $10 by mail)",
+      "Proof of a valid Texas Driver's License (at time of request)",
+      "Proof of current liability insurance listing the defendant as an eligible driver (at time of request)"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true
+  },
+  "collin-municipal-melissa": {
+    "fee": "$144",
+    "feeKnown": true,
+    "submissionMethods": [
+      "In-person",
+      "Mail",
+      "Online"
+    ],
+    "requiredDocs": [
+      "Completed Form DD-205 'Affidavit and Request for Driver or Motorcycle Safety Course' — notarized, or signature witnessed in person by the Court Clerk",
+      "Copy of valid Texas driver's license or permit",
+      "Proof of financial responsibility (auto insurance) listing you as a driver",
+      "Plea of Guilty or No Contest (entered on the affidavit)",
+      "After course: TDLR-approved course Certificate of Completion",
+      "After course: Certified Type 3A driving record from Texas DPS (returned with the certificate)"
+    ],
+    "requiresNotarizedAffidavit": true,
+    "requiresType3A": true
+  },
+  "brazoria-municipal-alvin": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Online"
+    ],
+    "requiredDocs": [
+      "Valid Texas driver's license (or proof of active-duty U.S. military service)",
+      "Proof of financial responsibility (liability insurance card) listing you as a driver",
+      "After the course: certificate of completion plus a certified copy of your TX DPS driving record, submitted within 90 days of your request"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true
+  },
+  "brazoria-municipal-angleton": {
+    "fee": "$144.00",
+    "feeKnown": true,
+    "submissionMethods": [
+      "In-person",
+      "Mail"
+    ],
+    "requiredDocs": [
+      "Valid Texas (non-commercial) driver's license",
+      "Proof of insurance with defendant's name on the policy",
+      "Payment of the $144/$169 court cost at time of request",
+      "After course: original certificate of completion",
+      "After course: certified Type 3A driving record — must be submitted together with the certificate"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true
+  },
+  "brazoria-municipal-lake-jackson": {
+    "fee": "$144.00",
+    "feeKnown": true,
+    "submissionMethods": [
+      "In-person",
+      "Mail",
+      "Email"
+    ],
+    "requiredDocs": [
+      "Written notice/court form requesting the driving safety course",
+      "A colored copy of your valid Texas driver's license (non-commercial)",
+      "Copy of your motor vehicle insurance policy listing you as an insured driver",
+      "Copy of your Texas driver record, type 3A (order online at www.texas.gov)",
+      "Payment of the DSC fee ($144 / $169 school zone)"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true
+  },
+  "galveston-municipal-dickinson": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Mail",
+      "Email"
+    ],
+    "requiredDocs": [
+      "Completed Driving Safety Course (DSC) Request form",
+      "Signed and notarized Affidavit for Driving Safety Course",
+      "Copy of valid Texas driver's license",
+      "Copy of current insurance policy listing you as a covered driver",
+      "Court administrative fee (money order only if paying by mail; contact court for total)",
+      "After course: uniform certificate of completion from a TEA/TDLR-approved driving safety course",
+      "After course: certified copy of your driving record from Texas DPS (Type 3A)"
+    ],
+    "requiresNotarizedAffidavit": true,
+    "requiresType3A": true,
+    "emailAccepted": true
+  },
+  "galveston-municipal-la-marque": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Mail"
+    ],
+    "requiredDocs": [
+      "Written plea of no contest or guilty",
+      "Copy of valid Texas driver's license",
+      "Copy of proof of vehicle liability insurance in your name",
+      "Payment of state fee and costs",
+      "After course: course completion certificate",
+      "After course: certified copy of driving record from Texas DPS"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true
+  },
+  "bexar-municipal-live-oak": {
+    "fee": "$144.00",
+    "feeKnown": true,
+    "submissionMethods": [
+      "In-person",
+      "Mail"
+    ],
+    "requiredDocs": [
+      "Proof of current insurance with defendant's name",
+      "Copy of valid driver's license",
+      "Payment of $144.00 (money order, cashier check, credit card, or cash; no personal checks)",
+      "After course: certificate of completion",
+      "After course: certified Type 3A driving record from Texas DPS"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": false
+  },
+  "bexar-municipal-selma": {
+    "fee": "$144.00",
+    "feeKnown": true,
+    "submissionMethods": [
+      "In-person",
+      "Mail"
+    ],
+    "requiredDocs": [
+      "Copy of proof of financial responsibility (insurance)",
+      "Copy of valid driver's license or permit",
+      "Written plea of guilty or no contest",
+      "Written statement requesting the driving safety course",
+      "Payment of court costs plus administrative fee ($144 standard / $169 school zone)",
+      "After course: completion certificate",
+      "After course: certified copy of driving record from DPS"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": false
+  },
+  "bexar-municipal-leon-valley": {
+    "fee": "$144.00",
+    "feeKnown": true,
+    "submissionMethods": [
+      "Mail",
+      "In-person",
+      "Fax",
+      "Online"
+    ],
+    "requiredDocs": [
+      "Completed/signed Leon Valley Safety Course Request form with sworn affidavit (no-contest plea, statement that no DSC taken in preceding 12 months)",
+      "Copy of valid Texas driver license or permit",
+      "Copy of proof of financial responsibility (vehicle insurance)",
+      "Payment of $144.00 court costs and administrative fee ($169.00 if school zone)",
+      "After course: uniform certificate of course completion with your signature, by the 90th day",
+      "After course: certified copy of your DPS driving record, by the 90th day"
+    ],
+    "requiresNotarizedAffidavit": true,
+    "requiresType3A": true
+  },
+  "bexar-municipal-kirby": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Online"
+    ],
+    "requiredDocs": [
+      "DSC Certificate of Completion",
+      "Type 3A Certified Driving Record from Texas DPS",
+      "Notarized Affidavit (standard Texas requirement — confirm with court)"
+    ],
+    "requiresNotarizedAffidavit": true,
+    "requiresType3A": true
+  },
+  "henderson-municipal-athens": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Online"
+    ],
+    "requiredDocs": [
+      "Valid Texas Driver's License",
+      "Proof of current liability insurance (defendant listed as a driver)",
+      "Plea of Guilty or No Contest",
+      "Payment of administrative fee (court cost) in full",
+      "After course: DSC Certificate of Completion",
+      "After course: Type 3A Certified Driving Record from Texas DPS"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true
+  },
+  "cherokee-municipal-jacksonville": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Mail",
+      "Email"
+    ],
+    "requiredDocs": [
+      "Valid Texas driver's license or permit",
+      "Proof of financial responsibility (insurance)",
+      "Affidavit stating you are not currently taking and have not completed another Texas-approved driving safety course within one year of the citation date",
+      "'Court Copy' of the certificate of completion",
+      "Non-refundable court fee payment"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false
+  },
+  "gregg-municipal-kilgore": {
+    "fee": "$144",
+    "feeKnown": true,
+    "submissionMethods": [
+      "In-person",
+      "Email",
+      "Mail"
+    ],
+    "requiredDocs": [
+      "Written request with plea of guilty or no contest",
+      "Proof of a valid Texas Driver's License",
+      "Proof of liability insurance with the defendant's name on the policy",
+      "Payment of the administrative fee and court costs at the time of the request",
+      "After course: certificate of completion",
+      "After course: certified Type 3A driving record from Texas DPS"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": true
+  },
+  "hopkins-municipal-sulphur-springs": {
+    "fee": "$144.00",
+    "feeKnown": true,
+    "submissionMethods": [
+      "Mail",
+      "In-person",
+      "Online"
+    ],
+    "requiredDocs": [
+      "Copy of valid driver's license or permit (Texas non-CDL, or active-duty military/spouse/dependent)",
+      "Copy of proof of financial responsibility (insurance showing you as an insured driver)",
+      "Written statement requesting to take a driving safety course, or the court's DSC request form",
+      "Written plea of guilty or no contest",
+      "Payment of court costs and administrative fee ($144 standard / $169 school zone)",
+      "After course: TDLR-approved 6-hour course completion certificate",
+      "After course: certified copy of your driving record (Type 3A) from Texas DPS"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true
+  },
+  "anderson-municipal-palestine": {
+    "fee": "$144",
+    "feeKnown": true,
+    "submissionMethods": [
+      "In-person",
+      "Mail"
+    ],
+    "requiredDocs": [
+      "Valid Texas driver's license or permit",
+      "Proof of financial responsibility/insurance listing you as a driver",
+      "Signed affidavit (Request for Driver's Safety Course form) stating you have not completed and are not currently taking a DSC within the past 12 months",
+      "Guilty or no contest plea with waiver of jury trial",
+      "Payment of the $144 fee ($169 school zone)",
+      "After course: TDLR-approved course completion certificate and certified copy of your driving record (Type 3A)"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true
+  },
+  "cooke-municipal-gainesville": {
+    "fee": "$144",
+    "feeKnown": true,
+    "submissionMethods": [
+      "In-person"
+    ],
+    "requiredDocs": [
+      "Sworn Request for Driver Safety Course (notarized affidavit of eligibility)",
+      "Valid Texas driver's license",
+      "Proof of valid Texas liability insurance (in effect on both the citation date and the request date)",
+      "Payment of the fee",
+      "After course approval: court certificate of completion from a TEA/TDLR-approved course",
+      "After course approval: certified copy of your Texas DPS driving record"
+    ],
+    "requiresNotarizedAffidavit": true,
+    "requiresType3A": true
+  },
+  "hood-municipal-granbury": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Email",
+      "Fax",
+      "Online"
+    ],
+    "requiredDocs": [
+      "Call court to confirm — standard Texas DSC requirements are: course completion certificate (court copy), certified Type 3A driving record from DPS, valid Texas driver's license, and proof of financial responsibility (insurance)"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": true
+  },
+  "erath-municipal-stephenville": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Online",
+      "Email",
+      "Mail"
+    ],
+    "requiredDocs": [
+      "Texas driver's license (bring when requesting DSC)",
+      "Proof of liability insurance — policy must list you as a driver",
+      "After course: certificate of completion",
+      "After course: certified Type 3A driving record from Texas DPS"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": true
+  },
+  "brown-municipal-brownwood": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "Online",
+      "In-person",
+      "Fax"
+    ],
+    "requiredDocs": [
+      "Call court to confirm — Texas courts typically require the course certificate of completion and a certified Type 3A driving record"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true
+  },
+  "coryell-municipal-gatesville": {
+    "fee": "$144.00",
+    "feeKnown": true,
+    "submissionMethods": [
+      "In-person",
+      "Email",
+      "Mail",
+      "Fax",
+      "Online"
+    ],
+    "requiredDocs": [
+      "Payment of $144.00 ($169.00 if school zone) — payable only after forms are submitted and case is updated",
+      "Notarized plea form (located on the back/bottom of the court's form)",
+      "Copy of current insurance",
+      "Copy of valid Texas Driver's License (military: current Driver's License plus Military ID)",
+      "After course: signed 'COURT COPY' of completion certificate",
+      "After course: certified copy of Type 3A driving record from DPS — 'Your citation will not be dismissed without a certified copy of your driving record.'"
+    ],
+    "requiresNotarizedAffidavit": true,
+    "requiresType3A": true,
+    "emailAccepted": true
   }
 }

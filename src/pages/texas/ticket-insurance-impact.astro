@@ -1,5 +1,6 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import YouTubeCard from '../../components/YouTubeCard.astro';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 
@@ -102,6 +103,8 @@ const faqSchema = JSON.stringify({
         <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
           <p>If a conviction is already on your record (you paid the ticket, or lost at trial), the levers left are smaller but real: ask your insurer exactly when the conviction ages out of <em>their</em> lookback (carriers differ); take the voluntary course and claim the discount if offered; shop carriers at renewal, since lookbacks and surcharges vary meaningfully; and drive clean — a second conviction inside the window multiplies surcharges and starts the habitual-violator clock (four moving convictions in 12 months can suspend a license, §521.292). And next ticket: request the course before paying anything.</p>
         </div>
+
+        <YouTubeCard id="NaURcc6kmu8" title="A $200 Texas Speeding Ticket Can Cost You $1,000+ — Here's Why" duration="2:26" blurb="How a cheap ticket turns into a four-figure insurance hit." />
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
         <div class="space-y-8 mb-12">

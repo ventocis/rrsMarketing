@@ -1,5 +1,6 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import YouTubeCard from '../../components/YouTubeCard.astro';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 
@@ -99,6 +100,8 @@ const faqSchema = JSON.stringify({
           <p>Keep it to five sentences on one page: your full name exactly as on your license, citation number, the charge and date; a sentence entering a plea of no contest; a sentence requesting permission to take a driving safety course for dismissal under Code of Criminal Procedure chapter 45A; a sentence affirming you hold a valid Texas license, have insurance (copies enclosed), and have not completed a course for dismissal in the 12 months before the offense date; your mailing address, email, and phone. Enclose the fee. That's the entire genre — courts process thousands of these; clarity beats formality.</p>
           <p>The three request-killers, per the courts' own instructions: sending it <strong class="text-text">after the answer date</strong>, sending an <strong class="text-text">incomplete packet</strong> (Prosper's form says it plainly: incomplete requests will be denied), and <strong class="text-text">taking the course before the order arrives</strong>.</p>
         </div>
+
+        <YouTubeCard id="lKhv6FiHoIk" title="How to Request Permission for a Texas Driver Safety Course (Step-by-Step Guide)" duration="4:04" blurb="Step-by-step: getting court approval to take the course." />
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
         <div class="space-y-8 mb-12">

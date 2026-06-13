@@ -1,5 +1,6 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import YouTubeCard from '../../components/YouTubeCard.astro';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 
@@ -120,6 +121,8 @@ const faqSchema = JSON.stringify({
           <p>For most eligible drivers, the driving safety course is the cleaner path: predictable, usually cheaper overall, no second court fee, and no months-long probation to maintain. Deferred disposition is the strong backup when the course isn't an option.</p>
           <p>Not sure which you qualify for? Check the basics with our <a href="/texas/eligibility-tracker" class="text-primary-deep font-medium hover:underline">eligibility checker</a>, then confirm with your court.</p>
         </div>
+
+        <YouTubeCard id="0ctV91T4DKo" title="Texas Driver Safety Course vs Deferred Disposition — Which One Should You Choose" duration="2:26" blurb="Which dismissal path is right for your ticket." />
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
         <div class="space-y-8 mb-12">

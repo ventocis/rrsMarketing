@@ -1,5 +1,6 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import YouTubeCard from '../../components/YouTubeCard.astro';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 
@@ -96,6 +97,8 @@ const faqSchema = JSON.stringify({
           <p><strong class="text-text">Ask the clerk two questions:</strong> "What do I need to do to lift the warrant?" and "If I come in, will I be arrested?" Many courts follow <strong class="text-text">safe-harbor policies</strong> — you won't be arrested on that court's warrants while appearing to resolve them (La Porte advertises exactly this) — but it's local policy, not law, so get the answer from your court before walking in. Posting a bond or paying a portion typically recalls the warrant and puts you back on the docket.</p>
           <p><strong class="text-text">Then resolve the underlying case.</strong> If it's pre-judgment, ask what options survived: judges retain discretion to allow defensive driving any time before final disposition, and deferred disposition may be available — a warrant makes courts less generous, not powerless. Pay the OmniBase fee ($10 per violation) and the court clears the renewal hold once the case resolves. Total damage for a typical neglected ticket: original fine and costs, FTA fine and costs, $50 warrant fee, $10 hold fee — call it two to three times the original ticket. Still cheaper this month than next.</p>
         </div>
+
+        <YouTubeCard id="pQC3u8qUx_M" title="What Happens If You Don't Pay a Texas Traffic Ticket" duration="1:55" blurb="What actually happens if you ignore a Texas traffic ticket." />
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
         <div class="space-y-8 mb-12">

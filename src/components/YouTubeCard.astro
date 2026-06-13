@@ -1,0 +1,67 @@
+---
+// Reusable "Watch on YouTube" card + VideoObject schema.
+// Props: id (YouTube video id), title, duration ("m:ss"), blurb (optional one-liner).
+interface Props {
+  id: string;
+  title: string;
+  duration?: string;
+  blurb?: string;
+}
+const { id, title, duration = '', blurb = '' } = Astro.props;
+
+const watchUrl = `https://www.youtube.com/watch?v=${id}`;
+const embedUrl = `https://www.youtube.com/embed/${id}`;
+const thumbUrl = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+
+// "5:26" -> "PT5M26S"; "1:02:03" -> "PT1H2M3S"
+function isoDuration(d: string): string {
+  if (!d) return '';
+  const parts = d.split(':').map(n => parseInt(n, 10));
+  let h = 0, m = 0, s = 0;
+  if (parts.length === 3) [h, m, s] = parts;
+  else if (parts.length === 2) [m, s] = parts;
+  else [s] = parts;
+  return `PT${h ? h + 'H' : ''}${m ? m + 'M' : ''}${s ? s + 'S' : ''}` || 'PT0S';
+}
+const iso = isoDuration(duration);
+
+const videoSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'VideoObject',
+  name: title,
+  description: blurb || title,
+  thumbnailUrl: thumbUrl,
+  contentUrl: watchUrl,
+  embedUrl,
+  ...(iso ? { duration: iso } : {}),
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety' },
+});
+---
+
+<script type="application/ld+json" set:html={videoSchema} />
+
+<a
+  href={watchUrl}
+  target="_blank"
+  rel="noopener noreferrer"
+  class="not-prose flex flex-col sm:flex-row items-stretch gap-0 sm:gap-5 bg-surface-muted border border-border rounded-2xl overflow-hidden no-underline hover:border-primary-deep transition-colors group my-8"
+  style="font-family: 'DM Sans', sans-serif;"
+  aria-label={`Watch on YouTube: ${title}`}
+>
+  <div class="relative shrink-0 sm:w-[260px] aspect-video bg-black">
+    <img src={thumbUrl} alt="" loading="lazy" class="w-full h-full object-cover opacity-95 group-hover:opacity-100 transition-opacity" />
+    <span class="absolute inset-0 flex items-center justify-center">
+      <span class="flex items-center justify-center w-14 h-14 rounded-full bg-black/60 group-hover:bg-[#FF0000] transition-colors">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+      </span>
+    </span>
+    {duration && (
+      <span class="absolute bottom-2 right-2 text-xs font-semibold text-white bg-black/80 px-1.5 py-0.5 rounded">{duration}</span>
+    )}
+  </div>
+  <div class="flex flex-col justify-center gap-1 p-4 sm:py-5 sm:pr-6">
+    <span class="text-xs font-bold uppercase tracking-wide text-[#FF0000]">▶ Watch on YouTube</span>
+    <span class="text-base font-bold text-text leading-snug" style="font-family: 'Outfit', sans-serif;">{title}</span>
+    {blurb && <span class="text-sm text-text-body leading-relaxed">{blurb}</span>}
+  </div>
+</a>

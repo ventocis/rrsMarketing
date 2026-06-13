@@ -1,5 +1,6 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import YouTubeCard from '../../components/YouTubeCard.astro';
 import providerData from '../../data/tdlr-providers.json';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
@@ -268,6 +269,8 @@ const collectionSchema = JSON.stringify({
         <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
           <p>We transcribe this directory from TDLR's official licensing records and refresh it periodically — the date at the bottom of the page tells you when it was last verified. Licenses are issued, renewed, and expire on a rolling basis, so a status can change between our refreshes. For a single provider you're about to pay, the fastest live check is to validate a certificate number at <a href="https://www.tdlr.texas.gov/dessearch" target="_blank" rel="noopener noreferrer" class="text-primary-deep font-medium hover:underline">DESSearch</a>, which is always real-time. We'd rather point you to the official source than pretend a static list is live.</p>
         </div>
+
+        <YouTubeCard id="93jfA8YAEOU" title="Texas Defensive Driving Course: Stop Paying Hidden Fees (What to Know)" duration="6:49" blurb="Spotting the hidden fees in Texas defensive driving pricing." />
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
         <div class="space-y-8 mb-12">

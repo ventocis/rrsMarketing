@@ -1,5 +1,6 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import YouTubeCard from '../../components/YouTubeCard.astro';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 
@@ -98,6 +99,8 @@ const faqSchema = JSON.stringify({
           <p><strong class="text-text">Choose a classroom if</strong> you focus better with live structure and zero home distractions, you want the comedy-show version as entertainment, you'd rather not wrangle a device for six hours — or you simply want the certificate physically in hand when you walk out.</p>
           <p><strong class="text-text">Choose online if</strong> your deadline is close (no waiting for the next scheduled class), your week can't fit a fixed six-hour block, you want the cheapest compliant option, or you want the certificate and its <a href="/texas/defensive-driving-certificate" class="text-primary-deep font-medium hover:underline">court and insurance copies</a> as files you can't lose. For most people resolving a ticket against a clock, online wins on logistics alone — which is why most of the market moved there.</p>
         </div>
+
+        <YouTubeCard id="WVJ0ORmWv1Q" title="Texas DSC Course: What to Know Before You Sign Up" duration="3:58" blurb="What to check before you pick a Texas DSC course." />
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
         <div class="space-y-8 mb-12">

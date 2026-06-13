@@ -1,0 +1,171 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    "q": "Is there a statewide way to look up a Texas traffic ticket?",
+    "a": "No. The only central tool is the Texas DPS Citation Search, which covers Highway Patrol (trooper) citations from about the last 24 months and only returns the court's contact info. City police and county tickets aren't in it — you look those up through the specific court."
+  },
+  {
+    "q": "Can I look up a Texas ticket by license plate or license number?",
+    "a": "The DPS Citation Search uses your driver license/ID number and date of birth, and only covers Highway Patrol tickets. There's no statewide plate-based lookup for all tickets; for city or county citations you contact the issuing court."
+  },
+  {
+    "q": "Does paying a Texas ticket online count as a conviction?",
+    "a": "Yes. Paying the fine is a guilty or no-contest plea, and it results in a conviction on your driving record — which can raise your insurance. If you qualify, a driving safety course dismisses the charge instead."
+  },
+  {
+    "q": "Can I still dismiss my ticket after I pay it?",
+    "a": "Generally no. Paying closes the case as a conviction. To keep the option open, request a driving safety course (or other resolution) on or before your appearance date — before you pay."
+  },
+  {
+    "q": "Does Road Ready Safety look up or take payment for my ticket?",
+    "a": "No. We're a TDLR-licensed course provider, not a court or the DMV. Use the official links above to look up or pay your citation. Our role is the $28 course that can get an eligible ticket dismissed."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: "How to Look Up a Texas Traffic Ticket — and Why You Shouldn't Just Pay It",
+  description: "There's no single statewide place to look up a Texas ticket. Here's where to actually find and pay yours — and why paying is a guilty plea you may be able to avoid by dismissing it instead.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-13',
+  dateModified: '2026-06-13',
+  mainEntityOfPage: `${siteUrl}/texas/look-up-your-ticket`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="How to Look Up a Texas Traffic Ticket — and Why You Shouldn't Just Pay It (2026)"
+    description="There's no single statewide place to look up a Texas ticket. Here's where to actually find and pay yours — and why paying is a guilty plea you may be able to avoid by dismissing it instead."
+    keywords="texas citation lookup, look up texas traffic ticket, pay texas ticket online, find my ticket texas, texas ticket lookup by license, should I pay my texas ticket"
+    url="/texas/look-up-your-ticket"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Look up your ticket</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          How to Look Up a Texas Traffic Ticket — and Why You Shouldn't Just Pay It
+        </h1>
+
+        <div class="bg-amber-50 border-l-4 border-amber-400 rounded-r-xl p-4 mb-8 flex items-start gap-3">
+          <svg class="w-5 h-5 shrink-0 mt-0.5 text-amber-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+          <p class="text-sm text-amber-900 leading-relaxed" style="font-family: 'DM Sans', sans-serif;">Road Ready Safety is a private, TDLR-licensed Texas driving safety course provider (CP1234). We are <strong>not</strong> a court, the Texas DMV (TxDMV), or the Department of Public Safety (DPS), and we can't look up your citation or take payment for it. Use the official links on this page for that.</p>
+        </div>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Here's the first thing nobody tells you: <strong>there is no single statewide place to look up a Texas traffic ticket.</strong> The state's only central tool covers Highway Patrol (trooper) citations from the last 24 months and just gives you the court's contact info — city police and county tickets aren't in it. For everything else, you go to the specific court that issued it.</p>
+          <p>And before you reach for your card: <strong>paying a Texas ticket is a guilty plea and a conviction</strong> that stays on your record and can raise your insurance. If you qualify, taking a defensive driving course gets the same ticket <strong>dismissed</strong> instead — for $28. Here's how to find your ticket, and how to decide what to do with it.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. We don't collect citation payments — use the official links to pay or look up your case, and confirm options with the court on your citation.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Where to actually look up your Texas ticket</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Tickets are issued by hundreds of separate agencies and handled in separate municipal and justice (JP) courts, each with its own records — so the "where" depends on who wrote the ticket. The state's <strong>DPS Citation Search</strong> only includes Texas Highway Patrol citations from roughly the last 24 months, and even then it only returns the court's contact information, not your fine or your options. If a city police officer or a sheriff's deputy wrote your ticket, it won't be there.</p>
+          <p>If you already missed a court date or didn't pay, your case may show up in the statewide <strong>Failure to Appear (OmniBase)</strong> system. For everything else, the fastest path is to look up the specific court — which you can do through our <a href="/texas/courts" class="text-primary-deep font-medium hover:underline">Texas court directory</a>.</p>
+        <div class="bg-surface-muted border border-border rounded-xl p-5 my-4">
+          <p class="text-sm font-semibold text-text mb-3">Official lookup &amp; payment links</p>
+          <ul class="flex flex-col gap-2 list-none m-0 p-0 text-sm text-text-body">
+            <li>• <a href="https://www.dps.texas.gov/apps/citations/Search" target="_blank" rel="noopener noreferrer" class="text-primary-deep font-medium hover:underline">Texas DPS Citation Search</a> — Highway Patrol (trooper) tickets only, last ~24 months; returns your court's contact info.</li>
+            <li>• <a href="https://www.texasfailuretoappear.com/" target="_blank" rel="noopener noreferrer" class="text-primary-deep font-medium hover:underline">Texas Failure to Appear (OmniBase) lookup</a> — for tickets you've already missed or left unpaid.</li>
+            <li>• <a href="/texas/courts" class="text-primary-deep font-medium hover:underline">Find your Texas court</a> — for city police and county tickets, look up the specific court to pay or request a dismissal.</li>
+          </ul>
+          <p class="text-xs text-text-subtle mt-3">These are official government or court resources. Road Ready Safety does not collect citation payments.</p>
+        </div>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Before you pay: paying is a guilty plea</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>When you pay a Texas ticket online, you're not just "handling it" — you're entering a plea of guilty (or no contest), and the result is a <strong>conviction on your driving record</strong>. Convictions can raise your insurance and stack toward a license suspension (4 in 12 months, or 7 in 24).</p>
+          <p>Here's the part the payment portal won't tell you: there are really <strong>two ways to plead guilty</strong>. You can pay and take the conviction — or you can request a driving safety course and, once you complete it, the charge is <strong>dismissed and kept off your record</strong> under Texas law. Same plea, very different outcome. We compare the paths in <a href="/texas/fight-or-dismiss" class="text-primary-deep font-medium hover:underline">pay, fight, or dismiss</a> and <a href="/texas/ways-to-dismiss-ticket" class="text-primary-deep font-medium hover:underline">every way to dismiss a Texas ticket</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Can you still dismiss it? A quick eligibility check</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Most everyday moving violations qualify for a driving safety course dismissal. The catch that trips people up: you generally have to <strong>request it on or before your appearance/answer date</strong> — the date printed on your citation — so don't pay or ignore it first.</p>
+        <div class="bg-surface-muted border border-border rounded-xl p-5 my-4">
+          <p class="text-sm font-semibold text-text mb-3">You can usually request a dismissal if all of these are true</p>
+          <ul class="flex flex-col gap-2 list-none m-0 p-0 text-sm text-text-body">
+            <li>✓ You have a valid Texas driver license or permit</li>
+            <li>✓ You request the course on or before your appearance/answer date</li>
+            <li>✓ You haven't used a course to dismiss a ticket in the past 12 months</li>
+            <li>✓ You weren't cited for speeding 25+ mph over the limit (or 95+ mph)</li>
+            <li>✓ You don't hold a commercial driver license (CDL)</li>
+          </ul>
+          <p class="text-xs text-text-subtle mt-3">Approval is up to the court. <a href="/texas/eligibility-tracker" class="text-primary-deep font-medium hover:underline">Check your eligibility</a>, or confirm with the court on your citation.</p>
+        </div>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Missed your date, or hit a license or registration hold?</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>If you already missed your court date, the standard course-dismissal option may be off the table — but you often still have a path to avoid a conviction. See <a href="/texas/missed-court-date" class="text-primary-deep font-medium hover:underline">missed your court date</a> and <a href="/texas/ticket-warrant" class="text-primary-deep font-medium hover:underline">I have a warrant for a ticket</a>.</p>
+          <p>Hit a wall renewing something? They're two different holds: if you <strong>can't renew your driver license</strong>, that's an <a href="/texas/omnibase-hold" class="text-primary-deep font-medium hover:underline">OmniBase / Failure to Appear hold</a>; if you <strong>can't renew your vehicle registration</strong>, that's a separate <a href="/texas/registration-block" class="text-primary-deep font-medium hover:underline">"Scofflaw" hold</a>. Both pages explain how to clear them — and how dismissing the ticket can be part of the fix.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Don't pay it into a conviction — dismiss it instead</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>If your ticket qualifies, the course keeps it off your record and out of your insurance rate. It's $28, fully online, with the certificate the moment you finish.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="/texas/ways-to-dismiss-ticket"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            See every dismissal path
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated June 13, 2026 — verified by the Road Ready Safety editorial team against Texas DPS (citation search), the Texas Failure to Appear program, and Tex. Code Crim. Proc. ch. 45A.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

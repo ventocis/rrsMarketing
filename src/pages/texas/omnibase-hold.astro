@@ -1,0 +1,157 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    "q": "Is my driver license suspended if I have an OmniBase hold?",
+    "a": "No. OmniBase places a hold on renewing your license — your current license stays valid until it expires. It's a Failure to Appear / Failure to Pay hold under Transportation Code Chapter 706, not a suspension."
+  },
+  {
+    "q": "How much does it cost to clear an OmniBase hold?",
+    "a": "There's a $10 reimbursement fee per cited offense (it was $30 for offenses entered before January 1, 2020), paid to the court, plus whatever it takes to resolve the underlying case. The fee can be waived if the court finds you indigent."
+  },
+  {
+    "q": "Does an OmniBase hold block my vehicle registration?",
+    "a": "No — that's a different program. OmniBase (Chapter 706) blocks driver-license renewal. A vehicle-registration block is the separate \"Scofflaw\" program (Chapter 702), run by your county tax office and TxDMV."
+  },
+  {
+    "q": "Can defensive driving clear an OmniBase hold?",
+    "a": "It can help, indirectly. If your case still qualifies for a driving safety course, completing it dismisses the charge — and dismissal is one of the resolutions that, together with the $10 fee, lets the court clear the hold. Whether the course is still available depends on your case and court."
+  },
+  {
+    "q": "Who do I pay to lift the hold?",
+    "a": "The court that reported you — not OmniBase or DPS directly. Once you pay the fee and resolve the case, the court notifies DPS to remove the hold."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: "Can't Renew Your Texas Driver License? The OmniBase Hold, Explained",
+  description: "An OmniBase / Failure to Appear hold blocks your Texas driver-license renewal — it's not a suspension. Here's how it works, the $10 fee, and how dismissing the ticket can clear it.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-13',
+  dateModified: '2026-06-13',
+  mainEntityOfPage: `${siteUrl}/texas/omnibase-hold`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Texas OmniBase Hold: Can't Renew Your Driver License Over a Ticket? (2026)"
+    description="An OmniBase / Failure to Appear hold blocks your Texas driver-license renewal — it's not a suspension. Here's how it works, the $10 fee, and how dismissing the ticket can clear it."
+    keywords="omnibase texas, failure to appear texas, can't renew drivers license texas ticket, omnibase hold, texas FTA program, clear omnibase hold"
+    url="/texas/omnibase-hold"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/texas/look-up-your-ticket" class="text-primary-deep font-medium hover:underline">Look up your ticket</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">OmniBase / license hold</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          Can't Renew Your Texas Driver License? The OmniBase Hold, Explained
+        </h1>
+
+        <div class="bg-amber-50 border-l-4 border-amber-400 rounded-r-xl p-4 mb-8 flex items-start gap-3">
+          <svg class="w-5 h-5 shrink-0 mt-0.5 text-amber-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+          <p class="text-sm text-amber-900 leading-relaxed" style="font-family: 'DM Sans', sans-serif;">Road Ready Safety is a private, TDLR-licensed Texas driving safety course provider (CP1234). We are <strong>not</strong> a court, the Texas DMV, or DPS, and we can't clear a hold or take payment for your citation. Use the official links on this page and contact your court to resolve a hold.</p>
+        </div>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>If the DPS won't let you renew your driver license because of an old ticket, you've hit an <strong>OmniBase hold</strong> — part of Texas's Failure to Appear / Failure to Pay program under Transportation Code Chapter 706. Important: your license is <strong>not suspended</strong>. It's a hold on <em>renewing</em> it, placed when a court reports that you missed a court date or didn't pay a fine-only charge (most traffic tickets count).</p>
+          <p>Two things lift the hold: <strong>resolving the underlying case</strong> and paying a <strong>$10-per-offense program fee</strong>. And resolving the case can sometimes mean getting the ticket <strong>dismissed</strong> with a defensive driving course — not just paying it.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Holds and remedies are handled by the court and DPS — we don't clear holds or take payments. Confirm your specific situation with the court that reported you.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What an OmniBase hold is — and isn't</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Under Chapter 706, when you fail to appear on a fine-only misdemeanor (including most traffic tickets) or fail to pay/satisfy the judgment, the court can report you to a statewide database administered by OmniBase Services of Texas, and DPS <strong>may deny renewal of your driver license</strong> until the matter is cleared. Your current license stays valid until it expires — this only blocks the renewal.</p>
+          <p>One common mix-up: an OmniBase hold is about your <strong>driver license</strong>, not your vehicle registration. If you can't renew your <em>registration</em>, that's a different program — see <a href="/texas/registration-block" class="text-primary-deep font-medium hover:underline">the "Scofflaw" registration hold</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How to clear it</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Texas law (Transportation Code §706.005) says the court will notify DPS to lift the hold once you do <strong>two</strong> things: (1) pay the <strong>$10 reimbursement fee</strong> for each cited offense — it was $30 for offenses entered before January 1, 2020, and the court can waive it if it finds you indigent — and (2) <strong>resolve the underlying case</strong> by one of the methods the statute allows: dismissing the charge, paying or discharging the fine, posting bond, perfecting an appeal, or another arrangement the court approves. The fee is paid to the <strong>court</strong>, not to OmniBase.</p>
+          <p>Start by confirming the hold and contacting the reporting court.</p>
+        <div class="bg-surface-muted border border-border rounded-xl p-5 my-4">
+          <p class="text-sm font-semibold text-text mb-3">Official resources</p>
+          <ul class="flex flex-col gap-2 list-none m-0 p-0 text-sm text-text-body">
+            <li>• <a href="https://www.texasfailuretoappear.com/" target="_blank" rel="noopener noreferrer" class="text-primary-deep font-medium hover:underline">Texas Failure to Appear (OmniBase) lookup</a> — check whether you have a hold and which court reported it.</li>
+            <li>• <a href="https://www.dps.texas.gov/section/driver-license/failure-appearfailure-pay-program" target="_blank" rel="noopener noreferrer" class="text-primary-deep font-medium hover:underline">TxDPS — Failure to Appear / Failure to Pay Program</a></li>
+            <li>• <a href="/texas/courts" class="text-primary-deep font-medium hover:underline">Find your Texas court</a> — to resolve the underlying ticket.</li>
+          </ul>
+          <p class="text-xs text-text-subtle mt-3">Official government and court resources. Road Ready Safety does not clear holds or collect payments.</p>
+        </div>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Where defensive driving comes in</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>An OmniBase hold does <strong>not</strong> automatically mean you've lost the option to dismiss your ticket. Driving safety course eligibility is governed by a separate law (Code of Criminal Procedure Chapter 45A), and <strong>dismissing the charge is one of the resolutions the OmniBase statute accepts</strong> (§706.005(a)(2)). So if your case still qualifies, completing a course dismisses it — and that, plus the $10 fee, clears the hold.</p>
+          <p>The honest caveats: a course dismissal is the court's call, you generally must request it by your appearance date, you can use it only once every 12 months, and it's not available for CDL holders or for speeding 25+ mph over the limit (or 95+ mph). If your case already reached a conviction or you're well past the deadline, the course may no longer be an option — so the safest move is to <strong>contact the court and ask what resolutions, including a driving safety course, are still on the table</strong>. See <a href="/texas/missed-court-date" class="text-primary-deep font-medium hover:underline">missed your court date</a> for the post-deadline playbook.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">If your ticket still qualifies, dismiss it</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Dismissing the charge can be the resolution that clears your hold — and keeps the conviction off your record. If you're eligible, the course is $28, fully online, certificate when you finish.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="/texas/registration-block"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            Can't renew your registration?
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated June 13, 2026 — verified by the Road Ready Safety editorial team against Tex. Transp. Code ch. 706 (§§706.004–706.006), the Texas DPS Failure to Appear program, and Tex. Code Crim. Proc. ch. 45A.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

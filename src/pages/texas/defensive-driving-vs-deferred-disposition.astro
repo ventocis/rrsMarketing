@@ -1,0 +1,166 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    "q": "Is defensive driving or deferred disposition better in Texas?",
+    "a": "For most eligible drivers, the driving safety course — it's predictable, usually cheaper overall, has no second court fee, and avoids a months-long probation period. Deferred disposition is the better backup when you're not eligible for the course."
+  },
+  {
+    "q": "Why do more Texas tickets get dismissed by deferred disposition?",
+    "a": "Because deferred is available in more situations, including drivers who aren't eligible for the course and offenses the course doesn't cover. In FY2024 there were 495,109 deferred dismissals versus 294,534 course dismissals."
+  },
+  {
+    "q": "Can I do both the course and deferred disposition?",
+    "a": "They're separate options for resolving a charge, and courts generally have you choose one. Eligibility and combinations vary by court, so confirm with the court on your citation."
+  },
+  {
+    "q": "Which one keeps the ticket off my record?",
+    "a": "Both do when completed successfully. The difference is the course finishes in one sitting, while deferred requires staying ticket-free for the full probation period — a new ticket during that window can undo it."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: "Defensive Driving vs Deferred Disposition in Texas",
+  description: "Texas courts dismiss more tickets through deferred disposition (495,109 vs 294,534 in FY2024) — but for most eligible drivers a driving safety course is the cleaner, cheaper path. Here's the honest comparison.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-13',
+  dateModified: '2026-06-13',
+  mainEntityOfPage: `${siteUrl}/texas/defensive-driving-vs-deferred-disposition`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Defensive Driving vs Deferred Disposition in Texas: Which Is Better?"
+    description="Texas courts dismiss more tickets through deferred disposition (495,109 vs 294,534 in FY2024) — but for most eligible drivers a driving safety course is the cleaner, cheaper path. Here's the honest comparison."
+    keywords="defensive driving vs deferred disposition Texas, deferred disposition vs driving safety course, which is better Texas ticket, deferred adjudication traffic ticket Texas"
+    url="/texas/defensive-driving-vs-deferred-disposition"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/texas/defensive-driving-statistics" class="text-primary-deep font-medium hover:underline">Texas DSC statistics</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Course vs deferred disposition</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          Defensive Driving vs Deferred Disposition in Texas
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Both a driving safety course and deferred disposition can keep a Texas traffic ticket off your record — and drivers constantly ask which to choose. The surprising part: <strong>Texas courts dismiss more tickets through deferred disposition (495,109) than through a driving safety course (294,534) in FY2024.</strong></p>
+          <p>But higher volume doesn't make deferred the better deal for you. For most <em>eligible</em> drivers, the course is the cleaner, more predictable path. Here's the honest comparison.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">Eligibility and fees vary by court and offense. This is general information, not legal advice — confirm the options on your specific citation with the court that issued it.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What each option actually is</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>A <strong>driving safety course</strong> dismisses the charge once you complete an approved 6-hour course (and meet the requirements) — the ticket is dismissed and, under Texas law, kept off your driving record. See <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">how the course dismissal works</a>.</p>
+          <p><strong>Deferred disposition</strong> is a short probation: the judge defers a finding of guilt for a set period (often 90–180 days), and if you don't get another ticket in that window, the charge is dismissed. We cover the mechanics in <a href="/texas/deferred-disposition" class="text-primary-deep font-medium hover:underline">Texas deferred disposition explained</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Why deferred shows bigger numbers</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Deferred disposition dismisses more tickets statewide partly because it's available for more situations — including drivers who aren't eligible for the course (for example, those who've taken a course within the past 12 months) and offenses the course doesn't cover.</p>
+          <p>The gap has widened over time, from about 1.4x more deferred dismissals than course dismissals in FY2019 to roughly 1.7x in FY2025.</p>
+        <div class="overflow-x-auto my-2">
+          <table class="w-full text-sm border-collapse" style="font-family: 'DM Sans', sans-serif;">
+            <thead><tr class="border-b-2 border-border text-left"><th class="py-2 pr-4 font-semibold text-text">Fiscal year</th><th class="py-2 pr-4 font-semibold text-text">Dismissed via driving safety course</th><th class="py-2 pr-4 font-semibold text-text">Dismissed via deferred disposition</th><th class="py-2 font-semibold text-text">Deferred ÷ course</th></tr></thead>
+            <tbody>
+              <tr class="border-b border-border"><td class="py-2 pr-4">FY2019</td><td class="py-2 pr-4">489,565</td><td class="py-2 pr-4">702,010</td><td class="py-2">1.43x</td></tr>
+              <tr class="border-b border-border"><td class="py-2 pr-4">FY2021</td><td class="py-2 pr-4">305,963</td><td class="py-2 pr-4">452,115</td><td class="py-2">1.48x</td></tr>
+              <tr class="border-b border-border"><td class="py-2 pr-4">FY2023</td><td class="py-2 pr-4">287,591</td><td class="py-2 pr-4">461,026</td><td class="py-2">1.60x</td></tr>
+              <tr class="border-b border-border"><td class="py-2 pr-4">FY2024</td><td class="py-2 pr-4">294,534</td><td class="py-2 pr-4">495,109</td><td class="py-2">1.68x</td></tr>
+              <tr><td class="py-2 pr-4">FY2025</td><td class="py-2 pr-4">304,934</td><td class="py-2 pr-4">525,205</td><td class="py-2">1.72x</td></tr>
+            </tbody>
+          </table>
+          <p class="text-xs text-text-subtle mt-2">Source: Texas Office of Court Administration, justice &amp; municipal court activity (fiscal year, Sept 1–Aug 31).</p>
+        </div>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Where the course usually wins for the driver</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong>Cost:</strong> deferred disposition typically adds a separate court fee on top of fine-equivalent costs, while the course's cost is the course fee plus the standard administrative fee. For many drivers the course comes out lower overall.</p>
+          <p><strong>Control:</strong> with the course, you finish a 6-hour class and you're done — you control the outcome. Deferred makes you stay ticket-free for the entire probation period; a new citation during that window can undo it.</p>
+          <p><strong>Clean record:</strong> both keep the charge off your record when completed successfully, but the course removes the uncertainty of a months-long waiting period.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">When deferred disposition makes sense</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Deferred is the right tool when the course isn't available to you — for instance, if you've already used a course dismissal in the past 12 months, if your license type or offense makes you ineligible, or if a particular court steers you toward it.</p>
+          <p>It's also worth considering if you're confident you won't get another ticket for several months and the court's deferred fee is lower than the course route in your specific case.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The bottom line</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>For most eligible drivers, the driving safety course is the cleaner path: predictable, usually cheaper overall, no second court fee, and no months-long probation to maintain. Deferred disposition is the strong backup when the course isn't an option.</p>
+          <p>Not sure which you qualify for? Check the basics with our <a href="/texas/eligibility-tracker" class="text-primary-deep font-medium hover:underline">eligibility checker</a>, then confirm with your court.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">If you're eligible, the course is the clean path</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>No probation period, no second court fee, and the ticket stays off your record. For most eligible Texas drivers, the $28 online course is the simplest way to put the ticket behind you.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="/texas/deferred-disposition"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            How deferred disposition works
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated June 13, 2026 — original analysis by the Road Ready Safety editorial team using the Texas Office of Court Administration court activity reports.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

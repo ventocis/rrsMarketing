@@ -1,0 +1,166 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    "q": "What are all the ways to get a Texas ticket dismissed?",
+    "a": "The main paths are a driving safety course, deferred disposition, proof-of-insurance or other compliance dismissals, and dismissal by the prosecution. The course and deferred disposition are the two you actively initiate."
+  },
+  {
+    "q": "What's the most common way Texas tickets get dismissed?",
+    "a": "By volume, dismissal by the prosecution (717,106 in FY2024) is largest, followed by deferred disposition (495,109) and the driving safety course (294,534). But the course and deferred are the paths a driver controls."
+  },
+  {
+    "q": "What is a compliance dismissal?",
+    "a": "A dismissal you earn by doing something — taking a course, completing deferred disposition, or proving you fixed the issue (like showing valid insurance). Compliance dismissals were about 27.7% of disposed traffic cases in FY2024."
+  },
+  {
+    "q": "Can a no-insurance ticket be dismissed?",
+    "a": "Often, yes — if you actually had valid coverage at the time, showing proof can get it dismissed. Texas courts recorded 41,605 proof-of-insurance dismissals in FY2024."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: "Every Way to Get a Texas Traffic Ticket Dismissed",
+  description: "The driving safety course, deferred disposition, proof of insurance, and prosecution dismissals — here's every way Texas tickets actually get dismissed, ranked by real FY2024 court volumes.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-13',
+  dateModified: '2026-06-13',
+  mainEntityOfPage: `${siteUrl}/texas/ways-to-dismiss-ticket`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Every Way to Get a Texas Traffic Ticket Dismissed (With Real Numbers)"
+    description="The driving safety course, deferred disposition, proof of insurance, and prosecution dismissals — here's every way Texas tickets actually get dismissed, ranked by real FY2024 court volumes."
+    keywords="how to get a ticket dismissed Texas, ways to dismiss traffic ticket Texas, Texas ticket dismissal options, compliance dismissal Texas, proof of insurance dismissal Texas"
+    url="/texas/ways-to-dismiss-ticket"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/texas/defensive-driving-statistics" class="text-primary-deep font-medium hover:underline">Texas DSC statistics</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Every way to dismiss a ticket</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          Every Way to Get a Texas Traffic Ticket Dismissed
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>There's more than one way to make a Texas traffic ticket disappear — and the court data shows exactly how often each one actually happens. In FY2024, about <strong>27.7% of all disposed traffic cases ended in a "compliance" dismissal</strong>, where the driver did something to earn it.</p>
+          <p>Here's every path, what it requires, and how common it is — so you can see which one fits your situation.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">Eligibility for each path depends on your offense, your record, and your court. This is general information, not legal advice — confirm what's available with the court listed on your citation.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How Texas tickets actually get resolved</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>First, the big picture. Most cases aren't dismissed at all — about 40% are uncontested (the driver pays or pleads, which is a conviction), and roughly 9% are convicted in court. Dismissals are the minority, and they split across several distinct paths.</p>
+        <div class="overflow-x-auto my-2">
+          <table class="w-full text-sm border-collapse" style="font-family: 'DM Sans', sans-serif;">
+            <thead><tr class="border-b-2 border-border text-left"><th class="py-2 pr-4 font-semibold text-text">Outcome (FY2024)</th><th class="py-2 pr-4 font-semibold text-text">Cases</th><th class="py-2 font-semibold text-text">Share</th></tr></thead>
+            <tbody>
+              <tr class="border-b border-border"><td class="py-2 pr-4">Uncontested (paid / plea)</td><td class="py-2 pr-4">1,574,031</td><td class="py-2">39.9%</td></tr>
+              <tr class="border-b border-border"><td class="py-2 pr-4">Dismissed by prosecution</td><td class="py-2 pr-4">717,106</td><td class="py-2">18.2%</td></tr>
+              <tr class="border-b border-border"><td class="py-2 pr-4">Deferred disposition dismissal</td><td class="py-2 pr-4">495,109</td><td class="py-2">12.5%</td></tr>
+              <tr class="border-b border-border"><td class="py-2 pr-4">Convicted by court</td><td class="py-2 pr-4">359,152</td><td class="py-2">9.1%</td></tr>
+              <tr class="border-b border-border"><td class="py-2 pr-4 font-semibold">Driving safety course dismissal</td><td class="py-2 pr-4 font-semibold">294,534</td><td class="py-2 font-semibold">7.5%</td></tr>
+              <tr class="border-b border-border"><td class="py-2 pr-4">Other Transportation Code dismissal</td><td class="py-2 pr-4">257,856</td><td class="py-2">6.5%</td></tr>
+              <tr><td class="py-2 pr-4">Proof-of-insurance dismissal</td><td class="py-2 pr-4">41,605</td><td class="py-2">1.1%</td></tr>
+            </tbody>
+          </table>
+          <p class="text-xs text-text-subtle mt-2">Source: Texas Office of Court Administration, justice &amp; municipal court activity, FY2024 (of 3,947,968 disposed traffic cases).</p>
+        </div>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">1. Driving safety course (the path you control)</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Complete an approved 6-hour course and meet the requirements, and the charge is dismissed and kept off your driving record under Texas law. It's the single largest fully-dismissing option that you initiate, accounting for 294,534 dismissals in FY2024.</p>
+          <p>You're generally eligible if you have a valid license, proof of insurance, haven't used the course in the past 12 months, and weren't cited for an excluded offense (like speeding 25+ over). Start with <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">the dismissal guide</a> or check our <a href="/texas/eligibility-tracker" class="text-primary-deep font-medium hover:underline">eligibility checker</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">2. Deferred disposition (probation, then dismissal)</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>The judge defers a finding of guilt for a set period; stay ticket-free and the charge is dismissed. It's actually the largest driver-initiated path by volume — 495,109 dismissals in FY2024 — and it's the main option when the course isn't available to you.</p>
+          <p>See how it stacks up against the course in <a href="/texas/defensive-driving-vs-deferred-disposition" class="text-primary-deep font-medium hover:underline">defensive driving vs deferred disposition</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">3. Proof-of-insurance and other compliance dismissals</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Some charges are dismissed when you fix the underlying problem. A "no insurance" ticket can often be dismissed by showing you actually had valid coverage at the time (41,605 such dismissals in FY2024), and other Transportation Code violations — like an expired registration or license — can be dismissed once you provide proof you've corrected them (257,856 dismissals).</p>
+          <p>If your ticket is one of these, see <a href="/texas/no-insurance-ticket" class="text-primary-deep font-medium hover:underline">no-insurance tickets</a> for how the compliance dismissal works.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">4. Dismissed by the prosecution</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>The largest single dismissal category — 717,106 cases, or 18.2% — is dismissal by the prosecution, either before or at trial. This isn't something you simply apply for; it can result from a successful challenge, a plea arrangement, or the state choosing not to pursue the case.</p>
+          <p>It's the least predictable path for a driver to rely on, which is why the course and deferred disposition — the options you control — matter most for everyday tickets.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Pick the path you control</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>If you're eligible, the driving safety course is the most predictable way to dismiss your ticket and keep it off your record — done in one 6-hour sitting for $28.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="/texas/eligibility-tracker"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            Check your eligibility
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated June 13, 2026 — original analysis by the Road Ready Safety editorial team using the Texas Office of Court Administration court activity reports.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

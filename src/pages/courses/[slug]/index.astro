@@ -6,6 +6,7 @@ import coursesData from '../../../data/courses.json';
 import { stateNames } from '../../../utils/states';
 import { usd, hours } from '../../../utils/format';
 import { getStateRequirements } from '../../../utils/stateRequirements';
+import courseFaqs from '../../../data/course-faqs.json';
 
 export function getStaticPaths() {
   return (coursesData as any[]).map((course: any) => ({
@@ -77,6 +78,19 @@ const courseSchema = JSON.stringify({
     name: isPartner ? course.provider_name : 'Road Ready Safety',
   },
 });
+
+// Optional FAQ set — renders only when the course has a matching faq_set_key.
+// Courses without a matching key get no FAQ section (output unchanged).
+const faqSet = course.faq_set_key ? (courseFaqs as any)[course.faq_set_key] : null;
+const faqSchema = faqSet ? JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqSet.items.map((it: any) => ({
+    '@type': 'Question',
+    name: it.q,
+    acceptedAnswer: { '@type': 'Answer', text: it.a },
+  })),
+}) : null;
 ---
 
 {isTexasPage && <meta http-equiv="refresh" content="0;url=/texas" />}
@@ -88,6 +102,7 @@ const courseSchema = JSON.stringify({
   url={`/courses/${course.slug}`}
 >
   <script type="application/ld+json" set:html={courseSchema} />
+  {faqSchema && <script type="application/ld+json" set:html={faqSchema} />}
   <Header />
 
   <main class="bg-surface-muted min-h-screen pb-20 lg:pb-0">
@@ -293,6 +308,30 @@ const courseSchema = JSON.stringify({
         </aside>
       </div>
     </div>
+
+    {faqSet && (
+      <section class="bg-white border-t border-border">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-14">
+          <h2 class="text-2xl md:text-3xl font-bold text-text mb-3" style="font-family: 'Outfit', sans-serif;">
+            {faqSet.heading}
+          </h2>
+          <p class="text-sm text-text-body mb-8 max-w-3xl leading-relaxed" style="font-family: 'DM Sans', sans-serif;">
+            Plain-English answers based on New York DMV rules and state law. Road Ready Safety refers drivers to a DMV-approved course sponsor; always confirm current details with the NY DMV or your insurer.
+          </p>
+          <div class="space-y-3 max-w-3xl">
+            {faqSet.items.map((it: any) => (
+              <details class="group bg-surface-muted border border-border rounded-2xl px-5 py-4 [&>summary::-webkit-details-marker]:hidden">
+                <summary class="flex items-center justify-between cursor-pointer list-none text-base font-semibold text-text" style="font-family: 'Outfit', sans-serif;">
+                  <span>{it.q}</span>
+                  <svg class="w-4 h-4 flex-shrink-0 ml-3 transition-transform group-open:rotate-180 text-text-body" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                </summary>
+                <p class="mt-3 text-sm text-text-body leading-relaxed" style="font-family: 'DM Sans', sans-serif;">{it.a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
 
     <!-- Mobile sticky enroll bar -->
     <div class="fixed bottom-0 inset-x-0 z-40 lg:hidden bg-white border-t border-border px-4 py-3 flex items-center gap-3" style="box-shadow: 0 -4px 12px rgba(0,0,0,0.06);">

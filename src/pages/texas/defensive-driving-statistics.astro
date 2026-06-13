@@ -1,0 +1,185 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    "q": "How many people take defensive driving in Texas each year?",
+    "a": "Roughly 410,000–630,000 a year over 2019–2023, with about 411,791 completions in 2023. Separately, Texas courts dismissed 304,934 tickets through a driving safety course in fiscal year 2025."
+  },
+  {
+    "q": "Is defensive driving declining in Texas?",
+    "a": "It dropped about 35% from 2019 to 2023, but it has since stabilized — court dismissals via the course rebounded to 304,934 in FY2025. It's a large, steady option, not a disappearing one."
+  },
+  {
+    "q": "Do most Texans take defensive driving online?",
+    "a": "Yes. Online courses were 95.3% of all completions in 2023, up from 87.6% in 2019. Classroom completions fell 75% over that period."
+  },
+  {
+    "q": "What percentage of Texas tickets are dismissed with a driving safety course?",
+    "a": "About 7.5% of all disposed traffic cases in FY2024. By contrast, roughly 40% were uncontested (paid or pled), which is a guilty plea that stays on the record."
+  },
+  {
+    "q": "Where does this data come from?",
+    "a": "Course completions come from the Texas Department of Licensing & Regulation; court dismissal and disposition figures come from the Texas Office of Court Administration's justice and municipal court activity reports."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: "Texas Defensive Driving by the Numbers (2019–2025)",
+  description: "Hundreds of thousands of Texans still dismiss tickets with a driving safety course every year — 304,934 in FY2025. Original analysis of TDLR completion data and Texas court records, 2019–2025.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-13',
+  dateModified: '2026-06-13',
+  mainEntityOfPage: `${siteUrl}/texas/defensive-driving-statistics`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Texas Defensive Driving by the Numbers (2019–2025): Completions, Dismissals & Trends"
+    description="Hundreds of thousands of Texans still dismiss tickets with a driving safety course every year — 304,934 in FY2025. Original analysis of TDLR completion data and Texas court records, 2019–2025."
+    keywords="Texas defensive driving statistics, how many people take defensive driving Texas, Texas driving safety course numbers, Texas ticket dismissal data, online defensive driving Texas"
+    url="/texas/defensive-driving-statistics"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Texas DSC statistics</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          Texas Defensive Driving by the Numbers (2019–2025)
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Hundreds of thousands of Texans still dismiss traffic tickets with a state driving safety course every year — <strong>304,934 tickets were dismissed this way in fiscal year 2025</strong> alone. The market reset after 2019 and has since stabilized, and the course has moved almost entirely online.</p>
+          <p>We pulled the numbers from two official Texas datasets — the state's course-completion report and statewide court activity records — to answer the questions drivers actually ask: how many people take defensive driving, whether it's still worth it, and how Texans really handle their tickets. Every figure below is sourced and dated.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">Two important caveats: course completions are reported by calendar year, while court dismissals use the state fiscal year (Sept 1–Aug 31), so the two series aren't directly comparable. And a completion (a person finishing a course) is not the same as a dismissal (a court outcome) — some people take the course purely for an insurance discount. We keep the two separate throughout.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How many Texans take defensive driving each year?</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Course completions fell from <strong>630,723 in 2019 to 411,791 in 2023</strong> — about a 35% drop over four years — as fewer tickets were written and habits shifted after 2019. But the decline flattened: completions held essentially steady from 2021 to 2023.</p>
+          <p>On the court side, tickets dismissed after a driving safety course dropped from a 2019 peak, bottomed out around FY2023, and have since <strong>rebounded to 304,934 in FY2025</strong>. In other words, this isn't a dying option — it's a large, stable one.</p>
+        <div class="overflow-x-auto my-2">
+          <table class="w-full text-sm border-collapse" style="font-family: 'DM Sans', sans-serif;">
+            <thead><tr class="border-b-2 border-border text-left"><th class="py-2 pr-4 font-semibold text-text">Year</th><th class="py-2 pr-4 font-semibold text-text">Online</th><th class="py-2 pr-4 font-semibold text-text">Classroom</th><th class="py-2 pr-4 font-semibold text-text">Total completions</th><th class="py-2 font-semibold text-text">Online %</th></tr></thead>
+            <tbody>
+              <tr class="border-b border-border"><td class="py-2 pr-4">2019</td><td class="py-2 pr-4">552,665</td><td class="py-2 pr-4">78,058</td><td class="py-2 pr-4 font-semibold">630,723</td><td class="py-2">87.6%</td></tr>
+              <tr class="border-b border-border"><td class="py-2 pr-4">2020</td><td class="py-2 pr-4">399,919</td><td class="py-2 pr-4">26,256</td><td class="py-2 pr-4 font-semibold">426,175</td><td class="py-2">93.8%</td></tr>
+              <tr class="border-b border-border"><td class="py-2 pr-4">2021</td><td class="py-2 pr-4">391,430</td><td class="py-2 pr-4">22,370</td><td class="py-2 pr-4 font-semibold">413,800</td><td class="py-2">94.6%</td></tr>
+              <tr><td class="py-2 pr-4">2023</td><td class="py-2 pr-4">392,325</td><td class="py-2 pr-4">19,466</td><td class="py-2 pr-4 font-semibold">411,791</td><td class="py-2">95.3%</td></tr>
+            </tbody>
+          </table>
+          <p class="text-xs text-text-subtle mt-2">Source: Texas Department of Licensing &amp; Regulation, driving-safety course completions (calendar year). 2022 and 2024–2025 are excluded here because the state data for those years is partial or unreleased.</p>
+        </div>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Online won — about 95% of Texans take it online</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>If you're wondering whether the online course is legitimate, the whole state has already answered: online ("alternative delivery") courses grew from <strong>87.6% of all completions in 2019 to 95.3% in 2023</strong>. Classroom completions collapsed from 78,058 to 19,466 — a 75% drop — while online stayed nearly flat.</p>
+          <p>The classroom isn't quite extinct, but it's close. For most drivers the practical choice is which online course to take, not whether to go online. We compare the formats in <a href="/texas/online-vs-classroom" class="text-primary-deep font-medium hover:underline">online vs in-person defensive driving</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Most Texans just pay their ticket — and many overpay</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Here's the gap the data exposes. Of every traffic case Texas justice and municipal courts disposed of in FY2024, about <strong>40% were uncontested</strong> — the driver simply paid or pled — and roughly <strong>9% ended in a conviction</strong> that stays on the record. Only <strong>7.5% were dismissed through a driving safety course</strong>.</p>
+          <p>Paying a Texas ticket is a guilty plea, and the conviction sticks. A large number of those drivers were eligible to dismiss the charge instead and didn't. If you're deciding right now, read <a href="/texas/fight-or-dismiss" class="text-primary-deep font-medium hover:underline">pay, fight, or dismiss your ticket</a> before you pay anything.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The course is one of the biggest dismissal paths you control</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Texas courts dismissed about <strong>27.7% of all disposed traffic cases through "compliance" outcomes</strong> in FY2024 — cases where the driver did something (took a course, showed proof of insurance, completed deferred disposition) to earn the dismissal. The driving safety course is the single largest fully-dismissing option a driver initiates.</p>
+          <p>We map every dismissal path, with real volumes, in <a href="/texas/ways-to-dismiss-ticket" class="text-primary-deep font-medium hover:underline">every way to get a Texas ticket dismissed</a>.</p>
+        <div class="overflow-x-auto my-2">
+          <table class="w-full text-sm border-collapse" style="font-family: 'DM Sans', sans-serif;">
+            <thead><tr class="border-b-2 border-border text-left"><th class="py-2 pr-4 font-semibold text-text">Fiscal year</th><th class="py-2 pr-4 font-semibold text-text">Tickets dismissed after a driving safety course</th></tr></thead>
+            <tbody>
+              <tr class="border-b border-border"><td class="py-2 pr-4">FY2019</td><td class="py-2 pr-4">489,565</td></tr>
+              <tr class="border-b border-border"><td class="py-2 pr-4">FY2021</td><td class="py-2 pr-4">305,963</td></tr>
+              <tr class="border-b border-border"><td class="py-2 pr-4">FY2023</td><td class="py-2 pr-4">287,591</td></tr>
+              <tr class="border-b border-border"><td class="py-2 pr-4">FY2024</td><td class="py-2 pr-4">294,534</td></tr>
+              <tr><td class="py-2 pr-4">FY2025</td><td class="py-2 pr-4 font-semibold">304,934</td></tr>
+            </tbody>
+          </table>
+          <p class="text-xs text-text-subtle mt-2">Source: Texas Office of Court Administration, justice &amp; municipal court activity (fiscal year, Sept 1–Aug 31).</p>
+        </div>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">A bigger field of providers splitting a smaller market</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Even as completions fell, the number of approved <strong>online providers grew from 83 in 2019 to 127 in 2023</strong>, while classroom providers shrank from 43 to 27. More schools are competing for a smaller pool of students, and the market is concentrated — roughly the top 5 providers account for about 60% of completions.</p>
+          <p>That crowding is exactly why "official-looking" affiliate sites have multiplied. If you're choosing a course, our guide to <a href="/texas/tdlr-approved" class="text-primary-deep font-medium hover:underline">TDLR-approved courses</a> explains how to tell a state-approved provider from a middleman.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Course vs deferred disposition: the other big path</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Texas courts actually dismiss <em>more</em> tickets through deferred disposition than through a driving safety course — 495,109 vs 294,534 in FY2024 — and that gap has widened. But more volume doesn't make it the better choice for every driver.</p>
+          <p>We break down the trade-offs in <a href="/texas/defensive-driving-vs-deferred-disposition" class="text-primary-deep font-medium hover:underline">defensive driving vs deferred disposition</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Be one of the drivers who dismiss it, not one who pays</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>The data is clear: most Texans pay and convict themselves when many were eligible to dismiss. If you qualify, the online course keeps the ticket off your record for $28.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="/texas/ways-to-dismiss-ticket"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            See every dismissal path
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated June 13, 2026 — original analysis by the Road Ready Safety editorial team using the Texas Department of Licensing &amp; Regulation course-completion report and the Texas Office of Court Administration court activity reports.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

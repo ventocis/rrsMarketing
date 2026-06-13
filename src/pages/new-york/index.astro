@@ -1,0 +1,171 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+const enrollUrl = '/courses/ny-ipirp';
+
+const faqs = [
+  {
+    "q": "Is PIRP the same as defensive driving?",
+    "a": "Yes. The official name is the Point &amp; Insurance Reduction Program (PIRP). The online version is I-PIRP, and providers commonly market it as a \"defensive driving\" or \"accident prevention\" course. They are the same DMV-approved program."
+  },
+  {
+    "q": "Does the New York course remove points from my license?",
+    "a": "No. It subtracts up to 4 points from the total the DMV uses to calculate a suspension, but the points, the violation, and the conviction stay on your driving record (usually for about four years)."
+  },
+  {
+    "q": "How much does it lower my insurance?",
+    "a": "New York law requires a 10% reduction in the base rate of your liability and collision premiums, each year for three years. It does not apply to comprehensive coverage, and it is 10% of those coverages' base rate, not your whole premium."
+  },
+  {
+    "q": "Will it help with a ticket I just got?",
+    "a": "No. Points only attach after you are convicted, so PIRP cannot help a pending ticket and never dismisses one. Fighting the charge is a separate court process."
+  },
+  {
+    "q": "Can anyone take the course, or do I need points?",
+    "a": "Any licensed New York driver can take it for the insurance discount — you do not need any points. Point reduction simply only applies if you have eligible points from the prior 18 months."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: "New York Defensive Driving (PIRP): What It Actually Does",
+  description: "How New York's Point & Insurance Reduction Program (PIRP) actually works: a mandatory 10% insurance discount for 3 years and up to 4 points off your suspension total. What it does, what it doesn't, and how to do it right.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-12',
+  dateModified: '2026-06-12',
+  mainEntityOfPage: `${siteUrl}/new-york`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+<Layout
+  title="New York Defensive Driving (PIRP): Points, Insurance Discount & How It Works"
+  description="How New York's Point & Insurance Reduction Program (PIRP) actually works: a mandatory 10% insurance discount for 3 years and up to 4 points off your suspension total. What it does, what it doesn't, and how to do it right."
+  keywords="New York defensive driving, PIRP, IPIRP, NY point reduction, NY insurance discount, defensive driving NY online"
+  url="/new-york"
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+  </Fragment>
+  <Header />
+
+  <main class="bg-white">
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/" class="text-primary-deep font-medium hover:underline">Home</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">New York Defensive Driving</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          New York Defensive Driving (PIRP): What It Actually Does
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>New York's defensive driving course — officially the <strong>Point &amp; Insurance Reduction Program (PIRP)</strong> — does two specific things. It requires your insurer to cut the base rate of your liability and collision premiums by 10% for three years, and it subtracts up to 4 points from the total the DMV uses to decide whether to suspend your license.</p>
+          <p>It does <strong>not</strong> erase a ticket, remove points or a conviction from your driving record, or help with a ticket you are currently fighting. A lot of course-seller pages blur those lines; this guide keeps them straight, with every fact tied to the New York DMV and state law.</p>
+          <p>The online version is called <strong>I-PIRP</strong>; the classroom version is plain PIRP. Both are DMV-approved and deliver the exact same point and insurance benefits.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">Road Ready Safety is not the New York DMV or a course provider — we refer drivers to a DMV-approved sponsor. This page is general information, not legal or insurance advice. Always confirm current rules at dmv.ny.gov and with your own insurer.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The two benefits, in plain English</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong>Insurance discount:</strong> Under New York Insurance Law § 2336, an insurer must reduce the <em>base rate</em> of your liability and collision coverage by 10% for three years after you finish an approved course. It is 10% off those coverages' base rate — not 10% off your entire bill — and it does not apply to comprehensive coverage. Full details are in our guide to <a href="/new-york/insurance-discount" class="text-primary-deep font-medium hover:underline">the New York 10% insurance discount</a>.</p>
+          <p><strong>Point reduction:</strong> The course subtracts up to 4 points from the total the DMV uses when deciding on a suspension. Crucially, the points are not deleted — the violation and the points stay on your record. We explain exactly what that means in <a href="/new-york/does-defensive-driving-remove-points" class="text-primary-deep font-medium hover:underline">does defensive driving remove points in New York</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What PIRP does NOT do</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>PIRP never dismisses a ticket and never removes a violation, conviction, or points from your driving record. Most violations stay on your record for about four years regardless of the course.</p>
+          <p>It also cannot lower a Driver Responsibility Assessment, and it does nothing for a ticket you have not been convicted of yet — points only attach after a conviction. If you have an open ticket, read <a href="/new-york/defensive-driving-pending-ticket" class="text-primary-deep font-medium hover:underline">why defensive driving won't help a pending ticket</a> first, so you do things in the right order.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Two different clocks: 18 months vs 36 months</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>These two numbers trip up almost everyone. You can use a PIRP course to reduce points <strong>once every 18 months</strong>, and the reduction only applies to convictions from the 18 months before you finish.</p>
+          <p>The insurance discount lasts three years, so you retake the course <strong>every 36 months</strong> to keep the 10% in place. The two clocks run independently — see <a href="/new-york/how-often-can-you-take-it" class="text-primary-deep font-medium hover:underline">how often you can take the course</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Online vs classroom, and how long it takes</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Both formats deliver identical benefits, so most drivers pick online for the flexibility. The DMV sets the course at 320 minutes of instruction (about 5.5 hours); the online version is self-paced but must be finished within 30 days of registering.</p>
+          <p>Compare the formats in <a href="/new-york/online-vs-classroom" class="text-primary-deep font-medium hover:underline">online vs classroom defensive driving</a>, and see the timing rules in <a href="/new-york/course-length" class="text-primary-deep font-medium hover:underline">how long the course takes</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Fighting the ticket is a separate process — and NYC is different</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>If your goal is to beat or reduce the charge itself, that happens in court, not through PIRP. In most of New York, town and village courts allow plea bargaining to a lower or zero-point charge.</p>
+          <p>New York City is the big exception: tickets there go to the DMV's Traffic Violations Bureau (TVB), which does not allow plea bargains at all. We break down the difference in <a href="/new-york/nyc-tvb-vs-town-court" class="text-primary-deep font-medium hover:underline">NYC TVB vs upstate town court</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Is it worth it?</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>For most New York drivers the answer is yes — premiums here are high, so 10% off liability and collision for three years usually outweighs the modest course fee many times over, and the point cushion is pure insurance against a suspension. We run the actual math in <a href="/new-york/is-it-worth-it" class="text-primary-deep font-medium hover:underline">is the 10% discount worth it</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Explore the full New York guide</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong>The basics:</strong> <a href="/new-york/does-defensive-driving-remove-points" class="text-primary-deep font-medium hover:underline">Does it remove points?</a> · <a href="/new-york/insurance-discount" class="text-primary-deep font-medium hover:underline">The 10% insurance discount</a> · <a href="/new-york/how-often-can-you-take-it" class="text-primary-deep font-medium hover:underline">How often can you take it?</a> · <a href="/new-york/course-length" class="text-primary-deep font-medium hover:underline">How long does it take?</a></p>
+          <p><strong>Tickets &amp; court:</strong> <a href="/new-york/defensive-driving-pending-ticket" class="text-primary-deep font-medium hover:underline">Pending ticket? Read this first</a> · <a href="/new-york/nyc-tvb-vs-town-court" class="text-primary-deep font-medium hover:underline">NYC TVB vs town court</a> · <a href="/new-york/2026-point-changes" class="text-primary-deep font-medium hover:underline">New York's 2026 point changes</a></p>
+          <p><strong>Choosing &amp; special cases:</strong> <a href="/new-york/online-vs-classroom" class="text-primary-deep font-medium hover:underline">Online vs classroom</a> · <a href="/new-york/is-it-worth-it" class="text-primary-deep font-medium hover:underline">Is it worth it?</a> · <a href="/new-york/cdl-defensive-driving" class="text-primary-deep font-medium hover:underline">CDL &amp; commercial drivers</a> · <a href="/new-york/5-hour-pre-licensing" class="text-primary-deep font-medium hover:underline">The 5-hour pre-licensing course</a></p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Ready to take the New York course?</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>When you're ready, we'll point you to a DMV-approved online PIRP course so you can earn the 10% insurance discount and your point reduction. You complete the course and get your certificate directly from the provider.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            See the New York Course →
+          </a>
+          <a
+            href="/new-york/is-it-worth-it"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            Is the 10% discount worth it?
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety refers New York drivers to TicketSchool, a DMV-approved PIRP course sponsor, and may earn a commission. We are not the New York DMV or the course provider. This page is general information, not legal or insurance advice — confirm current rules with the NY DMV (dmv.ny.gov) and your insurer.</p>
+          <p class="text-xs text-text-subtle">Last updated June 12, 2026 — verified by the Road Ready Safety editorial team against the New York DMV (dmv.ny.gov) and NY Insurance Law § 2336.</p>
+        </div>
+
+      </div>
+    </article>
+  </main>
+
+  <Footer />
+</Layout>

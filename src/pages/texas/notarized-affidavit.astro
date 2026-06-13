@@ -1,0 +1,145 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    "q": "Do I need a notarized affidavit for defensive driving in Texas?",
+    "a": "Depends entirely on your court and how you submit. Many courts require notarization for mail or online requests (Katy, University Park, Magnolia, Brenham, and others on our verified list) but waive it when you sign in person before the clerk. Plenty of courts don't require notarization at all. Check your specific court before making a notary trip."
+  },
+  {
+    "q": "What does the DSC affidavit actually say?",
+    "a": "It's your sworn statement that you aren't currently taking a driving safety course for another citation and haven't completed one for dismissal in the 12 months preceding the offense — the 12-month rule in affidavit form. Courts verify it against your certified Type 3A driving record, so accuracy matters more than the stamp."
+  },
+  {
+    "q": "Where can I get a DSC affidavit notarized cheaply?",
+    "a": "Your bank (usually free for customers), UPS stores and shipping shops (a few dollars), many libraries, or a Texas online notary by webcam. Sign in the notary's presence — bringing a pre-signed form is the classic mistake that gets the document refused."
+  },
+  {
+    "q": "Can the court clerk notarize my affidavit?",
+    "a": "Several courts effectively do this — Pleasanton and Gainesville notarize in person at no charge, and many others (Melissa, Helotes, Boerne) accept the clerk witnessing your signature in lieu of a notary. It's the strongest argument for submitting in person at notary-strict courts."
+  },
+  {
+    "q": "What is an unsworn declaration and will courts take one?",
+    "a": "Texas law (Civ. Prac. & Rem. Code §132.001) lets most people substitute a signed statement under penalty of perjury — with statutory wording — for a notarized affidavit. Liberty Hill publishes its own form for exactly this. Acceptance for DSC paperwork varies by court, so ask the clerk; when accepted, it removes the notary requirement entirely."
+  },
+  {
+    "q": "What happens if I mail an un-notarized affidavit to a court that requires one?",
+    "a": "Rejection — and the clock doesn't stop while your paperwork boomerangs. Katy's published rule says the judge will not accept it; Pleasanton warns late or incomplete requests are rejected outright. With answer dates measured in days, a bounced affidavit can cost you the dismissal option itself."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: "The Notary Trap: Which Texas Courts Demand a Notarized DSC Affidavit — and Three Ways Around the Stamp",
+  description: "Some Texas courts reject un-notarized DSC requests outright; others waive the notary if you appear in person. Our court-by-court verified list, the in-person waiver trick, and the unsworn-declaration alternative most drivers don't know exists.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-11',
+  dateModified: '2026-06-11',
+  mainEntityOfPage: `${siteUrl}/texas/notarized-affidavit`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Which Texas Courts Require a Notarized Affidavit for Defensive Driving? Our Verified List (2026)"
+    description="Some Texas courts reject un-notarized DSC requests outright; others waive the notary if you appear in person. Our court-by-court verified list, the in-person waiver trick, and the unsworn-declaration alternative most drivers don't know exists."
+    keywords="notarized affidavit defensive driving texas, dsc affidavit notary, driving safety course affidavit texas, notary traffic ticket texas, unsworn declaration texas court"
+    url="/texas/notarized-affidavit"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">Speeding ticket guide</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Notarized affidavits</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          The Notary Trap: Which Texas Courts Demand a Notarized DSC Affidavit — and Three Ways Around the Stamp
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Buried in many Texas courts' defensive-driving instructions is a requirement that quietly kills requests: the sworn affidavit — your statement that you haven't used a course for dismissal in the past 12 months — <strong class="text-text">must be notarized</strong>, and several courts state flatly that un-notarized submissions are rejected. Katy's published rule is blunt: the judge will not accept a non-notarized affidavit.</p>
+          <p>Across the 200+ Texas courts whose procedures we've verified directly, a clear pattern emerged — which courts demand the stamp, which waive it if you show up, and the statutory alternative that works almost everywhere. This is that map.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Procedures vary by court and judge — confirm with the court listed on your citation.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The pattern across 200+ verified courts</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">Notary required for mail/online requests</strong> — our verified list includes Katy (rejected outright without it), University Park, White Settlement, Magnolia, Brenham, Dickinson, Helotes, Floresville, Boerne, Buda, Prosper, Farmersville, Gatesville (the plea form itself), Hempstead (the post-course affidavit), Fairview, and Bulverde (whose emailed requests need a notarized application <em>plus</em> payment within 3 days of approval). The common logic: when the court can't watch you sign, it wants a notary to have done so.</p>
+          <p><strong class="text-text">Notary waived in person</strong> — the most useful pattern: many of the same courts will witness your signature at the clerk's window instead. Melissa says the clerk witnesses in-person signatures; Pleasanton notarizes in person at no charge; Gainesville's clerk notarizes the affidavit free; Helotes and Boerne both waive the stamp for in-person signers. If a notary trip is harder than a courthouse trip, the courthouse <em>is</em> the notary.</p>
+          <p><strong class="text-text">No notary mentioned at all</strong> — plenty of courts use simple signed forms or build the sworn statement into an online flow. Never add a notarization the court didn't ask for; check your court's verified requirements in our <a href="/texas/courts" class="text-primary-deep font-medium hover:underline">directory</a> first.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Three ways to satisfy the requirement without pain</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">1. Sign at the window.</strong> If your court waives notarization for in-person submission — most that require it do — one visit replaces the whole errand. Bring your license, insurance card, and the fee, and the clerk handles the rest.</p>
+          <p><strong class="text-text">2. Use a real notary, cheaply.</strong> Banks notarize free for customers; UPS stores and many libraries charge a few dollars; online notarization (legal in Texas since 2018) handles it by webcam in minutes for mail-in submissions. The affidavit must be signed <em>in the notary's presence</em> — pre-signed documents get refused.</p>
+          <p><strong class="text-text">3. Ask about an unsworn declaration.</strong> Texas law (Civ. Prac. &amp; Rem. Code §132.001) lets most people substitute an unsworn declaration — a signed statement under penalty of perjury with prescribed wording — for a notarized affidavit, and at least one court in our research (Liberty Hill) publishes its own 'Unsworn Declaration in Lieu of a Notary' form. Courts vary in how readily they accept it for DSC paperwork, so ask the clerk — but when accepted, it eliminates the notary entirely.</p>
+          <p>Whichever route: the affidavit's <em>content</em> still matters more than its stamp. It swears you haven't completed a course for dismissal in the 12 months before the offense — and courts check it against your <a href="/texas/type-3a-driving-record" class="text-primary-deep font-medium hover:underline">Type 3A record</a>. A perfectly notarized false statement is the worst document in this entire process.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The affidavit is the court's paperwork — the course is ours</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Once your request clears (stamped or witnessed), the rest is the easy part: <strong class="text-text">$28, online, certificate the instant you finish</strong> — no notary, no mail, no waiting.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="/texas/request-defensive-driving"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            The full request walkthrough
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated June 11, 2026 — verified by the Road Ready Safety editorial team against Tex. Civ. Prac. &amp; Rem. Code §132.001 and the published DSC affidavit requirements of the 200+ Texas courts verified in our directory.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

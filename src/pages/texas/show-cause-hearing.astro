@@ -1,0 +1,148 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    "q": "What is a show cause hearing for a traffic ticket in Texas?",
+    "a": "It's the hearing a court sets when your defensive driving (or deferred disposition) deadline passes without the required documents on file. You appear and explain — show cause — why you didn't comply. The judge then decides: accept late compliance, grant a good-cause extension, convert to another disposition, or enter the conviction."
+  },
+  {
+    "q": "What happens if I miss the show cause hearing?",
+    "a": "The published consequences are consistent across Texas courts: a conviction is entered on the original charge, the maximum fine is assessed, the conviction is reported to DPS, and many courts issue a capias pro fine arrest warrant. Non-appearance is the single worst move available."
+  },
+  {
+    "q": "Can I still submit my certificate at the show cause hearing?",
+    "a": "Often yes — if you completed the course and your only failure was paperwork, bring the signed court copy of the certificate and your Type 3A record to the hearing. Many judges accept late-but-complete compliance. Order the Type 3A online (it's instant) the day the notice arrives."
+  },
+  {
+    "q": "Can the judge give me more time at a show cause hearing?",
+    "a": "Yes — Texas law allows an extension of the completion period for good cause (Tex. Code Crim. Proc. art. 45A.355). It's discretionary: medical events, deployments, and documented delays carry weight; simple forgetfulness usually doesn't. Showing up already enrolled in a course strengthens the ask considerably."
+  },
+  {
+    "q": "Why did the notice go to my old address?",
+    "a": "Courts mail show cause orders to the address on file from your citation or request. If you move during the 90-day window, update the court in writing immediately — a hearing you never heard about can still end in a default conviction and warrant."
+  },
+  {
+    "q": "Is a show cause hearing the same as a trial?",
+    "a": "No. There's no prosecution proving the offense — you already pleaded guilty or no contest when you requested the course. The only question is compliance: did you complete the conditions, and if not, why. It's shorter, less formal, and entirely about your explanation and documents."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: "The Show Cause Hearing: What Happens When Your Defensive Driving Paperwork Doesn't Arrive",
+  description: "Missed your defensive driving deadline and got a show cause notice? What the hearing actually is, what judges decide there, what happens if you skip it, and how to fix things before the date.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-11',
+  dateModified: '2026-06-11',
+  mainEntityOfPage: `${siteUrl}/texas/show-cause-hearing`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Show Cause Hearing for a Texas Traffic Ticket: What It Is and How to Survive It (2026)"
+    description="Missed your defensive driving deadline and got a show cause notice? What the hearing actually is, what judges decide there, what happens if you skip it, and how to fix things before the date."
+    keywords="show cause hearing texas traffic ticket, show cause hearing defensive driving, missed dsc deadline texas, show cause order municipal court, what happens at show cause hearing"
+    url="/texas/show-cause-hearing"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">Speeding ticket guide</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Show cause hearings</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          The Show Cause Hearing: What Happens When Your Defensive Driving Paperwork Doesn't Arrive
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>A show cause hearing is the Texas traffic court's last-chance checkpoint: when your 90-day defensive driving window closes without the certificate and driving record on file, the court orders you to appear and <strong class="text-text">show cause — explain why you didn't comply</strong>. It is not automatically a conviction; it's a hearing where the judge decides what happens next. Skipping it is what converts the problem into a conviction, the maximum fine, and often an arrest warrant.</p>
+          <p>We've verified the show-cause language published by dozens of Texas courts, and the pattern is remarkably consistent. Here's what the hearing is, your realistic outcomes, and what to do before the date arrives.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Procedures vary by court and judge — confirm with the court listed on your citation.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How you end up with one — and what courts actually say</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>The trigger is almost always the same: the 90-day deferral period ends without the completion certificate and Type 3A record in the court's file (art. 45A.356). The court then mails a show cause order to the address it has for you, setting a hearing date. The stakes are spelled out bluntly on court websites we've verified — Huntsville's reads: failure to appear results in <em>"a conviction against you for the offense, and the maximum fine will be imposed"</em>; The Colony warns of a judgment, conviction, and a <em>capias pro fine</em> warrant; Murphy schedules the hearing automatically if documents don't arrive within the 90 days.</p>
+          <p>Two details matter more than people realize. First, <strong class="text-text">the order goes to your address on file</strong> — if you've moved since the citation, you can be defaulted at a hearing you never knew about. Keep your address current with the court. Second, the hearing exists because the law gives judges room to listen: an extension for good cause is statutory (art. 45A.355), and the hearing is where you ask for it.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Your realistic outcomes — and how to improve them</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">If you've actually finished the course but fumbled the paperwork</strong> (record never ordered, certificate unsigned, wrong copy sent), the hearing usually ends well: bring the corrected documents with you. Many judges accept late-but-complete compliance on the spot. Order the <a href="/texas/type-3a-driving-record" class="text-primary-deep font-medium hover:underline">Type 3A online</a> the day you get the notice — it's instant.</p>
+          <p><strong class="text-text">If you haven't finished the course</strong>, come with a reason and a plan. Good cause is the judge's call — medical events, deployments, and genuine document delays get traction; "I forgot" usually doesn't. Ask for a short extension and be ready to show you've already enrolled. <strong class="text-text">If you can't win either way</strong>, ask about converting to deferred disposition or a payment plan — judges have more tools than conviction, but only for people standing in front of them.</p>
+          <p><strong class="text-text">What never works: not showing up.</strong> Every court's published warning converges on the same sequence — conviction entered, maximum fine assessed, warrant possible, and the conviction reported to DPS where your insurer finds it. The hearing is the off-ramp; non-appearance is the cliff. If a warrant has already issued, start with our <a href="/texas/ticket-warrant" class="text-primary-deep font-medium hover:underline">warrant guide</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Better: never get the notice</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Almost every show cause hearing traces to the same three mistakes: starting the course in week 11 of 13, waiting on a mailed certificate, or forgetting the driving record entirely. The fix is sequencing — course in the first month, <a href="/texas/type-3a-driving-record" class="text-primary-deep font-medium hover:underline">record ordered online</a> per your court's timing rule, documents submitted with days to spare (TDLR itself notes new certificates can take up to 5 days to appear in its validation system). Our <a href="/texas/dismissal-timeline" class="text-primary-deep font-medium hover:underline">timeline guide</a> maps the whole sequence.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The cheapest way through a show cause hearing is never needing one</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>An instant certificate removes the most common cause of missed deadlines: <strong class="text-text">$28 all-in, downloadable the moment you finish</strong> — no mail, no fee, no week lost waiting.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="/texas/dismissal-timeline"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            Map your 90 days
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated June 11, 2026 — verified by the Road Ready Safety editorial team against Tex. Code Crim. Proc. arts. 45A.355–.356 and the published show-cause procedures of the Texas municipal courts referenced.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

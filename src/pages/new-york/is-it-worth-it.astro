@@ -1,0 +1,144 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+const enrollUrl = '/courses/ny-ipirp';
+
+const faqs = [
+  {
+    "q": "Does the New York defensive driving discount pay for itself?",
+    "a": "For most drivers, easily. A typical course costs around $25–$45, while 10% off liability and collision for three years often saves several hundred dollars — you usually break even within the first months."
+  },
+  {
+    "q": "How much can I actually save?",
+    "a": "It depends on your premium. The discount is 10% of the base rate of your liability and collision coverage for three years, so the higher those costs, the more you save. Run 10% of that portion of your premium to estimate it."
+  },
+  {
+    "q": "Is it worth it if I have a clean record?",
+    "a": "Often yes. The 10% insurance discount doesn't require any points, so a clean-record driver still benefits on premiums alone."
+  },
+  {
+    "q": "Who sets the course price?",
+    "a": "The provider, not the state. The New York DMV says fees vary by provider, so prices differ between course sponsors."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: "Is the New York Defensive Driving Discount Worth It?",
+  description: "For most New York drivers, a 10% cut to liability and collision for three years easily beats the small course fee — plus you get up to a 4-point cushion. Here's the break-even math.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-12',
+  dateModified: '2026-06-12',
+  mainEntityOfPage: `${siteUrl}/new-york/is-it-worth-it`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+<Layout
+  title="Is the New York Defensive Driving Discount Worth It? (The Real Math)"
+  description="For most New York drivers, a 10% cut to liability and collision for three years easily beats the small course fee — plus you get up to a 4-point cushion. Here's the break-even math."
+  keywords="is defensive driving worth it New York, NY 10 percent discount worth it, defensive driving savings NY, PIRP worth it"
+  url="/new-york/is-it-worth-it"
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+  </Fragment>
+  <Header />
+
+  <main class="bg-white">
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/" class="text-primary-deep font-medium hover:underline">Home</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/new-york" class="text-primary-deep font-medium hover:underline">New York Defensive Driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Is it worth it?</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          Is the New York Defensive Driving Discount Worth It?
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>For most New York drivers, <strong>yes.</strong> New York has some of the highest auto premiums in the country, so a mandatory 10% cut to your liability and collision base rate for three years usually outweighs the modest course fee several times over — and you also get an up-to-4-point cushion against a suspension.</p>
+          <p>Let's run the actual numbers so you can decide for your own policy.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information about New York PIRP (the Point &amp; Insurance Reduction Program), not legal or insurance advice. Confirm current rules with the NY DMV and your insurer.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The break-even is low</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Online courses commonly run somewhere in the $25–$45 range (the state doesn't set the price — providers do). The discount is 10% off the base rate of your liability and collision coverage, every year for three years.</p>
+          <p>If the liability-and-collision base portion of your premium is, say, $1,500 a year, 10% is about $150 a year — roughly $450 over three years. Against a ~$30 course, you're ahead after the first couple of months.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The point cushion is a bonus</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Even if the dollars were a wash, the <a href="/new-york/does-defensive-driving-remove-points" class="text-primary-deep font-medium hover:underline">up-to-4-point reduction</a> is valuable on its own — it lowers the total the DMV uses to decide on a suspension, which matters most exactly when you're closest to losing your license.</p>
+          <p>And the insurance discount doesn't require any points at all, so a clean-record driver still comes out ahead on premiums alone.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">When it might not pay off</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>The savings scale with your premium, so a driver with very low liability and collision costs will save less in absolute dollars. If you carry only minimal coverage, run your own 10% figure before deciding.</p>
+          <p>Remember what it doesn't do, too: it won't dismiss a ticket or remove anything from your record. If that's your goal, see <a href="/new-york/defensive-driving-pending-ticket" class="text-primary-deep font-medium hover:underline">the pending-ticket guide</a> instead.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Do the math, then do the course</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>If 10% of your liability-and-collision premium beats a ~$30 course — and for most New Yorkers it does — it's an easy call. When you're ready, we'll point you to the New York online course.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            See the New York Course →
+          </a>
+          <a
+            href="/new-york/insurance-discount"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            How the discount works
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety refers New York drivers to TicketSchool, a DMV-approved PIRP course sponsor, and may earn a commission. We are not the New York DMV or the course provider. This page is general information, not legal or insurance advice — confirm current rules with the NY DMV (dmv.ny.gov) and your insurer.</p>
+          <p class="text-xs text-text-subtle">Last updated June 12, 2026 — verified by the Road Ready Safety editorial team against the New York DMV (dmv.ny.gov) and NY Insurance Law § 2336.</p>
+        </div>
+
+      </div>
+    </article>
+  </main>
+
+  <Footer />
+</Layout>

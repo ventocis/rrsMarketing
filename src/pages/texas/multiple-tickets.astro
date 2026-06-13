@@ -1,0 +1,149 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    "q": "Can one defensive driving course dismiss multiple tickets in Texas?",
+    "a": "Yes — if the tickets came from the same stop. Since September 1, 2025 (S.B. 296), every eligible charge arising from the same criminal transaction can be dismissed with one course completion, provided each charge independently qualifies. Tickets from different stops still can't share a course."
+  },
+  {
+    "q": "Do I pay more court fees for multiple charges?",
+    "a": "Per charge, yes: court costs apply to each charge, and the statute allows up to a $10 administrative fee per dismissed offense. But you take only one $28 course and order only one $12 driving record — far cheaper than the old reality of dismissing one charge and eating the other."
+  },
+  {
+    "q": "I got a speeding ticket and an expired registration in one stop — does one course cover both?",
+    "a": "Use two tracks: the course covers the speeding (a moving violation), while the registration ticket has its own cheaper fix — register within the statutory window and the court may dismiss it for a fee capped at $20. Don't waste course eligibility on a charge with a $20 compliance dismissal."
+  },
+  {
+    "q": "One of my tickets is for 25+ over — can the course still cover the other one?",
+    "a": "Yes. The excluded charge can't use the course, but it doesn't poison the rest of the stop — eligible companion charges can still be dismissed with the course. The 25-over charge needs its own play, usually deferred disposition."
+  },
+  {
+    "q": "My ticket is from before September 2025 — does the new rule apply?",
+    "a": "If you're requesting now, yes — the multi-charge rule applies based on the request date, not the offense date. Any request made on or after September 1, 2025 gets the new treatment."
+  },
+  {
+    "q": "What if my court says one course per ticket?",
+    "a": "Politely point to the current statute — Code of Criminal Procedure art. 45A.352(b), as amended by S.B. 296 effective September 1, 2025 — which provides that each eligible charge from the same criminal transaction is dismissed on one course completion. Court staff handle thousands of cases under rules that changed recently; a citation to the article usually resolves it."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: "Two Tickets, One Stop: The 2025 Rule That Lets One Course Clear Them All",
+  description: "Since September 2025, one defensive driving course can dismiss every eligible charge from the same Texas traffic stop — a reversal of the old one-ticket rule. How it works, the per-charge fees, and the charges that can't ride along.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-11',
+  dateModified: '2026-06-11',
+  mainEntityOfPage: `${siteUrl}/texas/multiple-tickets`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Multiple Tickets in One Stop in Texas? One Course Can Now Dismiss Them All (2026)"
+    description="Since September 2025, one defensive driving course can dismiss every eligible charge from the same Texas traffic stop — a reversal of the old one-ticket rule. How it works, the per-charge fees, and the charges that can't ride along."
+    keywords="multiple tickets one stop texas, two tickets defensive driving texas, dismiss multiple citations texas, sb 296 multiple charges, one course multiple tickets"
+    url="/texas/multiple-tickets"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">Speeding ticket guide</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Multiple tickets</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          Two Tickets, One Stop: The 2025 Rule That Lets One Course Clear Them All
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Texas traffic stops routinely produce more than one citation — speeding plus expired registration, a red light plus no seatbelt. Until recently, defensive driving could dismiss exactly <strong class="text-text">one</strong> of them, and the rest needed separate handling. That changed on <strong class="text-text">September 1, 2025</strong>: under S.B. 296, <strong class="text-text">every eligible charge arising from the same stop can now be dismissed with a single course completion</strong> (art. 45A.352(b)).</p>
+          <p>It's one of the most driver-friendly changes in years — and because it's recent, many court websites and most other guides don't mention it. Here's exactly how to use it.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Procedures vary by court and judge — confirm with the court listed on your citation.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How the multi-charge dismissal works</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>The mechanics: when you <a href="/texas/request-defensive-driving" class="text-primary-deep font-medium hover:underline">request the course</a> by your answer date, ask the court to apply the request to <strong class="text-text">each eligible charge from the stop</strong>. Each charge must independently qualify — the same eligibility rules apply per charge, not per stop. You complete one 6-hour course, submit one certificate and one Type 3A record, and every qualifying charge is dismissed together.</p>
+          <p>The cost structure: you pay the court's costs per charge as usual, and the statute allows a separate administrative fee of up to <strong class="text-text">$10 per dismissed offense</strong> (art. 45A.358). So two charges might run roughly double the court costs — but only <em>one</em> $28 course and one $12 driving record. Compared to the old world (one dismissal plus paying or deferring the second charge as a conviction risk), the savings are real, and the record protection doubles.</p>
+          <p>Timing note: the rule applies based on <strong class="text-text">when you request</strong>, not when you were cited — any request made on or after September 1, 2025 gets the new treatment, even on an older ticket. Full background in our <a href="/texas/ticket-law-changes-2025" class="text-primary-deep font-medium hover:underline">2025 law changes guide</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Which companion charges can — and can't — ride along</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">Can ride along:</strong> any charge from the stop that would qualify for the course on its own — a second moving violation under the speed bars, a <a href="/texas/seat-belt-ticket" class="text-primary-deep font-medium hover:underline">driver's seatbelt charge</a>, a <a href="/texas/stop-sign-ticket" class="text-primary-deep font-medium hover:underline">stop sign</a> alongside the speeding.</p>
+          <p><strong class="text-text">Can't ride along — but have their own, often cheaper fixes:</strong> <a href="/texas/no-insurance-ticket" class="text-primary-deep font-medium hover:underline">no insurance</a> (mandatory dismissal with proof of coverage valid at the stop), <a href="/texas/expired-registration-ticket" class="text-primary-deep font-medium hover:underline">expired registration</a> ($20 fix-it dismissal), <a href="/texas/expired-license-ticket" class="text-primary-deep font-medium hover:underline">expired license</a> ($20), and <a href="/texas/equipment-violation-ticket" class="text-primary-deep font-medium hover:underline">equipment defects</a> ($10 repair-and-dismiss). The right play for a messy stop is usually parallel tracks: the course for the moving violations, the compliance statutes for the paperwork tickets.</p>
+          <p><strong class="text-text">Can't be fixed by anything on this page:</strong> charges excluded from the course entirely — 25+ mph over, work-zone-with-workers, school bus passing, accident-related charges. If one charge from your stop is excluded, the others can still use the course; the excluded one needs <a href="/texas/speeding-25-over" class="text-primary-deep font-medium hover:underline">its own strategy</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How to actually ask for it</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Because the rule is new, don't assume the clerk will volunteer it. When you make your request, list <strong class="text-text">every citation number from the stop</strong> and state that you're requesting the driving safety course for each eligible charge arising from the same criminal transaction under art. 45A.352(b). If a court's form only has room for one citation, attach a sheet listing the rest and confirm with the clerk that all are covered by the single course. Get the court's order confirming which charges are included before you take the course — that order is your protection if a charge gets missed.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">One course, one evening, every eligible charge</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>The multi-charge rule makes the course the best value in Texas traffic law: <strong class="text-text">$28 all-in, one 6-hour evening, every qualifying citation from the stop dismissed</strong>.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="/texas/eligibility-tracker"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            Check each charge
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated June 11, 2026 — verified by the Road Ready Safety editorial team against Tex. Code Crim. Proc. arts. 45A.352(b) &amp; 45A.358 (S.B. 296, eff. Sept. 1, 2025) and Tex. Transp. Code §§502.407, 521.026, 547.004 &amp; 601.193.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

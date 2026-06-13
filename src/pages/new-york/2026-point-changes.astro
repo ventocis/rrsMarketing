@@ -1,0 +1,144 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+const enrollUrl = '/courses/ny-ipirp';
+
+const faqs = [
+  {
+    "q": "Did New York lower the suspension threshold to 10 points in 2026?",
+    "a": "No. Per the DMV, the threshold is still 11 points. What changed is the look-back window, which went from 18 months to 24 months. The widely repeated \"10 points\" figure is not supported by any DMV source."
+  },
+  {
+    "q": "When did the 2026 point changes take effect?",
+    "a": "February 16, 2026."
+  },
+  {
+    "q": "What violations went up in points?",
+    "a": "Among the confirmed increases: passing a stopped school bus (5 to 8), work-zone speeding (now 8), bridge strikes/over-height vehicles (0 to 8), alcohol/drug-related incidents (now 11), aggravated unlicensed operation (now 11), leaving the scene of a personal-injury crash (3 to 5), and failure to exercise due care (2 to 5)."
+  },
+  {
+    "q": "Does PIRP still reduce 4 points under the new system?",
+    "a": "Yes. The course still subtracts up to 4 points from your suspension total. With higher point values and a longer look-back, that cushion is arguably more useful now."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: "New York's 2026 Driver Point Changes: What Actually Changed",
+  description: "On Feb 16, 2026 New York raised point values for several violations and extended the suspension look-back to 24 months. The threshold is still 11 points — not 10. What changed, and why PIRP matters more now.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-12',
+  dateModified: '2026-06-12',
+  mainEntityOfPage: `${siteUrl}/new-york/2026-point-changes`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+<Layout
+  title="New York's 2026 Driver Point Changes: What Actually Changed (Not 10 Points)"
+  description="On Feb 16, 2026 New York raised point values for several violations and extended the suspension look-back to 24 months. The threshold is still 11 points — not 10. What changed, and why PIRP matters more now."
+  keywords="New York 2026 point system, NY point changes 2026, 11 points 24 months, NY driver point values 2026, school bus 8 points NY"
+  url="/new-york/2026-point-changes"
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+  </Fragment>
+  <Header />
+
+  <main class="bg-white">
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/" class="text-primary-deep font-medium hover:underline">Home</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/new-york" class="text-primary-deep font-medium hover:underline">New York Defensive Driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">New York's 2026 point changes</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          New York's 2026 Driver Point Changes: What Actually Changed
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>On <strong>February 16, 2026</strong>, New York updated its driver point system. Two things changed: several violations now carry <strong>higher point values</strong>, and the window the DMV looks back over for suspensions grew from 18 to <strong>24 months</strong>.</p>
+          <p>One correction up front, because it's everywhere online: the suspension threshold did <strong>not</strong> drop to 10 points. Per the DMV it's still <strong>11 points</strong> — only the look-back window changed. Here's the accurate picture.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">Point values and rules change. This page reflects the New York DMV's February 2026 update; always confirm current point values and suspension rules at dmv.ny.gov before relying on them.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The threshold: still 11 points, now over 24 months</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>New York may suspend a license when a driver reaches <strong>11 points within 24 months</strong>. Before the change it was 11 points within 18 months — so the point total that triggers a suspension is the same, but the DMV now counts convictions over a longer window.</p>
+          <p>A lot of news and law-firm pages claim the threshold dropped to "10 points." That figure does not appear on any DMV page and contradicts the DMV's own materials. Treat 11 points / 24 months as the rule.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Higher point values for several violations</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>The DMV raised points on a number of serious violations. Confirmed changes include: passing a stopped school bus (5 to 8), speeding in a work zone (now 8), an over-height vehicle or bridge strike (0 to 8), any alcohol- or drug-related conviction or incident (now 11), aggravated unlicensed operation (now 11), leaving the scene of a personal-injury crash (3 to 5), failure to exercise due care (2 to 5), facilitating aggravated unlicensed operation (now 5), and speed contests or races (now 5).</p>
+          <p>Some things did not change: a mobile-phone or portable-device violation is still 5 points, and equipment violations are still 0. Ordinary (non-work-zone) speeding tiers were not changed by this update.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Why PIRP matters more now</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>With heavier point values and a longer 24-month look-back, it's easier to accumulate points toward a suspension — which makes the <a href="/new-york/does-defensive-driving-remove-points" class="text-primary-deep font-medium hover:underline">up-to-4-point reduction</a> from a defensive driving course more valuable, not less.</p>
+          <p>PIRP still subtracts up to 4 points from your suspension total, exactly as before. The DMV has not published changes to how PIRP works under the new system, so the same 18-month point-reduction rule still applies — see <a href="/new-york/how-often-can-you-take-it" class="text-primary-deep font-medium hover:underline">how often you can take it</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Build in a point cushion</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Under the stricter 2026 rules, an up-to-4-point reduction plus a three-year insurance discount is worth more than ever. When you're ready, we'll point you to the New York online course.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            See the New York Course →
+          </a>
+          <a
+            href="/new-york/does-defensive-driving-remove-points"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            How point reduction works
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety refers New York drivers to TicketSchool, a DMV-approved PIRP course sponsor, and may earn a commission. We are not the New York DMV or the course provider. This page is general information, not legal or insurance advice — confirm current rules with the NY DMV (dmv.ny.gov) and your insurer.</p>
+          <p class="text-xs text-text-subtle">Last updated June 12, 2026 — verified by the Road Ready Safety editorial team against the New York DMV's February 2026 point-value update (dmv.ny.gov).</p>
+        </div>
+
+      </div>
+    </article>
+  </main>
+
+  <Footer />
+</Layout>

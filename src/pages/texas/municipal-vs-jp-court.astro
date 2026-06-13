@@ -1,0 +1,147 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    "q": "How do I know if my ticket is municipal court or JP court?",
+    "a": "Read the citation — the court's name and address are printed on it. The shortcut: a city police officer writes into that city's municipal court; a sheriff's deputy or DPS trooper writes into the justice of the peace court for the precinct where the stop occurred."
+  },
+  {
+    "q": "Can I take defensive driving for a JP court ticket?",
+    "a": "Yes — the dismissal statute applies identically to justice and municipal courts. Same eligibility, same 90-day window, same documents. JP courts more often handle requests by mail rather than portals, and rural ones publish less online, so calling the clerk first is more often necessary."
+  },
+  {
+    "q": "What does the precinct number on my JP citation mean?",
+    "a": "Counties are divided into JP precincts, each with one or more 'places' (judges) — 'JP 3-1' is Precinct 3, Place 1. The precinct is determined by where the offense happened. Your paperwork must go to that specific precinct court, not just any JP office in the county."
+  },
+  {
+    "q": "Why did my DPS trooper ticket go to a court in a town I've never heard of?",
+    "a": "Trooper tickets file in the JP precinct covering the stretch of highway where you were stopped — often a small county seat far from where you live. It's normal, and the entire dismissal can usually be handled by mail without ever visiting."
+  },
+  {
+    "q": "Are JP court fees different from municipal court fees?",
+    "a": "The statutory pieces are identical, and in our verified research both court types cluster around the same $144 ($169 school zone) defensive-driving totals. One small difference: the $25 school-zone child safety fund fine applies in municipal courts specifically."
+  },
+  {
+    "q": "What happens if I send my paperwork to the wrong court?",
+    "a": "It gets rejected or sits unprocessed — courts don't forward case documents to other jurisdictions, and your deadlines keep running while the envelope boomerangs. Always match the court name on your citation exactly; if two courts share a building or name, call and confirm before sending."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: "Municipal Court or JP Court? Which One Has Your Texas Ticket — and Why It Matters",
+  description: "City officer = municipal court; sheriff or DPS trooper = justice of the peace court. How to tell which of Texas's ~1,700 courts has your ticket, what differs between them, and why sending paperwork to the wrong one is a real rejection.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-11',
+  dateModified: '2026-06-11',
+  mainEntityOfPage: `${siteUrl}/texas/municipal-vs-jp-court`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Municipal Court vs. JP Court in Texas: Which One Has Your Ticket, and Why It Matters (2026)"
+    description="City officer = municipal court; sheriff or DPS trooper = justice of the peace court. How to tell which of Texas's ~1,700 courts has your ticket, what differs between them, and why sending paperwork to the wrong one is a real rejection."
+    keywords="municipal court vs jp court texas, justice of the peace ticket texas, which court has my ticket texas, jp court speeding ticket, dps trooper ticket which court"
+    url="/texas/municipal-vs-jp-court"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">Speeding ticket guide</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Municipal vs JP courts</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          Municipal Court or JP Court? Which One Has Your Texas Ticket — and Why It Matters
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Texas runs roughly <strong class="text-text">1,700 trial courts for traffic tickets</strong>, split into two families: <strong class="text-text">municipal courts</strong> (one or more per incorporated city) and <strong class="text-text">justice of the peace courts</strong> (one or more per county precinct). Your citation went to exactly one of them, and the fastest way to know which is to remember who stopped you: <strong class="text-text">a city police officer means that city's municipal court; a sheriff's deputy or DPS trooper almost always means a county JP court.</strong></p>
+          <p>Both can dismiss your ticket through defensive driving under the same state law — but the procedural details differ, and paperwork sent to the wrong court is simply rejected. Here's the map.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Procedures vary by court and judge — confirm with the court listed on your citation.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The 30-second jurisdiction test</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">Who stopped you?</strong> City PD writes into the city's municipal court. Sheriff's deputies and DPS troopers (the highway patrol) write into the JP court for the precinct where the stop happened — which is why a ticket on I-35 outside city limits lands at a courthouse you've never heard of. <strong class="text-text">Where were you?</strong> Inside city limits usually means municipal; open highway or unincorporated county means JP. And when in doubt, <strong class="text-text">read the citation</strong> — the court's name, address, and phone are printed on it, and that printed court is the only one that can touch your case.</p>
+          <p>One recurring trap from our court research: many Texas cities and their counties share names and even buildings. A 'Travis County' JP ticket is not an 'Austin Municipal' ticket; a Harris County JP precinct won't forward documents to Houston Municipal. Wrong-court submissions are one of the rejection patterns we documented in our <a href="/texas/certificate-rejected" class="text-primary-deep font-medium hover:underline">certificate rejection guide</a> — the court named on the citation is the whole answer.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What's actually different between them</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">The law is the same; the office is different.</strong> Both court types apply the identical defensive-driving statute (CCP ch. 45A applies to offenses 'within the jurisdiction of a justice or municipal court'), the same eligibility rules, the same 90-day window, and similar fee stacks. What varies is administration: municipal courts in cities tend to have bigger clerk staffs, online portals, and published DSC pages; JP courts — especially rural ones — run leaner, take more business by mail and phone-then-mail, and publish less online. JP judges are also elected county officials who handle small claims and evictions alongside traffic, so traffic dockets may run on specific days only.</p>
+          <p>Practical differences we've verified across 200+ courts: municipal courts more often offer email/portal DSC requests, while JP courts more often want certified mail; fee totals cluster at the same $144/$169 convention in both; and JP precinct numbering confuses people — 'JP 3-1' means Precinct 3, Place 1, and the right one is determined by where the offense happened, not where you live. Our <a href="/texas/courts" class="text-primary-deep font-medium hover:underline">directory covers both court types</a> with verified contacts.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Same playbook, addressed correctly</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Once you've identified the court, everything on this site applies identically: <a href="/texas/request-defensive-driving" class="text-primary-deep font-medium hover:underline">request by the answer date</a>, court approval, the 6-hour course, certificate plus <a href="/texas/type-3a-driving-record" class="text-primary-deep font-medium hover:underline">Type 3A record</a> inside 90 days. The only jurisdiction-specific work is the address on the envelope and the court's preferred method — both printed on your citation and verified in our directory. When the citation is lost, our <a href="/texas/lost-ticket" class="text-primary-deep font-medium hover:underline">lost-ticket guide</a> walks through reconstructing which court has the case.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Either court, same six hours</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Municipal or JP, the course they accept is identical: <strong class="text-text">$28 all-in, TDLR-approved, certificate the moment you finish</strong> — just address the paperwork to the court on the citation.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="/texas/courts"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            Find your exact court
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated June 11, 2026 — verified by the Road Ready Safety editorial team against Tex. Code Crim. Proc. art. 45A.351(a) and the verified procedures of 200+ Texas municipal and JP courts in our directory.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

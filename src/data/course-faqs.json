@@ -1,0 +1,44 @@
+{
+  "_note": "FAQ sets keyed by a course's faq_set_key. The course page renders an FAQ section + FAQPage schema ONLY when the course's faq_set_key matches an entry here. Courses without a matching key render no FAQ (unchanged output). All answers must be source-verifiable.",
+  "newyork_ipirp": {
+    "heading": "New York Defensive Driving (PIRP) — Frequently Asked Questions",
+    "items": [
+      {
+        "q": "Does a New York defensive driving course remove points from my license?",
+        "a": "Not exactly. Completing the Point & Insurance Reduction Program (PIRP) subtracts up to 4 points when the DMV calculates whether you hit the suspension threshold — but it does not physically remove the points, the violation, or the conviction from your driving record, which can stay on your record for about four years. It also does not lower a Driver Responsibility Assessment."
+      },
+      {
+        "q": "How much will a NY defensive driving course lower my insurance?",
+        "a": "New York law requires insurers to cut the base rate of your liability and collision premiums by 10% each year for three years after you complete an approved course. It is 10% off those coverages' base rate — not 10% off your entire bill — and it does not apply to comprehensive coverage. The discount is mandatory under NY Insurance Law § 2336."
+      },
+      {
+        "q": "How often can I take the course?",
+        "a": "There are two separate clocks. For point reduction, you can use a PIRP course once every 18 months. For the insurance discount, you retake the course every 36 months (three years) to keep the 10% reduction in place."
+      },
+      {
+        "q": "Will defensive driving help with a ticket I just received?",
+        "a": "No. Points only land on your record after you are convicted, so PIRP cannot help a pending ticket, and it never dismisses a ticket. If you want to fight or reduce the charge itself, that happens with the court (or, in New York City, the DMV Traffic Violations Bureau) — separately from PIRP."
+      },
+      {
+        "q": "How long is the course and how fast can I finish it online?",
+        "a": "The DMV requires 320 minutes of instruction — about 5.5 hours. The online version (I-PIRP) is self-paced and can be done in multiple sittings, but you must finish it within 30 days of registering. There is no single final exam, though lessons include quizzes and you generally need 70% to pass."
+      },
+      {
+        "q": "How do the point reduction and insurance discount actually get applied?",
+        "a": "The course provider reports your point reduction to the NY DMV electronically (typically within about 10 weeks). For the insurance discount, you give your completion certificate to your auto insurer — not the DMV. Submit it within 90 days of completing the course to keep the discount retroactive to your completion date."
+      },
+      {
+        "q": "Is this the same thing as PIRP, I-PIRP, or 'defensive driving'?",
+        "a": "Yes. The official program name is the Point & Insurance Reduction Program (PIRP). The online format is called I-PIRP, and providers commonly market it as a 'defensive driving' or 'accident prevention' course. They are the same DMV-approved program."
+      },
+      {
+        "q": "Who is eligible to take it?",
+        "a": "Any licensed New York driver can take the course for the insurance discount — you do not need to have any points. Point reduction only applies if you have eligible points from convictions in the 18 months before you finish the course."
+      },
+      {
+        "q": "Do I take this course through Road Ready Safety?",
+        "a": "No. Road Ready Safety is not the DMV or the course provider. We refer New York drivers to TicketSchool, a DMV-approved course sponsor, and may earn a commission if you enroll through our link. You complete the course and receive your certificate directly from the provider."
+      }
+    ]
+  }
+}

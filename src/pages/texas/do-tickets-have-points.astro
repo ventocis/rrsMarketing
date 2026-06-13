@@ -1,0 +1,146 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    "q": "Does Texas still have points on your license?",
+    "a": "No. Texas eliminated the driver points system when it repealed the Driver Responsibility Program through HB 2048, effective September 1, 2019. The DPS removed previously assessed points from drivers' records."
+  },
+  {
+    "q": "Do Texas tickets still have surcharges?",
+    "a": "No. The annual surcharges were part of the Driver Responsibility Program, which was repealed effective September 1, 2019. There are no DRP surcharges today."
+  },
+  {
+    "q": "If there are no points, why dismiss a ticket?",
+    "a": "Because a conviction still appears on your driving record, can still lead to a suspension (four convictions in 12 months, or seven in 24), and can still raise your insurance. Dismissing the ticket keeps the conviction off your record."
+  },
+  {
+    "q": "Can too many tickets still suspend my Texas license?",
+    "a": "Yes. Even without points, the state can suspend a license for four or more moving-violation convictions within 12 months, or seven or more within 24 months."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: "Do Texas Traffic Tickets Still Have Points or Surcharges?",
+  description: "Texas repealed its points-and-surcharge system in 2019. There are no driver points or surcharges today — but convictions still hit your record and insurance, which is why dismissing a ticket still matters.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-13',
+  dateModified: '2026-06-13',
+  mainEntityOfPage: `${siteUrl}/texas/do-tickets-have-points`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Do Texas Traffic Tickets Still Have Points or Surcharges? (No — Here's What Changed)"
+    description="Texas repealed its points-and-surcharge system in 2019. There are no driver points or surcharges today — but convictions still hit your record and insurance, which is why dismissing a ticket still matters."
+    keywords="do Texas tickets have points, Texas surcharges repealed, Texas driver responsibility program, Texas no points system, Texas traffic ticket points 2026"
+    url="/texas/do-tickets-have-points"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/texas/defensive-driving-statistics" class="text-primary-deep font-medium hover:underline">Texas DSC statistics</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Do tickets still have points?</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          Do Texas Traffic Tickets Still Have Points or Surcharges?
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Short answer: <strong>no.</strong> Texas eliminated its driver "points" system and the surcharges that came with it. The state repealed the Driver Responsibility Program through House Bill 2048, <strong>effective September 1, 2019</strong>, and the Department of Public Safety removed previously assessed points from drivers' records.</p>
+          <p>A lot of websites still describe Texas surcharges as if they're current — they're not. But that doesn't mean a ticket is harmless. Here's what actually happens now.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page describes Texas law as of June 2026. Laws change — confirm current rules with the Texas Department of Public Safety (dps.texas.gov) and the court on your citation before relying on them.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What was repealed in 2019</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>The old Driver Responsibility Program assigned points for moving-violation convictions and charged annual surcharges to drivers who accumulated them. House Bill 2048 (86th Texas Legislature) repealed that entire program — Chapter 708 of the Transportation Code — effective September 1, 2019.</p>
+          <p>The Department of Public Safety has stated it no longer assesses points for moving violations and that previously assessed points were removed from drivers' records. So today there is <strong>no points system and no surcharge system</strong> in Texas.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What replaced it</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>To make up the lost surcharge revenue, HB 2048 raised certain fines and fees rather than reinstating points — including a general state traffic fine (set at $50) and new state fines tied to DWI convictions.</p>
+          <p>In other words, the penalties shifted from an ongoing surcharge to one-time fines at conviction. Convictions still carry their own statutory fines and consequences.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Convictions still count — even without points</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Losing the points system did not make tickets consequence-free. A moving-violation conviction still appears on your Texas driving record, and the state can still suspend a license for too many convictions — generally <strong>four or more moving violations within 12 months, or seven or more within 24 months.</strong></p>
+          <p>And insurers price off your driving record, so convictions can still raise your premiums. We cover that in <a href="/texas/ticket-insurance-impact" class="text-primary-deep font-medium hover:underline">how a ticket affects your insurance</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Why dismissing a ticket still matters</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Because the conviction — not "points" — is what hurts you, keeping the conviction off your record is the whole game. Under Texas law (Code of Criminal Procedure Chapter 45A), a charge dismissed through a driving safety course may not be made part of your driving record or used against you.</p>
+          <p>That's why hundreds of thousands of Texans still dismiss tickets with the course every year. See the full picture in <a href="/texas/defensive-driving-statistics" class="text-primary-deep font-medium hover:underline">Texas defensive driving by the numbers</a>, or start with <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">how dismissal works</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">No points — but the conviction still counts</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Texas dropped points and surcharges, but a conviction still sticks to your record and your premiums. If you're eligible, the $28 course keeps the ticket off your record entirely.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="/texas/ticket-insurance-impact"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            How a ticket affects insurance
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated June 13, 2026 — original analysis by the Road Ready Safety editorial team using Texas House Bill 2048 (86th Legislature), the Texas Department of Public Safety, and the Texas Code of Criminal Procedure.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

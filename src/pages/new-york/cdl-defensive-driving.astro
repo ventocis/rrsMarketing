@@ -1,0 +1,144 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+const enrollUrl = '/courses/ny-ipirp';
+
+const faqs = [
+  {
+    "q": "Can a CDL holder take New York defensive driving?",
+    "a": "Yes. CDL holders can take a PIRP course. The 10% insurance discount applies to your personal auto policy, and the point reduction applies to your New York driver record."
+  },
+  {
+    "q": "Does the discount apply to my commercial policy?",
+    "a": "No. The mandatory 10% reduction applies to the base rate of liability and collision on your personal auto policy, not a commercial or employer fleet policy."
+  },
+  {
+    "q": "Will the course fix a CDL disqualification?",
+    "a": "No. PIRP reduces up to 4 points from your suspension total, but it doesn't override CDL-specific disqualification rules for serious violations. Confirm those with the DMV and your employer."
+  },
+  {
+    "q": "Is the point reduction different for commercial drivers?",
+    "a": "The up-to-4-point reduction on your driver record works the same way. The nuance is around CDL-specific consequences and carrier rules, which a points course doesn't change."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: "Can CDL and Commercial Drivers Take New York Defensive Driving?",
+  description: "Yes — CDL holders can take a New York PIRP course. The 10% discount applies to your personal auto policy, and point reduction works on your driver record. Here's the nuance for commercial drivers.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-12',
+  dateModified: '2026-06-12',
+  mainEntityOfPage: `${siteUrl}/new-york/cdl-defensive-driving`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+<Layout
+  title="Can CDL & Commercial Drivers Take New York Defensive Driving?"
+  description="Yes — CDL holders can take a New York PIRP course. The 10% discount applies to your personal auto policy, and point reduction works on your driver record. Here's the nuance for commercial drivers."
+  keywords="CDL defensive driving New York, commercial driver PIRP NY, CDL points New York, defensive driving CDL insurance discount"
+  url="/new-york/cdl-defensive-driving"
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+  </Fragment>
+  <Header />
+
+  <main class="bg-white">
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/" class="text-primary-deep font-medium hover:underline">Home</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/new-york" class="text-primary-deep font-medium hover:underline">New York Defensive Driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">CDL & commercial drivers</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          Can CDL and Commercial Drivers Take New York Defensive Driving?
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Yes — holding a commercial driver's license doesn't stop you from taking a New York PIRP course. The thing to understand is <em>where</em> the benefits land: the <strong>10% insurance discount applies to your personal auto policy</strong>, and the point reduction works on your New York driver record.</p>
+          <p>Here's how it plays out for commercial drivers, with the honest caveats.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information about New York PIRP (the Point &amp; Insurance Reduction Program), not legal or insurance advice. Confirm current rules with the NY DMV and your insurer.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The insurance discount and your personal policy</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>New York's mandatory 10% reduction applies to the base rate of the liability and collision coverage on your <strong>personal</strong> auto policy. It is not a discount on a commercial fleet or employer policy. See <a href="/new-york/insurance-discount" class="text-primary-deep font-medium hover:underline">how the discount works</a> for the mechanics.</p>
+          <p>So if you hold a CDL but also insure a personal vehicle, you can still earn the discount on that personal policy by completing the course.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Point reduction for CDL holders</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Point reduction applies to points on your New York driver record, the same up-to-4-point subtraction every driver gets — see <a href="/new-york/does-defensive-driving-remove-points" class="text-primary-deep font-medium hover:underline">how it works</a>.</p>
+          <p>Commercial drivers should be aware that some serious violations carry separate consequences for CDL privileges that a points course does not erase, and that an employer or carrier may have its own rules. PIRP reduces your suspension-point total; it doesn't override CDL-specific disqualification rules.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">When in doubt, confirm the specifics</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Because commercial-driver rules can get detailed — and depend on the vehicle involved and your carrier — confirm anything CDL-specific with the New York DMV and your employer before relying on it.</p>
+          <p>For the core program rules that apply to everyone, the <a href="/new-york" class="text-primary-deep font-medium hover:underline">main New York guide</a> covers points, insurance, and timing.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Save on your personal policy</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>If you hold a CDL and insure a personal vehicle, the course still earns the 10% discount on that policy plus a point cushion. When you're ready, we'll point you to the New York online course.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            See the New York Course →
+          </a>
+          <a
+            href="/new-york"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            Back to the New York guide
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety refers New York drivers to TicketSchool, a DMV-approved PIRP course sponsor, and may earn a commission. We are not the New York DMV or the course provider. This page is general information, not legal or insurance advice — confirm current rules with the NY DMV (dmv.ny.gov) and your insurer.</p>
+          <p class="text-xs text-text-subtle">Last updated June 12, 2026 — verified by the Road Ready Safety editorial team against the New York DMV (dmv.ny.gov).</p>
+        </div>
+
+      </div>
+    </article>
+  </main>
+
+  <Footer />
+</Layout>

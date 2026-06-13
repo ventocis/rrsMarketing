@@ -1,0 +1,154 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+const enrollUrl = '/courses/ny-ipirp';
+
+const faqs = [
+  {
+    "q": "How much does defensive driving lower insurance in New York?",
+    "a": "By law, 10% off the base rate of your liability and collision premiums, each year for three years. It does not apply to comprehensive coverage, and it's 10% of those coverages' base rate rather than your entire bill."
+  },
+  {
+    "q": "Is the discount mandatory?",
+    "a": "Yes. New York Insurance Law § 2336 requires insurers to provide the reduction for three years after you complete an approved course."
+  },
+  {
+    "q": "Do I send the certificate to the DMV or my insurer?",
+    "a": "Your insurer. The DMV handles the point reduction automatically through the course sponsor; for the discount, you give the completion certificate to your insurance company or agent."
+  },
+  {
+    "q": "Is there a deadline to submit it?",
+    "a": "Submit the certificate to your insurer within 90 days of completing the course to keep the discount retroactive to your completion date. Within 45 days before a renewal, the insurer can apply it at the new policy period."
+  },
+  {
+    "q": "How long does the discount last?",
+    "a": "Three years. To keep it, you retake an approved course every 36 months."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: "How the New York 10% Insurance Discount Works",
+  description: "New York law requires a 10% cut to the base rate of your liability and collision premiums for 3 years after defensive driving. How it applies, how to claim it, and a worked dollar example.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-12',
+  dateModified: '2026-06-12',
+  mainEntityOfPage: `${siteUrl}/new-york/insurance-discount`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+<Layout
+  title="How the New York Defensive Driving Insurance Discount Works (10% for 3 Years)"
+  description="New York law requires a 10% cut to the base rate of your liability and collision premiums for 3 years after defensive driving. How it applies, how to claim it, and a worked dollar example."
+  keywords="New York defensive driving insurance discount, 10 percent NY insurance, PIRP insurance discount, how much does defensive driving save NY"
+  url="/new-york/insurance-discount"
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+  </Fragment>
+  <Header />
+
+  <main class="bg-white">
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/" class="text-primary-deep font-medium hover:underline">Home</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/new-york" class="text-primary-deep font-medium hover:underline">New York Defensive Driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">The 10% insurance discount</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          How the New York 10% Insurance Discount Works
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Finish an approved New York defensive driving course and your insurer must cut the <strong>base rate of your liability and collision coverage by 10%, every year for three years.</strong> It's mandatory under New York Insurance Law § 2336 — not a courtesy discount the company can decline.</p>
+          <p>The catch most pages skip: it's 10% off the base rate of <em>those two coverages</em>, not 10% off your whole bill, and it doesn't touch comprehensive coverage.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information about New York PIRP (the Point &amp; Insurance Reduction Program), not legal or insurance advice. Confirm current rules with the NY DMV and your insurer.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What coverages the 10% applies to</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>The reduction applies to the base rate of your <strong>liability and collision</strong> premiums. Comprehensive coverage is not included, so your total savings depend on how much of your premium is liability and collision.</p>
+          <p>The discount goes to the principal operator who is an insured driver on the policy. It is a flat 10% — taking the course repeatedly does not stack it into a bigger discount.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">A worked example</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Suppose the liability-and-collision base portion of your premium is about $1,800 a year. A 10% reduction is roughly $180 a year, or about $540 over the three years the discount lasts.</p>
+          <p>Against a typical online course fee of around $25–$45, the discount usually pays for itself many times over — which is why, for most New York drivers, it's worth doing. We walk through the full break-even in <a href="/new-york/is-it-worth-it" class="text-primary-deep font-medium hover:underline">is the 10% discount worth it</a>. (Your actual savings depend on your premium and insurer; this is an illustration, not a quote.)</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How to actually claim it</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Unlike the point reduction, the insurance discount is <strong>not</strong> handled by the DMV. You give your course completion certificate to your auto insurer or agent, and they apply the reduction.</p>
+          <p>Timing matters: present the certificate to your insurer within <strong>90 days</strong> of completing the course to keep the discount retroactive to your completion date. If you present it within 45 days before a renewal, the insurer can start it at the new policy period.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Keeping the discount going</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>The discount lasts three years, so you retake the course <strong>every 36 months</strong> to keep it. That's a different clock from the 18-month point-reduction rule — see <a href="/new-york/how-often-can-you-take-it" class="text-primary-deep font-medium hover:underline">how often you can take it</a>.</p>
+          <p>And remember the discount is separate from points: the same course also gives you <a href="/new-york/does-defensive-driving-remove-points" class="text-primary-deep font-medium hover:underline">up to a 4-point reduction</a> on your suspension total.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Lock in your 10% for three years</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>One DMV-approved course earns the mandatory three-year discount plus your point reduction. When you're ready, we'll point you to the New York online course.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            See the New York Course →
+          </a>
+          <a
+            href="/new-york/is-it-worth-it"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            See the worth-it math
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety refers New York drivers to TicketSchool, a DMV-approved PIRP course sponsor, and may earn a commission. We are not the New York DMV or the course provider. This page is general information, not legal or insurance advice — confirm current rules with the NY DMV (dmv.ny.gov) and your insurer.</p>
+          <p class="text-xs text-text-subtle">Last updated June 12, 2026 — verified by the Road Ready Safety editorial team against New York Insurance Law § 2336 and the New York DMV (dmv.ny.gov).</p>
+        </div>
+
+      </div>
+    </article>
+  </main>
+
+  <Footer />
+</Layout>

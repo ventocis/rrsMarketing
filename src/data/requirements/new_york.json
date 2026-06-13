@@ -2,26 +2,31 @@
   "state": "New York",
   "courses": [
     {
-      "course_name": "Point & Insurance Reduction Program (IPIRP) \u2013 6-hour",
-      "who_for": "NY licensed drivers seeking up to 4-point reduction and/or 10% insurance discount.",
+      "course_name": "Point & Insurance Reduction Program (PIRP / I-PIRP)",
+      "who_for": "NY licensed drivers seeking up to a 4-point reduction and/or a 10% insurance discount.",
       "requirements": [
-        "DMV-approved online or classroom",
-        "Can be taken once every 18 months for point reduction",
-        "Insurance discount valid 3 years"
+        "DMV-approved, online (I-PIRP) or classroom",
+        "320 minutes of instruction (about 5.5 hours); online is self-paced but must be finished within 30 days of registration",
+        "Point reduction: up to 4 points, once every 18 months (subtracted for suspension purposes only \u2013 the points and violation stay on your record)",
+        "Insurance discount: 10% off the base rate of liability and collision premiums each year for 3 years; retake every 36 months to keep it"
       ],
       "submission": {
-        "certificate": "Provider reports completion to DMV; driver submits certificate to insurer",
-        "reporting": "Automatic DMV update (points); physical certificate to insurer",
-        "deadlines": "Insurance certificate should be submitted within 90 days for retroactive discount"
+        "certificate": "Provider reports your point reduction to the NY DMV electronically; you give the completion certificate to your auto insurer",
+        "reporting": "DMV is notified of the point reduction within about 10 weeks; the insurance discount is applied by your insurer, not the DMV",
+        "deadlines": "Give the certificate to your insurer within 90 days of completion to keep the discount retroactive to your completion date (or within 45 days before a renewal)"
       },
       "court_vs_insurance": {
-        "court": "Sometimes recommended by judges as part of plea deals.",
-        "insurance": "Guaranteed 10% discount for 3 years."
+        "court": "PIRP does not dismiss a ticket or help a pending charge \u2013 it only reduces points after a conviction, and it does not lower a Driver Responsibility Assessment.",
+        "insurance": "Mandatory 10% reduction on the base rate of liability and collision premiums for 3 years under NY Insurance Law \u00a7 2336."
       },
       "sources": [
         {
           "name": "New York DMV \u2013 PIRP",
           "url": "https://dmv.ny.gov/points-and-penalties/point-and-insurance-reduction-program"
+        },
+        {
+          "name": "New York DMV \u2013 PIRP brochure",
+          "url": "https://dmv.ny.gov/brochure/point-insurance-reduction-program"
         }
       ]
     },

@@ -1,0 +1,144 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+const enrollUrl = '/courses/ny-ipirp';
+
+const faqs = [
+  {
+    "q": "How many hours is the New York defensive driving course?",
+    "a": "320 minutes of instruction — about 5.5 hours. You'll see it marketed as 5.5 to 6 hours, but the DMV requirement is 320 minutes."
+  },
+  {
+    "q": "Can I finish the online course in one sitting?",
+    "a": "You can, but you don't have to. It's self-paced and saves your progress, so you can split the 320 minutes across multiple sessions within the 30-day window."
+  },
+  {
+    "q": "How long do I have to complete it?",
+    "a": "Online, you must finish within 30 days of registering. Miss that window and you'll generally need to re-register."
+  },
+  {
+    "q": "Is there a final exam?",
+    "a": "No single final exam. There are quizzes throughout, usually requiring about 70% to pass, plus identity verification."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: "How Long Is the New York Defensive Driving Course?",
+  description: "New York's defensive driving course is 320 minutes of instruction — about 5.5 hours. Online is self-paced but must be finished within 30 days. No single final exam.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-12',
+  dateModified: '2026-06-12',
+  mainEntityOfPage: `${siteUrl}/new-york/course-length`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+<Layout
+  title="How Long Is the New York Defensive Driving Course? (And the 30-Day Deadline)"
+  description="New York's defensive driving course is 320 minutes of instruction — about 5.5 hours. Online is self-paced but must be finished within 30 days. No single final exam."
+  keywords="how long is New York defensive driving course, 320 minutes PIRP, NY defensive driving hours, 30 day deadline I-PIRP"
+  url="/new-york/course-length"
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+  </Fragment>
+  <Header />
+
+  <main class="bg-white">
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/" class="text-primary-deep font-medium hover:underline">Home</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/new-york" class="text-primary-deep font-medium hover:underline">New York Defensive Driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">How long does it take?</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          How Long Is the New York Defensive Driving Course?
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>The New York DMV sets the course at <strong>320 minutes of instruction</strong> — about 5.5 hours. (That's why you'll see it advertised as anywhere from "5.5 hours" to "6 hours"; the real requirement is 320 minutes.) Online, you can spread that time across several sittings, as long as you finish within <strong>30 days</strong> of registering.</p>
+          <p>Here's exactly how the time and the deadlines work.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information about New York PIRP (the Point &amp; Insurance Reduction Program), not legal or insurance advice. Confirm current rules with the NY DMV and your insurer.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The 320-minute requirement</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Both classroom and online courses must cover 320 minutes of instruction. Online providers can't let you blow through it faster — the time is built into the course, so plan for roughly 5.5 hours total.</p>
+          <p>You don't have to do it all at once online. The course is self-paced and saves your progress between sessions.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The 30-day completion window (online)</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Once you register for the online course, you must <strong>complete it within 30 days</strong>. Within that window you can log in and out as often as you like.</p>
+          <p>If you don't finish in time, you can generally lose access and have to re-register — so don't start the day before you need the certificate.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Quizzes, passing, and identity checks</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>There's no single final exam. Lessons include quizzes, and you typically need about 70% to pass. Online courses verify your identity throughout — using your DMV client ID and methods such as security questions or biometrics — so you can't have someone else take it for you.</p>
+          <p>When you're done, the provider reports your point reduction to the DMV (usually within about 10 weeks), and you give the certificate to your insurer for the discount. See <a href="/new-york/insurance-discount" class="text-primary-deep font-medium hover:underline">claiming the discount</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Knock it out in an afternoon</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>About 5.5 hours, self-paced, finished within 30 days — then your benefits kick in. When you're ready, we'll point you to the New York online course.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            See the New York Course →
+          </a>
+          <a
+            href="/new-york/online-vs-classroom"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            Online vs classroom
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety refers New York drivers to TicketSchool, a DMV-approved PIRP course sponsor, and may earn a commission. We are not the New York DMV or the course provider. This page is general information, not legal or insurance advice — confirm current rules with the NY DMV (dmv.ny.gov) and your insurer.</p>
+          <p class="text-xs text-text-subtle">Last updated June 12, 2026 — verified by the Road Ready Safety editorial team against the New York DMV online-course rules (dmv.ny.gov).</p>
+        </div>
+
+      </div>
+    </article>
+  </main>
+
+  <Footer />
+</Layout>

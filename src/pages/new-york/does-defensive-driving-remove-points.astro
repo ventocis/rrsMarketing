@@ -1,0 +1,155 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+const enrollUrl = '/courses/ny-ipirp';
+
+const faqs = [
+  {
+    "q": "Does defensive driving take points off my New York license?",
+    "a": "Not literally. It subtracts up to 4 points from the total the DMV uses to calculate a suspension. The points and the violation remain on your driving record, usually for about four years."
+  },
+  {
+    "q": "How many points does a New York defensive driving course remove?",
+    "a": "Up to 4 points — but only as many as you actually have. If you have fewer than 4 eligible points, you get that smaller number, and unused points can't be saved for later."
+  },
+  {
+    "q": "How long until the point reduction shows up?",
+    "a": "The course sponsor reports your completion to the DMV electronically, and the reduction generally appears within about 10 weeks."
+  },
+  {
+    "q": "Does it remove points from a ticket I haven't been convicted of yet?",
+    "a": "No. Points only attach after a conviction, so PIRP can't touch a pending ticket. It only reduces points already on (or about to post to) your record from convictions in the prior 18 months."
+  },
+  {
+    "q": "Will it lower my Driver Responsibility Assessment?",
+    "a": "No. The DMV states that PIRP cannot prevent or reduce the points used to calculate a Driver Responsibility Assessment."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: "Does Defensive Driving Remove Points in New York?",
+  description: "No — a New York defensive driving course doesn't remove points from your record. It subtracts up to 4 points from your suspension total. Here's exactly how PIRP point reduction works.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-12',
+  dateModified: '2026-06-12',
+  mainEntityOfPage: `${siteUrl}/new-york/does-defensive-driving-remove-points`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+<Layout
+  title="Does Defensive Driving Remove Points in New York? (What PIRP Really Does)"
+  description="No — a New York defensive driving course doesn't remove points from your record. It subtracts up to 4 points from your suspension total. Here's exactly how PIRP point reduction works."
+  keywords="does defensive driving remove points New York, NY PIRP point reduction, how many points defensive driving NY, remove points NY license"
+  url="/new-york/does-defensive-driving-remove-points"
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+  </Fragment>
+  <Header />
+
+  <main class="bg-white">
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/" class="text-primary-deep font-medium hover:underline">Home</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/new-york" class="text-primary-deep font-medium hover:underline">New York Defensive Driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Does it remove points?</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          Does Defensive Driving Remove Points in New York?
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Short answer: <strong>no — not in the way most people think.</strong> Completing a New York Point &amp; Insurance Reduction Program (PIRP) course subtracts up to 4 points from the total the DMV uses to decide on a suspension, but it does not physically remove the points, the violation, or the conviction from your driving record.</p>
+          <p>That distinction matters, because course-seller ads often imply the points simply vanish. They don't. Here's how the reduction actually works.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information about New York PIRP (the Point &amp; Insurance Reduction Program), not legal or insurance advice. Confirm current rules with the NY DMV and your insurer.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What the 4-point reduction actually means</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>New York suspends a license when a driver reaches a set point total within a look-back window. PIRP gives you a one-time subtraction of up to 4 points against <em>that</em> calculation. Think of it as a cushion that lowers your running suspension total — not an eraser.</p>
+          <p>Because it is "up to" 4 points, you only get as many as you have. If you have 3 eligible points, the course reduces 3; you can't bank the unused point for later.</p>
+          <p>The DMV is explicit that the tickets and points "do not physically come off your driving record." The reduction is purely a computational subtraction for suspension purposes.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The points and the conviction still stay on your record</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>After you finish the course, the violation, the conviction, and the points all remain visible on your driving record — typically for about four years from the conviction date (longer for certain alcohol- and drug-related offenses).</p>
+          <p>PIRP also cannot prevent or reduce a Driver Responsibility Assessment, and it does not stop a mandatory suspension or revocation tied to things like DWI/DWAI or three speeding convictions within 18 months.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Which points qualify, and how often</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Point reduction applies only to convictions from the <strong>18 months</strong> before you complete the course, and you can use a course for point reduction <strong>once every 18 months</strong>. See <a href="/new-york/how-often-can-you-take-it" class="text-primary-deep font-medium hover:underline">how often you can take it</a> for the full timing rules.</p>
+          <p>It also does nothing for a ticket you haven't been convicted of yet — points attach only after conviction. If you have an open ticket, start with <a href="/new-york/defensive-driving-pending-ticket" class="text-primary-deep font-medium hover:underline">pending ticket? read this first</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How the reduction reaches the DMV</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>You don't file anything for the point reduction yourself. The course sponsor reports your completion to the New York DMV electronically, and the reduction is typically reflected within about 10 weeks.</p>
+          <p>The insurance side is separate — that certificate goes to your insurer. See <a href="/new-york/insurance-discount" class="text-primary-deep font-medium hover:underline">how the 10% insurance discount works</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Get your point reduction and 10% discount</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>A single DMV-approved course earns both the up-to-4-point reduction and the three-year insurance discount. When you're ready, we'll point you to the New York online course.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            See the New York Course →
+          </a>
+          <a
+            href="/new-york"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            Back to the New York guide
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety refers New York drivers to TicketSchool, a DMV-approved PIRP course sponsor, and may earn a commission. We are not the New York DMV or the course provider. This page is general information, not legal or insurance advice — confirm current rules with the NY DMV (dmv.ny.gov) and your insurer.</p>
+          <p class="text-xs text-text-subtle">Last updated June 12, 2026 — verified by the Road Ready Safety editorial team against the New York DMV PIRP pages (dmv.ny.gov).</p>
+        </div>
+
+      </div>
+    </article>
+  </main>
+
+  <Footer />
+</Layout>

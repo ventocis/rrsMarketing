@@ -77,6 +77,19 @@ const staticRoutes = [
   '/texas/vs/improv',
   '/texas/vs/comedydriving',
   '/texas/vs/safemotorist',
+  // New York cluster
+  '/new-york',
+  '/new-york/does-defensive-driving-remove-points',
+  '/new-york/insurance-discount',
+  '/new-york/defensive-driving-pending-ticket',
+  '/new-york/nyc-tvb-vs-town-court',
+  '/new-york/online-vs-classroom',
+  '/new-york/how-often-can-you-take-it',
+  '/new-york/course-length',
+  '/new-york/is-it-worth-it',
+  '/new-york/2026-point-changes',
+  '/new-york/cdl-defensive-driving',
+  '/new-york/5-hour-pre-licensing',
 ];
 
 const courseRoutes = (coursesData as Array<{ slug: string }>).map(c => `/courses/${c.slug}`);

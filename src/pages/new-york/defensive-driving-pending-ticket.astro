@@ -1,0 +1,144 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+const enrollUrl = '/courses/ny-ipirp';
+
+const faqs = [
+  {
+    "q": "Will defensive driving get my pending ticket dismissed?",
+    "a": "No. PIRP never dismisses tickets, and it can't act on a pending ticket because points only attach after a conviction. Dismissal or reduction comes from resolving the ticket in court."
+  },
+  {
+    "q": "Should I take the course before or after my court date?",
+    "a": "For point reduction, the course only helps once a conviction has posted points, so handle the ticket first. You can take it any time for the insurance discount, which doesn't depend on points."
+  },
+  {
+    "q": "What happens if I just pay the ticket?",
+    "a": "Paying a New York ticket is a guilty plea. The conviction and its points go on your record — after which PIRP can reduce up to 4 points from your suspension total."
+  },
+  {
+    "q": "Can I negotiate a New York ticket down?",
+    "a": "In most of the state, yes — town and village courts commonly allow plea bargains to a lower-point charge. New York City's Traffic Violations Bureau does not allow plea bargaining."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: "Defensive Driving Won't Help a Pending New York Ticket",
+  description: "PIRP can't help a ticket you haven't been convicted of yet — points only attach after conviction. The right order of operations for a pending New York ticket.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-12',
+  dateModified: '2026-06-12',
+  mainEntityOfPage: `${siteUrl}/new-york/defensive-driving-pending-ticket`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+<Layout
+  title="Defensive Driving Won't Fix a Pending NY Ticket — Do This Instead"
+  description="PIRP can't help a ticket you haven't been convicted of yet — points only attach after conviction. The right order of operations for a pending New York ticket."
+  keywords="defensive driving pending ticket New York, does defensive driving help a ticket NY, fight NY traffic ticket, NY ticket order of operations"
+  url="/new-york/defensive-driving-pending-ticket"
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+  </Fragment>
+  <Header />
+
+  <main class="bg-white">
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/" class="text-primary-deep font-medium hover:underline">Home</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/new-york" class="text-primary-deep font-medium hover:underline">New York Defensive Driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Pending ticket? Read this</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          Defensive Driving Won't Help a Pending New York Ticket
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>If you just got a ticket and you're hoping a defensive driving course will make it go away — it won't. New York's PIRP course reduces points that are already on your record; <strong>points only attach after you're convicted.</strong> Until then, there's nothing for the course to reduce, and PIRP never dismisses a ticket.</p>
+          <p>That doesn't mean the course is useless — it means the order of operations matters. Here's how to think about it.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information about New York PIRP (the Point &amp; Insurance Reduction Program), not legal or insurance advice. Confirm current rules with the NY DMV and your insurer.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Why a course can't touch an open ticket</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>A pending ticket is just an accusation until it's resolved. No points hit your license, and no conviction exists, so there is nothing for PIRP's up-to-4-point reduction to apply to.</p>
+          <p>PIRP also can't dismiss the ticket or reduce the charge. Those outcomes only come from how you resolve the ticket itself — by pleading, fighting it, or negotiating.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Step 1: deal with the ticket itself</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>First decide how to handle the charge. If you simply pay it, you are pleading guilty — the conviction and its points post to your record. If you plead not guilty, you can fight it or, in much of New York, negotiate a plea to a lower or zero-point charge.</p>
+          <p>Where your ticket is matters a lot here. Town and village courts across most of the state allow plea bargaining; New York City's Traffic Violations Bureau does not. We explain the split in <a href="/new-york/nyc-tvb-vs-town-court" class="text-primary-deep font-medium hover:underline">NYC TVB vs upstate town court</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Step 2: use PIRP for what's left</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Once a conviction posts points to your record, that's when PIRP earns its keep — subtracting up to 4 points from your suspension total for convictions in the prior 18 months. See <a href="/new-york/does-defensive-driving-remove-points" class="text-primary-deep font-medium hover:underline">how point reduction works</a>.</p>
+          <p>And you don't even need points to benefit: any licensed driver can take the course purely for the <a href="/new-york/insurance-discount" class="text-primary-deep font-medium hover:underline">10% insurance discount</a>, which is the bigger long-term win for many drivers.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Handle the ticket, then bank the benefits</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Once your ticket is resolved, a DMV-approved course gives you the point reduction and the three-year insurance discount. When you're ready, we'll point you to the New York online course.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            See the New York Course →
+          </a>
+          <a
+            href="/new-york/nyc-tvb-vs-town-court"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            NYC TVB vs town court
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety refers New York drivers to TicketSchool, a DMV-approved PIRP course sponsor, and may earn a commission. We are not the New York DMV or the course provider. This page is general information, not legal or insurance advice — confirm current rules with the NY DMV (dmv.ny.gov) and your insurer.</p>
+          <p class="text-xs text-text-subtle">Last updated June 12, 2026 — verified by the Road Ready Safety editorial team against the New York DMV (dmv.ny.gov).</p>
+        </div>
+
+      </div>
+    </article>
+  </main>
+
+  <Footer />
+</Layout>

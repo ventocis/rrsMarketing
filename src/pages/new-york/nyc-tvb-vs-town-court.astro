@@ -1,0 +1,144 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+const enrollUrl = '/courses/ny-ipirp';
+
+const faqs = [
+  {
+    "q": "Can you plea-bargain a New York City traffic ticket?",
+    "a": "No. NYC moving violations go to the DMV Traffic Violations Bureau, which only rules guilty or not guilty. There is no plea bargaining and no option to reduce the charge."
+  },
+  {
+    "q": "Why can you negotiate upstate but not in NYC?",
+    "a": "Outside the city, tickets go to town and village courts that have a prosecutor and allow plea deals. The NYC TVB is an administrative DMV bureau, not a court, so there's no one to negotiate with."
+  },
+  {
+    "q": "Does defensive driving help more at the TVB?",
+    "a": "It's the same either way. PIRP doesn't affect how the ticket is decided. It reduces points after a conviction and gives the insurance discount, regardless of which forum handled the ticket."
+  },
+  {
+    "q": "Should I just pay a NYC ticket then take defensive driving?",
+    "a": "Paying is a guilty plea, so the points post to your record. If those convictions are within the prior 18 months, a PIRP course can then reduce up to 4 points from your suspension total."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: "NYC TVB vs Upstate Town Court: The Plea-Bargain Difference",
+  description: "New York City traffic tickets go to the DMV's Traffic Violations Bureau, which doesn't allow plea bargains. Outside the city, town and village courts usually do. What that means for your ticket and for PIRP.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-12',
+  dateModified: '2026-06-12',
+  mainEntityOfPage: `${siteUrl}/new-york/nyc-tvb-vs-town-court`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+<Layout
+  title="NYC TVB vs Upstate Town Court: Why You Can't Plea-Bargain a NYC Ticket"
+  description="New York City traffic tickets go to the DMV's Traffic Violations Bureau, which doesn't allow plea bargains. Outside the city, town and village courts usually do. What that means for your ticket and for PIRP."
+  keywords="NYC TVB, Traffic Violations Bureau, plea bargain NYC ticket, NYC vs upstate traffic court, fight NYC traffic ticket"
+  url="/new-york/nyc-tvb-vs-town-court"
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+  </Fragment>
+  <Header />
+
+  <main class="bg-white">
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/" class="text-primary-deep font-medium hover:underline">Home</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/new-york" class="text-primary-deep font-medium hover:underline">New York Defensive Driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">NYC TVB vs town court</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          NYC TVB vs Upstate Town Court: The Plea-Bargain Difference
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Where your New York traffic ticket lands changes everything about how you can handle it. New York City tickets go to the DMV's <strong>Traffic Violations Bureau (TVB)</strong>, an administrative office that does <strong>not</strong> allow plea bargaining. Most tickets outside the city go to <strong>town or village courts</strong>, where negotiating a lower charge is routine.</p>
+          <p>Understanding that split tells you what's realistic for your ticket — and where a defensive driving course fits in afterward.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information about New York PIRP (the Point &amp; Insurance Reduction Program), not legal or insurance advice. Confirm current rules with the NY DMV and your insurer.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How the NYC Traffic Violations Bureau works</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>The TVB handles non-criminal moving violations in the five boroughs (plus a few other cities). It is part of the DMV, not the court system, and an administrative law judge hears the case.</p>
+          <p>There are only two outcomes: guilty or not guilty. There is no prosecutor to bargain with and no option to plead down to a lesser charge. You either pay the ticket, or you contest it at a hearing and the judge decides.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How town and village courts differ</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Outside New York City, moving violations are handled by local town and village justice courts. These courts have a prosecutor, and plea bargaining is common — often reducing a points-heavy charge to a lower-point or zero-point violation.</p>
+          <p>That's why the same ticket can play out very differently depending on geography: a negotiated plea that's normal upstate simply isn't available at the NYC TVB.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Where defensive driving (PIRP) fits either way</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>PIRP is separate from all of this. It doesn't fight your ticket or reduce a charge — it reduces points <em>after</em> a conviction and earns the insurance discount. See <a href="/new-york/defensive-driving-pending-ticket" class="text-primary-deep font-medium hover:underline">why it won't help a pending ticket</a>.</p>
+          <p>So whether your ticket is at the TVB or a town court, the play is the same: resolve the ticket first, then use a course to <a href="/new-york/does-defensive-driving-remove-points" class="text-primary-deep font-medium hover:underline">cut up to 4 points</a> and lock in the <a href="/new-york/insurance-discount" class="text-primary-deep font-medium hover:underline">10% insurance discount</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">After the ticket, reduce points and save</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>However your ticket is resolved, a DMV-approved course earns the point reduction and three-year insurance discount. When you're ready, we'll point you to the New York online course.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            See the New York Course →
+          </a>
+          <a
+            href="/new-york"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            Back to the New York guide
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety refers New York drivers to TicketSchool, a DMV-approved PIRP course sponsor, and may earn a commission. We are not the New York DMV or the course provider. This page is general information, not legal or insurance advice — confirm current rules with the NY DMV (dmv.ny.gov) and your insurer.</p>
+          <p class="text-xs text-text-subtle">Last updated June 12, 2026 — verified by the Road Ready Safety editorial team against New York DMV materials on the Traffic Violations Bureau and PIRP (dmv.ny.gov).</p>
+        </div>
+
+      </div>
+    </article>
+  </main>
+
+  <Footer />
+</Layout>

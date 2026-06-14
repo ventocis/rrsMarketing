@@ -1,0 +1,157 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    "q": "Why can't I renew my Texas vehicle registration?",
+    "a": "Most often it's a \"Scofflaw\" hold under Transportation Code Chapter 702 — your county refuses registration renewal because a court reported an unresolved ticket. Resolve the underlying case with that court (and pay any county fee) and the hold lifts."
+  },
+  {
+    "q": "Is a registration hold the same as an OmniBase hold?",
+    "a": "No. A registration hold is the county-run Scofflaw program (Chapter 702). OmniBase (Chapter 706) is a separate DPS program that blocks driver-license renewal. They come from the same kind of unpaid ticket but are cleared separately."
+  },
+  {
+    "q": "How do I clear a Scofflaw registration hold?",
+    "a": "Find the court that reported you, resolve the ticket (pay, dismiss, or another court-approved arrangement), and pay any county administrative fee. The county/court then releases the flag so TxDMV will renew your registration. Steps and fees vary by county."
+  },
+  {
+    "q": "Can a defensive driving course help with a registration hold?",
+    "a": "Indirectly. The hold lifts once the underlying ticket is resolved — and if your case qualifies, a course dismisses the ticket instead of convicting you. Whether the course is still available depends on your case and court."
+  },
+  {
+    "q": "Does Road Ready Safety remove the hold?",
+    "a": "No. We're a TDLR-licensed course provider, not the county, court, DMV, or DPS. We can't clear holds or take citation payments — use the official resources above. Our role is the $28 course that can get an eligible ticket dismissed."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: "Can't Renew Your Texas Vehicle Registration? The \"Scofflaw\" Hold, Explained",
+  description: "A 'Scofflaw' hold blocks your Texas vehicle-registration renewal over an unpaid ticket — it's run by your county, separate from the OmniBase license hold. How it works and how to clear it.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-13',
+  dateModified: '2026-06-13',
+  mainEntityOfPage: `${siteUrl}/texas/registration-block`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Can't Renew Your Texas Vehicle Registration Over a Ticket? The Scofflaw Hold (2026)"
+    description="A 'Scofflaw' hold blocks your Texas vehicle-registration renewal over an unpaid ticket — it's run by your county, separate from the OmniBase license hold. How it works and how to clear it."
+    keywords="scofflaw texas, can't renew registration texas ticket, texas registration block, why can't I renew my registration texas, scofflaw hold registration"
+    url="/texas/registration-block"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/texas/look-up-your-ticket" class="text-primary-deep font-medium hover:underline">Look up your ticket</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Scofflaw / registration hold</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          Can't Renew Your Texas Vehicle Registration? The "Scofflaw" Hold, Explained
+        </h1>
+
+        <div class="bg-amber-50 border-l-4 border-amber-400 rounded-r-xl p-4 mb-8 flex items-start gap-3">
+          <svg class="w-5 h-5 shrink-0 mt-0.5 text-amber-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+          <p class="text-sm text-amber-900 leading-relaxed" style="font-family: 'DM Sans', sans-serif;">Road Ready Safety is a private, TDLR-licensed Texas driving safety course provider (CP1234). We are <strong>not</strong> a court, the Texas DMV (TxDMV), a county tax office, or DPS, and we can't clear a hold or take payment for your citation. Use the official resources below and contact your court or county to resolve a hold.</p>
+        </div>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>If your county won't let you renew your vehicle registration because of an unpaid ticket, that's a <strong>"Scofflaw" hold</strong> under Texas Transportation Code Chapter 702. It's run by your <strong>county tax assessor-collector together with the TxDMV</strong> — and it's a <em>different</em> program from the OmniBase hold that blocks your driver license.</p>
+          <p>To lift it, you generally have to <strong>resolve the underlying ticket</strong> with the court that placed the hold (and pay any county fee). Resolving the ticket can include getting it <strong>dismissed</strong> with a defensive driving course rather than simply paying the fine.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Registration holds are administered by your county and TxDMV; remedies and any fees vary by county. We don't clear holds or take payments — confirm the steps with the court that placed the hold and your county tax office.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Scofflaw vs OmniBase — two different holds</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>These get confused constantly because both come from an unpaid or ignored ticket, but they're separate programs with separate fixes:</p>
+          <p><strong>Registration hold = "Scofflaw" (Transportation Code ch. 702).</strong> Your county tax assessor-collector can refuse to renew your vehicle registration when a court reports an unresolved fine-only offense. <strong>Driver-license renewal hold = OmniBase / Failure to Appear (ch. 706).</strong> That one is run by DPS and blocks license renewal — see <a href="/texas/omnibase-hold" class="text-primary-deep font-medium hover:underline">the OmniBase hold page</a>. You can have one, the other, or both, depending on what your court and county participate in.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How to clear a registration (Scofflaw) hold</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>The hold is tied to a specific case, so the path is: find out <strong>which court</strong> reported you, <strong>resolve that ticket</strong>, and the court/county releases the flag so TxDMV will let you renew. Your county may charge an administrative fee to lift the hold — amounts and exact steps vary by county, so confirm with your county tax office.</p>
+          <p>Because participation is county-by-county, the most reliable first step is to contact the court on your citation and your county tax assessor-collector.</p>
+        <div class="bg-surface-muted border border-border rounded-xl p-5 my-4">
+          <p class="text-sm font-semibold text-text mb-3">Official resources</p>
+          <ul class="flex flex-col gap-2 list-none m-0 p-0 text-sm text-text-body">
+            <li>• <a href="https://www.txdmv.gov/motorists/register-your-vehicle" target="_blank" rel="noopener noreferrer" class="text-primary-deep font-medium hover:underline">TxDMV — Vehicle Registration</a></li>
+            <li>• Your <strong>county tax assessor-collector</strong> — the office that processes registration and can confirm a Scofflaw hold and any fee.</li>
+            <li>• <a href="/texas/courts" class="text-primary-deep font-medium hover:underline">Find your Texas court</a> — to resolve the underlying ticket.</li>
+          </ul>
+          <p class="text-xs text-text-subtle mt-3">Official government and court resources. Road Ready Safety does not clear holds or collect payments.</p>
+        </div>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Dismissing the ticket can be the resolution</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Whatever the county fee, the hold won't lift until the <strong>underlying ticket is resolved</strong> — and "resolved" doesn't have to mean a conviction. If your case still qualifies, completing a driving safety course gets the charge <strong>dismissed and kept off your record</strong>, which is a clean way to clear the path to renewal.</p>
+          <p>The usual caveats apply: a course dismissal is the court's decision, you generally request it by your appearance date, it's available once every 12 months, and not for CDL holders or speeding 25+ mph over (or 95+ mph). If the case is already a conviction or past the deadline, ask the court what's still possible — see <a href="/texas/missed-court-date" class="text-primary-deep font-medium hover:underline">missed your court date</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Clear the path to renewal — dismiss the ticket</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>The hold lifts when the ticket is resolved. If you qualify, dismissing it with the course keeps the conviction off your record too. $28, fully online, certificate when you finish.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="/texas/omnibase-hold"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            Can't renew your license instead?
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated June 13, 2026 — verified by the Road Ready Safety editorial team against Tex. Transp. Code ch. 702 (the "Scofflaw" program), TxDMV registration guidance, and Tex. Code Crim. Proc. ch. 45A.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

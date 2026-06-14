@@ -18522,6 +18522,23 @@ function joinOrNA(arr: string[] | undefined) {
             </a>
           </div>
 
+          <!-- Intercept: look up / pay → dismiss — all court pages -->
+          <div class="bg-white border border-border rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div class="flex flex-col gap-1">
+              <p class="text-base font-semibold text-text leading-6">Need to look up or pay your {court.county} County ticket?</p>
+              <p class="text-sm text-text-body leading-6">Paying it online is a guilty plea and a conviction. See how to find your ticket — and why dismissing it is usually the cheaper move.</p>
+            </div>
+            <a
+              href="/texas/look-up-your-ticket"
+              class="h-11 px-5 border border-primary text-primary hover:bg-primary hover:text-white rounded-xl text-sm font-semibold inline-flex items-center justify-center gap-2 no-underline transition-colors flex-shrink-0"
+            >
+              Look up &amp; decide
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M3 8h10M8.5 4L13 8l-4.5 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+
           <!-- ══════════════════════════════════════════
                KATY MUNICIPAL COURT — Court-Specific DSC Info
                ══════════════════════════════════════════ -->

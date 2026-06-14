@@ -1,0 +1,219 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    "q": "How much does it cost to dismiss a ticket in Fort Worth?",
+    "a": "The court cost is typically up to about $144 ($169 in a school zone) and is set by each court — some Tarrant-area courts charge less. The TDLR-approved course is separate; ours is $28. Check your court's page for the exact amount."
+  },
+  {
+    "q": "Can I take the course online for a Tarrant County ticket?",
+    "a": "Yes. Once the court approves your request, a TDLR-approved 6-hour course can be completed fully online. Every Fort Worth-area court accepts a state-approved online course."
+  },
+  {
+    "q": "My ticket is from Arlington / North Richland Hills, not Fort Worth. Does that change things?",
+    "a": "The process is the same, but you deal with that city's court, which sets its own fee, request method, and deadlines. Open its page in the table above."
+  },
+  {
+    "q": "How long do I have to finish?",
+    "a": "Generally 90 days after the court approves the request. Request the course by your appearance date first, and don't pay the ticket — paying is a guilty plea and a conviction."
+  },
+  {
+    "q": "Does a dismissal keep it off my insurance?",
+    "a": "Yes. A driving safety course dismissal keeps the charge off your driving record under Texas law, so it can't raise your insurance — unlike paying, which is a conviction."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org', '@type': 'Article',
+  headline: "How to Dismiss a Traffic Ticket in Fort Worth with Defensive Driving", description: "Dismiss a Fort Worth or Tarrant County traffic ticket: request a driving safety course by your appearance date, finish a 6-hour course in 90 days, submit your certificate. Here's how each local court differs.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-13', dateModified: '2026-06-13',
+  mainEntityOfPage: `${siteUrl}/texas/fort-worth`,
+});
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout title="How to Dismiss a Traffic Ticket in Fort Worth with Defensive Driving (2026)" description="Dismiss a Fort Worth or Tarrant County traffic ticket: request a driving safety course by your appearance date, finish a 6-hour course in 90 days, submit your certificate. Here's how each local court differs." keywords="dismiss ticket fort worth, fort worth defensive driving, tarrant county traffic ticket, driving safety course fort worth, arlington defensive driving" url="/texas/fort-worth">
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Fort Worth</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          How to Dismiss a Traffic Ticket in Fort Worth with Defensive Driving
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong>Short answer:</strong> to dismiss a Fort Worth or Tarrant County traffic ticket, request a driving safety course from the court <strong>on or before your appearance date</strong>, complete a TDLR-approved 6-hour course within 90 days, and submit your certificate plus a certified DPS driving record. The charge is then dismissed and kept off your record.</p>
+          <p><strong>The catch:</strong> the Fort Worth area is a patchwork of separate city courts across Tarrant County — Fort Worth, Arlington, and a long list of mid-cities — each with its own fee and process. Here's what's the same everywhere and how the local courts differ.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Each court sets its own fees, deadlines, and procedures — confirm with the specific court on your citation. Road Ready Safety is a TDLR-licensed course provider, not a court.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">"Fort Worth" isn't one court</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Read the <strong>court name on your citation</strong>. A Tarrant County ticket is often handled by a suburb, not the City of Fort Worth.</p>
+          <p>Major Tarrant courts include the <strong>City of Fort Worth</strong> and <strong>Arlington</strong>, plus the mid-cities: <strong>North Richland Hills, Hurst, Euless, Bedford, Haltom City, Grapevine, Keller, Southlake, Colleyville, Mansfield, Saginaw, Watauga, Crowley,</strong> and others. The city where you were stopped is your court.</p>
+          <p>Tickets from a <strong>constable or deputy</strong> in an unincorporated area go to a <strong>Tarrant County Justice of the Peace</strong> court. Same idea, different office.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What's the same at every Fort Worth-area court</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <p>Texas law sets the core rules, so the basic path to a dismissal is the same no matter which Fort Worth-area court has your ticket:</p>
+        </div>
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <ul class="flex flex-col gap-2 list-none m-0 p-0 text-sm text-text-body">
+            <li>• <strong>Request the course by your appearance/answer date</strong> — the date on your citation. Don't pay first: paying is a guilty plea and a conviction.</li>
+            <li>• You need a <strong>valid Texas driver license and proof of insurance</strong>, and you plead guilty or no contest.</li>
+            <li>• You can use it <strong>once every 12 months</strong>. It's <strong>not</strong> available for speeding 25+ mph over the limit (or 95+ mph), CDL holders, passing a school bus, or work-zone violations with workers present.</li>
+            <li>• Court costs run <strong>up to about $144</strong> ($169 in a school zone) and are set by each court — some charge less.</li>
+            <li>• After approval you have <strong>90 days</strong> to finish a TDLR-approved 6-hour course and submit the certificate plus a certified DPS <a href="/texas/type-3a-driving-record" class="text-primary-deep font-medium hover:underline">Type 3A driving record</a>.</li>
+            <li>• Complete it and the charge is <strong>dismissed and kept off your record</strong> under Texas law (Code of Criminal Procedure ch. 45A) — it can't be used against you or raise your insurance.</li>
+          </ul>
+        </div>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <p>Want the full walkthrough? See <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">how Texas ticket dismissal works</a>, or <a href="/texas/eligibility-tracker" class="text-primary-deep font-medium hover:underline">check your eligibility</a>.</p>
+        </div>
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How Fort Worth-area courts differ</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-4" style="font-family: 'DM Sans', sans-serif;">
+          <p>The fee, how you request the course, the exact deadline, and small local rules vary court to court. Here are the 19 Tarrant County courts we've researched — tap any one for its full instructions, fees, and contacts.</p>
+        </div>
+        <div class="overflow-x-auto my-2">
+          <table class="w-full text-sm border-collapse" style="font-family: 'DM Sans', sans-serif;">
+            <thead><tr class="border-b-2 border-border text-left"><th class="py-2 pr-4 font-semibold text-text">Tarrant County court</th><th class="py-2 font-semibold text-text">What to know (tap to open the court page)</th></tr></thead>
+            <tbody>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/tarrant-municipal-fort-worth" class="text-primary-deep font-semibold hover:underline">Fort Worth Municipal Court</a></td>
+                <td class="py-3 text-text-body">You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/tarrant-municipal-arlington" class="text-primary-deep font-semibold hover:underline">Arlington Municipal Court</a></td>
+                <td class="py-3 text-text-body">You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/tarrant-municipal-bedford" class="text-primary-deep font-semibold hover:underline">Bedford Municipal Court</a></td>
+                <td class="py-3 text-text-body">You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/tarrant-municipal-colleyville" class="text-primary-deep font-semibold hover:underline">Colleyville Municipal Court</a></td>
+                <td class="py-3 text-text-body">Colleyville charges $144 ($169 school zone, incl. $10 admin fee) — request with the clerk by your court date; insurance proof must be a paper copy.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/tarrant-municipal-crowley" class="text-primary-deep font-semibold hover:underline">Crowley Municipal Court</a></td>
+                <td class="py-3 text-text-body">Crowley gives you only 11 days from the citation to request DSC — by email, mail, or in person.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/tarrant-municipal-euless" class="text-primary-deep font-semibold hover:underline">Euless Municipal Court</a></td>
+                <td class="py-3 text-text-body">You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/tarrant-municipal-forest-hill" class="text-primary-deep font-semibold hover:underline">Forest Hill Municipal Court</a></td>
+                <td class="py-3 text-text-body">Forest Hill takes DSC requests by email or fax and charges $144 ($169 school zone).</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/tarrant-municipal-grapevine" class="text-primary-deep font-semibold hover:underline">Grapevine Municipal Court</a></td>
+                <td class="py-3 text-text-body">You'll need a certified Type 3A driving record from Texas DPS to submit with your certificate. Court fee: $144.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/tarrant-municipal-haltom-city" class="text-primary-deep font-semibold hover:underline">Haltom City Municipal Court</a></td>
+                <td class="py-3 text-text-body">You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/tarrant-municipal-hurst" class="text-primary-deep font-semibold hover:underline">Hurst Municipal Court</a></td>
+                <td class="py-3 text-text-body">Hurst's court fee is $144 for most violations. Take a $28 TDLR-approved defensive driving course online. Certificate downloads the same day.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/tarrant-municipal-keller" class="text-primary-deep font-semibold hover:underline">Keller Municipal Court</a></td>
+                <td class="py-3 text-text-body">Keller tickets go through the joint Keller-Colleyville court in Colleyville — $144 plus a $10 admin fee.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/tarrant-municipal-lake-worth" class="text-primary-deep font-semibold hover:underline">Lake Worth Municipal Court</a></td>
+                <td class="py-3 text-text-body">Lake Worth (SH-199) takes DSC requests through its online form and gives 90 days — you lose the option if you miss your appearance date.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/tarrant-municipal-mansfield" class="text-primary-deep font-semibold hover:underline">Mansfield Municipal Court</a></td>
+                <td class="py-3 text-text-body">Mansfield requires a signed DSC affidavit before you enroll — most drivers miss this step. Court fee: $144.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/tarrant-municipal-north-richland-hills" class="text-primary-deep font-semibold hover:underline">North Richland Hills Municipal Court</a></td>
+                <td class="py-3 text-text-body">You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/tarrant-municipal-river-oaks" class="text-primary-deep font-semibold hover:underline">River Oaks Municipal Court</a></td>
+                <td class="py-3 text-text-body">River Oaks (SH-183) doesn't publish a DSC process online — contact the court directly and get approval before paying.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/tarrant-municipal-saginaw" class="text-primary-deep font-semibold hover:underline">Saginaw Municipal Court</a></td>
+                <td class="py-3 text-text-body">Saginaw requires DSC requests in person — no online or mail option. $144 fee at the window.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/tarrant-municipal-southlake" class="text-primary-deep font-semibold hover:underline">Southlake Municipal Court</a></td>
+                <td class="py-3 text-text-body">Southlake requires a notarized affidavit with your request — court fee $144. The 90-day window starts when your plea is received.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/tarrant-municipal-watauga" class="text-primary-deep font-semibold hover:underline">Watauga Municipal Court</a></td>
+                <td class="py-3 text-text-body">Watauga requires an in-person DSC request but accepts your completion documents by email.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/tarrant-municipal-white-settlement" class="text-primary-deep font-semibold hover:underline">White Settlement Municipal Court</a></td>
+                <td class="py-3 text-text-body">White Settlement requires a notarized affidavit and gives no extensions on the 90-day window.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10 mt-4" style="font-family: 'DM Sans', sans-serif;">
+          <p>Don't see your court? Search every Texas court in our <a href="/texas/courts" class="text-primary-deep font-medium hover:underline">court directory</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Take the Fort Worth course that every court accepts</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Once your court approves the request, our TDLR-approved course is accepted at every Tarrant County court — $28, fully online, with the certificate the moment you finish.</p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a href={enrollUrl} class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline" style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);">
+            Start the $28 Course →
+          </a>
+          <a href="/texas/courts" class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors" style="font-family: 'DM Sans', sans-serif;">
+            Browse all Texas courts
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated June 13, 2026 — court details verified by the Road Ready Safety editorial team against the City of Fort Worth and Tarrant County area municipal courts and Tex. Code Crim. Proc. ch. 45A.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

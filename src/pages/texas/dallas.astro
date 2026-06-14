@@ -1,0 +1,239 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    "q": "How much does it cost to dismiss a ticket in Dallas?",
+    "a": "The court's cost is typically up to about $144 ($169 in a school zone), set by each court — some Dallas-area courts charge less. The TDLR-approved course is separate; ours is $28. See your court's page for the exact figure."
+  },
+  {
+    "q": "Can I take the Dallas defensive driving course online?",
+    "a": "Yes. After the court approves your request, a TDLR-approved 6-hour course can be done fully online and the certificate submitted. Every Dallas-area court accepts a state-approved online course."
+  },
+  {
+    "q": "My ticket is from Irving / Garland / Mesquite, not Dallas. Does that matter?",
+    "a": "The legal steps are the same, but you deal with that city's court, not the City of Dallas — and each sets its own fee, request method, and deadlines. Open its page in the table above."
+  },
+  {
+    "q": "How long do I have to complete it?",
+    "a": "Usually 90 days after the court grants your request. Request the course by your appearance date first, and don't pay the ticket — paying is a guilty plea and a conviction."
+  },
+  {
+    "q": "Will a dismissal keep the ticket off my insurance?",
+    "a": "Yes. A driving safety course dismissal keeps the charge off your driving record under Texas law, so it can't raise your insurance — unlike paying it, which is a conviction."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org', '@type': 'Article',
+  headline: "How to Dismiss a Traffic Ticket in Dallas with Defensive Driving", description: "Dismiss a Dallas traffic ticket: request a driving safety course by your appearance date, finish a 6-hour course in 90 days, submit your certificate. 'Dallas' is many courts — here's how each one differs.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-13', dateModified: '2026-06-13',
+  mainEntityOfPage: `${siteUrl}/texas/dallas`,
+});
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout title="How to Dismiss a Traffic Ticket in Dallas with Defensive Driving (2026)" description="Dismiss a Dallas traffic ticket: request a driving safety course by your appearance date, finish a 6-hour course in 90 days, submit your certificate. 'Dallas' is many courts — here's how each one differs." keywords="dismiss ticket dallas, dallas defensive driving, dallas traffic ticket dismissal, driving safety course dallas, dallas municipal court ticket" url="/texas/dallas">
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Dallas</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          How to Dismiss a Traffic Ticket in Dallas with Defensive Driving
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong>Short answer:</strong> to dismiss a Dallas traffic ticket, ask the court for a driving safety course <strong>on or before your appearance date</strong>, complete a TDLR-approved 6-hour course within 90 days, and submit your certificate plus a certified DPS driving record. The charge is then dismissed and kept off your record.</p>
+          <p><strong>The catch:</strong> "Dallas" covers the City of Dallas Municipal Court plus more than two dozen separate suburb and enclave city courts across Dallas County — each with its own fee, request method, and rules. Here's what's identical everywhere, and exactly how the local courts differ.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Each court sets its own fees, deadlines, and procedures — confirm with the specific court on your citation. Road Ready Safety is a TDLR-licensed course provider, not a court.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">"Dallas" isn't one court</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Check the <strong>court name on your citation</strong> — that's who you deal with. Many Dallas-area tickets are <em>not</em> handled by the City of Dallas.</p>
+          <p>Beyond the <strong>City of Dallas Municipal Court</strong>, Dallas County has its own busy city courts: <strong>Irving, Garland, Mesquite, Richardson, Carrollton, Grand Prairie, Rowlett, DeSoto, Cedar Hill, Duncanville, Lancaster, Coppell, University Park, Highland Park,</strong> and more. If you were stopped in one of those cities, that's your court.</p>
+          <p>Tickets from a <strong>constable or sheriff's deputy</strong> in an unincorporated area go to a <strong>Dallas County Justice of the Peace</strong> court instead. Same general process, different office.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What's the same at every Dallas-area court</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <p>Texas law sets the core rules, so the basic path to a dismissal is the same no matter which Dallas-area court has your ticket:</p>
+        </div>
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <ul class="flex flex-col gap-2 list-none m-0 p-0 text-sm text-text-body">
+            <li>• <strong>Request the course by your appearance/answer date</strong> — the date on your citation. Don't pay first: paying is a guilty plea and a conviction.</li>
+            <li>• You need a <strong>valid Texas driver license and proof of insurance</strong>, and you plead guilty or no contest.</li>
+            <li>• You can use it <strong>once every 12 months</strong>. It's <strong>not</strong> available for speeding 25+ mph over the limit (or 95+ mph), CDL holders, passing a school bus, or work-zone violations with workers present.</li>
+            <li>• Court costs run <strong>up to about $144</strong> ($169 in a school zone) and are set by each court — some charge less.</li>
+            <li>• After approval you have <strong>90 days</strong> to finish a TDLR-approved 6-hour course and submit the certificate plus a certified DPS <a href="/texas/type-3a-driving-record" class="text-primary-deep font-medium hover:underline">Type 3A driving record</a>.</li>
+            <li>• Complete it and the charge is <strong>dismissed and kept off your record</strong> under Texas law (Code of Criminal Procedure ch. 45A) — it can't be used against you or raise your insurance.</li>
+          </ul>
+        </div>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <p>Want the full walkthrough? See <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">how Texas ticket dismissal works</a>, or <a href="/texas/eligibility-tracker" class="text-primary-deep font-medium hover:underline">check your eligibility</a>.</p>
+        </div>
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How Dallas-area courts differ</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-4" style="font-family: 'DM Sans', sans-serif;">
+          <p>The fee, how you request the course, the exact deadline, and small local rules vary court to court. Here are the 24 Dallas County courts we've researched — tap any one for its full instructions, fees, and contacts.</p>
+        </div>
+        <div class="overflow-x-auto my-2">
+          <table class="w-full text-sm border-collapse" style="font-family: 'DM Sans', sans-serif;">
+            <thead><tr class="border-b-2 border-border text-left"><th class="py-2 pr-4 font-semibold text-text">Dallas County court</th><th class="py-2 font-semibold text-text">What to know (tap to open the court page)</th></tr></thead>
+            <tbody>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/dallas-municipal-dallas" class="text-primary-deep font-semibold hover:underline">Dallas Municipal Court</a></td>
+                <td class="py-3 text-text-body">You'll need a certified Type 3A driving record from Texas DPS to submit with your certificate. Court fee: $144.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/dallas-municipal-addison" class="text-primary-deep font-semibold hover:underline">Addison Municipal Court</a></td>
+                <td class="py-3 text-text-body">Addison lets you apply for DSC online and pay by card, but the fee depends on your offense date — call the clerk.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/dallas-municipal-balch-springs" class="text-primary-deep font-semibold hover:underline">Balch Springs Municipal Court</a></td>
+                <td class="py-3 text-text-body">Balch Springs gives you 20 days from the citation date to request DSC — $144 fee, Texas license required.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/dallas-municipal-carrollton" class="text-primary-deep font-semibold hover:underline">Carrollton Municipal Court</a></td>
+                <td class="py-3 text-text-body">Take a $28 TDLR-approved defensive driving course online. Certificate downloads instantly so you can submit to Carrollton Municipal Court the same day.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/dallas-municipal-cedar-hill" class="text-primary-deep font-semibold hover:underline">Cedar Hill Municipal Court</a></td>
+                <td class="py-3 text-text-body">Cedar Hill requires a signed DSC affidavit before you enroll — most drivers miss this step. Court fee: $144.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/dallas-municipal-cockrell-hill" class="text-primary-deep font-semibold hover:underline">Cockrell Hill Municipal Court</a></td>
+                <td class="py-3 text-text-body">Cockrell Hill wants you to call first (option #2), then submit your plea and payment before your appearance date.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/dallas-municipal-coppell" class="text-primary-deep font-semibold hover:underline">Coppell Municipal Court</a></td>
+                <td class="py-3 text-text-body">Coppell takes DSC requests online — pay the $144 fee and upload your license and insurance. 90 days, no extensions.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/dallas-municipal-desoto" class="text-primary-deep font-semibold hover:underline">Desoto Municipal Court</a></td>
+                <td class="py-3 text-text-body">You'll need a certified Type 3A driving record from Texas DPS to submit with your certificate. Court fee: $144.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/dallas-municipal-duncanville" class="text-primary-deep font-semibold hover:underline">Duncanville Municipal Court</a></td>
+                <td class="py-3 text-text-body">You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/dallas-municipal-farmers-branch" class="text-primary-deep font-semibold hover:underline">Farmers Branch Municipal Court</a></td>
+                <td class="py-3 text-text-body">Farmers Branch fees range $144–$169 and you must wait for the court's order before starting the course.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/dallas-municipal-garland" class="text-primary-deep font-semibold hover:underline">Garland Municipal Court</a></td>
+                <td class="py-3 text-text-body">You'll need a certified Type 3A driving record from Texas DPS to submit with your certificate. Court fee: $144.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/dallas-municipal-glenn-heights" class="text-primary-deep font-semibold hover:underline">Glenn Heights Municipal Court</a></td>
+                <td class="py-3 text-text-body">Glenn Heights gives you 20 days to request DSC, and the 90-day clock starts when you PAY. $144 fee.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/dallas-municipal-grand-prairie" class="text-primary-deep font-semibold hover:underline">Grand Prairie Municipal Court</a></td>
+                <td class="py-3 text-text-body">You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/dallas-municipal-highland-park" class="text-primary-deep font-semibold hover:underline">Highland Park Municipal Court</a></td>
+                <td class="py-3 text-text-body">Highland Park gives you 20 days to request DSC and warns: don't pay online — that's a conviction. $144 fee.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/dallas-municipal-hutchins" class="text-primary-deep font-semibold hover:underline">Hutchins Municipal Court</a></td>
+                <td class="py-3 text-text-body">Hutchins charges $144 ($169 school zone), wants the request within 20 days, then gives 90 to finish — get court permission first.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/dallas-municipal-irving" class="text-primary-deep font-semibold hover:underline">Irving Municipal Court</a></td>
+                <td class="py-3 text-text-body">Irving requires a signed DSC affidavit before you can enroll — most drivers miss this until it is too late.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/dallas-municipal-lancaster" class="text-primary-deep font-semibold hover:underline">Lancaster Municipal Court</a></td>
+                <td class="py-3 text-text-body">Lancaster gives you only 20 days from the citation date to request DSC — court fee $139.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/dallas-municipal-mesquite" class="text-primary-deep font-semibold hover:underline">Mesquite Municipal Court</a></td>
+                <td class="py-3 text-text-body">You'll need a certified Type 3A driving record from Texas DPS to submit with your certificate. Court fee: $144.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/dallas-municipal-richardson" class="text-primary-deep font-semibold hover:underline">Richardson Municipal Court</a></td>
+                <td class="py-3 text-text-body">You'll need a certified Type 3A driving record from Texas DPS to submit with your certificate. Court fee: $144.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/dallas-municipal-rowlett" class="text-primary-deep font-semibold hover:underline">Rowlett Municipal Court</a></td>
+                <td class="py-3 text-text-body">Rowlett requires a notarized DSC affidavit before you enroll — most drivers miss this until it is too late.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/dallas-municipal-sachse" class="text-primary-deep font-semibold hover:underline">Sachse Municipal Court</a></td>
+                <td class="py-3 text-text-body">Sachse gives you only 10 days from the citation to request DSC, and you must wait for the permission letter. $144 fee.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/dallas-municipal-seagoville" class="text-primary-deep font-semibold hover:underline">Seagoville Municipal Court</a></td>
+                <td class="py-3 text-text-body">Seagoville gives you only 15 days from the citation to request DSC — one of the shortest windows in Texas. $144 fee.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/dallas-municipal-university-park" class="text-primary-deep font-semibold hover:underline">University Park Municipal Court</a></td>
+                <td class="py-3 text-text-body">University Park requires a notarized affidavit and written notice within 20 days. $144 fee.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/dallas-municipal-wilmer" class="text-primary-deep font-semibold hover:underline">Wilmer Municipal Court</a></td>
+                <td class="py-3 text-text-body">Wilmer (I-45) takes DSC requests through an online form — the clerk emails your fee ($144, or $169 school zone) after you apply.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10 mt-4" style="font-family: 'DM Sans', sans-serif;">
+          <p>Don't see your court? Search every Texas court in our <a href="/texas/courts" class="text-primary-deep font-medium hover:underline">court directory</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Take the Dallas course that every court accepts</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Once your court approves the request, our TDLR-approved course is accepted at every Dallas County court — $28, fully online, with the certificate the moment you finish.</p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a href={enrollUrl} class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline" style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);">
+            Start the $28 Course →
+          </a>
+          <a href="/texas/courts" class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors" style="font-family: 'DM Sans', sans-serif;">
+            Browse all Texas courts
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated June 13, 2026 — court details verified by the Road Ready Safety editorial team against the City of Dallas and Dallas County area municipal courts and Tex. Code Crim. Proc. ch. 45A.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

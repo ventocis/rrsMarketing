@@ -23,6 +23,7 @@ const staticRoutes = [
   '/texas/refund',
   '/texas/accessibility',
   '/texas/cost',
+  '/texas/best-defensive-driving-course',
   '/texas/speeding-ticket',
   '/texas/speeding-25-over',
   '/texas/ticket-law-changes-2025',

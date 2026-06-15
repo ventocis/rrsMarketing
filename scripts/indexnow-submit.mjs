@@ -64,6 +64,7 @@ const MARKETING_URLS = [
   `${BASE}/texas/faq`,
   `${BASE}/texas/pricing`,
   `${BASE}/texas/cost`,
+  `${BASE}/texas/best-defensive-driving-course`,
   `${BASE}/texas/eligibility-tracker`,
   `${BASE}/texas/helpcenter`,
   `${BASE}/texas/contactus`,

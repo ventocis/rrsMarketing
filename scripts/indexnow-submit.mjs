@@ -9,9 +9,9 @@
  * Run manually after a production deploy:
  *
  *   npm run indexnow              — all pages (courts + marketing + blog + courses)
- *   npm run indexnow -- courts    — 80 enhanced court pages only
+ *   npm run indexnow -- courts    — all enhanced court pages (read live from [slug].astro)
  *   npm run indexnow -- marketing — static marketing pages only
- *   npm run indexnow -- blog      — all 53 blog posts only
+ *   npm run indexnow -- blog      — all blog posts only
  *   npm run indexnow -- courses   — course + requirements pages only
  *
  * Prerequisites:
@@ -40,102 +40,21 @@ const BASE = `https://${HOST}`;
 const KEY_LOCATION = `${BASE}/${KEY}.txt`;
 const INDEXNOW_ENDPOINT = 'https://api.indexnow.org/IndexNow';
 
-// ─── 80 Enhanced court page slugs ────────────────────────────────────────────
-const BATCH1_SLUGS = [
-  'harris-municipal-houston',
-  'travis-municipal-austin',
-  'dallas-municipal-dallas',
-  'bexar-municipal-san-antonio',
-  'dallas-municipal-garland',
-  'harris-justice-of-the-peace-precinct-1',
-];
+// ─── Enhanced court page slugs (read live from [slug].astro) ─────────────────
+// Pulls the current enhancedCourtSlugs Set so this list never goes stale as new
+// court batches ship. Falls back to empty if the file can't be parsed.
+function loadEnhancedCourtSlugs() {
+  try {
+    const src = fs.readFileSync('src/pages/texas/courts/[slug].astro', 'utf8');
+    const block = src.match(/const enhancedCourtSlugs = new Set\(\[([\s\S]*?)\]\);/);
+    if (!block) return [];
+    return [...block[1].matchAll(/'([a-z0-9-]+)'/g)].map(m => m[1]);
+  } catch {
+    return [];
+  }
+}
 
-const BATCH2_SLUGS = [
-  'tarrant-municipal-fort-worth',
-  'el-paso-municipal-el-paso',
-  'tarrant-municipal-arlington',
-  'nueces-municipal-corpus-christi',
-  'collin-municipal-plano',
-  'lubbock-municipal-lubbock',
-  'webb-municipal-laredo',
-  'dallas-municipal-irving',
-  'collin-municipal-frisco',
-  'collin-municipal-mckinney',
-  'potter-municipal-amarillo',
-  'dallas-municipal-grand-prairie',
-  'bell-municipal-killeen',
-  'cameron-municipal-brownsville',
-  'harris-municipal-pasadena',
-  'dallas-municipal-mesquite',
-  'hidalgo-municipal-mcallen',
-  'denton-municipal-denton',
-  'mclennan-municipal-waco',
-  'dallas-municipal-carrollton',
-  'midland-municipal-midland',
-  'taylor-municipal-abilene',
-  'jefferson-municipal-beaumont',
-  'williamson-municipal-round-rock',
-];
-
-const BATCH3_SLUGS = [
-  'brazoria-municipal-pearland',
-  'dallas-municipal-richardson',
-  'ector-municipal-odessa',
-  'denton-municipal-lewisville',
-  'collin-municipal-allen',
-  'galveston-municipal-league-city',
-  'fort-bend-municipal-sugar-land',
-  'smith-municipal-tyler',
-  'brazos-municipal-college-station',
-  'hays-municipal-san-marcos',
-  'wichita-municipal-wichita-falls',
-  'gregg-municipal-longview',
-  'denton-municipal-flower-mound',
-  'montgomery-municipal-conroe',
-  'williamson-municipal-cedar-park',
-  'comal-municipal-new-braunfels',
-  'hidalgo-municipal-edinburg',
-  'harris-municipal-baytown',
-  'bell-municipal-temple',
-  'hidalgo-municipal-pharr',
-  'hidalgo-municipal-mission',
-  'cameron-municipal-harlingen',
-  'williamson-municipal-georgetown',
-  'travis-municipal-pflugerville',
-  'victoria-municipal-victoria',
-];
-
-const BATCH4_SLUGS = [
-  'tom-green-municipal-san-angelo',
-  'brazos-municipal-bryan',
-  'fort-bend-municipal-missouri-city',
-  'tarrant-municipal-mansfield',
-  'williamson-municipal-leander',
-  'hays-municipal-kyle',
-  'tarrant-municipal-north-richland-hills',
-  'dallas-municipal-rowlett',
-  'tarrant-municipal-euless',
-  'collin-municipal-wylie',
-  'rockwall-municipal-rockwall',
-  'tarrant-municipal-grapevine',
-  'tarrant-municipal-bedford',
-  'dallas-municipal-desoto',
-  'dallas-municipal-cedar-hill',
-  'johnson-municipal-burleson',
-  'galveston-municipal-galveston',
-  'galveston-municipal-texas-city',
-  'guadalupe-municipal-schertz',
-  'tarrant-municipal-haltom-city',
-  'tarrant-municipal-hurst',
-  'dallas-municipal-duncanville',
-  'ellis-municipal-waxahachie',
-  'parker-municipal-weatherford',
-  'jefferson-municipal-port-arthur',
-];
-
-const COURT_URLS = [
-  ...BATCH1_SLUGS, ...BATCH2_SLUGS, ...BATCH3_SLUGS, ...BATCH4_SLUGS,
-].map(slug => `${BASE}/texas/courts/${slug}`);
+const COURT_URLS = loadEnhancedCourtSlugs().map(slug => `${BASE}/texas/courts/${slug}`);
 
 // ─── Static marketing pages ───────────────────────────────────────────────────
 const MARKETING_URLS = [
@@ -145,6 +64,7 @@ const MARKETING_URLS = [
   `${BASE}/texas/faq`,
   `${BASE}/texas/pricing`,
   `${BASE}/texas/cost`,
+  `${BASE}/texas/best-defensive-driving-course`,
   `${BASE}/texas/eligibility-tracker`,
   `${BASE}/texas/helpcenter`,
   `${BASE}/texas/contactus`,
@@ -158,6 +78,36 @@ const MARKETING_URLS = [
   `${BASE}/support`,
   `${BASE}/support/how-to-submit`,
   `${BASE}/blog`,
+  // Texas content + intercept + data clusters
+  `${BASE}/texas/speeding-ticket`,
+  `${BASE}/texas/speeding-25-over`,
+  `${BASE}/texas/ticket-law-changes-2025`,
+  `${BASE}/texas/look-up-your-ticket`,
+  `${BASE}/texas/omnibase-hold`,
+  `${BASE}/texas/registration-block`,
+  `${BASE}/texas/dsc-deadlines-by-court`,
+  `${BASE}/texas/dsc-fees-by-court`,
+  // Metro hub pages
+  `${BASE}/texas/houston`,
+  `${BASE}/texas/dallas`,
+  `${BASE}/texas/fort-worth`,
+  `${BASE}/texas/san-antonio`,
+  `${BASE}/texas/austin`,
+  // Competitor comparison hub
+  `${BASE}/texas/vs`,
+  // New York cluster
+  `${BASE}/new-york`,
+  `${BASE}/new-york/does-defensive-driving-remove-points`,
+  `${BASE}/new-york/insurance-discount`,
+  `${BASE}/new-york/defensive-driving-pending-ticket`,
+  `${BASE}/new-york/nyc-tvb-vs-town-court`,
+  `${BASE}/new-york/online-vs-classroom`,
+  `${BASE}/new-york/how-often-can-you-take-it`,
+  `${BASE}/new-york/course-length`,
+  `${BASE}/new-york/is-it-worth-it`,
+  `${BASE}/new-york/2026-point-changes`,
+  `${BASE}/new-york/cdl-defensive-driving`,
+  `${BASE}/new-york/5-hour-pre-licensing`,
 ];
 
 // ─── Blog posts ───────────────────────────────────────────────────────────────

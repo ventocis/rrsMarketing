@@ -1,0 +1,211 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    "q": "How much does it cost to dismiss a ticket in Austin?",
+    "a": "The court cost is typically up to about $144 ($169 in a school zone), set by each court — some Austin-area courts charge less. The TDLR-approved course is separate; ours is $28. Check your court's page for the exact amount."
+  },
+  {
+    "q": "Can I take the Austin defensive driving course online?",
+    "a": "Yes. Once the court approves your request, a TDLR-approved 6-hour course can be completed fully online. Every Austin-area court accepts a state-approved online course."
+  },
+  {
+    "q": "My ticket is from Round Rock / Cedar Park / San Marcos, not Austin. Does that change things?",
+    "a": "The legal steps are the same, but you deal with that city's court — and it's often in Williamson or Hays County, with its own fee, request method, and deadlines. Open its page in the table above."
+  },
+  {
+    "q": "How long do I have to finish?",
+    "a": "Generally 90 days after the court approves the request. Request the course by your appearance date first, and don't pay the ticket — paying is a guilty plea and a conviction."
+  },
+  {
+    "q": "Does a dismissal keep it off my insurance?",
+    "a": "Yes. A driving safety course dismissal keeps the charge off your driving record under Texas law, so it can't raise your insurance — unlike paying, which is a conviction."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org', '@type': 'Article',
+  headline: "How to Dismiss a Traffic Ticket in Austin with Defensive Driving", description: "Dismiss an Austin-area traffic ticket: request a driving safety course by your appearance date, finish a 6-hour course in 90 days, submit your certificate. 'Austin' spans many courts — here's how each differs.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-13', dateModified: '2026-06-13',
+  mainEntityOfPage: `${siteUrl}/texas/austin`,
+});
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout title="How to Dismiss a Traffic Ticket in Austin with Defensive Driving (2026)" description="Dismiss an Austin-area traffic ticket: request a driving safety course by your appearance date, finish a 6-hour course in 90 days, submit your certificate. 'Austin' spans many courts — here's how each differs." keywords="dismiss ticket austin, austin defensive driving, austin traffic ticket dismissal, driving safety course austin, round rock cedar park defensive driving" url="/texas/austin">
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Austin</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          How to Dismiss a Traffic Ticket in Austin with Defensive Driving
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong>Short answer:</strong> to dismiss an Austin-area traffic ticket, request a driving safety course from the court <strong>on or before your appearance date</strong>, complete a TDLR-approved 6-hour course within 90 days, and submit your certificate plus a certified DPS driving record. The charge is then dismissed and kept off your record.</p>
+          <p><strong>The catch:</strong> the Austin metro stretches across three counties — Travis, Williamson, and Hays — and a ticket "in Austin" might actually be at a suburb's court. Each court sets its own fee and process. Here's what's the same everywhere and how the local courts differ.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Each court sets its own fees, deadlines, and procedures — confirm with the specific court on your citation. Road Ready Safety is a TDLR-licensed course provider, not a court.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">"Austin" isn't one court</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Read the <strong>court name on your citation</strong>. The fast-growing Austin suburbs each run their own court, often in a different county than the city of Austin.</p>
+          <p>Besides the <strong>City of Austin Municipal Court</strong> (Travis County), the metro includes <strong>Round Rock, Cedar Park, Georgetown, Leander, Hutto, Taylor</strong> (Williamson County); <strong>San Marcos, Kyle, Buda, Dripping Springs</strong> (Hays County); and <strong>Lakeway, Manor, Pflugerville</strong> (Travis County). The city where you were stopped is your court.</p>
+          <p>Tickets written by a <strong>constable or deputy</strong> outside the city limits go to a <strong>Justice of the Peace</strong> court in that county. Same general process, different office.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What's the same at every Austin-area court</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <p>Texas law sets the core rules, so the basic path to a dismissal is the same no matter which Austin-area court has your ticket:</p>
+        </div>
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <ul class="flex flex-col gap-2 list-none m-0 p-0 text-sm text-text-body">
+            <li>• <strong>Request the course by your appearance/answer date</strong> — the date on your citation. Don't pay first: paying is a guilty plea and a conviction.</li>
+            <li>• You need a <strong>valid Texas driver license and proof of insurance</strong>, and you plead guilty or no contest.</li>
+            <li>• You can use it <strong>once every 12 months</strong>. It's <strong>not</strong> available for speeding 25+ mph over the limit (or 95+ mph), CDL holders, passing a school bus, or work-zone violations with workers present.</li>
+            <li>• Court costs run <strong>up to about $144</strong> ($169 in a school zone) and are set by each court — some charge less.</li>
+            <li>• After approval you have <strong>90 days</strong> to finish a TDLR-approved 6-hour course and submit the certificate plus a certified DPS <a href="/texas/type-3a-driving-record" class="text-primary-deep font-medium hover:underline">Type 3A driving record</a>.</li>
+            <li>• Complete it and the charge is <strong>dismissed and kept off your record</strong> under Texas law (Code of Criminal Procedure ch. 45A) — it can't be used against you or raise your insurance.</li>
+          </ul>
+        </div>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <p>Want the full walkthrough? See <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">how Texas ticket dismissal works</a>, or <a href="/texas/eligibility-tracker" class="text-primary-deep font-medium hover:underline">check your eligibility</a>.</p>
+        </div>
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How Austin-area courts differ</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-4" style="font-family: 'DM Sans', sans-serif;">
+          <p>The fee, how you request the course, the exact deadline, and small local rules vary court to court. Here are the 17 Austin-area courts we've researched — tap any one for its full instructions, fees, and contacts.</p>
+        </div>
+        <div class="overflow-x-auto my-2">
+          <table class="w-full text-sm border-collapse" style="font-family: 'DM Sans', sans-serif;">
+            <thead><tr class="border-b-2 border-border text-left"><th class="py-2 pr-4 font-semibold text-text">Austin-area court</th><th class="py-2 font-semibold text-text">What to know (tap to open the court page)</th></tr></thead>
+            <tbody>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/travis-municipal-austin" class="text-primary-deep font-semibold hover:underline">Austin Municipal Court</a></td>
+                <td class="py-3 text-text-body">You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/hays-municipal-buda" class="text-primary-deep font-semibold hover:underline">Buda Municipal Court</a></td>
+                <td class="py-3 text-text-body">Buda's mailed DSC request must be notarized, and certificates dated before court approval are rejected. $144 fee.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/williamson-municipal-cedar-park" class="text-primary-deep font-semibold hover:underline">Cedar Park Municipal Court</a></td>
+                <td class="py-3 text-text-body">Cedar Park requires a signed DSC affidavit before you can enroll — most drivers miss this until it is too late.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/hays-municipal-dripping-springs" class="text-primary-deep font-semibold hover:underline">Dripping Springs Municipal Court</a></td>
+                <td class="py-3 text-text-body">Dripping Springs (US-290) takes DSC requests in person, by mail, or phone by your appearance date — call (512) 858-4725 for the fee.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/williamson-municipal-georgetown" class="text-primary-deep font-semibold hover:underline">Georgetown Municipal Court</a></td>
+                <td class="py-3 text-text-body">Georgetown requires a signed DSC affidavit before you enroll — most drivers miss this step. Court fee: $144.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/williamson-municipal-granger" class="text-primary-deep font-semibold hover:underline">Granger Municipal Court</a></td>
+                <td class="py-3 text-text-body">Granger (SH-95) holds court once a month and doesn't publish a DSC fee — call the clerk before your appearance date.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/williamson-municipal-hutto" class="text-primary-deep font-semibold hover:underline">Hutto Municipal Court</a></td>
+                <td class="py-3 text-text-body">Hutto takes no cash or personal checks, and paying your ticket online forfeits the DSC option. $144 total fee.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/williamson-municipal-jarrell" class="text-primary-deep font-semibold hover:underline">Jarrell Municipal Court</a></td>
+                <td class="py-3 text-text-body">Jarrell's I-35 court is one of Williamson County's busiest for speed enforcement — request DSC before paying.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/hays-municipal-kyle" class="text-primary-deep font-semibold hover:underline">Kyle Municipal Court</a></td>
+                <td class="py-3 text-text-body">You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/travis-municipal-lakeway" class="text-primary-deep font-semibold hover:underline">Lakeway Municipal Court</a></td>
+                <td class="py-3 text-text-body">Lakeway (RR-620) charges $144 ($169 school zone) — request online before your appearance date, then submit docs by email or in person.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/williamson-municipal-leander" class="text-primary-deep font-semibold hover:underline">Leander Municipal Court</a></td>
+                <td class="py-3 text-text-body">Leander's court fee is $144 for most violations. Take a $28 TDLR-approved defensive driving course online. Certificate downloads the same day.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/williamson-municipal-liberty-hill" class="text-primary-deep font-semibold hover:underline">Liberty Hill Municipal Court</a></td>
+                <td class="py-3 text-text-body">Liberty Hill doesn't post its DSC fee — and not all offenses qualify, so contact the court first.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/travis-municipal-manor" class="text-primary-deep font-semibold hover:underline">Manor Municipal Court</a></td>
+                <td class="py-3 text-text-body">Manor (US-290) charges $144 ($169 school zone) — get court approval first; request by your second appearance date.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/travis-municipal-pflugerville" class="text-primary-deep font-semibold hover:underline">Pflugerville Municipal Court</a></td>
+                <td class="py-3 text-text-body">You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/williamson-municipal-round-rock" class="text-primary-deep font-semibold hover:underline">Round Rock Municipal Court</a></td>
+                <td class="py-3 text-text-body">Round Rock requires a signed DSC affidavit before you enroll — most drivers miss this step. Court fee: $144.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/hays-municipal-san-marcos" class="text-primary-deep font-semibold hover:underline">San Marcos Municipal Court</a></td>
+                <td class="py-3 text-text-body">San Marcos requires a signed DSC affidavit before you enroll — most drivers miss this step. Court fee: $144.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/williamson-municipal-taylor" class="text-primary-deep font-semibold hover:underline">Taylor Municipal Court</a></td>
+                <td class="py-3 text-text-body">Taylor lets you request DSC online — upload your license and insurance with the citation search. $144 fee.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10 mt-4" style="font-family: 'DM Sans', sans-serif;">
+          <p>Don't see your court? Search every Texas court in our <a href="/texas/courts" class="text-primary-deep font-medium hover:underline">court directory</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Take the Austin course that every court accepts</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Once your court approves the request, our TDLR-approved course is accepted at every Austin-area court — $28, fully online, with the certificate the moment you finish.</p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a href={enrollUrl} class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline" style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);">
+            Start the $28 Course →
+          </a>
+          <a href="/texas/courts" class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors" style="font-family: 'DM Sans', sans-serif;">
+            Browse all Texas courts
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated June 13, 2026 — court details verified by the Road Ready Safety editorial team against the City of Austin and Austin-area (Travis, Williamson, Hays) municipal courts and Tex. Code Crim. Proc. ch. 45A.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

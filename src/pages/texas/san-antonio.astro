@@ -1,0 +1,203 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    "q": "How much does it cost to dismiss a ticket in San Antonio?",
+    "a": "The court cost is typically up to about $144 ($169 in a school zone), set by each court — some Bexar-area courts charge less. The TDLR-approved course is separate; ours is $28. See your court's page for the exact figure."
+  },
+  {
+    "q": "Can I take the San Antonio defensive driving course online?",
+    "a": "Yes. After the court approves your request, a TDLR-approved 6-hour course can be done fully online and the certificate submitted. Every San Antonio-area court accepts a state-approved online course."
+  },
+  {
+    "q": "My ticket is from Converse / Alamo Heights / Leon Valley, not San Antonio. Does that matter?",
+    "a": "The legal steps are the same, but you deal with that city's court, which sets its own fee, request method, and deadlines. Open its page in the table above."
+  },
+  {
+    "q": "How long do I have to complete the course?",
+    "a": "Usually 90 days after the court grants your request. Request the course by your appearance date first, and don't pay the ticket — paying is a guilty plea and a conviction."
+  },
+  {
+    "q": "Does a dismissal keep it off my insurance?",
+    "a": "Yes. A driving safety course dismissal keeps the charge off your driving record under Texas law, so it can't raise your insurance — unlike paying, which is a conviction."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org', '@type': 'Article',
+  headline: "How to Dismiss a Traffic Ticket in San Antonio with Defensive Driving", description: "Dismiss a San Antonio or Bexar County traffic ticket: request a driving safety course by your appearance date, finish a 6-hour course in 90 days, submit your certificate. Here's how each local court differs.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-13', dateModified: '2026-06-13',
+  mainEntityOfPage: `${siteUrl}/texas/san-antonio`,
+});
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout title="How to Dismiss a Traffic Ticket in San Antonio with Defensive Driving (2026)" description="Dismiss a San Antonio or Bexar County traffic ticket: request a driving safety course by your appearance date, finish a 6-hour course in 90 days, submit your certificate. Here's how each local court differs." keywords="dismiss ticket san antonio, san antonio defensive driving, bexar county traffic ticket, driving safety course san antonio, san antonio municipal court ticket" url="/texas/san-antonio">
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">San Antonio</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          How to Dismiss a Traffic Ticket in San Antonio with Defensive Driving
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong>Short answer:</strong> to dismiss a San Antonio or Bexar County traffic ticket, request a driving safety course from the court <strong>on or before your appearance date</strong>, complete a TDLR-approved 6-hour course within 90 days, and submit your certificate plus a certified DPS driving record. The charge is then dismissed and kept off your record.</p>
+          <p><strong>The catch:</strong> "San Antonio" includes the big City of San Antonio Municipal Court plus a ring of independent suburb and enclave city courts across Bexar County — each with its own fee and process. Here's what's identical everywhere and how the local courts differ.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Each court sets its own fees, deadlines, and procedures — confirm with the specific court on your citation. Road Ready Safety is a TDLR-licensed course provider, not a court.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">"San Antonio" isn't one court</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Check the <strong>court name on your citation</strong> — a Bexar County ticket may be handled by a small suburb, not the City of San Antonio.</p>
+          <p>Besides the <strong>City of San Antonio Municipal Court</strong>, Bexar County has its own city courts: <strong>Converse, Universal City, Live Oak, Selma, Kirby, Windcrest, Leon Valley, Castle Hills, Alamo Heights, Balcones Heights, Shavano Park,</strong> and <strong>Helotes</strong>. The city where you were stopped is your court.</p>
+          <p>Tickets written by a <strong>constable or deputy</strong> in an unincorporated area go to a <strong>Bexar County Justice of the Peace</strong> court. Same general process, different office.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What's the same at every San Antonio-area court</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <p>Texas law sets the core rules, so the basic path to a dismissal is the same no matter which San Antonio-area court has your ticket:</p>
+        </div>
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <ul class="flex flex-col gap-2 list-none m-0 p-0 text-sm text-text-body">
+            <li>• <strong>Request the course by your appearance/answer date</strong> — the date on your citation. Don't pay first: paying is a guilty plea and a conviction.</li>
+            <li>• You need a <strong>valid Texas driver license and proof of insurance</strong>, and you plead guilty or no contest.</li>
+            <li>• You can use it <strong>once every 12 months</strong>. It's <strong>not</strong> available for speeding 25+ mph over the limit (or 95+ mph), CDL holders, passing a school bus, or work-zone violations with workers present.</li>
+            <li>• Court costs run <strong>up to about $144</strong> ($169 in a school zone) and are set by each court — some charge less.</li>
+            <li>• After approval you have <strong>90 days</strong> to finish a TDLR-approved 6-hour course and submit the certificate plus a certified DPS <a href="/texas/type-3a-driving-record" class="text-primary-deep font-medium hover:underline">Type 3A driving record</a>.</li>
+            <li>• Complete it and the charge is <strong>dismissed and kept off your record</strong> under Texas law (Code of Criminal Procedure ch. 45A) — it can't be used against you or raise your insurance.</li>
+          </ul>
+        </div>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <p>Want the full walkthrough? See <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">how Texas ticket dismissal works</a>, or <a href="/texas/eligibility-tracker" class="text-primary-deep font-medium hover:underline">check your eligibility</a>.</p>
+        </div>
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How San Antonio-area courts differ</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-4" style="font-family: 'DM Sans', sans-serif;">
+          <p>The fee, how you request the course, the exact deadline, and small local rules vary court to court. Here are the 15 Bexar County courts we've researched — tap any one for its full instructions, fees, and contacts.</p>
+        </div>
+        <div class="overflow-x-auto my-2">
+          <table class="w-full text-sm border-collapse" style="font-family: 'DM Sans', sans-serif;">
+            <thead><tr class="border-b-2 border-border text-left"><th class="py-2 pr-4 font-semibold text-text">Bexar County court</th><th class="py-2 font-semibold text-text">What to know (tap to open the court page)</th></tr></thead>
+            <tbody>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/bexar-municipal-san-antonio" class="text-primary-deep font-semibold hover:underline">San Antonio Municipal Court</a></td>
+                <td class="py-3 text-text-body">You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/bexar-municipal-alamo-heights" class="text-primary-deep font-semibold hover:underline">Alamo Heights Municipal Court</a></td>
+                <td class="py-3 text-text-body">Alamo Heights charges $144 ($169 school zone) including a $10 admin fee — request by your appearance date.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/bexar-municipal-balcones-heights" class="text-primary-deep font-semibold hover:underline">Balcones Heights Municipal Court</a></td>
+                <td class="py-3 text-text-body">Balcones Heights takes DSC requests only in writing — email or in person, never by phone. $144 fee.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/bexar-municipal-castle-hills" class="text-primary-deep font-semibold hover:underline">Castle Hills Municipal Court</a></td>
+                <td class="py-3 text-text-body">Castle Hills says don't order your driving record until the court approves you. $144 ($169 school zone).</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/bexar-municipal-converse" class="text-primary-deep font-semibold hover:underline">Converse Municipal Court</a></td>
+                <td class="py-3 text-text-body">Converse takes DSC applications online but payment is due within 24 hours of approval. $144 fee.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/bexar-municipal-fair-oaks-ranch" class="text-primary-deep font-semibold hover:underline">Fair Oaks Ranch Municipal Court</a></td>
+                <td class="py-3 text-text-body">Fair Oaks Ranch (I-10 NW of San Antonio) takes DSC requests in person or by mail only — never pay online or it's a conviction; 90 days.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/bexar-municipal-helotes" class="text-primary-deep font-semibold hover:underline">Helotes Municipal Court</a></td>
+                <td class="py-3 text-text-body">Helotes needs a notarized affidavit by certified mail (waived if you sign in person). $144 fee.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/bexar-municipal-kirby" class="text-primary-deep font-semibold hover:underline">Kirby Municipal Court</a></td>
+                <td class="py-3 text-text-body">Kirby's court page is still under construction and posts no DSC fee — request through the clerk before your monthly court date.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/bexar-municipal-leon-valley" class="text-primary-deep font-semibold hover:underline">Leon Valley Municipal Court</a></td>
+                <td class="py-3 text-text-body">Leon Valley needs a notarized request form and $144 ($169 school zone) by your appearance date — call before paying online.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/bexar-municipal-live-oak" class="text-primary-deep font-semibold hover:underline">Live Oak Municipal Court</a></td>
+                <td class="py-3 text-text-body">Live Oak charges a flat $144, no personal checks, and paying online is a conviction. Get court approval first.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/bexar-municipal-selma" class="text-primary-deep font-semibold hover:underline">Selma Municipal Court</a></td>
+                <td class="py-3 text-text-body">Selma's high-traffic I-35 court charges $144 ($169 school zone) and bars CDL holders even before the judge.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/bexar-municipal-shavano-park" class="text-primary-deep font-semibold hover:underline">Shavano Park Municipal Court</a></td>
+                <td class="py-3 text-text-body">Shavano Park's NW Military/1604 court takes DSC requests by your appearance date — fee due at request.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/bexar-municipal-terrell-hills" class="text-primary-deep font-semibold hover:underline">Terrell Hills Municipal Court</a></td>
+                <td class="py-3 text-text-body">Terrell Hills (San Antonio enclave) charges $144 ($169 school zone) — request in person or by mail with a notarized form by your court date.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/bexar-municipal-universal-city" class="text-primary-deep font-semibold hover:underline">Universal City Municipal Court</a></td>
+                <td class="py-3 text-text-body">Universal City's mail-in DSC request needs photocopies, payment, and a stamped envelope — and 90 days means 90 days.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/bexar-municipal-windcrest" class="text-primary-deep font-semibold hover:underline">Windcrest Municipal Court</a></td>
+                <td class="py-3 text-text-body">Windcrest takes DSC requests by email and charges a flat $144 — court approval required first.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10 mt-4" style="font-family: 'DM Sans', sans-serif;">
+          <p>Don't see your court? Search every Texas court in our <a href="/texas/courts" class="text-primary-deep font-medium hover:underline">court directory</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Take the San Antonio course that every court accepts</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Once your court approves the request, our TDLR-approved course is accepted at every Bexar County court — $28, fully online, with the certificate the moment you finish.</p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a href={enrollUrl} class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline" style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);">
+            Start the $28 Course →
+          </a>
+          <a href="/texas/courts" class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors" style="font-family: 'DM Sans', sans-serif;">
+            Browse all Texas courts
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated June 13, 2026 — court details verified by the Road Ready Safety editorial team against the City of San Antonio and Bexar County area municipal courts and Tex. Code Crim. Proc. ch. 45A.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

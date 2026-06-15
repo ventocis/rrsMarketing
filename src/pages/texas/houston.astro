@@ -1,0 +1,203 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    "q": "How much does it cost to dismiss a ticket in Houston?",
+    "a": "The court's cost is typically up to about $144 ($169 in a school zone), set by each individual court — some Houston-area courts charge less or add a small school-zone fee. The TDLR-approved course itself is separate; ours is $28. Check your specific court's page for the exact amount."
+  },
+  {
+    "q": "Can I take the Houston defensive driving course online?",
+    "a": "Yes. Once your court approves the request, you can take a TDLR-approved 6-hour course fully online and submit the certificate. Every Houston-area court accepts a state-approved online course."
+  },
+  {
+    "q": "My ticket is from Bellaire / West U / Jersey Village, not Houston proper. Does that change anything?",
+    "a": "The legal process is the same, but you deal with that city's court, not the City of Houston. Each enclave court has its own fee, request method, and deadline rules — open its page in the table above for specifics."
+  },
+  {
+    "q": "How long do I have to finish the course?",
+    "a": "Generally 90 days after the court approves your request. You must request the course by your appearance date first — don't pay the ticket, because paying is a guilty plea and a conviction."
+  },
+  {
+    "q": "Does dismissing the ticket keep it off my insurance?",
+    "a": "Yes. A driving safety course dismissal keeps the charge off your driving record under Texas law, so it can't be used against you or raise your insurance — unlike paying, which is a conviction."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org', '@type': 'Article',
+  headline: "How to Dismiss a Traffic Ticket in Houston with Defensive Driving", description: "Dismiss a Houston traffic ticket: request a driving safety course by your appearance date, finish a 6-hour course in 90 days, submit your certificate. But 'Houston' is many courts — here's how each one differs.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-13', dateModified: '2026-06-13',
+  mainEntityOfPage: `${siteUrl}/texas/houston`,
+});
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout title="How to Dismiss a Traffic Ticket in Houston with Defensive Driving (2026)" description="Dismiss a Houston traffic ticket: request a driving safety course by your appearance date, finish a 6-hour course in 90 days, submit your certificate. But 'Houston' is many courts — here's how each one differs." keywords="dismiss ticket houston, houston defensive driving, houston traffic ticket dismissal, driving safety course houston, houston municipal court ticket" url="/texas/houston">
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Houston</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          How to Dismiss a Traffic Ticket in Houston with Defensive Driving
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong>Short answer:</strong> to dismiss a Houston traffic ticket, you ask the court for a driving safety course (defensive driving) <strong>on or before your appearance date</strong>, complete a TDLR-approved 6-hour course within 90 days, and turn in your certificate plus a certified DPS driving record. Do that and the charge is dismissed and kept off your record.</p>
+          <p><strong>The catch nobody tells you:</strong> a ticket "in Houston" isn't all one court. Depending on who stopped you and where, your case is at the City of Houston Municipal Courts, one of a dozen smaller Houston-area city courts, or a Harris County Justice of the Peace court — and each sets its own fee, request method, and deadline quirks. This page covers what's the same everywhere and exactly how the local courts differ.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Each court sets its own fees, deadlines, and procedures — confirm with the specific court on your citation. Road Ready Safety is a TDLR-licensed course provider, not a court.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">"Houston" isn't one court</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Look at the <strong>court name printed on your citation</strong> — that's who you deal with, and it may not say "Houston" at all.</p>
+          <p>Most Houston tickets land at the <strong>City of Houston Municipal Courts</strong>. But if you were stopped inside an enclave or suburb, it's that city's court instead — <strong>Bellaire, West University Place, Jersey Village, Humble, Tomball, Webster, Pasadena, Baytown, Deer Park, La Porte,</strong> or <strong>Katy</strong>, among others. A few sit in neighboring counties (for example, Stafford and Sugar Land are in Fort Bend, Pearland in Brazoria).</p>
+          <p>If a <strong>sheriff's deputy or constable</strong> wrote the ticket in an unincorporated area, it's likely a <strong>Harris County Justice of the Peace</strong> court. The process is the same idea, but the office and forms are different.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What's the same at every Houston-area court</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <p>Texas law sets the core rules, so the basic path to a dismissal is the same no matter which Houston-area court has your ticket:</p>
+        </div>
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <ul class="flex flex-col gap-2 list-none m-0 p-0 text-sm text-text-body">
+            <li>• <strong>Request the course by your appearance/answer date</strong> — the date on your citation. Don't pay first: paying is a guilty plea and a conviction.</li>
+            <li>• You need a <strong>valid Texas driver license and proof of insurance</strong>, and you plead guilty or no contest.</li>
+            <li>• You can use it <strong>once every 12 months</strong>. It's <strong>not</strong> available for speeding 25+ mph over the limit (or 95+ mph), CDL holders, passing a school bus, or work-zone violations with workers present.</li>
+            <li>• Court costs run <strong>up to about $144</strong> ($169 in a school zone) and are set by each court — some charge less.</li>
+            <li>• After approval you have <strong>90 days</strong> to finish a TDLR-approved 6-hour course and submit the certificate plus a certified DPS <a href="/texas/type-3a-driving-record" class="text-primary-deep font-medium hover:underline">Type 3A driving record</a>.</li>
+            <li>• Complete it and the charge is <strong>dismissed and kept off your record</strong> under Texas law (Code of Criminal Procedure ch. 45A) — it can't be used against you or raise your insurance.</li>
+          </ul>
+        </div>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <p>Want the full walkthrough? See <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">how Texas ticket dismissal works</a>, or <a href="/texas/eligibility-tracker" class="text-primary-deep font-medium hover:underline">check your eligibility</a>.</p>
+        </div>
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How Houston-area courts differ</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-4" style="font-family: 'DM Sans', sans-serif;">
+          <p>The fee, how you request the course, the exact deadline, and small local rules vary court to court. Here are the 15 Houston-area courts we've researched — tap any one for its full instructions, fees, and contacts.</p>
+        </div>
+        <div class="overflow-x-auto my-2">
+          <table class="w-full text-sm border-collapse" style="font-family: 'DM Sans', sans-serif;">
+            <thead><tr class="border-b-2 border-border text-left"><th class="py-2 pr-4 font-semibold text-text">Houston-area court</th><th class="py-2 font-semibold text-text">What to know (tap to open the court page)</th></tr></thead>
+            <tbody>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/harris-municipal-houston" class="text-primary-deep font-semibold hover:underline">Houston Municipal Court</a></td>
+                <td class="py-3 text-text-body">You'll need a certified Type 3A driving record from Texas DPS to submit with your certificate. Court fee: $144.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/harris-municipal-baytown" class="text-primary-deep font-semibold hover:underline">Baytown Municipal Court</a></td>
+                <td class="py-3 text-text-body">You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/harris-municipal-bellaire" class="text-primary-deep font-semibold hover:underline">Bellaire Municipal Court</a></td>
+                <td class="py-3 text-text-body">Bellaire charges $144 ($169 school zone) — request at the clerk window or before the judge by your court date; insurance proof must be paper.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/harris-municipal-deer-park" class="text-primary-deep font-semibold hover:underline">Deer Park Municipal Court</a></td>
+                <td class="py-3 text-text-body">Deer Park rejects certificates without the Type 3A record — both must be turned in together. Court fee $144.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/harris-municipal-galena-park" class="text-primary-deep font-semibold hover:underline">Galena Park Municipal Court</a></td>
+                <td class="py-3 text-text-body">Galena Park (Ship Channel) takes DSC requests in person, by fax, or mail — call (713) 672-2556 for the fee before your court date.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/harris-municipal-humble" class="text-primary-deep font-semibold hover:underline">Humble Municipal Court</a></td>
+                <td class="py-3 text-text-body">Humble (US-59) charges $144 ($159 school zone) and gives 90 days — request in court, by mail, or at the court office, not the clerk window.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/harris-municipal-jersey-village" class="text-primary-deep font-semibold hover:underline">Jersey Village Municipal Court</a></td>
+                <td class="py-3 text-text-body">Jersey Village (US-290) charges $144 ($169 school zone) and takes DSC requests in person, by email, or mail by your appearance date.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/harris-municipal-katy" class="text-primary-deep font-semibold hover:underline">Katy Municipal Court</a></td>
+                <td class="py-3 text-text-body">Katy's court fee is unusually low — $114.10 ($139.10 school zone) — but mail/online requests need a notarized affidavit.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/harris-municipal-la-porte" class="text-primary-deep font-semibold hover:underline">La Porte Municipal Court</a></td>
+                <td class="py-3 text-text-body">La Porte doesn't post DSC fees online — and paying your fine online counts as a conviction. Request DSC first.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/harris-municipal-pasadena" class="text-primary-deep font-semibold hover:underline">Pasadena Municipal Court</a></td>
+                <td class="py-3 text-text-body">You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/harris-municipal-seabrook" class="text-primary-deep font-semibold hover:underline">Seabrook Municipal Court</a></td>
+                <td class="py-3 text-text-body">Seabrook (SH-146) takes DSC requests in person, by email (2 business days ahead), or online — sign via DropBox by 4 p.m. that day.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/harris-municipal-south-houston" class="text-primary-deep font-semibold hover:underline">South Houston Municipal Court</a></td>
+                <td class="py-3 text-text-body">South Houston (its own court, not City of Houston) takes DSC requests in person at your arraignment — call (713) 947-7700 for the fee.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/harris-municipal-tomball" class="text-primary-deep font-semibold hover:underline">Tomball Municipal Court</a></td>
+                <td class="py-3 text-text-body">Tomball (SH-249) charges $144 ($169 school zone) and takes DSC requests in person, online, or by notarized mail by your answer date.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/harris-municipal-webster" class="text-primary-deep font-semibold hover:underline">Webster Municipal Court</a></td>
+                <td class="py-3 text-text-body">Webster (I-45/NASA) charges $144 ($169 school zone) and takes DSC requests in person or through its online form before your court date.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/harris-municipal-west-university-place" class="text-primary-deep font-semibold hover:underline">West University Place Municipal Court</a></td>
+                <td class="py-3 text-text-body">West U charges $144 ($169 school zone) — give written notice by your court date in person or by email; 90 days to finish.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10 mt-4" style="font-family: 'DM Sans', sans-serif;">
+          <p>Don't see your court? Search every Texas court in our <a href="/texas/courts" class="text-primary-deep font-medium hover:underline">court directory</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Take the Houston course that every court accepts</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Once your court approves the request, our TDLR-approved course is accepted at every Houston-area court — $28, fully online, with the certificate the moment you finish.</p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a href={enrollUrl} class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline" style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);">
+            Start the $28 Course →
+          </a>
+          <a href="/texas/courts" class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors" style="font-family: 'DM Sans', sans-serif;">
+            Browse all Texas courts
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated June 13, 2026 — court details verified by the Road Ready Safety editorial team against the City of Houston and area municipal courts and Tex. Code Crim. Proc. ch. 45A.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

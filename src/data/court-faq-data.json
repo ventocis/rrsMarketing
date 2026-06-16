@@ -6551,5 +6551,372 @@
     "requiresNotarizedAffidavit": true,
     "requiresType3A": true,
     "emailAccepted": false
+  },
+  "cooke-municipal-muenster": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Mail"
+    ],
+    "requiredDocs": [],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": false
+  },
+  "montague-municipal-nocona": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Mail",
+      "Fax",
+      "Email"
+    ],
+    "requiredDocs": [],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": true
+  },
+  "montague-municipal-saint-jo": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Mail"
+    ],
+    "requiredDocs": [
+      "Texas TEA-approved driving safety course completion certificate",
+      "Certified copy of driving record (Type 3A) — typically required by Texas courts",
+      "Proof of liability insurance"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": false
+  },
+  "grayson-municipal-whitewright": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Phone"
+    ],
+    "requiredDocs": [],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": false
+  },
+  "grayson-municipal-gunter": {
+    "fee": "$144",
+    "feeKnown": true,
+    "submissionMethods": [
+      "In-person"
+    ],
+    "requiredDocs": [
+      "Certified copy of your driving record from the Texas Department of Public Safety",
+      "Copy of your Texas Driver's License",
+      "Current vehicle insurance documentation",
+      "Court-provided application form"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": false
+  },
+  "grayson-municipal-collinsville": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "Online",
+      "In-person",
+      "Email"
+    ],
+    "requiredDocs": [],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": true
+  },
+  "van-zandt-municipal-grand-saline": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Phone"
+    ],
+    "requiredDocs": [
+      "Certificate of completion from a TDLR-approved driving safety course",
+      "Certified copy of driving record (typically required by Texas courts)"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": false
+  },
+  "van-zandt-municipal-van": {
+    "fee": "$144.00",
+    "feeKnown": true,
+    "submissionMethods": [
+      "In-person",
+      "Email",
+      "Mail"
+    ],
+    "requiredDocs": [
+      "Completed DSC/Deferred Request Form",
+      "$144.00 administrative fee",
+      "Proof of insurance",
+      "Texas driver's license/permit (or active-duty military verification)",
+      "At completion: approved driving safety course completion certificate",
+      "At completion: Texas DPS certified driving record (Type 3A) showing no DSC in the prior 12 months"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": true
+  },
+  "van-zandt-municipal-edgewood": {
+    "fee": "$134.00",
+    "feeKnown": true,
+    "submissionMethods": [
+      "In-person",
+      "Mail"
+    ],
+    "requiredDocs": [
+      "Completed Driver Safety Course Application form",
+      "Proof of financial responsibility (insurance)",
+      "Valid Texas driver's license/permit or proof of active military duty"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": false
+  },
+  "freestone-municipal-fairfield": {
+    "fee": "$129.10",
+    "feeKnown": true,
+    "submissionMethods": [
+      "In-person",
+      "Mail"
+    ],
+    "requiredDocs": [
+      "Payment of court costs ($129.10, or $154.10 if in a school zone)",
+      "Proof of financial responsibility (insurance)",
+      "Texas driver's license or permit, OR proof of active-duty U.S. Military service",
+      "Driving safety course completion certificate (presented after the course, within the 90-day deferral period)"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": false
+  },
+  "freestone-municipal-teague": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Online"
+    ],
+    "requiredDocs": [],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": false
+  },
+  "navarro-municipal-kerens": {
+    "fee": "$144.00",
+    "feeKnown": true,
+    "submissionMethods": [
+      "In-person",
+      "Mail",
+      "Email"
+    ],
+    "requiredDocs": [
+      "Plea of guilty or no contest",
+      "Proof of current liability insurance valid as of the violation date",
+      "Completed Driver Safety Course Form",
+      "Certificate of completion (confirm exact post-course docs with the court)"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": true
+  },
+  "limestone-municipal-groesbeck": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Email",
+      "Fax",
+      "Mail"
+    ],
+    "requiredDocs": [],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": true
+  },
+  "trinity-municipal-trinity": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Mail"
+    ],
+    "requiredDocs": [],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": false
+  },
+  "trinity-municipal-groveton": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Mail",
+      "Fax"
+    ],
+    "requiredDocs": [],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": false
+  },
+  "polk-municipal-onalaska": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Mail",
+      "Fax",
+      "Email"
+    ],
+    "requiredDocs": [
+      "Completed Driving Safety Course / Motorcycle Operator Training Course Request Form, signed before a Notary Public or the Municipal Court Clerk",
+      "Required court fee",
+      "After the course: DSC completion certificate; a certified driving record may be required"
+    ],
+    "requiresNotarizedAffidavit": true,
+    "requiresType3A": true,
+    "emailAccepted": true
+  },
+  "polk-municipal-corrigan": {
+    "fee": "$144.00",
+    "feeKnown": true,
+    "submissionMethods": [
+      "Mail",
+      "In-person"
+    ],
+    "requiredDocs": [
+      "No Contest plea form (mark Initial Letter A)",
+      "Written notice of intent to take DSC, on or before the appearance date",
+      "Proof of vehicle insurance / financial responsibility",
+      "Copy of driver's license",
+      "Money order for $144.00 ($169.00 if school zone) — state fee only",
+      "Type 3A certified copy of driving record",
+      "Certificate of completion from a Texas-approved Driving Safety Course (returned after the course)"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": false
+  },
+  "houston-municipal-grapeland": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Mail"
+    ],
+    "requiredDocs": [
+      "DSC completion certificate (provider-issued)",
+      "Certified driving record (typically required by TX courts; confirm with court)"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": false
+  },
+  "eastland-municipal-ranger": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Phone"
+    ],
+    "requiredDocs": [],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": false
+  },
+  "eastland-municipal-gorman": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Mail"
+    ],
+    "requiredDocs": [],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": false
+  },
+  "young-municipal-olney": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Email"
+    ],
+    "requiredDocs": [],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": true
+  },
+  "jack-municipal-jacksboro": {
+    "fee": "$100",
+    "feeKnown": true,
+    "submissionMethods": [
+      "In-person",
+      "Mail"
+    ],
+    "requiredDocs": [
+      "DSC completion certificate (uniform certificate of completion)",
+      "Certified copy of your driving record from the Texas Department of Public Safety"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": false
+  },
+  "kimble-municipal-junction": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Email"
+    ],
+    "requiredDocs": [],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": true
+  },
+  "mason-municipal-mason": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Mail",
+      "Fax"
+    ],
+    "requiredDocs": [],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": false
+  },
+  "wise-municipal-alvord": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Email",
+      "Mail"
+    ],
+    "requiredDocs": [
+      "Plea of 'no contest' or 'guilty' (handwritten signature on mailed/written requests)",
+      "Copy of driver's license (valid Texas DL or Military ID; non-CDL)",
+      "Proof of financial responsibility (current liability insurance)",
+      "DSC fee (confirm amount with court)"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": true
   }
 }

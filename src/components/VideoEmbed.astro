@@ -5,7 +5,7 @@ interface Props {
   id: string;            // YouTube video ID
   title: string;         // video title (schema name + iframe title)
   description: string;   // short description for schema
-  duration: string;      // ISO 8601, e.g. "PT53S"
+  duration?: string;     // ISO 8601, e.g. "PT53S" (optional)
   uploadDate?: string;   // ISO date
 }
 const { id, title, description, duration, uploadDate = '2026-06-16' } = Astro.props;
@@ -20,7 +20,7 @@ const schema = JSON.stringify({
     `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`,
   ],
   uploadDate,
-  duration,
+  ...(duration ? { duration } : {}),
   embedUrl: `https://www.youtube.com/embed/${id}`,
   contentUrl: `https://www.youtube.com/watch?v=${id}`,
   publisher: {

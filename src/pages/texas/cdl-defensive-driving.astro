@@ -1,5 +1,6 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import VideoEmbed from '../../components/VideoEmbed.astro';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 
@@ -79,6 +80,8 @@ const faqSchema = JSON.stringify({
         <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
           CDL Holders and Defensive Driving in Texas: Why Dismissal Is Off-Limits, and What You Can Actually Do
         </h1>
+
+        <VideoEmbed id="60P2iJ_avLA" title="CDL Holders & Defensive Driving in Texas: The Rules (2026)" description="Texas law bars CDL holders from dismissing a ticket with defensive driving. What you can do instead, and why commercial records are different." duration="PT49S" />
 
         <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
           <p>If you hold a commercial driver's license, <strong class="text-text">you cannot use a defensive driving course to dismiss a Texas traffic ticket — and you can't use deferred disposition either.</strong> That's true even if the ticket came in your personal car on your day off, and it stays true even if you give up the CDL afterward. It isn't your court being strict; it's federal law, and every Texas court applies it the same way.</p>

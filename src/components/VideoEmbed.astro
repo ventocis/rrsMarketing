@@ -1,0 +1,47 @@
+---
+// Responsive YouTube embed + VideoObject JSON-LD (for video rich results).
+// Privacy-friendly (youtube-nocookie), lazy-loaded, 16:9.
+interface Props {
+  id: string;            // YouTube video ID
+  title: string;         // video title (schema name + iframe title)
+  description: string;   // short description for schema
+  duration: string;      // ISO 8601, e.g. "PT53S"
+  uploadDate?: string;   // ISO date
+}
+const { id, title, description, duration, uploadDate = '2026-06-16' } = Astro.props;
+
+const schema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'VideoObject',
+  name: title,
+  description,
+  thumbnailUrl: [
+    `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
+    `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`,
+  ],
+  uploadDate,
+  duration,
+  embedUrl: `https://www.youtube.com/embed/${id}`,
+  contentUrl: `https://www.youtube.com/watch?v=${id}`,
+  publisher: {
+    '@type': 'Organization',
+    name: 'Road Ready Safety',
+    logo: { '@type': 'ImageObject', url: 'https://roadreadysafety.com/assets/icons/texas/logo-shield-footer.svg' },
+  },
+});
+---
+<script type="application/ld+json" set:html={schema} />
+<figure class="my-8">
+  <div class="relative w-full overflow-hidden rounded-xl border border-border bg-black" style="padding-bottom:56.25%;">
+    <iframe
+      class="absolute inset-0 h-full w-full"
+      src={`https://www.youtube-nocookie.com/embed/${id}`}
+      title={title}
+      loading="lazy"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen
+    ></iframe>
+  </div>
+  <figcaption class="mt-2 text-sm text-text-subtle" style="font-family: 'DM Sans', sans-serif;">▶ Watch: {title}</figcaption>
+</figure>

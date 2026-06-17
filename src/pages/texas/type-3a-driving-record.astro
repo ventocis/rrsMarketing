@@ -1,5 +1,6 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import VideoEmbed from '../../components/VideoEmbed.astro';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 
@@ -84,6 +85,8 @@ const faqSchema = JSON.stringify({
         <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
           The Type 3A Driving Record: What Texas Courts Actually Want, and How to Order It in Two Minutes
         </h1>
+
+        <VideoEmbed id="ltb0_xv0FPE" title="Texas Type 3A Driving Record: What It Is & How to Get One (2026)" description="What a Type 3A driving record is, why Texas courts require it for defensive driving, and how to order the certified copy." duration="PT53S" />
 
         <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
           <p>The <strong class="text-text">Type 3A is the certified copy of your complete Texas driving record</strong>, issued by the Texas Department of Public Safety, and it's the document most Texas courts require alongside your course certificate to dismiss a ticket with defensive driving. DPS's own record-type chart marks the 3A as the record <em>"acceptable for Defensive Driving Course (DDC)"</em> — and the uncertified Type 3, the three-year Type 2A, and everything else on the menu are not.</p>

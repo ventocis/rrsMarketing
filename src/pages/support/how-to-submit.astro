@@ -1,5 +1,6 @@
 ---
 import DocLayout from '../../layouts/DocLayout.astro';
+import VideoEmbed from '../../components/VideoEmbed.astro';
 import { marked } from 'marked';
 import { readFileSync } from 'fs';
 import { join } from 'path';
@@ -32,6 +33,8 @@ const coursesByState = Object.entries(grouped).sort(([a], [b]) =>
   ]}
 >
   <Fragment set:html={html} />
+
+  <VideoEmbed id="9VvjiOhSRSA" title="How to Submit Your Texas Defensive Driving Certificate to the Court" description="Exactly how to submit or upload your defensive driving certificate of completion to the court — what to send, where to find your TDLR number, and how to confirm it was accepted." duration="PT58S" />
 
   <!-- State course requirements — pure static, no JS needed -->
   <div class="mt-8 not-prose">

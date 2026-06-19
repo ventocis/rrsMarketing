@@ -1,13 +1,15 @@
 ---
 // Reusable "Watch on YouTube" card + VideoObject schema.
-// Props: id (YouTube video id), title, duration ("m:ss"), blurb (optional one-liner).
+// Props: id (YouTube video id), title, duration ("m:ss"), blurb (optional one-liner), uploadDate (ISO date).
 interface Props {
   id: string;
   title: string;
   duration?: string;
   blurb?: string;
+  uploadDate?: string;   // ISO date — required by Google for VideoObject rich results
 }
-const { id, title, duration = '', blurb = '' } = Astro.props;
+// uploadDate defaults to a known-good date so the schema is never missing this required field.
+const { id, title, duration = '', blurb = '', uploadDate = '2026-06-16' } = Astro.props;
 
 const watchUrl = `https://www.youtube.com/watch?v=${id}`;
 const embedUrl = `https://www.youtube.com/embed/${id}`;
@@ -31,6 +33,7 @@ const videoSchema = JSON.stringify({
   name: title,
   description: blurb || title,
   thumbnailUrl: thumbUrl,
+  uploadDate,
   contentUrl: watchUrl,
   embedUrl,
   ...(iso ? { duration: iso } : {}),

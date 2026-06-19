@@ -1,6 +1,5 @@
 ---
 import '../styles/global.css';
-import ViewTransitions from 'astro/components/ViewTransitions.astro';
 import { version } from '../../package.json';
 
 interface Props {
@@ -37,7 +36,6 @@ const pageTitle = title.includes('Road Ready') ? title : `${title} | Road Ready 
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
-    <ViewTransitions />
 
     <!-- SEO -->
     <title>{pageTitle}</title>

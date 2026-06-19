@@ -356,7 +356,12 @@ const collectionSchema = JSON.stringify({
           });
         });
       }
-      document.addEventListener('astro:page-load', initProviderDirectory);
+      // Run on initial load (module scripts are deferred, but guard for safety).
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initProviderDirectory);
+      } else {
+        initProviderDirectory();
+      }
     </script>
   </TexasLayout>
 ) : (

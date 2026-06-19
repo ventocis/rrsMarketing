@@ -165,7 +165,12 @@ const currentYear = new Date().getFullYear();
       _promoInterval = setInterval(tick, 1000);
     }
 
-    document.addEventListener('astro:page-load', initPromoCountdown);
+    // Run on initial load (module scripts are deferred, but guard for safety).
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initPromoCountdown);
+    } else {
+      initPromoCountdown();
+    }
   </script>
 
   <!-- Header -->
@@ -329,30 +334,34 @@ const currentYear = new Date().getFullYear();
 </Layout>
 
 <script>
-  // Re-run on every client-side navigation (astro:page-load fires on first load too)
-  function initMobileMenu() {
-    const btn = document.getElementById('mobile-menu-btn');
-    const menu = document.getElementById('mobile-menu');
-    const iconOpen = document.getElementById('icon-open');
-    const iconClose = document.getElementById('icon-close');
+  // Mobile menu toggle via event delegation. One listener on `document`
+  // survives full page loads AND view-transition DOM swaps, so it never needs
+  // rebinding and doesn't depend on the ViewTransitions router (astro:page-load).
+  if (!(window as any).__rrsTexasMenuDelegated) {
+    (window as any).__rrsTexasMenuDelegated = true;
 
-    if (btn && menu) {
-      btn.addEventListener('click', () => {
-        const isOpen = !menu.classList.contains('hidden');
-        if (isOpen) {
-          menu.classList.add('hidden');
-          iconOpen?.classList.remove('hidden');
-          iconClose?.classList.add('hidden');
-          btn.setAttribute('aria-expanded', 'false');
-        } else {
-          menu.classList.remove('hidden');
-          iconOpen?.classList.add('hidden');
-          iconClose?.classList.remove('hidden');
-          btn.setAttribute('aria-expanded', 'true');
-        }
-      });
+    function setMenuOpen(open: boolean) {
+      const menu = document.getElementById('mobile-menu');
+      const btn = document.getElementById('mobile-menu-btn');
+      const iconOpen = document.getElementById('icon-open');
+      const iconClose = document.getElementById('icon-close');
+      if (!menu || !btn) return;
+      menu.classList.toggle('hidden', !open);
+      iconOpen?.classList.toggle('hidden', open);
+      iconClose?.classList.toggle('hidden', !open);
+      btn.setAttribute('aria-expanded', String(open));
     }
-  }
 
-  document.addEventListener('astro:page-load', initMobileMenu);
+    document.addEventListener('click', (e) => {
+      const target = e.target as Element | null;
+      if (target?.closest('#mobile-menu-btn')) {
+        const menu = document.getElementById('mobile-menu');
+        setMenuOpen(menu?.classList.contains('hidden') ?? true);
+        return;
+      }
+      if (target?.closest('#mobile-menu a')) {
+        setMenuOpen(false);
+      }
+    });
+  }
 </script>

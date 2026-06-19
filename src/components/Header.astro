@@ -88,28 +88,40 @@ const loginUrl = import.meta.env.VITE_LOGIN_URL || '';
   </div>
 </header>
 
-<!-- Vanilla JS for mobile menu toggle — zero framework overhead -->
+<!-- Mobile menu toggle via event delegation — zero framework overhead.
+     One listener on `document` survives full page loads AND view-transition
+     DOM swaps, so it never needs rebinding and doesn't depend on the
+     ViewTransitions router (astro:page-load) firing. -->
 <script>
-  const btn = document.getElementById('mobile-menu-btn');
-  const menu = document.getElementById('mobile-menu');
-  const iconOpen = document.getElementById('icon-open');
-  const iconClose = document.getElementById('icon-close');
+  // Guard so the document listener is attached at most once, even if this
+  // module is ever evaluated more than once on the same document.
+  if (!(window as any).__rrsMenuDelegated) {
+    (window as any).__rrsMenuDelegated = true;
 
-  btn?.addEventListener('click', () => {
-    const isOpen = !menu?.classList.contains('hidden');
-    menu?.classList.toggle('hidden', isOpen);
-    iconOpen?.classList.toggle('hidden', !isOpen);
-    iconClose?.classList.toggle('hidden', isOpen);
-    btn?.setAttribute('aria-expanded', String(!isOpen));
-  });
+    function setMenuOpen(open: boolean) {
+      const menu = document.getElementById('mobile-menu');
+      const btn = document.getElementById('mobile-menu-btn');
+      const iconOpen = document.getElementById('icon-open');
+      const iconClose = document.getElementById('icon-close');
+      if (!menu || !btn) return;
+      menu.classList.toggle('hidden', !open);
+      iconOpen?.classList.toggle('hidden', open);
+      iconClose?.classList.toggle('hidden', !open);
+      btn.setAttribute('aria-expanded', String(open));
+    }
 
-  // Close menu on nav link click
-  menu?.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      menu.classList.add('hidden');
-      iconOpen?.classList.remove('hidden');
-      iconClose?.classList.add('hidden');
-      btn?.setAttribute('aria-expanded', 'false');
+    document.addEventListener('click', (e) => {
+      const target = e.target as Element | null;
+      // Toggle when the hamburger button (or its inner SVG) is clicked.
+      if (target?.closest('#mobile-menu-btn')) {
+        const menu = document.getElementById('mobile-menu');
+        setMenuOpen(menu?.classList.contains('hidden') ?? true);
+        return;
+      }
+      // Close when a link inside the open menu is clicked.
+      if (target?.closest('#mobile-menu a')) {
+        setMenuOpen(false);
+      }
     });
-  });
+  }
 </script>

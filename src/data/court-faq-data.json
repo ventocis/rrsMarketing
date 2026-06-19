@@ -9960,5 +9960,454 @@
     "requiresNotarizedAffidavit": false,
     "requiresType3A": false,
     "emailAccepted": false
+  },
+  "cameron-municipal-santa-rosa": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "in-person",
+      "mail",
+      "email"
+    ],
+    "requiredDocs": [
+      "Original citation / ticket number",
+      "Proof of valid Texas driver license",
+      "Proof of current Texas liability insurance (on date of offense)",
+      "Type 3A Texas DPS certified driving record (obtain at dps.texas.gov)",
+      "Completed DSC/driver safety course certificate from a TEA-approved provider"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": true
+  },
+  "cameron-municipal-indian-lake": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "Mail",
+      "In Person"
+    ],
+    "requiredDocs": [
+      "Uniform DSC completion certificate from a TDLR-approved driving safety course",
+      "Certified copy of Texas driving record (order from TX DPS at txdps.state.tx.us or call (512) 424-2000)"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": false
+  },
+  "cameron-municipal-south-padre-island": {
+    "fee": "$110.00",
+    "feeKnown": true,
+    "submissionMethods": [
+      "In person",
+      "Mail",
+      "Online portal (citations/payment only)"
+    ],
+    "requiredDocs": [
+      "DSC completion certificate from a TDLR-approved provider",
+      "Copy of valid Texas driver's license",
+      "Proof of current auto insurance",
+      "Driving record (Texas DPS unofficial print-out typically accepted)"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": false
+  },
+  "cameron-municipal-primera": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In person",
+      "Mail",
+      "Email (unconfirmed)"
+    ],
+    "requiredDocs": [
+      "Completed DSC certificate of completion (original or as accepted by court)",
+      "Proof of current valid Texas driver's license",
+      "Proof of current valid Texas liability insurance on date of offense",
+      "Court fee payment (debit/credit card or money order — cash not accepted as of April 2021)"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": true
+  },
+  "cameron-municipal-combes": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In person",
+      "Mail",
+      "Phone (payment only)"
+    ],
+    "requiredDocs": [
+      "DSC completion certificate (TDLR-approved course)",
+      "Valid Texas driver's license",
+      "Proof of current liability insurance",
+      "Payment of DSC administrative fee"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": false
+  },
+  "cameron-municipal-rancho-viejo": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In person",
+      "Mail"
+    ],
+    "requiredDocs": [
+      "Defensive driving certificate of completion (court copy)",
+      "Valid Texas driver's license",
+      "Proof of insurance (at time of offense)",
+      "Citation / case number"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": false
+  },
+  "cameron-municipal-rio-hondo": {
+    "fee": "$144",
+    "feeKnown": true,
+    "submissionMethods": [
+      "Email",
+      "In-person",
+      "Mail"
+    ],
+    "requiredDocs": [
+      "Valid Texas driver's license",
+      "Proof of current auto insurance",
+      "Completed DSC request form (available at court or via city website)",
+      "Payment of $144 administrative fee (check, money order, or cashier's check)",
+      "Signed DSC certificate of completion (submitted after course completion)"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": true
+  },
+  "cameron-municipal-palm-valley": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In person",
+      "Phone inquiry"
+    ],
+    "requiredDocs": [
+      "Uniform Certificate of Completion from a TDLR-approved driving safety course",
+      "Certified copy of Texas driving record (from DPS)"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": false
+  },
+  "cameron-municipal-laguna-vista": {
+    "fee": "$129.10",
+    "feeKnown": true,
+    "submissionMethods": [
+      "Email",
+      "US Mail",
+      "In person"
+    ],
+    "requiredDocs": [
+      "Copy of valid Texas driver's license",
+      "Proof of liability insurance",
+      "Texas DPS 'Type 3A' driving record (must be submitted to court before taking the course)",
+      "Payment of $129.10 DSC fee (money order or cashier's check per court instructions)"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": true
+  },
+  "cameron-municipal-la-feria": {
+    "fee": "$144",
+    "feeKnown": true,
+    "submissionMethods": [
+      "In person",
+      "Mail",
+      "Email",
+      "Online payment"
+    ],
+    "requiredDocs": [
+      "Written DSC request form (see form_links)",
+      "Written plea of guilty or no contest",
+      "Copy of valid Texas driver's license",
+      "Proof of current insurance / financial responsibility",
+      "Notarized affidavit",
+      "Certified copy of driving record (Type 3A) from Texas DPS — must be presented on or before initial court appearance"
+    ],
+    "requiresNotarizedAffidavit": true,
+    "requiresType3A": true,
+    "emailAccepted": true
+  },
+  "hidalgo-municipal-la-joya": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Online (payment only)"
+    ],
+    "requiredDocs": [
+      "Original traffic citation / case number",
+      "DSC completion certificate (TDLR-approved course)",
+      "Proof of valid Texas driver license",
+      "Proof of liability insurance (valid on date of offense)"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": false
+  },
+  "hidalgo-municipal-sullivan-city": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In person",
+      "Mail",
+      "Email (unconfirmed)"
+    ],
+    "requiredDocs": [
+      "DSC completion certificate (TDLR-approved course)",
+      "Texas Type 3A certified driving record (from DPS — confirms no DSC in prior 12 months)",
+      "Proof of valid Texas driver's license",
+      "Proof of liability insurance valid at time of offense",
+      "Payment of court costs (amount to be confirmed with court)"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": true
+  },
+  "hidalgo-municipal-palmview": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Mail",
+      "Phone inquiry"
+    ],
+    "requiredDocs": [
+      "Original or certified copy of TEA-approved DSC completion certificate",
+      "Copy of Texas driving record (obtained from DPS) dated after citation date",
+      "Proof of valid Texas liability insurance on date of offense",
+      "Court-imposed DSC fee (paid in person or by mail — not accepted on online portal)"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": false
+  },
+  "hidalgo-municipal-edcouch": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In person",
+      "Mail",
+      "Email"
+    ],
+    "requiredDocs": [
+      "Signed DSC completion certificate (court copy)",
+      "Texas Type 3A driving record (from DPS)",
+      "Proof of valid Texas liability insurance at time of offense",
+      "Court request fee payment"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": true
+  },
+  "hidalgo-municipal-la-villa": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Email"
+    ],
+    "requiredDocs": [
+      "Original traffic citation / case number",
+      "DSC completion certificate (TDLR-approved course)",
+      "Proof of valid Texas driver license",
+      "Proof of liability insurance (valid on date of offense)",
+      "Texas Type 3A certified driving record from DPS (may be required — confirm with court)"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": true
+  },
+  "hidalgo-municipal-progreso": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In person",
+      "Mail",
+      "Online fine payment"
+    ],
+    "requiredDocs": [
+      "DSC completion certificate from a Texas-approved provider",
+      "Certified Texas driving record (from DPS, dated within the court's deadline)",
+      "Proof of current auto insurance",
+      "Court-issued DSC request approval or case number"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": false
+  },
+  "hidalgo-municipal-penitas": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "Mail",
+      "Email",
+      "In person"
+    ],
+    "requiredDocs": [
+      "Original DSC/driving safety course completion certificate",
+      "Texas driving record (obtained from TxDPS within 90 days of plea)",
+      "Proof of current Texas auto insurance at time of citation"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": true
+  },
+  "hidalgo-municipal-palmhurst": {
+    "fee": "$107",
+    "feeKnown": true,
+    "submissionMethods": [
+      "In-person",
+      "Mail"
+    ],
+    "requiredDocs": [
+      "Written plea of guilty or no contest (submitted at time of request)",
+      "Copy of valid Texas driver's license or permit (submitted at time of request)",
+      "Copy of proof of financial responsibility / insurance (submitted at time of request)",
+      "Court fee of $107 paid at time of request",
+      "Certified driving record from DPS (submitted within 90-day window)",
+      "Uniform Certificate of Course Completion from TDLR-approved driving safety school (submitted within 90-day window)"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": false
+  },
+  "hidalgo-municipal-hidalgo": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In person",
+      "By mail",
+      "Phone inquiry"
+    ],
+    "requiredDocs": [
+      "DSC completion certificate",
+      "Texas driving record (from DPS — ~$10 fee)",
+      "Proof of liability insurance (typically required)",
+      "Court-assessed DSC administrative fee (amount TBD — call court)"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": false
+  },
+  "starr-municipal-escobares": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In person or mail"
+    ],
+    "requiredDocs": [
+      "Signed DSC request/motion (court may provide form — call to confirm)",
+      "Proof of valid Texas driver license",
+      "Proof of current Texas liability insurance",
+      "Copy of citation",
+      "Court-approved DSC completion certificate from a TDLR-approved provider",
+      "Payment of DSC administrative fee"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": false
+  },
+  "starr-municipal-rio-grande-city": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In person",
+      "Email",
+      "Online portal (citations/payment only)"
+    ],
+    "requiredDocs": [
+      "Signed plea of no contest/guilty and written DSC request",
+      "Copy of valid Texas driver's license",
+      "Current proof of vehicle insurance",
+      "Certified copy of Texas driving record (Type 3A from DPS)",
+      "DSC certificate of completion (submitted after course, within completion window)",
+      "DSC fee payment"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": true
+  },
+  "starr-municipal-roma": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "online_payment",
+      "in_person",
+      "phone"
+    ],
+    "requiredDocs": [
+      "Completed TDLR-approved DSC certificate",
+      "Copy of valid Texas driver license",
+      "Proof of liability insurance (Texas Financial Responsibility)",
+      "Court's written DSC order/request approval (obtained from court before taking course)"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": false
+  },
+  "starr-municipal-la-grulla": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "Online payment portal",
+      "In-person",
+      "Mail",
+      "Phone inquiry"
+    ],
+    "requiredDocs": [
+      "TDLR-approved DSC completion certificate",
+      "Texas driving record (type 3A) dated after course completion",
+      "Proof of valid Texas liability insurance at time of offense"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": false
+  },
+  "willacy-municipal-raymondville": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Email (unconfirmed)",
+      "Mail"
+    ],
+    "requiredDocs": [
+      "DSC completion certificate (original or court-accepted copy — confirm format with court)",
+      "Valid Texas driver license (copy)",
+      "Proof of current liability insurance",
+      "Court-approved request/affidavit form (if required — not confirmed; call court)"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": true
+  },
+  "willacy-municipal-lyford": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "Download & submit form",
+      "Phone/email inquiry"
+    ],
+    "requiredDocs": [
+      "Completed Driver Safety Request Form (court-provided PDF)",
+      "TDLR-approved DSC completion certificate",
+      "Texas driving record (type 3A) dated after course completion",
+      "Proof of valid Texas liability insurance at time of offense"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": true
   }
 }

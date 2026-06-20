@@ -15312,5 +15312,363 @@
     "requiresNotarizedAffidavit": false,
     "requiresType3A": false,
     "emailAccepted": false
+  },
+  "ellis-municipal-alma": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "online",
+      "email",
+      "mail",
+      "in-person"
+    ],
+    "requiredDocs": [
+      "Completed plea agreement (notarized if submitting by mail or email)",
+      "TDLR-approved DSC certificate of completion (court copy)",
+      "Proof of current Texas liability insurance",
+      "Valid Texas driver license"
+    ],
+    "requiresNotarizedAffidavit": true,
+    "requiresType3A": false,
+    "emailAccepted": true
+  },
+  "ellis-municipal-bardwell": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "in-person",
+      "mail"
+    ],
+    "requiredDocs": [
+      "Completion certificate from a TDLR-approved defensive driving course",
+      "Copy of your Texas driving record (Type 3A)"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": false
+  },
+  "ellis-municipal-garrett": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "email",
+      "drop box",
+      "online payment",
+      "in-person"
+    ],
+    "requiredDocs": [
+      "Completed DSC request form (available at cityofgarrett.com under Municipal Court > Forms)",
+      "Copy of valid Texas driver license",
+      "Proof of liability insurance",
+      "Driver Safety Course completion certificate (Type 3A, submitted after completion)"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": true
+  },
+  "navarro-municipal-angus": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "in-person",
+      "mail"
+    ],
+    "requiredDocs": [],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": false
+  },
+  "navarro-municipal-richland": {
+    "fee": "$144",
+    "feeKnown": true,
+    "submissionMethods": [
+      "mail",
+      "in-person",
+      "online"
+    ],
+    "requiredDocs": [
+      "Copy of valid Texas Driver's License",
+      "Proof of valid auto insurance (must show defendant as covered driver at the time of citation)",
+      "Receipt of $144 court administrative fee payment",
+      "Completed Request for Driver Safety Course form"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": true
+  },
+  "rains-municipal-alba": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "mail",
+      "email",
+      "in-person"
+    ],
+    "requiredDocs": [],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": true
+  },
+  "rains-municipal-point": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "in-person",
+      "mail",
+      "email"
+    ],
+    "requiredDocs": [
+      "Signed TDLR-approved defensive driving course certificate of completion",
+      "Certified Type 3A Texas driving record from DPS",
+      "Proof of current Texas liability insurance"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": true
+  },
+  "rains-municipal-east-tawakoni": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "in-person",
+      "online"
+    ],
+    "requiredDocs": [],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": true
+  },
+  "hunt-municipal-hawk-cove": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "online",
+      "mail",
+      "phone",
+      "email"
+    ],
+    "requiredDocs": [],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": true
+  },
+  "cass-municipal-avinger": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "in-person",
+      "mail"
+    ],
+    "requiredDocs": [],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": false
+  },
+  "cass-municipal-bloomburg": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "in-person",
+      "mail"
+    ],
+    "requiredDocs": [],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": false
+  },
+  "johnson-municipal-briaroaks": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "mail",
+      "email"
+    ],
+    "requiredDocs": [],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": true
+  },
+  "johnson-municipal-cross-timber": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "mail",
+      "email",
+      "in-person"
+    ],
+    "requiredDocs": [
+      "Proof of Texas liability insurance",
+      "Valid Texas driver license",
+      "Defensive Driving Course completion certificate (TDLR-approved)",
+      "Payment of court administrative fee"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": true
+  },
+  "jack-municipal-bryson": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "in-person",
+      "phone"
+    ],
+    "requiredDocs": [],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": false
+  },
+  "foard-municipal-crowell": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "online",
+      "in-person",
+      "phone"
+    ],
+    "requiredDocs": [],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": false
+  },
+  "cherokee-municipal-cuney": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "in-person"
+    ],
+    "requiredDocs": [],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": true
+  },
+  "upshur-municipal-east-mountain": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "in-person",
+      "phone",
+      "email"
+    ],
+    "requiredDocs": [],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": true
+  },
+  "upshur-municipal-ore-city": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "in-person",
+      "certified-mail",
+      "online"
+    ],
+    "requiredDocs": [
+      "Driving Safety Course completion certificate",
+      "Current Texas driving record (Type 3A)"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": false
+  },
+  "jones-municipal-hawley": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "phone",
+      "email",
+      "in-person"
+    ],
+    "requiredDocs": [],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": true
+  },
+  "burnet-municipal-highland-haven": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "in-person",
+      "phone",
+      "email"
+    ],
+    "requiredDocs": [],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": true
+  },
+  "tyler-municipal-ivanhoe": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "online",
+      "phone",
+      "mail"
+    ],
+    "requiredDocs": [],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": true
+  },
+  "san-patricio-municipal-lake-city": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "in-person",
+      "phone"
+    ],
+    "requiredDocs": [],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": true
+  },
+  "cooke-municipal-lindsay": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "in-person",
+      "online",
+      "mail",
+      "email"
+    ],
+    "requiredDocs": [
+      "Completed TDLR-approved driver safety course certificate (Type 3A)",
+      "Copy of your valid Texas driver license",
+      "Proof of current liability insurance"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": true
+  },
+  "cooke-municipal-valley-view": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "in-person",
+      "mail",
+      "online"
+    ],
+    "requiredDocs": [
+      "Completed Request-for-Driver-Safety-Course form (submitted before court date)",
+      "Court Certificate of Completion from a state-approved DSC provider",
+      "Certified copy of Texas driving record"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": true
+  },
+  "hood-municipal-lipan": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "online",
+      "phone",
+      "mail",
+      "in-person"
+    ],
+    "requiredDocs": [],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": false
   }
 }

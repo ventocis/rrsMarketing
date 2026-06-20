@@ -13158,5 +13158,453 @@
     "requiresNotarizedAffidavit": false,
     "requiresType3A": true,
     "emailAccepted": false
+  },
+  "reeves-municipal-town-of-pecos-city": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Mail",
+      "Fax",
+      "Email"
+    ],
+    "requiredDocs": [
+      "DSC completion certificate (original or certified copy)",
+      "Texas driving record (Type 3A, obtained from DPS — not older than 90 days at submission)",
+      "Case number / citation number"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": true
+  },
+  "el-paso-municipal-san-elizario": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Online",
+      "Mail"
+    ],
+    "requiredDocs": [
+      "TDLR court-copy certificate of completion",
+      "Texas DPS certified driving record (showing no DSC dismissal in past 12 months)",
+      "Proof of current liability insurance"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": true
+  },
+  "el-paso-municipal-anthony": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Email",
+      "Online"
+    ],
+    "requiredDocs": [
+      "Valid Texas driver's license",
+      "Proof of liability insurance",
+      "Completed DSC request form (contact court for form)",
+      "Driving record from DPS (Texas Type 3A, typically required at submission)"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": true
+  },
+  "rockwall-municipal-mclendon-chisholm": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Mail"
+    ],
+    "requiredDocs": [
+      "Completion certificate from a TDLR-approved Driver Safety Course",
+      "Type 3A Texas driving record (ordered from TxDPS)"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": false
+  },
+  "presidio-municipal-presidio": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Online",
+      "Fax",
+      "Mail"
+    ],
+    "requiredDocs": [
+      "DSC certificate of completion (TDLR-approved course)",
+      "Texas driving record (Type 3A, obtained from DPS)",
+      "Court fee payment (amount unconfirmed — call court)",
+      "Copy of citation or case number"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": true
+  },
+  "colorado-municipal-eagle-lake": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Online",
+      "Email"
+    ],
+    "requiredDocs": [
+      "Completed TDLR-approved Driver Safety Course certificate of completion",
+      "Certified copy of Texas driving record (obtained from DPS)",
+      "Proof of valid Texas driver's license",
+      "Proof of financial responsibility (insurance)"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": true
+  },
+  "runnels-municipal-ballinger": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Mail",
+      "Online"
+    ],
+    "requiredDocs": [
+      "Completion certificate from a TDLR-approved driving safety course (Type 3A)",
+      "Copy of valid Texas driver license (or out-of-state equivalent)",
+      "Proof of insurance valid at time of offense (if required by court)"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": true
+  },
+  "karnes-municipal-karnes-city": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Mail",
+      "In-person"
+    ],
+    "requiredDocs": [
+      "Court-approved DSC request (must be granted by the court before enrolling in a course)",
+      "Texas Type 3A driving safety course completion certificate",
+      "Texas driver record (available at texas.gov) showing no DSC election in the past 12 months"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": false
+  },
+  "karnes-municipal-kenedy": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Mail",
+      "Online",
+      "Fax"
+    ],
+    "requiredDocs": [
+      "DSC completion certificate (TDLR-approved course)",
+      "Copy of driving record (Texas Type 3A, typically required)",
+      "Court administrative fee payment",
+      "Valid Texas driver's license"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": true
+  },
+  "crane-municipal-crane": {
+    "fee": "$144",
+    "feeKnown": true,
+    "submissionMethods": [
+      "Mail",
+      "In-person",
+      "Online"
+    ],
+    "requiredDocs": [
+      "Completed and notarized Sworn Statement for Driving Safety Course (must be signed before a Notary Public)",
+      "Cashier's check or money order for $144.00 payable to Crane Municipal Court (personal checks not accepted)",
+      "Copy of current liability insurance card"
+    ],
+    "requiresNotarizedAffidavit": true,
+    "requiresType3A": false,
+    "emailAccepted": true
+  },
+  "atascosa-municipal-poteet": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Mail",
+      "Online"
+    ],
+    "requiredDocs": [
+      "Copy of driver's license",
+      "Current proof of insurance (insurance card)",
+      "Affidavit stating no driving safety course taken in the past 12 months",
+      "Proof of DSC completion (submitted after completing the course)",
+      "Copy of driving record from Texas DPS (court provides the request form; $10 DPS fee applies)"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": true
+  },
+  "nueces-municipal-bishop": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Mail"
+    ],
+    "requiredDocs": [
+      "TDLR-approved Driver Safety Course completion certificate (within 90-day window)",
+      "Certified copy of driving record from Texas DPS",
+      "Valid Texas driver's license",
+      "Proof of liability insurance at time of offense"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": false
+  },
+  "clay-municipal-henrietta": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Mail"
+    ],
+    "requiredDocs": [
+      "Completion certificate from a TDLR-approved Driver Safety Course",
+      "Texas driving record (Type 3A) dated after the citation date",
+      "Proof of current liability insurance"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": false
+  },
+  "jones-municipal-stamford": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Mail",
+      "Online"
+    ],
+    "requiredDocs": [
+      "Proof of valid Texas liability insurance at time of offense",
+      "Type 3A certified driving record (from TxDPS)",
+      "Completion certificate from a TDLR-approved Driver Safety Course",
+      "Court-issued DSC request approval / deferred disposition order"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": false
+  },
+  "san-patricio-municipal-taft": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "Online",
+      "Email",
+      "Mail",
+      "Fax",
+      "In-person"
+    ],
+    "requiredDocs": [
+      "Request for Driver Safety Course Form (available on court website)",
+      "Completion certificate from a TDLR-approved driving safety course (Type 3A)",
+      "Copy of driving record (if required by court — confirm when requesting)"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": true
+  },
+  "atascosa-municipal-lytle": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Mail",
+      "Online",
+      "Email",
+      "Fax"
+    ],
+    "requiredDocs": [
+      "Valid Texas Driver's License",
+      "Valid proof of financial responsibility (insurance)",
+      "Written plea of Guilty or No Contest",
+      "Payment of court costs and administrative fee"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": true
+  },
+  "refugio-municipal-refugio": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Mail",
+      "Email"
+    ],
+    "requiredDocs": [
+      "Signed DSC completion certificate (Type 3A, 6-hour course from a TDLR-approved provider)",
+      "Proof of valid Texas driver's license",
+      "Proof of financial responsibility (insurance)"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": true
+  },
+  "sutton-municipal-sonora": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Mail"
+    ],
+    "requiredDocs": [
+      "Valid Texas driver license",
+      "DSC completion certificate (TDLR-approved course)",
+      "Proof of current Texas liability insurance",
+      "Court request fee payment (amount TBD — call court)"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": false
+  },
+  "lavaca-municipal-hallettsville": {
+    "fee": "$144",
+    "feeKnown": true,
+    "submissionMethods": [
+      "Mail",
+      "In-person",
+      "Email",
+      "Online"
+    ],
+    "requiredDocs": [
+      "Completed and notarized DSC Affidavit (plea of Guilty or No Contest, request for DSC)",
+      "Copy of valid Texas driver's license (non-CDL; or valid out-of-state license if active US military)",
+      "Proof of valid financial responsibility (insurance) listing defendant as a driver",
+      "Payment of $144.00 (standard) or $169.00 (school zone) by cashier's check or money order payable to City of Hallettsville",
+      "After completion: original uniform certificate of completion (TDLR-approved course)",
+      "After completion: Type 3 or 3A Texas driving record from DPS showing no DSC in prior 12 months"
+    ],
+    "requiresNotarizedAffidavit": true,
+    "requiresType3A": true,
+    "emailAccepted": true
+  },
+  "wichita-municipal-electra": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Mail",
+      "Online",
+      "Email"
+    ],
+    "requiredDocs": [
+      "DSC completion certificate (Type 3A approved course)",
+      "Proof of insurance (if applicable)",
+      "Court-issued permission/approval before taking the course"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": true
+  },
+  "kaufman-municipal-talty": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "Mail",
+      "In-person",
+      "Online"
+    ],
+    "requiredDocs": [
+      "Completed DSC Request Form (Defendant's Plea Request for a Driving Safety Course)",
+      "Copy of Texas driving record (Type 3A — obtain from TxDPS)",
+      "DSC completion certificate from a TDLR-approved provider",
+      "Proof of insurance at time of offense (if required by court)"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": false
+  },
+  "live-oak-municipal-george-west": {
+    "fee": "$110",
+    "feeKnown": true,
+    "submissionMethods": [
+      "Mail",
+      "In-person",
+      "Online"
+    ],
+    "requiredDocs": [
+      "Completed and notarized DSC request form",
+      "Copy of your traffic citation",
+      "Copy of current auto insurance",
+      "Money order or cashier's check for the DSC admin fee ($110 standard / $135 school zone or accident)"
+    ],
+    "requiresNotarizedAffidavit": true,
+    "requiresType3A": false,
+    "emailAccepted": false
+  },
+  "jones-municipal-anson": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Mail",
+      "Email"
+    ],
+    "requiredDocs": [
+      "Texas Type 3A driving record (obtained from TxDPS)",
+      "Completion certificate from a TDLR-approved driver safety course",
+      "Proof of financial responsibility (auto insurance)",
+      "Court-issued request/application (confirm with court)"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": true
+  },
+  "goliad-municipal-goliad": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "In-person",
+      "Mail",
+      "Email"
+    ],
+    "requiredDocs": [
+      "DSC completion certificate (TDLR-approved course)",
+      "Texas driving record (Type 3A, ordered from DPS)",
+      "Court-issued request/approval before starting the course"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": true
+  },
+  "live-oak-municipal-three-rivers": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      "Online",
+      "In-person",
+      "Mail"
+    ],
+    "requiredDocs": [
+      "Written plea of guilty or nolo contendere",
+      "Citation number and correct mailing address",
+      "Proof of financial responsibility (current liability insurance)",
+      "Valid Texas Driver's License or permit",
+      "Driving record from Texas Department of Public Safety",
+      "Payment of court costs and administrative fee"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": false
   }
 }

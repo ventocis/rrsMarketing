@@ -1,0 +1,207 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    "q": "How much does it cost to dismiss a ticket in Waco?",
+    "a": "The court cost is typically up to about $144 ($169 in a school zone), set by each court — some McLennan County courts charge less (McGregor and Moody, for example, post $143.90). The TDLR-approved course is separate; ours is $28. Check your court's page for the exact amount."
+  },
+  {
+    "q": "Can I take the Waco defensive driving course online?",
+    "a": "Yes. Once the court approves your request, a TDLR-approved 6-hour course can be completed fully online. Every Waco-area court accepts a state-approved online course."
+  },
+  {
+    "q": "My ticket is from Hewitt / Woodway / Robinson / Bellmead, not Waco. Does that change things?",
+    "a": "The legal steps are the same, but you deal with that city's court — each with its own fee, request method, and deadlines. Open its page in the table above."
+  },
+  {
+    "q": "How long do I have to finish?",
+    "a": "Generally 90 days after the court approves the request. Request the course by your appearance date first, and don't pay the ticket — paying is a guilty plea and a conviction."
+  },
+  {
+    "q": "Does a dismissal keep it off my insurance?",
+    "a": "Yes. A driving safety course dismissal keeps the charge off your driving record under Texas law, so it can't raise your insurance — unlike paying, which is a conviction."
+  }
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org', '@type': 'Article',
+  headline: "How to Dismiss a Traffic Ticket in Waco with Defensive Driving", description: "Dismiss a Waco-area traffic ticket: request a driving safety course by your appearance date, finish a 6-hour course in 90 days, submit your certificate. 'Waco' spans many McLennan County courts — here's how each differs.",
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-13', dateModified: '2026-06-13',
+  mainEntityOfPage: `${siteUrl}/texas/waco`,
+});
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout title="How to Dismiss a Traffic Ticket in Waco with Defensive Driving (2026)" description="Dismiss a Waco-area traffic ticket: request a driving safety course by your appearance date, finish a 6-hour course in 90 days, submit your certificate. 'Waco' spans many McLennan County courts — here's how each differs." keywords="dismiss ticket waco, waco defensive driving, waco traffic ticket dismissal, driving safety course waco, mclennan county defensive driving, hewitt woodway robinson defensive driving" url="/texas/waco">
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Waco</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          How to Dismiss a Traffic Ticket in Waco with Defensive Driving
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong>Short answer:</strong> to dismiss a Waco-area traffic ticket, request a driving safety course from the court <strong>on or before your appearance date</strong>, complete a TDLR-approved 6-hour course within 90 days, and submit your certificate plus a certified DPS driving record. The charge is then dismissed and kept off your record.</p>
+          <p><strong>The catch:</strong> a ticket "in Waco" might actually be at one of McLennan County's suburb or small-town courts — and each sets its own fee and process. Here's what's the same everywhere and how the local courts differ.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Each court sets its own fees, deadlines, and procedures — confirm with the specific court on your citation. Road Ready Safety is a TDLR-licensed course provider, not a court.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">"Waco" isn't one court</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Read the <strong>court name on your citation</strong>. The City of Waco runs its own court, but the surrounding cities each run theirs.</p>
+          <p>Besides the <strong>City of Waco Municipal Court</strong>, McLennan County includes <strong>Bellmead, Lacy-Lakeview, Hewitt, Woodway, Robinson</strong> (the close-in suburbs) and smaller towns like <strong>McGregor, Lorena, Crawford, West, Mart, Moody, Riesel, Bruceville-Eddy, Beverly Hills, and Golinda</strong>. The city where you were stopped is your court.</p>
+          <p>Tickets written by a <strong>constable or sheriff's deputy</strong> on county roads outside the city limits go to a <strong>McLennan County Justice of the Peace</strong> court. Same general process, different office.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What's the same at every Waco-area court</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <p>Texas law sets the core rules, so the basic path to a dismissal is the same no matter which Waco-area court has your ticket:</p>
+        </div>
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <ul class="flex flex-col gap-2 list-none m-0 p-0 text-sm text-text-body">
+            <li>• <strong>Request the course by your appearance/answer date</strong> — the date on your citation. Don't pay first: paying is a guilty plea and a conviction.</li>
+            <li>• You need a <strong>valid Texas driver license and proof of insurance</strong>, and you plead guilty or no contest.</li>
+            <li>• You can use it <strong>once every 12 months</strong>. It's <strong>not</strong> available for speeding 25+ mph over the limit (or 95+ mph), CDL holders, passing a school bus, or work-zone violations with workers present.</li>
+            <li>• Court costs run <strong>up to about $144</strong> ($169 in a school zone) and are set by each court — some charge less.</li>
+            <li>• After approval you have <strong>90 days</strong> to finish a TDLR-approved 6-hour course and submit the certificate plus a certified DPS <a href="/texas/type-3a-driving-record" class="text-primary-deep font-medium hover:underline">Type 3A driving record</a>.</li>
+            <li>• Complete it and the charge is <strong>dismissed and kept off your record</strong> under Texas law (Code of Criminal Procedure ch. 45A) — it can't be used against you or raise your insurance.</li>
+          </ul>
+        </div>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <p>Want the full walkthrough? See <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">how Texas ticket dismissal works</a>, or <a href="/texas/eligibility-tracker" class="text-primary-deep font-medium hover:underline">check your eligibility</a>.</p>
+        </div>
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How Waco-area courts differ</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-4" style="font-family: 'DM Sans', sans-serif;">
+          <p>The fee, how you request the course, the exact deadline, and small local rules vary court to court. Here are the 16 Waco-area courts we've researched — tap any one for its full instructions, fees, and contacts.</p>
+        </div>
+        <div class="overflow-x-auto my-2">
+          <table class="w-full text-sm border-collapse" style="font-family: 'DM Sans', sans-serif;">
+            <thead><tr class="border-b-2 border-border text-left"><th class="py-2 pr-4 font-semibold text-text">Waco-area court</th><th class="py-2 font-semibold text-text">What to know (tap to open the court page)</th></tr></thead>
+            <tbody>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/mclennan-municipal-waco" class="text-primary-deep font-semibold hover:underline">Waco Municipal Court</a></td>
+                <td class="py-3 text-text-body">You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/mclennan-municipal-bellmead" class="text-primary-deep font-semibold hover:underline">Bellmead Municipal Court</a></td>
+                <td class="py-3 text-text-body">Bellmead (I-35) charges court costs plus a $10 fee — submit a notarized plea form and Type 3A record by your appearance date; 90 days.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/mclennan-municipal-beverly-hills" class="text-primary-deep font-semibold hover:underline">Beverly Hills Municipal Court</a></td>
+                <td class="py-3 text-text-body">Beverly Hills Municipal Court (McLennan County, TX — a small city within Waco, not California) hasn't posted its standard DSC fee online — call (254) 752-2584 ext. 2 by your appearance date to confirm. Complete your</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/mclennan-municipal-bruceville-eddy" class="text-primary-deep font-semibold hover:underline">Bruceville Eddy Municipal Court</a></td>
+                <td class="py-3 text-text-body">Got a ticket in Bruceville-Eddy (McLennan County, I-35 south of Waco)? The municipal court charges $144 to dismiss a traffic ticket via Driver Safety Course. Take a</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/mclennan-municipal-crawford" class="text-primary-deep font-semibold hover:underline">Crawford Municipal Court</a></td>
+                <td class="py-3 text-text-body">Crawford Municipal Court (McLennan County, west of Waco) charges a $144 court admin fee ($169 in a school zone) to dismiss a ticket via Driver Safety Course — submit your notarized form before your appearance date.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/mclennan-municipal-golinda" class="text-primary-deep font-semibold hover:underline">Golinda Municipal Court</a></td>
+                <td class="py-3 text-text-body">Got a speeding ticket in Golinda (McLennan County, south of Waco)? The Golinda Municipal Court hasn't posted its DSC fee online — call (254) 881-7333 before your appearance date to request dismissal via Driver Safety Course. Take the</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/mclennan-municipal-hewitt" class="text-primary-deep font-semibold hover:underline">Hewitt Municipal Court</a></td>
+                <td class="py-3 text-text-body">Hewitt (I-35) charges $144 ($169 school zone) by money order — request in person or by mail by your appearance date; 90 days to finish.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/mclennan-municipal-lacy-lakeview" class="text-primary-deep font-semibold hover:underline">Lacy Lakeview Municipal Court</a></td>
+                <td class="py-3 text-text-body">Lacy Lakeview (I-35) takes a written DSC request by your appearance date — call (254) 799-2458 for the court costs; disposition within 20 business days.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/mclennan-municipal-lorena" class="text-primary-deep font-semibold hover:underline">Lorena Municipal Court</a></td>
+                <td class="py-3 text-text-body">Lorena Municipal Court (McLennan County, I-35 S of Waco) charges a $144 court fee ($169 school zone) to dismiss a ticket via driver safety course — mail your notarized application by your court date.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/mclennan-municipal-mart" class="text-primary-deep font-semibold hover:underline">Mart Municipal Court</a></td>
+                <td class="py-3 text-text-body">Mart (US-84) takes a written DSC request by your appearance date — call (254) 876-2462 to confirm the court costs; 90 days, Type 3A record.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/mclennan-municipal-mcgregor" class="text-primary-deep font-semibold hover:underline">Mcgregor Municipal Court</a></td>
+                <td class="py-3 text-text-body">McGregor Municipal Court (McLennan County, US-84 SW of Waco) charges $143.90 to dismiss a traffic ticket via Driver Safety Course — request by your appearance date. Take your course online for</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/mclennan-municipal-moody" class="text-primary-deep font-semibold hover:underline">Moody Municipal Court</a></td>
+                <td class="py-3 text-text-body">Moody Municipal Court (McLennan County, SW of Waco) charges $143.90 to dismiss a ticket via Driver Safety Course — submit your notarized reply form by your appearance date. Complete a state-approved course for</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/mclennan-municipal-riesel" class="text-primary-deep font-semibold hover:underline">Riesel Municipal Court</a></td>
+                <td class="py-3 text-text-body">Riesel Municipal Court (McLennan County, SE of Waco) charges a $144 court fee to take a driver safety course and dismiss a qualifying ticket — call (254) 896-6501 ext. 1 within 10 days of your citation. Complete a state-approved course for</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/mclennan-municipal-robinson" class="text-primary-deep font-semibold hover:underline">Robinson Municipal Court</a></td>
+                <td class="py-3 text-text-body">Robinson charges $144 ($169 school zone) — get court approval before taking the course; submit a Type 3A record within 90 days.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/mclennan-municipal-west" class="text-primary-deep font-semibold hover:underline">West Municipal Court</a></td>
+                <td class="py-3 text-text-body">West (I-35) charges a $144 fee — submit the Request Form in person or by mail; 90 days and a certified DPS record required.</td>
+              </tr>
+              <tr class="border-b border-border align-top">
+                <td class="py-3 pr-4"><a href="/texas/courts/mclennan-municipal-woodway" class="text-primary-deep font-semibold hover:underline">Woodway Municipal Court</a></td>
+                <td class="py-3 text-text-body">Woodway (SH-6) charges $144 ($169 school zone) and takes DSC requests online or in person by your appearance date; 90 days to finish.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10 mt-4" style="font-family: 'DM Sans', sans-serif;">
+          <p>Don't see your court? Search every Texas court in our <a href="/texas/courts" class="text-primary-deep font-medium hover:underline">court directory</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Take the Waco course that every court accepts</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Once your court approves the request, our TDLR-approved course is accepted at every Waco-area court — $28, fully online, with the certificate the moment you finish.</p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a href={enrollUrl} class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline" style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);">
+            Start the $28 Course →
+          </a>
+          <a href="/texas/courts" class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors" style="font-family: 'DM Sans', sans-serif;">
+            Browse all Texas courts
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated June 13, 2026 — court details verified by the Road Ready Safety editorial team against the City of Waco and McLennan County municipal courts and Tex. Code Crim. Proc. ch. 45A.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

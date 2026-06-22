@@ -16747,5 +16747,449 @@
     "requiresNotarizedAffidavit": true,
     "requiresType3A": false,
     "emailAccepted": false
+  },
+  "dallas-justice-of-the-peace-precinct-1-place-2": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "requiredDocs": [
+      "Completed Driving Safety Course Affidavit Request form",
+      "Proof of completion of TDLR-approved driver safety course",
+      "Copy of valid Texas driver's license",
+      "Proof of current liability insurance on date of offense"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": true
+  },
+  "dallas-justice-of-the-peace-precinct-2-place-1": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      null,
+      null,
+      null
+    ],
+    "requiredDocs": [
+      "Valid Texas driver license",
+      "Proof of financial responsibility (liability insurance)",
+      "Completed DSC request/affidavit form (obtain from court)",
+      "Certified driving record (if required by court)",
+      "DSC completion certificate (submitted within court-set deadline)"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": false
+  },
+  "dallas-justice-of-the-peace-precinct-2-place-2": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      null,
+      null
+    ],
+    "requiredDocs": [
+      "Valid Texas driver license",
+      "Proof of financial responsibility (liability insurance)",
+      "Completed DSC request/affidavit form (obtain from court)",
+      "Certified driving record (if required by court)",
+      "DSC completion certificate (submitted within court-set deadline)"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": true
+  },
+  "dallas-justice-of-the-peace-precinct-3-place-1": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      null,
+      null,
+      null
+    ],
+    "requiredDocs": [
+      "Completed DSC Request Form and Affidavit (plea of guilty or no contest)",
+      "Valid Texas driver license or permit (or active-duty military equivalent)",
+      "Proof of liability insurance in defendant's name",
+      "Payment of court costs plus $10 nonrefundable DSC reimbursement fee",
+      "DSC completion certificate (submit within 90 days)",
+      "Certified copy of DPS driving record (submit within 90 days)",
+      "Affidavit of no DSC within prior 12 months"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": false
+  },
+  "dallas-justice-of-the-peace-precinct-3-place-2": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      null,
+      null
+    ],
+    "requiredDocs": [
+      "Valid Texas driver license",
+      "Proof of liability insurance at time of offense",
+      "Driving safety course completion certificate",
+      "Court request/affidavit form (obtain from court)"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": true
+  },
+  "dallas-justice-of-the-peace-precinct-4-place-1": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      null
+    ],
+    "requiredDocs": [
+      "Valid Texas driver license or proof of active-duty U.S. military status",
+      "Proof of liability insurance (in defendant's name)",
+      "Payment of court costs (contact court for amount) plus $10 nonrefundable DSC reimbursement fee",
+      "DSC completion certificate (submit within 90 days)",
+      "Affidavit of non-completion (no DSC taken in preceding 12 months from offense date)",
+      "Certified DPS driving record (Type 3A)"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": true
+  },
+  "dallas-justice-of-the-peace-precinct-4-place-2": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      null,
+      null,
+      null
+    ],
+    "requiredDocs": [
+      "Driving Safety Course certificate of completion",
+      "Texas driving record (Type 3A)",
+      "Proof of valid insurance at time of offense"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": true
+  },
+  "dallas-justice-of-the-peace-precinct-5-place-1": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "requiredDocs": [
+      "Driving Safety Course certificate of completion",
+      "Texas driving record (Type 3A)",
+      "Proof of valid insurance at time of offense"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": true
+  },
+  "dallas-justice-of-the-peace-precinct-5-place-2": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      null,
+      null
+    ],
+    "requiredDocs": [
+      "Notarized Driving Safety Course affidavit (signed before notary public)",
+      "Driving Safety Course certificate of completion (must be marked 'COURT COPY' and show court name)",
+      "Certified copy of Texas driving record from DPS",
+      "Copy of proof of liability insurance"
+    ],
+    "requiresNotarizedAffidavit": true,
+    "requiresType3A": true,
+    "emailAccepted": false
+  },
+  "tarrant-justice-of-the-peace-precinct-1-place-1": {
+    "fee": "$144",
+    "feeKnown": true,
+    "submissionMethods": [
+      null,
+      null
+    ],
+    "requiredDocs": [
+      "Signed plea of guilty or no contest",
+      "Texas DPS Type 3A driving record",
+      "Proof of financial responsibility (current auto insurance)",
+      "Notarized Driving Safety Course Request affidavit (required if submitting by mail)",
+      "Texas state-certified DSC completion certificate (submitted after course completion)"
+    ],
+    "requiresNotarizedAffidavit": true,
+    "requiresType3A": true,
+    "emailAccepted": true
+  },
+  "tarrant-justice-of-the-peace-precinct-4-place-1": {
+    "fee": "$144",
+    "feeKnown": true,
+    "submissionMethods": [
+      null,
+      null,
+      null
+    ],
+    "requiredDocs": [
+      "Completed and notarized Driving Safety Course Request form",
+      "Texas Driving Record (Type 3A) from DPS",
+      "Proof of financial responsibility (auto insurance)"
+    ],
+    "requiresNotarizedAffidavit": true,
+    "requiresType3A": true,
+    "emailAccepted": true
+  },
+  "tarrant-justice-of-the-peace-precinct-5": {
+    "fee": "$144",
+    "feeKnown": true,
+    "submissionMethods": [
+      null,
+      null,
+      null
+    ],
+    "requiredDocs": [
+      "Driving Safety Course Request form (notarized if mailed)",
+      "Texas Driving Record Type 3A from Texas DPS",
+      "Proof of financial responsibility (auto liability insurance)",
+      "Certificate of Completion from an approved Texas State Certified Driving Safety Course"
+    ],
+    "requiresNotarizedAffidavit": true,
+    "requiresType3A": true,
+    "emailAccepted": true
+  },
+  "tarrant-justice-of-the-peace-precinct-6": {
+    "fee": "$144",
+    "feeKnown": true,
+    "submissionMethods": [
+      null,
+      null,
+      null
+    ],
+    "requiredDocs": [
+      "Completed Driver's Safety Course Request and Plea form (DSCREQUEST.pdf)",
+      "Texas Type 3A driving record from DPS (proof no DSC in prior 12 months)",
+      "Proof of financial responsibility (valid TX auto liability insurance)"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": true
+  },
+  "tarrant-justice-of-the-peace-precinct-7-place-1": {
+    "fee": "$144",
+    "feeKnown": true,
+    "submissionMethods": [
+      null,
+      null,
+      null
+    ],
+    "requiredDocs": [],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": true
+  },
+  "tarrant-justice-of-the-peace-precinct-8-place-1": {
+    "fee": "$144",
+    "feeKnown": true,
+    "submissionMethods": [
+      null,
+      null
+    ],
+    "requiredDocs": [
+      "DSC request affidavit (submitted on or before appearance date)",
+      "Driving Safety Course completion certificate",
+      "Texas driving record (Type 3A) from DPS",
+      "Proof of financial responsibility (insurance)"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": true,
+    "emailAccepted": false
+  },
+  "bexar-justice-of-the-peace-precinct-2-place-1": {
+    "fee": "$146",
+    "feeKnown": true,
+    "submissionMethods": [
+      null,
+      null,
+      null
+    ],
+    "requiredDocs": [
+      "Court-prepared Affidavit to Take a Driving Safety Course (notarized if mailed)",
+      "Driving Record Form with $10 check/money order payable to Department of Public Safety (mailed to DPS Austin)",
+      "Proof of financial responsibility (insurance copy)",
+      "Original signed certificate of DSC completion"
+    ],
+    "requiresNotarizedAffidavit": true,
+    "requiresType3A": true,
+    "emailAccepted": false
+  },
+  "bexar-justice-of-the-peace-precinct-3-place-1": {
+    "fee": "$146",
+    "feeKnown": true,
+    "submissionMethods": [
+      null,
+      null,
+      null
+    ],
+    "requiredDocs": [
+      "Signed affidavit (notarized if mailed) — use court-prepared form",
+      "Texas DPS driving record ($10 fee; order at txapps.texas.gov)",
+      "Proof of liability insurance",
+      "DSC completion certificate (court copy, signed by defendant) — submit within 90 days"
+    ],
+    "requiresNotarizedAffidavit": true,
+    "requiresType3A": true,
+    "emailAccepted": false
+  },
+  "bexar-justice-of-the-peace-precinct-4-place-1": {
+    "fee": "$146",
+    "feeKnown": true,
+    "submissionMethods": [
+      null,
+      null
+    ],
+    "requiredDocs": [
+      "Affidavit to Take a Driving Safety Course (notarized if mailed)",
+      "Driving Record Form (obtained from court; mailed to DPS Austin)",
+      "Proof of financial responsibility (insurance copy)",
+      "Certificate of completion from a Texas State Certified driving safety course"
+    ],
+    "requiresNotarizedAffidavit": true,
+    "requiresType3A": true,
+    "emailAccepted": false
+  },
+  "travis-justice-of-the-peace-precinct-3-place-1": {
+    "fee": "$146",
+    "feeKnown": true,
+    "submissionMethods": [
+      null,
+      null
+    ],
+    "requiredDocs": [
+      "Signed and notarized DSC request form",
+      "Valid Texas non-commercial driver license (or proof of active duty/dependent military status)",
+      "Current proof of insurance with applicant's name",
+      "Type 3A driving record from Texas DPS (upon course completion)",
+      "Signed 'Court Copy' of DSC certificate (upon course completion)"
+    ],
+    "requiresNotarizedAffidavit": true,
+    "requiresType3A": true,
+    "emailAccepted": false
+  },
+  "travis-justice-of-the-peace-precinct-4-place-1": {
+    "fee": "$146",
+    "feeKnown": true,
+    "submissionMethods": [
+      null,
+      null,
+      null
+    ],
+    "requiredDocs": [
+      "Signed and notarized DSC request form (DSC_Request_Form.pdf)",
+      "Valid Texas non-commercial driver's license (or active-duty military proof)",
+      "Valid proof of insurance with applicant's name",
+      "Type 3A driving record from Texas DPS",
+      "Signed court copy of DSC completion certificate (upon course completion)"
+    ],
+    "requiresNotarizedAffidavit": true,
+    "requiresType3A": true,
+    "emailAccepted": true
+  },
+  "travis-justice-of-the-peace-precinct-5-place-1": {
+    "fee": "$146",
+    "feeKnown": true,
+    "submissionMethods": [
+      null,
+      null
+    ],
+    "requiredDocs": [
+      "Signed and notarized DSC affidavit (court-provided form)",
+      "Copy of current liability insurance with applicant's name",
+      "Copy of valid non-commercial Texas driver's license",
+      "Type 3A driving record from Texas DPS (submit after course completion)",
+      "Signed 'Court Copy' of DSC certificate of completion"
+    ],
+    "requiresNotarizedAffidavit": true,
+    "requiresType3A": true,
+    "emailAccepted": false
+  },
+  "collin-justice-of-the-peace-precinct-2": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      null,
+      null
+    ],
+    "requiredDocs": [
+      "Original traffic ticket",
+      "Copy of valid Texas driver's license",
+      "Proof of insurance (company name, phone, effective dates, you listed as driver)",
+      "Signed and notarized Driver's Safety Course Request Affidavit",
+      "Payment for court fee (Money Order, Check, Visa, or Mastercard)"
+    ],
+    "requiresNotarizedAffidavit": true,
+    "requiresType3A": false,
+    "emailAccepted": false
+  },
+  "collin-justice-of-the-peace-precinct-3": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      null,
+      null
+    ],
+    "requiredDocs": [
+      "Copy of valid Texas driver's license",
+      "Proof of current auto insurance (must show company name, phone number, effective dates, and list defendant as driver)",
+      "Original traffic ticket",
+      "Signed and notarized Driver's Safety Course Request Affidavit",
+      "DSC court fee payment (money order, check, Visa, or MasterCard)"
+    ],
+    "requiresNotarizedAffidavit": true,
+    "requiresType3A": false,
+    "emailAccepted": false
+  },
+  "collin-justice-of-the-peace-precinct-4": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      null,
+      null
+    ],
+    "requiredDocs": [
+      "Signed and notarized DSC Request Affidavit",
+      "Copy of valid Texas driver's license",
+      "Proof of insurance (company name, policy number, effective dates, driver listed)",
+      "Original citation",
+      "DSC completion certificate (original)"
+    ],
+    "requiresNotarizedAffidavit": true,
+    "requiresType3A": false,
+    "emailAccepted": true
+  },
+  "denton-justice-of-the-peace-precinct-1": {
+    "fee": null,
+    "feeKnown": false,
+    "submissionMethods": [
+      null,
+      null
+    ],
+    "requiredDocs": [
+      "Written plea of no contest or guilty",
+      "Copy of valid Texas driver's license",
+      "Proof of insurance (applicant's name must appear on active policy)",
+      "Court cost payment (money order or cashier's check; call court for amount)",
+      "Completed Driving Safety Course Request form"
+    ],
+    "requiresNotarizedAffidavit": false,
+    "requiresType3A": false,
+    "emailAccepted": true
   }
 }

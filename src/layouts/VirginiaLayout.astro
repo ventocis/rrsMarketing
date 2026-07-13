@@ -1,0 +1,95 @@
+---
+// VirginiaLayout — staging layout for the (currently hidden) Virginia section.
+// Mirrors the Texas style but is intentionally Virginia-correct:
+//   • NO "TDLR" / "CP#1234" (that is the Texas license, not Virginia).
+//   • NO "DMV-approved" claim for Road Ready Safety — DIC 550 §5.15 prohibits
+//     holding ourselves out as DMV-approved until we hold a signed DMV agreement.
+//   • Approval, when shown, must attribute to the approved provider, not RRS.
+// This whole section ships only when VITE_VIRGINIA_ROUTES_ENABLED === 'true'
+// (set locally in .env.local; absent in prod/qa → section stays hidden).
+import Layout from './Layout.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  keywords?: string;
+  url?: string;
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description = 'Online Virginia Driver Improvement Clinic — earn safe driving points and meet court or DMV requirements.',
+  keywords = 'Virginia driver improvement clinic, driver improvement program, online driver improvement Virginia',
+  url = '/virginia',
+  // Staging page: keep it noindex regardless of environment until launch.
+  noindex = true,
+} = Astro.props;
+
+const enrollUrl = import.meta.env.VITE_VIRGINIA_ENROLLMENT_URL || '#';
+const supportUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
+const currentYear = new Date().getFullYear();
+---
+
+<Layout title={title} description={description} keywords={keywords} url={url} noindex={noindex}>
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-white border-b border-border shadow-[0px_1px_3px_0px_rgba(17,23,34,0.04)]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <!-- Logo (no Texas license string) -->
+        <a href="/virginia" class="flex items-center gap-2 no-underline flex-shrink-0">
+          <img src="/assets/icons/texas/logo-shield.svg" alt="Road Ready Safety" class="w-9 h-9 flex-shrink-0" />
+          <div class="flex flex-col leading-none">
+            <span class="text-[14px] font-bold text-primary-navy leading-tight">Road Ready</span>
+            <span class="text-[10px] font-medium text-text-body leading-tight">Safety · Virginia</span>
+          </div>
+        </a>
+
+        <nav class="hidden md:flex items-center gap-8">
+          <a href="#how-it-works" class="text-sm font-medium text-text-body hover:text-text no-underline transition-colors">How It Works</a>
+          <a href="#program" class="text-sm font-medium text-text-body hover:text-text no-underline transition-colors">Program</a>
+          <a href="#support" class="text-sm font-medium text-text-body hover:text-text no-underline transition-colors">Support</a>
+        </nav>
+
+        <a
+          href={enrollUrl}
+          class="h-10 px-5 bg-primary hover:bg-primary-hover text-white rounded-xl text-sm font-semibold flex items-center justify-center no-underline transition-colors shadow-[0px_4px_6px_-1px_rgba(17,23,34,0.1)]"
+        >
+          Start Course
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <slot />
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-surface-dark text-text-subtle">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="flex flex-col md:flex-row items-start justify-between gap-8">
+        <div class="flex flex-col gap-3 max-w-sm">
+          <span class="text-base font-bold text-white">Road Ready Safety — Virginia</span>
+          <!-- DIC 550 §5.15 / §5.8: compliance-safe — no DMV-approval or DMV-agent claim for RRS. -->
+          <p class="text-sm text-text-muted leading-relaxed">
+            Online Virginia Driver Improvement education. Road Ready Safety is an independent
+            company and is not an agent of the Virginia DMV.
+            <!-- TODO(compliance): once approved, state DMV approval here and attribute correctly. -->
+          </p>
+        </div>
+        <nav class="flex flex-col gap-3">
+          <h3 class="text-sm font-semibold text-white uppercase tracking-wider">Company</h3>
+          <a href="#support" class="text-sm hover:text-white no-underline transition-colors">Help &amp; Support</a>
+          <a href="/virginia/accessibility" class="text-sm hover:text-white no-underline transition-colors">Accessibility</a>
+          <a href={supportUrl} class="text-sm hover:text-white no-underline transition-colors">Contact Us</a>
+        </nav>
+      </div>
+      <div class="border-t border-surface-dark/60 mt-10 pt-6 flex flex-col md:flex-row items-center justify-between gap-3">
+        <p class="text-sm text-text-muted">&copy; {currentYear} Road Ready Safety. All rights reserved.</p>
+        <!-- TODO(compliance, DIC 550 §2.5): add registered VA/foreign-corp legal entity name + registered office. -->
+        <p class="text-xs text-text-muted">Virginia legal entity: __________ (registered office / agent: TBD)</p>
+      </div>
+    </div>
+  </footer>
+</Layout>

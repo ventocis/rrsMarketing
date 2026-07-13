@@ -1,0 +1,139 @@
+---
+// Virginia landing page — HIDDEN staging build.
+// Ships only when VITE_VIRGINIA_ROUTES_ENABLED === 'true' (local .env.local).
+// In prod/qa the flag is absent → the real content below is NEVER emitted; the
+// page renders only the minimal "not available" fallback. This is a content-level
+// hide (not just noindex), matching the Texas gating pattern.
+//
+// This is the canvas to build the DIC 550 page-level requirements onto.
+// Sections tagged with <!-- DIC 550 §X --> map to the compliance tracker:
+//   docs/virginia-dic550-compliance.md
+import VirginiaLayout from '../../layouts/VirginiaLayout.astro';
+
+const isEnabled = import.meta.env.VITE_VIRGINIA_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_VIRGINIA_ENROLLMENT_URL || '#';
+---
+
+{isEnabled ? (
+  <VirginiaLayout title="Virginia Driver Improvement Clinic | Road Ready Safety">
+
+    <!-- Hero -->
+    <section class="bg-surface-muted">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 text-center">
+        <span class="inline-block text-xs font-bold uppercase tracking-widest text-primary mb-4">Virginia · Online</span>
+        <h1 class="text-4xl sm:text-5xl font-bold text-text leading-tight" style="font-family: 'Outfit', sans-serif;">
+          Virginia Driver Improvement Clinic — Online
+        </h1>
+        <p class="mt-5 text-lg text-text-body max-w-2xl mx-auto leading-relaxed">
+          Complete your Virginia Driver Improvement Program online, at your own pace.
+          Earn safe-driving points or satisfy a court or DMV requirement — without taking a day off.
+        </p>
+        <div class="mt-8 flex items-center justify-center">
+          <a href={enrollUrl} class="h-12 px-7 bg-primary hover:bg-primary-hover text-white rounded-xl text-base font-semibold inline-flex items-center justify-center no-underline transition-colors shadow-[0px_4px_6px_-1px_rgba(17,23,34,0.1)]">
+            Start Course
+          </a>
+        </div>
+        <!-- DIC 550 §5.15: NO "DMV-approved" claim for RRS until we hold a signed agreement. -->
+        <p class="mt-4 text-xs text-text-subtle">State-required driver improvement education, delivered online.</p>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section id="how-it-works" class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <h2 class="text-2xl font-bold text-text text-center mb-10" style="font-family: 'Outfit', sans-serif;">How it works</h2>
+      <div class="grid sm:grid-cols-3 gap-6">
+        <div class="bg-white border border-border rounded-2xl p-6">
+          <div class="text-primary text-2xl font-bold mb-2">1</div>
+          <h3 class="font-semibold text-text mb-1">Enroll online</h3>
+          <p class="text-sm text-text-body">Sign up in minutes from any device.</p>
+        </div>
+        <div class="bg-white border border-border rounded-2xl p-6">
+          <div class="text-primary text-2xl font-bold mb-2">2</div>
+          <h3 class="font-semibold text-text mb-1">Complete the clinic</h3>
+          <p class="text-sm text-text-body">Work through the course in increments — start, stop, and resume anytime.</p>
+        </div>
+        <div class="bg-white border border-border rounded-2xl p-6">
+          <div class="text-primary text-2xl font-bold mb-2">3</div>
+          <h3 class="font-semibold text-text mb-1">Get your completion</h3>
+          <p class="text-sm text-text-body">Receive your certificate of completion when you finish.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Program details — DIC 550 §3.2 (accuracy: current Virginia facts). VERIFY before launch. -->
+    <section id="program" class="bg-surface-muted">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <h2 class="text-2xl font-bold text-text mb-6" style="font-family: 'Outfit', sans-serif;">Program details</h2>
+        <div class="bg-white border border-border rounded-2xl p-6 sm:p-8">
+          <dl class="grid sm:grid-cols-2 gap-x-8 gap-y-5">
+            <div>
+              <dt class="text-xs font-semibold uppercase tracking-wide text-text-subtle">Format</dt>
+              <dd class="text-text font-medium">100% online, self-paced</dd>
+            </div>
+            <div>
+              <dt class="text-xs font-semibold uppercase tracking-wide text-text-subtle">Length</dt>
+              <!-- DIC 550 §3.2: clinic must be no less than 8 hours including the final exam. -->
+              <dd class="text-text font-medium">8 hours (state minimum, incl. final exam)</dd>
+            </div>
+            <div>
+              <dt class="text-xs font-semibold uppercase tracking-wide text-text-subtle">Why people take it</dt>
+              <dd class="text-text font-medium">Safe-driving points · court referral · DMV referral · voluntary</dd>
+            </div>
+            <div>
+              <dt class="text-xs font-semibold uppercase tracking-wide text-text-subtle">Price</dt>
+              <dd class="text-text font-medium">$<!-- TODO: set price --> __</dd>
+            </div>
+          </dl>
+          <p class="mt-6 text-xs text-text-subtle">
+            <!-- VERIFY all figures against current Va. DMV guidance before this page goes public. -->
+            Details to be confirmed against current Virginia DMV requirements (Va. Code § 46.2-490 et seq.).
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Support / Help Desk — DIC 550 §3.6 (toll-free phone + online help, posted hours). PLACEHOLDER. -->
+    <section id="support" class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <h2 class="text-2xl font-bold text-text mb-6" style="font-family: 'Outfit', sans-serif;">Help &amp; support</h2>
+      <div class="bg-white border border-border rounded-2xl p-6 sm:p-8 grid sm:grid-cols-2 gap-6">
+        <div>
+          <h3 class="font-semibold text-text mb-1">Toll-free help desk</h3>
+          <!-- TODO(compliance): real toll-free number + posted weekday (and any weekend) hours. -->
+          <p class="text-text-body">Phone: <span class="font-medium">1-8XX-XXX-XXXX</span></p>
+          <p class="text-text-body">Hours: <span class="font-medium">Mon–Fri __:__–__:__ ET</span> <span class="text-text-subtle">(TBD)</span></p>
+        </div>
+        <div>
+          <h3 class="font-semibold text-text mb-1">Online help</h3>
+          <p class="text-text-body">Email / chat support for course and technical questions.</p>
+          <!-- TODO(compliance): wire real support email / chat + guaranteed response window. -->
+          <p class="text-text-subtle text-sm mt-1">support@__________ (TBD)</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Accessibility — DIC 550 §2.10 / ADA. PLACEHOLDER (mirror Texas accessibility page later). -->
+    <section class="bg-surface-muted">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
+        <p class="text-sm text-text-body">
+          We are committed to accessibility under the Americans with Disabilities Act.
+          <a href="/virginia/accessibility" class="text-primary font-medium no-underline hover:underline">Accessibility statement</a>
+          <span class="text-text-subtle"> (to be added)</span>
+        </p>
+      </div>
+    </section>
+
+  </VirginiaLayout>
+) : (
+  <!-- Hidden fallback: real content above is not emitted when the flag is off. -->
+  <html lang="en">
+    <head>
+      <meta charset="utf-8" />
+      <meta name="robots" content="noindex, nofollow" />
+      <title>Not available</title>
+    </head>
+    <body style="font-family: sans-serif; text-align: center; padding: 4rem 1rem; color: #555;">
+      <p>This page isn’t available.</p>
+      <p><a href="/">Return home</a></p>
+    </body>
+  </html>
+)}

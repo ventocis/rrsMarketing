@@ -611,8 +611,7 @@ const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
           What Our Customers Say
         </h2>
         <p class="text-lg text-text-body text-center leading-7 max-w-[672px]">
-          Join thousands of Texas drivers who have successfully dismissed their tickets<br />
-          with Road Ready Safety.
+          Join thousands of Texas drivers who have successfully dismissed their tickets.
         </p>
       </div>
 
@@ -656,6 +655,27 @@ const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
             <div class="flex flex-col">
               <span class="text-base font-semibold text-text leading-6">Tommie Garner</span>
               <span class="text-xs text-text-subtle leading-5">Verified via Trustpilot &middot; May 13, 2026</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonial 3 - MW (Trustpilot) — spans full width; longer review -->
+        <div class="bg-surface-muted rounded-[20px] p-8 flex flex-col gap-4 items-start md:col-span-2">
+          <div class="flex gap-1 items-start">
+            {[...Array(5)].map((_, i) => (
+              <img src="/assets/icons/texas/star-testimonial.svg" alt="" class="w-5 h-5" />
+            ))}
+          </div>
+          <p class="text-lg text-text leading-[28px]">
+            &ldquo;Roadready is the best place to get the course to dismiss your ticket. Other sites say $20&ndash;25 but then after you fill in their form and give your info, you find out they charge you $35 to print the certificate. Here $28 clear upfront, includes printing certificate. Also customer service is very good &mdash; I typed my email wrong when I signed up for the class, I called them, and customer service fixed it right away, and it was during the weekend. I would recommend roadreadysafety.&rdquo;
+          </p>
+          <div class="flex gap-3 items-center pt-2">
+            <div class="bg-info rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0">
+              <span class="text-sm font-semibold text-primary-deep">MW</span>
+            </div>
+            <div class="flex flex-col">
+              <span class="text-base font-semibold text-text leading-6">MW</span>
+              <span class="text-xs text-text-subtle leading-5">Verified via Trustpilot &middot; July 18, 2026</span>
             </div>
           </div>
         </div>

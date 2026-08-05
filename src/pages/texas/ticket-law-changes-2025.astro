@@ -8,7 +8,7 @@ const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
 const faqs = [
   {
     q: 'Did Texas change its traffic ticket dismissal law in 2025?',
-    a: 'Yes, twice. On January 1, 2025, the entire fine-only misdemeanor chapter was renumbered: the defensive driving dismissal law moved from Art. 45.0511 to Code of Criminal Procedure Chapter 45A (arts. 45A.351–.359). Then on September 1, 2025, S.B. 296 took effect — modernizing how you request the course and letting one course dismiss multiple eligible charges from the same stop.',
+    a: 'Yes — three times. On January 1, 2025, the entire fine-only misdemeanor chapter was renumbered: the defensive driving dismissal law moved from Art. 45.0511 to Code of Criminal Procedure Chapter 45A (arts. 45A.351–.359). Then on September 1, 2025, S.B. 296 took effect — modernizing how you request the course and letting one course dismiss multiple eligible charges from the same stop. And on December 4, 2025, H.B. 16 amended deferred disposition (art. 45A.302), renaming the special expense charge a fee and requiring it be credited toward any fine.',
   },
   {
     q: 'Can one defensive driving course dismiss multiple tickets in Texas now?',
@@ -24,7 +24,7 @@ const faqs = [
   },
   {
     q: 'Is Article 45.0511 still the law in Texas?',
-    a: 'The substance is still the law, but the citation is dead. Art. 45.0511 was repealed and recodified into Chapter 45A effective January 1, 2025 — the dismissal rules now live at arts. 45A.351–.359, and deferred disposition moved from Art. 45.051 to arts. 45A.301–.305. A page still citing 45.0511 was written before 2025.',
+    a: 'The substance is still the law, but the citation is dead. Art. 45.0511 was repealed and recodified into Chapter 45A effective January 1, 2025 — the dismissal rules now live at arts. 45A.351–.359, and deferred disposition moved from Art. 45.051 to arts. 45A.301–.307. A page still citing 45.0511 was written before 2025.',
   },
   {
     q: 'Do the new rules apply to a ticket I got before September 1, 2025?',
@@ -40,7 +40,7 @@ const articleSchema = JSON.stringify({
   author: { '@type': 'Organization', name: 'Road Ready Safety' },
   publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
   datePublished: '2026-06-11',
-  dateModified: '2026-06-11',
+  dateModified: '2026-08-04',
   mainEntityOfPage: `${siteUrl}/texas/ticket-law-changes-2025`,
 });
 
@@ -56,7 +56,7 @@ const faqSchema = JSON.stringify({
 
 const citationRows = [
   { old: 'Art. 45.0511 — Driving safety course dismissal', new: 'Arts. 45A.351–45A.359 (Subchapter H)', note: 'Eligibility at 45A.352; exclusions list at 45A.353; the "may not be part of a person’s driving record" rule at 45A.357' },
-  { old: 'Art. 45.051 — Deferred disposition', new: 'Arts. 45A.301–45A.305 (Subchapter G)', note: 'Deferral up to 180 days at 45A.302; under-25 course requirement at 45A.304; dismissal at 45A.305' },
+  { old: 'Art. 45.051 — Deferred disposition', new: 'Arts. 45A.301–45A.307 (Subchapter G)', note: 'Deferral up to 180 days at 45A.302; under-25 course requirement at 45A.304; dismissal at 45A.305' },
   { old: 'Art. 45.0511(p) — Excluded offenses', new: 'Art. 45A.353', note: 'School bus, leaving the scene, serious traffic violations; work-zone exclusion lives in Transp. Code §472.022(f)' },
 ];
 ---
@@ -87,7 +87,7 @@ const citationRows = [
         </h1>
 
         <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
-          <p>Texas changed its traffic ticket laws twice in 2025. On <strong class="text-text">January 1, 2025</strong>, the Legislature's recodification bill (H.B. 4504) renumbered the entire fine-only misdemeanor chapter — the defensive driving dismissal statute everyone knew as "Article 45.0511" became <strong class="text-text">Code of Criminal Procedure Chapter 45A</strong>. Then on <strong class="text-text">September 1, 2025</strong>, S.B. 296 took effect and made two practical changes: it modernized how you can request a driving safety course, and — the big one — it now lets <strong class="text-text">one course dismiss every eligible charge from the same stop</strong>.</p>
+          <p>Texas changed its traffic ticket laws three times in 2025. On <strong class="text-text">January 1, 2025</strong>, the Legislature's recodification bill (H.B. 4504) renumbered the entire fine-only misdemeanor chapter — the defensive driving dismissal statute everyone knew as "Article 45.0511" became <strong class="text-text">Code of Criminal Procedure Chapter 45A</strong>. Then on <strong class="text-text">September 1, 2025</strong>, S.B. 296 took effect and made two practical changes: it modernized how you can request a driving safety course, and — the big one — it now lets <strong class="text-text">one course dismiss every eligible charge from the same stop</strong>. And on <strong class="text-text">December 4, 2025</strong>, H.B. 16 (Second Called Session) amended deferred disposition (art. 45A.302), renaming the "special expense fine" a fee and requiring that it be credited toward any fine.</p>
           <p>Here's exactly what changed, what didn't, and how to tell whether the page you're reading about Texas tickets is up to date. (Spoiler: if it cites "Art. 45.0511," it was written before 2025.)</p>
         </div>
 
@@ -180,7 +180,7 @@ const citationRows = [
 
         <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
           <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
-          <p class="text-xs text-text-subtle">Last updated June 11, 2026 — verified by the Road Ready Safety editorial team against the enrolled texts of H.B. 4504 (88th Leg., 2023) and S.B. 296 (89th Leg., 2025) at capitol.texas.gov, and Tex. Code Crim. Proc. arts. 45A.301–.305 &amp; 45A.351–.359.</p>
+          <p class="text-xs text-text-subtle">Last updated August 4, 2026 — verified by the Road Ready Safety editorial team against the enrolled texts of H.B. 4504 (88th Leg., 2023), S.B. 296 (89th Leg., 2025), and H.B. 16 (89th Leg., 2nd C.S., 2025) at capitol.texas.gov, and Tex. Code Crim. Proc. arts. 45A.301–.307 &amp; 45A.351–.359.</p>
         </div>
 
       </div>

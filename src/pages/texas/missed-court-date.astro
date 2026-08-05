@@ -12,7 +12,7 @@ const faqs = [
   },
   {
     "q": "Will I be arrested if I go to the court to fix it?",
-    "a": "At many courts, no — \"safe harbor\" policies mean you won't be arrested on that court's warrants while appearing to resolve them. But it's a local policy, not a law. Call the clerk first and ask directly: \"If I come in to resolve this, will I be arrested?\""
+    "a": "Generally no — under Texas's \"safe harbor\" law (art. 45A.104), a court must recall its own warrant when you voluntarily appear to resolve the case before the warrant is executed. It only covers that court's own warrants, though, so call the clerk first and ask directly: \"If I come in to resolve this, will I be arrested?\""
   },
   {
     "q": "Why won't DPS renew my license?",
@@ -40,7 +40,7 @@ const articleSchema = JSON.stringify({
   author: { '@type': 'Organization', name: 'Road Ready Safety' },
   publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
   datePublished: '2026-06-11',
-  dateModified: '2026-06-11',
+  dateModified: '2026-08-04',
   mainEntityOfPage: `${siteUrl}/texas/missed-court-date`,
 });
 
@@ -95,7 +95,7 @@ const faqSchema = JSON.stringify({
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How to fix it — fastest first</h2>
         <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
           <p><strong class="text-text">Call the court clerk today.</strong> Tell them you missed the date and ask what your options are. Most courts will tell you exactly how to get back on the docket — appearing in person, posting a bond, or paying to lift the warrant. Some courts run periodic warrant-amnesty periods; ask.</p>
-          <p><strong class="text-text">Appear — many courts make it safe to.</strong> A number of Texas courts follow "safe harbor" policies: you will not be arrested on the court's own outstanding warrants while you're there to resolve them (La Porte Municipal Court advertises exactly this). It's a local policy, not a statewide right — confirm with your clerk before walking in, and our <a href="/texas/courts" class="text-primary-deep font-medium hover:underline">court directory</a> notes it where courts publish it.</p>
+          <p><strong class="text-text">Appear — many courts make it safe to.</strong> A number of Texas courts follow "safe harbor" policies: you will not be arrested on the court's own outstanding warrants while you're there to resolve them (La Porte Municipal Court advertises exactly this). It's backed by statute (art. 45A.104) for the court's own warrants — but implementation varies, so confirm with your clerk before walking in, and our <a href="/texas/courts" class="text-primary-deep font-medium hover:underline">court directory</a> notes it where courts publish it.</p>
           <p><strong class="text-text">Ask whether dismissal options survived.</strong> If the case hasn't gone to judgment, a judge still has discretion to allow defensive driving even though your answer date passed (art. 45A.352(c) allows a grant any time before final disposition) — and deferred disposition may be on the table too. Missing the date weakens your position; it doesn't always end it. Once the FTA program fee and the case are resolved, the court notifies the program and your renewal hold lifts.</p>
           <p>If a renewal is now blocked, it's one of two holds: <a href="/texas/omnibase-hold" class="text-primary-deep font-medium hover:underline">an OmniBase license hold</a> or <a href="/texas/registration-block" class="text-primary-deep font-medium hover:underline">a Scofflaw registration hold</a> — each page explains how to clear it.</p>
         </div>
@@ -134,7 +134,7 @@ const faqSchema = JSON.stringify({
 
         <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
           <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
-          <p class="text-xs text-text-subtle">Last updated June 11, 2026 — verified by the Road Ready Safety editorial team against Tex. Transp. Code §543.009 &amp; ch. 706, Tex. Penal Code §38.10, Tex. Code Crim. Proc. arts. 102.011 &amp; 45A.352, and published court policies.</p>
+          <p class="text-xs text-text-subtle">Last updated August 4, 2026 — verified by the Road Ready Safety editorial team against Tex. Transp. Code §543.009 &amp; ch. 706, Tex. Penal Code §38.10, Tex. Code Crim. Proc. arts. 102.011 &amp; 45A.352, and published court policies.</p>
         </div>
 
       </div>

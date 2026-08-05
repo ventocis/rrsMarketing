@@ -9,7 +9,7 @@ const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
 // Verified against the official TDLR Driving Safety Provider licensing export (June 2026).
 // Every CP# and status below appears in TDLR's own records as CURRENT.
 const providers = [
-  { name: 'Road Ready Safety', cp: 'CP1234', price: '$28', note: 'Statutory minimum, free instant certificate', us: true },
+  { name: 'Road Ready Safety', cp: 'CP1234', price: '$28', note: 'Free instant certificate, no add-ons', us: true },
   { name: 'Safe2Drive', cp: 'CP577', price: '$25 + $3', note: 'Advertises court-accepted; add-ons at checkout' },
   { name: 'Aware Driver / OnlineTXDefensiveDrivingCourse.com', cp: 'CP995', price: '$25 + $3', note: 'Advertised "reduce points" into 2025 — Texas has no points (since removed)' },
   { name: 'Aceable', cp: 'CP262', price: 'Higher tier', note: 'App-based; all-in cost runs well above the minimum' },
@@ -177,7 +177,7 @@ const faqSchema = JSON.stringify({
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">A TDLR-approved course with nothing to hide</h2>
         <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
-          <p>Road Ready Safety is TDLR-approved under <strong class="text-text">CP1234</strong> — check it yourself. The course is the statutory minimum <strong class="text-text">$28 all-in</strong>, 6 hours, fully online, with a <strong class="text-text">free instant certificate</strong> and no add-on at the end. If your ticket qualifies, that's the whole price.</p>
+          <p>Road Ready Safety is TDLR-approved under <strong class="text-text">CP1234</strong> — check it yourself. The course is <strong class="text-text">$28 all-in</strong>, 6 hours, fully online, with a <strong class="text-text">free instant certificate</strong> and no add-on at the end. If your ticket qualifies, that's the whole price.</p>
         </div>
 
         <div class="flex flex-col sm:flex-row gap-4 mb-10">

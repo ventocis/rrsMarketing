@@ -40,7 +40,7 @@ const STEP_HEADERS: Record<Exclude<Step, 'result'>, { heading: string; subtitle:
   },
   step1b: {
     heading: 'How far were you going over the speed limit?',
-    subtitle: 'Speeds 25+ mph over the limit — or 95 mph or more at any limit — are excluded by statute.',
+    subtitle: 'Speeds 25+ mph over the limit — or 95 mph or more at any limit — lose the automatic statutory right to a course.',
   },
   step2: {
     heading: "Do you hold a Commercial Driver's License (CDL)?",

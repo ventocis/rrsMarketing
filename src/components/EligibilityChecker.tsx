@@ -484,7 +484,6 @@ export default function EligibilityChecker({ courts }: Props) {
                   <div className="flex items-baseline gap-1 mb-0.5">
                     <span className="text-[28px] font-bold text-text leading-none">$28</span>
                     <span className="text-xs text-text-body">.00</span>
-                    <span className="text-base font-medium text-text-body line-through ml-2">$35.00</span>
                   </div>
                   <p className="text-xs text-text-body mb-3" style={{ fontFamily: "'DM Sans', sans-serif" }}>
                     All-in — no hidden fees

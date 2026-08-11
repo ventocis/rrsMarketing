@@ -40,7 +40,7 @@ const STEP_HEADERS: Record<Exclude<Step, 'result'>, { heading: string; subtitle:
   },
   step1b: {
     heading: 'How far were you going over the speed limit?',
-    subtitle: 'The amount over the limit affects your eligibility.',
+    subtitle: 'Speeds 25+ mph over the limit — or 95 mph or more at any limit — lose the automatic statutory right to a course.',
   },
   step2: {
     heading: "Do you hold a Commercial Driver's License (CDL)?",
@@ -82,10 +82,10 @@ const RESULT_DATA: Record<
     isEligible: false,
   },
   'ineligible-prior': {
-    badge: 'Not Eligible',
+    badge: 'Likely Not Eligible',
     badgeClass: 'inline-flex items-center gap-2 bg-error-bg text-error text-sm font-semibold px-3 py-1.5 rounded-full',
     heading: "You've already used a dismissal in the past 12 months",
-    body: "Texas only allows one ticket dismissal via defensive driving per 12-month period. You'll need to wait until 12 months have passed from your last dismissal.",
+    body: "Texas normally allows one dismissal per 12-month period, measured from your course-completion date to the date of the new offense. Some judges can still grant a course at their discretion (art. 45A.352(c)) — ask your court.",
     isEligible: false,
   },
   'ineligible-denied': {
@@ -327,7 +327,7 @@ export default function EligibilityChecker({ courts }: Props) {
                 onClick={() => setStep('step2')}
               >
                 <span className="text-lg leading-none">✅</span>
-                Less than 25 mph over
+                Less than 25 mph over (and under 95 mph)
               </button>
               <button
                 className={optionButtonClass}
@@ -335,7 +335,7 @@ export default function EligibilityChecker({ courts }: Props) {
                 onClick={() => goToResult('ineligible-speed')}
               >
                 <span className="text-lg leading-none">⛔</span>
-                25 mph or more over
+                25+ mph over — or 95 mph or faster
               </button>
             </div>
           </div>
@@ -482,12 +482,11 @@ export default function EligibilityChecker({ courts }: Props) {
 
                   {/* Price */}
                   <div className="flex items-baseline gap-1 mb-0.5">
-                    <span className="text-[28px] font-bold text-text leading-none">$25</span>
+                    <span className="text-[28px] font-bold text-text leading-none">$28</span>
                     <span className="text-xs text-text-body">.00</span>
-                    <span className="text-base font-medium text-text-body line-through ml-2">$35.00</span>
                   </div>
                   <p className="text-xs text-text-body mb-3" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                    + $3.00 state processing fee
+                    All-in — no hidden fees
                   </p>
 
                   {/* Stars */}

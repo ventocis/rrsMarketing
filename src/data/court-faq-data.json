@@ -23,7 +23,7 @@
     "feeKnown": false,
     "submissionMethods": [
       "Mail",
-      "Fax",
+      "Online",
       "In-person",
       "In-person (Arraignment)"
     ],
@@ -31,7 +31,8 @@
     "requiredDocs": [
       "Copy of Texas Type 3A Certified Driving Record from the Texas Department of Public Safety",
       "Texas Department of Licensing and Regulation (TDLR) Court Copy Certificate of Completion",
-      "Check or money order for court costs and administrative fees (for initial DSC request)"
+      "Check or money order for court costs and administrative fees (for initial DSC request)",
+      "Copy of your car insurance (submitted with completion documents)"
     ],
     "requiresNotarizedAffidavit": false,
     "requiresType3A": true
@@ -83,18 +84,19 @@
     "submissionMethods": [
       "In-person",
       "Mail",
-      "Online"
+      "Online",
+      "Email"
     ],
-    "emailAccepted": false,
+    "emailAccepted": true,
     "requiredDocs": [
       "Valid Texas Driver's License (or proof of active U.S. military service)",
       "Proof of financial responsibility (auto insurance showing minimum required coverage)",
       "Payment of applicable state costs and administrative DSC fee",
-      "Signed and notarized DSC Affidavit (Request Affidavit stating no DSC taken in prior 12 months)",
+      "Signed Application for Driving Safety / Plea Notification Form (states no DSC taken in prior 12 months)",
       "DSC Certificate of Completion (submitted after course, within court deadline)",
       "Type 3A Texas DPS Driving Record (certified copy, submitted with completion documents)"
     ],
-    "requiresNotarizedAffidavit": true,
+    "requiresNotarizedAffidavit": false,
     "requiresType3A": true
   },
   "lubbock-municipal-lubbock": {
@@ -140,8 +142,8 @@
     "requiresType3A": true
   },
   "dallas-municipal-irving": {
-    "fee": null,
-    "feeKnown": false,
+    "fee": "$144",
+    "feeKnown": true,
     "submissionMethods": [
       "Online",
       "In-person",
@@ -151,13 +153,13 @@
     ],
     "emailAccepted": true,
     "requiredDocs": [
-      "Completed Driving Safety Course Affidavit (Non-School Zone OR School Zone — whichever applies)",
+      "Completed and notarized Driving Safety Course Affidavit (Non-School Zone OR School Zone — whichever applies)",
       "Copy of valid Texas Driver's License",
       "Copy of current vehicle liability insurance (proof of financial responsibility)",
       "Texas DPS Type 3A Driving Record (required upon course completion, submitted within 90-day window)",
       "DSC Certificate of Completion (submitted within 90-day window)"
     ],
-    "requiresNotarizedAffidavit": false,
+    "requiresNotarizedAffidavit": true,
     "requiresType3A": true
   },
   "dallas-municipal-garland": {
@@ -202,8 +204,8 @@
     "requiresType3A": true
   },
   "collin-municipal-mckinney": {
-    "fee": null,
-    "feeKnown": false,
+    "fee": "$144",
+    "feeKnown": true,
     "submissionMethods": [
       "Online",
       "In-person"
@@ -238,13 +240,14 @@
     "requiresType3A": true
   },
   "dallas-municipal-grand-prairie": {
-    "fee": null,
-    "feeKnown": false,
+    "fee": "$144",
+    "feeKnown": true,
     "submissionMethods": [
-      "In-person",
-      "Email"
+      "Online",
+      "Mail",
+      "In-person"
     ],
-    "emailAccepted": true,
+    "emailAccepted": false,
     "requiredDocs": [
       "DSC Certificate of Completion (signed)",
       "Type 3A Texas Driving Record (from TX DPS)",
@@ -293,22 +296,21 @@
     "requiresType3A": true
   },
   "harris-municipal-pasadena": {
-    "fee": null,
-    "feeKnown": false,
+    "fee": "$144",
+    "feeKnown": true,
     "submissionMethods": [
-      "In-person",
-      "Email",
-      "Online"
+      "Mail",
+      "In-person"
     ],
-    "emailAccepted": true,
+    "emailAccepted": false,
     "requiredDocs": [
       "DSC Certificate of Completion (court copy, signed) from a TDLR-approved provider",
       "Certified Type 3A Texas Driving Record from DPS",
       "Valid Texas Driver's License",
       "Current proof of automobile liability insurance",
-      "Notarized affidavit of eligibility (if submitting by mail or email — confirm if required in person)"
+      "Completed application with unsworn declaration (no notarization required)"
     ],
-    "requiresNotarizedAffidavit": true,
+    "requiresNotarizedAffidavit": false,
     "requiresType3A": true
   },
   "dallas-municipal-mesquite": {
@@ -337,9 +339,10 @@
     "submissionMethods": [
       "In-person",
       "Online (payments/search only)",
-      "Mail"
+      "Mail",
+      "Email"
     ],
-    "emailAccepted": false,
+    "emailAccepted": true,
     "requiredDocs": [
       "DSC/Driver Safety Course Certificate of Completion (TDLR-approved course)",
       "Type 3A Certified Driving Record from Texas DPS (obtain at www.texas.gov)",
@@ -355,8 +358,7 @@
     "feeKnown": false,
     "submissionMethods": [
       "Online",
-      "In-person",
-      "Online"
+      "In-person"
     ],
     "emailAccepted": false,
     "requiredDocs": [
@@ -369,17 +371,17 @@
     "requiresType3A": true
   },
   "mclennan-municipal-waco": {
-    "fee": null,
-    "feeKnown": false,
+    "fee": "$144",
+    "feeKnown": true,
     "submissionMethods": [
       "In-person",
       "Mail",
-      "Email"
+      "Online"
     ],
-    "emailAccepted": true,
+    "emailAccepted": false,
     "requiredDocs": [
       "DSC Certificate of Completion (signed; courts required to accept student-printed PDF certificate as of 11/1/2018)",
-      "Certified Type 3A Texas Driving Record (from TX DPS — confirm with court whether required)",
+      "Certified copy of your Texas driving record from the DPS Driver Records Bureau (required; $10 fee by mail)",
       "Valid Texas Driver's License (copy)",
       "Proof of current liability insurance"
     ],
@@ -1065,7 +1067,7 @@
     "requiredDocs": [
       "Proof of financial responsibility (auto liability insurance meeting Texas state requirements)",
       "Proof of a valid Texas driver's license",
-      "DSC Certificate of Completion (from a TEA-approved driving safety course, or DPS-approved motorcycle operator's course if applicable)",
+      "DSC Certificate of Completion (from a TDLR-approved driving safety course, or DPS-approved motorcycle operator's course if applicable; formerly TEA-approved)",
       "Copy of driving record as maintained by the Texas Department of Public Safety (Type 3A)"
     ],
     "requiresNotarizedAffidavit": false,
@@ -1082,7 +1084,7 @@
     "emailAccepted": true,
     "requiredDocs": [
       "Valid Texas driver's license or military identification",
-      "DSC Certificate of Completion (TEA-approved course)",
+      "DSC Certificate of Completion (TDLR-approved course; formerly TEA-approved)",
       "Type 3A Texas Driving Record (from DPS — required when requesting DSC)",
       "Notarized Affidavit (standard Texas DSC requirement)",
       "Completed plea form (guilty or no contest — required for DSC approval)"
@@ -1253,7 +1255,7 @@
       "Proof of financial responsibility / current vehicle liability insurance",
       "Sworn Request for Driving Safety Course (DSC by Mail affidavit — Form at https://www.burlesontx.com/DocumentCenter/View/20621/2020-07-22DSCbymail)",
       "Certified copy of Texas DPS Driving Record (Type 3A) — submitted after course completion",
-      "Uniform Certificate of Completion from a TEA-approved Driving Safety Course — submitted after course completion",
+      "Uniform Certificate of Completion from a TDLR-approved (formerly TEA-approved) Driving Safety Course — submitted after course completion",
       "Notarized DSC Affidavit (if submitting by mail after completion; clerk may certify in person)"
     ],
     "requiresNotarizedAffidavit": true,
@@ -1332,7 +1334,7 @@
       "Copy of valid Texas Driver's License (non-commercial; valid at time of request)",
       "Proof of financial responsibility / automobile liability insurance in defendant's name (or with defendant listed as a driver)",
       "Payment of court costs and administrative fees (call court at 817-222-7773 for exact amount)",
-      "AFTER COURSE — Original certificate of completion from a TEA-approved driving safety course (NO copies, faxes, or emails accepted — original only per court's verbatim rule)",
+      "AFTER COURSE — Original certificate of completion from a TDLR-approved (formerly TEA-approved) driving safety course (NO copies, faxes, or emails accepted — original only per court's verbatim rule)",
       "AFTER COURSE — Copy of Texas DPS driving record (Type 3A); court will mail a DPS form with a $10 fee, or defendant may order independently"
     ],
     "requiresNotarizedAffidavit": false,
@@ -1352,7 +1354,7 @@
       "Clear and legible copy of valid Texas driver's license (Class C — NOT a CDL; active military may substitute military ID with valid DL)",
       "Clear and legible copy of valid liability insurance",
       "Payment of $144.00 (regular zone) or $169.00 (school zone) — check, money order, or credit card; no cash by mail",
-      "AFTER COMPLETION (within 90 days): Court copy of TEA-approved Driving Safety Course certificate — must be the designated court copy, signed by defendant, and reflect completion for Hurst Municipal Court within 90 days of request date",
+      "AFTER COMPLETION (within 90 days): Court copy of TDLR-approved (formerly TEA-approved) Driving Safety Course certificate — must be the designated court copy, signed by defendant, and reflect completion for Hurst Municipal Court within 90 days of request date",
       "AFTER COMPLETION (within 90 days): Certified copy of driving record obtained from the Texas Department of Public Safety"
     ],
     "requiresNotarizedAffidavit": false,
@@ -1607,7 +1609,7 @@
       "Fax"
     ],
     "requiredDocs": [
-      "DSC Certificate of Course Completion (TEA-approved 6-hour course)",
+      "DSC Certificate of Course Completion (TDLR-approved 6-hour course; formerly TEA-approved)",
       "Certified copy of driving record from Texas DPS (Type 3A)",
       "Request form with plea of Guilty or No Contest and notarized Driving Safety Course Affidavit (at time of request)",
       "Proof of valid Texas driver's license (at time of request)",
@@ -1649,7 +1651,7 @@
     "requiredDocs": [
       "Valid Texas driver's license or permit (copy required with request)",
       "Current proof of liability insurance with defendant listed as a driver (court accepts paper copy only)",
-      "Uniform Certificate of Course Completion from a TDLR/TEA-approved driving safety course (court copy)",
+      "Uniform Certificate of Course Completion from a TDLR-approved (formerly TEA-approved) driving safety course (court copy)",
       "Certified Type 3A driving record from Texas DPS ($10 by mail / $12 online)",
       "Affidavit stating you have not taken a driving safety course for a traffic offense in the past 12 months",
       "Payment of court costs plus $10.00 administrative fee"
@@ -1831,7 +1833,7 @@
       "Copy of valid Texas driver's license or permit (exception for active duty military and military dependents)",
       "Proof of current financial responsibility (insurance) with the defendant's name on the policy or card",
       "Payment of court costs in full",
-      "After completion: certificate of completion from a TDLR/TEA-approved course AND certified Type 3A driving record from DPS — both must be turned in at the same time; one will not be accepted without the other"
+      "After completion: certificate of completion from a TDLR-approved (formerly TEA-approved) course AND certified Type 3A driving record from DPS — both must be turned in at the same time; one will not be accepted without the other"
     ],
     "requiresNotarizedAffidavit": true,
     "requiresType3A": true,
@@ -2406,7 +2408,7 @@
       "Online"
     ],
     "requiredDocs": [
-      "DSC Certificate of Completion (TDLR/TEA-approved course; motorcycle operator's training course if cited on a motorcycle)",
+      "DSC Certificate of Completion (TDLR-approved course; motorcycle operator's training course if cited on a motorcycle; formerly TEA-approved)",
       "Certified copy of driving record from the Texas Department of Public Safety (Type 3A)",
       "Affidavit stating you are not taking the course for any other traffic violation"
     ],
@@ -3152,7 +3154,7 @@
       "Valid Texas Driver's License",
       "Proof of liability insurance listing you as a driver (coverage effective before the citation date)",
       "Plea of Guilty or Nolo Contendere at time of request",
-      "After course: certificate of completion from a TDLR/TEA-approved course",
+      "After course: certificate of completion from a TDLR-approved (formerly TEA-approved) course",
       "After course: certified Type 3A driving record from Texas.gov/DPS"
     ],
     "requiresNotarizedAffidavit": false,
@@ -3474,7 +3476,7 @@
       "Valid Texas driver's license or permit (non-CDL; military ID accepted)",
       "Proof of financial responsibility (liability insurance in your name or listing you as a covered driver)",
       "Certified copy of your driving record (TX DPS Type 3A) — due with the completion certificate",
-      "TEA-approved driving safety course certificate of completion (original court copy)",
+      "TDLR-approved (formerly TEA-approved) driving safety course certificate of completion (original court copy)",
       "Check or money order for the court fee (mail/fax requests)"
     ],
     "requiresNotarizedAffidavit": false,
@@ -4905,7 +4907,7 @@
       "Valid Texas Class 'C' driver's license",
       "Proof of financial responsibility (insurance in your name)",
       "Certified copy of your DPS driver's record",
-      "Uniform certificate of DSC completion from a TEA-approved course"
+      "Uniform certificate of DSC completion from a TDLR-approved (formerly TEA-approved) course"
     ],
     "requiresNotarizedAffidavit": false,
     "requiresType3A": false,
@@ -5234,7 +5236,7 @@
       "Current proof of liability insurance / insurance card",
       "Plea of guilty or no contest",
       "Payment: court costs + $10 administrative fee",
-      "After deferral: TEA-approved driving safety course completion certificate",
+      "After deferral: TDLR-approved (formerly TEA-approved) driving safety course completion certificate",
       "After deferral: certified copy of driving record from Texas DPS"
     ],
     "requiresNotarizedAffidavit": true,
@@ -5850,7 +5852,7 @@
     "requiredDocs": [
       "Driving Safety Course Request (court form / sworn request)",
       "Affidavit for a Driving Safety Course (notarized)",
-      "After completion: Driving Safety Course (Court) Certificate of completion from a TEA-approved provider",
+      "After completion: Driving Safety Course (Court) Certificate of completion from a TDLR-approved (formerly TEA-approved) provider",
       "Certified driving record (Type 3A) where required"
     ],
     "requiresNotarizedAffidavit": true,
@@ -6416,7 +6418,7 @@
     "requiredDocs": [
       "Completed Driver's Safety Course request form",
       "Copy of driver record — request Record Type 3A and submit when requesting the Driving Safety Course",
-      "Certificate of course completion (after finishing a TEA-approved driver safety course)"
+      "Certificate of course completion (after finishing a TDLR-approved driver safety course; formerly TEA-approved)"
     ],
     "requiresNotarizedAffidavit": false,
     "requiresType3A": true,
@@ -6586,7 +6588,7 @@
       "Mail"
     ],
     "requiredDocs": [
-      "Texas TEA-approved driving safety course completion certificate",
+      "Texas TDLR-approved (formerly TEA-approved) driving safety course completion certificate",
       "Certified copy of driving record (Type 3A) — typically required by Texas courts",
       "Proof of liability insurance"
     ],
@@ -6987,7 +6989,7 @@
       "Valid Texas Driver's license",
       "Proof of financial responsibility (insurance)",
       "Signed affidavit confirming no DSC for dismissal in the prior 12 months",
-      "After course: Certificate of completion from a TEA-approved course",
+      "After course: Certificate of completion from a TDLR-approved (formerly TEA-approved) course",
       "After course: Certified copy of your DPS driving record ($12.00 fee to DPS)"
     ],
     "requiresNotarizedAffidavit": false,
@@ -7611,7 +7613,7 @@
       "Valid Texas driver's license",
       "Proof of insurance with your name on the policy",
       "Signed and notarized DSC request form/affidavit",
-      "Certificate of completion from a TEA-approved driving safety course (or DPS-approved motorcycle course)",
+      "Certificate of completion from a TDLR-approved (formerly TEA-approved) driving safety course (or DPS-approved motorcycle course)",
       "Certified copy of your Type 3A driving record"
     ],
     "requiresNotarizedAffidavit": true,
@@ -7784,7 +7786,7 @@
       "Valid Texas driver license",
       "Proof of current liability insurance",
       "Certified Type 3A DPS driving record",
-      "Course completion certificate from a TDPS/TEA-approved driver safety course"
+      "Course completion certificate from a TDLR-approved (formerly TEA-approved) driver safety course"
     ],
     "requiresNotarizedAffidavit": false,
     "requiresType3A": true,
@@ -7868,7 +7870,7 @@
       "Mail / fax / email (document return)"
     ],
     "requiredDocs": [
-      "Driving Safety Course completion certificate (TEA-approved course)",
+      "Driving Safety Course completion certificate (TDLR-approved course; formerly TEA-approved)",
       "Certified copy of your driving record from the State (Type 3A); $10.00 by mail or $12.00 online"
     ],
     "requiresNotarizedAffidavit": false,
@@ -8760,7 +8762,7 @@
       "Valid Texas driver license",
       "Proof of current liability insurance",
       "Certified Type 3A driving record from DPS (typically required; confirm with the court)",
-      "Completed driving safety course (DSC) completion certificate from a TEA-approved provider"
+      "Completed driving safety course (DSC) completion certificate from a TDLR-approved (formerly TEA-approved) provider"
     ],
     "requiresNotarizedAffidavit": false,
     "requiresType3A": true,
@@ -8900,7 +8902,7 @@
       "Valid Texas driver license",
       "Proof of current liability insurance",
       "Certified Type 3A driving record from Texas DPS",
-      "Completion certificate from a TDLR/TEA-approved driving safety course"
+      "Completion certificate from a TDLR-approved (formerly TEA-approved) driving safety course"
     ],
     "requiresNotarizedAffidavit": false,
     "requiresType3A": true,
@@ -9017,7 +9019,7 @@
     "requiredDocs": [
       "Valid Texas driver's license",
       "Proof of financial responsibility (vehicle liability insurance)",
-      "Uniform certificate of completion from a TEA-approved driving safety / motorcycle operator's training course",
+      "Uniform certificate of completion from a TDLR-approved (formerly TEA-approved) driving safety / motorcycle operator's training course",
       "Certified copy of driving record (Type 3A) from Texas DPS"
     ],
     "requiresNotarizedAffidavit": false,
@@ -9297,7 +9299,7 @@
       "In person / by mail"
     ],
     "requiredDocs": [
-      "Driving Safety Course completion certificate (court copy) from a TDLR/TEA-approved provider",
+      "Driving Safety Course completion certificate (court copy) from a TDLR-approved (formerly TEA-approved) provider",
       "Certified copy of your Texas driving record (Type 3A) from DPS",
       "Valid Texas driver license",
       "Proof of current liability insurance"
@@ -9384,7 +9386,7 @@
     "requiredDocs": [
       "Valid Texas driver license",
       "Proof of current liability insurance",
-      "TDLR/TEA-approved driving safety course completion certificate",
+      "TDLR-approved (formerly TEA-approved) driving safety course completion certificate",
       "Certified Type 3A driving record from DPS (court may require)"
     ],
     "requiresNotarizedAffidavit": false,
@@ -9974,7 +9976,7 @@
       "Proof of valid Texas driver license",
       "Proof of current Texas liability insurance (on date of offense)",
       "Type 3A Texas DPS certified driving record (obtain at dps.texas.gov)",
-      "Completed DSC/driver safety course certificate from a TEA-approved provider"
+      "Completed DSC/driver safety course certificate from a TDLR-approved (formerly TEA-approved) provider"
     ],
     "requiresNotarizedAffidavit": false,
     "requiresType3A": true,
@@ -10184,7 +10186,7 @@
       "Phone inquiry"
     ],
     "requiredDocs": [
-      "Original or certified copy of TEA-approved DSC completion certificate",
+      "Original or certified copy of TDLR-approved (formerly TEA-approved) DSC completion certificate",
       "Copy of Texas driving record (obtained from DPS) dated after citation date",
       "Proof of valid Texas liability insurance on date of offense",
       "Court-imposed DSC fee (paid in person or by mail — not accepted on online portal)"
@@ -11766,7 +11768,7 @@
       "Valid Texas Driver's License or ID",
       "Proof of financial responsibility (insurance)",
       "Signed affidavit / plea of no contest or guilty (court provides)",
-      "DSC completion certificate (Type 3A, from TEA-approved provider)",
+      "DSC completion certificate (Type 3A, from TDLR-approved provider; formerly TEA-approved)",
       "Certified copy of driving record from Texas DPS"
     ],
     "requiresNotarizedAffidavit": false,
@@ -12445,7 +12447,7 @@
       "Photocopy of valid Texas driver's license (correct address must be listed)",
       "Court costs paid in full by money order or cashier's check (no personal checks)",
       "After approval: certified Texas DPS driver's license record (Type 3A, order at txapps.texas.gov/tolapp/txldrcdr/TXDPSLicenseeManager) — due within 90 days of request",
-      "After approval: original signed Court Copy of TEA-approved DSC completion certificate showing 'Thorndale Municipal Court' — due within 90 days of request date",
+      "After approval: original signed Court Copy of TDLR-approved (formerly TEA-approved) DSC completion certificate showing 'Thorndale Municipal Court' — due within 90 days of request date",
       "After approval: proof of current auto insurance — due within 90 days"
     ],
     "requiresNotarizedAffidavit": false,
@@ -12716,7 +12718,7 @@
     ],
     "requiredDocs": [
       "Texas DPS Type 3A certified driving record",
-      "TDLR court copy certificate of completion (TEA-approved DSC)",
+      "TDLR court copy certificate of completion (TDLR-approved DSC; formerly TEA-approved)",
       "Proof of current auto insurance"
     ],
     "requiresNotarizedAffidavit": false,
@@ -14217,7 +14219,7 @@
     "requiredDocs": [
       "Proof of financial responsibility (valid auto insurance)",
       "Valid Texas driver's license or permit (active military may use any state license)",
-      "Completed TEA-approved defensive driving course certificate (submitted upon completion)",
+      "Completed TDLR-approved (formerly TEA-approved) defensive driving course certificate (submitted upon completion)",
       "Certified Texas DPS Type 3A driving record showing no defensive driving course in the preceding 12 months (submitted upon completion)"
     ],
     "requiresNotarizedAffidavit": false,
@@ -14273,7 +14275,7 @@
       "Valid Texas driver's license or permit (or military proof of active duty / dependent status)",
       "Proof of financial responsibility / automobile liability insurance",
       "Payment of court costs",
-      "Within 90 days: uniform certificate of DSC course completion (TEA-approved course)",
+      "Within 90 days: uniform certificate of DSC course completion (TDLR-approved course; formerly TEA-approved)",
       "Within 90 days: signed affidavit that no DSC was taken or completed in the 12 months preceding the offense date",
       "Within 90 days: certified Texas DPS driving record (Type 3A)"
     ],
@@ -16635,7 +16637,7 @@
       null
     ],
     "requiredDocs": [
-      "Uniform certificate of completion from a TEA-approved driver safety course",
+      "Uniform certificate of completion from a TDLR-approved (formerly TEA-approved) driver safety course",
       "Texas DPS driving record showing no DSC completion within the prior 12 months",
       "Affidavit stating you were not enrolled in another DSC at time of request and had not completed one in the preceding 12 months",
       "Proof of current liability insurance"
@@ -17396,7 +17398,7 @@
     "requiredDocs": [
       "Copy of valid Texas Driver's License",
       "Proof of financial responsibility (valid Texas auto liability insurance in effect at time of offense)",
-      "Uniform certificate of course completion from a TEA-approved driving safety course",
+      "Uniform certificate of course completion from a TDLR-approved (formerly TEA-approved) driving safety course",
       "Certified copy of driving record from Texas DPS (due within 90-day completion window)"
     ],
     "requiresNotarizedAffidavit": false,
@@ -17431,7 +17433,7 @@
     ],
     "requiredDocs": [
       "DSC request form (submitted before appearance date)",
-      "Certificate of completion from TEA-approved driver safety course",
+      "Certificate of completion from TDLR-approved (formerly TEA-approved) driver safety course",
       "DPS Type 3A certified driving record ($12)"
     ],
     "requiresNotarizedAffidavit": false,
@@ -17448,7 +17450,7 @@
     "requiredDocs": [
       "Valid Texas Driver's License copy",
       "Proof of financial responsibility (insurance card/policy effective at time of offense)",
-      "Uniform certificate of course completion from a TEA-approved provider",
+      "Uniform certificate of course completion from a TDLR-approved (formerly TEA-approved) provider",
       "Certified copy of driving record from Texas DPS"
     ],
     "requiresNotarizedAffidavit": false,
@@ -17634,7 +17636,7 @@
       null
     ],
     "requiredDocs": [
-      "DSC certificate of completion (TEA-approved course)",
+      "DSC certificate of completion (TDLR-approved course; formerly TEA-approved)",
       "Copy of current proof of insurance",
       "Certified driving record (Texas DPS)",
       "Court cost payment (confirm amount with court)"
@@ -17872,7 +17874,7 @@
       null
     ],
     "requiredDocs": [
-      "Completed defensive driving course certificate (TEA-approved)",
+      "Completed defensive driving course certificate (TDLR-approved; formerly TEA-approved)",
       "Copy of current auto insurance",
       "Court approval for DSC prior to enrollment"
     ],
@@ -17891,7 +17893,7 @@
     ],
     "requiredDocs": [
       "Signed plea form or Criminal Case Request Form",
-      "TEA-approved driver safety course certificate of completion",
+      "TDLR-approved (formerly TEA-approved) driver safety course certificate of completion",
       "Copy of valid Texas driver license",
       "Proof of insurance (at time of citation)"
     ],
@@ -17966,7 +17968,7 @@
       null
     ],
     "requiredDocs": [
-      "DSC certificate of completion (TEA-approved course)",
+      "DSC certificate of completion (TDLR-approved course; formerly TEA-approved)",
       "Request for driving safety course option (must be approved by judge before enrolling)"
     ],
     "requiresNotarizedAffidavit": false,
@@ -17982,7 +17984,7 @@
       null
     ],
     "requiredDocs": [
-      "TEA-approved driver safety course certificate of completion",
+      "TDLR-approved (formerly TEA-approved) driver safety course certificate of completion",
       "proof of valid Texas driver's license",
       "proof of insurance (if required by court)"
     ],
@@ -18072,7 +18074,7 @@
     "requiredDocs": [
       "Valid Texas driver license or ID",
       "Proof of current Texas liability insurance",
-      "Certificate of Completion from a TEA-approved driver safety course",
+      "Certificate of Completion from a TDLR-approved (formerly TEA-approved) driver safety course",
       "Type 3A certified Texas driving record (not older than 90 days)"
     ],
     "requiresNotarizedAffidavit": false,
@@ -18290,7 +18292,7 @@
       "Copy of citation",
       "Proof of valid Texas driver license",
       "Proof of current liability insurance on date of offense",
-      "TEA-approved driver safety course completion certificate (upon completion)"
+      "TDLR-approved (formerly TEA-approved) driver safety course completion certificate (upon completion)"
     ],
     "requiresNotarizedAffidavit": false,
     "requiresType3A": false,
@@ -18714,7 +18716,7 @@
       null
     ],
     "requiredDocs": [
-      "Completed driver safety course certificate (TEA-approved)",
+      "Completed driver safety course certificate (TDLR-approved; formerly TEA-approved)",
       "Copy of valid Texas driver license",
       "Proof of insurance (if required by citation)"
     ],
@@ -19029,7 +19031,7 @@
       null
     ],
     "requiredDocs": [
-      "Certificate of completion (TEA-approved driver safety course)",
+      "Certificate of completion (TDLR-approved driver safety course; formerly TEA-approved)",
       "Certified Texas driving record"
     ],
     "requiresNotarizedAffidavit": false,
@@ -19466,7 +19468,7 @@
       null
     ],
     "requiredDocs": [
-      "DSC completion certificate (TEA-approved course)",
+      "DSC completion certificate (TDLR-approved course; formerly TEA-approved)",
       "Certified copy of driving record (Type 3A from DPS)"
     ],
     "requiresNotarizedAffidavit": false,
@@ -19729,7 +19731,7 @@
     "requiredDocs": [
       "Driving Safety Request form (available on court website)",
       "DSC Affidavit (available on court website)",
-      "TEA-approved driver safety course certificate of completion",
+      "TDLR-approved (formerly TEA-approved) driver safety course certificate of completion",
       "Proof of Texas liability insurance",
       "Copy of valid Texas driver license"
     ],
@@ -19769,7 +19771,7 @@
       "Copy of valid Texas driver's license (non-commercial)",
       "Proof of vehicle liability insurance (must be listed as driver on policy)",
       "Completed DSC request form with no-contest/guilty plea",
-      "Certificate of completion of TEA-approved driving safety course (within 90 days)",
+      "Certificate of completion of TDLR-approved (formerly TEA-approved) driving safety course (within 90 days)",
       "Certified copy of driving record (version 3A) from Texas DPS — $10 fee"
     ],
     "requiresNotarizedAffidavit": false,
@@ -20250,7 +20252,7 @@
       null
     ],
     "requiredDocs": [
-      "TEA-approved driver safety course certificate of completion",
+      "TDLR-approved (formerly TEA-approved) driver safety course certificate of completion",
       "Certified copy of your Texas driving record"
     ],
     "requiresNotarizedAffidavit": false,
@@ -20863,7 +20865,7 @@
       "proof of current financial responsibility/insurance (applicant must be a listed driver)",
       "copy of driver's license",
       "signed affidavit/Request for Driver's Safety Course confirming no DSC completion in the past 12 months",
-      "after approval: TEA-approved course completion certificate",
+      "after approval: TDLR-approved (formerly TEA-approved) course completion certificate",
       "after approval: certified driving record from Texas DPS ($10 by mail, $12 online)"
     ],
     "requiresNotarizedAffidavit": false,
@@ -20912,7 +20914,7 @@
       null
     ],
     "requiredDocs": [
-      "TEA-approved driver safety course certificate of completion",
+      "TDLR-approved (formerly TEA-approved) driver safety course certificate of completion",
       "Certified copy of your Texas driving record"
     ],
     "requiresNotarizedAffidavit": false,

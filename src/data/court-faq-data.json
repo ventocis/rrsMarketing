@@ -23,7 +23,7 @@
     "feeKnown": false,
     "submissionMethods": [
       "Mail",
-      "Fax",
+      "Online",
       "In-person",
       "In-person (Arraignment)"
     ],
@@ -31,7 +31,8 @@
     "requiredDocs": [
       "Copy of Texas Type 3A Certified Driving Record from the Texas Department of Public Safety",
       "Texas Department of Licensing and Regulation (TDLR) Court Copy Certificate of Completion",
-      "Check or money order for court costs and administrative fees (for initial DSC request)"
+      "Check or money order for court costs and administrative fees (for initial DSC request)",
+      "Copy of your car insurance (submitted with completion documents)"
     ],
     "requiresNotarizedAffidavit": false,
     "requiresType3A": true
@@ -83,18 +84,19 @@
     "submissionMethods": [
       "In-person",
       "Mail",
-      "Online"
+      "Online",
+      "Email"
     ],
-    "emailAccepted": false,
+    "emailAccepted": true,
     "requiredDocs": [
       "Valid Texas Driver's License (or proof of active U.S. military service)",
       "Proof of financial responsibility (auto insurance showing minimum required coverage)",
       "Payment of applicable state costs and administrative DSC fee",
-      "Signed and notarized DSC Affidavit (Request Affidavit stating no DSC taken in prior 12 months)",
+      "Signed Application for Driving Safety / Plea Notification Form (states no DSC taken in prior 12 months)",
       "DSC Certificate of Completion (submitted after course, within court deadline)",
       "Type 3A Texas DPS Driving Record (certified copy, submitted with completion documents)"
     ],
-    "requiresNotarizedAffidavit": true,
+    "requiresNotarizedAffidavit": false,
     "requiresType3A": true
   },
   "lubbock-municipal-lubbock": {
@@ -140,8 +142,8 @@
     "requiresType3A": true
   },
   "dallas-municipal-irving": {
-    "fee": null,
-    "feeKnown": false,
+    "fee": "$144",
+    "feeKnown": true,
     "submissionMethods": [
       "Online",
       "In-person",
@@ -151,13 +153,13 @@
     ],
     "emailAccepted": true,
     "requiredDocs": [
-      "Completed Driving Safety Course Affidavit (Non-School Zone OR School Zone — whichever applies)",
+      "Completed and notarized Driving Safety Course Affidavit (Non-School Zone OR School Zone — whichever applies)",
       "Copy of valid Texas Driver's License",
       "Copy of current vehicle liability insurance (proof of financial responsibility)",
       "Texas DPS Type 3A Driving Record (required upon course completion, submitted within 90-day window)",
       "DSC Certificate of Completion (submitted within 90-day window)"
     ],
-    "requiresNotarizedAffidavit": false,
+    "requiresNotarizedAffidavit": true,
     "requiresType3A": true
   },
   "dallas-municipal-garland": {
@@ -202,8 +204,8 @@
     "requiresType3A": true
   },
   "collin-municipal-mckinney": {
-    "fee": null,
-    "feeKnown": false,
+    "fee": "$144",
+    "feeKnown": true,
     "submissionMethods": [
       "Online",
       "In-person"
@@ -238,13 +240,14 @@
     "requiresType3A": true
   },
   "dallas-municipal-grand-prairie": {
-    "fee": null,
-    "feeKnown": false,
+    "fee": "$144",
+    "feeKnown": true,
     "submissionMethods": [
-      "In-person",
-      "Email"
+      "Online",
+      "Mail",
+      "In-person"
     ],
-    "emailAccepted": true,
+    "emailAccepted": false,
     "requiredDocs": [
       "DSC Certificate of Completion (signed)",
       "Type 3A Texas Driving Record (from TX DPS)",
@@ -293,22 +296,21 @@
     "requiresType3A": true
   },
   "harris-municipal-pasadena": {
-    "fee": null,
-    "feeKnown": false,
+    "fee": "$144",
+    "feeKnown": true,
     "submissionMethods": [
-      "In-person",
-      "Email",
-      "Online"
+      "Mail",
+      "In-person"
     ],
-    "emailAccepted": true,
+    "emailAccepted": false,
     "requiredDocs": [
       "DSC Certificate of Completion (court copy, signed) from a TDLR-approved provider",
       "Certified Type 3A Texas Driving Record from DPS",
       "Valid Texas Driver's License",
       "Current proof of automobile liability insurance",
-      "Notarized affidavit of eligibility (if submitting by mail or email — confirm if required in person)"
+      "Completed application with unsworn declaration (no notarization required)"
     ],
-    "requiresNotarizedAffidavit": true,
+    "requiresNotarizedAffidavit": false,
     "requiresType3A": true
   },
   "dallas-municipal-mesquite": {
@@ -337,9 +339,10 @@
     "submissionMethods": [
       "In-person",
       "Online (payments/search only)",
-      "Mail"
+      "Mail",
+      "Email"
     ],
-    "emailAccepted": false,
+    "emailAccepted": true,
     "requiredDocs": [
       "DSC/Driver Safety Course Certificate of Completion (TDLR-approved course)",
       "Type 3A Certified Driving Record from Texas DPS (obtain at www.texas.gov)",
@@ -355,8 +358,7 @@
     "feeKnown": false,
     "submissionMethods": [
       "Online",
-      "In-person",
-      "Online"
+      "In-person"
     ],
     "emailAccepted": false,
     "requiredDocs": [
@@ -369,17 +371,17 @@
     "requiresType3A": true
   },
   "mclennan-municipal-waco": {
-    "fee": null,
-    "feeKnown": false,
+    "fee": "$144",
+    "feeKnown": true,
     "submissionMethods": [
       "In-person",
       "Mail",
-      "Email"
+      "Online"
     ],
-    "emailAccepted": true,
+    "emailAccepted": false,
     "requiredDocs": [
       "DSC Certificate of Completion (signed; courts required to accept student-printed PDF certificate as of 11/1/2018)",
-      "Certified Type 3A Texas Driving Record (from TX DPS — confirm with court whether required)",
+      "Certified copy of your Texas driving record from the DPS Driver Records Bureau (required; $10 fee by mail)",
       "Valid Texas Driver's License (copy)",
       "Proof of current liability insurance"
     ],

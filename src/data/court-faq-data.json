@@ -502,13 +502,17 @@
     "feeKnown": true,
     "submissionMethods": [
       "Online",
-      "In-person"
+      "In-person",
+      "Mail"
     ],
     "emailAccepted": false,
     "requiredDocs": [
-      "Completed state-approved Driving Safety Course certificate",
-      "Certified copy of Texas driving record (Type 3A) from the Texas Department of Public Safety in Austin",
-      "Driving Record Request Form (available at court or downloadable from cor.net)"
+      "Application for Driving Safety Course (submitted online, by mail, or in person, on or before the appearance date)",
+      "Plea of No Contest or Guilty",
+      "Valid Texas driver's license or permit",
+      "Valid proof of Texas financial responsibility (insurance ID card)",
+      "DSC Certificate of Completion (submitted after course, within 90 days)",
+      "Certified copy of Texas driving record (Type 3A) from the Texas Department of Public Safety (submitted after course)"
     ],
     "requiresNotarizedAffidavit": false,
     "requiresType3A": true
@@ -554,8 +558,8 @@
     "requiresType3A": true
   },
   "collin-municipal-allen": {
-    "fee": null,
-    "feeKnown": false,
+    "fee": "$144",
+    "feeKnown": true,
     "submissionMethods": [
       "Online",
       "In-person",
@@ -564,11 +568,12 @@
     "emailAccepted": false,
     "requiredDocs": [
       "Completed and signed Driving Safety Course Request Form",
+      "Copy of valid Texas driver's license",
+      "Copy of proof of insurance",
       "DSC Certificate of Completion (after course)",
-      "Type 3A Certified Driving Record",
-      "Notarized Affidavit (standard TX requirement — confirm with court)"
+      "Type 3A Certified Driving Record"
     ],
-    "requiresNotarizedAffidavit": true,
+    "requiresNotarizedAffidavit": false,
     "requiresType3A": true
   },
   "galveston-municipal-league-city": {
@@ -576,7 +581,8 @@
     "feeKnown": false,
     "submissionMethods": [
       "Mail",
-      "In-person"
+      "In-person",
+      "Online"
     ],
     "emailAccepted": false,
     "requiredDocs": [
@@ -600,10 +606,11 @@
     ],
     "emailAccepted": false,
     "requiredDocs": [
-      "Original court copy of a Driving Safety Course completion certificate from a TDLR-certified provider — must be signed and must have 'Sugar Land Municipal Court' listed as the court",
-      "Certified (Type 3A) copy of driving record from Texas DPS",
+      "Signed Driving Safety Course Request Form (if requesting online or by mail)",
       "Proof of financial responsibility (insurance with defendant's name on the policy) — required at time of DSC request",
-      "Valid, non-commercial Texas driver's license or permit (or active-duty U.S. military documentation)"
+      "Valid, non-commercial Texas driver's license or permit (or active-duty U.S. military documentation)",
+      "Original court copy of a Driving Safety Course completion certificate from a TDLR-certified provider — must be signed and must have 'Sugar Land Municipal Court' listed as the court (submitted after course, within 90 days)",
+      "Certified (Type 3A) copy of driving record from Texas DPS (submitted after course, together with the certificate)"
     ],
     "requiresNotarizedAffidavit": false,
     "requiresType3A": true
@@ -613,7 +620,8 @@
     "feeKnown": false,
     "submissionMethods": [
       "In-person",
-      "Mail"
+      "Mail",
+      "Online"
     ],
     "emailAccepted": false,
     "requiredDocs": [
@@ -740,7 +748,7 @@
       "Notarized affidavit (on or attached to ticket) stating you have not taken a Defensive Driving course within the 12 months prior to the citation",
       "Proof of completion of defensive driving (DSC Certificate from a state-approved provider)",
       "Certified copy of your driving record from the Texas Department of Public Safety (DPS) — court supplies the form upon DSC request",
-      "Court fee payment of $144.00 (prior to taking course)"
+      "Court fee payment of $144.00 — $169.00 for speeding school zone violations (paid prior to taking course)"
     ],
     "requiresNotarizedAffidavit": true,
     "requiresType3A": false
@@ -1262,8 +1270,8 @@
     "requiresType3A": true
   },
   "galveston-municipal-galveston": {
-    "fee": null,
-    "feeKnown": false,
+    "fee": "$144",
+    "feeKnown": true,
     "submissionMethods": [
       "Online",
       "In-person",
@@ -1274,7 +1282,7 @@
       "Completed and signed DSC Request/Affidavit form (Galveston Municipal Court form — see form_links)",
       "Valid Texas driver's license or permit",
       "Proof of financial responsibility (vehicle liability insurance in defendant's name, per Chapter 601 TRC)",
-      "Payment of court costs (call (409) 765-3740 for exact amount)",
+      "Payment of court costs ($144 standard / $169 school zone for citations issued on or after Jan 1, 2020; cashier's check or money order for mail requests)",
       "After course completion (due by 90th day): Uniform Certificate of Course Completion",
       "After course completion (due by 90th day): Type 3A Certified Complete Driving History from Texas DPS (proving no DSC taken in prior 12 months — fee: $12 from DPS)"
     ],
@@ -1282,8 +1290,8 @@
     "requiresType3A": true
   },
   "galveston-municipal-texas-city": {
-    "fee": null,
-    "feeKnown": false,
+    "fee": "$144",
+    "feeKnown": true,
     "submissionMethods": [
       "In-person",
       "Mail",
@@ -1291,10 +1299,10 @@
     ],
     "emailAccepted": true,
     "requiredDocs": [
-      "DSC Request Form (obtain from court's Forms page)",
+      "DSC Request Form (from the court's Forms page; email requests go to court@texascitytx.gov)",
       "Valid Texas Driver's License",
       "Proof of financial responsibility (vehicle liability insurance with defendant's name on it)",
-      "Payment of court costs",
+      "Payment of court costs ($144 standard / $169 school zone; for email requests, due within 24 hours of court approval)",
       "DSC Certificate of Course Completion (submitted by 90-day deadline after course completion)",
       "Type 3A Driving Record from Texas DPS (standard Texas court requirement)",
       "Notarized Affidavit (standard Texas court requirement — confirm with court)"
@@ -16152,9 +16160,8 @@
     "fee": null,
     "feeKnown": false,
     "submissionMethods": [
-      null,
-      null,
-      null
+      "In-person",
+      "Mail"
     ],
     "requiredDocs": [
       "Signed and notarized DSC affidavit (plea of no contest or guilty)",
@@ -16679,8 +16686,8 @@
     "emailAccepted": false
   },
   "dallas-justice-of-the-peace-precinct-1-place-1": {
-    "fee": null,
-    "feeKnown": false,
+    "fee": "$146",
+    "feeKnown": true,
     "submissionMethods": [
       null,
       null,
@@ -16688,7 +16695,7 @@
     ],
     "requiredDocs": [
       "Completed 'Defendants Plea and Request for DSC' form",
-      "Payment of court costs by cashier's check or money order at time of request (call to confirm the amount)",
+      "Payment of $146 court costs ($171 school zone) at time of request — includes $10 nonrefundable court fee; $2 transaction fee applies (subject to change)",
       "Completion certificate from a TDLR-approved Driving Safety Course",
       "Certified copy of Texas DPS Type 3A driving record (obtained from DPS)"
     ],
@@ -16842,18 +16849,18 @@
     ],
     "requiresNotarizedAffidavit": false,
     "requiresType3A": false,
-    "emailAccepted": true
+    "emailAccepted": false
   },
   "dallas-justice-of-the-peace-precinct-4-place-1": {
-    "fee": null,
-    "feeKnown": false,
+    "fee": "$146",
+    "feeKnown": true,
     "submissionMethods": [
       null
     ],
     "requiredDocs": [
       "Valid Texas driver license or proof of active-duty U.S. military status",
       "Proof of liability insurance (in defendant's name)",
-      "Payment of court costs (contact court for amount) plus $10 nonrefundable DSC reimbursement fee",
+      "Payment of $146 court costs ($171 school zone), including the $10 nonrefundable DSC reimbursement fee (subject to change — confirm with court)",
       "DSC completion certificate (submit within 90 days)",
       "Affidavit of non-completion (no DSC taken in preceding 12 months from offense date)",
       "Certified DPS driving record (Type 3A)"

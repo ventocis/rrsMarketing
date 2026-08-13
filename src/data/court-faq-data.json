@@ -748,7 +748,7 @@
       "Notarized affidavit (on or attached to ticket) stating you have not taken a Defensive Driving course within the 12 months prior to the citation",
       "Proof of completion of defensive driving (DSC Certificate from a state-approved provider)",
       "Certified copy of your driving record from the Texas Department of Public Safety (DPS) — court supplies the form upon DSC request",
-      "Court fee payment of $144.00 (prior to taking course)"
+      "Court fee payment of $144.00 — $169.00 for speeding school zone violations (paid prior to taking course)"
     ],
     "requiresNotarizedAffidavit": true,
     "requiresType3A": false
@@ -1270,8 +1270,8 @@
     "requiresType3A": true
   },
   "galveston-municipal-galveston": {
-    "fee": null,
-    "feeKnown": false,
+    "fee": "$144",
+    "feeKnown": true,
     "submissionMethods": [
       "Online",
       "In-person",
@@ -1282,7 +1282,7 @@
       "Completed and signed DSC Request/Affidavit form (Galveston Municipal Court form — see form_links)",
       "Valid Texas driver's license or permit",
       "Proof of financial responsibility (vehicle liability insurance in defendant's name, per Chapter 601 TRC)",
-      "Payment of court costs (call (409) 765-3740 for exact amount)",
+      "Payment of court costs ($144 standard / $169 school zone for citations issued on or after Jan 1, 2020; cashier's check or money order for mail requests)",
       "After course completion (due by 90th day): Uniform Certificate of Course Completion",
       "After course completion (due by 90th day): Type 3A Certified Complete Driving History from Texas DPS (proving no DSC taken in prior 12 months — fee: $12 from DPS)"
     ],
@@ -1290,8 +1290,8 @@
     "requiresType3A": true
   },
   "galveston-municipal-texas-city": {
-    "fee": null,
-    "feeKnown": false,
+    "fee": "$144",
+    "feeKnown": true,
     "submissionMethods": [
       "In-person",
       "Mail",
@@ -1299,10 +1299,10 @@
     ],
     "emailAccepted": true,
     "requiredDocs": [
-      "DSC Request Form (obtain from court's Forms page)",
+      "DSC Request Form (from the court's Forms page; email requests go to court@texascitytx.gov)",
       "Valid Texas Driver's License",
       "Proof of financial responsibility (vehicle liability insurance with defendant's name on it)",
-      "Payment of court costs",
+      "Payment of court costs ($144 standard / $169 school zone; for email requests, due within 24 hours of court approval)",
       "DSC Certificate of Course Completion (submitted by 90-day deadline after course completion)",
       "Type 3A Driving Record from Texas DPS (standard Texas court requirement)",
       "Notarized Affidavit (standard Texas court requirement — confirm with court)"
@@ -16160,9 +16160,8 @@
     "fee": null,
     "feeKnown": false,
     "submissionMethods": [
-      null,
-      null,
-      null
+      "In-person",
+      "Mail"
     ],
     "requiredDocs": [
       "Signed and notarized DSC affidavit (plea of no contest or guilty)",

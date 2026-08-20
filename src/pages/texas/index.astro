@@ -658,8 +658,8 @@ const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
           </div>
         </div>
 
-        <!-- Testimonial 3 - MW (Trustpilot) -->
-        <div class="bg-surface-muted rounded-[20px] p-8 flex flex-col gap-4 items-start">
+        <!-- Testimonial 3 - MW (Trustpilot) — spans full width; longer review -->
+        <div class="bg-surface-muted rounded-[20px] p-8 flex flex-col gap-4 items-start md:col-span-2">
           <div class="flex gap-1 items-start">
             {[...Array(5)].map((_, i) => (
               <img src="/assets/icons/texas/star-testimonial.svg" alt="" class="w-5 h-5" />
@@ -696,6 +696,27 @@ const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
             <div class="flex flex-col">
               <span class="text-base font-semibold text-text leading-6">Vamsi Raju</span>
               <span class="text-xs text-text-subtle leading-5">Verified via Trustpilot &middot; August 3, 2026</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonial 5 - Colleen Minor (Trustpilot) -->
+        <div class="bg-surface-muted rounded-[20px] p-8 flex flex-col gap-4 items-start">
+          <div class="flex gap-1 items-start">
+            {[...Array(5)].map((_, i) => (
+              <img src="/assets/icons/texas/star-testimonial.svg" alt="" class="w-5 h-5" />
+            ))}
+          </div>
+          <p class="text-lg text-text leading-[28px]">
+            &ldquo;Covered practical everyday &lsquo;real life&rsquo; experiences &mdash; and also a great refresher course for basics.&rdquo;
+          </p>
+          <div class="flex gap-3 items-center pt-2">
+            <div class="bg-info rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0">
+              <span class="text-sm font-semibold text-primary-deep">CM</span>
+            </div>
+            <div class="flex flex-col">
+              <span class="text-base font-semibold text-text leading-6">Colleen Minor</span>
+              <span class="text-xs text-text-subtle leading-5">Verified via Trustpilot &middot; August 15, 2026</span>
             </div>
           </div>
         </div>

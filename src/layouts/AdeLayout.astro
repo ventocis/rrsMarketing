@@ -1,0 +1,288 @@
+---
+import Layout from './Layout.astro';
+import ade from '../data/ade-texas.json';
+
+interface Props {
+  title: string;
+  description?: string;
+  keywords?: string;
+  url?: string;
+  banner?: string;
+}
+
+const {
+  title,
+  description = 'TDLR-approved Texas adult driver education. The six hours Texas requires for a first driver license, for $39.95 flat.',
+  keywords = 'Texas adult drivers ed, adult driver education Texas, ADE-1317, 6 hour drivers ed Texas, Texas drivers ed for adults',
+  url = '/adult-drivers-ed/texas',
+  banner = '$39.95 flat. Certificate included. Nothing added at checkout that isn’t on this page.',
+} = Astro.props;
+
+const enrollUrl = import.meta.env.VITE_ADE_ENROLLMENT_URL || '#';
+const loginUrl = import.meta.env.VITE_LOGIN_URL || '#';
+const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
+const currentYear = new Date().getFullYear();
+
+// 16 TAC 84.503(j)(4) — the DRIVER EDUCATION license number, never CP#1234.
+// Empty until TDLR approves; the route flag must stay off while it is empty.
+const deLicense = ade.provider.deLicenseNumber;
+const licenceLabel = deLicense
+  ? `TDLR Approved · DE License #${deLicense}`
+  : 'TDLR Driver Education Provider · License Pending';
+
+const nav = [
+  { href: '/adult-drivers-ed/texas#who-needs-it', label: 'Do I Need This?' },
+  { href: '/adult-drivers-ed/texas#curriculum', label: "What's Covered" },
+  { href: '/adult-drivers-ed/texas#pricing', label: 'Pricing' },
+  { href: '/adult-drivers-ed/texas#faq', label: 'FAQ' },
+];
+
+// Footer mirrors /texas exactly. The Texas legal set ports across; everything below the
+// divider is what adult driver education adds on top (16 TAC §84.46, §84.503(d)(4), (f), (i), §84.84).
+const supportLinks = [
+  { href: '/adult-drivers-ed/texas/helpcenter', label: 'Help Center' }, // carries the posted instructor + support hours, §84.503(i)
+  { href: contactUrl, label: 'Contact Us' },
+  { href: loginUrl, label: 'Log In' },
+];
+
+const legalLinks = [
+  { href: '/privacy', label: 'Privacy' },
+  { href: '/adult-drivers-ed/texas/terms', label: 'Terms' },
+  { href: '/adult-drivers-ed/texas/refund', label: 'Refund' },
+  { href: '/adult-drivers-ed/texas/accessibility', label: 'Accessibility' },
+];
+
+// ADE-only. Driving safety has no equivalent for these.
+const adeLegalLinks = [
+  { href: '/adult-drivers-ed/texas/make-up-policy', label: 'Make-Up Policy' },
+  { href: '/adult-drivers-ed/texas/final-exam-policy', label: 'Final Examination' },
+  { href: '/adult-drivers-ed/texas/instructor-of-record', label: 'Instructor of Record' },
+  { href: '/adult-drivers-ed/texas/public-interest-notice', label: 'Public Interest Notice' },
+];
+---
+
+<Layout title={title} description={description} keywords={keywords} url={url}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Course',
+      name: 'Texas Adult Driver Education Course (ADE-1317)',
+      description:
+        'TDLR-approved six-hour online adult driver education course for Texas first-time driver license applicants aged 18 and over. Satisfies the highway sign and traffic law portions of the DPS knowledge exam.',
+      url: 'https://roadreadysafety.com/adult-drivers-ed/texas',
+      provider: {
+        '@type': 'Organization',
+        name: 'Road Ready Safety',
+        url: 'https://roadreadysafety.com',
+        logo: 'https://roadreadysafety.com/assets/icons/texas/logo-shield.svg',
+      },
+      courseMode: 'online',
+      educationalCredentialAwarded: 'Texas ADE-1317 Certificate of Completion',
+      timeRequired: 'PT6H',
+      inLanguage: 'en-US',
+      isAccessibleForFree: false,
+      typicalAgeRange: '18-',
+      offers: {
+        '@type': 'Offer',
+        price: ade.course.priceUsd,
+        priceCurrency: 'USD',
+        availability: 'https://schema.org/InStock',
+        url: 'https://roadreadysafety.com/adult-drivers-ed/texas',
+      },
+      hasCourseInstance: {
+        '@type': 'CourseInstance',
+        courseMode: 'online',
+        courseWorkload: 'PT6H',
+        courseSchedule: {
+          '@type': 'Schedule',
+          repeatFrequency: 'P1D',
+          repeatCount: -1,
+        },
+      },
+    })} />
+
+    <!-- Forward the page's own head slot (FAQPage schema, etc.) up into Layout's head. -->
+    <slot name="head" />
+  </Fragment>
+
+  <!-- Announcement banner — no countdown, no promo code. The price is the price. -->
+  <div class="bg-primary-navy text-white text-sm font-semibold text-center py-3 px-4 leading-5">
+    {banner}
+  </div>
+
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-white border-b border-border shadow-[0px_1px_3px_0px_rgba(17,23,34,0.04)]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <a href="/adult-drivers-ed/texas" class="flex items-center gap-2 no-underline flex-shrink-0">
+          <img src="/assets/icons/texas/logo-shield.svg" alt="Road Ready Safety" class="w-9 h-9 flex-shrink-0" />
+          <div class="flex flex-col leading-none">
+            <span class="text-[14px] font-bold text-primary-navy leading-tight">Road Ready</span>
+            <span class="text-[10px] font-medium text-text-body leading-tight">Safety</span>
+          </div>
+        </a>
+
+        <nav class="hidden lg:flex items-center gap-8">
+          {nav.map((item) => (
+            <a href={item.href} class="text-sm font-medium text-text-body hover:text-text no-underline transition-colors">{item.label}</a>
+          ))}
+        </nav>
+
+        <div class="hidden lg:flex items-center gap-3">
+          <a href={loginUrl} class="h-10 px-5 border border-border text-text rounded-xl text-sm font-semibold flex items-center justify-center no-underline hover:bg-surface-muted transition-colors">Log In</a>
+          <a href={enrollUrl} class="h-10 px-5 bg-primary hover:bg-primary-hover text-white rounded-xl text-sm font-semibold flex items-center justify-center no-underline transition-colors shadow-[0px_4px_6px_-1px_rgba(17,23,34,0.1)]">Get My License</a>
+        </div>
+
+        <button
+          id="ade-menu-btn"
+          class="lg:hidden flex items-center justify-center w-10 h-10 rounded-lg border border-border text-text-body hover:bg-surface-muted transition-colors"
+          aria-label="Open menu"
+          aria-expanded="false"
+        >
+          <svg id="ade-icon-open" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 5H17M3 10H17M3 15H17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <svg id="ade-icon-close" class="hidden" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 5L15 15M15 5L5 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Provider identification strip — 16 TAC 84.503(j)(4) -->
+    <div class="bg-surface-muted border-t border-border">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-1.5">
+        <p class="text-[11px] text-text-muted text-center leading-4">
+          {ade.provider.legalName} d/b/a {ade.provider.dba} &middot; {licenceLabel}
+        </p>
+      </div>
+    </div>
+
+    <div id="ade-menu" class="hidden lg:hidden border-t border-border bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex flex-col gap-4">
+        {nav.map((item) => (
+          <a href={item.href} class="text-sm font-medium text-text-body hover:text-text no-underline py-2">{item.label}</a>
+        ))}
+        <hr class="border-border" />
+        <div class="flex flex-col gap-3">
+          <a href={loginUrl} class="h-10 px-5 border border-border text-text rounded-xl text-sm font-semibold flex items-center justify-center no-underline hover:bg-surface-muted transition-colors">Log In</a>
+          <a href={enrollUrl} class="h-10 px-5 bg-primary hover:bg-primary-hover text-white rounded-xl text-sm font-semibold flex items-center justify-center no-underline transition-colors">Get My License</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <slot />
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-surface-dark text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
+
+        <div class="flex flex-col gap-6">
+          <a href="/adult-drivers-ed/texas" class="flex items-center gap-2 no-underline">
+            <img src="/assets/icons/texas/logo-shield.svg" alt="Road Ready Safety" class="w-10 h-10 flex-shrink-0" />
+            <div class="flex flex-col leading-none">
+              <span class="text-[14px] font-bold text-white leading-tight">Road Ready</span>
+              <span class="text-[10px] font-medium text-text-subtle leading-tight">Safety</span>
+            </div>
+          </a>
+          <p class="text-sm text-text-subtle leading-6">
+            The six hours of adult driver education Texas requires before a first driver license — online, self-paced, and priced at one flat number.
+          </p>
+          <a href={`mailto:${ade.provider.supportEmail}`} class="text-sm text-info-border hover:text-white no-underline transition-colors">
+            {ade.provider.supportEmail}
+          </a>
+          <div class="inline-flex items-center gap-2 rounded-full px-3 py-2 w-fit border border-white/15">
+            <img src="/assets/icons/texas/tdlr-badge-footer.svg" alt="" class="w-4 h-4" />
+            <span class="text-xs font-semibold text-info-border">{licenceLabel}</span>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-4">
+          <h3 class="text-sm font-semibold text-white uppercase tracking-wider">Course</h3>
+          <nav class="flex flex-col gap-3">
+            <a href="/adult-drivers-ed/texas" class="text-sm text-text-subtle hover:text-white no-underline transition-colors">Texas Adult Drivers Ed</a>
+            <a href="/adult-drivers-ed/texas#pricing" class="text-sm text-text-subtle hover:text-white no-underline transition-colors">Pricing</a>
+            <a href="/adult-drivers-ed/texas#faq" class="text-sm text-text-subtle hover:text-white no-underline transition-colors">FAQ</a>
+            <a href={enrollUrl} class="text-sm text-text-subtle hover:text-white no-underline transition-colors">Start Course</a>
+          </nav>
+        </div>
+
+        <div class="flex flex-col gap-4">
+          <h3 class="text-sm font-semibold text-white uppercase tracking-wider">Support</h3>
+          <nav class="flex flex-col gap-3">
+            {supportLinks.map((l) => (
+              <a href={l.href} class="text-sm text-text-subtle hover:text-white no-underline transition-colors">{l.label}</a>
+            ))}
+          </nav>
+        </div>
+
+        <div class="flex flex-col gap-4">
+          <h3 class="text-sm font-semibold text-white uppercase tracking-wider">Legal</h3>
+          <nav class="flex flex-col gap-3">
+            {legalLinks.map((l) => (
+              <a href={l.href} class="text-sm text-text-subtle hover:text-white no-underline transition-colors">{l.label}</a>
+            ))}
+            <hr class="border-white/10 my-1" />
+            {adeLegalLinks.map((l) => (
+              <a href={l.href} class="text-sm text-text-subtle hover:text-white no-underline transition-colors">{l.label}</a>
+            ))}
+          </nav>
+        </div>
+
+      </div>
+
+      <div class="border-t border-white/10 mt-12 pt-8 flex flex-col gap-4">
+        <p class="text-xs text-text-muted leading-5 max-w-4xl">
+          Completing this course {ade.exam.claimPhrasing}. It does not satisfy the driving skills test, the vision
+          screening, or any other licensing requirement, and does not entitle any student to a driver license.
+          All remaining licensing steps are between the student and the Texas Department of Public Safety.
+        </p>
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <p class="text-sm text-text-muted">
+            &copy; {currentYear} {ade.provider.legalName} d/b/a {ade.provider.dba}. All rights reserved.
+          </p>
+          <p class="text-xs text-text-muted">
+            {licenceLabel}
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+</Layout>
+
+<script>
+  // Event delegation — one listener on `document` survives full page loads AND
+  // view-transition DOM swaps, so it never needs rebinding. See the Texas layout
+  // for the bug this pattern exists to prevent.
+  if (!(window as any).__rrsAdeMenuDelegated) {
+    (window as any).__rrsAdeMenuDelegated = true;
+
+    function setAdeMenuOpen(open: boolean) {
+      const menu = document.getElementById('ade-menu');
+      const btn = document.getElementById('ade-menu-btn');
+      const iconOpen = document.getElementById('ade-icon-open');
+      const iconClose = document.getElementById('ade-icon-close');
+      if (!menu || !btn) return;
+      menu.classList.toggle('hidden', !open);
+      iconOpen?.classList.toggle('hidden', open);
+      iconClose?.classList.toggle('hidden', !open);
+      btn.setAttribute('aria-expanded', String(open));
+    }
+
+    document.addEventListener('click', (e) => {
+      const target = e.target as Element | null;
+      if (target?.closest('#ade-menu-btn')) {
+        const menu = document.getElementById('ade-menu');
+        setAdeMenuOpen(menu?.classList.contains('hidden') ?? true);
+        return;
+      }
+      if (target?.closest('#ade-menu a')) {
+        setAdeMenuOpen(false);
+      }
+    });
+  }
+</script>

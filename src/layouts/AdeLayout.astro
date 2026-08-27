@@ -30,6 +30,12 @@ const licenceLabel = deLicense
   ? `TDLR Approved · DE License #${deLicense}`
   : 'TDLR Driver Education Provider · License Pending';
 
+// While the DE licence is pending we may not advertise (16 TAC §84.80(e)), so every ADE
+// page is noindex regardless of environment. QA in particular is NOT protected by
+// robots.txt — it serves a permissive one because VITE_ENABLE_ANALYTICS is true there.
+// This lifts by itself once provider.deLicenseNumber is filled in.
+const licencePending = !deLicense;
+
 const nav = [
   { href: '/adult-drivers-ed/texas#who-needs-it', label: 'Do I Need This?' },
   { href: '/adult-drivers-ed/texas#curriculum', label: "What's Covered" },
@@ -61,7 +67,7 @@ const adeLegalLinks = [
 ];
 ---
 
-<Layout title={title} description={description} keywords={keywords} url={url}>
+<Layout title={title} description={description} keywords={keywords} url={url} noindex={licencePending}>
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify({
       '@context': 'https://schema.org',

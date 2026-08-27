@@ -2,6 +2,7 @@ import type { APIRoute } from 'astro';
 import coursesData from '../data/courses.json';
 import blogData from '../data/blog.json';
 import courtsData from '../data/texas-courts.json';
+import adeData from '../data/ade-texas.json';
 
 // Generate sitemap at build time from known static routes
 const siteUrl = (import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com').replace(/\/$/, '');
@@ -108,7 +109,10 @@ const staticRoutes = [
 // Adult Driver Education (ADE-1317) cluster — excluded from the sitemap until the
 // TDLR Driver Education Provider license is approved and VITE_ADE_ROUTES_ENABLED is true.
 // 16 TAC §84.80(e) bars provider-name advertising before approval.
-const adeEnabled = import.meta.env.VITE_ADE_ROUTES_ENABLED === 'true';
+// Listed only when the routes are on AND the DE licence exists. While the licence is
+// pending the pages render noindex, so advertising them in the sitemap would contradict that.
+const adeEnabled =
+  import.meta.env.VITE_ADE_ROUTES_ENABLED === 'true' && Boolean(adeData.provider.deLicenseNumber);
 const adeRoutes = adeEnabled
   ? [
       '/adult-drivers-ed/texas',

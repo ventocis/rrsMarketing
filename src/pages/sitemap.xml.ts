@@ -105,6 +105,24 @@ const staticRoutes = [
   '/new-york/5-hour-pre-licensing',
 ];
 
+// Adult Driver Education (ADE-1317) cluster — excluded from the sitemap until the
+// TDLR Driver Education Provider license is approved and VITE_ADE_ROUTES_ENABLED is true.
+// 16 TAC §84.80(e) bars provider-name advertising before approval.
+const adeEnabled = import.meta.env.VITE_ADE_ROUTES_ENABLED === 'true';
+const adeRoutes = adeEnabled
+  ? [
+      '/adult-drivers-ed/texas',
+      '/adult-drivers-ed/texas/helpcenter',
+      '/adult-drivers-ed/texas/terms',
+      '/adult-drivers-ed/texas/refund',
+      '/adult-drivers-ed/texas/accessibility',
+      '/adult-drivers-ed/texas/make-up-policy',
+      '/adult-drivers-ed/texas/final-exam-policy',
+      '/adult-drivers-ed/texas/instructor-of-record',
+      '/adult-drivers-ed/texas/public-interest-notice',
+    ]
+  : [];
+
 const courseRoutes = (coursesData as Array<{ slug: string }>).map(c => `/courses/${c.slug}`);
 
 const courseRequirementsRoutes = (coursesData as Array<{ slug: string }>).map(c => `/courses/${c.slug}/requirements`);
@@ -134,7 +152,7 @@ for (const state of states) {
 const texasCourtsRoutes = ['/texas/courts'];
 const courtSlugRoutes = ((courtsData as any).courts as Array<{ slug: string }>).map(c => `/texas/courts/${c.slug}`);
 
-const allRoutes = [...staticRoutes, ...courseRoutes, ...courseRequirementsRoutes, ...blogRoutes, ...findRoutes, ...texasCourtsRoutes, ...courtSlugRoutes];
+const allRoutes = [...staticRoutes, ...adeRoutes, ...courseRoutes, ...courseRequirementsRoutes, ...blogRoutes, ...findRoutes, ...texasCourtsRoutes, ...courtSlugRoutes];
 
 const toEntry = (path: string) =>
   `  <url>\n    <loc>${siteUrl}${path}</loc>\n    <changefreq>weekly</changefreq>\n  </url>`;

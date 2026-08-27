@@ -1,0 +1,83 @@
+{
+  "_note": "Single source of truth for Texas Adult Driver Education (ADE-1317) marketing facts. Every number here traces to the Portal Handoff Spec or 16 TAC 84.503. Do not hand-edit values without updating the spec.",
+  "provider": {
+    "legalName": "Road Ready Driver Instruction LLC",
+    "dba": "Road Ready Safety",
+    "deLicenseNumber": "",
+    "deLicenseNumberNote": "16 TAC 84.503(j)(4): provider name + DRIVER EDUCATION license number must show on the site and through registration/payment. This is NOT CP#1234 (that is the driving-safety license and belongs only on /texas). Fill in after TDLR approval; the flag must stay off until then.",
+    "instructorOfRecord": "Jackson Maitner",
+    "instructorLicenseNumber": "11284",
+    "supportEmail": "info@roadreadysafety.com",
+    "instructorHours": "",
+    "supportHours": ""
+  },
+  "course": {
+    "code": "ADE-1317",
+    "name": "Texas Adult Driver Education Course",
+    "instructionMinutes": 330,
+    "courseMinutes": 360,
+    "modules": 9,
+    "sections": 93,
+    "completionDays": 90,
+    "minAge": 18,
+    "requiredAgeBand": "18 through 24",
+    "priceUsd": "39.95"
+  },
+  "exam": {
+    "questions": 40,
+    "signsQuestions": 20,
+    "lawsQuestions": 20,
+    "passPerBank": 14,
+    "passPercent": 70,
+    "attempts": 3,
+    "claimPhrasing": "satisfies the highway sign and traffic law portions of the DPS knowledge exam",
+    "bannedPhrasing": "skip the DPS written test"
+  },
+  "modules": [
+    {
+      "n": 1,
+      "title": "Course Introduction",
+      "blurb": "How the course works and what you get at the end."
+    },
+    {
+      "n": 2,
+      "title": "Your License to Drive",
+      "blurb": "License types, what the DPS wants from you, and the documents to bring."
+    },
+    {
+      "n": 3,
+      "title": "Right-of-Way",
+      "blurb": "Who goes first at intersections, four-way stops, and roundabouts."
+    },
+    {
+      "n": 4,
+      "title": "Traffic Control Devices",
+      "blurb": "Signs, signals, and road markings \u2014 the material the sign half of your exam comes from."
+    },
+    {
+      "n": 5,
+      "title": "Controlling Traffic Flow",
+      "blurb": "Speed, lane changes, passing, merging, turning, and parking."
+    },
+    {
+      "n": 6,
+      "title": "Alcohol and Other Drugs",
+      "blurb": "Texas DWI law, what refusing a test costs you, and how prescriptions fit in."
+    },
+    {
+      "n": 7,
+      "title": "Cooperating with Other Roadway Users",
+      "blurb": "Motorcycles, trucks, cyclists, pedestrians, school buses, and traffic stops."
+    },
+    {
+      "n": 8,
+      "title": "Managing Risk",
+      "blurb": "Distraction, fatigue, bad weather, night driving, and what to do in a crash."
+    },
+    {
+      "n": 9,
+      "title": "Final Assessment",
+      "blurb": "The final exam: 20 highway signs, 20 traffic laws."
+    }
+  ]
+}

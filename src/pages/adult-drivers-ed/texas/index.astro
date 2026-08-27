@@ -1,0 +1,579 @@
+---
+import AdeLayout from '../../../layouts/AdeLayout.astro';
+import ade from '../../../data/ade-texas.json';
+
+const isEnabled = import.meta.env.VITE_ADE_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_ADE_ENROLLMENT_URL || '#';
+const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
+
+const price = ade.course.priceUsd;
+
+const badges = [
+  {
+    icon: '/assets/icons/texas/tdlr-approved-icon.svg',
+    title: 'TDLR-Approved',
+    body: 'The full six hours Texas requires for your first driver license.',
+  },
+  {
+    icon: '/assets/icons/texas/super-easy-icon.svg',
+    title: 'Exam Built In',
+    body: 'Finish the course and you have satisfied the highway sign and traffic law portions of the DPS knowledge exam.',
+  },
+  {
+    icon: '/assets/icons/texas/guarantee-icon.svg',
+    title: 'One Flat Price',
+    body: `$${price}. Certificate included. Nothing added at checkout.`,
+  },
+  {
+    icon: '/assets/icons/texas/mobile-friendly-icon.svg',
+    title: 'Works on Your Phone',
+    body: 'Self-paced and saves as you go. Ten minutes at a time is fine.',
+  },
+];
+
+const included = [
+  'All six hours Texas requires',
+  'The final exam',
+  'Two more attempts if you do not pass the first time',
+  'Your certificate',
+  `${ade.course.completionDays} days to finish, stopping and resuming anytime`,
+  'Unlimited review of anything you have already finished',
+  'A licensed Texas instructor you can reach',
+];
+
+const notCharged = ['Certificate fees', 'Processing fees', 'Faster delivery', 'Exam retakes'];
+
+const audiences = [
+  {
+    tag: 'Under 18',
+    tone: 'muted',
+    heading: 'This is not your course',
+    body: 'Texas requires a different, longer course for drivers under 18. We do not offer it.',
+  },
+  {
+    tag: '18 to 24',
+    tone: 'primary',
+    heading: 'Texas requires this course',
+    body: 'If you are 18 to 24 and getting your first Texas license, the state requires these six hours. You have to finish all of it.',
+  },
+  {
+    tag: '25 and over',
+    tone: 'info',
+    heading: 'Not required. Still worth it.',
+    body: 'Texas does not require the course once you turn 25. People take it anyway because the sign and traffic law exam is part of it.',
+  },
+];
+
+const steps = [
+  {
+    n: 1,
+    title: 'Finish the six hours',
+    body: 'Nine modules, self-paced. Most people finish across two or three sittings.',
+  },
+  {
+    n: 2,
+    title: 'Pass the final exam',
+    body: `${ade.exam.questions} questions — ${ade.exam.signsQuestions} on highway signs, ${ade.exam.lawsQuestions} on traffic laws. Miss it and you get two more tries.`,
+  },
+  {
+    n: 3,
+    title: 'Get your certificate',
+    body: 'A licensed Texas instructor signs off on your record and we email your certificate. Print it — the DPS wants a paper copy.',
+  },
+  {
+    n: 4,
+    title: 'Watch Impact Texas Drivers',
+    body: 'A free one-hour video from the DPS. Everyone getting a first Texas license watches it, at any age. Do it within 90 days of your driving test and bring the printed certificate.',
+  },
+  {
+    n: 5,
+    title: 'Go to the DPS',
+    body: 'Bring your certificates and your documents. You still take the vision screening and the driving test there.',
+  },
+];
+
+const testimonials = [
+  {
+    initials: 'P',
+    name: 'Princess',
+    date: 'May 26, 2026',
+    quote: 'Not difficult to understand. When a problem occurred they replied immediately and helped me sort it out. 5 stars.',
+  },
+  {
+    initials: 'TG',
+    name: 'Tommie Garner',
+    date: 'May 13, 2026',
+    quote: 'Easy to access and informative. I had no problems navigating the system and the customer support services were superb.',
+  },
+  {
+    initials: 'VR',
+    name: 'Vamsi Raju',
+    date: 'August 3, 2026',
+    quote: 'Fantastic service and very user-friendly course. Support was quick to assist me when I needed a course update. Five stars!',
+  },
+  {
+    initials: 'CM',
+    name: 'Colleen Minor',
+    date: 'August 15, 2026',
+    quote: "Covered practical everyday 'real life' experiences — and also a great refresher course for basics.",
+  },
+];
+
+const faqs = [
+  {
+    q: 'Who has to take Texas adult drivers ed?',
+    a: 'Anyone 18 to 24 getting a first Texas driver license has to complete a six-hour approved course. Drivers 25 and over do not have to. Under 18, Texas requires a different course that we do not offer.',
+  },
+  {
+    q: 'Do I still take the written test at the DPS?',
+    a: `Completing this course ${ade.exam.claimPhrasing}. You still take the vision screening and the driving test at the DPS.`,
+  },
+  {
+    q: 'What is in the six hours?',
+    a: 'Nine modules: getting your license, right-of-way, signs and signals, speed and lane use, alcohol and drugs, sharing the road, managing risk, and the final exam.',
+  },
+  {
+    q: 'Do adults need behind-the-wheel hours in Texas?',
+    a: 'No. Texas does not require adults to log practice hours. You still have to pass the driving test, so if you have never driven, get a learner license and practice first.',
+  },
+  {
+    q: 'What if I fail the final exam?',
+    a: 'You get two more attempts, with different questions each time. A third failure means starting over with a new enrollment — that limit is set by the state.',
+  },
+  {
+    q: 'What is Impact Texas Drivers?',
+    a: 'A free one-hour video from the Texas DPS about distracted driving. Everyone getting a first Texas license has to watch it, including drivers 25 and over. It is separate from this course and has its own certificate. Watch it within 90 days of your driving test and print the certificate — the DPS will not accept it on your phone.',
+  },
+  {
+    q: 'How long do I have to finish?',
+    a: `${ade.course.completionDays} days from the day you sign up. Stop whenever you need to and pick up where you left off.`,
+  },
+  {
+    q: 'When do I get my certificate?',
+    a: 'After you pass, a licensed Texas instructor reviews your record and signs your certificate. We email it as soon as that is done.',
+  },
+  {
+    q: `Is it really $${price}?`,
+    a: 'Yes. The certificate is included. No processing fee, no delivery fee, no retake fee, and no upgraded version of the course.',
+  },
+  {
+    q: 'I am 25 or older. Should I take this?',
+    a: 'You do not have to. People over 25 take it because the sign and traffic law exam is part of the course, on their own schedule.',
+  },
+  {
+    q: 'Do I need a learner permit first?',
+    a: 'No. You can take the course before you have any license or permit at all.',
+  },
+  {
+    q: 'Can I do this on my phone?',
+    a: 'Yes. Your progress saves as you go, so ten minutes on a break counts.',
+  },
+  {
+    q: 'Can I get a refund?',
+    a: 'Yes. Full refund if you cancel within three days of signing up, and a partial refund after that based on how much of the course you have not taken.',
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+
+{!isEnabled && <meta http-equiv="refresh" content="0;url=/" />}
+
+{isEnabled && (
+<AdeLayout
+  title={`Texas Adult Drivers Ed Online — 6 Hours, $${price} Flat | Road Ready Safety`}
+  description={`TDLR-approved Texas adult driver education for ages 18 and up. All six hours the state requires, the exam built in, and one flat price of $${price} with the certificate included.`}
+  url="/adult-drivers-ed/texas"
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  </Fragment>
+
+  <!-- ================= HERO ================= -->
+  <section class="bg-gradient-to-b from-info to-white pt-10 pb-16 lg:pt-16 lg:pb-24 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-30 pointer-events-none">
+      <div class="absolute bg-info-border blur-[32px] rounded-full w-64 h-64 left-10 top-[150px]"></div>
+      <div class="absolute bg-[#b9e2fe] blur-[32px] rounded-full w-96 h-96 bottom-20 right-10"></div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="flex flex-col lg:flex-row gap-10 lg:gap-16 items-center justify-center">
+
+        <div class="w-full lg:w-[600px] flex flex-col gap-6 items-center lg:items-start">
+          <div class="inline-flex items-center gap-1.5 bg-primary-deep/10 border border-primary-deep/20 text-primary-deep text-xs font-semibold px-3 py-1.5 rounded-full">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1l1.12 2.27L10 3.64l-2 1.95.47 2.75L6 7.02 3.53 8.34 4 5.59 2 3.64l2.88-.37L6 1z" fill="currentColor"/></svg>
+            TDLR-Approved &middot; Texas {ade.course.code}
+          </div>
+
+          <h1 class="text-[34px] lg:text-[56px] font-bold text-primary-navy leading-[40px] lg:leading-[62px] tracking-[-1.5px] text-center lg:text-left" style="font-family:'Outfit',sans-serif;">
+            Texas Adult Drivers Ed Online &mdash; All 6 Hours for ${price}
+          </h1>
+
+          <p class="text-[17px] lg:text-xl text-text-body leading-[28px] max-w-[600px] text-center lg:text-left">
+            The 6 hours Texas requires for a first driver license, at one flat price with the
+            certificate included. The highway sign and traffic law exam happens right here,
+            inside the course. No classroom, no behind-the-wheel hours.
+          </p>
+
+          <div class="flex flex-col gap-3 pt-2 w-full items-center lg:items-start">
+            <div class="flex flex-col sm:flex-row gap-4 w-full items-center lg:items-start">
+              <a href={enrollUrl} class="bg-primary hover:bg-primary-hover text-white h-[56px] px-[36px] rounded-[16px] shadow-[0px_20px_25px_-5px_rgba(17,23,34,0.10),0px_8px_10px_-6px_rgba(17,23,34,0.05)] text-[18px] font-semibold flex items-center justify-center leading-[28px] no-underline text-center w-full sm:w-auto transition-colors">
+                Get My License &mdash; ${price}
+              </a>
+              <a href="#who-needs-it" class="bg-white border border-border text-text h-[56px] px-[36px] rounded-[16px] shadow-[0px_4px_6px_-1px_rgba(17,23,34,0.07)] text-[18px] font-semibold flex items-center justify-center leading-[28px] no-underline text-center w-full sm:w-auto hover:bg-surface-muted transition-colors">
+                Do I even need this?
+              </a>
+            </div>
+            <p class="text-sm text-text-body pt-1">
+              Self-paced &middot; Stop and resume anytime &middot; {ade.course.completionDays} days to finish
+            </p>
+          </div>
+        </div>
+
+        <!-- Course progress mockup -->
+        <div class="relative w-full lg:w-[420px] hidden lg:flex items-start justify-end">
+          <div class="relative w-full max-w-[260px]">
+            <div class="aspect-[320/675.55] bg-surface-dark rounded-[48px] p-2 shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)]">
+              <div class="bg-white rounded-[40px] h-full overflow-hidden">
+                <div class="bg-surface-muted h-8 flex items-center justify-center">
+                  <div class="bg-surface-dark h-5 w-20 rounded-full"></div>
+                </div>
+                <div class="p-4 space-y-4">
+                  <div class="bg-info rounded-2xl p-4 relative h-[84px]">
+                    <p class="text-primary-deep text-xs font-semibold mb-2">Course Progress</p>
+                    <div class="absolute left-4 right-4 top-10 bg-info-border h-2 rounded-full overflow-hidden">
+                      <div class="bg-info-text h-full w-2/3 rounded-full"></div>
+                    </div>
+                    <p class="absolute left-4 right-4 top-[52px] text-info-text text-xs">6 of 9 modules complete</p>
+                  </div>
+                  <div class="space-y-2">
+                    {ade.modules.slice(0, 4).map((m) => (
+                      <div class="bg-surface-muted rounded-xl p-3 flex gap-3 items-center">
+                        <div class="rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 bg-primary">
+                          <img src="/assets/icons/texas/checkmark-white.svg" alt="" class="w-3 h-3" />
+                        </div>
+                        <span class="text-[11px] text-text-body leading-4 truncate">{m.title}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <a href={enrollUrl} class="w-full bg-primary text-white rounded-xl py-3.5 text-sm font-semibold flex items-center justify-center no-underline">
+                    Continue Module 7
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="absolute bg-white rounded-2xl shadow-[0px_20px_25px_-5px_rgba(17,23,34,0.1)] p-4 left-[-72px] top-28 flex gap-3 items-center">
+              <div class="bg-info rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0">
+                <img src="/assets/icons/texas/check-circle.svg" alt="" class="w-5 h-5" />
+              </div>
+              <div>
+                <p class="text-sm font-semibold text-text leading-5">Exam included</p>
+                <p class="text-xs text-text-body leading-4">Signs + traffic laws</p>
+              </div>
+            </div>
+
+            <div class="absolute bg-white rounded-2xl shadow-[0px_20px_25px_-5px_rgba(17,23,34,0.1)] px-4 py-3 right-[-56px] bottom-24">
+              <p class="text-[22px] font-bold text-primary-navy leading-6">${price}</p>
+              <p class="text-xs text-text-body leading-4">all in</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feature badges -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-16">
+        {badges.map((b) => (
+          <div class="bg-white/70 border border-border rounded-[20px] px-5 py-7 flex flex-col gap-4 items-center text-center">
+            <div class="relative flex items-center justify-center w-[64px] h-[64px] border border-border rounded-2xl bg-white">
+              <img src={b.icon} alt="" class="w-8 h-8" />
+            </div>
+            <h3 class="text-lg font-semibold text-text leading-6" style="font-family:'Outfit',sans-serif;">{b.title}</h3>
+            <p class="text-sm text-text-body leading-5">{b.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PRICING ================= -->
+  <section id="pricing" class="py-16 lg:py-24 bg-white scroll-mt-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col lg:flex-row gap-12 items-start">
+
+        <div class="w-full lg:w-1/2 flex flex-col gap-6">
+          <h2 class="text-[32px] lg:text-[44px] font-bold text-text leading-[1.15] tracking-[-1px]" style="font-family:'Outfit',sans-serif;">
+            One price. Here is everything inside it.
+          </h2>
+          <ul class="flex flex-col gap-3 list-none p-0 m-0">
+            {included.map((item) => (
+              <li class="flex gap-3 items-start">
+                <span class="mt-1 flex-shrink-0 w-5 h-5 rounded-full bg-success-bg flex items-center justify-center">
+                  <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.2l2.2 2.2 4.8-4.8" stroke="#16A34A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                <span class="text-base text-text-body leading-6">{item}</span>
+              </li>
+            ))}
+          </ul>
+
+          <div class="border-t border-border pt-6 mt-2">
+            <p class="text-sm font-bold text-text uppercase tracking-wider mb-3">And what we never charge for</p>
+            <div class="flex flex-wrap gap-2">
+              {notCharged.map((item) => (
+                <span class="inline-flex items-center gap-1.5 bg-surface-muted border border-border text-text-body text-sm px-3 py-1.5 rounded-full">
+                  <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3l6 6M9 3l-6 6" stroke="#64748B" stroke-width="1.6" stroke-linecap="round"/></svg>
+                  {item}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div class="w-full lg:w-1/2 lg:max-w-[440px] lg:ml-auto">
+          <div class="bg-surface-muted border border-border rounded-[24px] p-8 flex flex-col gap-6">
+            <div class="flex flex-col gap-1">
+              <span class="text-sm font-semibold text-text-muted uppercase tracking-wider">Texas Adult Drivers Ed</span>
+              <div class="flex items-baseline gap-2">
+                <span class="text-[56px] font-bold text-primary-navy leading-none" style="font-family:'Outfit',sans-serif;">${price}</span>
+              </div>
+              <span class="text-base text-text-body">Total. Not a deposit, not a starting price.</span>
+            </div>
+
+            <div class="bg-white border border-border rounded-2xl p-4 flex flex-col gap-2">
+              <div class="flex justify-between text-sm"><span class="text-text-body">Course</span><span class="font-semibold text-text">${price}</span></div>
+              <div class="flex justify-between text-sm"><span class="text-text-body">Certificate</span><span class="font-semibold text-success">Included</span></div>
+              <div class="flex justify-between text-sm"><span class="text-text-body">Processing fee</span><span class="font-semibold text-success">$0.00</span></div>
+              <div class="flex justify-between text-sm"><span class="text-text-body">Exam retakes</span><span class="font-semibold text-success">$0.00</span></div>
+              <div class="border-t border-border pt-2 mt-1 flex justify-between text-base">
+                <span class="font-bold text-text">What you pay</span><span class="font-bold text-text">${price}</span>
+              </div>
+            </div>
+
+            <a href={enrollUrl} class="bg-primary hover:bg-primary-hover text-white h-[56px] rounded-[16px] text-[18px] font-semibold flex items-center justify-center no-underline transition-colors shadow-[0px_8px_16px_-6px_rgba(36,84,230,0.5)]">
+              Get My License
+            </a>
+
+            <p class="text-xs text-text-muted leading-5 text-center">
+              Full refund if you cancel within three days of signing up.
+              <a href="/adult-drivers-ed/texas/refund" class="text-primary underline">Refund policy</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= WHO NEEDS IT ================= -->
+  <section id="who-needs-it" class="py-16 lg:py-24 bg-surface-muted scroll-mt-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col gap-4 items-center mb-12 text-center">
+        <h2 class="text-[32px] lg:text-[44px] font-bold text-text leading-[1.15] tracking-[-1px] max-w-3xl" style="font-family:'Outfit',sans-serif;">
+          Do you actually need this course?
+        </h2>
+        <p class="text-lg text-text-body leading-7 max-w-2xl">
+          It depends on your age. Find yourself below.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {audiences.map((a) => (
+          <div class={`rounded-[20px] p-8 flex flex-col gap-4 border ${
+            a.tone === 'primary'
+              ? 'bg-primary-deep border-primary-deep text-white'
+              : a.tone === 'info'
+                ? 'bg-info border-info-border'
+                : 'bg-white border-border'
+          }`}>
+            <span class={`text-xs font-bold uppercase tracking-wider ${a.tone === 'primary' ? 'text-info-border' : 'text-text-muted'}`}>
+              {a.tag}
+            </span>
+            <h3 class={`text-2xl font-bold leading-8 ${a.tone === 'primary' ? 'text-white' : 'text-text'}`} style="font-family:'Outfit',sans-serif;">
+              {a.heading}
+            </h3>
+            <p class={`text-base leading-6 ${a.tone === 'primary' ? 'text-white/85' : 'text-text-body'}`}>
+              {a.body}
+            </p>
+            {a.tone === 'primary' && (
+              <a href={enrollUrl} class="mt-2 bg-white text-primary-deep h-12 px-6 rounded-xl text-base font-semibold flex items-center justify-center no-underline w-fit hover:bg-info transition-colors">
+                Get My License
+              </a>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CURRICULUM ================= -->
+  <section id="curriculum" class="py-16 lg:py-24 bg-white scroll-mt-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col gap-4 items-center mb-12 text-center">
+        <h2 class="text-[32px] lg:text-[44px] font-bold text-text leading-[1.15] tracking-[-1px] max-w-3xl" style="font-family:'Outfit',sans-serif;">
+          What&rsquo;s in the 6-hour course
+        </h2>
+        <p class="text-lg text-text-body leading-7 max-w-2xl">
+          Nine modules. Here is what each one covers.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {ade.modules.map((m) => (
+          <div class="bg-surface-muted border border-border rounded-[20px] p-6 flex flex-col gap-3">
+            <span class="w-9 h-9 rounded-xl bg-info flex items-center justify-center text-sm font-bold text-primary-deep">{m.n}</span>
+            <h3 class="text-lg font-bold text-text leading-6" style="font-family:'Outfit',sans-serif;">{m.title}</h3>
+            <p class="text-sm text-text-body leading-6">{m.blurb}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= STEPS ================= -->
+  <section class="py-16 lg:py-24 bg-gradient-to-b from-surface-muted to-white">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col gap-4 items-center mb-12 text-center">
+        <h2 class="text-[32px] lg:text-[44px] font-bold text-text leading-[1.15] tracking-[-1px]" style="font-family:'Outfit',sans-serif;">
+          How to get your Texas driver license as an adult
+        </h2>
+        <p class="text-lg text-text-body leading-7 max-w-2xl">
+          We handle the first three steps. The last two are at the DPS.
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        {steps.map((s) => (
+          <div class={`rounded-[20px] p-6 lg:p-7 flex gap-5 items-start border ${s.n <= 3 ? 'bg-info/40 border-info-border' : 'bg-white border-border'}`}>
+            <span class={`flex-shrink-0 w-11 h-11 rounded-2xl flex items-center justify-center text-lg font-bold ${s.n <= 3 ? 'bg-primary text-white' : 'bg-surface-muted text-text-muted border border-border'}`}>
+              {s.n}
+            </span>
+            <div class="flex flex-col gap-1.5">
+              <div class="flex flex-wrap items-center gap-2">
+                <h3 class="text-xl font-bold text-text leading-7" style="font-family:'Outfit',sans-serif;">{s.title}</h3>
+                <span class={`text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full ${s.n <= 3 ? 'bg-primary-deep text-white' : 'bg-surface-muted text-text-muted border border-border'}`}>
+                  {s.n <= 3 ? 'With us' : 'At the DPS'}
+                </span>
+              </div>
+              <p class="text-base text-text-body leading-6">{s.body}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SOCIAL PROOF ================= -->
+  <section class="py-16 lg:py-24 bg-surface-muted">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col gap-3 items-center mb-10 text-center">
+        <h2 class="text-[32px] lg:text-[44px] font-bold text-text leading-[1.15] tracking-[-1px]" style="font-family:'Outfit',sans-serif;">
+          What Texans say about our courses
+        </h2>
+        <p class="text-sm text-text-muted leading-6 max-w-2xl">
+          These reviews are from students of our <a href="/texas" class="text-primary underline">Texas defensive driving course</a>. Reviews of the adult drivers ed course will appear here as students finish it.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {testimonials.map((t) => (
+          <div class="bg-white border border-border rounded-[20px] p-8 flex flex-col gap-4 items-start">
+            <div class="flex gap-1">
+              {[...Array(5)].map(() => (
+                <img src="/assets/icons/texas/star-testimonial.svg" alt="" class="w-5 h-5" />
+              ))}
+            </div>
+            <p class="text-lg text-text leading-[28px]">&ldquo;{t.quote}&rdquo;</p>
+            <div class="flex gap-3 items-center pt-2">
+              <div class="bg-info rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0">
+                <span class="text-sm font-semibold text-primary-deep">{t.initials}</span>
+              </div>
+              <div class="flex flex-col">
+                <span class="text-base font-semibold text-text leading-6">{t.name}</span>
+                <span class="text-xs text-text-subtle leading-5">Verified via Trustpilot &middot; {t.date}</span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FAQ ================= -->
+  <section id="faq" class="py-16 lg:py-24 bg-white scroll-mt-24">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col gap-4 items-center mb-10 text-center">
+        <h2 class="text-[32px] lg:text-[44px] font-bold text-text leading-[1.15] tracking-[-1px]" style="font-family:'Outfit',sans-serif;">
+          Questions people actually ask
+        </h2>
+      </div>
+
+      <div class="flex flex-col gap-3">
+        {faqs.map((f, i) => (
+          <details class="group bg-surface-muted border border-border rounded-[16px] overflow-hidden" open={i === 0}>
+            <summary class="cursor-pointer list-none px-6 py-5 flex items-center justify-between gap-4">
+              <h3 class="text-lg font-semibold text-text leading-7">{f.q}</h3>
+              <svg class="flex-shrink-0 w-5 h-5 text-text-muted transition-transform group-open:rotate-45" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+            </summary>
+            <div class="px-6 pb-6 -mt-1">
+              <p class="text-base text-text-body leading-7">{f.a}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+
+      <div class="mt-10 bg-info border border-info-border rounded-[20px] p-8 flex flex-col gap-3 items-center text-center">
+        <h3 class="text-xl font-semibold text-text leading-7" style="font-family:'Outfit',sans-serif;">Still have a question?</h3>
+        <p class="text-base text-text-body leading-6 max-w-xl">Ask us before you pay.</p>
+        <a href={contactUrl} class="mt-2 bg-white border border-border text-text h-12 px-6 rounded-xl text-base font-semibold flex items-center justify-center no-underline hover:bg-surface-muted transition-colors">
+          Contact us
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FINAL CTA ================= -->
+  <section class="py-16 lg:py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-primary-navy rounded-[28px] px-6 py-14 lg:px-16 lg:py-20 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-20 pointer-events-none">
+          <div class="absolute bg-primary blur-[64px] rounded-full w-96 h-96 -left-20 -top-20"></div>
+          <div class="absolute bg-info-text blur-[64px] rounded-full w-96 h-96 -right-20 -bottom-20"></div>
+        </div>
+
+        <div class="relative z-10 flex flex-col gap-6 items-center text-center">
+          <h2 class="text-[32px] lg:text-[46px] font-bold text-white leading-[1.12] tracking-[-1.2px] max-w-3xl" style="font-family:'Outfit',sans-serif;">
+            Six hours. One flat price. Start whenever you want.
+          </h2>
+          <p class="text-lg text-white/80 leading-7 max-w-2xl">
+            Stop whenever you need to and come back to the exact spot you left.
+          </p>
+
+          <a href={enrollUrl} class="bg-white text-primary-navy h-[56px] px-10 rounded-[16px] text-[18px] font-semibold flex items-center justify-center no-underline hover:bg-info transition-colors mt-2">
+            Get My License &mdash; ${price}
+          </a>
+
+          <div class="flex flex-wrap gap-x-6 gap-y-2 justify-center pt-4 text-sm text-white/70">
+            <span>TDLR-approved</span>
+            <span>&middot;</span>
+            <span>Certificate included</span>
+            <span>&middot;</span>
+            <span>{ade.course.completionDays} days to finish</span>
+            <span>&middot;</span>
+            <span>3-day full refund</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</AdeLayout>
+)}

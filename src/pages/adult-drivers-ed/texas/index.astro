@@ -2,7 +2,16 @@
 import AdeLayout from '../../../layouts/AdeLayout.astro';
 import ade from '../../../data/ade-texas.json';
 
-const isEnabled = import.meta.env.VITE_ADE_ROUTES_ENABLED === 'true';
+// 16 TAC §84.80(e) bars provider-name advertising, enrollment and payment before the
+// TDLR Driver Education Provider licence is approved. So production additionally requires
+// provider.deLicenseNumber to be filled in; QA and local previews need only the flag.
+// This lives here rather than in .env.production on purpose: it cannot be undone by an
+// env edit, and it still holds if a developer's local flag leaks into a production build.
+const isProdSite =
+  import.meta.env.VITE_ENABLE_ANALYTICS === 'true' && import.meta.env.VITE_IS_QA !== 'true';
+const isLicensed = Boolean(ade.provider.deLicenseNumber);
+const isEnabled =
+  import.meta.env.VITE_ADE_ROUTES_ENABLED === 'true' && (isLicensed || !isProdSite);
 const enrollUrl = import.meta.env.VITE_ADE_ENROLLMENT_URL || '#';
 const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
 

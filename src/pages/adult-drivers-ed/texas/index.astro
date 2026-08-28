@@ -54,19 +54,22 @@ const notCharged = ['Certificate fees', 'Processing fees', 'Faster delivery', 'E
 
 const audiences = [
   {
-    tag: 'Under 18',
+    age: 'Under 18',
+    status: 'Not yet',
     tone: 'muted',
-    heading: 'This is not your course',
-    body: 'Texas requires a different, longer course for drivers under 18. We do not offer it.',
+    heading: 'Your course is a different one',
+    body: 'Drivers under 18 take a longer course that includes supervised driving hours behind the wheel. This one begins at 18.',
   },
   {
-    tag: '18 to 24',
+    age: '18 to 24',
+    status: 'Required',
     tone: 'primary',
     heading: 'Texas requires this course',
     body: 'If you are 18 to 24 and getting your first Texas license, the state requires these six hours. You have to finish all of it.',
   },
   {
-    tag: '25 and over',
+    age: '25 and over',
+    status: 'Optional',
     tone: 'info',
     heading: 'Not required. Still worth it.',
     body: 'Texas does not require the course once you turn 25. People take it anyway because the sign and traffic law exam is part of it.',
@@ -131,7 +134,7 @@ const testimonials = [
 const faqs = [
   {
     q: 'Who has to take Texas adult drivers ed?',
-    a: 'Anyone 18 to 24 getting a first Texas driver license has to complete a six-hour approved course. Drivers 25 and over do not have to. Under 18, Texas requires a different course that we do not offer.',
+    a: 'Anyone 18 to 24 getting a first Texas driver license has to complete a six-hour approved course. Drivers 25 and over do not have to. Drivers under 18 take a different, longer course that includes supervised driving hours.',
   },
   {
     q: 'Do I still take the written test at the DPS?',
@@ -313,12 +316,33 @@ const faqSchema = {
     </div>
   </section>
 
+  <!-- ================= TRUST BAND ================= -->
+  <section class="border-y border-border bg-surface-muted">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
+      <div class="flex flex-wrap items-center justify-center gap-x-10 gap-y-3">
+        {['TDLR-approved course', 'Certificate included', '3-day full refund', 'Licensed Texas instructor'].map((t) => (
+          <div class="flex items-center gap-2">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <circle cx="8" cy="8" r="8" fill="#16A34A" opacity="0.12"/>
+              <path d="M4.8 8.2l2.1 2.1 4.3-4.4" stroke="#16A34A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="text-sm font-medium text-text-body">{t}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
   <!-- ================= PRICING ================= -->
   <section id="pricing" class="py-16 lg:py-24 bg-white scroll-mt-24">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex flex-col lg:flex-row gap-12 items-start">
 
         <div class="w-full lg:w-1/2 flex flex-col gap-6">
+          <div class="flex items-center gap-2.5">
+            <span class="h-[3px] w-7 rounded-full bg-primary"></span>
+            <span class="text-[11px] font-bold uppercase tracking-[0.16em] text-primary-deep">Pricing</span>
+          </div>
           <h2 class="text-[32px] lg:text-[44px] font-bold text-text leading-[1.15] tracking-[-1px]" style="font-family:'Outfit',sans-serif;">
             One price. Here is everything inside it.
           </h2>
@@ -384,6 +408,11 @@ const faqSchema = {
   <section id="who-needs-it" class="py-16 lg:py-24 bg-surface-muted scroll-mt-24">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex flex-col gap-4 items-center mb-12 text-center">
+        <div class="flex items-center gap-2.5">
+          <span class="h-[3px] w-7 rounded-full bg-primary"></span>
+          <span class="text-[11px] font-bold uppercase tracking-[0.16em] text-primary-deep">Eligibility</span>
+          <span class="h-[3px] w-7 rounded-full bg-primary"></span>
+        </div>
         <h2 class="text-[32px] lg:text-[44px] font-bold text-text leading-[1.15] tracking-[-1px] max-w-3xl" style="font-family:'Outfit',sans-serif;">
           Do you actually need this course?
         </h2>
@@ -392,27 +421,41 @@ const faqSchema = {
         </p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
         {audiences.map((a) => (
-          <div class={`rounded-[20px] p-8 flex flex-col gap-4 border ${
+          <div class={`relative rounded-[24px] p-8 flex flex-col gap-5 transition-transform ${
             a.tone === 'primary'
-              ? 'bg-primary-deep border-primary-deep text-white'
+              ? 'bg-primary-navy ring-1 ring-white/20 shadow-[0_24px_48px_-16px_rgba(2,25,84,0.45)] md:-translate-y-2 md:pb-10'
               : a.tone === 'info'
-                ? 'bg-info border-info-border'
-                : 'bg-white border-border'
+                ? 'bg-info border border-info-border'
+                : 'bg-white border border-border'
           }`}>
-            <span class={`text-xs font-bold uppercase tracking-wider ${a.tone === 'primary' ? 'text-info-border' : 'text-text-muted'}`}>
-              {a.tag}
-            </span>
-            <h3 class={`text-2xl font-bold leading-8 ${a.tone === 'primary' ? 'text-white' : 'text-text'}`} style="font-family:'Outfit',sans-serif;">
+            <div class="flex items-center justify-between gap-3">
+              <span class={`text-[26px] font-bold leading-none ${a.tone === 'primary' ? 'text-white' : 'text-text'}`} style="font-family:'Outfit',sans-serif;">
+                {a.age}
+              </span>
+              <span class={`text-[11px] font-bold uppercase tracking-[0.12em] px-2.5 py-1 rounded-full whitespace-nowrap ${
+                a.tone === 'primary'
+                  ? 'bg-white text-primary-navy'
+                  : a.tone === 'info'
+                    ? 'bg-white text-info-text border border-info-border'
+                    : 'bg-surface-muted text-text-muted border border-border'
+              }`}>
+                {a.status}
+              </span>
+            </div>
+
+            <div class={`h-px w-full ${a.tone === 'primary' ? 'bg-white/20' : 'bg-border'}`}></div>
+
+            <h3 class={`text-[21px] font-bold leading-7 ${a.tone === 'primary' ? 'text-white' : 'text-text'}`} style="font-family:'Outfit',sans-serif;">
               {a.heading}
             </h3>
-            <p class={`text-base leading-6 ${a.tone === 'primary' ? 'text-white/85' : 'text-text-body'}`}>
+            <p class={`text-[16px] leading-[26px] flex-1 ${a.tone === 'primary' ? 'text-white/90' : 'text-text-body'}`}>
               {a.body}
             </p>
             {a.tone === 'primary' && (
-              <a href={enrollUrl} class="mt-2 bg-white text-primary-deep h-12 px-6 rounded-xl text-base font-semibold flex items-center justify-center no-underline w-fit hover:bg-info transition-colors">
-                Get My License
+              <a href={enrollUrl} class="bg-white text-primary-navy h-12 px-6 rounded-xl text-base font-semibold flex items-center justify-center no-underline hover:bg-info transition-colors">
+                Get My License &mdash; ${price}
               </a>
             )}
           </div>
@@ -425,6 +468,11 @@ const faqSchema = {
   <section id="curriculum" class="py-16 lg:py-24 bg-white scroll-mt-24">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex flex-col gap-4 items-center mb-12 text-center">
+        <div class="flex items-center gap-2.5">
+          <span class="h-[3px] w-7 rounded-full bg-primary"></span>
+          <span class="text-[11px] font-bold uppercase tracking-[0.16em] text-primary-deep">Curriculum</span>
+          <span class="h-[3px] w-7 rounded-full bg-primary"></span>
+        </div>
         <h2 class="text-[32px] lg:text-[44px] font-bold text-text leading-[1.15] tracking-[-1px] max-w-3xl" style="font-family:'Outfit',sans-serif;">
           What&rsquo;s in the 6-hour course
         </h2>
@@ -434,13 +482,26 @@ const faqSchema = {
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {ade.modules.map((m) => (
-          <div class="bg-surface-muted border border-border rounded-[20px] p-6 flex flex-col gap-3">
-            <span class="w-9 h-9 rounded-xl bg-info flex items-center justify-center text-sm font-bold text-primary-deep">{m.n}</span>
-            <h3 class="text-lg font-bold text-text leading-6" style="font-family:'Outfit',sans-serif;">{m.title}</h3>
-            <p class="text-sm text-text-body leading-6">{m.blurb}</p>
-          </div>
-        ))}
+        {ade.modules.map((m) => {
+          const isFinal = m.n === ade.modules.length;
+          return (
+            <div class="group relative bg-white border border-border rounded-[20px] pl-7 pr-6 py-6 flex flex-col gap-3 overflow-hidden transition-all duration-200 hover:border-text-subtle hover:shadow-[0_16px_32px_-16px_rgba(17,23,34,0.22)] hover:-translate-y-0.5">
+              <span class={`absolute left-0 inset-y-0 w-[3px] ${isFinal ? 'bg-primary' : 'bg-info-border'}`}></span>
+              <div class="flex items-center gap-3">
+                <span class={`w-10 h-10 rounded-xl flex items-center justify-center text-[15px] font-bold tabular-nums leading-none ${
+                  isFinal ? 'bg-primary text-white' : 'bg-info text-primary-deep'
+                }`} style="font-family:'Outfit',sans-serif;">
+                  {String(m.n).padStart(2, '0')}
+                </span>
+                {isFinal && (
+                  <span class="text-[10px] font-bold uppercase tracking-[0.12em] text-primary-deep bg-info px-2 py-1 rounded-full">Final exam</span>
+                )}
+              </div>
+              <h3 class="text-[17px] font-bold text-text leading-6" style="font-family:'Outfit',sans-serif;">{m.title}</h3>
+              <p class="text-[15px] text-text-body leading-[24px]">{m.blurb}</p>
+            </div>
+          );
+        })}
       </div>
     </div>
   </section>
@@ -449,6 +510,11 @@ const faqSchema = {
   <section class="py-16 lg:py-24 bg-gradient-to-b from-surface-muted to-white">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex flex-col gap-4 items-center mb-12 text-center">
+        <div class="flex items-center gap-2.5">
+          <span class="h-[3px] w-7 rounded-full bg-primary"></span>
+          <span class="text-[11px] font-bold uppercase tracking-[0.16em] text-primary-deep">The process</span>
+          <span class="h-[3px] w-7 rounded-full bg-primary"></span>
+        </div>
         <h2 class="text-[32px] lg:text-[44px] font-bold text-text leading-[1.15] tracking-[-1px]" style="font-family:'Outfit',sans-serif;">
           How to get your Texas driver license as an adult
         </h2>
@@ -482,6 +548,11 @@ const faqSchema = {
   <section class="py-16 lg:py-24 bg-surface-muted">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex flex-col gap-3 items-center mb-10 text-center">
+        <div class="flex items-center gap-2.5">
+          <span class="h-[3px] w-7 rounded-full bg-primary"></span>
+          <span class="text-[11px] font-bold uppercase tracking-[0.16em] text-primary-deep">Reviews</span>
+          <span class="h-[3px] w-7 rounded-full bg-primary"></span>
+        </div>
         <h2 class="text-[32px] lg:text-[44px] font-bold text-text leading-[1.15] tracking-[-1px]" style="font-family:'Outfit',sans-serif;">
           What Texans say about our courses
         </h2>
@@ -518,6 +589,11 @@ const faqSchema = {
   <section id="faq" class="py-16 lg:py-24 bg-white scroll-mt-24">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex flex-col gap-4 items-center mb-10 text-center">
+        <div class="flex items-center gap-2.5">
+          <span class="h-[3px] w-7 rounded-full bg-primary"></span>
+          <span class="text-[11px] font-bold uppercase tracking-[0.16em] text-primary-deep">Questions</span>
+          <span class="h-[3px] w-7 rounded-full bg-primary"></span>
+        </div>
         <h2 class="text-[32px] lg:text-[44px] font-bold text-text leading-[1.15] tracking-[-1px]" style="font-family:'Outfit',sans-serif;">
           Questions people actually ask
         </h2>

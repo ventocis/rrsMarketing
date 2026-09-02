@@ -124,8 +124,8 @@
   ],
   "hero": {
     "eyebrow": "North Dakota · 4 Hours Online",
-    "headline": "Three points off your North Dakota record. Four hours, $24.99, done tonight.",
-    "subhead": "NDDOT lets you take an approved defensive driving course once every twelve months for a three-point reduction, or elect one at court so the points from a small violation never post. Four hours, self-paced, certificate emailed the moment you pass.",
+    "headline": "North Dakota Defensive Driving Course Online",
+    "subhead": "Three points off your record, or elect it at court so a small ticket's points never post. Four hours, self-paced, $24.99 total. Certificate emailed the moment you pass.",
     "ctaLabel": "Start the Course",
     "secondaryCta": {
       "label": "Which option is mine?",
@@ -209,14 +209,13 @@
   "audiences": {
     "eyebrow": "Eligibility",
     "heading": "Is this course for you?",
-    "intro": "Three situations. Find yours.",
+    "intro": "Two things this one course does for a North Dakota driver.",
     "items": [
       {
-        "label": "Points on your record",
+        "label": "If you have points on your record",
         "status": "3-point reduction",
-        "tone": "primary",
-        "heading": "Take three points off",
-        "cta": true,
+        "tone": "info",
+        "heading": "It takes three points off",
         "bullets": [
           "Once every 12 months",
           "Up to 9 points in any 3-year period",
@@ -224,10 +223,10 @@
         ]
       },
       {
-        "label": "Just got a ticket",
+        "label": "If you just got a ticket",
         "status": "In lieu of points",
         "tone": "info",
-        "heading": "Keep new points off entirely",
+        "heading": "It keeps the new points off entirely",
         "bullets": [
           "Elect it at court when you post bond",
           "Violations of 5 points or fewer",
@@ -236,20 +235,32 @@
       },
       {
         "label": "Near suspension",
-        "status": "Read this first",
+        "status": "Note",
         "tone": "muted",
         "heading": "It does not undo a suspension",
         "bullets": [
-          "12 points = suspension, 7 days per point over 11",
-          "The reduction applies after you serve it",
-          "Under 18: license canceled at 6 points"
+          "At 12 points North Dakota suspends the license, 7 days per point over 11, and the reduction applies after you serve it. Under 18, the license is canceled at 6 points."
         ]
       }
     ]
   },
   "curriculum": {
     "heading": "What is in the four hours",
-    "intro": "Eight modules of defensive driving written in plain language, with North Dakota's point system and reporting rules built into the last one."
+    "intro": "Eight short modules of defensive driving in plain language, with North Dakota's point rules built into the last one.",
+    "highlights": [
+      {
+        "v": "4 hours",
+        "l": "Self-paced. Stop and resume any time"
+      },
+      {
+        "v": "Unlimited retakes",
+        "l": "On the final exam, at no charge"
+      },
+      {
+        "v": "Certificate",
+        "l": "Emailed the moment you pass"
+      }
+    ]
   },
   "steps": {
     "heading": "How it works, start to certificate",
@@ -291,33 +302,7 @@
     "body": "Under NDCC 39-06.1-10.1, a driver who elects an approved course in lieu of points must deliver proof of completion to NDDOT within thirty days of the election, or the points are entered. The course is four hours. Do not let the deadline be the reason.",
     "cite": "NDCC 39-06.1-10.1. The three-point reduction under 39-06.1-13 has no deadline."
   },
-  "compare": {
-    "heading": "What North Dakota's approved courses cost",
-    "intro": "NDDOT lists about twenty approved providers. Prices range widely; the certificate and support are where they differ.",
-    "rows": [
-      {
-        "name": "Road Ready Safety",
-        "price": "$24.99",
-        "fees": "None",
-        "certificate": "PDF by email on completion, with NDDOT instructions",
-        "us": true
-      },
-      {
-        "name": "Defensive Drivers Institute",
-        "price": "$18.95",
-        "fees": "None stated",
-        "certificate": "Digital on completion"
-      },
-      {
-        "name": "ND Safety Council (online, 5 hours)",
-        "price": "$47.00 members · $57.00 non-members · $80.00 if court or DOT required",
-        "fees": "None stated",
-        "certificate": "Issued by the council"
-      }
-    ],
-    "footnote": "Prices as shown on each provider's public course page on the date below. Providers change prices; check before you buy.",
-    "verifiedDate": "September 2, 2026"
-  },
+  "compare": null,
   "benefits": [
     {
       "headline": "A three-point reduction, once every twelve months",

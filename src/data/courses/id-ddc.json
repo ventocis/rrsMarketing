@@ -141,8 +141,8 @@
   ],
   "hero": {
     "eyebrow": "Idaho · 6 Hours Online",
-    "headline": "Three points off your Idaho record. Six hours, $24.99, from your phone.",
-    "subhead": "Idaho removes three points from your driving record when you complete an approved defensive driving course, once every three years. Six hours, self-paced, no quizzes, unlimited exam retakes, and the certificate is emailed the moment you pass.",
+    "headline": "Idaho Defensive Driving Course Online",
+    "subhead": "Three points off your Idaho record, once every three years. Six hours, self-paced, no quizzes, $24.99 total. Certificate emailed the moment you pass.",
     "ctaLabel": "Start the Course",
     "secondaryCta": {
       "label": "Is this for me?",
@@ -226,25 +226,24 @@
   "audiences": {
     "eyebrow": "Eligibility",
     "heading": "Is this course for you?",
-    "intro": "Idaho is specific about what this course does. Find your situation.",
+    "intro": "What this course does for an Idaho driver, depending on why you are here.",
     "items": [
       {
-        "label": "Points on your record",
+        "label": "If you have points on your record",
         "status": "3-point reduction",
-        "tone": "primary",
-        "heading": "Take three points off",
-        "cta": true,
+        "tone": "info",
+        "heading": "It takes three points off",
         "bullets": [
           "Once every 3 years",
           "Pay the citation first",
-          "The conviction stays on your record"
+          "You email the certificate to ITD"
         ]
       },
       {
-        "label": "55 and older",
-        "status": "May help with insurance",
+        "label": "If you are 55 or older",
+        "status": "Insurance",
         "tone": "info",
-        "heading": "May lower your premium",
+        "heading": "It may lower your premium",
         "bullets": [
           "Your insurer decides, not the state",
           "Call them before you enroll",
@@ -252,21 +251,33 @@
         ]
       },
       {
-        "label": "Hoping to clear a ticket",
-        "status": "Not in Idaho",
+        "label": "Clearing a ticket",
+        "status": "Note",
         "tone": "muted",
-        "heading": "It does not clear a ticket",
+        "heading": "It does not clear a ticket or reduce a fine",
         "bullets": [
-          "No Idaho course can void a ticket",
-          "The fine is paid, the conviction records",
-          "Talk to the court about the ticket itself"
+          "No Idaho course can void a citation. The fine is paid, the conviction records, then the course takes three points off."
         ]
       }
     ]
   },
   "curriculum": {
     "heading": "What is in the six hours",
-    "intro": "Twelve modules of defensive driving in plain language, each with a minimum time so the six hours add up the way Idaho's rule requires."
+    "intro": "Twelve modules of defensive driving in plain language, each with a minimum time so the six hours add up the way Idaho's rule requires.",
+    "highlights": [
+      {
+        "v": "6 hours",
+        "l": "Self-paced, no deadline"
+      },
+      {
+        "v": "Unlimited retakes",
+        "l": "No quizzes, one final exam"
+      },
+      {
+        "v": "Certificate",
+        "l": "Emailed the moment you pass"
+      }
+    ]
   },
   "steps": {
     "heading": "How it works, start to certificate",
@@ -303,27 +314,7 @@
     ]
   },
   "deadline": null,
-  "compare": {
-    "heading": "What Idaho's approved courses cost",
-    "intro": "A short list of approved providers, and a wide range of prices.",
-    "rows": [
-      {
-        "name": "Road Ready Safety",
-        "price": "$24.99",
-        "fees": "None",
-        "certificate": "PDF by email on completion, with ITD instructions",
-        "us": true
-      },
-      {
-        "name": "AAA Idaho Point Reduction Course",
-        "price": "$35.95 members · $39.95 non-members",
-        "fees": "None stated",
-        "certificate": "Issued by AAA"
-      }
-    ],
-    "footnote": "Prices as shown on each provider's public course page on the date below. Providers change prices; check before you buy.",
-    "verifiedDate": "September 2, 2026"
-  },
+  "compare": null,
   "benefits": [
     {
       "headline": "Three points removed, once every three years",

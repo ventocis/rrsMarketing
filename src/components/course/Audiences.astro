@@ -1,7 +1,8 @@
 ---
 /**
- * "Is this course for you?" — three situations, each a label, a status pill, a one-line
- * headline and three short facts. Built to be read in ten seconds on a phone.
+ * "Is this course for you?" — the course's benefits framed by situation ("If you have…"),
+ * as equal cards with ONE shared button, then a short note for the situation the course does
+ * not help with. Items with tone 'muted' render as the note; everything else is a card.
  */
 import type { CourseData } from '../../data/courses/types';
 import SectionHeading from './SectionHeading.astro';
@@ -14,58 +15,53 @@ interface Props {
 const { course, enrollUrl, id = 'who-needs-it' } = Astro.props;
 const a = course.audiences;
 const price = course.course.priceUsd;
-const cols = a.items.length >= 3 ? 'md:grid-cols-3' : 'md:grid-cols-2';
+const cards = a.items.filter((i) => i.tone !== 'muted');
+const notes = a.items.filter((i) => i.tone === 'muted');
+const cols = cards.length >= 3 ? 'md:grid-cols-3' : 'md:grid-cols-2';
 ---
 
 <section id={id} class="py-16 lg:py-24 bg-surface-muted scroll-mt-24">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
     <SectionHeading eyebrow={a.eyebrow} heading={a.heading} intro={a.intro} />
 
     <div class={`grid grid-cols-1 ${cols} gap-4 lg:gap-6 items-stretch`}>
-      {a.items.map((item) => {
-        const primary = item.tone === 'primary';
-        const info = item.tone === 'info';
-        const textMain = primary ? 'text-white' : 'text-text';
-        const textBody = primary ? 'text-white/85' : 'text-text-body';
-        return (
-          <div class={`relative rounded-[24px] p-6 lg:p-8 flex flex-col gap-4 ${
-            primary
-              ? 'bg-primary-navy ring-1 ring-white/20 shadow-[0_24px_48px_-16px_rgba(2,25,84,0.45)] md:-translate-y-2'
-              : info
-                ? 'bg-info border border-info-border'
-                : 'bg-white border border-border'
-          }`}>
-            <div class="flex items-center justify-between gap-3">
-              <span class={`text-[13px] font-semibold uppercase tracking-[0.08em] ${primary ? 'text-white/70' : 'text-text-muted'}`}>{item.label}</span>
-              <span class={`text-[11px] font-bold uppercase tracking-[0.12em] px-2.5 py-1 rounded-full whitespace-nowrap ${
-                primary ? 'bg-white text-primary-navy' : info ? 'bg-white text-info-text border border-info-border' : 'bg-surface-muted text-text-muted border border-border'
-              }`}>{item.status}</span>
-            </div>
-
-            <h3 class={`text-[22px] lg:text-[24px] font-bold leading-tight ${textMain}`} style="font-family:'Outfit',sans-serif;">{item.heading}</h3>
-
-            {item.bullets && (
-              <ul class="flex flex-col gap-2 list-none p-0 m-0 flex-1">
-                {item.bullets.map((b) => (
-                  <li class={`flex gap-2.5 items-start text-[15px] leading-6 ${textBody}`}>
-                    <svg class={`mt-[7px] flex-shrink-0 ${primary ? 'text-info-border' : 'text-primary'}`} width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><circle cx="5" cy="5" r="4" fill="currentColor"/></svg>
-                    <span>{b}</span>
-                  </li>
-                ))}
-              </ul>
-            )}
-            {!item.bullets && item.body && <p class={`text-[15px] leading-6 flex-1 ${textBody}`}>{item.body}</p>}
-
-            {item.cta && (
-              <a href={enrollUrl} class={`mt-1 h-12 px-6 rounded-xl text-base font-semibold flex items-center justify-center no-underline transition-colors ${
-                primary ? 'bg-white text-primary-navy hover:bg-info' : 'bg-primary text-white hover:bg-primary-hover'
-              }`}>
-                {course.hero.ctaLabel} &mdash; ${price}
-              </a>
-            )}
+      {cards.map((item) => (
+        <div class="bg-white border border-border rounded-[24px] p-6 lg:p-8 flex flex-col gap-4 shadow-[0_12px_32px_-20px_rgba(2,25,84,0.35)]">
+          <div class="flex items-start justify-between gap-3">
+            <span class="text-[15px] font-semibold text-primary-deep leading-6">{item.label}</span>
+            <span class="text-[11px] font-bold uppercase tracking-[0.12em] px-2.5 py-1 rounded-full whitespace-nowrap bg-info text-info-text border border-info-border">{item.status}</span>
           </div>
-        );
-      })}
+          <h3 class="text-[22px] lg:text-[26px] font-bold leading-tight text-text" style="font-family:'Outfit',sans-serif;">{item.heading}</h3>
+          {item.bullets && (
+            <ul class="flex flex-col gap-2 list-none p-0 m-0 flex-1">
+              {item.bullets.map((b) => (
+                <li class="flex gap-2.5 items-start text-[15px] leading-6 text-text-body">
+                  <svg class="mt-[5px] flex-shrink-0 text-success" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="8" fill="currentColor" opacity="0.14"/><path d="M4.8 8.2l2.1 2.1 4.3-4.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span>{b}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      ))}
     </div>
+
+    <div class="flex flex-col items-center gap-3 mt-8">
+      <a href={enrollUrl} class="bg-primary hover:bg-primary-hover text-white h-[56px] px-10 rounded-[16px] text-[18px] font-semibold flex items-center justify-center no-underline transition-colors shadow-[0px_8px_16px_-6px_rgba(36,84,230,0.5)] w-full sm:w-auto">
+        {course.hero.ctaLabel} &mdash; ${price}
+      </a>
+      <span class="text-sm text-text-muted">Same course either way. {course.pricing.refundNote}</span>
+    </div>
+
+    {notes.length > 0 && (
+      <div class="mt-8 border-t border-border pt-6 flex flex-col gap-3">
+        {notes.map((n) => (
+          <p class="flex gap-2.5 items-start text-sm text-text-body leading-6 max-w-3xl mx-auto m-0">
+            <svg class="mt-1 flex-shrink-0 text-text-muted" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M8 7v4M8 5h.01" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <span><strong class="text-text">{n.heading}.</strong> {n.bullets ? n.bullets.join(' ') : n.body}</span>
+          </p>
+        ))}
+      </div>
+    )}
   </div>
 </section>

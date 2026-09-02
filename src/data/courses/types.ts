@@ -152,7 +152,7 @@ export interface CourseData {
     intro: string;
     items: Audience[];
   };
-  curriculum: { heading: string; intro: string };
+  curriculum: { heading: string; intro: string; highlights: { v: string; l: string }[] };
   steps: {
     heading: string;
     intro: string;

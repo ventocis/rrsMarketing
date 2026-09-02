@@ -1,8 +1,8 @@
 ---
 /**
- * Curriculum — a compact summary strip (hours, modules, checks, exam) with the full module
- * list collapsed behind "See every module". Nobody buys on module titles; they buy on the
- * hours and the exam rules, so those are what show by default.
+ * Curriculum — four benefit tiles (approval status, then the course's own highlights) with the
+ * module list collapsed behind "See every module". Module counts and question counts are
+ * not selling points; hours, retakes, the certificate and who approved it are.
  */
 import type { CourseData } from '../../data/courses/types';
 import SectionHeading from './SectionHeading.astro';
@@ -10,31 +10,28 @@ import SectionHeading from './SectionHeading.astro';
 interface Props { course: CourseData; id?: string; open?: boolean }
 const { course, id = 'curriculum', open = false } = Astro.props;
 const modules = course.course.modules;
-const content = modules.filter((m) => !m.isFinal);
-const ex = course.exam;
-const kc = course.course.knowledgeChecks;
+const approved = Boolean(course.provider.approvalNumber);
 
-const stats = [
-  { v: `${course.course.hours} hr`, l: 'of instruction' },
-  { v: `${content.length}`, l: 'modules' },
-  { v: kc ? `${kc.count}` : 'None', l: kc ? 'knowledge checks' : 'quizzes' },
-  { v: `${ex.questions} Q`, l: `final exam, ${ex.passPercent}% to pass` },
-];
+const tiles = [
+  approved
+    ? { v: `${course.state.agencyShort}-approved`, l: `${course.state.name} accepts this certificate` }
+    : { v: `${course.state.agencyShort} review`, l: 'Approval pending; built to the state standard' },
+  ...course.curriculum.highlights,
+].slice(0, 4);
 ---
 
 <section id={id} class="py-16 lg:py-24 bg-white scroll-mt-24">
   <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-    <SectionHeading eyebrow="Curriculum" heading={course.curriculum.heading} intro={course.curriculum.intro} />
+    <SectionHeading eyebrow="The course" heading={course.curriculum.heading} intro={course.curriculum.intro} />
 
-    <dl class="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4 m-0">
-      {stats.map((s) => (
-        <div class="bg-surface-muted border border-border rounded-2xl p-5 flex flex-col gap-1">
-          <dt class="sr-only">{s.l}</dt>
-          <dd class="m-0 text-[26px] font-bold text-primary-navy leading-none tabular-nums" style="font-family:'Outfit',sans-serif;">{s.v}</dd>
-          <dd class="m-0 text-sm text-text-body leading-5">{s.l}</dd>
-        </div>
+    <ul class="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4 list-none p-0 m-0">
+      {tiles.map((t) => (
+        <li class="bg-surface-muted border border-border rounded-2xl p-5 flex flex-col gap-1">
+          <span class="text-[22px] lg:text-[24px] font-bold text-primary-navy leading-tight" style="font-family:'Outfit',sans-serif;">{t.v}</span>
+          <span class="text-sm text-text-body leading-5">{t.l}</span>
+        </li>
       ))}
-    </dl>
+    </ul>
 
     <details class="group mt-6 bg-white border border-border rounded-[20px] overflow-hidden" open={open}>
       <summary class="cursor-pointer list-none px-6 py-5 flex items-center justify-between gap-4">

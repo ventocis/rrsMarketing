@@ -11,7 +11,6 @@ import Audiences from '../../components/course/Audiences.astro';
 import Pricing from '../../components/course/Pricing.astro';
 import Curriculum from '../../components/course/Curriculum.astro';
 import Steps from '../../components/course/Steps.astro';
-import CompareTable from '../../components/course/CompareTable.astro';
 import Testimonials from '../../components/course/Testimonials.astro';
 import Faq from '../../components/course/Faq.astro';
 import FinalCta from '../../components/course/FinalCta.astro';
@@ -51,7 +50,6 @@ const faqSchema = {
   {course.deadline && <DeadlineCallout deadline={course.deadline} enrollUrl={enrollUrl} ctaLabel={course.hero.ctaLabel} />}
   <Curriculum course={course} />
   <Steps course={course} />
-  <CompareTable course={course} />
   <Testimonials heading={course.reviewsHeading} />
   <Faq faqs={landingFaqs} contactUrl={contactUrl} moreHref={`${route}/faq`} />
   <FinalCta course={course} enrollUrl={enrollUrl} />

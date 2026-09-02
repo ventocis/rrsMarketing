@@ -141,8 +141,8 @@
   ],
   "hero": {
     "eyebrow": "Missouri · 8-Hour DIP Online",
-    "headline": "Your court said yes to DIP. You have 60 days. Start tonight.",
-    "subhead": "When a Missouri court or the Fine Collection Center authorizes the Driver Improvement Program, the points for your violation are never assessed. Eight hours online, self-paced, $24.99 total, with the certificate and completion form emailed the moment you pass.",
+    "headline": "Missouri Driver Improvement Program Online",
+    "subhead": "The 8-hour DIP course. When your court authorizes it, the points for your ticket are never assessed. Self-paced, $24.99 total, certificate and DOR form emailed the moment you pass. Sixty days from your plea.",
     "ctaLabel": "Start the Course",
     "secondaryCta": {
       "label": "Has my court authorized it?",
@@ -226,47 +226,58 @@
   "audiences": {
     "eyebrow": "Eligibility",
     "heading": "Is this course for you?",
-    "intro": "Missouri's DIP works one way. Find your situation.",
+    "intro": "What this course does for a Missouri driver, depending on where you are with the court.",
     "items": [
       {
-        "label": "Court authorized DIP",
+        "label": "If your court authorized DIP",
         "status": "Points not assessed",
-        "tone": "primary",
-        "heading": "Finish in 60 days, points never post",
-        "cta": true,
+        "tone": "info",
+        "heading": "It keeps the points off your record",
         "bullets": [
-          "60 days from your guilty plea",
+          "Finish within 60 days of your plea",
           "Once every 36 months",
-          "The conviction still records"
+          "We email the certificate and DOR form when you pass"
         ]
       },
       {
-        "label": "Have not asked yet",
-        "status": "Ask the court first",
+        "label": "If you have not asked the court yet",
+        "status": "Ask first",
         "tone": "info",
-        "heading": "Get authorization before you enroll",
+        "heading": "Get the court's OK, then enroll",
         "bullets": [
           "Ask your court or the Fine Collection Center",
           "Only the court can waive the points",
-          "Come back when the answer is yes"
+          "Come back the day the answer is yes"
         ]
       },
       {
-        "label": "Old points already posted",
-        "status": "Read this first",
+        "label": "Old points",
+        "status": "Note",
         "tone": "muted",
-        "heading": "It does not remove old points",
+        "heading": "It does not remove points already on your record",
         "bullets": [
-          "Stops the points from this ticket only",
-          "Old points fall off on their own over 3 years",
-          "A third after year one, half after two, all after three"
+          "DIP stops the points from this ticket only. Older points fall off on their own: a third after one year, half after two, all after three."
         ]
       }
     ]
   },
   "curriculum": {
     "heading": "What is in the eight hours",
-    "intro": "Twelve modules of defensive driving in plain language, meeting the eight-hour standard Missouri sets for every Driver Improvement Program."
+    "intro": "Twelve modules of defensive driving in plain language, meeting the eight-hour standard Missouri sets for every Driver Improvement Program.",
+    "highlights": [
+      {
+        "v": "8 hours",
+        "l": "Self-paced, inside your 60-day window"
+      },
+      {
+        "v": "Unlimited retakes",
+        "l": "No quizzes, one final exam"
+      },
+      {
+        "v": "DOR form",
+        "l": "Emailed with your certificate"
+      }
+    ]
   },
   "steps": {
     "heading": "How it works, start to certificate",
@@ -308,27 +319,7 @@
     "body": "Missouri requires the Driver Improvement Program to be completed within sixty days of the guilty plea or conviction for the points to be waived. The course is eight hours. The paperwork is one form. Sixty days is plenty if you start this week, and not if you start in week eight.",
     "cite": "RSMo 302.302; Missouri Department of Revenue, Tickets and Points."
   },
-  "compare": {
-    "heading": "What Missouri's approved programs cost",
-    "intro": "Missouri DIP courses are cheap across the board. We are not the cheapest, and here is what the difference buys.",
-    "rows": [
-      {
-        "name": "Road Ready Safety",
-        "price": "$24.99",
-        "fees": "None",
-        "certificate": "Certificate and DOR completion form by email on completion, plus phone support",
-        "us": true
-      },
-      {
-        "name": "All Star Driver Education",
-        "price": "$19.99",
-        "fees": "None stated",
-        "certificate": "Digital on completion"
-      }
-    ],
-    "footnote": "Prices as shown on each provider's public course page on the date below. Several providers advertise $10 to $19.95; we list only the ones we could verify. Providers change prices; check before you buy.",
-    "verifiedDate": "September 2, 2026"
-  },
+  "compare": null,
   "benefits": [
     {
       "headline": "Points for the violation are not assessed",

@@ -184,8 +184,8 @@
   ],
   "hero": {
     "eyebrow": "Ohio Adult Remedial · 8 Hours Online",
-    "headline": "Ohio&rsquo;s 8-hour remedial driving course. Online, $69.95, done.",
-    "subhead": "The course Ohio drivers take for a two-point credit, to get a license back after a 12-point suspension, or because a judge said so. All eight hours, the final exam, one retake and your certificate at one price. Nothing is added at checkout.",
+    "headline": "Ohio Remedial Driving Course Online",
+    "subhead": "The 8-hour adult remedial course Ohio drivers take for a two-point credit, to get a license back after a 12-point suspension, or because a judge said so. $69.95 total with the exam, one retake and your certificate included.",
     "ctaLabel": "Start the Course",
     "secondaryCta": {
       "label": "Do I need this?",
@@ -276,14 +276,13 @@
   "audiences": {
     "eyebrow": "Eligibility",
     "heading": "Is this course for you?",
-    "intro": "Three situations. Find yours.",
+    "intro": "Two things this one course does for an Ohio driver.",
     "items": [
       {
-        "label": "2 to 11 points",
+        "label": "If you have 2 to 11 points",
         "status": "Two-point credit",
-        "tone": "primary",
-        "heading": "Get a two-point cushion",
-        "cta": true,
+        "tone": "info",
+        "heading": "It earns you a two-point cushion",
         "bullets": [
           "Once every 3 years, 5 times in your life",
           "Your suspension line moves from 12 points to 14",
@@ -291,10 +290,10 @@
         ]
       },
       {
-        "label": "12 or more points",
+        "label": "If your license was suspended at 12 points",
         "status": "Reinstatement",
         "tone": "info",
-        "heading": "Required to get your license back",
+        "heading": "It is required to get your license back",
         "bullets": [
           "One of the BMV's four reinstatement steps",
           "Take it during the suspension, from home",
@@ -303,20 +302,32 @@
       },
       {
         "label": "Court-ordered",
-        "status": "Judge's order",
+        "status": "Note",
         "tone": "muted",
-        "heading": "Satisfies the order",
+        "heading": "If a judge ordered it, this course satisfies the order",
         "bullets": [
-          "You get a certificate to file with the court",
-          "No point credit, by Ohio law",
-          "We will not tell you otherwise"
+          "You get a certificate to file with the court. Ohio law grants no point credit for a court-ordered completion."
         ]
       }
     ]
   },
   "curriculum": {
     "heading": "What is in the eight hours",
-    "intro": "Twenty modules covering all nineteen topics Ohio requires. At least a quarter of the time is driver attitude and at least a quarter is alcohol and drugs, because Ohio law says so."
+    "intro": "Twenty modules covering all nineteen topics Ohio requires, with a quarter of the time on driver attitude and a quarter on alcohol and drugs, as Ohio law sets.",
+    "highlights": [
+      {
+        "v": "8 hours",
+        "l": "Measured by a visible timer, 30 days to finish"
+      },
+      {
+        "v": "1 retake",
+        "l": "Included on the final exam"
+      },
+      {
+        "v": "Read-aloud",
+        "l": "And captions on every video, included"
+      }
+    ]
   },
   "steps": {
     "heading": "How it works, start to certificate",

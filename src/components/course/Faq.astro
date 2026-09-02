@@ -1,0 +1,49 @@
+---
+import type { Faq } from '../../data/courses/types';
+import SectionHeading from './SectionHeading.astro';
+
+interface Props {
+  faqs: Faq[];
+  contactUrl: string;
+  heading?: string;
+  intro?: string;
+  id?: string;
+  /** Link to the long-form FAQ page, shown under the list. */
+  moreHref?: string;
+}
+const { faqs, contactUrl, heading = 'Questions people actually ask', intro, id = 'faq', moreHref } = Astro.props;
+---
+
+<section id={id} class="py-16 lg:py-24 bg-white scroll-mt-24">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <SectionHeading eyebrow="Questions" heading={heading} intro={intro} />
+
+    <div class="flex flex-col gap-3">
+      {faqs.map((f, i) => (
+        <details class="group bg-surface-muted border border-border rounded-[16px] overflow-hidden" open={i === 0}>
+          <summary class="cursor-pointer list-none px-6 py-5 flex items-center justify-between gap-4">
+            <h3 class="text-lg font-semibold text-text leading-7">{f.q}</h3>
+            <svg class="flex-shrink-0 w-5 h-5 text-text-muted transition-transform group-open:rotate-45 motion-reduce:transition-none" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </summary>
+          <div class="px-6 pb-6 -mt-1">
+            <p class="text-base text-text-body leading-7" set:html={f.a} />
+          </div>
+        </details>
+      ))}
+    </div>
+
+    {moreHref && (
+      <p class="text-center mt-6">
+        <a href={moreHref} class="text-primary font-semibold underline underline-offset-2">See every question we have been asked</a>
+      </p>
+    )}
+
+    <div class="mt-10 bg-info border border-info-border rounded-[20px] p-8 flex flex-col gap-3 items-center text-center">
+      <h3 class="text-xl font-semibold text-text leading-7" style="font-family:'Outfit',sans-serif;">Still have a question?</h3>
+      <p class="text-base text-text-body leading-6 max-w-xl">Ask us before you pay.</p>
+      <a href={contactUrl} class="mt-2 bg-white border border-border text-text h-12 px-6 rounded-xl text-base font-semibold flex items-center justify-center no-underline hover:bg-surface-muted transition-colors">Contact us</a>
+    </div>
+  </div>
+</section>

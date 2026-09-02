@@ -1,0 +1,68 @@
+---
+import CourseLayout from '../../layouts/CourseLayout.astro';
+import PageIntro from '../../components/course/PageIntro.astro';
+import { enabledCourses, stateParam } from '../../data/courses/index';
+import { contactUrl } from '../../lib/courseFlags';
+import type { CourseData } from '../../data/courses/types';
+
+export function getStaticPaths() {
+  return enabledCourses.map((course) => ({ params: { state: stateParam(course) }, props: { course } }));
+}
+
+const { course } = Astro.props as { course: CourseData };
+const route = course.state.route;
+const p = course.provider;
+---
+
+<CourseLayout
+  course={course}
+  title={`Help Center — ${course.course.shortName} | Road Ready Safety`}
+  description={`Step-by-step help for the ${course.course.name}: enrolling, logging in, the timer, the exam, your certificate and what to do with it.`}
+  url={`${route}/helpcenter`}
+>
+  <section class="py-16 lg:py-24 px-4 sm:px-6 lg:px-8 bg-surface-muted">
+    <div class="max-w-4xl mx-auto">
+      <PageIntro chip="Need help?" title="Help Center" subtitle={`Step-by-step guides for the ${course.course.name}, from enrolling to using your certificate.`} />
+
+      <div class="bg-white border border-border rounded-[20px] p-6 lg:p-8 mb-8 grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div class="flex flex-col gap-1">
+          <span class="text-[11px] font-bold uppercase tracking-[0.16em] text-primary-deep">Email</span>
+          <a href={`mailto:${p.supportEmail}`} class="text-base font-semibold text-text no-underline hover:text-primary">{p.supportEmail}</a>
+        </div>
+        <div class="flex flex-col gap-1">
+          <span class="text-[11px] font-bold uppercase tracking-[0.16em] text-primary-deep">Phone</span>
+          <a href={p.supportPhoneHref} class="text-base font-semibold text-text no-underline hover:text-primary">{p.supportPhone}</a>
+        </div>
+        <div class="flex flex-col gap-1">
+          <span class="text-[11px] font-bold uppercase tracking-[0.16em] text-primary-deep">Hours</span>
+          <span class="text-base font-semibold text-text">{p.supportHours || 'Monday to Friday, business hours'}</span>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-3">
+        {course.help.map((item, i) => (
+          <details class="group bg-white border border-border rounded-[16px] overflow-hidden" open={i === 0}>
+            <summary class="cursor-pointer list-none px-6 py-5 flex items-center justify-between gap-4">
+              <h2 class="text-lg font-semibold text-text leading-7 m-0">{item.q}</h2>
+              <svg class="flex-shrink-0 w-5 h-5 text-text-muted transition-transform group-open:rotate-45 motion-reduce:transition-none" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+            </summary>
+            <div class="px-6 pb-6 -mt-1">
+              <ol class="list-decimal pl-5 flex flex-col gap-2 text-base text-text-body leading-7 m-0">
+                {item.steps.map((s) => <li>{s}</li>)}
+              </ol>
+              {item.note && <p class="mt-4 text-sm text-text-body leading-6 bg-info border border-info-border rounded-xl px-4 py-3"><strong class="text-text">Note:</strong> {item.note}</p>}
+            </div>
+          </details>
+        ))}
+      </div>
+
+      <div class="mt-10 bg-info border border-info-border rounded-[20px] p-8 flex flex-col gap-3 items-center text-center">
+        <h2 class="text-xl font-semibold text-text leading-7 m-0" style="font-family:'Outfit',sans-serif;">Still stuck?</h2>
+        <p class="text-base text-text-body leading-6 max-w-xl">Send us the problem and a screenshot if you have one. A person reads it.</p>
+        <a href={contactUrl} class="mt-2 bg-white border border-border text-text h-12 px-6 rounded-xl text-base font-semibold flex items-center justify-center no-underline hover:bg-surface-muted transition-colors">Contact us</a>
+      </div>
+    </div>
+  </section>
+</CourseLayout>

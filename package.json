@@ -14,7 +14,8 @@
     "indexnow:courts": "node scripts/indexnow-submit.mjs courts",
     "indexnow:marketing": "node scripts/indexnow-submit.mjs marketing",
     "indexnow:blog": "node scripts/indexnow-submit.mjs blog",
-    "indexnow:courses": "node scripts/indexnow-submit.mjs courses"
+    "indexnow:courses": "node scripts/indexnow-submit.mjs courses",
+    "check:claims": "node scripts/check-claims.mjs"
   },
   "dependencies": {
     "@astrojs/react": "^3.6.0",
@@ -26,6 +27,7 @@
     "tailwindcss": "^3.4.10"
   },
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.20",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "typescript": "^5.5.4"

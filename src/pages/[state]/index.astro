@@ -1,0 +1,58 @@
+---
+/**
+ * State course landing page. One template, generated once per enabled course
+ * (see src/data/courses/index.ts). Disabled states emit no page at all.
+ */
+import CourseLayout from '../../layouts/CourseLayout.astro';
+import Hero from '../../components/course/Hero.astro';
+import TrustBand from '../../components/course/TrustBand.astro';
+import DeadlineCallout from '../../components/course/DeadlineCallout.astro';
+import Audiences from '../../components/course/Audiences.astro';
+import Pricing from '../../components/course/Pricing.astro';
+import Curriculum from '../../components/course/Curriculum.astro';
+import Steps from '../../components/course/Steps.astro';
+import CompareTable from '../../components/course/CompareTable.astro';
+import Testimonials from '../../components/course/Testimonials.astro';
+import Faq from '../../components/course/Faq.astro';
+import FinalCta from '../../components/course/FinalCta.astro';
+import { enabledCourses, stateParam } from '../../data/courses/index';
+import { enrollUrl as buildEnrollUrl, contactUrl } from '../../lib/courseFlags';
+import type { CourseData } from '../../data/courses/types';
+
+export function getStaticPaths() {
+  return enabledCourses.map((course) => ({ params: { state: stateParam(course) }, props: { course } }));
+}
+
+const { course } = Astro.props as { course: CourseData };
+const enrollUrl = buildEnrollUrl(course);
+const route = course.state.route;
+const landingFaqs = course.faqs.slice(0, 8);
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: landingFaqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+
+<CourseLayout course={course} title={course.seo.title} description={course.seo.description} keywords={course.seo.keywords} url={route}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  </Fragment>
+
+  <Hero course={course} enrollUrl={enrollUrl} />
+  <TrustBand items={course.trustBand} />
+  <Audiences course={course} enrollUrl={enrollUrl} />
+  <Pricing course={course} enrollUrl={enrollUrl} />
+  {course.deadline && <DeadlineCallout deadline={course.deadline} enrollUrl={enrollUrl} ctaLabel={course.hero.ctaLabel} />}
+  <Curriculum course={course} />
+  <Steps course={course} />
+  <CompareTable course={course} />
+  <Testimonials heading={course.reviewsHeading} />
+  <Faq faqs={landingFaqs} contactUrl={contactUrl} moreHref={`${route}/faq`} />
+  <FinalCta course={course} enrollUrl={enrollUrl} />
+</CourseLayout>

@@ -1,0 +1,61 @@
+---
+import type { CourseData } from '../../data/courses/types';
+import SectionHeading from './SectionHeading.astro';
+
+interface Props {
+  course: CourseData;
+  enrollUrl: string;
+  id?: string;
+}
+const { course, enrollUrl, id = 'who-needs-it' } = Astro.props;
+const a = course.audiences;
+const price = course.course.priceUsd;
+const cols = a.items.length >= 3 ? 'md:grid-cols-3' : 'md:grid-cols-2';
+---
+
+<section id={id} class="py-16 lg:py-24 bg-surface-muted scroll-mt-24">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <SectionHeading eyebrow={a.eyebrow} heading={a.heading} intro={a.intro} />
+
+    <div class={`grid grid-cols-1 ${cols} gap-6 items-stretch`}>
+      {a.items.map((item) => (
+        <div class={`relative rounded-[24px] p-8 flex flex-col gap-5 transition-transform ${
+          item.tone === 'primary'
+            ? 'bg-primary-navy ring-1 ring-white/20 shadow-[0_24px_48px_-16px_rgba(2,25,84,0.45)] md:-translate-y-2 md:pb-10'
+            : item.tone === 'info'
+              ? 'bg-info border border-info-border'
+              : 'bg-white border border-border'
+        }`}>
+          <div class="flex items-center justify-between gap-3">
+            <span class={`text-[22px] font-bold leading-tight ${item.tone === 'primary' ? 'text-white' : 'text-text'}`} style="font-family:'Outfit',sans-serif;">
+              {item.label}
+            </span>
+            <span class={`text-[11px] font-bold uppercase tracking-[0.12em] px-2.5 py-1 rounded-full whitespace-nowrap ${
+              item.tone === 'primary'
+                ? 'bg-white text-primary-navy'
+                : item.tone === 'info'
+                  ? 'bg-white text-info-text border border-info-border'
+                  : 'bg-surface-muted text-text-muted border border-border'
+            }`}>
+              {item.status}
+            </span>
+          </div>
+
+          <div class={`h-px w-full ${item.tone === 'primary' ? 'bg-white/20' : 'bg-border'}`}></div>
+
+          <h3 class={`text-[21px] font-bold leading-7 ${item.tone === 'primary' ? 'text-white' : 'text-text'}`} style="font-family:'Outfit',sans-serif;">
+            {item.heading}
+          </h3>
+          <p class={`text-[16px] leading-[26px] flex-1 ${item.tone === 'primary' ? 'text-white/90' : 'text-text-body'}`}>{item.body}</p>
+          {item.cta && (
+            <a href={enrollUrl} class={`h-12 px-6 rounded-xl text-base font-semibold flex items-center justify-center no-underline transition-colors ${
+              item.tone === 'primary' ? 'bg-white text-primary-navy hover:bg-info' : 'bg-primary text-white hover:bg-primary-hover'
+            }`}>
+              {course.hero.ctaLabel} &mdash; ${price}
+            </a>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

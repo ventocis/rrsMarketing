@@ -1,0 +1,32 @@
+---
+import type { CourseData } from '../../data/courses/types';
+import SectionHeading from './SectionHeading.astro';
+
+interface Props { course: CourseData; id?: string }
+const { course, id = 'curriculum' } = Astro.props;
+const modules = course.course.modules;
+---
+
+<section id={id} class="py-16 lg:py-24 bg-white scroll-mt-24">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <SectionHeading eyebrow="Curriculum" heading={course.curriculum.heading} intro={course.curriculum.intro} />
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      {modules.map((m) => (
+        <div class="group relative bg-white border border-border rounded-[20px] pl-7 pr-6 py-6 flex flex-col gap-3 overflow-hidden transition-all duration-200 hover:border-text-subtle hover:shadow-[0_16px_32px_-16px_rgba(17,23,34,0.22)] hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0">
+          <span class={`absolute left-0 inset-y-0 w-[3px] ${m.isFinal ? 'bg-primary' : 'bg-info-border'}`}></span>
+          <div class="flex items-center gap-3">
+            <span class={`w-10 h-10 rounded-xl flex items-center justify-center text-[15px] font-bold tabular-nums leading-none ${m.isFinal ? 'bg-primary text-white' : 'bg-info text-primary-deep'}`} style="font-family:'Outfit',sans-serif;">
+              {String(m.n).padStart(2, '0')}
+            </span>
+            {m.isFinal && (
+              <span class="text-[10px] font-bold uppercase tracking-[0.12em] text-primary-deep bg-info px-2 py-1 rounded-full">Final exam</span>
+            )}
+          </div>
+          <h3 class="text-[17px] font-bold text-text leading-6" style="font-family:'Outfit',sans-serif;">{m.title}</h3>
+          <p class="text-[15px] text-text-body leading-[24px]">{m.blurb}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

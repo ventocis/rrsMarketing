@@ -1,0 +1,17 @@
+---
+/** Header block for sub-pages (legal, help center, FAQ): chip + h1 + subtitle, Texas style. */
+interface Props {
+  chip: string;
+  title: string;
+  subtitle?: string;
+}
+const { chip, title, subtitle } = Astro.props;
+---
+
+<div class="flex flex-col gap-4 items-center mb-12 text-center">
+  <div class="bg-info inline-flex items-center px-4 py-2 rounded-full">
+    <span class="text-sm font-semibold text-info-text leading-5">{chip}</span>
+  </div>
+  <h1 class="text-[36px] lg:text-[44px] font-bold text-text leading-[1.1] tracking-[-0.9px] max-w-3xl" style="font-family:'Outfit',sans-serif;">{title}</h1>
+  {subtitle && <p class="text-base lg:text-lg text-text-body leading-7 max-w-2xl">{subtitle}</p>}
+</div>

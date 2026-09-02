@@ -1,0 +1,29 @@
+---
+/**
+ * Honest-urgency band. Only rendered when the state imposes a real clock (Ohio's 30-day window,
+ * Missouri's 60 days, North Dakota's 30-day in-lieu submission). Never a countdown.
+ */
+interface Props {
+  deadline: { eyebrow: string; heading: string; body: string; cite: string };
+  enrollUrl: string;
+  ctaLabel: string;
+}
+const { deadline, enrollUrl, ctaLabel } = Astro.props;
+---
+
+<section class="py-10 lg:py-14 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="rounded-[24px] border border-accent/40 bg-[#fff7f2] p-7 lg:p-9 flex flex-col lg:flex-row gap-6 lg:items-center">
+      <div class="flex-shrink-0 w-14 h-14 rounded-2xl bg-white border border-accent/40 flex items-center justify-center" aria-hidden="true">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="13" r="8" stroke="#FE915C" stroke-width="1.8"/><path d="M12 9v4l2.5 2M9 3h6" stroke="#FE915C" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </div>
+      <div class="flex-1 flex flex-col gap-1.5">
+        <span class="text-[11px] font-bold uppercase tracking-[0.16em] text-[#b45309]">{deadline.eyebrow}</span>
+        <h2 class="text-[24px] lg:text-[28px] font-bold text-text leading-tight tracking-[-0.5px]" style="font-family:'Outfit',sans-serif;">{deadline.heading}</h2>
+        <p class="text-base text-text-body leading-6 max-w-3xl" set:html={deadline.body} />
+        <p class="text-xs text-text-muted">{deadline.cite}</p>
+      </div>
+      <a href={enrollUrl} class="flex-shrink-0 bg-primary hover:bg-primary-hover text-white h-12 px-6 rounded-xl text-base font-semibold flex items-center justify-center no-underline transition-colors">{ctaLabel}</a>
+    </div>
+  </div>
+</section>

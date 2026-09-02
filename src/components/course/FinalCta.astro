@@ -1,0 +1,36 @@
+---
+import type { CourseData } from '../../data/courses/types';
+
+interface Props { course: CourseData; enrollUrl: string }
+const { course, enrollUrl } = Astro.props;
+const f = course.finalCta;
+---
+
+<section class="py-16 lg:py-24 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="bg-primary-navy rounded-[28px] px-6 py-14 lg:px-16 lg:py-20 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-20 pointer-events-none" aria-hidden="true">
+        <div class="absolute bg-primary blur-[64px] rounded-full w-96 h-96 -left-20 -top-20"></div>
+        <div class="absolute bg-info-text blur-[64px] rounded-full w-96 h-96 -right-20 -bottom-20"></div>
+      </div>
+
+      <div class="relative z-10 flex flex-col gap-6 items-center text-center">
+        <h2 class="text-[32px] lg:text-[46px] font-bold text-white leading-[1.12] tracking-[-1.2px] max-w-3xl" style="font-family:'Outfit',sans-serif;">{f.heading}</h2>
+        <p class="text-lg text-white/80 leading-7 max-w-2xl">{f.body}</p>
+
+        <a href={enrollUrl} class="bg-white text-primary-navy h-[56px] px-10 rounded-[16px] text-[18px] font-semibold flex items-center justify-center no-underline hover:bg-info transition-colors mt-2">
+          {course.hero.ctaLabel} &mdash; ${course.course.priceUsd}
+        </a>
+
+        <ul class="flex flex-wrap gap-x-6 gap-y-2 justify-center pt-4 text-sm text-white/70 list-none p-0 m-0">
+          {f.bullets.map((b, i) => (
+            <Fragment>
+              {i > 0 && <li aria-hidden="true">&middot;</li>}
+              <li>{b}</li>
+            </Fragment>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

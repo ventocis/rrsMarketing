@@ -1,0 +1,159 @@
+---
+/**
+ * Ohio 12-point suspension landing page. The mandatory, highest-intent segment: the query is
+ * currently owned by the BMV and defense attorneys, not by course providers. Answer-first,
+ * every step sourced, one clear next action.
+ *
+ * Gated exactly like the dynamic /ohio pages: nothing renders unless the Ohio course is enabled
+ * (and, in production, approved).
+ */
+import CourseLayout from '../../layouts/CourseLayout.astro';
+import PageIntro from '../../components/course/PageIntro.astro';
+import FinalCta from '../../components/course/FinalCta.astro';
+import Faq from '../../components/course/Faq.astro';
+import ohio from '../../data/courses/oh-bdi.json';
+import { isEnabled, enrollUrl as buildEnrollUrl, contactUrl } from '../../lib/courseFlags';
+import type { CourseData } from '../../data/courses/types';
+
+const course = ohio as CourseData;
+const enabled = isEnabled(course);
+const enrollUrl = buildEnrollUrl(course);
+
+const steps = [
+  {
+    n: 1,
+    title: 'Complete an approved remedial driving course',
+    who: 'With us · do this first',
+    body: 'Eight hours of measured online instruction and a 40-question exam at 75%. You do not need a valid license to take it, so most drivers finish it during the suspension. Ohio gives you 30 days from the moment you start the content, and the exam allows one retake after 24 hours.',
+    cite: 'ORC 4510.038(A); OAC 4501-21',
+    us: true,
+  },
+  {
+    n: 2,
+    title: 'Retake the complete driver license exam',
+    who: 'At the BMV',
+    body: 'Not the course exam. The BMV’s own knowledge test and driving test, the same ones a first-time driver takes. Book it for after the suspension ends. The remedial course covers the same traffic-law material, so take the course first.',
+    cite: 'ORC 4510.038(A)(2); ORC 4507.20',
+    us: false,
+  },
+  {
+    n: 3,
+    title: 'File proof of financial responsibility (SR-22)',
+    who: 'Through your insurer',
+    body: 'An SR-22 is a form your insurer files with the BMV certifying you carry Ohio’s minimum liability coverage. The BMV’s current guidance is one year for suspensions starting after April 9, 2025 and three years for earlier ones. Let it lapse and the suspension can come back.',
+    cite: 'ORC 4510.038(A)(3); Ohio BMV',
+    us: false,
+  },
+  {
+    n: 4,
+    title: 'Pay the reinstatement fee',
+    who: 'At the BMV',
+    body: 'Paid online or in person once the first three are done. The amount is on the BMV’s reinstatement fee schedule and in your suspension notice.',
+    cite: 'Ohio BMV, Reinstatement Fees',
+    us: false,
+  },
+];
+
+const faqs = [
+  { q: 'How long is an Ohio 12-point suspension?', a: 'Six months. The BMV imposes it on any driver who accumulates twelve or more points within a two-year period.' },
+  { q: 'Can I take the remedial course while I am suspended?', a: 'Yes. It is online and does not require a valid license. Finishing it during the suspension means your certificate is ready the day you are eligible to reinstate.' },
+  { q: 'Does the course shorten the suspension?', a: 'No. The six months are served regardless. The course is one of four reinstatement requirements, not a way to reduce the suspension.' },
+  { q: 'Does completing the course as a reinstatement requirement earn the two-point credit?', a: 'No. The two-point credit is a separate program for drivers with at least two but fewer than twelve points. Once you have twelve or more, the course is a requirement, not a credit.' },
+  { q: 'Can I get limited driving privileges during the suspension?', a: 'Sometimes. That is a request to the court in your county, not to the BMV, and it is separate from reinstatement. A court may condition privileges on completing the remedial course.' },
+  { q: 'What happens if I drive during the suspension?', a: 'Driving under a twelve-point suspension is itself a six-point offense under ORC 4510.036 and a criminal charge. Do not.' },
+  { q: 'How much does reinstatement cost in total?', a: 'The course ($69.95 with us), the BMV exam fees, your insurer’s SR-22 filing fee and any premium change, and the BMV reinstatement fee. Only the first is ours; the rest are set by the BMV and your insurer.' },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+const howToSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'How to reinstate an Ohio driver license after a 12-point suspension',
+  description: 'The four requirements Ohio sets for reinstatement after a twelve-point suspension, in the order to complete them.',
+  totalTime: 'P6M',
+  step: steps.map((s) => ({ '@type': 'HowToStep', position: s.n, name: s.title, text: s.body })),
+};
+---
+
+{!enabled && <meta http-equiv="refresh" content="0;url=/" />}
+
+{enabled && (
+<CourseLayout
+  course={course}
+  title="Ohio 12-Point Suspension: How to Get Your License Back | Road Ready Safety"
+  description="Twelve points in two years is a six-month Ohio suspension. Reinstatement takes a remedial driving course, a full exam retake, an SR-22 and a fee. The order to do them in, with sources."
+  keywords="Ohio 12 point suspension, Ohio twelve point suspension reinstatement, Ohio remedial driving course 12 points, Ohio license reinstatement remedial course"
+  url="/ohio/12-point-suspension"
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
+  </Fragment>
+
+  <section class="pt-16 lg:pt-24 pb-10 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-info to-white">
+    <div class="max-w-4xl mx-auto">
+      <PageIntro chip="12-point suspension" title="Twelve points. Six months. Four things to do to get your license back." subtitle="Ohio lists the requirements; nobody lists them in the order that saves you time. The remedial course is the only one you can finish from home, during the suspension, so it comes first." />
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-2">
+        {[
+          { v: '12+', l: 'points in two years triggers it' },
+          { v: '6 mo', l: 'suspension, served in full' },
+          { v: '4', l: 'reinstatement requirements' },
+          { v: '1', l: 'you can do from your couch' },
+        ].map((s) => (
+          <div class="bg-white border border-border rounded-2xl p-5 flex flex-col gap-1">
+            <span class="text-[28px] font-bold text-primary-navy leading-none tabular-nums" style="font-family:'Outfit',sans-serif;">{s.v}</span>
+            <span class="text-sm text-text-body leading-5">{s.l}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 lg:py-20 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-10">
+      <div class="prose prose-base max-w-none">
+        <h2>How you got here</h2>
+        <p>Ohio assigns points to moving-violation convictions under Revised Code 4510.036. Most violations are two points. Speeding more than 30 mph over the limit, reckless operation and driving with a prohibited blood-alcohol level are four. OVI, fleeing an officer, street racing, leaving the scene and driving under a twelve-point suspension are six. The BMV sends a warning letter at six points within a two-year window. Reach twelve in that window and the suspension letter follows.</p>
+        <h2>The four requirements, in the right order</h2>
+      </div>
+
+      <ol class="flex flex-col gap-4 list-none p-0 m-0">
+        {steps.map((s) => (
+          <li class={`rounded-[20px] p-6 lg:p-7 flex gap-5 items-start border ${s.us ? 'bg-info/40 border-info-border' : 'bg-white border-border'}`}>
+            <span class={`flex-shrink-0 w-11 h-11 rounded-2xl flex items-center justify-center text-lg font-bold tabular-nums ${s.us ? 'bg-primary text-white' : 'bg-surface-muted text-text-muted border border-border'}`}>{s.n}</span>
+            <div class="flex flex-col gap-1.5">
+              <div class="flex flex-wrap items-center gap-2">
+                <h3 class="text-xl font-bold text-text leading-7 m-0" style="font-family:'Outfit',sans-serif;">{s.title}</h3>
+                <span class={`text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full ${s.us ? 'bg-primary-deep text-white' : 'bg-surface-muted text-text-muted border border-border'}`}>{s.who}</span>
+              </div>
+              <p class="text-base text-text-body leading-6 m-0">{s.body}</p>
+              <p class="text-xs text-text-muted m-0">{s.cite}</p>
+              {s.us && (
+                <a href={enrollUrl} class="mt-2 w-fit bg-primary hover:bg-primary-hover text-white h-11 px-5 rounded-xl text-sm font-semibold flex items-center justify-center no-underline transition-colors">Start the course &mdash; ${course.course.priceUsd}</a>
+              )}
+            </div>
+          </li>
+        ))}
+      </ol>
+
+      <div class="bg-surface-muted border border-border rounded-[24px] p-7 lg:p-9 flex flex-col gap-3">
+        <h2 class="text-2xl font-bold text-text m-0" style="font-family:'Outfit',sans-serif;">What to do today</h2>
+        <ol class="list-decimal pl-5 text-base text-text-body leading-7 flex flex-col gap-1 m-0">
+          <li>Pull your driving record from the BMV so you know the exact points, dates and your suspension start date.</li>
+          <li>Enroll in an approved remedial course and finish it inside its 30-day window.</li>
+          <li>Call your insurer about the SR-22 so it is ready to file the day your suspension ends.</li>
+          <li>Book the BMV exam for the first available date after the suspension period.</li>
+        </ol>
+        <p class="text-sm text-text-muted m-0">Sources: Ohio BMV, <a href="https://www.bmv.ohio.gov/susp-other-points.aspx" class="underline" target="_blank" rel="noopener noreferrer">12 Point Suspension</a>; <a href="https://codes.ohio.gov/ohio-revised-code/section-4510.038" class="underline" target="_blank" rel="noopener noreferrer">ORC 4510.038</a>; <a href="https://codes.ohio.gov/ohio-revised-code/section-4510.036" class="underline" target="_blank" rel="noopener noreferrer">ORC 4510.036</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <Faq faqs={faqs} contactUrl={contactUrl} heading="12-point suspension questions" moreHref="/ohio/faq" />
+  <FinalCta course={course} enrollUrl={enrollUrl} />
+</CourseLayout>
+)}

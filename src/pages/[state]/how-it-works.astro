@@ -1,0 +1,77 @@
+---
+import CourseLayout from '../../layouts/CourseLayout.astro';
+import PageIntro from '../../components/course/PageIntro.astro';
+import Steps from '../../components/course/Steps.astro';
+import DeadlineCallout from '../../components/course/DeadlineCallout.astro';
+import Curriculum from '../../components/course/Curriculum.astro';
+import FinalCta from '../../components/course/FinalCta.astro';
+import { enabledCourses, stateParam } from '../../data/courses/index';
+import { enrollUrl as buildEnrollUrl } from '../../lib/courseFlags';
+import type { CourseData } from '../../data/courses/types';
+
+export function getStaticPaths() {
+  return enabledCourses.map((course) => ({ params: { state: stateParam(course) }, props: { course } }));
+}
+
+const { course } = Astro.props as { course: CourseData };
+const enrollUrl = buildEnrollUrl(course);
+const route = course.state.route;
+const ex = course.exam;
+
+const stats = [
+  { label: 'Instruction', value: `${course.course.hours} hours`, note: course.course.completionDays ? `${course.course.completionDays} days to finish once you start` : 'No completion deadline set by the state' },
+  { label: 'Final exam', value: `${ex.questions} questions`, note: `${ex.passPercent}% to pass (${ex.passCount} of ${ex.questions})` },
+  { label: 'Attempts', value: ex.attempts === null ? 'Unlimited' : `${ex.attempts}`, note: ex.cooldownHours ? `${ex.cooldownHours} hours between attempts` : 'No waiting period' },
+  { label: 'Knowledge checks', value: course.course.knowledgeChecks ? `${course.course.knowledgeChecks.count}` : 'None', note: course.course.knowledgeChecks ? 'One per unit' : 'Final exam only' },
+];
+---
+
+<CourseLayout
+  course={course}
+  title={`How the ${course.course.shortName} Works — Enrollment to Certificate | Road Ready Safety`}
+  description={`What the ${course.course.name} does under ${course.state.name} law, how the modules, timer and final exam work, and what happens after you pass.`}
+  url={`${route}/how-it-works`}
+>
+  <section class="pt-16 lg:pt-24 pb-4 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-info to-white">
+    <div class="max-w-4xl mx-auto">
+      <PageIntro chip="How it works" title={`What this course does for a ${course.state.name} driver, and how you get through it`} subtitle="What the state grants, what it does not, and every rule you will meet between enrolling and your certificate." />
+    </div>
+  </section>
+
+  <section class="py-16 lg:py-20 bg-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {course.benefits.map((b) => (
+          <article class="bg-surface-muted border border-border rounded-[20px] p-7 flex flex-col gap-3">
+            <h2 class="text-[20px] font-bold text-text leading-7" style="font-family:'Outfit',sans-serif;">{b.headline}</h2>
+            <p class="text-[15px] text-text-body leading-6 flex-1">{b.body}</p>
+            {b.cite && <p class="text-xs text-text-muted">{b.cite}</p>}
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-10 bg-surface-muted border-y border-border">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <dl class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+        {stats.map((s) => (
+          <div class="flex flex-col gap-1">
+            <dt class="text-[11px] font-bold uppercase tracking-[0.16em] text-primary-deep">{s.label}</dt>
+            <dd class="m-0 text-[28px] font-bold text-text leading-none tabular-nums" style="font-family:'Outfit',sans-serif;">{s.value}</dd>
+            <dd class="m-0 text-sm text-text-body leading-5">{s.note}</dd>
+          </div>
+        ))}
+      </dl>
+      {course.identityChecks && (
+        <p class="mt-8 text-sm text-text-body leading-6 max-w-4xl"><strong class="text-text">Identity checks.</strong> {course.identityChecks}</p>
+      )}
+      <p class="mt-3 text-sm text-text-body leading-6 max-w-4xl"><strong class="text-text">If you fail the final.</strong> {ex.failNote}</p>
+    </div>
+  </section>
+
+  <Steps course={course} />
+  {course.deadline && <DeadlineCallout deadline={course.deadline} enrollUrl={enrollUrl} ctaLabel={course.hero.ctaLabel} />}
+  <Curriculum course={course} />
+  <FinalCta course={course} enrollUrl={enrollUrl} />
+</CourseLayout>

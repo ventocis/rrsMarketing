@@ -225,30 +225,42 @@
   },
   "audiences": {
     "eyebrow": "Eligibility",
-    "heading": "Missouri's DIP works one way. Make sure it is your way.",
-    "intro": "The court decides whether you can use the program. We would rather tell you now than after you pay.",
+    "heading": "Is this course for you?",
+    "intro": "Missouri's DIP works one way. Find your situation.",
     "items": [
       {
         "label": "Court authorized DIP",
         "status": "Points not assessed",
         "tone": "primary",
-        "heading": "Finish within 60 days and the points never post",
-        "body": "If your court or the Fine Collection Center authorized you to complete a Driver Improvement Program, the points for that violation are not assessed once you finish an approved eight-hour program within 60 days of your plea or conviction. Once every 36 months.",
-        "cta": true
+        "heading": "Finish in 60 days, points never post",
+        "cta": true,
+        "bullets": [
+          "60 days from your guilty plea",
+          "Once every 36 months",
+          "The conviction still records"
+        ]
       },
       {
         "label": "Have not asked yet",
         "status": "Ask the court first",
         "tone": "info",
-        "heading": "Get the authorization before you enroll",
-        "body": "The program only keeps points off when the court says so. Ask the court handling your ticket, or the Fine Collection Center if that is where it went, whether you may complete DIP. If the answer is yes, come back; if you enroll first and the court says no, you have taken a good course that will not change your record."
+        "heading": "Get authorization before you enroll",
+        "bullets": [
+          "Ask your court or the Fine Collection Center",
+          "Only the court can waive the points",
+          "Come back when the answer is yes"
+        ]
       },
       {
         "label": "Old points already posted",
         "status": "Read this first",
         "tone": "muted",
-        "heading": "DIP does not remove points already on your record",
-        "body": "The program stops the points from a current violation being assessed. It does not take existing points off. Missouri points fall on their own: a third after one year without a conviction, half after two, all after three."
+        "heading": "It does not remove old points",
+        "bullets": [
+          "Stops the points from this ticket only",
+          "Old points fall off on their own over 3 years",
+          "A third after year one, half after two, all after three"
+        ]
       }
     ]
   },

@@ -1,4 +1,8 @@
 ---
+/**
+ * "Is this course for you?" — three situations, each a label, a status pill, a one-line
+ * headline and three short facts. Built to be read in ten seconds on a phone.
+ */
 import type { CourseData } from '../../data/courses/types';
 import SectionHeading from './SectionHeading.astro';
 
@@ -17,45 +21,51 @@ const cols = a.items.length >= 3 ? 'md:grid-cols-3' : 'md:grid-cols-2';
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <SectionHeading eyebrow={a.eyebrow} heading={a.heading} intro={a.intro} />
 
-    <div class={`grid grid-cols-1 ${cols} gap-6 items-stretch`}>
-      {a.items.map((item) => (
-        <div class={`relative rounded-[24px] p-8 flex flex-col gap-5 transition-transform ${
-          item.tone === 'primary'
-            ? 'bg-primary-navy ring-1 ring-white/20 shadow-[0_24px_48px_-16px_rgba(2,25,84,0.45)] md:-translate-y-2 md:pb-10'
-            : item.tone === 'info'
-              ? 'bg-info border border-info-border'
-              : 'bg-white border border-border'
-        }`}>
-          <div class="flex items-center justify-between gap-3">
-            <span class={`text-[22px] font-bold leading-tight ${item.tone === 'primary' ? 'text-white' : 'text-text'}`} style="font-family:'Outfit',sans-serif;">
-              {item.label}
-            </span>
-            <span class={`text-[11px] font-bold uppercase tracking-[0.12em] px-2.5 py-1 rounded-full whitespace-nowrap ${
-              item.tone === 'primary'
-                ? 'bg-white text-primary-navy'
-                : item.tone === 'info'
-                  ? 'bg-white text-info-text border border-info-border'
-                  : 'bg-surface-muted text-text-muted border border-border'
-            }`}>
-              {item.status}
-            </span>
+    <div class={`grid grid-cols-1 ${cols} gap-4 lg:gap-6 items-stretch`}>
+      {a.items.map((item) => {
+        const primary = item.tone === 'primary';
+        const info = item.tone === 'info';
+        const textMain = primary ? 'text-white' : 'text-text';
+        const textBody = primary ? 'text-white/85' : 'text-text-body';
+        return (
+          <div class={`relative rounded-[24px] p-6 lg:p-8 flex flex-col gap-4 ${
+            primary
+              ? 'bg-primary-navy ring-1 ring-white/20 shadow-[0_24px_48px_-16px_rgba(2,25,84,0.45)] md:-translate-y-2'
+              : info
+                ? 'bg-info border border-info-border'
+                : 'bg-white border border-border'
+          }`}>
+            <div class="flex items-center justify-between gap-3">
+              <span class={`text-[13px] font-semibold uppercase tracking-[0.08em] ${primary ? 'text-white/70' : 'text-text-muted'}`}>{item.label}</span>
+              <span class={`text-[11px] font-bold uppercase tracking-[0.12em] px-2.5 py-1 rounded-full whitespace-nowrap ${
+                primary ? 'bg-white text-primary-navy' : info ? 'bg-white text-info-text border border-info-border' : 'bg-surface-muted text-text-muted border border-border'
+              }`}>{item.status}</span>
+            </div>
+
+            <h3 class={`text-[22px] lg:text-[24px] font-bold leading-tight ${textMain}`} style="font-family:'Outfit',sans-serif;">{item.heading}</h3>
+
+            {item.bullets && (
+              <ul class="flex flex-col gap-2 list-none p-0 m-0 flex-1">
+                {item.bullets.map((b) => (
+                  <li class={`flex gap-2.5 items-start text-[15px] leading-6 ${textBody}`}>
+                    <svg class={`mt-[7px] flex-shrink-0 ${primary ? 'text-info-border' : 'text-primary'}`} width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><circle cx="5" cy="5" r="4" fill="currentColor"/></svg>
+                    <span>{b}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+            {!item.bullets && item.body && <p class={`text-[15px] leading-6 flex-1 ${textBody}`}>{item.body}</p>}
+
+            {item.cta && (
+              <a href={enrollUrl} class={`mt-1 h-12 px-6 rounded-xl text-base font-semibold flex items-center justify-center no-underline transition-colors ${
+                primary ? 'bg-white text-primary-navy hover:bg-info' : 'bg-primary text-white hover:bg-primary-hover'
+              }`}>
+                {course.hero.ctaLabel} &mdash; ${price}
+              </a>
+            )}
           </div>
-
-          <div class={`h-px w-full ${item.tone === 'primary' ? 'bg-white/20' : 'bg-border'}`}></div>
-
-          <h3 class={`text-[21px] font-bold leading-7 ${item.tone === 'primary' ? 'text-white' : 'text-text'}`} style="font-family:'Outfit',sans-serif;">
-            {item.heading}
-          </h3>
-          <p class={`text-[16px] leading-[26px] flex-1 ${item.tone === 'primary' ? 'text-white/90' : 'text-text-body'}`}>{item.body}</p>
-          {item.cta && (
-            <a href={enrollUrl} class={`h-12 px-6 rounded-xl text-base font-semibold flex items-center justify-center no-underline transition-colors ${
-              item.tone === 'primary' ? 'bg-white text-primary-navy hover:bg-info' : 'bg-primary text-white hover:bg-primary-hover'
-            }`}>
-              {course.hero.ctaLabel} &mdash; ${price}
-            </a>
-          )}
-        </div>
-      ))}
+        );
+      })}
     </div>
   </div>
 </section>

@@ -275,30 +275,42 @@
   },
   "audiences": {
     "eyebrow": "Eligibility",
-    "heading": "Three reasons Ohio drivers take this course",
-    "intro": "Find yours. Each one works a little differently, and we would rather tell you now than after you pay.",
+    "heading": "Is this course for you?",
+    "intro": "Three situations. Find yours.",
     "items": [
       {
         "label": "2 to 11 points",
         "status": "Two-point credit",
         "tone": "primary",
-        "heading": "Build a cushion before it costs you your license",
-        "body": "Ohio lets a driver with at least two and fewer than twelve points complete an approved course for a two-point credit, once every three years and five times in a lifetime. It does not erase anything on your record. It means a twelve-point suspension starts at fourteen.",
-        "cta": true
+        "heading": "Get a two-point cushion",
+        "cta": true,
+        "bullets": [
+          "Once every 3 years, 5 times in your life",
+          "Your suspension line moves from 12 points to 14",
+          "Points stay on your record"
+        ]
       },
       {
         "label": "12 or more points",
         "status": "Reinstatement",
         "tone": "info",
         "heading": "Required to get your license back",
-        "body": "After a twelve-point suspension Ohio requires the remedial course, a full license exam retake, proof of financial responsibility and a reinstatement fee. The course is the one part you can finish from home this week."
+        "bullets": [
+          "One of the BMV's four reinstatement steps",
+          "Take it during the suspension, from home",
+          "Then the exam retake, SR-22 and fee at the BMV"
+        ]
       },
       {
         "label": "Court-ordered",
         "status": "Judge's order",
         "tone": "muted",
-        "heading": "Satisfies the order. No credit.",
-        "body": "If a judge ordered a remedial course, this one satisfies it and you get a certificate to file. Ohio law grants no point credit for a court-ordered completion, and we will not tell you otherwise."
+        "heading": "Satisfies the order",
+        "bullets": [
+          "You get a certificate to file with the court",
+          "No point credit, by Ohio law",
+          "We will not tell you otherwise"
+        ]
       }
     ]
   },

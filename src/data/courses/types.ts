@@ -25,7 +25,9 @@ export interface Audience {
   status: string;
   tone: 'primary' | 'info' | 'muted';
   heading: string;
-  body: string;
+  /** Three short facts, ten words or fewer each. */
+  bullets?: string[];
+  body?: string;
   cta?: boolean;
 }
 

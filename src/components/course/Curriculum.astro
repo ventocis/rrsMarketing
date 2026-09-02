@@ -1,32 +1,59 @@
 ---
+/**
+ * Curriculum — a compact summary strip (hours, modules, checks, exam) with the full module
+ * list collapsed behind "See every module". Nobody buys on module titles; they buy on the
+ * hours and the exam rules, so those are what show by default.
+ */
 import type { CourseData } from '../../data/courses/types';
 import SectionHeading from './SectionHeading.astro';
 
-interface Props { course: CourseData; id?: string }
-const { course, id = 'curriculum' } = Astro.props;
+interface Props { course: CourseData; id?: string; open?: boolean }
+const { course, id = 'curriculum', open = false } = Astro.props;
 const modules = course.course.modules;
+const content = modules.filter((m) => !m.isFinal);
+const ex = course.exam;
+const kc = course.course.knowledgeChecks;
+
+const stats = [
+  { v: `${course.course.hours} hr`, l: 'of instruction' },
+  { v: `${content.length}`, l: 'modules' },
+  { v: kc ? `${kc.count}` : 'None', l: kc ? 'knowledge checks' : 'quizzes' },
+  { v: `${ex.questions} Q`, l: `final exam, ${ex.passPercent}% to pass` },
+];
 ---
 
 <section id={id} class="py-16 lg:py-24 bg-white scroll-mt-24">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
     <SectionHeading eyebrow="Curriculum" heading={course.curriculum.heading} intro={course.curriculum.intro} />
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-      {modules.map((m) => (
-        <div class="group relative bg-white border border-border rounded-[20px] pl-7 pr-6 py-6 flex flex-col gap-3 overflow-hidden transition-all duration-200 hover:border-text-subtle hover:shadow-[0_16px_32px_-16px_rgba(17,23,34,0.22)] hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0">
-          <span class={`absolute left-0 inset-y-0 w-[3px] ${m.isFinal ? 'bg-primary' : 'bg-info-border'}`}></span>
-          <div class="flex items-center gap-3">
-            <span class={`w-10 h-10 rounded-xl flex items-center justify-center text-[15px] font-bold tabular-nums leading-none ${m.isFinal ? 'bg-primary text-white' : 'bg-info text-primary-deep'}`} style="font-family:'Outfit',sans-serif;">
-              {String(m.n).padStart(2, '0')}
-            </span>
-            {m.isFinal && (
-              <span class="text-[10px] font-bold uppercase tracking-[0.12em] text-primary-deep bg-info px-2 py-1 rounded-full">Final exam</span>
-            )}
-          </div>
-          <h3 class="text-[17px] font-bold text-text leading-6" style="font-family:'Outfit',sans-serif;">{m.title}</h3>
-          <p class="text-[15px] text-text-body leading-[24px]">{m.blurb}</p>
+    <dl class="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4 m-0">
+      {stats.map((s) => (
+        <div class="bg-surface-muted border border-border rounded-2xl p-5 flex flex-col gap-1">
+          <dt class="sr-only">{s.l}</dt>
+          <dd class="m-0 text-[26px] font-bold text-primary-navy leading-none tabular-nums" style="font-family:'Outfit',sans-serif;">{s.v}</dd>
+          <dd class="m-0 text-sm text-text-body leading-5">{s.l}</dd>
         </div>
       ))}
-    </div>
+    </dl>
+
+    <details class="group mt-6 bg-white border border-border rounded-[20px] overflow-hidden" open={open}>
+      <summary class="cursor-pointer list-none px-6 py-5 flex items-center justify-between gap-4">
+        <span class="text-base font-semibold text-text">See every module</span>
+        <svg class="flex-shrink-0 w-5 h-5 text-text-muted transition-transform group-open:rotate-45 motion-reduce:transition-none" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </summary>
+      <ol class="list-none p-0 m-0 border-t border-border grid grid-cols-1 md:grid-cols-2">
+        {modules.map((m) => (
+          <li class="flex gap-3 items-start px-6 py-3.5 border-b border-border md:odd:border-r">
+            <span class={`flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center text-[13px] font-bold tabular-nums ${m.isFinal ? 'bg-primary text-white' : 'bg-info text-primary-deep'}`} style="font-family:'Outfit',sans-serif;">{String(m.n).padStart(2, '0')}</span>
+            <div class="flex flex-col gap-0.5 min-w-0">
+              <span class="text-[15px] font-semibold text-text leading-6">{m.title}</span>
+              <span class="text-[13px] text-text-muted leading-5">{m.blurb}</span>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </details>
   </div>
 </section>

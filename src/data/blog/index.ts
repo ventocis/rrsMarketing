@@ -4,6 +4,9 @@
  * `updated`, `faq` and `sources` for answer-engine friendliness.
  */
 import oh from './oh.json';
+import nd from './nd.json';
+import id from './id.json';
+import mo from './mo.json';
 
 export interface StatePost {
   slug: string;
@@ -19,6 +22,9 @@ export interface StatePost {
 
 const byState: Record<string, StatePost[]> = {
   OH: (oh as { posts: StatePost[] }).posts,
+  ND: (nd as { posts: StatePost[] }).posts,
+  ID: (id as { posts: StatePost[] }).posts,
+  MO: (mo as { posts: StatePost[] }).posts,
 };
 
 export function postsFor(stateCode: string): StatePost[] {

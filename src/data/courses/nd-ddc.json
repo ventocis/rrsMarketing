@@ -1,0 +1,219 @@
+{
+  "_note": "Single source of truth for the North Dakota marketing site. Course facts trace to the portal sheet 'ND DDC Full Course Prod Import' and ~/Claude/North Dakota Point Reduction/ND Research & Submission Plan.md. Regulatory facts cite NDCC 39-06.1-10, -10.1 and -13. approvalNumber: NDDOT lists approved courses rather than numbering them; enter the approval date (e.g. 'Approved 2026') once NDDOT confirms. claims.banned is enforced by scripts/check-claims.mjs.",
+  "state": {
+    "code": "ND",
+    "name": "North Dakota",
+    "route": "/north-dakota",
+    "agency": "North Dakota Department of Transportation, Driver License Division",
+    "agencyShort": "NDDOT",
+    "agencyUrl": "https://www.dot.nd.gov/driver/driver-license",
+    "timezone": "America/Chicago"
+  },
+  "provider": {
+    "legalName": "Road Ready Driver Instruction LLC",
+    "dba": "Road Ready Safety",
+    "approvalNumber": "",
+    "approvalLabel": "NDDOT-Approved Defensive Driving Course · {{number}}",
+    "approvalPendingLabel": "North Dakota Defensive Driving Course · NDDOT Approval Pending",
+    "supportEmail": "info@roadreadysafety.com",
+    "supportPhone": "(888) 885-5707",
+    "supportPhoneHref": "tel:+18888855707",
+    "supportHours": ""
+  },
+  "course": {
+    "key": "nd-ddc",
+    "sku": "nd-ddc",
+    "name": "North Dakota Defensive Driving Course",
+    "shortName": "North Dakota Course",
+    "hours": 4,
+    "priceUsd": "24.99",
+    "completionDays": null,
+    "completionNote": "North Dakota sets no completion deadline for the course itself. If you elected the course at court in lieu of points, NDDOT must have your certificate within 30 days of that election.",
+    "modules": [
+      { "n": 1, "title": "Introduction and Orientation", "blurb": "What defensive driving means, how the course works, and the mindset that makes the next four hours worth it." },
+      { "n": 2, "title": "Traffic Laws and Why They Matter", "blurb": "Right-of-way, speed, signals, turns, roundabouts and the rules drivers most often get wrong." },
+      { "n": 3, "title": "Defensive Driving Techniques", "blurb": "Scanning, space, following distance, hazard perception and a checklist you can actually use." },
+      { "n": 4, "title": "The Psychology of Driving", "blurb": "Attention, attitude, road rage, the myth of multitasking and the three kinds of distraction." },
+      { "n": 5, "title": "Impaired Driving", "blurb": "Alcohol, drugs, prescriptions, fatigue and the plan you make before the first drink." },
+      { "n": 6, "title": "Sharing the Road", "blurb": "Motorcycles, trucks, cyclists, pedestrians, farm equipment and winter traffic." },
+      { "n": 7, "title": "Crash Dynamics and Avoidance", "blurb": "What happens in a collision, how restraints work, and the seconds that avoid it." },
+      { "n": 8, "title": "The Vehicle and Driving Environment", "blurb": "Maintenance, tires, lights, weather, night driving and North Dakota's rules and point system." },
+      { "n": 9, "title": "Final Exam", "blurb": "25 questions. 18 correct to pass. Unlimited retakes.", "isFinal": true }
+    ],
+    "knowledgeChecks": { "count": 7, "passNote": "A short knowledge check after each of the first seven modules. Three questions, all three correct to move on, unlimited tries, and the correct answers are shown." }
+  },
+  "exam": {
+    "questions": 25,
+    "passPercent": 72,
+    "passCount": 18,
+    "attempts": null,
+    "cooldownHours": null,
+    "showAnswers": false,
+    "failNote": "Unlimited retakes, no waiting period. Different questions each time."
+  },
+  "identityChecks": "A few personal-history questions when you start and again before the final exam, to confirm the person finishing the course is the person who enrolled.",
+  "seo": {
+    "title": "North Dakota Defensive Driving Course Online — 3-Point Reduction, $24.99 | Road Ready Safety",
+    "description": "North Dakota's 4-hour online defensive driving course for a 3-point reduction, or elected at court in lieu of points. $24.99 total with the certificate included and emailed on completion.",
+    "keywords": "North Dakota defensive driving course, North Dakota point reduction course online, ND 3 point reduction, in lieu of points North Dakota, NDDOT approved defensive driving",
+    "credential": "North Dakota Defensive Driving Course Certificate of Completion",
+    "courseDescription": "Four-hour online defensive driving course for North Dakota drivers seeking a three-point reduction under NDCC 39-06.1-13 or electing a course in lieu of points under NDCC 39-06.1-10.1. Self-paced, with knowledge checks and a 25-question final exam."
+  },
+  "banner": "$24.99 total — certificate included and emailed the moment you pass. Nothing added at checkout.",
+  "nav": [
+    { "href": "/north-dakota#who-needs-it", "label": "Do I Need This?" },
+    { "href": "/north-dakota/how-it-works", "label": "How It Works" },
+    { "href": "/north-dakota/pricing", "label": "Pricing" },
+    { "href": "/north-dakota/blog", "label": "Guides" },
+    { "href": "/north-dakota/faq", "label": "FAQ" }
+  ],
+  "hero": {
+    "eyebrow": "North Dakota · 4 Hours Online",
+    "headline": "Three points off your North Dakota record. Four hours, $24.99, done tonight.",
+    "subhead": "NDDOT lets you take an approved defensive driving course once every twelve months for a three-point reduction, or elect one at court so the points from a small violation never post. Four hours, self-paced, certificate emailed the moment you pass.",
+    "ctaLabel": "Start the Course",
+    "secondaryCta": { "label": "Which option is mine?", "href": "#who-needs-it" },
+    "microcopy": "Self-paced · Works on your phone · No deadline unless you elected it at court",
+    "mockProgressLabel": "Course Progress",
+    "mockContinueLabel": "Continue Module 5",
+    "mockCalloutTitle": "Certificate on completion",
+    "mockCalloutBody": "Emailed as a PDF"
+  },
+  "badges": [
+    { "icon": "/assets/icons/texas/tdlr-approved-icon.svg", "title": "Built for NDDOT's Rules", "body": "Defensive driving strategies, hazard recognition and the retention exercises North Dakota's application requires." },
+    { "icon": "/assets/icons/texas/guarantee-icon.svg", "title": "One Flat Price", "body": "$24.99. Certificate included. No processing fee, no delivery fee." },
+    { "icon": "/assets/icons/texas/super-easy-icon.svg", "title": "Unlimited Retakes", "body": "Knowledge checks and the final exam can be retaken as many times as you need, at no charge." },
+    { "icon": "/assets/icons/texas/mobile-friendly-icon.svg", "title": "Works on Your Phone", "body": "Stop and resume anywhere. Most people finish in one evening or two." }
+  ],
+  "trustBand": ["4 hours, self-paced", "Certificate emailed when you pass", "Full refund any time before you finish", "Real people on phone and email"],
+  "pricing": {
+    "heading": "One price. Here is everything inside it.",
+    "included": [
+      "All four hours of the course",
+      "Eight modules and seven knowledge checks",
+      "The 25-question final exam, with unlimited retakes",
+      "Your certificate of completion, emailed as a PDF the moment you pass",
+      "Step-by-step instructions for sending it to NDDOT",
+      "Support by phone and email while you are enrolled"
+    ],
+    "notCharged": ["Certificate fees", "Processing fees", "Exam retakes", "Faster delivery"],
+    "lineItems": [
+      { "label": "Course", "value": "$24.99", "good": false },
+      { "label": "Certificate", "value": "Included", "good": true },
+      { "label": "Processing fee", "value": "$0.00", "good": true },
+      { "label": "Exam retakes", "value": "$0.00", "good": true }
+    ],
+    "totalLabel": "Total. Not a deposit, not a starting price.",
+    "refundNote": "Full refund any time before you complete the course."
+  },
+  "audiences": {
+    "eyebrow": "Eligibility",
+    "heading": "Two ways North Dakota lets this course help you",
+    "intro": "Both use the same course. They work differently, and only one of them can be used in any twelve-month period.",
+    "items": [
+      {
+        "label": "Points on your record",
+        "status": "3-point reduction",
+        "tone": "primary",
+        "heading": "Take three points off, once every twelve months",
+        "body": "Complete an approved course and NDDOT reduces your accumulated points by three. Once every twelve months, up to nine points in any three-year period. The reduction applies only to points that were on your record before you finished the course.",
+        "cta": true
+      },
+      {
+        "label": "Just got a ticket",
+        "status": "In lieu of points",
+        "tone": "info",
+        "heading": "Keep the points off entirely",
+        "body": "For a violation worth five points or fewer, you can elect at court, when you post bond, to take an approved course instead of having the points entered. The bond is still forfeited. NDDOT must receive your certificate within 30 days of the election, and using this option means no three-point reduction that year."
+      },
+      {
+        "label": "Near suspension",
+        "status": "Read this first",
+        "tone": "muted",
+        "heading": "Twelve points is a suspension. The course does not undo it.",
+        "body": "At twelve or more points (six for a driver under 18) North Dakota suspends the license, seven days for every point over eleven. If you are already there, the three-point reduction applies only after the suspension is served. The course still helps; it just does not skip the suspension."
+      }
+    ]
+  },
+  "curriculum": {
+    "heading": "What is in the four hours",
+    "intro": "Eight modules of defensive driving written in plain language, with North Dakota's point system and reporting rules built into the last one."
+  },
+  "steps": {
+    "heading": "How it works, start to certificate",
+    "intro": "We handle the first four steps. The last one is an email to NDDOT.",
+    "withUsCount": 4,
+    "withUsLabel": "With us",
+    "afterLabel": "You and NDDOT",
+    "items": [
+      { "n": 1, "title": "Enroll", "body": "Pay $24.99 and confirm your details. If you elected the course at court, enroll the same day; the 30-day clock is already running." },
+      { "n": 2, "title": "Work through the eight modules", "body": "Four hours, self-paced. A three-question knowledge check after each of the first seven modules, unlimited tries, answers shown. Stop and resume whenever you like." },
+      { "n": 3, "title": "Pass the 25-question final", "body": "Eighteen correct to pass. Unlimited retakes with different questions, no waiting period." },
+      { "n": 4, "title": "Get your certificate", "body": "Emailed to you as a PDF the moment you pass, with NDDOT's submission instructions attached." },
+      { "n": 5, "title": "Send it to NDDOT", "body": "Email your certificate to <a href=\"mailto:drs@nd.gov\" class=\"text-primary underline\">drs@nd.gov</a> or mail it to the Driver License Division. In-lieu elections must reach NDDOT within 30 days of the election. NDDOT applies the reduction; we do not report for you." }
+    ]
+  },
+  "deadline": {
+    "eyebrow": "In lieu of points",
+    "heading": "Elected the course at court? NDDOT needs your certificate within 30 days.",
+    "body": "Under NDCC 39-06.1-10.1, a driver who elects an approved course in lieu of points must deliver proof of completion to NDDOT within thirty days of the election, or the points are entered. The course is four hours. Do not let the deadline be the reason.",
+    "cite": "NDCC 39-06.1-10.1. The three-point reduction under 39-06.1-13 has no deadline."
+  },
+  "compare": {
+    "heading": "What North Dakota's approved courses cost",
+    "intro": "NDDOT lists about twenty approved providers. Prices range widely; the certificate and support are where they differ.",
+    "rows": [
+      { "name": "Road Ready Safety", "price": "$24.99", "fees": "None", "certificate": "PDF by email on completion, with NDDOT instructions", "us": true },
+      { "name": "Defensive Drivers Institute", "price": "$18.95", "fees": "None stated", "certificate": "Digital on completion" },
+      { "name": "ND Safety Council (online, 5 hours)", "price": "$47.00 members · $57.00 non-members · $80.00 if court or DOT required", "fees": "None stated", "certificate": "Issued by the council" }
+    ],
+    "footnote": "Prices as shown on each provider's public course page on the date below. Providers change prices; check before you buy.",
+    "verifiedDate": "September 2, 2026"
+  },
+  "benefits": [
+    { "headline": "A three-point reduction, once every twelve months", "body": "North Dakota Century Code 39-06.1-13(2) lets the director reduce a driver's accumulated points by three on completion of an approved course, once in any twelve-month period and no more than nine points in any three-year period. The reduction applies to points accumulated before completion.", "cite": "NDCC 39-06.1-13(2)" },
+    { "headline": "A course in lieu of points for small violations", "body": "Under NDCC 39-06.1-10.1 a cited driver may elect at court, when posting bond, to complete an approved course instead of having the points entered. Available for violations carrying five points or fewer, once every twelve months. The bond is forfeited, and proof of completion must reach NDDOT within thirty days.", "cite": "NDCC 39-06.1-10.1" },
+    { "headline": "A certificate you send to NDDOT yourself", "body": "North Dakota has no provider reporting system. You receive a certificate on completion and deliver it to the Driver License Division by email or mail. NDDOT applies the reduction to your record.", "cite": "NDCC 39-06.1-13(2); NDDOT" }
+  ],
+  "faqs": [
+    { "q": "How many points does the course take off?", "a": "Three, once every twelve months, capped at nine points in any three-year period. The reduction applies to points that were on your record before you completed the course, not to points added later." },
+    { "q": "What is \"in lieu of points\"?", "a": "A choice you make at court when you post bond for a violation worth five points or fewer: complete an approved course and the points are never entered on your record. The bond is still forfeited. You must get your certificate to NDDOT within 30 days of the election, and you can only use the option once every twelve months. It is not a dismissal." },
+    { "q": "Can I use both the reduction and the in-lieu option in the same year?", "a": "No. Electing a course in lieu of points forfeits the three-point reduction for that twelve-month period." },
+    { "q": "I have twelve points. Will the course stop my suspension?", "a": "No. At twelve or more points North Dakota suspends the license, seven days for each point over eleven. The reduction applies only after the suspension is served. Take the course anyway so the reduction is ready when you are eligible." },
+    { "q": "How long does the course take?", "a": "Four hours, self-paced. Most people finish in one or two evenings. There is no state deadline for the course itself; only the in-lieu election carries a 30-day submission deadline." },
+    { "q": "What is the final exam like?", "a": "Twenty-five questions, eighteen correct to pass. Unlimited retakes with different questions and no waiting period." },
+    { "q": "How do I get my certificate to NDDOT?", "a": "Email it to drs@nd.gov or mail it to the Driver License Division. We attach the instructions to your certificate email. North Dakota has no provider reporting system, so this step is yours." },
+    { "q": "Is it really $24.99?", "a": "Yes. The certificate, unlimited retakes and support are inside that number. There is no processing fee and no upgraded version of the course." },
+    { "q": "Can I get a refund?", "a": "Yes, in full, at any time before you complete the course. After you pass the exam and the certificate is issued, no refund is available." },
+    { "q": "Does the course lower my insurance?", "a": "We do not promise that. Some insurers offer a premium reduction for a defensive driving course; ask yours before you enroll if that is your reason." },
+    { "q": "Can I do this on my phone?", "a": "Yes. The course and exam work on a phone, and your progress saves the moment you leave." },
+    { "q": "Is this an NDDOT course?", "a": "No. NDDOT approves courses offered by private providers and lists them on its website. We are a private company; our approval status is shown at the top of every page." }
+  ],
+  "finalCta": {
+    "heading": "Four hours. One flat price. Three points, or none at all.",
+    "body": "Enroll now, finish tonight or over the weekend, and email your certificate to NDDOT. That is the whole process.",
+    "bullets": ["4 hours, self-paced", "Certificate included", "Unlimited retakes", "Full refund before completion"]
+  },
+  "reviewsHeading": "What students say about our courses",
+  "help": [
+    { "q": "How to enroll", "steps": ["Click Start the Course on any page", "Enter your name, date of birth, North Dakota driver license number and contact details exactly as they appear on your license", "Pay $24.99 by card. Nothing else is charged", "You receive a confirmation email with your login link"] },
+    { "q": "How to log in", "steps": ["Open the login page and enter your email and password", "Enter the code we email you", "Click Continue Course to pick up where you left off"] },
+    { "q": "How the modules and knowledge checks work", "steps": ["Work through the eight modules in order", "After each of the first seven, answer a three-question knowledge check. All three must be right to continue; you can retry as many times as you need and the correct answers are shown", "Stop and resume whenever you like; your place is saved"] },
+    { "q": "How to take the final exam", "steps": ["Finish every module first", "The exam is 25 questions; 18 correct passes", "If you miss it, retake it immediately with different questions. There is no limit"] },
+    { "q": "How to get your certificate", "steps": ["It is emailed to you as a PDF the moment you pass", "Download it and keep a copy", "Need another copy? Ask support. One free duplicate within 30 days"] },
+    { "q": "How to send your certificate to NDDOT", "steps": ["Email the PDF to drs@nd.gov, or mail it to NDDOT Driver License Division, 608 East Boulevard Avenue, Bismarck, ND 58505-0700", "If you elected the course at court in lieu of points, NDDOT must receive it within 30 days of the election", "NDDOT applies the reduction to your record. Allow a couple of weeks, then check your record"], "note": "We do not report completions to NDDOT. This step is yours." },
+    { "q": "How to reset your password", "steps": ["Open the login page and click Forgot Password", "Enter the email you enrolled with", "Open the reset link in the email (it expires after 24 hours)", "Choose a new password and log in"] },
+    { "q": "Taking the course on your phone", "steps": ["Open your phone's browser and log in", "The course and exam adapt to your screen", "Your progress saves when you leave, so you can switch between phone and computer any time"] }
+  ],
+  "footer": {
+    "blurb": "North Dakota's four-hour online defensive driving course for a three-point reduction or a course in lieu of points, at one flat price with the certificate included.",
+    "disclaimer": "Completing this course may support a three-point reduction under NDCC 39-06.1-13 or satisfy an election in lieu of points under NDCC 39-06.1-10.1. The North Dakota Department of Transportation applies any reduction; the student is responsible for delivering the certificate. Road Ready Safety is a private company and is not affiliated with the North Dakota Department of Transportation."
+  },
+  "claims": {
+    "banned": ["National Safety Council", "NSC-style", "NSC course", "NSC-approved", "dismiss your ticket", "ticket dismissed", "ticket dismissal", "guaranteed reduction", "insurance discount", "live instructor"]
+  },
+  "blog": {
+    "title": "North Dakota driving record guides",
+    "intro": "Plain answers about North Dakota points, the three-point reduction, the in-lieu election at court and what to send NDDOT. Written from the Century Code, with sources."
+  }
+}

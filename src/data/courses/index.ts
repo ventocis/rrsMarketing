@@ -6,8 +6,11 @@
 import type { CourseData } from './types';
 import { isEnabled, isInSitemap } from '../../lib/courseFlags';
 import ohBdi from './oh-bdi.json';
+import ndDdc from './nd-ddc.json';
+import idDdc from './id-ddc.json';
+import moDip from './mo-dip.json';
 
-export const allCourses: CourseData[] = [ohBdi as CourseData];
+export const allCourses: CourseData[] = [ohBdi as CourseData, ndDdc as CourseData, idDdc as CourseData, moDip as CourseData];
 
 export const enabledCourses: CourseData[] = allCourses.filter((c) => isEnabled(c));
 

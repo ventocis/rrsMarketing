@@ -1,0 +1,498 @@
+{
+  "_note": "Single source of truth for the Missouri marketing site. Course facts trace to the portal sheet 'MO DIP — v3 PROD Upload — 2026-07-29'. Regulatory facts cite RSMo 302.302 and the Missouri Department of Revenue. The existing TicketSchool affiliate listing (courses.json mo-dip, $29.95) is retired when this site launches. claims.banned is enforced by scripts/check-claims.mjs.",
+  "state": {
+    "code": "MO",
+    "name": "Missouri",
+    "route": "/missouri",
+    "agency": "Missouri Safety Center",
+    "agencyShort": "MSC",
+    "agencyUrl": "https://www.mosafetycenter.com/",
+    "timezone": "America/Chicago"
+  },
+  "provider": {
+    "legalName": "Road Ready Driver Instruction LLC",
+    "dba": "Road Ready Safety",
+    "approvalNumber": "",
+    "approvalLabel": "Missouri Safety Center-Approved Driver Improvement Program · {{number}}",
+    "approvalPendingLabel": "Missouri Driver Improvement Program · Approval Pending",
+    "supportEmail": "info@roadreadysafety.com",
+    "supportPhone": "(888) 885-5707",
+    "supportPhoneHref": "tel:+18888855707",
+    "supportHours": ""
+  },
+  "course": {
+    "key": "mo-dip",
+    "sku": "mo-dip",
+    "name": "Missouri Driver Improvement Program",
+    "shortName": "Missouri DIP",
+    "hours": 8,
+    "priceUsd": "24.99",
+    "completionDays": null,
+    "completionNote": "Missouri requires the program to be completed within 60 days of your guilty plea or conviction. That clock is the court's, not ours, and it is already running.",
+    "modules": [
+      {
+        "n": 1,
+        "title": "Introduction and Orientation",
+        "blurb": "What defensive driving means, how the course works, and what Missouri grants when you finish."
+      },
+      {
+        "n": 2,
+        "title": "Traffic Laws and Why They Matter",
+        "blurb": "Right-of-way, speed, signals, turns and roundabouts, plus Missouri's rules of the road."
+      },
+      {
+        "n": 3,
+        "title": "Defensive Driving Techniques",
+        "blurb": "Scanning, space, following distance, hazard perception and a checklist you can actually use."
+      },
+      {
+        "n": 4,
+        "title": "The Psychology of Driving",
+        "blurb": "Attention, attitude, road rage, the myth of multitasking and the three kinds of distraction."
+      },
+      {
+        "n": 5,
+        "title": "Impaired Driving",
+        "blurb": "Alcohol, drugs, prescriptions, fatigue and the plan you make before the first drink."
+      },
+      {
+        "n": 6,
+        "title": "Sharing the Road",
+        "blurb": "Motorcycles, trucks, cyclists, pedestrians, farm equipment and work zones."
+      },
+      {
+        "n": 7,
+        "title": "Crash Dynamics and Avoidance",
+        "blurb": "What happens in a collision, how restraints work, and the seconds that avoid it."
+      },
+      {
+        "n": 8,
+        "title": "The Vehicle and Driving Environment",
+        "blurb": "Maintenance, tires, lights, weather and night driving."
+      },
+      {
+        "n": 9,
+        "title": "Risk and How to Manage It",
+        "blurb": "Seeing risk before it becomes a hazard, and the habits that keep your margin."
+      },
+      {
+        "n": 10,
+        "title": "Preparing to Drive",
+        "blurb": "Fitness to drive, vehicle checks, seating and mirrors, and planning the trip."
+      },
+      {
+        "n": 11,
+        "title": "The Six Unsafe Behaviors",
+        "blurb": "The handful of behaviors behind most crashes, and how to catch yourself doing them."
+      },
+      {
+        "n": 12,
+        "title": "Driving for Life",
+        "blurb": "Aging, medication, changing abilities and Missouri's point system, in plain terms."
+      },
+      {
+        "n": 13,
+        "title": "Final Exam",
+        "blurb": "25 questions. 20 correct to pass. Unlimited retakes.",
+        "isFinal": true
+      }
+    ],
+    "knowledgeChecks": null
+  },
+  "exam": {
+    "questions": 25,
+    "passPercent": 80,
+    "passCount": 20,
+    "attempts": null,
+    "cooldownHours": null,
+    "showAnswers": false,
+    "failNote": "Unlimited retakes, no waiting period. Different questions each time."
+  },
+  "identityChecks": null,
+  "seo": {
+    "title": "Missouri Driver Improvement Program Online — 8-Hour DIP, $24.99 | Road Ready Safety",
+    "description": "Missouri's 8-hour Driver Improvement Program online. When your court authorizes DIP, the points for your violation are not assessed. $24.99 total, certificate and DOR form emailed the moment you pass. 60 days from your plea.",
+    "keywords": "Missouri driver improvement program online, Missouri DIP course, Missouri 8 hour driver improvement, avoid points Missouri ticket, Missouri Safety Center approved DIP",
+    "credential": "Missouri Driver Improvement Program Certificate of Completion",
+    "courseDescription": "Eight-hour online Driver Improvement Program for Missouri drivers authorized by a court or the Fine Collection Center to complete DIP so that points for a violation are not assessed, under RSMo 302.302. Self-paced with a 25-question final exam."
+  },
+  "banner": "$24.99 total — certificate and DOR form emailed the moment you pass. Nothing added at checkout.",
+  "nav": [
+    {
+      "href": "/missouri#who-needs-it",
+      "label": "Do I Need This?"
+    },
+    {
+      "href": "/missouri/how-it-works",
+      "label": "How It Works"
+    },
+    {
+      "href": "/missouri/pricing",
+      "label": "Pricing"
+    },
+    {
+      "href": "/missouri/blog",
+      "label": "Guides"
+    },
+    {
+      "href": "/missouri/faq",
+      "label": "FAQ"
+    }
+  ],
+  "hero": {
+    "eyebrow": "Missouri · 8-Hour DIP Online",
+    "headline": "Your court said yes to DIP. You have 60 days. Start tonight.",
+    "subhead": "When a Missouri court or the Fine Collection Center authorizes the Driver Improvement Program, the points for your violation are never assessed. Eight hours online, self-paced, $24.99 total, with the certificate and completion form emailed the moment you pass.",
+    "ctaLabel": "Start the Course",
+    "secondaryCta": {
+      "label": "Has my court authorized it?",
+      "href": "#who-needs-it"
+    },
+    "microcopy": "Self-paced · Works on your phone · 60 days from your plea, set by Missouri",
+    "mockProgressLabel": "Course Progress",
+    "mockContinueLabel": "Continue Module 8",
+    "mockCalloutTitle": "DOR form included",
+    "mockCalloutBody": "Emailed with your certificate"
+  },
+  "badges": [
+    {
+      "icon": "/assets/icons/texas/tdlr-approved-icon.svg",
+      "title": "Built to Missouri's Standard",
+      "body": "The eight-hour defensive driving standard Missouri requires of every DIP, in plain language."
+    },
+    {
+      "icon": "/assets/icons/texas/guarantee-icon.svg",
+      "title": "One Flat Price",
+      "body": "$24.99. Certificate and completion form included. No processing fee, no delivery fee."
+    },
+    {
+      "icon": "/assets/icons/texas/super-easy-icon.svg",
+      "title": "No Quizzes, One Exam",
+      "body": "Twelve modules, then a 25-question final with unlimited retakes."
+    },
+    {
+      "icon": "/assets/icons/texas/mobile-friendly-icon.svg",
+      "title": "Works on Your Phone",
+      "body": "Stop and resume anywhere. Your progress saves the moment you leave."
+    }
+  ],
+  "trustBand": [
+    "8 hours, self-paced",
+    "Certificate and DOR form emailed when you pass",
+    "Full refund any time before you finish",
+    "Real people on phone and email"
+  ],
+  "pricing": {
+    "heading": "One price. Here is everything inside it.",
+    "included": [
+      "All eight hours Missouri requires",
+      "Twelve modules, no quizzes",
+      "The 25-question final exam, with unlimited retakes",
+      "Your certificate of completion and the Department of Revenue completion form, emailed as PDFs the moment you pass",
+      "Step-by-step instructions for the DOR and your court",
+      "Support by phone and email while you are enrolled"
+    ],
+    "notCharged": [
+      "Certificate fees",
+      "Processing fees",
+      "Exam retakes",
+      "Faster delivery"
+    ],
+    "lineItems": [
+      {
+        "label": "Course",
+        "value": "$24.99",
+        "good": false
+      },
+      {
+        "label": "Certificate and DOR form",
+        "value": "Included",
+        "good": true
+      },
+      {
+        "label": "Processing fee",
+        "value": "$0.00",
+        "good": true
+      },
+      {
+        "label": "Exam retakes",
+        "value": "$0.00",
+        "good": true
+      }
+    ],
+    "totalLabel": "Total. Not a deposit, not a starting price.",
+    "refundNote": "Full refund any time before you complete the course."
+  },
+  "audiences": {
+    "eyebrow": "Eligibility",
+    "heading": "Missouri's DIP works one way. Make sure it is your way.",
+    "intro": "The court decides whether you can use the program. We would rather tell you now than after you pay.",
+    "items": [
+      {
+        "label": "Court authorized DIP",
+        "status": "Points not assessed",
+        "tone": "primary",
+        "heading": "Finish within 60 days and the points never post",
+        "body": "If your court or the Fine Collection Center authorized you to complete a Driver Improvement Program, the points for that violation are not assessed once you finish an approved eight-hour program within 60 days of your plea or conviction. Once every 36 months.",
+        "cta": true
+      },
+      {
+        "label": "Have not asked yet",
+        "status": "Ask the court first",
+        "tone": "info",
+        "heading": "Get the authorization before you enroll",
+        "body": "The program only keeps points off when the court says so. Ask the court handling your ticket, or the Fine Collection Center if that is where it went, whether you may complete DIP. If the answer is yes, come back; if you enroll first and the court says no, you have taken a good course that will not change your record."
+      },
+      {
+        "label": "Old points already posted",
+        "status": "Read this first",
+        "tone": "muted",
+        "heading": "DIP does not remove points already on your record",
+        "body": "The program stops the points from a current violation being assessed. It does not take existing points off. Missouri points fall on their own: a third after one year without a conviction, half after two, all after three."
+      }
+    ]
+  },
+  "curriculum": {
+    "heading": "What is in the eight hours",
+    "intro": "Twelve modules of defensive driving in plain language, meeting the eight-hour standard Missouri sets for every Driver Improvement Program."
+  },
+  "steps": {
+    "heading": "How it works, start to certificate",
+    "intro": "We handle the first four steps. The last one is a form to the Department of Revenue.",
+    "withUsCount": 4,
+    "withUsLabel": "With us",
+    "afterLabel": "You, the DOR and your court",
+    "items": [
+      {
+        "n": 1,
+        "title": "Get the court's authorization, then enroll",
+        "body": "Confirm your court or the Fine Collection Center authorized DIP. Then pay $24.99 and confirm your details. Your 60 days started at your plea, so enroll the same day."
+      },
+      {
+        "n": 2,
+        "title": "Work through the twelve modules",
+        "body": "Eight hours, self-paced, no quizzes. Stop and resume whenever you like; most people finish across three or four sittings."
+      },
+      {
+        "n": 3,
+        "title": "Pass the 25-question final",
+        "body": "Twenty correct to pass. Unlimited retakes with different questions, no waiting period."
+      },
+      {
+        "n": 4,
+        "title": "Get your certificate and completion form",
+        "body": "Both emailed to you as PDFs the moment you pass, with the Department of Revenue's mailing address and your court's next step."
+      },
+      {
+        "n": 5,
+        "title": "Send the form to the DOR, and to the court if told to",
+        "body": "Mail the completion form to the Missouri Department of Revenue, Driver License Bureau, PO Box 200, Jefferson City, MO 65105-0200, and give the court a copy if it asked for one. Do it well inside your 60 days."
+      }
+    ]
+  },
+  "deadline": {
+    "eyebrow": "Missouri's 60-day rule",
+    "heading": "You have 60 days from your plea, and the clock is already running.",
+    "body": "Missouri requires the Driver Improvement Program to be completed within sixty days of the guilty plea or conviction for the points to be waived. The course is eight hours. The paperwork is one form. Sixty days is plenty if you start this week, and not if you start in week eight.",
+    "cite": "RSMo 302.302; Missouri Department of Revenue, Tickets and Points."
+  },
+  "compare": {
+    "heading": "What Missouri's approved programs cost",
+    "intro": "Missouri DIP courses are cheap across the board. We are not the cheapest, and here is what the difference buys.",
+    "rows": [
+      {
+        "name": "Road Ready Safety",
+        "price": "$24.99",
+        "fees": "None",
+        "certificate": "Certificate and DOR completion form by email on completion, plus phone support",
+        "us": true
+      },
+      {
+        "name": "All Star Driver Education",
+        "price": "$19.99",
+        "fees": "None stated",
+        "certificate": "Digital on completion"
+      }
+    ],
+    "footnote": "Prices as shown on each provider's public course page on the date below. Several providers advertise $10 to $19.95; we list only the ones we could verify. Providers change prices; check before you buy.",
+    "verifiedDate": "September 2, 2026"
+  },
+  "benefits": [
+    {
+      "headline": "Points for the violation are not assessed",
+      "body": "Under RSMo 302.302, when a court or the Fine Collection Center authorizes a driver to complete an approved Driver Improvement Program, the points for that violation are not assessed on the driver's record. The conviction itself still records.",
+      "cite": "RSMo 302.302; Missouri DOR"
+    },
+    {
+      "headline": "Once every 36 months, within 60 days",
+      "body": "A driver may use the program to avoid points once in any thirty-six-month period, and must complete it within sixty days of the guilty plea or conviction. The court decides whether to authorize it.",
+      "cite": "Missouri DOR, Tickets and Points"
+    },
+    {
+      "headline": "A form you or we send to the Department of Revenue",
+      "body": "On completion you receive a certificate and the DOR completion form. The DOR's own guidance is that \"you or the program may mail the completion form\" to the Driver License Bureau; we email both documents to you the moment you pass, with the address on them.",
+      "cite": "Missouri DOR, Tickets and Points"
+    }
+  ],
+  "faqs": [
+    {
+      "q": "Do I need the court's permission to use DIP?",
+      "a": "Yes. The points are waived only when the court handling your ticket, or the Fine Collection Center, authorizes you to complete a Driver Improvement Program. Ask before you enroll. The course is still worth taking without authorization, but it will not change your record."
+    },
+    {
+      "q": "How long do I have?",
+      "a": "Sixty days from your guilty plea or conviction, set by Missouri. The course is eight hours; start the week you are authorized."
+    },
+    {
+      "q": "How often can I use DIP to avoid points?",
+      "a": "Once in any thirty-six-month period."
+    },
+    {
+      "q": "Does DIP remove points that are already on my record?",
+      "a": "No. It stops the points from the current violation being assessed. Existing points come off on their own: a third after one year with no new conviction, half after two years, all after three."
+    },
+    {
+      "q": "Does the ticket go away?",
+      "a": "No. The conviction records; the points do not. Your insurer can still see the conviction."
+    },
+    {
+      "q": "How long does the course take?",
+      "a": "Eight hours, self-paced. No quizzes. Most people finish across three or four sittings."
+    },
+    {
+      "q": "What is the final exam like?",
+      "a": "Twenty-five questions, twenty correct to pass. Unlimited retakes with different questions and no waiting period."
+    },
+    {
+      "q": "How does the Department of Revenue find out I finished?",
+      "a": "The completion form. The DOR's guidance is that you or the program may mail it to the Driver License Bureau, PO Box 200, Jefferson City, MO 65105-0200. We email you the completed form and the certificate the moment you pass. Mail it promptly and give your court a copy if it asked for one."
+    },
+    {
+      "q": "Is it really $24.99?",
+      "a": "Yes. The certificate, the DOR form, unlimited retakes and support are inside that number. There is no processing fee and no upgraded version of the course."
+    },
+    {
+      "q": "Why are you more than the $10 courses?",
+      "a": "Because a person answers the phone, the DOR form comes filled in with your certificate the moment you pass, and nothing is added at checkout. If price is the only thing that matters to you, a cheaper approved course will also satisfy the court."
+    },
+    {
+      "q": "Can I get a refund?",
+      "a": "Yes, in full, at any time before you complete the course. After you pass the exam and the certificate is issued, no refund is available."
+    },
+    {
+      "q": "Can I do this on my phone?",
+      "a": "Yes. The course and exam work on a phone, and your progress saves the moment you leave."
+    }
+  ],
+  "finalCta": {
+    "heading": "Eight hours. One flat price. Sixty days that are already counting.",
+    "body": "Enroll the day your court says yes, finish over a week of evenings, and mail one form. That is the whole process.",
+    "bullets": [
+      "8 hours, self-paced",
+      "Certificate and DOR form included",
+      "Unlimited retakes",
+      "Full refund before completion"
+    ]
+  },
+  "reviewsHeading": "What students say about our courses",
+  "help": [
+    {
+      "q": "How to get the court's authorization",
+      "steps": [
+        "Contact the court handling your ticket, or the Fine Collection Center if your ticket was sent there",
+        "Ask whether you may complete a Driver Improvement Program to avoid points",
+        "If yes, note the date of your plea or conviction. Your 60 days run from that date",
+        "Then enroll"
+      ]
+    },
+    {
+      "q": "How to enroll",
+      "steps": [
+        "Click Start the Course on any page",
+        "Enter your name, date of birth, Missouri driver license number and contact details exactly as they appear on your license",
+        "Enter your court and citation details so they appear on your completion form",
+        "Pay $24.99 by card. Nothing else is charged",
+        "You receive a confirmation email with your login link"
+      ]
+    },
+    {
+      "q": "How to log in",
+      "steps": [
+        "Open the login page and enter your email and password",
+        "Enter the code we email you",
+        "Click Continue Course to pick up where you left off"
+      ]
+    },
+    {
+      "q": "How the modules work",
+      "steps": [
+        "Work through the twelve modules in order",
+        "Each module has a minimum time; together they add up to Missouri's eight hours",
+        "Stop and resume whenever you like; your place is saved"
+      ]
+    },
+    {
+      "q": "How to take the final exam",
+      "steps": [
+        "Finish every module first",
+        "The exam is 25 questions; 20 correct passes",
+        "If you miss it, retake it immediately with different questions. There is no limit"
+      ]
+    },
+    {
+      "q": "How to get your certificate and DOR form",
+      "steps": [
+        "Both are emailed to you as PDFs the moment you pass",
+        "Download them and keep copies",
+        "Need another copy? Ask support. One free duplicate within 30 days"
+      ]
+    },
+    {
+      "q": "How to send the form to the Department of Revenue and your court",
+      "steps": [
+        "Mail the completion form to Missouri Department of Revenue, Driver License Bureau, PO Box 200, Jefferson City, MO 65105-0200",
+        "If your court asked for proof, give it a copy of the certificate and form",
+        "Do both well inside your 60 days, and keep proof of mailing"
+      ],
+      "note": "The DOR's guidance is that either you or the program may mail the form. If you want us to mail it, contact support after you pass."
+    },
+    {
+      "q": "How to reset your password",
+      "steps": [
+        "Open the login page and click Forgot Password",
+        "Enter the email you enrolled with",
+        "Open the reset link in the email (it expires after 24 hours)",
+        "Choose a new password and log in"
+      ]
+    },
+    {
+      "q": "Taking the course on your phone",
+      "steps": [
+        "Open your phone's browser and log in",
+        "The course and exam adapt to your screen",
+        "Your progress saves when you leave, so you can switch between phone and computer any time"
+      ]
+    }
+  ],
+  "footer": {
+    "blurb": "Missouri's eight-hour Driver Improvement Program online, at one flat price with the certificate and Department of Revenue form included.",
+    "disclaimer": "Points for a violation are waived only when a court or the Fine Collection Center authorizes completion of an approved Driver Improvement Program and the program is completed within sixty days of the plea or conviction (RSMo 302.302). The conviction itself remains on the record. Road Ready Safety is a private company and is not affiliated with the Missouri Safety Center, the Missouri Department of Revenue or any court."
+  },
+  "claims": {
+    "banned": [
+      "dismiss your ticket",
+      "ticket dismissed",
+      "ticket dismissal",
+      "guaranteed point",
+      "erases points",
+      "wipes points",
+      "no court visit",
+      "insurance discount",
+      "live instructor"
+    ]
+  },
+  "blog": {
+    "title": "Missouri driving record guides",
+    "intro": "Plain answers about Missouri points, the Driver Improvement Program, the 60-day rule and what to send the Department of Revenue. Written from the statute and the DOR's own pages, with sources."
+  }
+}

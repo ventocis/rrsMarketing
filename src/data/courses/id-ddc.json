@@ -1,0 +1,217 @@
+{
+  "_note": "Single source of truth for the Idaho marketing site. Course facts trace to the portal sheet 'Idaho DDC — v4 PROD Upload — 2026-08-15' and ~/Claude/Idaho DDC/Portal/idaho-portal-build-spec.md. Regulatory facts cite IDAPA 39.02.71 and Idaho Code 49-326. claims.banned is enforced by scripts/check-claims.mjs.",
+  "state": {
+    "code": "ID",
+    "name": "Idaho",
+    "route": "/idaho",
+    "agency": "Idaho Transportation Department, Division of Motor Vehicles",
+    "agencyShort": "ITD",
+    "agencyUrl": "https://itd.idaho.gov/itddmv/",
+    "timezone": "America/Denver"
+  },
+  "provider": {
+    "legalName": "Road Ready Driver Instruction LLC",
+    "dba": "Road Ready Safety",
+    "approvalNumber": "",
+    "approvalLabel": "ITD-Approved Defensive Driving Course · {{number}}",
+    "approvalPendingLabel": "Idaho Defensive Driving Course · ITD Approval Pending",
+    "supportEmail": "info@roadreadysafety.com",
+    "supportPhone": "(888) 885-5707",
+    "supportPhoneHref": "tel:+18888855707",
+    "supportHours": ""
+  },
+  "course": {
+    "key": "id-ddc",
+    "sku": "id-ddc",
+    "name": "Idaho 6-Hour Defensive Driving Course",
+    "shortName": "Idaho Course",
+    "hours": 6,
+    "priceUsd": "24.99",
+    "completionDays": null,
+    "completionNote": "Idaho sets no completion deadline. Take the course at your own pace.",
+    "modules": [
+      { "n": 1, "title": "Introduction and Orientation", "blurb": "What defensive driving means, how the course and its module timers work, and what Idaho grants when you finish." },
+      { "n": 2, "title": "Traffic Laws and Why They Matter", "blurb": "Right-of-way, speed, signals, turns and roundabouts, plus Idaho's rules of the road." },
+      { "n": 3, "title": "Defensive Driving Techniques", "blurb": "Scanning, space, following distance, hazard perception and a checklist you can actually use." },
+      { "n": 4, "title": "The Psychology of Driving", "blurb": "Attention, attitude, road rage, the myth of multitasking and the three kinds of distraction." },
+      { "n": 5, "title": "Impaired Driving", "blurb": "Alcohol, drugs, prescriptions, fatigue and the plan you make before the first drink." },
+      { "n": 6, "title": "Sharing the Road", "blurb": "Motorcycles, trucks, cyclists, pedestrians, wildlife and mountain and winter roads." },
+      { "n": 7, "title": "Crash Dynamics and Avoidance", "blurb": "What happens in a collision, how restraints work, and the seconds that avoid it." },
+      { "n": 8, "title": "The Vehicle and Driving Environment", "blurb": "Maintenance, tires, lights, weather and night driving." },
+      { "n": 9, "title": "Risk and How to Manage It", "blurb": "Seeing risk before it becomes a hazard, and the habits that keep your margin." },
+      { "n": 10, "title": "Preparing to Drive", "blurb": "Fitness to drive, vehicle checks, seating and mirrors, and planning the trip." },
+      { "n": 11, "title": "The Six Unsafe Behaviors", "blurb": "The handful of behaviors behind most crashes, and how to catch yourself doing them." },
+      { "n": 12, "title": "Driving for Life", "blurb": "Aging, medication, changing abilities and keeping your independence safely." },
+      { "n": 13, "title": "Final Exam", "blurb": "25 questions. 20 correct to pass. Unlimited retakes, and you see which answers you missed.", "isFinal": true }
+    ],
+    "knowledgeChecks": null
+  },
+  "exam": {
+    "questions": 25,
+    "passPercent": 80,
+    "passCount": 20,
+    "attempts": null,
+    "cooldownHours": null,
+    "showAnswers": true,
+    "failNote": "Unlimited retakes, no waiting period, and after every attempt you see which questions you got right and wrong."
+  },
+  "identityChecks": null,
+  "seo": {
+    "title": "Idaho Defensive Driving Course Online — 3 Points Off, $24.99 | Road Ready Safety",
+    "description": "Idaho's 6-hour online defensive driving course for a 3-point reduction once every three years. $24.99 total, certificate emailed the moment you pass, no quizzes, unlimited exam retakes.",
+    "keywords": "Idaho defensive driving course online, Idaho point reduction course, Idaho 3 point reduction, ITD approved defensive driving course, Idaho accident prevention course",
+    "credential": "Idaho Defensive Driving Course Certificate of Completion",
+    "courseDescription": "Six-hour online defensive driving (accident prevention) course for Idaho drivers seeking a three-point reduction under IDAPA 39.02.71. Self-paced with module timers and a 25-question final exam."
+  },
+  "banner": "$24.99 total — certificate included and emailed the moment you pass. Nothing added at checkout.",
+  "nav": [
+    { "href": "/idaho#who-needs-it", "label": "Do I Need This?" },
+    { "href": "/idaho/how-it-works", "label": "How It Works" },
+    { "href": "/idaho/pricing", "label": "Pricing" },
+    { "href": "/idaho/blog", "label": "Guides" },
+    { "href": "/idaho/faq", "label": "FAQ" }
+  ],
+  "hero": {
+    "eyebrow": "Idaho · 6 Hours Online",
+    "headline": "Three points off your Idaho record. Six hours, $24.99, from your phone.",
+    "subhead": "Idaho removes three points from your driving record when you complete an approved defensive driving course, once every three years. Six hours, self-paced, no quizzes, unlimited exam retakes, and the certificate is emailed the moment you pass.",
+    "ctaLabel": "Start the Course",
+    "secondaryCta": { "label": "Is this for me?", "href": "#who-needs-it" },
+    "microcopy": "Self-paced · No deadline · Certificate emailed on completion",
+    "mockProgressLabel": "Course Progress",
+    "mockContinueLabel": "Continue Module 8",
+    "mockCalloutTitle": "No quizzes",
+    "mockCalloutBody": "One final exam, unlimited retakes"
+  },
+  "badges": [
+    { "icon": "/assets/icons/texas/tdlr-approved-icon.svg", "title": "Built for Idaho's Rule", "body": "The six hours IDAPA 39.02.71 requires, with Idaho's rules of the road inside." },
+    { "icon": "/assets/icons/texas/guarantee-icon.svg", "title": "One Flat Price", "body": "$24.99. Certificate included. No processing fee, no delivery fee." },
+    { "icon": "/assets/icons/texas/super-easy-icon.svg", "title": "No Quizzes, One Exam", "body": "Twelve modules, then a 25-question final with unlimited retakes and your results shown." },
+    { "icon": "/assets/icons/texas/mobile-friendly-icon.svg", "title": "Works on Your Phone", "body": "Stop and resume anywhere. Your timer and progress save the moment you leave." }
+  ],
+  "trustBand": ["6 hours, self-paced", "Certificate emailed when you pass", "Full refund any time before you finish", "Real people on phone and email"],
+  "pricing": {
+    "heading": "One price. Here is everything inside it.",
+    "included": [
+      "All six hours Idaho requires",
+      "Twelve modules, no quizzes",
+      "The 25-question final exam, with unlimited retakes and your results shown",
+      "Your certificate of completion, emailed as a PDF the moment you pass",
+      "Step-by-step instructions for sending it to ITD",
+      "Support by phone and email while you are enrolled"
+    ],
+    "notCharged": ["Certificate fees", "Processing fees", "Exam retakes", "Faster delivery"],
+    "lineItems": [
+      { "label": "Course", "value": "$24.99", "good": false },
+      { "label": "Certificate", "value": "Included", "good": true },
+      { "label": "Processing fee", "value": "$0.00", "good": true },
+      { "label": "Exam retakes", "value": "$0.00", "good": true }
+    ],
+    "totalLabel": "Total. Not a deposit, not a starting price.",
+    "refundNote": "Full refund any time before you complete the course."
+  },
+  "audiences": {
+    "eyebrow": "Eligibility",
+    "heading": "Who this course is for, and who it is not for",
+    "intro": "Idaho is specific about what a defensive driving course does. We would rather tell you now than after you pay.",
+    "items": [
+      {
+        "label": "Points on your record",
+        "status": "3-point reduction",
+        "tone": "primary",
+        "heading": "Take three points off, once every three years",
+        "body": "Complete an approved course and ITD removes three points from your Idaho driving record. Once every three years. Your citation must be paid first, and the conviction itself stays on the record.",
+        "cta": true
+      },
+      {
+        "label": "55 and older",
+        "status": "May help with insurance",
+        "tone": "info",
+        "heading": "Ask your insurer before you enroll",
+        "body": "Some Idaho insurers reduce premiums for drivers 55 and older who complete a defensive driving course. Your insurer decides whether this course qualifies and how much. Call them first; then take the course if the answer is yes."
+      },
+      {
+        "label": "Hoping to clear a ticket",
+        "status": "Not in Idaho",
+        "tone": "muted",
+        "heading": "This course does not clear a ticket or reduce a fine",
+        "body": "Idaho has no traffic-school program that voids a citation. The fine is paid, the conviction records, and then the course takes three points off. If you are looking for a way out of the ticket itself, talk to the court."
+      }
+    ]
+  },
+  "curriculum": {
+    "heading": "What is in the six hours",
+    "intro": "Twelve modules of defensive driving in plain language, each with a minimum time so the six hours add up the way Idaho's rule requires."
+  },
+  "steps": {
+    "heading": "How it works, start to certificate",
+    "intro": "We handle the first four steps. The last one is an email to ITD.",
+    "withUsCount": 4,
+    "withUsLabel": "With us",
+    "afterLabel": "You and ITD",
+    "items": [
+      { "n": 1, "title": "Enroll", "body": "Pay $24.99 and confirm your details. There is no state deadline, so start when you like." },
+      { "n": 2, "title": "Work through the twelve modules", "body": "Each module has a minimum time; together they add up to Idaho's six hours. No quizzes. Stop and resume whenever you like; the timer saves." },
+      { "n": 3, "title": "Pass the 25-question final", "body": "Twenty correct to pass. Unlimited retakes, no waiting, and you see which answers you missed after every attempt." },
+      { "n": 4, "title": "Get your certificate", "body": "Emailed to you as a PDF the moment you pass, with ITD's submission instructions attached." },
+      { "n": 5, "title": "Send it to ITD", "body": "Pay any outstanding citation first, then email the certificate to <a href=\"mailto:ddc@itd.idaho.gov\" class=\"text-primary underline\">ddc@itd.idaho.gov</a> or mail it to ITD DMV, PO Box 7129, Boise, ID 83707-1129. ITD applies the reduction; we do not report for you." }
+    ]
+  },
+  "deadline": null,
+  "compare": {
+    "heading": "What Idaho's approved courses cost",
+    "intro": "A short list of approved providers, and a wide range of prices.",
+    "rows": [
+      { "name": "Road Ready Safety", "price": "$24.99", "fees": "None", "certificate": "PDF by email on completion, with ITD instructions", "us": true },
+      { "name": "AAA Idaho Point Reduction Course", "price": "$35.95 members · $39.95 non-members", "fees": "None stated", "certificate": "Issued by AAA" }
+    ],
+    "footnote": "Prices as shown on each provider's public course page on the date below. Providers change prices; check before you buy.",
+    "verifiedDate": "September 2, 2026"
+  },
+  "benefits": [
+    { "headline": "Three points removed, once every three years", "body": "Idaho's administrative rule for defensive driving courses provides that three points may be removed from a driver's record on completion of an approved course, and that points may be removed this way only once every three years.", "cite": "IDAPA 39.02.71.400" },
+    { "headline": "The citation is paid first, and the conviction stays", "body": "The reduction applies to points, not to the citation. Any outstanding citation must be paid before ITD applies the reduction, and the conviction remains on your record.", "cite": "ITD, Defensive Driving Course program" },
+    { "headline": "A certificate you send to ITD yourself", "body": "Idaho has no provider reporting system. You receive a certificate on completion and deliver it to ITD by email or mail. ITD applies the reduction to your record.", "cite": "ITD, ddc@itd.idaho.gov" }
+  ],
+  "faqs": [
+    { "q": "How many points does the course take off?", "a": "Three, once every three years, under IDAPA 39.02.71. The conviction itself stays on your record." },
+    { "q": "Will this course get my ticket dropped or my fine reduced?", "a": "No. Idaho has no traffic-school program that voids a citation. You pay the citation, the conviction records, and then the course removes three points. If you want to contest the ticket, that is a conversation with the court." },
+    { "q": "Do I have to pay the ticket before the points come off?", "a": "Yes. ITD applies the reduction only after any outstanding citation is paid." },
+    { "q": "How long does the course take?", "a": "Six hours, measured by module timers, at your own pace. There is no state deadline. Most people finish across two or three sittings." },
+    { "q": "Are there quizzes?", "a": "No. Twelve modules, then one 25-question final exam." },
+    { "q": "What is the final exam like?", "a": "Twenty-five questions, twenty correct to pass. Unlimited retakes with no waiting period, and after every attempt you see which questions you got right and wrong." },
+    { "q": "How do I get my certificate to ITD?", "a": "Email it to ddc@itd.idaho.gov or mail it to ITD DMV, PO Box 7129, Boise, ID 83707-1129. We attach the instructions to your certificate email. Idaho has no provider reporting system, so this step is yours." },
+    { "q": "I am 55 or older. Will my insurance go down?", "a": "It might. Some Idaho insurers reduce premiums for drivers 55 and older who complete a defensive driving course, but your insurer decides whether this course qualifies and by how much. Ask them before you enroll if that is your reason." },
+    { "q": "Is it really $24.99?", "a": "Yes. The certificate, unlimited retakes and support are inside that number. There is no processing fee and no upgraded version of the course." },
+    { "q": "Can I get a refund?", "a": "Yes, in full, at any time before you complete the course. After you pass the exam and the certificate is issued, no refund is available." },
+    { "q": "Can I do this on my phone?", "a": "Yes. The course, the timers and the exam work on a phone, and your progress saves the moment you leave." },
+    { "q": "Is this an ITD course?", "a": "No. ITD approves courses offered by private providers. We are a private company; our approval status is shown at the top of every page." }
+  ],
+  "finalCta": {
+    "heading": "Six hours. One flat price. Three points off your record.",
+    "body": "Enroll now, finish at your own pace, and email your certificate to ITD. That is the whole process.",
+    "bullets": ["6 hours, self-paced", "Certificate included", "Unlimited exam retakes", "Full refund before completion"]
+  },
+  "reviewsHeading": "What students say about our courses",
+  "help": [
+    { "q": "How to enroll", "steps": ["Click Start the Course on any page", "Enter your name, date of birth, Idaho driver license number and contact details exactly as they appear on your license", "Pay $24.99 by card. Nothing else is charged", "You receive a confirmation email with your login link"] },
+    { "q": "How to log in", "steps": ["Open the login page and enter your email and password", "Enter the code we email you", "Click Continue Course to pick up where you left off"] },
+    { "q": "How the module timers work", "steps": ["Each module has a minimum time. Together they add up to the six hours Idaho requires", "You cannot finish a module before its timer is satisfied, but there is no limit on how long you take", "Stop and resume whenever you like; the timer saves where you left off"] },
+    { "q": "How to take the final exam", "steps": ["Finish every module first", "The exam is 25 questions; 20 correct passes", "After every attempt you see which answers were right and wrong", "If you miss it, retake it immediately. There is no limit"] },
+    { "q": "How to get your certificate", "steps": ["It is emailed to you as a PDF the moment you pass", "Download it and keep a copy", "Need another copy? Ask support. One free duplicate within 30 days"] },
+    { "q": "How to send your certificate to ITD", "steps": ["Pay any outstanding citation first", "Email the PDF to ddc@itd.idaho.gov, or mail it to ITD DMV, PO Box 7129, Boise, ID 83707-1129", "ITD applies the three-point reduction to your record. Allow a couple of weeks, then check your record"], "note": "We do not report completions to ITD. This step is yours." },
+    { "q": "How to reset your password", "steps": ["Open the login page and click Forgot Password", "Enter the email you enrolled with", "Open the reset link in the email (it expires after 24 hours)", "Choose a new password and log in"] },
+    { "q": "Taking the course on your phone", "steps": ["Open your phone's browser and log in", "The course, timers and exam adapt to your screen", "Your progress saves when you leave, so you can switch between phone and computer any time"] }
+  ],
+  "footer": {
+    "blurb": "Idaho's six-hour online defensive driving course for a three-point reduction, at one flat price with the certificate included.",
+    "disclaimer": "Completing this course may support a three-point reduction under IDAPA 39.02.71, once every three years, after any citation is paid. It does not void a citation or a conviction. The Idaho Transportation Department applies any reduction; the student is responsible for delivering the certificate. Road Ready Safety is a private company and is not affiliated with the Idaho Transportation Department."
+  },
+  "claims": {
+    "banned": ["dismiss your ticket", "ticket dismissed", "ticket dismissal", "dismissal", "avoid the fine", "guaranteed discount", "insurance discount", "live instructor"]
+  },
+  "blog": {
+    "title": "Idaho driving record guides",
+    "intro": "Plain answers about Idaho points, suspensions, the three-point reduction and what to send ITD. Written from the Idaho Code and administrative rules, with sources."
+  }
+}

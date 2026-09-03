@@ -1,9 +1,12 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
 import NextStepBlock from '../../components/texas/NextStepBlock.astro';
+import { alternatesFor, translationsOf, langLabel } from '../../lib/i18n';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+const alternates = alternatesFor('/texas/ticket-dismissal');
+const translations = translationsOf('/texas/ticket-dismissal');
 
 // Legal basis: Tex. Code Crim. Proc. ch. 45A (arts. 45A.351–.359, the 2025
 // recodification of former art. 45.0511), S.B. 296 (eff. Sept. 1, 2025),
@@ -104,6 +107,7 @@ const howToSchema = JSON.stringify({
     description="How a TDLR-approved driving safety course dismisses a Texas traffic ticket: eligibility under CCP chapter 45A, the five steps in order, the 90-day deadline, court fees of $109 to $169, which tickets are excluded, and how individual courts handle it."
     keywords="texas defensive driving course for ticket dismissal, ticket dismissal texas, how to get a ticket dismissed in texas, can defensive driving dismiss a ticket in texas, texas ticket dismissal requirements, dismiss ticket texas online, driving safety course ticket dismissal"
     url="/texas/ticket-dismissal"
+    alternates={alternates}
   >
     <script type="application/ld+json" set:html={articleSchema} />
     <script type="application/ld+json" set:html={faqSchema} />
@@ -117,6 +121,12 @@ const howToSchema = JSON.stringify({
           <span class="mx-2 text-text-subtle">›</span>
           <span class="text-text">Ticket dismissal</span>
         </p>
+        {translations.length > 0 && (
+          <p class="text-xs text-text-body mb-6 flex flex-wrap items-center gap-1.5" style="font-family: 'DM Sans', sans-serif;">
+            <span class="text-text-subtle me-1">Also in:</span>
+            {translations.map(t => <a href={`/texas/${t.slug}`} hreflang={t.lang} lang={t.lang} class="px-2 py-0.5 rounded-full border border-border text-text-body hover:border-primary-deep no-underline">{langLabel(t.lang)}</a>)}
+          </p>
+        )}
 
         <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
           Texas Defensive Driving Course for Ticket Dismissal: Who Qualifies, the 5 Steps, Deadlines, and What It Costs

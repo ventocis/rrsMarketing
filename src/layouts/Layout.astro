@@ -9,6 +9,10 @@ interface Props {
   image?: string;
   url?: string;
   noindex?: boolean;
+  /** BCP-47 language of the page content (default en). */
+  lang?: string;
+  /** hreflang alternates: [{ lang, href }] — include the page itself and x-default. */
+  alternates?: { lang: string; href: string }[];
 }
 
 const {
@@ -18,6 +22,8 @@ const {
   image = '/assets/rrs (1200 x 630 px).png',
   url = '/',
   noindex = false,
+  lang = 'en',
+  alternates = [],
 } = Astro.props;
 
 const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
@@ -31,7 +37,7 @@ const pageTitle = title.includes('Road Ready') ? title : `${title} | Road Ready 
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -42,6 +48,7 @@ const pageTitle = title.includes('Road Ready') ? title : `${title} | Road Ready 
     <meta name="description" content={description} />
     {keywords && <meta name="keywords" content={keywords} />}
     <link rel="canonical" href={canonicalUrl} />
+    {alternates.map(a => <link rel="alternate" hreflang={a.lang} href={a.href.startsWith("http") ? a.href : `${siteUrl}${a.href}`} />)}
     <meta name="robots" content={isNoindex ? 'noindex, nofollow' : 'index, follow'} />
     <meta name="google-site-verification" content="VRxAjfZgmw2EG3f_aiEU6rupWURg-2h5kaOU3fr7uKo" />
 

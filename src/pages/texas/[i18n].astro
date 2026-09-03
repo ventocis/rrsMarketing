@@ -1,0 +1,122 @@
+---
+/**
+ * Translated Texas guide pages: /texas/<page>-<lang>
+ * Content comes from src/data/i18n/texas/*.json (see src/lib/i18n.ts).
+ * These are translations of the English guides for accessibility; the course is
+ * delivered in English and every page says so in its notice and CTA.
+ */
+import TexasLayout from '../../layouts/TexasLayout.astro';
+import NextStepBlock from '../../components/texas/NextStepBlock.astro';
+import { translatedPages, alternatesFor, langLabel } from '../../lib/i18n';
+
+export function getStaticPaths() {
+  return translatedPages.map(p => ({ params: { i18n: p.slug }, props: { page: p } }));
+}
+
+const { page } = Astro.props;
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+const url = `/texas/${page.slug}`;
+const dir = page.dir ?? 'ltr';
+const alternates = alternatesFor(page.source);
+const siblings = alternates.filter(a => a.lang !== 'x-default');
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: page.h1,
+  description: page.description,
+  inLanguage: page.lang,
+  translationOfWork: { '@type': 'Article', url: `${siteUrl}${page.source}` },
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  dateModified: page.dateModified,
+  mainEntityOfPage: `${siteUrl}${url}`,
+});
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  inLanguage: page.lang,
+  mainEntity: page.faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a.replace(/<[^>]+>/g, '') } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout title={page.title} description={page.description} keywords={page.keywords} url={url} lang={page.lang} alternates={alternates}>
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24" dir={dir} lang={page.lang}>
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <div class="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;" dir="ltr">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="text-text-subtle">›</span>
+          <span class="text-text">{page.langName}</span>
+          <span class="ml-auto flex flex-wrap gap-1.5" aria-label="Languages">
+            {siblings.map(a => (
+              <a href={a.href} class={`text-xs px-2 py-0.5 rounded-full border ${a.lang === page.lang ? 'bg-primary-deep text-white border-primary-deep' : 'border-border text-text-body hover:border-primary-deep'} no-underline`} hreflang={a.lang}>{langLabel(a.lang)}</a>
+            ))}
+          </span>
+        </div>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">{page.h1}</h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          {page.intro.map(p => <p set:html={p} />)}
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;" set:html={page.notice} />
+        </div>
+
+        {page.sections.map((s, i) => (
+          <>
+            <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">{s.h2}</h2>
+            <div class="space-y-4 text-text-body text-base leading-7 mb-10 i18n-body" style="font-family: 'DM Sans', sans-serif;" set:html={s.html} />
+            {i === 1 && (
+              <NextStepBlock page={page.slug} lead="precourt" lang={page.lang} dir={dir} strings={page.nextStep} />
+            )}
+          </>
+        ))}
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">{page.faqHeading}</h2>
+        <div class="space-y-8 mb-12">
+          {page.faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">{page.cta.h2}</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p set:html={page.cta.text} />
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a href={enrollUrl} class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline text-center" style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);">{page.cta.primary}</a>
+          <a href={page.cta.secondaryHref} class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors text-center" style="font-family: 'DM Sans', sans-serif;">{page.cta.secondary}</a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle" set:html={page.footer.provider} />
+          <p class="text-xs text-text-subtle" set:html={page.footer.sources} />
+        </div>
+
+      </div>
+    </article>
+
+    <style is:global>
+      .i18n-body ul { list-style: disc; padding-inline-start: 1.5rem; }
+      .i18n-body ol { list-style: decimal; padding-inline-start: 1.5rem; }
+      .i18n-body li { margin: 0.35rem 0; }
+      .i18n-body a { color: #1e3fbf; font-weight: 500; }
+      .i18n-body a:hover { text-decoration: underline; }
+      .i18n-body strong { color: #111722; }
+    </style>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

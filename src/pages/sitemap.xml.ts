@@ -3,6 +3,7 @@ import coursesData from '../data/courses.json';
 import blogData from '../data/blog.json';
 import courtsData from '../data/texas-courts.json';
 import adeData from '../data/ade-texas.json';
+import { translatedPages } from '../lib/i18n';
 import { sitemapCourses, STATE_SUBROUTES } from '../data/courses/index';
 import { postsFor } from '../data/blog/index';
 
@@ -173,7 +174,9 @@ for (const state of states) {
 const texasCourtsRoutes = ['/texas/courts'];
 const courtSlugRoutes = ((courtsData as any).courts as Array<{ slug: string }>).map(c => `/texas/courts/${c.slug}`);
 
-const allRoutes = [...staticRoutes, ...adeRoutes, ...stateCourseRoutes, ...courseRoutes, ...courseRequirementsRoutes, ...blogRoutes, ...findRoutes, ...texasCourtsRoutes, ...courtSlugRoutes];
+const i18nRoutes = translatedPages.map(p => `/texas/${p.slug}`);
+
+const allRoutes = [...staticRoutes, ...adeRoutes, ...i18nRoutes, ...stateCourseRoutes, ...courseRoutes, ...courseRequirementsRoutes, ...blogRoutes, ...findRoutes, ...texasCourtsRoutes, ...courtSlugRoutes];
 
 const toEntry = (path: string) =>
   `  <url>\n    <loc>${siteUrl}${path}</loc>\n    <changefreq>weekly</changefreq>\n  </url>`;

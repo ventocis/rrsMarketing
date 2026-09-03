@@ -115,6 +115,13 @@ const faqSchema = JSON.stringify({
       .i18n-body a { color: #1e3fbf; font-weight: 500; }
       .i18n-body a:hover { text-decoration: underline; }
       .i18n-body strong { color: #111722; }
+      .i18n-body table { width: 100%; border-collapse: collapse; font-size: 0.9rem; display: block; overflow-x: auto; border: 1px solid #d9e0ec; border-radius: 12px; margin: 1rem 0; }
+      .i18n-body table thead { background: #f5f7fb; }
+      .i18n-body table th, .i18n-body table td { padding: 0.6rem 0.9rem; border-bottom: 1px solid #d9e0ec; text-align: start; vertical-align: top; min-width: 9rem; }
+      .i18n-body table th:first-child, .i18n-body table td:first-child { min-width: 7rem; }
+      .i18n-body table tbody tr:last-child td { border-bottom: 0; }
+      .i18n-body table tbody tr:nth-child(even) { background: rgba(245,247,251,0.6); }
+      .i18n-body em { color: #5f6d88; font-size: 0.85rem; }
     </style>
   </TexasLayout>
 ) : (

@@ -32,6 +32,7 @@ const staticRoutes = [
   '/texas/ticket-law-changes-2025',
   '/texas/tdlr-approved',
   '/texas/ticket-dismissal',
+  '/texas/spanish',
   '/texas/providers',
   '/texas/type-3a-driving-record',
   '/texas/certificate-rejected',

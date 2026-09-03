@@ -31,6 +31,7 @@ const staticRoutes = [
   '/texas/speeding-25-over',
   '/texas/ticket-law-changes-2025',
   '/texas/tdlr-approved',
+  '/texas/ticket-dismissal',
   '/texas/providers',
   '/texas/type-3a-driving-record',
   '/texas/certificate-rejected',

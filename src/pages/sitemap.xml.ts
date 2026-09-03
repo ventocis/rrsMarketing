@@ -33,6 +33,7 @@ const staticRoutes = [
   '/texas/tdlr-approved',
   '/texas/ticket-dismissal',
   '/texas/spanish',
+  '/texas/fastest-defensive-driving-course',
   '/texas/providers',
   '/texas/type-3a-driving-record',
   '/texas/certificate-rejected',

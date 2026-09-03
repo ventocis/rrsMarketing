@@ -1,6 +1,11 @@
 ---
 // Responsive YouTube embed + VideoObject JSON-LD (for video rich results).
-// Privacy-friendly (youtube-nocookie), lazy-loaded, 16:9.
+//
+// Performance: this renders a "facade" (the video's own thumbnail plus a play
+// button) instead of the YouTube player. The real iframe is injected only when
+// the viewer clicks, with autoplay, so the page pays nothing for the player
+// (about 1 MB of script) until someone actually wants to watch. Privacy-friendly
+// (youtube-nocookie), 16:9, keyboard accessible.
 interface Props {
   id: string;            // YouTube video ID
   title: string;         // video title (schema name + iframe title)
@@ -10,15 +15,16 @@ interface Props {
 }
 const { id, title, description, duration, uploadDate = '2026-06-16' } = Astro.props;
 
+const thumb = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+const thumbHi = `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
+const embed = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
+
 const schema = JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'VideoObject',
   name: title,
   description,
-  thumbnailUrl: [
-    `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
-    `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`,
-  ],
+  thumbnailUrl: [thumb, thumbHi],
   uploadDate,
   ...(duration ? { duration } : {}),
   embedUrl: `https://www.youtube.com/embed/${id}`,
@@ -32,16 +38,68 @@ const schema = JSON.stringify({
 ---
 <script type="application/ld+json" set:html={schema} />
 <figure class="my-8">
-  <div class="relative w-full overflow-hidden rounded-xl border border-border bg-black" style="padding-bottom:56.25%;">
-    <iframe
-      class="absolute inset-0 h-full w-full"
-      src={`https://www.youtube-nocookie.com/embed/${id}`}
-      title={title}
-      loading="lazy"
-      frameborder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-      allowfullscreen
-    ></iframe>
+  <div
+    class="rrs-yt relative w-full overflow-hidden rounded-xl border border-border bg-black"
+    style="padding-bottom:56.25%;"
+    data-embed={embed}
+    data-title={title}
+  >
+    <img
+      src={thumb}
+      srcset={`${thumb} 480w, ${thumbHi} 1280w`}
+      sizes="(min-width: 880px) 880px, 100vw"
+      alt=""
+      width="1280"
+      height="720"
+      loading="eager"
+      decoding="async"
+      class="absolute inset-0 h-full w-full object-cover"
+    />
+    <button
+      type="button"
+      class="rrs-yt-play absolute inset-0 flex h-full w-full items-center justify-center bg-transparent focus-visible:outline focus-visible:outline-4 focus-visible:outline-white"
+      aria-label={`Play video: ${title}`}
+    >
+      <span class="flex h-16 w-16 items-center justify-center rounded-full bg-black/65 transition-colors group-hover:bg-[#FF0000]" style="box-shadow:0 8px 24px rgba(0,0,0,.35)">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+      </span>
+    </button>
   </div>
   <figcaption class="mt-2 text-sm text-text-subtle" style="font-family: 'DM Sans', sans-serif;">▶ Watch: {title}</figcaption>
 </figure>
+
+<script is:inline>
+  (function () {
+    function activate(box) {
+      if (box.dataset.loaded) return;
+      box.dataset.loaded = '1';
+      var iframe = document.createElement('iframe');
+      iframe.className = 'absolute inset-0 h-full w-full';
+      iframe.src = box.getAttribute('data-embed');
+      iframe.title = box.getAttribute('data-title') || 'Video';
+      iframe.setAttribute('frameborder', '0');
+      iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+      iframe.setAttribute('allowfullscreen', '');
+      box.replaceChildren(iframe);
+    }
+    function warm() {
+      // Preconnect once, on first hover/focus, so the click feels instant.
+      if (document.getElementById('rrs-yt-preconnect')) return;
+      ['https://www.youtube-nocookie.com', 'https://www.google.com', 'https://static.doubleclick.net'].forEach(function (href, i) {
+        var l = document.createElement('link'); l.rel = 'preconnect'; l.href = href; if (i === 0) l.id = 'rrs-yt-preconnect';
+        document.head.appendChild(l);
+      });
+    }
+    function init() {
+      document.querySelectorAll('.rrs-yt').forEach(function (box) {
+        if (box.dataset.bound) return;
+        box.dataset.bound = '1';
+        var btn = box.querySelector('.rrs-yt-play');
+        btn.addEventListener('click', function () { activate(box); });
+        btn.addEventListener('pointerover', warm, { once: true });
+        btn.addEventListener('focus', warm, { once: true });
+      });
+    }
+    if (document.readyState !== 'loading') { init(); } else { document.addEventListener('DOMContentLoaded', init); }
+  })();
+</script>

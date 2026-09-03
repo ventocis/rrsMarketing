@@ -1,9 +1,12 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import { alternatesFor, translationsOf, langLabel } from '../../lib/i18n';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 
 const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+const alternates = alternatesFor('/texas/lost-ticket');
+const translations = translationsOf('/texas/lost-ticket');
 
 const faqs = [
   {
@@ -57,7 +60,7 @@ const faqSchema = JSON.stringify({
     description="Lost the citation? The deadline didn't get lost with it. How to identify which Texas court has your ticket, recover the citation number, and protect the dismissal option before the answer date passes."
     keywords="lost traffic ticket texas, find my ticket texas, lost citation number texas, what court is my ticket texas, look up traffic ticket texas"
     url="/texas/lost-ticket"
-  >
+   alternates={alternates}>
     <script type="application/ld+json" set:html={articleSchema} />
     <script type="application/ld+json" set:html={faqSchema} />
 
@@ -71,6 +74,12 @@ const faqSchema = JSON.stringify({
           <span class="mx-2 text-text-subtle">›</span>
           <span class="text-text">Lost your ticket</span>
         </p>
+        {translations.length > 0 && (
+          <p class="text-xs text-text-body mb-6 flex flex-wrap items-center gap-1.5" style="font-family: 'DM Sans', sans-serif;">
+            <span class="text-text-subtle me-1">Also in:</span>
+            {translations.map(t => <a href={`/texas/${t.slug}`} hreflang={t.lang} lang={t.lang} class="px-2 py-0.5 rounded-full border border-border text-text-body hover:border-primary-deep no-underline">{langLabel(t.lang)}</a>)}
+          </p>
+        )}
 
         <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
           Lost the Ticket? The Deadline Didn't Get Lost With It — Here's How to Find Everything

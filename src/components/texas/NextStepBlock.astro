@@ -11,7 +11,16 @@
  * court-page coupon widget). It subscribes to the TX Eligibility Checker list, whose
  * live flow already walks subscribers through eligibility and the course; a dedicated
  * "court approval reminders" list can replace it via VITE_KLAVIYO_REMINDER_LIST.
+ *
+ * Translated pages pass `strings` (all visible text) plus `lang`/`dir`. The course is
+ * delivered in English; translated strings must say so rather than imply otherwise.
  */
+export interface NextStepStrings {
+  heading: string; approvedTitle: string; approvedText: string; approvedBtn: string;
+  notYetTitle: string; step1: string; step2: string; step2Link: string;
+  reminderLabel: string; placeholder: string; send: string; sent: string; error: string;
+  ineligibleNote: string; ineligibleLabel: string; ineligibleHref: string;
+}
 interface Props {
   /** Short label used as the Klaviyo custom_source and the signup_page property. */
   page: string;
@@ -22,6 +31,9 @@ interface Props {
   /** Where to send the ineligible reader. */
   ineligibleHref?: string;
   ineligibleLabel?: string;
+  lang?: string;
+  dir?: 'ltr' | 'rtl';
+  strings?: Partial<NextStepStrings>;
 }
 
 const {
@@ -30,11 +42,33 @@ const {
   ineligibleNote = 'Cited at 25+ mph over, in a work zone with workers present, or holding a CDL? Defensive driving dismissal is off the table, but you still have options.',
   ineligibleHref = '/texas/speeding-25-over',
   ineligibleLabel = 'See what to do instead',
+  lang = 'en',
+  dir = 'ltr',
+  strings = {},
 } = Astro.props;
+
+const t: NextStepStrings = {
+  heading: 'Your next step',
+  approvedTitle: 'The court already approved you for defensive driving?',
+  approvedText: 'Then the only thing left is the 6-hour course. Ours is $28 all-in, TDLR-approved (CP1234), and the certificate downloads the moment you finish.',
+  approvedBtn: 'Start the $28 course →',
+  notYetTitle: "Haven't asked the court yet?",
+  step1: "Don't pay the ticket online. Paying is a guilty plea and ends the dismissal option.",
+  step2: 'Request the driving safety course from your court on or before the appearance date printed on the citation.',
+  step2Link: "Here's exactly how",
+  reminderLabel: 'Email me the steps and a deadline reminder',
+  placeholder: 'you@email.com',
+  send: 'Send',
+  sent: 'Sent. Check your inbox for the steps for your court.',
+  error: 'Something went wrong. Please try again.',
+  ineligibleNote,
+  ineligibleLabel,
+  ineligibleHref,
+  ...strings,
+};
 
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 const listId = import.meta.env.VITE_KLAVIYO_REMINDER_LIST || 'UHAu4n';
-const companyId = 'U3BbdX';
 const blockId = `rrs-next-${page.replace(/[^a-z0-9]+/gi, '-').toLowerCase()}`;
 const order = lead === 'eligible' ? ['eligible', 'precourt'] : ['precourt', 'eligible'];
 ---
@@ -44,39 +78,44 @@ const order = lead === 'eligible' ? ['eligible', 'precourt'] : ['precourt', 'eli
   class="rrs-next-step my-10 rounded-2xl border border-border bg-surface-muted p-5 sm:p-6"
   data-list={listId}
   data-page={page}
+  data-lang={lang}
+  data-send={t.send}
+  data-error={t.error}
+  dir={dir}
+  lang={lang}
   aria-labelledby={`${blockId}-title`}
 >
-  <p id={`${blockId}-title`} class="text-xs font-semibold tracking-[0.12em] uppercase text-primary-deep mb-4" style="font-family: 'DM Sans', sans-serif;">Your next step</p>
+  <p id={`${blockId}-title`} class="text-xs font-semibold tracking-[0.12em] uppercase text-primary-deep mb-4" style="font-family: 'DM Sans', sans-serif;">{t.heading}</p>
 
   <div class="grid gap-4 sm:grid-cols-2">
     {order.map((kind) => kind === 'eligible' ? (
       <div class="rounded-xl bg-white border border-border p-4 flex flex-col gap-3">
-        <p class="text-base font-semibold text-text" style="font-family: 'Outfit', sans-serif;">The court already approved you for defensive driving?</p>
-        <p class="text-sm text-text-body leading-6" style="font-family: 'DM Sans', sans-serif;">Then the only thing left is the 6-hour course. Ours is $28 all-in, TDLR-approved (CP1234), and the certificate downloads the moment you finish.</p>
-        <a href={enrollUrl} class="mt-auto inline-flex h-11 items-center justify-center rounded-xl bg-primary px-5 text-sm font-semibold text-white no-underline hover:bg-primary-hover" style="font-family: 'DM Sans', sans-serif;">Start the $28 course →</a>
+        <p class="text-base font-semibold text-text" style="font-family: 'Outfit', sans-serif;">{t.approvedTitle}</p>
+        <p class="text-sm text-text-body leading-6" style="font-family: 'DM Sans', sans-serif;">{t.approvedText}</p>
+        <a href={enrollUrl} class="mt-auto inline-flex h-11 items-center justify-center rounded-xl bg-primary px-5 text-sm font-semibold text-white no-underline hover:bg-primary-hover text-center" style="font-family: 'DM Sans', sans-serif;">{t.approvedBtn}</a>
       </div>
     ) : (
       <div class="rounded-xl bg-white border border-border p-4 flex flex-col gap-3">
-        <p class="text-base font-semibold text-text" style="font-family: 'Outfit', sans-serif;">Haven't asked the court yet?</p>
-        <ol class="text-sm text-text-body leading-6 list-decimal pl-5 space-y-1" style="font-family: 'DM Sans', sans-serif;">
-          <li>Don't pay the ticket online. Paying is a guilty plea and ends the dismissal option.</li>
-          <li>Request the driving safety course from your court on or before the appearance date printed on the citation. <a href="/texas/request-defensive-driving" class="text-primary-deep font-medium hover:underline">Here's exactly how</a>.</li>
+        <p class="text-base font-semibold text-text" style="font-family: 'Outfit', sans-serif;">{t.notYetTitle}</p>
+        <ol class="text-sm text-text-body leading-6 list-decimal ps-5 space-y-1" style="font-family: 'DM Sans', sans-serif;">
+          <li>{t.step1}</li>
+          <li>{t.step2} <a href="/texas/request-defensive-driving" class="text-primary-deep font-medium hover:underline">{t.step2Link}</a>.</li>
         </ol>
         <form class="rrs-next-form flex flex-col gap-2 mt-auto" novalidate>
-          <label class="text-xs text-text-body" style="font-family: 'DM Sans', sans-serif;">Email me the steps and a deadline reminder</label>
+          <label class="text-xs text-text-body" style="font-family: 'DM Sans', sans-serif;">{t.reminderLabel}</label>
           <div class="flex gap-2">
-            <input type="email" name="email" required placeholder="you@email.com" autocomplete="email" class="min-w-0 flex-1 h-11 px-3 border border-border rounded-xl text-sm" />
-            <button type="submit" class="h-11 shrink-0 rounded-xl bg-primary-deep px-4 text-sm font-semibold text-white hover:bg-primary-hover" style="font-family: 'DM Sans', sans-serif;">Send</button>
+            <input type="email" name="email" required placeholder={t.placeholder} autocomplete="email" class="min-w-0 flex-1 h-11 px-3 border border-border rounded-xl text-sm" dir="ltr" />
+            <button type="submit" class="h-11 shrink-0 rounded-xl bg-primary-deep px-4 text-sm font-semibold text-white hover:bg-primary-hover" style="font-family: 'DM Sans', sans-serif;">{t.send}</button>
           </div>
-          <p class="rrs-next-error text-xs" style="display:none;color:#b91c1c">Something went wrong. Please try again.</p>
-          <p class="rrs-next-ok text-xs font-semibold" style="display:none;color:#047857">Sent. Check your inbox for the steps for your court.</p>
+          <p class="rrs-next-error text-xs" style="display:none;color:#b91c1c">{t.error}</p>
+          <p class="rrs-next-ok text-xs font-semibold" style="display:none;color:#047857">{t.sent}</p>
         </form>
       </div>
     ))}
   </div>
 
   <p class="mt-4 text-xs text-text-body leading-5" style="font-family: 'DM Sans', sans-serif;">
-    {ineligibleNote} <a href={ineligibleHref} class="text-primary-deep font-medium hover:underline">{ineligibleLabel}</a>
+    {t.ineligibleNote} <a href={t.ineligibleHref} class="text-primary-deep font-medium hover:underline">{t.ineligibleLabel}</a>
   </p>
 </aside>
 
@@ -91,6 +130,9 @@ const order = lead === 'eligible' ? ['eligible', 'precourt'] : ['precourt', 'eli
         form.dataset.bound = '1';
         var list = block.getAttribute('data-list');
         var page = block.getAttribute('data-page');
+        var lang = block.getAttribute('data-lang') || 'en';
+        var sendLabel = block.getAttribute('data-send') || 'Send';
+        var errorText = block.getAttribute('data-error') || 'Something went wrong. Please try again.';
         var err = form.querySelector('.rrs-next-error');
         var ok = form.querySelector('.rrs-next-ok');
         form.addEventListener('submit', function (e) {
@@ -98,14 +140,14 @@ const order = lead === 'eligible' ? ['eligible', 'precourt'] : ['precourt', 'eli
           err.style.display = 'none';
           var input = form.querySelector('input[type=email]');
           var email = (input.value || '').trim();
-          if (!email || email.indexOf('@') < 1) { err.textContent = 'Enter a valid email address.'; err.style.display = 'block'; return; }
+          if (!email || email.indexOf('@') < 1) { err.textContent = errorText; err.style.display = 'block'; return; }
           var btn = form.querySelector('button[type=submit]');
-          btn.disabled = true; btn.textContent = 'Sending…';
+          btn.disabled = true; btn.textContent = '…';
           var qs = new URLSearchParams(location.search);
           var payload = { data: { type: 'subscription', attributes: {
             custom_source: 'Next Step: ' + page,
             profile: { data: { type: 'profile', attributes: { email: email, properties: {
-              signup_page: page, signup_url: location.href, signup_source: 'next-step-block',
+              signup_page: page, signup_url: location.href, signup_source: 'next-step-block', signup_language: lang,
               utm_source: qs.get('utm_source') || '', utm_medium: qs.get('utm_medium') || '', utm_campaign: qs.get('utm_campaign') || ''
             } } } }
           }, relationships: { list: { data: { type: 'list', id: list } } } } };
@@ -114,7 +156,7 @@ const order = lead === 'eligible' ? ['eligible', 'precourt'] : ['precourt', 'eli
           }).then(function (r) {
             if (r.status >= 200 && r.status < 300) { form.querySelector('.flex').style.display = 'none'; ok.style.display = 'block'; }
             else { throw new Error('status ' + r.status); }
-          }).catch(function () { btn.disabled = false; btn.textContent = 'Send'; err.textContent = 'Something went wrong. Please try again.'; err.style.display = 'block'; });
+          }).catch(function () { btn.disabled = false; btn.textContent = sendLabel; err.textContent = errorText; err.style.display = 'block'; });
         });
       });
     }

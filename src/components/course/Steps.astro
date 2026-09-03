@@ -1,0 +1,34 @@
+---
+import type { CourseData } from '../../data/courses/types';
+import SectionHeading from './SectionHeading.astro';
+
+interface Props { course: CourseData; id?: string }
+const { course, id = 'how-it-works' } = Astro.props;
+const s = course.steps;
+---
+
+<section id={id} class="py-16 lg:py-24 bg-gradient-to-b from-surface-muted to-white scroll-mt-24">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <SectionHeading eyebrow="The process" heading={s.heading} intro={s.intro} />
+
+    <ol class="flex flex-col gap-4 list-none p-0 m-0">
+      {s.items.map((step) => {
+        const withUs = s.withUsCount >= step.n;
+        return (
+          <li class={`rounded-[20px] p-6 lg:p-7 flex gap-5 items-start border ${withUs ? 'bg-info/40 border-info-border' : 'bg-white border-border'}`}>
+            <span class={`flex-shrink-0 w-11 h-11 rounded-2xl flex items-center justify-center text-lg font-bold tabular-nums ${withUs ? 'bg-primary text-white' : 'bg-surface-muted text-text-muted border border-border'}`}>{step.n}</span>
+            <div class="flex flex-col gap-1.5">
+              <div class="flex flex-wrap items-center gap-2">
+                <h3 class="text-xl font-bold text-text leading-7" style="font-family:'Outfit',sans-serif;">{step.title}</h3>
+                <span class={`text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full ${withUs ? 'bg-primary-deep text-white' : 'bg-surface-muted text-text-muted border border-border'}`}>
+                  {withUs ? s.withUsLabel : s.afterLabel}
+                </span>
+              </div>
+              <p class="text-base text-text-body leading-6" set:html={step.body} />
+            </div>
+          </li>
+        );
+      })}
+    </ol>
+  </div>
+</section>

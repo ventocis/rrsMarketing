@@ -1,0 +1,85 @@
+---
+import type { CourseData } from '../../data/courses/types';
+
+interface Props {
+  course: CourseData;
+  enrollUrl: string;
+  /** Section id for in-page anchors. */
+  id?: string;
+}
+const { course, enrollUrl, id = 'pricing' } = Astro.props;
+const price = course.course.priceUsd;
+const p = course.pricing;
+---
+
+<section id={id} class="py-16 lg:py-24 bg-white scroll-mt-24">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col lg:flex-row gap-12 items-start">
+
+      <div class="w-full lg:w-1/2 flex flex-col gap-6">
+        <div class="flex items-center gap-2.5">
+          <span class="h-[3px] w-7 rounded-full bg-primary"></span>
+          <span class="text-[11px] font-bold uppercase tracking-[0.16em] text-primary-deep">Pricing</span>
+        </div>
+        <h2 class="text-[32px] lg:text-[44px] font-bold text-text leading-[1.15] tracking-[-1px]" style="font-family:'Outfit',sans-serif;">{p.heading}</h2>
+        <ul class="flex flex-col gap-3 list-none p-0 m-0">
+          {p.included.map((item) => (
+            <li class="flex gap-3 items-start">
+              <span class="mt-1 flex-shrink-0 w-5 h-5 rounded-full bg-success-bg flex items-center justify-center">
+                <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.2l2.2 2.2 4.8-4.8" stroke="#16A34A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <span class="text-base text-text-body leading-6">{item}</span>
+            </li>
+          ))}
+        </ul>
+
+        {p.notCharged.length > 0 && (
+          <div class="border-t border-border pt-6 mt-2">
+            <p class="text-sm font-bold text-text uppercase tracking-wider mb-3">And what we never charge for</p>
+            <div class="flex flex-wrap gap-2">
+              {p.notCharged.map((item) => (
+                <span class="inline-flex items-center gap-1.5 bg-surface-muted border border-border text-text-body text-sm px-3 py-1.5 rounded-full">
+                  <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3l6 6M9 3l-6 6" stroke="#64748B" stroke-width="1.6" stroke-linecap="round"/></svg>
+                  {item}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div class="w-full lg:w-1/2 lg:max-w-[440px] lg:ml-auto">
+        <div class="bg-surface-muted border border-border rounded-[24px] p-8 flex flex-col gap-6">
+          <div class="flex flex-col gap-1">
+            <span class="text-sm font-semibold text-text-muted uppercase tracking-wider">{course.course.shortName}</span>
+            <div class="flex items-baseline gap-2">
+              <span class="text-[56px] font-bold text-primary-navy leading-none tabular-nums" style="font-family:'Outfit',sans-serif;">${price}</span>
+            </div>
+            <span class="text-base text-text-body">{p.totalLabel}</span>
+          </div>
+
+          <div class="bg-white border border-border rounded-2xl p-4 flex flex-col gap-2">
+            {p.lineItems.map((li) => (
+              <div class="flex justify-between text-sm">
+                <span class="text-text-body">{li.label}</span>
+                <span class={`font-semibold tabular-nums ${li.good ? 'text-success' : 'text-text'}`}>{li.value}</span>
+              </div>
+            ))}
+            <div class="border-t border-border pt-2 mt-1 flex justify-between text-base">
+              <span class="font-bold text-text">What you pay</span><span class="font-bold text-text tabular-nums">${price}</span>
+            </div>
+          </div>
+
+          <a href={enrollUrl} class="bg-primary hover:bg-primary-hover text-white h-[56px] rounded-[16px] text-[18px] font-semibold flex items-center justify-center no-underline transition-colors shadow-[0px_8px_16px_-6px_rgba(36,84,230,0.5)]">
+            {course.hero.ctaLabel}
+          </a>
+
+          <p class="text-xs text-text-muted leading-5 text-center">
+            {p.refundNote}
+            <a href={`${course.state.route}/refund`} class="text-primary underline">Refund policy</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

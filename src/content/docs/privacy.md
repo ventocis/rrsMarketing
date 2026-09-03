@@ -13,7 +13,7 @@ This Privacy Policy describes how we collect, use, store, disclose, and protect 
 - Job applicants and business contacts
 - Representatives of partner organizations
 
-Road Ready Safety is currently licensed or actively seeking licensure as a driver safety education provider in California, Florida, and Texas, and operates as a referral partner with Ticket School (ticketschool.com) and Driver Training Associates (drivertrainingassociates.com) for course delivery in other states. Your use of third-party partner platforms is subject to their separate privacy policies. We encourage you to review those policies before enrolling through a referred provider.
+Road Ready Safety is currently licensed or actively seeking approval as a driver safety, driver improvement or driver education provider in Texas, California, Florida, Virginia, Ohio, North Dakota, Idaho and Missouri, and operates as a referral partner with Ticket School (ticketschool.com) and Driver Training Associates (drivertrainingassociates.com) for course delivery in other states. Your use of third-party partner platforms is subject to their separate privacy policies. We encourage you to review those policies before enrolling through a referred provider.
 
 This Privacy Policy applies to users in the United States only. By accessing the Services, you agree to the practices described below. If you do not agree, do not use the Services.
 

@@ -1,0 +1,36 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import reviews from '../../data/reviews.json';
+
+interface Props { heading: string; intro?: string; limit?: number }
+const { heading, intro, limit = 4 } = Astro.props;
+const items = (reviews as Array<{ initials: string; name: string; date: string; quote: string }>).slice(0, limit);
+---
+
+<section class="py-16 lg:py-24 bg-surface-muted">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <SectionHeading eyebrow="Reviews" heading={heading} intro={intro} />
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {items.map((t) => (
+        <figure class="bg-white border border-border rounded-[20px] p-8 flex flex-col gap-4 items-start m-0">
+          <div class="flex gap-1" aria-label="5 out of 5 stars">
+            {[...Array(5)].map(() => (
+              <img src="/assets/icons/texas/star-testimonial.svg" alt="" class="w-5 h-5" />
+            ))}
+          </div>
+          <blockquote class="text-lg text-text leading-[28px] m-0">&ldquo;{t.quote}&rdquo;</blockquote>
+          <figcaption class="flex gap-3 items-center pt-2">
+            <div class="bg-info rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0">
+              <span class="text-sm font-semibold text-primary-deep">{t.initials}</span>
+            </div>
+            <div class="flex flex-col">
+              <span class="text-base font-semibold text-text leading-6">{t.name}</span>
+              <span class="text-xs text-text-subtle leading-5">Verified via Trustpilot &middot; {t.date}</span>
+            </div>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>

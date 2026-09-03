@@ -1,0 +1,60 @@
+---
+import CourseLayout from '../../layouts/CourseLayout.astro';
+import PageIntro from '../../components/course/PageIntro.astro';
+import Pricing from '../../components/course/Pricing.astro';
+import CompareTable from '../../components/course/CompareTable.astro';
+import Faq from '../../components/course/Faq.astro';
+import FinalCta from '../../components/course/FinalCta.astro';
+import { enabledCourses, stateParam } from '../../data/courses/index';
+import { enrollUrl as buildEnrollUrl, contactUrl } from '../../lib/courseFlags';
+import type { CourseData } from '../../data/courses/types';
+
+export function getStaticPaths() {
+  return enabledCourses.map((course) => ({ params: { state: stateParam(course) }, props: { course } }));
+}
+
+const { course } = Astro.props as { course: CourseData };
+const enrollUrl = buildEnrollUrl(course);
+const route = course.state.route;
+const price = course.course.priceUsd;
+
+const priceFaqs = course.faqs.filter((f) => /\$|refund|price|cost|fee|insurance/i.test(f.q + f.a)).slice(0, 5);
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: priceFaqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+---
+
+<CourseLayout
+  course={course}
+  title={`${course.course.shortName} Pricing — $${price} Total | Road Ready Safety`}
+  description={`What the ${course.course.name} costs and everything included in the $${price}: certificate, exam retake and support, with no fees added at checkout.`}
+  url={`${route}/pricing`}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  </Fragment>
+
+  <section class="pt-16 lg:pt-24 pb-4 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-info to-white">
+    <div class="max-w-4xl mx-auto">
+      <PageIntro chip="Pricing" title={`$${price}. That is the whole number.`} subtitle={`Here is exactly what is inside the price of the ${course.course.name}, and what other providers add after you start.`} />
+    </div>
+  </section>
+
+  <Pricing course={course} enrollUrl={enrollUrl} id="whats-included" />
+  <CompareTable course={course} />
+
+  <section class="py-16 lg:py-24 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-surface-muted border border-border rounded-[24px] p-8 lg:p-10 flex flex-col gap-4">
+        <h2 class="text-2xl font-bold text-text" style="font-family:'Outfit',sans-serif;">Refunds, in one sentence</h2>
+        <p class="text-base text-text-body leading-7">{course.pricing.refundNote} Once you have passed the final exam and the certificate has been issued, it has been earned and reported, and no refund is available.</p>
+        <a href={`${route}/refund`} class="text-primary font-semibold underline underline-offset-2 w-fit">Read the full refund policy</a>
+      </div>
+    </div>
+  </section>
+
+  <Faq faqs={priceFaqs} contactUrl={contactUrl} heading="Questions about the price" moreHref={`${route}/faq`} />
+  <FinalCta course={course} enrollUrl={enrollUrl} />
+</CourseLayout>

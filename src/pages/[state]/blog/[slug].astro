@@ -1,0 +1,112 @@
+---
+import { marked } from 'marked';
+import CourseLayout from '../../../layouts/CourseLayout.astro';
+import { enabledCourses, stateParam } from '../../../data/courses/index';
+import { postsFor, type StatePost } from '../../../data/blog/index';
+import { enrollUrl as buildEnrollUrl, siteUrl } from '../../../lib/courseFlags';
+import type { CourseData } from '../../../data/courses/types';
+
+export function getStaticPaths() {
+  return enabledCourses.flatMap((course) =>
+    postsFor(course.state.code).map((post) => ({
+      params: { state: stateParam(course), slug: post.slug },
+      props: { course, post },
+    })),
+  );
+}
+
+const { course, post } = Astro.props as { course: CourseData; post: StatePost };
+const route = course.state.route;
+const enrollUrl = buildEnrollUrl(course);
+const html = marked(post.content) as string;
+const related = postsFor(course.state.code).filter((p) => p.slug !== post.slug).slice(0, 3);
+
+function formatDate(d: string) {
+  return new Date(d).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+}
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: post.title,
+  description: post.description,
+  datePublished: post.date,
+  dateModified: post.updated ?? post.date,
+  url: `${siteUrl}${route}/blog/${post.slug}`,
+  inLanguage: 'en-US',
+  author: { '@type': 'Organization', name: course.provider.dba, url: siteUrl },
+  publisher: { '@type': 'Organization', name: course.provider.dba, url: siteUrl, logo: { '@type': 'ImageObject', url: `${siteUrl}/assets/icons/texas/logo-shield.svg` } },
+  about: { '@type': 'Thing', name: `${course.state.name} driving record` },
+  mainEntityOfPage: `${siteUrl}${route}/blog/${post.slug}`,
+};
+const faqSchema = post.faq && post.faq.length
+  ? { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: post.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) }
+  : null;
+---
+
+<CourseLayout course={course} title={post.title} description={post.description} url={`${route}/blog/${post.slug}`}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+    {faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
+  </Fragment>
+
+  <article class="bg-white">
+    <div class="max-w-[768px] mx-auto px-4 sm:px-6 py-10 md:py-16">
+      <nav class="mb-8 text-sm" aria-label="Breadcrumb">
+        <ol class="flex flex-wrap items-center gap-2 list-none p-0 m-0 text-text-body">
+          <li><a href={route} class="hover:text-primary no-underline">{course.state.name}</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href={`${route}/blog`} class="hover:text-primary no-underline">Guides</a></li>
+          <li aria-hidden="true">›</li>
+          <li class="text-text font-medium">{post.title.length > 48 ? post.title.slice(0, 48) + '…' : post.title}</li>
+        </ol>
+      </nav>
+
+      <header class="mb-10 flex flex-col gap-4">
+        <div class="flex flex-wrap items-center gap-3 text-sm text-text-muted">
+          <time datetime={post.updated ?? post.date}>Updated {formatDate(post.updated ?? post.date)}</time>
+          <span aria-hidden="true">·</span>
+          <span>Road Ready Safety</span>
+        </div>
+        <h1 class="text-3xl md:text-[40px] font-bold text-text leading-[1.15] tracking-[-0.02em] m-0" style="font-family:'Outfit',sans-serif;">{post.title}</h1>
+        <p class="text-xl text-text-body leading-relaxed m-0">{post.description}</p>
+      </header>
+
+      <div class="prose prose-base max-w-none" set:html={html} />
+
+      {post.sources && post.sources.length > 0 && (
+        <section class="mt-10 pt-6 border-t border-border">
+          <h2 class="text-base font-semibold text-text uppercase tracking-wider mb-3" style="font-family:'Outfit',sans-serif;">Sources</h2>
+          <ul class="list-disc pl-5 text-sm text-text-body flex flex-col gap-1.5 m-0">
+            {post.sources.map((s) => (
+              <li><a href={s.url} target="_blank" rel="noopener noreferrer" class="text-primary-deep underline underline-offset-2">{s.name}</a></li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      <aside class="mt-12 bg-primary-navy rounded-[24px] p-8 flex flex-col gap-4 text-white">
+        <h2 class="text-2xl font-bold leading-tight m-0" style="font-family:'Outfit',sans-serif;">{course.course.name}</h2>
+        <p class="text-white/85 leading-7 m-0">{course.course.hours} hours online, ${course.course.priceUsd} total, certificate included. {course.course.completionDays ? `${course.course.completionDays} days to finish once you start.` : ''}</p>
+        <div class="flex flex-col sm:flex-row gap-3">
+          <a href={enrollUrl} class="bg-white text-primary-navy h-12 px-6 rounded-xl text-base font-semibold flex items-center justify-center no-underline hover:bg-info transition-colors">{course.hero.ctaLabel} &mdash; ${course.course.priceUsd}</a>
+          <a href={route} class="border border-white/30 text-white h-12 px-6 rounded-xl text-base font-semibold flex items-center justify-center no-underline hover:bg-white/10 transition-colors">About the course</a>
+        </div>
+      </aside>
+
+      {related.length > 0 && (
+        <section class="mt-12">
+          <h2 class="text-lg font-bold text-text mb-4" style="font-family:'Outfit',sans-serif;">More {course.state.name} guides</h2>
+          <ul class="flex flex-col gap-3 list-none p-0 m-0">
+            {related.map((r) => (
+              <li class="border border-border rounded-2xl p-5">
+                <a href={`${route}/blog/${r.slug}`} class="font-semibold text-text no-underline hover:text-primary">{r.title}</a>
+                <p class="text-sm text-text-body mt-1 m-0">{r.description}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+    </div>
+  </article>
+</CourseLayout>

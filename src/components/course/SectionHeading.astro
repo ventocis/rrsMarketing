@@ -1,0 +1,24 @@
+---
+/** Eyebrow + heading + optional intro, in the ADE page's section style. */
+interface Props {
+  eyebrow: string;
+  heading: string;
+  intro?: string;
+  align?: 'center' | 'left';
+  tone?: 'light' | 'dark';
+}
+const { eyebrow, heading, intro, align = 'center', tone = 'light' } = Astro.props;
+const centered = align === 'center';
+---
+
+<div class={`flex flex-col gap-4 ${centered ? 'items-center text-center' : 'items-start text-left'} mb-12`}>
+  <div class="flex items-center gap-2.5">
+    <span class="h-[3px] w-7 rounded-full bg-primary"></span>
+    <span class={`text-[11px] font-bold uppercase tracking-[0.16em] ${tone === 'dark' ? 'text-info-border' : 'text-primary-deep'}`}>{eyebrow}</span>
+    {centered && <span class="h-[3px] w-7 rounded-full bg-primary"></span>}
+  </div>
+  <h2 class={`text-[32px] lg:text-[44px] font-bold leading-[1.15] tracking-[-1px] max-w-3xl ${tone === 'dark' ? 'text-white' : 'text-text'}`} style="font-family:'Outfit',sans-serif;">
+    {heading}
+  </h2>
+  {intro && <p class={`text-lg leading-7 max-w-2xl ${tone === 'dark' ? 'text-white/80' : 'text-text-body'}`}>{intro}</p>}
+</div>

@@ -1,0 +1,43 @@
+---
+import CourseLayout from '../../layouts/CourseLayout.astro';
+import PageIntro from '../../components/course/PageIntro.astro';
+import Faq from '../../components/course/Faq.astro';
+import FinalCta from '../../components/course/FinalCta.astro';
+import { enabledCourses, stateParam } from '../../data/courses/index';
+import { enrollUrl as buildEnrollUrl, contactUrl } from '../../lib/courseFlags';
+import type { CourseData } from '../../data/courses/types';
+
+export function getStaticPaths() {
+  return enabledCourses.map((course) => ({ params: { state: stateParam(course) }, props: { course } }));
+}
+
+const { course } = Astro.props as { course: CourseData };
+const enrollUrl = buildEnrollUrl(course);
+const route = course.state.route;
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: course.faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+---
+
+<CourseLayout
+  course={course}
+  title={`${course.course.shortName} FAQ — Every Question We Get Asked | Road Ready Safety`}
+  description={`Answers about the ${course.course.name}: who it is for, what it does under ${course.state.name} law, the exam, the deadline, the certificate and the price.`}
+  url={`${route}/faq`}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  </Fragment>
+
+  <section class="pt-16 lg:pt-24 pb-4 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-info to-white">
+    <div class="max-w-4xl mx-auto">
+      <PageIntro chip="FAQ" title={`${course.state.name} remedial course questions, answered plainly`} subtitle="Every answer here comes from the state's rules or from how our course is built. If yours is not here, ask us before you pay." />
+    </div>
+  </section>
+
+  <Faq faqs={course.faqs} contactUrl={contactUrl} heading="Everything people ask before they enroll" />
+  <FinalCta course={course} enrollUrl={enrollUrl} />
+</CourseLayout>

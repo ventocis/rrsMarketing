@@ -3,6 +3,8 @@ import coursesData from '../data/courses.json';
 import blogData from '../data/blog.json';
 import courtsData from '../data/texas-courts.json';
 import adeData from '../data/ade-texas.json';
+import { sitemapCourses, STATE_SUBROUTES } from '../data/courses/index';
+import { postsFor } from '../data/blog/index';
 
 // Generate sitemap at build time from known static routes
 const siteUrl = (import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com').replace(/\/$/, '');
@@ -127,6 +129,16 @@ const adeRoutes = adeEnabled
     ]
   : [];
 
+// Per-state course sites (/ohio, ...). Listed only when the state is enabled AND approved
+// (src/lib/courseFlags.ts). While approval is pending the pages are noindex, so they stay out.
+const stateCourseRoutes = sitemapCourses.flatMap((c) => {
+  const base = c.state.route;
+  const subs = STATE_SUBROUTES.map((s) => `${base}${s}`);
+  const posts = postsFor(c.state.code).map((p) => `${base}/blog/${p.slug}`);
+  const extras = c.state.code === 'OH' ? [`${base}/12-point-suspension`] : [];
+  return [...subs, ...posts, ...extras];
+});
+
 const courseRoutes = (coursesData as Array<{ slug: string }>).map(c => `/courses/${c.slug}`);
 
 const courseRequirementsRoutes = (coursesData as Array<{ slug: string }>).map(c => `/courses/${c.slug}/requirements`);
@@ -156,7 +168,7 @@ for (const state of states) {
 const texasCourtsRoutes = ['/texas/courts'];
 const courtSlugRoutes = ((courtsData as any).courts as Array<{ slug: string }>).map(c => `/texas/courts/${c.slug}`);
 
-const allRoutes = [...staticRoutes, ...adeRoutes, ...courseRoutes, ...courseRequirementsRoutes, ...blogRoutes, ...findRoutes, ...texasCourtsRoutes, ...courtSlugRoutes];
+const allRoutes = [...staticRoutes, ...adeRoutes, ...stateCourseRoutes, ...courseRoutes, ...courseRequirementsRoutes, ...blogRoutes, ...findRoutes, ...texasCourtsRoutes, ...courtSlugRoutes];
 
 const toEntry = (path: string) =>
   `  <url>\n    <loc>${siteUrl}${path}</loc>\n    <changefreq>weekly</changefreq>\n  </url>`;

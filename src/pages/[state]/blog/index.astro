@@ -1,0 +1,50 @@
+---
+import CourseLayout from '../../../layouts/CourseLayout.astro';
+import PageIntro from '../../../components/course/PageIntro.astro';
+import FinalCta from '../../../components/course/FinalCta.astro';
+import { enabledCourses, stateParam } from '../../../data/courses/index';
+import { postsFor } from '../../../data/blog/index';
+import { enrollUrl as buildEnrollUrl } from '../../../lib/courseFlags';
+import type { CourseData } from '../../../data/courses/types';
+
+export function getStaticPaths() {
+  return enabledCourses.map((course) => ({ params: { state: stateParam(course) }, props: { course } }));
+}
+
+const { course } = Astro.props as { course: CourseData };
+const route = course.state.route;
+const posts = postsFor(course.state.code);
+const enrollUrl = buildEnrollUrl(course);
+
+function formatDate(d: string) {
+  return new Date(d).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+}
+---
+
+<CourseLayout
+  course={course}
+  title={`${course.blog.title} | Road Ready Safety`}
+  description={course.blog.intro}
+  url={`${route}/blog`}
+>
+  <section class="py-16 lg:py-24 px-4 sm:px-6 lg:px-8 bg-surface-muted">
+    <div class="max-w-4xl mx-auto">
+      <PageIntro chip="Guides" title={course.blog.title} subtitle={course.blog.intro} />
+
+      <div class="flex flex-col gap-5">
+        {posts.map((post) => (
+          <article class="bg-white border border-border rounded-[20px] p-7 lg:p-8 flex flex-col gap-3">
+            <time class="text-xs text-text-muted" datetime={post.updated ?? post.date}>Updated {formatDate(post.updated ?? post.date)}</time>
+            <h2 class="text-[22px] font-bold text-text leading-7 m-0" style="font-family:'Outfit',sans-serif;">
+              <a href={`${route}/blog/${post.slug}`} class="no-underline hover:text-primary transition-colors">{post.title}</a>
+            </h2>
+            <p class="text-base text-text-body leading-7 m-0">{post.description}</p>
+            <a href={`${route}/blog/${post.slug}`} class="text-primary font-semibold underline underline-offset-2 w-fit">Read the guide</a>
+          </article>
+        ))}
+        {posts.length === 0 && <p class="text-text-body">Guides for {course.state.name} are on the way.</p>}
+      </div>
+    </div>
+  </section>
+  <FinalCta course={course} enrollUrl={enrollUrl} />
+</CourseLayout>

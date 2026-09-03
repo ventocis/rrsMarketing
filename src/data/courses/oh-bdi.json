@@ -1,0 +1,638 @@
+{
+  "_note": "Single source of truth for the Ohio marketing site. Course facts trace to the portal sheet 'OH BDI — v5 PROD Upload — 2026-09-01' and to ~/Claude/Ohio/11-Portal-Handoff.md. Regulatory facts cite ORC 4510.036/.037/.038, OAC 4501-21 and the Ohio BMV. Do not hand-edit numbers without updating the sheet. claims.banned is enforced by scripts/check-claims.mjs.",
+  "state": {
+    "code": "OH",
+    "name": "Ohio",
+    "route": "/ohio",
+    "agency": "Ohio Department of Public Safety",
+    "agencyShort": "ODPS",
+    "agencyUrl": "https://otso.ohio.gov",
+    "timezone": "America/New_York"
+  },
+  "provider": {
+    "legalName": "Road Ready Driver Instruction LLC",
+    "dba": "Road Ready Safety",
+    "approvalNumber": "",
+    "approvalLabel": "ODPS-Approved Adult Remedial Online School · #{{number}}",
+    "approvalPendingLabel": "Ohio Adult Remedial Online School · Approval Pending",
+    "supportEmail": "info@roadreadysafety.com",
+    "supportPhone": "(888) 885-5707",
+    "supportPhoneHref": "tel:+18888855707",
+    "supportHours": ""
+  },
+  "course": {
+    "key": "oh-bdi",
+    "sku": "oh-bdi",
+    "name": "Ohio 8-Hour Adult Remedial Driving Course",
+    "shortName": "Ohio Remedial Course",
+    "hours": 8,
+    "priceUsd": "69.95",
+    "completionDays": 30,
+    "completionNote": "30 days from the moment you first open the course content, set by Ohio rule, not by us.",
+    "modules": [
+      {
+        "n": 0,
+        "title": "Orientation",
+        "blurb": "How the course works, how the timer counts your eight hours, the three reasons people are here, and the 30-day clock."
+      },
+      {
+        "n": 1,
+        "title": "Driving Involves Risk That Can Be Managed",
+        "blurb": "Why crashes are not accidents, where risk actually comes from, and the habits that shrink it."
+      },
+      {
+        "n": 2,
+        "title": "Developing Good Visual Habits",
+        "blurb": "Scanning, mirrors, the 12-second look-ahead, and the blind spots that catch experienced drivers."
+      },
+      {
+        "n": 3,
+        "title": "Communicating with Others",
+        "blurb": "Signals, lane position, horn and lights, and how to read what other drivers are about to do."
+      },
+      {
+        "n": 4,
+        "title": "Personal Responsibility and Safe Driving Attitude",
+        "blurb": "Attitude is a quarter of Ohio's required curriculum. This module is why."
+      },
+      {
+        "n": 5,
+        "title": "Safe and Courteous Driving Strategies",
+        "blurb": "Following distance, right-of-way, intersections, merging and the courtesy that keeps traffic moving."
+      },
+      {
+        "n": 6,
+        "title": "Assessing and Adjusting Speed",
+        "blurb": "Stopping distance, speed and injury severity, and Ohio's speed-related point values."
+      },
+      {
+        "n": 7,
+        "title": "Dynamics of a Crash",
+        "blurb": "What happens to a vehicle and a body in the first tenth of a second, and why restraints exist."
+      },
+      {
+        "n": 8,
+        "title": "Space Management",
+        "blurb": "Keeping a cushion on every side, escape routes, and what to give up when you cannot have it all."
+      },
+      {
+        "n": 9,
+        "title": "Consequences of Poor Driving Behavior",
+        "blurb": "Points, suspensions, insurance, employment and the costs that do not show up on the ticket."
+      },
+      {
+        "n": 10,
+        "title": "Distracted Driving and Ohio Law",
+        "blurb": "Visual, manual and cognitive distraction, plus Ohio's hands-free law and its escalating point values."
+      },
+      {
+        "n": 11,
+        "title": "Handling Driving Emergencies",
+        "blurb": "Blowouts, brake failure, skids, stuck accelerators and what to do in the seconds you get."
+      },
+      {
+        "n": 12,
+        "title": "Safety Restraint Systems",
+        "blurb": "Seat belts, airbags, child restraints and Ohio's restraint laws."
+      },
+      {
+        "n": 13,
+        "title": "Financial Responsibility Laws",
+        "blurb": "Ohio's insurance requirement, proof of financial responsibility, and what an SR-22 actually is."
+      },
+      {
+        "n": 14,
+        "title": "Vehicle Technology Issues",
+        "blurb": "Driver assistance systems, what they do, what they do not do, and how drivers over-trust them."
+      },
+      {
+        "n": 15,
+        "title": "Driver Fitness",
+        "blurb": "Fatigue, vision, medication, aging and illness, and the honest self-check before a drive."
+      },
+      {
+        "n": 16,
+        "title": "Alcohol, Drugs and Driving",
+        "blurb": "The longest module by Ohio requirement: impairment, OVI law, refusal, prescriptions and cannabis."
+      },
+      {
+        "n": 17,
+        "title": "Aggressive Driving and Road Rage",
+        "blurb": "Recognizing it in others, recognizing it in yourself, and de-escalating without losing."
+      },
+      {
+        "n": 18,
+        "title": "Anatomical Gifts",
+        "blurb": "Ohio requires this topic. How organ donation registration works and what it means."
+      },
+      {
+        "n": 19,
+        "title": "Ohio-Specific Laws",
+        "blurb": "The point schedule, the two-point credit, the twelve-point suspension, and how to use your certificate."
+      },
+      {
+        "n": 20,
+        "title": "Final Examination",
+        "blurb": "40 questions drawn from the state-required bank. 75% to pass. One retake, 24 hours later.",
+        "isFinal": true
+      }
+    ],
+    "knowledgeChecks": {
+      "count": 8,
+      "passNote": "Eight unit checks of at least five questions. You need 80% to move on; if you miss it you see every correct answer with the reason, then take a fresh set."
+    }
+  },
+  "exam": {
+    "questions": 40,
+    "passPercent": 75,
+    "passCount": 30,
+    "attempts": 2,
+    "cooldownHours": 24,
+    "showAnswers": false,
+    "failNote": "Ohio allows two attempts, at least 24 hours apart. A second failure means retaking the course. We show you the exact time your retake unlocks and email you when it does."
+  },
+  "identityChecks": "An identity question after every two hours of credited instruction and one more before the final exam. Answer wrong and you get one more try; wrong again and Ohio requires a 24-hour lockout.",
+  "seo": {
+    "title": "Ohio Remedial Driving Course Online — 8 Hours, $69.95 Flat | Road Ready Safety",
+    "description": "Ohio's 8-hour adult remedial driving course, online and self-paced. Two-point credit, 12-point suspension reinstatement or a court order. $69.95 total with the certificate included.",
+    "keywords": "Ohio remedial driving course, Ohio adult remedial course online, Ohio 2 point credit course, Ohio 12 point suspension course, Ohio remedial driving course online",
+    "credential": "Ohio Adult Remedial Driving Course Certificate of Completion",
+    "courseDescription": "Eight-hour online adult remedial driving course for Ohio drivers seeking a two-point credit under ORC 4510.037, reinstating after a twelve-point suspension under ORC 4510.038, or completing a court order. Asynchronous, self-paced, with a 40-question final examination."
+  },
+  "banner": "$69.95 total — certificate, exam retake and support included. Nothing added at checkout.",
+  "nav": [
+    {
+      "href": "/ohio#who-needs-it",
+      "label": "Do I Need This?"
+    },
+    {
+      "href": "/ohio/how-it-works",
+      "label": "How It Works"
+    },
+    {
+      "href": "/ohio/pricing",
+      "label": "Pricing"
+    },
+    {
+      "href": "/ohio/12-point-suspension",
+      "label": "12-Point Suspension"
+    },
+    {
+      "href": "/ohio/faq",
+      "label": "FAQ"
+    }
+  ],
+  "hero": {
+    "eyebrow": "Ohio Adult Remedial · 8 Hours Online",
+    "headline": "Ohio Remedial Driving Course Online",
+    "subhead": "The 8-hour adult remedial course Ohio drivers take for a two-point credit, to get a license back after a 12-point suspension, or because a judge said so. $69.95 total with the exam, one retake and your certificate included.",
+    "ctaLabel": "Start the Course",
+    "secondaryCta": {
+      "label": "Do I need this?",
+      "href": "#who-needs-it"
+    },
+    "microcopy": "Self-paced · Works on your phone · 30 days to finish once you start",
+    "mockProgressLabel": "Course Progress",
+    "mockContinueLabel": "Continue Module 12",
+    "mockCalloutTitle": "Timer visible",
+    "mockCalloutBody": "Today and total, always on screen"
+  },
+  "badges": [
+    {
+      "icon": "/assets/icons/texas/tdlr-approved-icon.svg",
+      "title": "Built to Ohio's Standard",
+      "body": "All 19 topics Ohio requires, in the order and proportions the state sets, with 480 measured minutes."
+    },
+    {
+      "icon": "/assets/icons/texas/guarantee-icon.svg",
+      "title": "One Flat Price",
+      "body": "$69.95. Certificate, exam retake and support included. No processing fee, no audio upsell."
+    },
+    {
+      "icon": "/assets/icons/texas/super-easy-icon.svg",
+      "title": "Read-Aloud and Captions",
+      "body": "Every page can be read to you. Every video is captioned. Included, not sold separately."
+    },
+    {
+      "icon": "/assets/icons/texas/mobile-friendly-icon.svg",
+      "title": "Works on Your Phone",
+      "body": "Stop and resume anywhere. Your timer and progress save the moment you leave."
+    }
+  ],
+  "trustBand": [
+    "All 8 hours, measured by the course timer",
+    "Certificate included",
+    "Full refund any time before you finish",
+    "Real people on phone and email"
+  ],
+  "pricing": {
+    "heading": "One price. Here is everything inside it.",
+    "included": [
+      "All eight hours Ohio requires, tracked by a visible timer",
+      "Twenty modules and eight unit knowledge checks",
+      "The 40-question final examination",
+      "One exam retake if you need it",
+      "Your signed certificate of completion, issued through Ohio's DETS system and emailed to you",
+      "Read-aloud audio on every page and captions on every video",
+      "Support by phone and email while you are enrolled"
+    ],
+    "notCharged": [
+      "Certificate fees",
+      "Processing fees",
+      "Audio narration",
+      "Exam retakes",
+      "Faster delivery"
+    ],
+    "lineItems": [
+      {
+        "label": "Course",
+        "value": "$69.95",
+        "good": false
+      },
+      {
+        "label": "Certificate",
+        "value": "Included",
+        "good": true
+      },
+      {
+        "label": "Processing fee",
+        "value": "$0.00",
+        "good": true
+      },
+      {
+        "label": "Audio narration",
+        "value": "Included",
+        "good": true
+      },
+      {
+        "label": "Exam retake",
+        "value": "$0.00",
+        "good": true
+      }
+    ],
+    "totalLabel": "Total. Not a deposit, not a starting price.",
+    "refundNote": "Full refund any time before you complete the course."
+  },
+  "audiences": {
+    "eyebrow": "Eligibility",
+    "heading": "Is this course for you?",
+    "intro": "Two things this one course does for an Ohio driver.",
+    "items": [
+      {
+        "label": "If you have 2 to 11 points",
+        "status": "Two-point credit",
+        "tone": "info",
+        "heading": "It earns you a two-point cushion",
+        "bullets": [
+          "Once every 3 years, 5 times in your life",
+          "Your suspension line moves from 12 points to 14",
+          "Points stay on your record"
+        ]
+      },
+      {
+        "label": "If your license was suspended at 12 points",
+        "status": "Reinstatement",
+        "tone": "info",
+        "heading": "It is required to get your license back",
+        "bullets": [
+          "One of the BMV's four reinstatement steps",
+          "Take it during the suspension, from home",
+          "Then the exam retake, SR-22 and fee at the BMV"
+        ]
+      },
+      {
+        "label": "Court-ordered",
+        "status": "Note",
+        "tone": "muted",
+        "heading": "If a judge ordered it, this course satisfies the order",
+        "bullets": [
+          "You get a certificate to file with the court. Ohio law grants no point credit for a court-ordered completion."
+        ]
+      }
+    ]
+  },
+  "curriculum": {
+    "heading": "What is in the eight hours",
+    "intro": "Twenty modules covering all nineteen topics Ohio requires, with a quarter of the time on driver attitude and a quarter on alcohol and drugs, as Ohio law sets.",
+    "highlights": [
+      {
+        "v": "8 hours",
+        "l": "Measured by a visible timer, 30 days to finish"
+      },
+      {
+        "v": "1 retake",
+        "l": "Included on the final exam"
+      },
+      {
+        "v": "Read-aloud",
+        "l": "And captions on every video, included"
+      }
+    ]
+  },
+  "steps": {
+    "heading": "How it works, start to certificate",
+    "intro": "We handle the first four steps. The last one is at the BMV or your court.",
+    "withUsCount": 4,
+    "withUsLabel": "With us",
+    "afterLabel": "At the BMV or court",
+    "items": [
+      {
+        "n": 1,
+        "title": "Enroll and read the contract",
+        "body": "Pay $69.95, confirm your details, and accept Ohio's required enrollment contract. Your 30-day clock does not start until you open the first module, so enroll today and start when you have a clear week."
+      },
+      {
+        "n": 2,
+        "title": "Work through the twenty modules",
+        "body": "A visible timer counts your eight hours. Each unit ends with a knowledge check at 80%. Every two hours the course asks you an identity question, as Ohio requires. Stop and resume as often as you like."
+      },
+      {
+        "n": 3,
+        "title": "Pass the 40-question final",
+        "body": "Drawn from the state-required bank, graded when you finish, 75% to pass. If you miss it you get one retake, 24 hours later. We show you the exact unlock time."
+      },
+      {
+        "n": 4,
+        "title": "Get your certificate",
+        "body": "We enter your completion in Ohio's DETS system, which links to the BMV, and email you the signed certificate PDF during support hours. Local courts cannot see the state record, so keep your copy."
+      },
+      {
+        "n": 5,
+        "title": "Use it",
+        "body": "Two-point credit: apply to the BMV registrar with your certificate. Reinstatement: complete the exam retake, file your SR-22 and pay the reinstatement fee. Court order: file the certificate with the court by its deadline."
+      }
+    ]
+  },
+  "deadline": {
+    "eyebrow": "Ohio's 30-day rule",
+    "heading": "You have 30 days from the moment you start. Then Ohio makes you start over.",
+    "body": "Ohio Administrative Code 4501-21-14 requires every student to finish the full eight hours within thirty days of the date and time they first open the course content. Miss it and the state requires the course to begin again from zero. The clock starts when you open Module 1, not when you pay, so enroll now and begin when you can finish.",
+    "cite": "OAC 4501-21-14. Warnings at day 21, 27 and 29 by email."
+  },
+  "compare": {
+    "heading": "What Ohio's online remedial courses actually cost",
+    "intro": "Almost everyone online charges about seventy dollars. The differences are in what gets added after you start, and how you get your certificate.",
+    "rows": [
+      {
+        "name": "Road Ready Safety",
+        "price": "$69.95",
+        "fees": "None",
+        "certificate": "Signed PDF by email, DETS entry included",
+        "us": true
+      },
+      {
+        "name": "Safe2Drive",
+        "price": "$69.95",
+        "fees": "+$4.00 processing",
+        "certificate": "Same business day only if finished before 5 PM ET"
+      },
+      {
+        "name": "Online Two Point Driving Classes",
+        "price": "$69.95",
+        "fees": "None stated",
+        "certificate": "Digital on completion"
+      },
+      {
+        "name": "Ohio Driver Education (Costech)",
+        "price": "$64.99",
+        "fees": "Audio narration sold separately",
+        "certificate": "Emailed"
+      },
+      {
+        "name": "EZ Drive Ohio",
+        "price": "$75.00",
+        "fees": "None stated",
+        "certificate": "Emailed, download and print"
+      },
+      {
+        "name": "Online Traffic Education / 24Seven",
+        "price": "$76.00",
+        "fees": "None stated",
+        "certificate": "Within 24 hours"
+      },
+      {
+        "name": "Too Cool Traffic School",
+        "price": "$79.99",
+        "fees": "None stated",
+        "certificate": "Download on completion"
+      }
+    ],
+    "footnote": "Prices and fees as shown on each provider's public course page on the date below. Providers change prices; check before you buy. Classroom courses in Ohio run $115 to $150.",
+    "verifiedDate": "August 27, 2026"
+  },
+  "benefits": [
+    {
+      "headline": "A two-point credit if you have 2 to 11 points",
+      "body": "Ohio Revised Code 4510.037 lets the registrar credit two points to a driver with at least two but fewer than twelve points who completes an approved remedial course. Once every three years, five times in a lifetime. The BMV's own words: completion \"does not remove points from your record, but can act as a cushion against future convictions.\"",
+      "cite": "ORC 4510.037(C); Ohio BMV"
+    },
+    {
+      "headline": "One of the four reinstatement requirements after a 12-point suspension",
+      "body": "Twelve or more points within two years is a six-month suspension. To reinstate, Ohio requires you to complete a remedial driving course, retake the complete driver license exam, file proof of financial responsibility (SR-22) for the period the BMV sets, and pay a reinstatement fee. We are the first of those four.",
+      "cite": "ORC 4510.038; Ohio BMV, 12 Point Suspension"
+    },
+    {
+      "headline": "A certificate that satisfies a court order",
+      "body": "When a judge orders a remedial course, this course satisfies the order and you receive a certificate to file with the court. By statute a court-ordered completion earns no point credit.",
+      "cite": "ORC 4510.037(C)"
+    }
+  ],
+  "faqs": [
+    {
+      "q": "Does the Ohio remedial course take points off my record?",
+      "a": "No, and be wary of any course that says it does. The Ohio BMV states that completing the course \"does not remove points from your record, but can act as a cushion against future convictions.\" The two-point credit raises the threshold at which a twelve-point suspension is triggered. Your convictions and their points stay on the record and remain visible to insurers."
+    },
+    {
+      "q": "Who qualifies for the two-point credit?",
+      "a": "A driver with at least two but fewer than twelve points on their Ohio record, who has not used the credit in the past three years and has used it fewer than five times in their lifetime. A course taken under a judge's order earns no credit."
+    },
+    {
+      "q": "How often can I take it for the credit?",
+      "a": "Once every three years, and five times in a lifetime. Ohio Revised Code 4510.037 sets both limits."
+    },
+    {
+      "q": "I got a 12-point suspension. Is this the course I need?",
+      "a": "Yes. After a twelve-point suspension Ohio requires an approved remedial driving course, a retake of the complete driver license exam, proof of financial responsibility on file with the BMV, and a reinstatement fee. This course satisfies the first requirement. The other three happen at the BMV."
+    },
+    {
+      "q": "How long does the course take?",
+      "a": "Eight hours of measured instruction. Ohio credits only real time on the content, so the timer is on screen the whole way and break time is not counted. Most people finish across three or four sittings."
+    },
+    {
+      "q": "How long do I have to finish?",
+      "a": "Thirty days from the date and time you first open the course content, set by Ohio Administrative Code 4501-21-14. After thirty days Ohio requires the course to start again. The clock starts when you open Module 1, not when you pay."
+    },
+    {
+      "q": "What is the final exam like?",
+      "a": "Forty questions drawn from a state-required bank of at least 120, graded when you finish, 75% to pass. Course content is locked while the exam is open. If you miss it, you get one retake no sooner than 24 hours later, and we email you the moment it unlocks."
+    },
+    {
+      "q": "What if I fail the exam twice?",
+      "a": "Ohio's rule is that a second failure means retaking the course. We tell you that here rather than at the end. The unit knowledge checks are built to make sure you are ready before you ever see the final."
+    },
+    {
+      "q": "What are the identity questions?",
+      "a": "Ohio requires an identity check after every two hours of instruction and before the final exam. You answer a question only you would know. A wrong answer gives you one more try; a second wrong answer locks the course for 24 hours, by state rule. Answer honestly and it takes ten seconds."
+    },
+    {
+      "q": "When do I get my certificate?",
+      "a": "After you pass, we enter your completion in Ohio's DETS system, which is linked to the BMV, and email you the signed certificate PDF. Certificates are issued by our staff during support hours, usually the same business day. Keep your copy: local courts cannot see the state record."
+    },
+    {
+      "q": "Is it really $69.95?",
+      "a": "Yes. The certificate, the DETS entry, one exam retake, audio narration and support are all inside that number. There is no processing fee and no upgraded version of the course."
+    },
+    {
+      "q": "Can I get a refund?",
+      "a": "Yes, in full, at any time before you complete the course. Once you have passed the exam and the certificate is issued there is no refund, because it has already been earned and reported."
+    },
+    {
+      "q": "Will my insurance go down?",
+      "a": "We do not promise that. Ohio's statutory premium reduction for mature drivers applies only to courses with classroom instruction, which this is not. Some insurers run their own programs; ask yours before you enroll if that is your reason."
+    },
+    {
+      "q": "Can I do this on my phone?",
+      "a": "Yes. The course, the timer and the exam all work on a phone. Your progress saves the moment you leave, so ten minutes on a break counts toward your eight hours."
+    },
+    {
+      "q": "Is the course live or on a schedule?",
+      "a": "No. It is entirely self-paced and asynchronous. There are no sessions to attend and no one to wait for. That is how Ohio defines an online course."
+    }
+  ],
+  "finalCta": {
+    "heading": "Eight hours. One flat price. Start when you have a clear month.",
+    "body": "Your 30-day clock starts when you open the first module, not when you pay. Enroll now, begin when you are ready, and stop and resume as often as you need.",
+    "bullets": [
+      "All 8 hours Ohio requires",
+      "Certificate included",
+      "One exam retake included",
+      "Full refund before completion"
+    ]
+  },
+  "reviewsHeading": "What students say about our courses",
+  "help": [
+    {
+      "q": "How to enroll",
+      "steps": [
+        "Click Start the Course on any page",
+        "Enter your name, date of birth, Ohio driver license number and contact details exactly as they appear on your license",
+        "Read and accept the enrollment contract Ohio requires",
+        "Pay $69.95 by card. Nothing else is charged",
+        "You receive a confirmation email with your login link"
+      ]
+    },
+    {
+      "q": "How to log in",
+      "steps": [
+        "Open the login page and enter your email and password",
+        "Enter the six-digit code we email you. This is required every time, as part of identity verification",
+        "Click Continue Course to pick up exactly where you left off"
+      ]
+    },
+    {
+      "q": "How the timer and modules work",
+      "steps": [
+        "Your eight hours are counted by a timer that is always visible: today's time and total time",
+        "Work through the modules in order. Each one has a minimum time set by the course",
+        "Breaks are fine. The timer pauses when you are away and does not count break time, as Ohio requires",
+        "Each unit ends with a knowledge check. You need 80%. If you miss it, you see the correct answers with reasons and take a fresh set"
+      ],
+      "note": "Switching tabs or windows pauses the timer. Keep the course in front while you are reading."
+    },
+    {
+      "q": "The identity questions",
+      "steps": [
+        "After every two hours of instruction, and once more before the final exam, the course asks you a question only you would know",
+        "Answer it and continue",
+        "A wrong answer gives you one more try",
+        "A second wrong answer locks the course for 24 hours. This is an Ohio rule, and we cannot override it"
+      ]
+    },
+    {
+      "q": "How to take the final exam",
+      "steps": [
+        "Finish every module and knowledge check first",
+        "The exam is 40 questions, graded when you submit. Course content is locked while the exam is open",
+        "You need 30 of 40 correct (75%)",
+        "If you miss it, your retake unlocks 24 hours later. We show the exact time and email you when it opens",
+        "A second failure means retaking the course, by Ohio rule"
+      ]
+    },
+    {
+      "q": "How to get your certificate",
+      "steps": [
+        "After you pass, our staff enter your completion in Ohio's DETS system, which is linked to the BMV",
+        "We email you the signed certificate PDF, usually the same business day",
+        "Download it and keep a copy. Courts cannot see the state record, only the BMV can",
+        "Need another copy? Ask support. One free duplicate within 30 days"
+      ]
+    },
+    {
+      "q": "How to apply for the two-point credit",
+      "steps": [
+        "Confirm you had at least 2 and fewer than 12 points, and have not used the credit in the last three years",
+        "Take your certificate to the Ohio BMV, or follow the instructions the BMV provides for submitting proof of completion",
+        "The registrar applies the credit to your record. It does not remove any existing points"
+      ],
+      "note": "If a judge ordered the course, no credit is available by statute."
+    },
+    {
+      "q": "How to reinstate after a 12-point suspension",
+      "steps": [
+        "Serve the suspension period the BMV set",
+        "Complete this course and download your certificate",
+        "Retake the complete driver license exam at the BMV",
+        "Have your insurer file an SR-22 with the BMV for the period the BMV requires",
+        "Pay the reinstatement fee to the BMV"
+      ],
+      "note": "The BMV lists your exact requirements in your suspension notice and on your record. Follow that list."
+    },
+    {
+      "q": "How to reset your password",
+      "steps": [
+        "Open the login page and click Forgot Password",
+        "Enter the email you enrolled with",
+        "Open the reset link in the email (it expires after 24 hours)",
+        "Choose a new password and log in"
+      ],
+      "note": "No email? Check spam, then contact support."
+    },
+    {
+      "q": "Taking the course on your phone",
+      "steps": [
+        "Open your phone's browser and log in",
+        "The course, timer and exam adapt to your screen",
+        "Your progress and timer save when you leave, so you can switch between phone and computer any time"
+      ]
+    }
+  ],
+  "footer": {
+    "blurb": "Ohio's eight-hour adult remedial driving course, online and self-paced, at one flat price with the certificate included.",
+    "disclaimer": "Completing this course does not remove points from an Ohio driving record. For eligible drivers it may support a two-point credit under ORC 4510.037, and it is one of several reinstatement requirements after a twelve-point suspension under ORC 4510.038. A court-ordered completion earns no credit. Road Ready Safety is a private company and is not affiliated with or endorsed by the Ohio Department of Public Safety or the Ohio Bureau of Motor Vehicles."
+  },
+  "claims": {
+    "banned": [
+      "points removed",
+      "remove two points",
+      "removes two points",
+      "removes 2 points",
+      "2 points off",
+      "two points off",
+      "points off your record",
+      "erase your points",
+      "erases points",
+      "insurance discount",
+      "live instructor",
+      "live class",
+      "instant certificate",
+      "guaranteed credit",
+      "dismiss your ticket",
+      "ticket dismissal",
+      "ODPS-endorsed"
+    ]
+  },
+  "blog": {
+    "title": "Ohio driving record guides",
+    "intro": "Plain answers about Ohio points, suspensions, the two-point credit and what the remedial course does and does not do. Written from the statute and the BMV's own pages, with sources."
+  }
+}

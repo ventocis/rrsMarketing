@@ -1,0 +1,47 @@
+---
+/**
+ * Named-competitor comparison with verified prices and fees. Every row must trace to a page
+ * checked on the verifiedDate; put the date on the page so the reader can judge freshness.
+ */
+import type { CourseData } from '../../data/courses/types';
+import SectionHeading from './SectionHeading.astro';
+
+interface Props { course: CourseData; id?: string }
+const { course, id = 'compare' } = Astro.props;
+const c = course.compare;
+---
+
+{c && (
+  <section id={id} class="py-16 lg:py-24 bg-surface-muted scroll-mt-24">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <SectionHeading eyebrow="Compare" heading={c.heading} intro={c.intro} />
+
+      <div class="overflow-x-auto rounded-[20px] border border-border bg-white">
+        <table class="w-full text-sm min-w-[640px]">
+          <thead>
+            <tr class="bg-surface-muted text-left">
+              <th scope="col" class="px-5 py-4 font-semibold text-text">Provider</th>
+              <th scope="col" class="px-5 py-4 font-semibold text-text">Listed price</th>
+              <th scope="col" class="px-5 py-4 font-semibold text-text">Add-on fees</th>
+              <th scope="col" class="px-5 py-4 font-semibold text-text">Certificate</th>
+            </tr>
+          </thead>
+          <tbody>
+            {c.rows.map((row) => (
+              <tr class={`border-t border-border ${row.us ? 'bg-info/50' : ''}`}>
+                <th scope="row" class="px-5 py-4 text-left align-top">
+                  <span class={`font-semibold ${row.us ? 'text-primary-deep' : 'text-text'}`}>{row.name}</span>
+                  {row.note && <span class="block text-xs text-text-muted font-normal mt-0.5">{row.note}</span>}
+                </th>
+                <td class="px-5 py-4 align-top tabular-nums text-text">{row.price}</td>
+                <td class={`px-5 py-4 align-top ${row.us ? 'text-success font-semibold' : 'text-text-body'}`}>{row.fees}</td>
+                <td class="px-5 py-4 align-top text-text-body">{row.certificate}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="text-xs text-text-muted leading-5 mt-4 max-w-4xl">{c.footnote} Prices checked {c.verifiedDate}.</p>
+    </div>
+  </section>
+)}

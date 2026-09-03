@@ -1,0 +1,19 @@
+---
+/**
+ * Renders a shared policy markdown file (src/content/policies/*.md) with {{token}} substitution,
+ * inside the standard white legal card. The same source renders on the global site, /texas and
+ * every state site, so the documents cannot drift apart.
+ */
+import { renderPolicy } from '../../lib/policies';
+
+interface Props {
+  file: string;
+  tokens?: Record<string, string>;
+}
+const { file, tokens = {} } = Astro.props;
+const html = renderPolicy(file, tokens);
+---
+
+<div class="bg-white border border-border rounded-[20px] p-8 lg:p-12">
+  <div class="prose prose-base max-w-none" set:html={html} />
+</div>

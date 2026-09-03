@@ -1,0 +1,29 @@
+---
+/** Site-wide Terms of Service and Student Policies, rendered inside this state's layout. */
+import CourseLayout from '../../layouts/CourseLayout.astro';
+import PageIntro from '../../components/course/PageIntro.astro';
+import PolicyDoc from '../../components/course/PolicyDoc.astro';
+import { enabledCourses, stateParam } from '../../data/courses/index';
+import type { CourseData } from '../../data/courses/types';
+
+export function getStaticPaths() {
+  return enabledCourses.map((course) => ({ params: { state: stateParam(course) }, props: { course } }));
+}
+
+const { course } = Astro.props as { course: CourseData };
+const route = course.state.route;
+---
+
+<CourseLayout
+  course={course}
+  title="Terms of Service and Student Policies | Road Ready Safety"
+  description={`Road Ready Safety's terms of service and student policies. The same document applies on every page of the site, with ${course.state.name}-specific provisions in Part 3.`}
+  url={`${route}/terms`}
+>
+  <section class="py-16 lg:py-24 px-4 sm:px-6 lg:px-8 bg-surface-muted">
+    <div class="max-w-4xl mx-auto">
+      <PageIntro chip="Legal" title="Terms of Service and Student Policies" subtitle={`${course.provider.legalName} d/b/a ${course.provider.dba}`} />
+      <PolicyDoc file="terms.md" tokens={{ courseName: course.course.name, stateName: course.state.name, agency: course.state.agency, supportEmail: course.provider.supportEmail, supportPhone: course.provider.supportPhone }} />
+    </div>
+  </section>
+</CourseLayout>

@@ -1,0 +1,191 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+import NextStepBlock from '../../components/texas/NextStepBlock.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+// Court details are from Road Ready Safety's verified Smith County court dataset
+// (fees, request methods and required documents as published by each court),
+// last refreshed August 2026. Legal basis: Tex. Code Crim. Proc. arts. 45A.351–.359.
+
+const courts = [
+  { slug: 'smith-municipal-tyler', name: 'Tyler Municipal Court', note: 'City of Tyler police tickets. Request in person, by mail, or through the court\'s online portal by your appearance date. The court asks for a plea of guilty or no contest, court costs plus $10 paid in full, proof of insurance in your name, your Texas licence, the certificate, and a DPS driving record.' },
+  { slug: 'smith-justice-of-the-peace-precinct-1-place-1', name: 'Smith County JP Precinct 1 (Tyler, Ferguson St.)', note: 'Deputy and DPS tickets in central Tyler. $146 court fee. Submit the signed Driving Safety Course Request Form, proof of insurance, a copy of your licence, and the fee by the citation due date.' },
+  { slug: 'smith-justice-of-the-peace-precinct-2-place-1', name: 'Smith County JP Precinct 2 (Hwy 155 S, Tyler)', note: '$146 fee. Signed request form, proof of insurance, copy of licence, payment. South Tyler and the Hwy 155 corridor.' },
+  { slug: 'smith-justice-of-the-peace-precinct-3-place-1', name: 'Smith County JP Precinct 3 (Troup)', note: '$146 fee. The request form with fee and proof of insurance must be postmarked by the citation due date. Requires the official DPS driving record and an affidavit that no course was in progress or completed in the prior 12 months.' },
+  { slug: 'smith-justice-of-the-peace-precinct-4-place-1', name: 'Smith County JP Precinct 4 (Winona)', note: '$146 fee. Proof of insurance and a copy of your licence with the fee. Northern Smith County.' },
+  { slug: 'smith-justice-of-the-peace-precinct-5-place-1', name: 'Smith County JP Precinct 5 (Lindale)', note: '$146 fee. Request form, proof of insurance on the offense date, copy of licence, the certificate within 90 days, the official DPS driving record, and a 12-month affidavit.' },
+  { slug: 'smith-municipal-whitehouse', name: 'Whitehouse Municipal Court', note: '$144 fee. Requests in person; bring your Texas licence and insurance showing you as a covered driver. Certificate after the course.' },
+  { slug: 'smith-municipal-lindale', name: 'Lindale Municipal Court', note: 'Requests in person or through the city\'s online system. Confirm the fee with the clerk.' },
+  { slug: 'smith-municipal-noonday', name: 'Noonday Municipal Court', note: 'Call the court to request. Requires a certified Type 3A driving record from DPS with the certificate.' },
+  { slug: 'smith-municipal-arp', name: 'Arp Municipal Court', note: 'Request by phone or in person. Type 3A driving record required with the certificate.' },
+  { slug: 'smith-municipal-troup', name: 'Troup Municipal Court', note: 'Request by phone, in person, or by mail. Type 3A driving record required.' },
+  { slug: 'smith-municipal-winona', name: 'Winona Municipal Court', note: 'Request by phone or in person. Type 3A driving record typically required; confirm with the court.' },
+];
+
+const faqs = [
+  {
+    q: 'How do I dismiss a traffic ticket in Tyler, Texas?',
+    a: 'Request a driving safety course from the court on your citation on or before the appearance date, pay the court\'s fee, complete a TDLR-approved 6-hour course within 90 days, and submit the certificate plus the driving record the court requires. Tyler Municipal Court handles city police tickets; a sheriff\'s deputy or DPS ticket goes to one of the five Smith County justice of the peace courts.',
+  },
+  {
+    q: 'How much does it cost to dismiss a ticket in Tyler or Smith County?',
+    a: 'Smith County justice courts charge a $146 court fee; Whitehouse charges $144; Tyler Municipal Court charges court costs plus $10. Add the course ($28 with the certificate included at Road Ready Safety) and, where required, the $12 DPS driving record. Roughly $150 to $190 total.',
+  },
+  {
+    q: 'Which court has my Tyler ticket?',
+    a: 'Read the court name on the citation. A City of Tyler police officer\'s ticket is at Tyler Municipal Court. A Smith County deputy, constable or DPS trooper\'s ticket is at a Smith County JP court, by precinct. Tickets in Lindale, Whitehouse, Noonday, Arp, Troup or Winona go to that city\'s municipal court. Note that Tyler County, in Southeast Texas, is a different place with its own courts.',
+  },
+  {
+    q: 'Can I take the defensive driving course online for a Tyler ticket?',
+    a: 'Yes. Every court in Smith County accepts a TDLR-approved online course, including Tyler Municipal Court and all five JP precincts. You must get the court\'s approval before starting the course.',
+  },
+  {
+    q: 'Do Smith County courts require the Type 3A driving record?',
+    a: 'Several do. JP Precincts 3 and 5 require the official DPS driving record, and Noonday, Arp, Troup and Winona require the certified Type 3A record with the certificate. Tyler Municipal Court asks for a copy of your DPS driving record. Order it online from DPS for $12 as an instant PDF.',
+  },
+  {
+    q: 'How long do I have after a Tyler court approves the course?',
+    a: '90 days under Texas law. JP Precinct 3 also requires the request itself to be postmarked by the citation due date, and Precinct 5 states the certificate must arrive within the 90-day window, so treat the court\'s letter as the deadline.',
+  },
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'How to Dismiss a Traffic Ticket in Tyler, Texas with Defensive Driving: Every Smith County Court, Fees and Rules (2026)',
+  description: 'Dismiss a Tyler or Smith County traffic ticket: which of the twelve local courts has your case, what each charges ($144 to $146 at most), how each takes the request, which ones require the Type 3A record or an affidavit, and the 90-day course deadline.',
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-09-02',
+  dateModified: '2026-09-02',
+  mainEntityOfPage: `${siteUrl}/texas/tyler`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Dismiss a Traffic Ticket in Tyler, TX with Defensive Driving: Every Smith County Court, Fees & Rules (2026)"
+    description="Dismiss a Tyler or Smith County traffic ticket: which of the twelve local courts has your case, what each charges, how each takes the request, which require the Type 3A record or an affidavit, and the 90-day deadline."
+    keywords="defensive driving tyler tx, tyler texas traffic ticket dismissal, smith county defensive driving, tyler municipal court defensive driving, driving safety course tyler texas, smith county jp driving safety course, whitehouse municipal court defensive driving"
+    url="/texas/tyler"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Tyler</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          How to Dismiss a Traffic Ticket in Tyler, Texas with Defensive Driving: Every Smith County Court, Fees and Rules
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">To dismiss a Tyler traffic ticket, ask the court on your citation for a driving safety course on or before the appearance date, pay its fee (court costs plus $10 at Tyler Municipal Court; $146 at the Smith County justice courts), complete a TDLR-approved 6-hour course within 90 days, and submit the certificate with the driving record the court requires.</strong> Do that and the charge is dismissed and kept off your record under Texas law.</p>
+          <p>The part that trips people up here is the same as in every Texas county: "Tyler" is not one court. A Tyler police ticket, a sheriff's deputy ticket on Loop 323, and a DPS ticket on I-20 land at three different courts with three different forms. This page lists all twelve courts in Smith County with what each one charges and requires, from our verified court data.</p>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Each court sets its own fees and procedures; confirm with the court on your citation. Road Ready Safety is a TDLR-licensed course provider (CP1234), not a court. Looking for Tyler County, in Southeast Texas? That is a different county with its own courts; find them in the <a href="/texas/courts" class="text-primary-deep font-medium hover:underline">court directory</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Which Tyler court has my ticket?</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Read the court name printed on the citation. <strong class="text-text">Tyler Police Department</strong> tickets go to <strong class="text-text">Tyler Municipal Court</strong>. A <strong class="text-text">Smith County sheriff's deputy, constable, or DPS trooper</strong> ticket goes to one of the five <strong class="text-text">Smith County justice of the peace courts</strong>, by precinct: Precinct 1 downtown on Ferguson Street, Precinct 2 on Hwy 155 South, Precinct 3 in Troup, Precinct 4 in Winona, Precinct 5 in Lindale. A ticket inside <strong class="text-text">Lindale, Whitehouse, Noonday, Arp, Troup or Winona</strong> city limits goes to that city's municipal court.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What is the same at every Smith County court</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <ul class="list-disc pl-6 space-y-2">
+            <li><strong class="text-text">Request the course by your appearance date.</strong> Do not pay the ticket first; paying is a guilty plea and a conviction.</li>
+            <li>You need a <strong class="text-text">valid Texas driver's licence and proof of insurance</strong>, and you plead guilty or no contest.</li>
+            <li>Once every <strong class="text-text">12 months</strong>. Not available for speeding 25 or more mph over (or 95 mph and up), CDL holders, passing a school bus, or work-zone violations with workers present.</li>
+            <li>After approval you have <strong class="text-text">90 days</strong> to finish a TDLR-approved 6-hour course and submit the certificate, plus a DPS driving record where the court requires one.</li>
+            <li>Complete it and the charge is <strong class="text-text">dismissed and kept off your record</strong> under Code of Criminal Procedure chapter 45A.</li>
+          </ul>
+          <p>The full process, exclusions and costs are in the <a href="/texas/ticket-dismissal" class="text-primary-deep font-medium hover:underline">Texas ticket dismissal guide</a>; check yourself in a minute with the <a href="/texas/eligibility-tracker" class="text-primary-deep font-medium hover:underline">eligibility checker</a>.</p>
+        </div>
+
+        <NextStepBlock page="tyler" lead="precourt" />
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How the twelve Smith County courts differ</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-4" style="font-family: 'DM Sans', sans-serif;">
+          <p>Fees, request methods and paperwork vary court to court. Tap any court for its full instructions, address, phone and forms.</p>
+        </div>
+        <div class="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 mb-10 rounded-xl border border-border">
+          <table class="w-full text-sm border-collapse" style="font-family: 'DM Sans', sans-serif;">
+            <thead><tr class="bg-surface-muted text-left border-b border-border"><th class="py-3 px-4 font-semibold text-text">Court</th><th class="py-3 px-4 font-semibold text-text">What to know</th></tr></thead>
+            <tbody>
+              {courts.map((c, i) => (
+                <tr class={`border-b border-border align-top ${i % 2 === 0 ? '' : 'bg-surface-muted/40'}`}>
+                  <td class="py-3 px-4 font-semibold whitespace-nowrap"><a href={`/texas/courts/${c.slug}`} class="text-primary-deep hover:underline">{c.name}</a></td>
+                  <td class="py-3 px-4 text-text-body">{c.note}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Three Tyler-specific things worth knowing</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">1. The $146 is the JP fee, and it is not the fine.</strong> Smith County's five justice courts all charge $146 when they grant the course, in full, with the request. That replaces the fine; you do not pay both.</p>
+          <p><strong class="text-text">2. Two precincts want an affidavit, and four small-city courts want the Type 3A.</strong> JP Precincts 3 and 5 require a sworn statement that you have not taken the course in the past 12 months, and Precinct 3 wants the request postmarked by the due date. Noonday, Arp, Troup and Winona require the certified <a href="/texas/type-3a-driving-record" class="text-primary-deep font-medium hover:underline">Type 3A driving record</a> with the certificate; order it from DPS online for $12 the same day you request the course.</p>
+          <p><strong class="text-text">3. Tyler Municipal Court takes the request online.</strong> Its portal is the fastest route; mail and in-person also work. The court lists "court costs plus $10.00, in full" and does not offer payment plans on the course option, so budget for it up front.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;">{item.a}</p>
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The course every Smith County court accepts</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Road Ready Safety is TDLR-approved under CP1234. <strong class="text-text">$28 all-in</strong>, 6 hours online on any device, chapter quizzes with unlimited attempts, and the <strong class="text-text">court copy of your certificate downloads the moment you finish</strong>, so the Tyler portal or the JP clerk can have it the same day.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="/texas/courts"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            Find another court
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated September 2, 2026. Court fees, request methods and required documents from Road Ready Safety's verified Smith County court dataset, last refreshed August 2026, as published by each court; dismissal rules per Tex. Code Crim. Proc. arts. 45A.351 to 45A.359; Type 3A record per Texas DPS.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

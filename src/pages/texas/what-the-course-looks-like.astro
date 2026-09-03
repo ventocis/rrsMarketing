@@ -1,0 +1,190 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+import YouTubeCard from '../../components/YouTubeCard.astro';
+import NextStepBlock from '../../components/texas/NextStepBlock.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+// Module list and mechanics are taken from the approved Road Ready Safety Texas
+// 6-hour course script (CP1234). Timing rules: TDLR Course of Organized
+// Instruction for Six-Hour Driving Safety; 16 TAC §§84.500, 84.504.
+
+const modules = [
+  { n: 1, t: 'Course Introduction & Orientation', d: 'How the course runs, the timers, and the mindset the state wants you to leave with.' },
+  { n: 2, t: 'The Traffic Safety Problem', d: 'Texas crash patterns, right-of-way, speed limits and school zones, signs and signals, turning and lane changes, seat belts, car seats and the texting law.' },
+  { n: 3, t: 'Factors Influencing Driver Performance', d: 'Fatigue, vision, health, emotions and the physical limits every driver has.' },
+  { n: 4, t: 'The Psychology of Driving', d: 'Attitude, aggression and distraction, and how to stay mentally ready at the wheel.' },
+  { n: 5, t: 'Alcohol, Drugs & Driving', d: 'Effects, Texas law, and safer choices.' },
+  { n: 6, t: 'Vulnerable Road Users', d: 'Pedestrians, cyclists, motorcyclists, school buses, emergency vehicles and rail crossings.' },
+  { n: 0, t: 'Break 1 (30 minutes)', d: 'Built into the course. Step away; your place is saved.' },
+  { n: 7, t: 'Crash Dynamics, Avoidance & Emergencies', d: 'What happens in a collision, following distance, and what to do when something goes wrong.' },
+  { n: 8, t: 'Sharing the Road & Environmental Factors', d: 'Large vehicles, weather, night driving and work zones.' },
+  { n: 9, t: 'Street Racing Awareness', d: 'A Texas-required topic: the dangers and the penalties.' },
+  { n: 10, t: 'Human Trafficking Prevention', d: 'Texas-required awareness content.' },
+  { n: 11, t: 'Litter Prevention', d: 'Texas-required content.' },
+  { n: 0, t: 'Break 2 (30 minutes)', d: 'The second built-in break.' },
+  { n: 12, t: 'Organ Donation Awareness', d: 'Texas-required content on anatomical gifts.' },
+  { n: 13, t: 'Traffic Stop Protocols', d: 'What to do when you are pulled over, per Texas law enforcement procedure.' },
+  { n: 14, t: 'Driving with Disabilities Program', d: 'The Texas program and how it works.' },
+  { n: 15, t: 'Oversize / Overweight Vehicle Awareness', d: 'Sharing the road safely with the vehicles that cannot stop for you.' },
+  { n: 16, t: 'Insurance, Recovery & Texas Support Resources', d: 'What a conviction does to premiums, and where to get help after a crash.' },
+  { n: 17, t: 'Review', d: 'A final pass over the material, then your certificate.' },
+];
+
+const faqs = [
+  {
+    q: 'Is the Texas defensive driving course video or reading?',
+    a: 'Ours is reading, with images and short check-in questions, at your own pace. There is no narration to sit through and nothing you have to watch in real time; you read each page and the timer runs alongside. If you strongly prefer video, other licensed providers offer video-format courses, and they are the same six hours.',
+  },
+  {
+    q: 'Is there a final exam?',
+    a: 'No. TDLR allows either chapter exams or one comprehensive exam, at 70% mastery. We use short chapter quizzes with unlimited attempts, so you cannot fail out of the course. You retake a quiz until you pass it and move on.',
+  },
+  {
+    q: 'How long is each module?',
+    a: 'The course is six hours in total with at least five hours of instruction, spread across seventeen modules and two 30-minute breaks. Individual pages carry a minimum viewing time; when a page\'s timer ends, the Next button activates. Modules vary in length, and you can see your progress as you go.',
+  },
+  {
+    q: 'Can I do the course on my phone?',
+    a: 'Yes. It runs in any modern browser on a phone, tablet or computer, and your progress saves automatically across devices, so you can start on one and finish on another.',
+  },
+  {
+    q: 'Can I stop and come back later?',
+    a: 'Yes, as often as you like. Progress and time already completed are saved. The only clock that matters is your court\'s deadline, usually 90 days from approval.',
+  },
+  {
+    q: 'What do I get at the end?',
+    a: 'Your uniform certificate of completion downloads immediately as a PDF, with the court copy and the insurance copy, at no extra charge. You submit the court copy to dismiss the ticket and can send the insurance copy to your carrier for a discount.',
+  },
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'What the Texas Defensive Driving Course Actually Looks Like: Every Module, the Timers, the Quizzes and the Certificate (2026)',
+  description: 'A module-by-module tour of the Road Ready Safety Texas 6-hour driving safety course: what is in each of the seventeen modules, how the timers and two breaks work, how the chapter quizzes work, what device you can use, and what you get at the end.',
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-09-02',
+  dateModified: '2026-09-02',
+  mainEntityOfPage: `${siteUrl}/texas/what-the-course-looks-like`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="What the Texas Defensive Driving Course Actually Looks Like: Every Module, Timers, Quizzes & Certificate (2026)"
+    description="A module-by-module tour of the Road Ready Safety Texas 6-hour course: what is in all seventeen modules, how the timers and two breaks work, how the chapter quizzes work, what device you can use, and what you get at the end."
+    keywords="what is the texas defensive driving course like, texas defensive driving course modules, is defensive driving course video or reading, texas driving safety course final exam, defensive driving course on phone, road ready safety course review"
+    url="/texas/what-the-course-looks-like"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Inside the course</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          What the Texas Defensive Driving Course Actually Looks Like: Every Module, the Timers, the Quizzes and the Certificate
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">The Road Ready Safety Texas course is seventeen short reading modules with images, two built-in 30-minute breaks, page timers that satisfy the state's six-hour rule, chapter quizzes with unlimited attempts instead of a final exam, and a certificate that downloads the moment you finish.</strong> It runs on a phone, saves your place, and can be done in one sitting or several.</p>
+          <p>Every approved Texas course teaches the same thirteen state-required topics, so what differs is the experience. This page shows ours module by module, exactly as students see it, so you know what you are buying before you pay $28.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How does the course run?</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <ul class="list-disc pl-6 space-y-2">
+            <li><strong class="text-text">Short, focused lessons.</strong> Plain language, real Texas examples, and quick check-in questions to keep you moving. No narration, nothing you must watch in real time.</li>
+            <li><strong class="text-text">Page timers.</strong> Some pages require a minimum viewing time; when the timer ends, the Next button activates. That is how an online course satisfies TDLR's six-hour rule (at least five hours of instruction plus breaks). Reading faster does not shorten it, and you cannot skip ahead: navigation unlocks as you progress.</li>
+            <li><strong class="text-text">Two scheduled breaks.</strong> 30 minutes after Module 6 and 30 minutes after Module 11. Step away; your place is saved.</li>
+            <li><strong class="text-text">Chapter quizzes, no final exam.</strong> TDLR requires 70% mastery on chapter exams or a comprehensive exam. We use chapter quizzes with unlimited attempts, so a wrong answer costs you a retake, not the course.</li>
+            <li><strong class="text-text">Any device, progress saved.</strong> Start on a laptop, finish on your phone. If a page ever seems stuck, refresh once; your time and place are preserved.</li>
+            <li><strong class="text-text">Support.</strong> Phone and email, including weekends, for anything from a typo in your name to a court that wants something unusual.</li>
+          </ul>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What is in each module?</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-4" style="font-family: 'DM Sans', sans-serif;">
+          <p>Seventeen modules and two breaks, in the order you will see them. Modules 9 through 15 are the topics Texas specifically requires every driving safety course to cover.</p>
+        </div>
+        <ol class="space-y-2 mb-10">
+          {modules.map((m) => (
+            <li class={`rounded-[12px] border border-border p-4 ${m.n === 0 ? 'bg-info/40' : 'bg-surface-muted'}`}>
+              <p class="text-sm font-semibold text-text" style="font-family: 'Outfit', sans-serif;">{m.n ? `Module ${m.n}: ` : ''}{m.t}</p>
+              <p class="text-sm text-text-body leading-6 mt-1" style="font-family: 'DM Sans', sans-serif;">{m.d}</p>
+            </li>
+          ))}
+        </ol>
+
+        <NextStepBlock page="course-tour" lead="eligible" />
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What happens at the end?</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>When Module 17 closes, your <strong class="text-text">uniform certificate of completion downloads immediately</strong> as a PDF with both copies: the court copy you submit for dismissal and the insurance copy you can send to your carrier for a discount. There is no delivery fee and no upsell screen. Your certificate number is in the CP1234-######## format and can be validated at TDLR's DESSearch; TDLR notes new certificates can take up to five days to appear there, so submit with a cushion. What each copy is for, and what to do if something on it is wrong, is on the <a href="/texas/defensive-driving-certificate" class="text-primary-deep font-medium hover:underline">certificate page</a>; how to get it to your court is on the <a href="/support/how-to-submit" class="text-primary-deep font-medium hover:underline">submission guide</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What the course is not</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>It is not a video course, it is not narrated, and it is not in Spanish yet (see our <a href="/texas/spanish" class="text-primary-deep font-medium hover:underline">Spanish page</a>). It is not faster than six hours, because <a href="/texas/fastest-defensive-driving-course" class="text-primary-deep font-medium hover:underline">no approved course is</a>. And it is not a shortcut around the court: you still have to request the course by your appearance date and submit the certificate on time, which the <a href="/texas/ticket-dismissal" class="text-primary-deep font-medium hover:underline">ticket dismissal guide</a> walks through. If you want humor or full-screen video, a licensed provider that offers those is a legitimate choice. If you want to read at your own pace, finish in an evening, and have the certificate in hand the moment you do, this is that course.</p>
+        </div>
+
+        <YouTubeCard id="WVJ0ORmWv1Q" title="Texas DSC Course: What to Know Before You Sign Up" duration="2:00" blurb="A short walkthrough of what to expect from a Texas driving safety course before you enroll." />
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;">{item.a}</p>
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Now you have seen it</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>TDLR-approved under CP1234. <strong class="text-text">$28 all-in</strong>, seventeen modules, two breaks, chapter quizzes with unlimited attempts, certificate included the moment you finish. Full refund any time before you complete it if it is not for you.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="/texas/eligibility-tracker"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            Check eligibility first
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP1234). This page describes our course and is informational, not legal advice; whether a course dismisses your ticket depends on your court's approval and deadlines, so confirm requirements with the court on your citation. For questions about course standards or to file a complaint, contact the Texas Department of Licensing and Regulation, Education and Examination Division, P.O. Box 12157, Austin, Texas 78711, (800) 803-9202, www.tdlr.texas.gov.</p>
+          <p class="text-xs text-text-subtle">Last updated September 2, 2026. Module list and mechanics reflect the approved Road Ready Safety Texas 6-hour course as delivered on this date; length, instruction minimum, topics and mastery standard per TDLR's Course of Organized Instruction for Six-Hour Driving Safety and 16 TAC §§84.500, 84.504.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

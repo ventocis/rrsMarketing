@@ -1,0 +1,184 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+import NextStepBlock from '../../components/texas/NextStepBlock.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+// Timing rules: TDLR Course of Organized Instruction for Six-Hour Driving Safety
+// (Dec. 2024): six-hour curriculum, minimum five hours of instruction excluding
+// breaks, mastery of 70% on chapter exams or a comprehensive exam; 16 TAC §84.500
+// (breaks) and §84.504. Dismissal window: Tex. Code Crim. Proc. art. 45A.351.
+
+const faqs = [
+  {
+    q: 'What is the fastest defensive driving course in Texas?',
+    a: 'Six hours, for every approved course. TDLR\'s Course of Organized Instruction requires a six-hour curriculum with at least five hours of instruction excluding breaks, and every approved online course enforces that with timers. A course that promises to finish faster is either not TDLR-approved or not telling the truth. The real speed differences are outside the six hours: how fast you get the certificate, and how fast the court processes it.',
+  },
+  {
+    q: 'Can I finish Texas defensive driving in one day?',
+    a: 'Yes. The six hours can be completed in a single sitting, with the breaks the course builds in, and nothing in the rules requires you to spread it over several days. Most of our students who finish in one day start in the morning and download the certificate by mid-afternoon.',
+  },
+  {
+    q: 'How long is a defensive driving course in Texas?',
+    a: 'Six hours (360 minutes), of which at least five hours must be instruction, per TDLR\'s Course of Organized Instruction. That is the same for classroom and online courses. Online courses use screen timers to enforce it.',
+  },
+  {
+    q: 'Can you skip ahead or speed up an online defensive driving course?',
+    a: 'No. Approved online courses time each section, and a course that let you skip the timers would lose its approval. Reading faster does not shorten the course; the timer runs regardless. What you can do is avoid wasting the six hours: the course saves your place, so you can stop and resume without losing time.',
+  },
+  {
+    q: 'What is the easiest defensive driving course in Texas?',
+    a: 'Every approved course covers the same thirteen state-mandated topics and requires 70% mastery on chapter exams or a comprehensive exam. "Easiest" comes down to format and retakes. Ours is text-based, self-paced, has chapter quizzes instead of a final exam, and allows unlimited attempts on every quiz, so you cannot fail out.',
+  },
+  {
+    q: 'What is the fastest way to get the certificate to the court?',
+    a: 'Download it the moment you finish, then submit it the way your court requires: e-file or portal upload where the court has one, email where accepted, otherwise in person. Order your Type 3A driving record from Texas DPS online ($12, instant PDF) at the same time so you submit everything at once. Leave a few days of cushion: TDLR says a new certificate can take up to five days to appear in its validation system.',
+  },
+  {
+    q: 'How long do I have to complete the course after the court approves it?',
+    a: '90 days from the date the court grants the course (Tex. Code Crim. Proc. art. 45A.351), extendable for good cause. Individual courts set their own paperwork deadlines inside that, from 10 to 180 days in our verified data, so check your court\'s letter.',
+  },
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'The Fastest Defensive Driving Course in Texas Is Six Hours. Here Is Where the Real Time Goes (2026)',
+  description: 'Every TDLR-approved Texas defensive driving course is six hours by rule. What "fastest" actually means, whether you can finish in one day, what "easiest" means, and the four places drivers lose days: waiting for the certificate, the driving record, the court\'s process, and the request deadline.',
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-09-02',
+  dateModified: '2026-09-02',
+  mainEntityOfPage: `${siteUrl}/texas/fastest-defensive-driving-course`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Fastest Defensive Driving Course in Texas: Why Every Course Is 6 Hours & Where the Real Time Goes (2026)"
+    description="Every TDLR-approved Texas defensive driving course is six hours by rule. What fastest actually means, whether you can finish in one day, what easiest means, and the four places drivers lose days: certificate delivery, the driving record, the court's process, and the request deadline."
+    keywords="fastest defensive driving course texas, fastest texas defensive driving course, easiest defensive driving course texas, shortest defensive driving course texas, how long is a defensive driving course in texas, finish defensive driving in one day texas, quickest defensive driving texas"
+    url="/texas/fastest-defensive-driving-course"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Fastest course</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          The Fastest Defensive Driving Course in Texas Is Six Hours. Here Is Where the Real Time Goes.
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">Every TDLR-approved Texas defensive driving course is six hours, and no approved course can be finished faster.</strong> TDLR's Course of Organized Instruction requires a six-hour curriculum with at least five hours of instruction excluding breaks, and every approved online course enforces that with timers. A site promising a "3-hour" or "2-hour" Texas course is either not approved, or is describing something other than the state's driving safety course.</p>
+          <p>So "fastest" is not about the course. It is about the days around the course: how fast you get the certificate, how fast you get the driving record, how fast the court processes it, and whether you asked in time at all. We have watched thousands of drivers go through this, and the six hours are almost never where the time goes. Here is where it does, and how to cut it.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Why is every Texas defensive driving course six hours?</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Because the state wrote the length into the course itself. TDLR's Course of Organized Instruction for Six-Hour Driving Safety sets a six-hour curriculum, a minimum of five hours of instruction excluding breaks, thirteen required topics, and mastery of 70% on chapter exams or a comprehensive exam. Providers may teach the topics in any order but must teach every one in full. An online course is an "alternative delivery method" of the same curriculum, so it carries the same clock. A provider that let students skip the timers would be offering an unapproved course, and its certificates would not survive TDLR validation.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Can you finish Texas defensive driving in one day?</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Yes. Nothing in the rules requires the six hours to be spread across days, and the course builds in the required breaks. Start in the morning, take the breaks, and you can have the certificate by mid-afternoon. You can also split it across several sittings within your court's deadline; the course saves your place, and pausing does not cost you time already banked. The only thing that resets nothing and wastes everything is waiting until the week of the deadline to start.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Where the real time goes: four delays that are not the course</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-4" style="font-family: 'DM Sans', sans-serif;">
+          <p>In our experience helping drivers across Texas courts, these four are where days disappear, in order of how often we see them:</p>
+        </div>
+        <ol class="space-y-4 mb-8">
+          <li class="bg-surface-muted border border-border rounded-[14px] p-5">
+            <p class="text-sm font-semibold text-text mb-1" style="font-family: 'Outfit', sans-serif;">1. Certificate delivery: instant, or a week</p>
+            <p class="text-sm text-text-body leading-7" style="font-family: 'DM Sans', sans-serif;">Some courses mail the certificate by default and charge extra for an instant or emailed copy. Mail is five to seven days you cannot get back. Our certificate downloads the moment you finish, included in the price. Whatever course you pick, confirm before paying that instant delivery is included.</p>
+          </li>
+          <li class="bg-surface-muted border border-border rounded-[14px] p-5">
+            <p class="text-sm font-semibold text-text mb-1" style="font-family: 'Outfit', sans-serif;">2. The Type 3A driving record: order it the same day</p>
+            <p class="text-sm text-text-body leading-7" style="font-family: 'DM Sans', sans-serif;">Most courts want a Type 3A certified driving record with the certificate. Texas DPS sells it online for $12 as an instant PDF. Drivers who leave it for later, or order the wrong record type, add a round trip with the clerk. <a href="/texas/type-3a-driving-record" class="text-primary-deep font-medium hover:underline">How to order the right one</a>.</p>
+          </li>
+          <li class="bg-surface-muted border border-border rounded-[14px] p-5">
+            <p class="text-sm font-semibold text-text mb-1" style="font-family: 'Outfit', sans-serif;">3. The court's process: e-file where you can</p>
+            <p class="text-sm text-text-body leading-7" style="font-family: 'DM Sans', sans-serif;">Courts differ more than courses do. Some take the request and the certificate through an online portal and process same week; some want paper by mail and take weeks; a few require a notarized affidavit. Your court's method, fee and deadline are in the <a href="/texas/courts" class="text-primary-deep font-medium hover:underline">court directory</a>, and the stage-by-stage calendar is on the <a href="/texas/dismissal-timeline" class="text-primary-deep font-medium hover:underline">timeline page</a>.</p>
+          </li>
+          <li class="bg-surface-muted border border-border rounded-[14px] p-5">
+            <p class="text-sm font-semibold text-text mb-1" style="font-family: 'Outfit', sans-serif;">4. The request deadline: the one you cannot make up</p>
+            <p class="text-sm text-text-body leading-7" style="font-family: 'DM Sans', sans-serif;">You must ask the court for the course on or before the appearance date on the citation, before you take it. Miss that and no course, however fast, helps. If you have not asked yet, <a href="/texas/request-defensive-driving" class="text-primary-deep font-medium hover:underline">here is how</a>.</p>
+          </li>
+        </ol>
+
+        <NextStepBlock page="fastest-course" lead="eligible" />
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What does "easiest" mean, if every course teaches the same thing?</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Format and retakes. All approved courses cover the same thirteen topics and require 70% mastery, so "easiest" is about how you get to 70%. Ours is text-based (read at your own pace, no video that cannot be paused), uses <strong class="text-text">chapter quizzes instead of a final exam</strong>, and allows <strong class="text-text">unlimited attempts on every quiz</strong>, so you cannot fail out of it. It runs on a phone, saves your progress, and support answers by phone and email when something comes up. If you would rather watch than read, a video-format course from another licensed provider is a legitimate choice; it will still be six hours. To see ours module by module before you pay, read <a href="/texas/what-the-course-looks-like" class="text-primary-deep font-medium hover:underline">what the course looks like</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The fastest realistic path, start to finish</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <ul class="list-disc pl-6 space-y-2">
+            <li><strong class="text-text">Day 0:</strong> request the course from the court by the appearance date, through its portal or email if it has one. Order the Type 3A from DPS online while you wait.</li>
+            <li><strong class="text-text">The day the court approves you:</strong> take the six-hour course in one sitting and download the certificate.</li>
+            <li><strong class="text-text">Same day:</strong> submit the certificate, the Type 3A, and any affidavit the court requires, by e-file or portal where offered.</li>
+            <li><strong class="text-text">Then:</strong> the court processes the dismissal on its own schedule, days to a few weeks. Leave a cushion before the court's deadline; TDLR's validation system can lag a new certificate by up to five days.</li>
+          </ul>
+          <p>That path resolves most tickets in one to three weeks, almost all of it waiting on the court. The full request-to-dismissal calendar is on the <a href="/texas/dismissal-timeline" class="text-primary-deep font-medium hover:underline">timeline page</a>; eligibility and the five steps are in the <a href="/texas/ticket-dismissal" class="text-primary-deep font-medium hover:underline">ticket dismissal guide</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;">{item.a}</p>
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Six hours, then done: no waiting on us</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Road Ready Safety is TDLR-approved under CP1234. The course is <strong class="text-text">$28 all-in</strong>, runs on your phone, saves your place, uses chapter quizzes with unlimited attempts, and the <strong class="text-text">certificate downloads the moment you finish</strong>. The six hours are the state's. Everything after them is instant.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="/texas/dismissal-timeline"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            See the full timeline
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated September 2, 2026. Course length, instruction minimum, topics and mastery standard per TDLR's Course of Organized Instruction for Six-Hour Driving Safety (Dec. 2024) and 16 TAC §§84.500, 84.504; 90-day window per Tex. Code Crim. Proc. art. 45A.351; certificate validation lag per TDLR DESSearch; Type 3A record per Texas DPS; court deadline range from our verified court dataset.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

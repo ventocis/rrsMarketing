@@ -1,46 +1,68 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import NextStepBlock from '../../components/texas/NextStepBlock.astro';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 
 const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
 
+// Legal basis: Tex. Code Crim. Proc. arts. 45A.301–.305 (deferred disposition,
+// recodified from art. 45.051 effective Jan. 1, 2025); arts. 45A.351–.359
+// (driving safety course dismissal); Tex. Transp. Code §542.401 (speeding fine cap).
+// Dismissal-volume figures: Texas Office of Court Administration court activity reports.
+
 const faqs = [
   {
-    "q": "What is deferred disposition for a Texas traffic ticket?",
-    "a": "A court-supervised probation for fine-only offenses: you plead guilty or no contest, pay court costs and a judge-set fine, and stay violation-free for up to 180 days. Complete the conditions and the charge is dismissed — it never becomes a final conviction and may not be used against you for any purpose (Tex. Code Crim. Proc. arts. 45A.302, 45A.305)."
+    q: 'What is deferred disposition for a Texas traffic ticket?',
+    a: 'A court-supervised probation for fine-only (Class C) offenses. You plead guilty or no contest, pay court costs and a special expense fee the judge sets, and stay violation-free for a period of up to 180 days. Complete the conditions and the charge is dismissed; it never becomes a final conviction and may not be used against you for any purpose (Tex. Code Crim. Proc. arts. 45A.302, 45A.305).',
   },
   {
-    "q": "Is deferred disposition better than defensive driving?",
-    "a": "If you qualify for defensive driving, the course is usually better: it's a statutory right rather than a judge's favor, typically costs less, and doesn't leave you exposed to conviction if you pick up another ticket during a probation period. Deferred is the tool for drivers the course excludes — 25+ mph over, out-of-state licenses, or a second ticket within 12 months."
+    q: 'What is the difference between deferred disposition and deferred adjudication?',
+    a: 'Deferred disposition is for Class C, fine-only offenses in justice and municipal courts, like traffic tickets; it ends in dismissal after up to 180 days. Deferred adjudication is a form of community supervision for Class B misdemeanors and above in county and district courts, can run for years, and leaves a record of the deferral. People searching "deferred adjudication for a speeding ticket" almost always mean deferred disposition.',
   },
   {
-    "q": "Who cannot get deferred disposition in Texas?",
-    "a": "Two statutory exclusions: offenses committed in a construction or maintenance work zone with workers present, and anyone who holds or held a commercial driver's license when the offense was committed (art. 45A.301). Beyond that, the judge can simply say no — deferred is always discretionary."
+    q: 'How much does deferred disposition cost in Texas?',
+    a: 'Court costs plus a special expense fee the judge sets, capped at the maximum fine for the offense. For ordinary speeding the cap is $200 (Transp. Code §542.401), so deferred totals commonly land between $200 and $300 depending on the court\'s costs. If the judge also orders a driving safety course, add the course. Defensive driving dismissal usually costs less when you qualify: roughly $144 in court fees plus the $28 course.',
   },
   {
-    "q": "Does deferred disposition go on your driving record?",
-    "a": "A successfully completed deferred disposition ends in dismissal — there is no final conviction, and the complaint may not be used against you for any purpose. If you violate the conditions, though, the court can enter the conviction, and that does go on your record."
+    q: 'Is deferred disposition worth it?',
+    a: 'Yes, if the alternative is a conviction and you cannot take the driving safety course. A completed deferral keeps the ticket off your record and away from your insurer. It is not worth choosing over defensive driving when you qualify for the course, because the course is a statutory right that finishes in one evening, while deferred is a judge\'s favor with months of exposure.',
   },
   {
-    "q": "Do I have to take a course with deferred disposition?",
-    "a": "Sometimes. The judge may order a driving safety course as a condition for anyone, and must order one if you're under 25 and the offense is a moving violation (art. 45A.304). Under-25 drivers who hold a provisional license must also be examined by DPS."
+    q: 'What happens if you get another ticket during deferred disposition?',
+    a: 'The court can find you violated the conditions and enter a conviction on the original charge, which then goes on your driving record. Some courts give you a hearing first; some act on the new citation alone. The new ticket is a separate case with its own consequences.',
   },
   {
-    "q": "How many times can you get deferred disposition in Texas?",
-    "a": "There's no statutory once-per-12-months limit like defensive driving has — but it's entirely the judge's discretion, and courts get less generous with repeat requests. Don't treat it as a renewable subscription."
-  }
+    q: 'Who cannot get deferred disposition in Texas?',
+    a: 'Two statutory exclusions: offenses committed in a construction or maintenance work zone with workers present, and anyone who holds, or held at the time of the offense, a commercial driver\'s license (art. 45A.301). Beyond that, deferred is discretionary; a judge can decline it for any reason, and repeat requests are granted less often.',
+  },
+  {
+    q: 'Do I have to take a driving safety course with deferred disposition?',
+    a: 'Sometimes. The judge may order a course as a condition for anyone, and must order one if you are under 25 and the offense is a moving violation (art. 45A.304). Under-25 drivers with a provisional license must also take a DPS examination.',
+  },
+  {
+    q: 'How many times can you get deferred disposition in Texas?',
+    a: 'There is no statutory once-per-12-months limit like the driving safety course has. In practice, judges see your history and are less generous the second and third time, and some courts have local policies against repeat deferrals.',
+  },
+  {
+    q: 'Does deferred disposition go on your record?',
+    a: 'A completed deferral ends in dismissal, so there is no conviction and nothing for an insurer to find on a Texas driving record. If you violate the conditions and the court enters the conviction, that does go on your record like any other ticket.',
+  },
+  {
+    q: 'Can I get deferred disposition for a speeding ticket 25 mph over in Texas?',
+    a: 'Usually yes. Deferred disposition has no speed threshold, which is why it is the main path for drivers cited 25 or more mph over, or at 95 mph and above, who are barred from the driving safety course. It is still the judge\'s call, and some courts decline deferral at very high speeds.',
+  },
 ];
 
 const articleSchema = JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'Article',
-  headline: "Deferred Disposition in Texas: The Other Way to Keep a Ticket Off Your Record",
-  description: "Deferred disposition is Texas's other ticket-dismissal tool: a probation of up to 180 days that ends in dismissal, with no speed cap and no 12-month limit. How it works, what it costs, and when to choose it over defensive driving.",
+  headline: 'Deferred Disposition in Texas: What It Is, What It Costs, Who Qualifies, and When to Use It Instead of Defensive Driving (2026)',
+  description: 'Deferred disposition explained for Texas traffic tickets: the up-to-180-day probation that ends in dismissal, what it costs, the two statutory exclusions, what happens if you get another ticket, how it differs from deferred adjudication, and when the driving safety course is the better choice.',
   author: { '@type': 'Organization', name: 'Road Ready Safety' },
   publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
   datePublished: '2026-06-11',
-  dateModified: '2026-08-04',
+  dateModified: '2026-09-02',
   mainEntityOfPage: `${siteUrl}/texas/deferred-disposition`,
 });
 
@@ -53,9 +75,9 @@ const faqSchema = JSON.stringify({
 
 {isEnabled ? (
   <TexasLayout
-    title="Deferred Disposition in Texas: How It Works, Who Qualifies, and How It Compares to Defensive Driving (2026)"
-    description="Deferred disposition is Texas's other ticket-dismissal tool: a probation of up to 180 days that ends in dismissal, with no speed cap and no 12-month limit. How it works, what it costs, and when to choose it over defensive driving."
-    keywords="deferred disposition texas, deferred disposition vs defensive driving, deferred adjudication traffic ticket texas, dismiss ticket without defensive driving texas, 180 day probation ticket texas"
+    title="Deferred Disposition in Texas: What It Is, What It Costs, Who Qualifies & When to Use It (2026)"
+    description="Deferred disposition for Texas traffic tickets: the up-to-180-day probation that ends in dismissal, what it costs, who is excluded, what happens if you get another ticket, how it differs from deferred adjudication, and when defensive driving is the better path."
+    keywords="deferred disposition texas, what is deferred disposition, deferred disposition meaning, deferred disposition for traffic ticket, deferred disposition vs deferred adjudication, is deferred disposition worth it, how much is deferred disposition, deferred disposition speeding ticket texas, violate deferred disposition"
     url="/texas/deferred-disposition"
   >
     <script type="application/ld+json" set:html={articleSchema} />
@@ -67,42 +89,74 @@ const faqSchema = JSON.stringify({
         <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
           <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
           <span class="mx-2 text-text-subtle">›</span>
-          <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">Speeding ticket guide</a>
+          <a href="/texas/ticket-dismissal" class="text-primary-deep font-medium hover:underline">Ticket dismissal</a>
           <span class="mx-2 text-text-subtle">›</span>
           <span class="text-text">Deferred disposition</span>
         </p>
 
         <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
-          Deferred Disposition in Texas: The Other Way to Keep a Ticket Off Your Record
+          Deferred Disposition in Texas: What It Is, What It Costs, Who Qualifies, and When to Use It Instead of Defensive Driving
         </h1>
 
         <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
-          <p>Deferred disposition is a court-supervised probation for fine-only offenses: you plead guilty or no contest, pay court costs plus a fine the judge sets, stay out of trouble for up to <strong class="text-text">180 days</strong> — and the charge is <strong class="text-text">dismissed</strong> (Tex. Code Crim. Proc. art. 45A.302). By law the dismissed complaint "may not be used against the person for any purpose" (art. 45A.305). No course required, unless the judge orders one.</p>
-          <p>It's the tool that catches almost everyone defensive driving can't: drivers cited 25+ mph over, out-of-state license holders, and anyone inside the 12-month rule. Here's exactly how it works and how to decide between the two.</p>
+          <p>Deferred disposition is a court-supervised probation for fine-only traffic offenses: <strong class="text-text">you plead guilty or no contest, pay court costs plus a special expense fee the judge sets, stay violation-free for up to 180 days, and the charge is dismissed</strong> (Tex. Code Crim. Proc. art. 45A.302). By law the dismissed complaint "may not be used against the person for any purpose" (art. 45A.305). No course is required unless the judge orders one.</p>
+          <p>It is the tool that catches almost everyone the driving safety course cannot: drivers cited 25 or more mph over, out-of-state licence holders, and anyone inside the 12-month rule. Texas courts dismissed <strong class="text-text">525,205 tickets this way in fiscal 2025</strong>, more than through the course, according to the Office of Court Administration. This page explains how it works, what it really costs, what breaks it, and when the course is the better choice.</p>
         </div>
 
         <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
-          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Procedures vary by court and judge — confirm with the court listed on your citation.</p>
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Deferred disposition is always at the judge's discretion and procedures vary by court; confirm with the court listed on your citation.</p>
         </div>
 
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How deferred disposition works, step by step</h2>
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How does deferred disposition work, step by step?</h2>
         <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p>You ask the court for deferred disposition on or before your appearance date — in person, by mail, or at many courts online. If the judge grants it (it's entirely discretionary — "may," not "shall"), you plead guilty or no contest, pay court costs plus a fine the judge sets up to the maximum for the offense, and the judge defers judgment for a set period not exceeding 180 days.</p>
-          <p>The judge can attach conditions (art. 45A.303): most commonly, don't get another ticket during the period; sometimes a driving safety course. If you're <strong class="text-text">under 25 and the offense is a moving violation, the course condition is mandatory</strong> (art. 45A.304) — and provisional-license holders must also take a DPS exam.</p>
-          <p>Complete the conditions and the judge dismisses the complaint: no final conviction, nothing your insurer can price off, nothing counting toward a license suspension. Violate the conditions — usually by picking up a new ticket — and you can be convicted of the original charge.</p>
+          <p>You ask the court for deferred disposition on or before the appearance date on your citation, in person, by mail, or at many courts online. If the judge grants it (the statute says the court "may," not "shall," so it is entirely discretionary), you plead guilty or no contest, pay court costs plus a special expense fee up to the maximum fine for the offense, and the judge defers judgment for a set period not exceeding <strong class="text-text">180 days</strong>.</p>
+          <p>The judge can attach conditions (art. 45A.303): most commonly, do not get another ticket during the period; sometimes a driving safety course. If you are <strong class="text-text">under 25 and the offense is a moving violation, the course condition is mandatory</strong> (art. 45A.304), and provisional-licence holders must also take a DPS examination.</p>
+          <p>Complete the conditions and the judge dismisses the complaint: no final conviction, nothing your insurer can price off, nothing counting toward a licence suspension. Violate the conditions, usually by picking up a new ticket, and the court can enter a conviction on the original charge.</p>
         </div>
 
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Deferred disposition vs. defensive driving: which one to use</h2>
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Deferred disposition vs deferred adjudication: are they the same thing?</h2>
         <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p><strong class="text-text">Use defensive driving when you qualify for it.</strong> It's an entitlement, not a favor: if you meet the conditions, the judge must grant it. You control the outcome — finish the course, submit your documents, done. Deferred is discretionary and leaves you exposed for up to 180 days: a second ticket during the period can convert into a conviction on the original charge.</p>
-          <p><strong class="text-text">Use deferred when defensive driving is closed to you:</strong> cited <a href="/texas/speeding-25-over" class="text-primary-deep font-medium hover:underline">25+ mph over or 95+ mph</a> (deferred has no speed cap), holding an <a href="/texas/out-of-state-driver" class="text-primary-deep font-medium hover:underline">out-of-state license</a> (deferred has no license-state requirement), or inside the <a href="/texas/12-month-rule" class="text-primary-deep font-medium hover:underline">12-month rule</a> (deferred has no such limit).</p>
-          <p>Two groups are excluded from deferred by statute (art. 45A.301): offenses in a construction or maintenance work zone with workers present, and anyone who holds — or held at the time of the offense — a commercial driver's license. Notably, the work-zone driver is excluded from <em>both</em> tools, and the CDL holder too: for them, the realistic paths are negotiation or trial.</p>
+          <p>No, and the mix-up matters because the two have very different consequences. <strong class="text-text">Deferred disposition</strong> is for Class C, fine-only offenses in justice and municipal courts: traffic tickets. It runs up to 180 days and ends in a dismissal that cannot be used against you. <strong class="text-text">Deferred adjudication</strong> is community supervision for Class B misdemeanors and above in county and district courts; it can run for years, carries reporting conditions, and leaves a record of the deferral that background checks can see. If you searched "deferred adjudication for a speeding ticket," you mean deferred disposition, and this page is the right one.</p>
         </div>
 
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What deferred disposition costs</h2>
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Who qualifies for deferred disposition, and who is excluded?</h2>
         <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p>Court costs (the same state and local consolidated costs as any Class C case) plus a fine the judge sets, capped at the maximum fine for the offense — for ordinary speeding that cap is $200 (Transp. Code §542.401). Many courts publish deferred totals in the $200–$300 range; the exact number is the court's. If a course is ordered as a condition, add the $28 course. Compare that to the defensive driving path's typical $144 court costs plus $28 course, and defensive driving is usually cheaper when you qualify for it.</p>
-          <p>One warning that applies to both tools: <strong class="text-text">don't pay the ticket online first.</strong> Payment in full is a plea and a conviction, and it forecloses both deferred and the course — see <a href="/texas/already-paid-ticket" class="text-primary-deep font-medium hover:underline">what happens if you already paid</a>.</p>
+          <p>Any driver charged with a fine-only traffic offense can ask, and unlike the driving safety course there is no Texas-licence requirement, no speed cap, and no once-per-12-months limit. Two groups are excluded by statute (art. 45A.301):</p>
+          <ul class="list-disc pl-6 space-y-2">
+            <li>Offenses committed in a <strong class="text-text">construction or maintenance work zone while workers were present</strong>. That driver is excluded from both deferred and the course; see the <a href="/texas/construction-zone-ticket" class="text-primary-deep font-medium hover:underline">work-zone ticket page</a> for what is left.</li>
+            <li>Anyone who <strong class="text-text">holds, or held when the offense was committed, a commercial driver's licence</strong>, including tickets in a personal vehicle. The <a href="/texas/cdl-defensive-driving" class="text-primary-deep font-medium hover:underline">CDL page</a> covers the realistic options.</li>
+          </ul>
+          <p>Everyone else is at the judge's discretion. In our experience helping drivers across Texas courts, first requests on ordinary speeding and moving violations are granted routinely; second requests within a year or two, and very high speeds, are where judges start saying no.</p>
+        </div>
+
+        <NextStepBlock page="deferred-disposition" lead="precourt" ineligibleNote="Eligible for the driving safety course instead? It is a statutory right, finishes in one evening, and usually costs less than a deferral." ineligibleHref="/texas/ticket-dismissal" ineligibleLabel="See if you qualify" />
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How much does deferred disposition cost?</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Court costs (the same state and local consolidated costs as any Class C case) plus a <strong class="text-text">special expense fee the judge sets, capped at the maximum fine for the offense</strong>. For ordinary speeding that cap is $200 (Transp. Code §542.401), so deferred totals commonly land in the <strong class="text-text">$200 to $300</strong> range; the exact figure is the court's. If a course is ordered as a condition, add the course. Compare that with the driving safety course path, typically <a href="/texas/dsc-fees-by-court" class="text-primary-deep font-medium hover:underline">$109 to $169 in court fees</a> plus the $28 course, and the course is usually cheaper when you qualify for it.</p>
+          <p>One warning that applies to both paths: <strong class="text-text">do not pay the ticket online first.</strong> Payment in full is a plea and a conviction, and it forecloses both deferred and the course. See <a href="/texas/already-paid-ticket" class="text-primary-deep font-medium hover:underline">what happens if you already paid</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What happens if you get another ticket during deferred disposition?</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>The court can find that you violated the conditions and <strong class="text-text">enter a conviction on the original charge</strong>, which then appears on your driving record like any other ticket. Some courts hold a hearing before doing so; others act on the new citation alone. The new ticket is a separate case with its own fine, and you cannot use deferred disposition to fix a ticket that itself broke a deferral. This exposure window is the real cost of deferred: for up to six months, one mistake turns into two convictions' worth of consequences.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How do you request deferred disposition?</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Ask on or before the appearance date, using the method your court accepts. Many municipal and justice courts have a "request for deferred disposition" checkbox on the plea form or the online portal; others want a short written request. Say that you plead no contest and ask the court to grant deferred disposition under article 45A.301, and that you will comply with any conditions. If you are under 25, expect the course to be required; if you want to take the course anyway to get the insurance discount, say so, because some judges shorten the deferral period for it. Your court's request method, forms and fees are in our <a href="/texas/courts" class="text-primary-deep font-medium hover:underline">court directory</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">When should you use deferred disposition instead of defensive driving?</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">Use the driving safety course when you qualify for it.</strong> It is an entitlement, not a favor: meet the conditions and the judge must grant it. You control the outcome, you finish in one evening, and it usually costs less. <strong class="text-text">Use deferred when the course is closed to you:</strong></p>
+          <ul class="list-disc pl-6 space-y-2">
+            <li>Cited <a href="/texas/speeding-25-over" class="text-primary-deep font-medium hover:underline">25 or more mph over, or 95 mph and up</a>. Deferred has no speed cap.</li>
+            <li>Holding an <a href="/texas/out-of-state-driver" class="text-primary-deep font-medium hover:underline">out-of-state licence</a>. Deferred has no licence-state requirement.</li>
+            <li>Inside the <a href="/texas/12-month-rule" class="text-primary-deep font-medium hover:underline">12-month rule</a> from a previous course dismissal. Deferred has no such limit.</li>
+            <li>A non-moving or equipment charge the course does not cover, where the court will not offer a compliance dismissal.</li>
+          </ul>
+          <p>The side-by-side decision table, with the statewide numbers, is on <a href="/texas/defensive-driving-vs-deferred-disposition" class="text-primary-deep font-medium hover:underline">deferred disposition vs defensive driving</a>.</p>
         </div>
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
@@ -110,14 +164,14 @@ const faqSchema = JSON.stringify({
           {faqs.map(item => (
             <div>
               <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
-              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;">{item.a}</p>
             </div>
           ))}
         </div>
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">If you qualify for the course, take the surer path</h2>
         <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
-          <p>Deferred disposition is a good tool — but when you're eligible for defensive driving, the course is a right, not a favor, and usually the cheaper option. Our TDLR-approved course (CP1234) is <strong class="text-text">$28 all-in, online, with a free instant certificate</strong>.</p>
+          <p>Deferred disposition is a good tool. But when you are eligible for defensive driving, the course is a right, not a favor, and usually the cheaper option. Ours is TDLR-approved (CP1234), <strong class="text-text">$28 all-in, online, with the instant certificate included</strong>. And if the judge orders a course as a condition of your deferral, this one satisfies it.</p>
         </div>
 
         <div class="flex flex-col sm:flex-row gap-4 mb-10">
@@ -138,8 +192,8 @@ const faqSchema = JSON.stringify({
         </div>
 
         <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
-          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
-          <p class="text-xs text-text-subtle">Last updated August 4, 2026 — verified by the Road Ready Safety editorial team against Tex. Code Crim. Proc. arts. 45A.301–.305 &amp; 45A.351–.359 and Tex. Transp. Code §542.401.</p>
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated September 2, 2026. Verified against Tex. Code Crim. Proc. arts. 45A.301 to 45A.305 (deferred disposition) and 45A.351 to 45A.359 (driving safety course), Tex. Transp. Code §542.401, and the Texas Office of Court Administration court activity reports (FY2025).</p>
         </div>
 
       </div>

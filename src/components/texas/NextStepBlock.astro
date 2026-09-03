@@ -1,0 +1,123 @@
+---
+/**
+ * NextStepBlock — the intent-matched "Your next step" module for Texas content pages.
+ *
+ * Three readers land on every Texas page: someone the court has already approved
+ * (sell the course), someone who has not asked the court yet (give the two steps and
+ * capture a reminder), and someone whose ticket is not eligible (be honest and route
+ * them). This block answers all three in one place instead of one generic buy button.
+ *
+ * Reminder capture posts to Klaviyo's client subscriptions API (same mechanism as the
+ * court-page coupon widget). It subscribes to the TX Eligibility Checker list, whose
+ * live flow already walks subscribers through eligibility and the course; a dedicated
+ * "court approval reminders" list can replace it via VITE_KLAVIYO_REMINDER_LIST.
+ */
+interface Props {
+  /** Short label used as the Klaviyo custom_source and the signup_page property. */
+  page: string;
+  /** Which reader is most likely on this page; controls which card leads. */
+  lead?: 'eligible' | 'precourt' | 'ineligible';
+  /** Optional one-line note for readers whose ticket is likely not eligible. */
+  ineligibleNote?: string;
+  /** Where to send the ineligible reader. */
+  ineligibleHref?: string;
+  ineligibleLabel?: string;
+}
+
+const {
+  page,
+  lead = 'precourt',
+  ineligibleNote = 'Cited at 25+ mph over, in a work zone with workers present, or holding a CDL? Defensive driving dismissal is off the table, but you still have options.',
+  ineligibleHref = '/texas/speeding-25-over',
+  ineligibleLabel = 'See what to do instead',
+} = Astro.props;
+
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+const listId = import.meta.env.VITE_KLAVIYO_REMINDER_LIST || 'UHAu4n';
+const companyId = 'U3BbdX';
+const blockId = `rrs-next-${page.replace(/[^a-z0-9]+/gi, '-').toLowerCase()}`;
+const order = lead === 'eligible' ? ['eligible', 'precourt'] : ['precourt', 'eligible'];
+---
+
+<aside
+  id={blockId}
+  class="rrs-next-step my-10 rounded-2xl border border-border bg-surface-muted p-5 sm:p-6"
+  data-list={listId}
+  data-page={page}
+  aria-labelledby={`${blockId}-title`}
+>
+  <p id={`${blockId}-title`} class="text-xs font-semibold tracking-[0.12em] uppercase text-primary-deep mb-4" style="font-family: 'DM Sans', sans-serif;">Your next step</p>
+
+  <div class="grid gap-4 sm:grid-cols-2">
+    {order.map((kind) => kind === 'eligible' ? (
+      <div class="rounded-xl bg-white border border-border p-4 flex flex-col gap-3">
+        <p class="text-base font-semibold text-text" style="font-family: 'Outfit', sans-serif;">The court already approved you for defensive driving?</p>
+        <p class="text-sm text-text-body leading-6" style="font-family: 'DM Sans', sans-serif;">Then the only thing left is the 6-hour course. Ours is $28 all-in, TDLR-approved (CP1234), and the certificate downloads the moment you finish.</p>
+        <a href={enrollUrl} class="mt-auto inline-flex h-11 items-center justify-center rounded-xl bg-primary px-5 text-sm font-semibold text-white no-underline hover:bg-primary-hover" style="font-family: 'DM Sans', sans-serif;">Start the $28 course →</a>
+      </div>
+    ) : (
+      <div class="rounded-xl bg-white border border-border p-4 flex flex-col gap-3">
+        <p class="text-base font-semibold text-text" style="font-family: 'Outfit', sans-serif;">Haven't asked the court yet?</p>
+        <ol class="text-sm text-text-body leading-6 list-decimal pl-5 space-y-1" style="font-family: 'DM Sans', sans-serif;">
+          <li>Don't pay the ticket online. Paying is a guilty plea and ends the dismissal option.</li>
+          <li>Request the driving safety course from your court on or before the appearance date printed on the citation. <a href="/texas/request-defensive-driving" class="text-primary-deep font-medium hover:underline">Here's exactly how</a>.</li>
+        </ol>
+        <form class="rrs-next-form flex flex-col gap-2 mt-auto" novalidate>
+          <label class="text-xs text-text-body" style="font-family: 'DM Sans', sans-serif;">Email me the steps and a deadline reminder</label>
+          <div class="flex gap-2">
+            <input type="email" name="email" required placeholder="you@email.com" autocomplete="email" class="min-w-0 flex-1 h-11 px-3 border border-border rounded-xl text-sm" />
+            <button type="submit" class="h-11 shrink-0 rounded-xl bg-primary-deep px-4 text-sm font-semibold text-white hover:bg-primary-hover" style="font-family: 'DM Sans', sans-serif;">Send</button>
+          </div>
+          <p class="rrs-next-error text-xs" style="display:none;color:#b91c1c">Something went wrong. Please try again.</p>
+          <p class="rrs-next-ok text-xs font-semibold" style="display:none;color:#047857">Sent. Check your inbox for the steps for your court.</p>
+        </form>
+      </div>
+    ))}
+  </div>
+
+  <p class="mt-4 text-xs text-text-body leading-5" style="font-family: 'DM Sans', sans-serif;">
+    {ineligibleNote} <a href={ineligibleHref} class="text-primary-deep font-medium hover:underline">{ineligibleLabel}</a>
+  </p>
+</aside>
+
+<script is:inline>
+  (function () {
+    function init() {
+      var blocks = document.querySelectorAll('.rrs-next-step');
+      var COMPANY = 'U3BbdX';
+      blocks.forEach(function (block) {
+        var form = block.querySelector('.rrs-next-form');
+        if (!form || form.dataset.bound) return;
+        form.dataset.bound = '1';
+        var list = block.getAttribute('data-list');
+        var page = block.getAttribute('data-page');
+        var err = form.querySelector('.rrs-next-error');
+        var ok = form.querySelector('.rrs-next-ok');
+        form.addEventListener('submit', function (e) {
+          e.preventDefault();
+          err.style.display = 'none';
+          var input = form.querySelector('input[type=email]');
+          var email = (input.value || '').trim();
+          if (!email || email.indexOf('@') < 1) { err.textContent = 'Enter a valid email address.'; err.style.display = 'block'; return; }
+          var btn = form.querySelector('button[type=submit]');
+          btn.disabled = true; btn.textContent = 'Sending…';
+          var qs = new URLSearchParams(location.search);
+          var payload = { data: { type: 'subscription', attributes: {
+            custom_source: 'Next Step: ' + page,
+            profile: { data: { type: 'profile', attributes: { email: email, properties: {
+              signup_page: page, signup_url: location.href, signup_source: 'next-step-block',
+              utm_source: qs.get('utm_source') || '', utm_medium: qs.get('utm_medium') || '', utm_campaign: qs.get('utm_campaign') || ''
+            } } } }
+          }, relationships: { list: { data: { type: 'list', id: list } } } } };
+          fetch('https://a.klaviyo.com/client/subscriptions/?company_id=' + COMPANY, {
+            method: 'POST', headers: { 'Content-Type': 'application/json', 'revision': '2024-10-15' }, body: JSON.stringify(payload)
+          }).then(function (r) {
+            if (r.status >= 200 && r.status < 300) { form.querySelector('.flex').style.display = 'none'; ok.style.display = 'block'; }
+            else { throw new Error('status ' + r.status); }
+          }).catch(function () { btn.disabled = false; btn.textContent = 'Send'; err.textContent = 'Something went wrong. Please try again.'; err.style.display = 'block'; });
+        });
+      });
+    }
+    if (document.readyState !== 'loading') { init(); } else { document.addEventListener('DOMContentLoaded', init); }
+  })();
+</script>

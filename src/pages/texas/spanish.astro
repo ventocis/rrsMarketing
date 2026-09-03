@@ -1,0 +1,217 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+import NextStepBlock from '../../components/texas/NextStepBlock.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+const listId = import.meta.env.VITE_KLAVIYO_REMINDER_LIST || 'UHAu4n';
+
+// Language rule: 16 TAC §84.504 (a licensed provider may offer the course in a
+// language other than English if the translation is affirmed true and correct and
+// the course is approved before use). Road Ready Safety's course is English-only as
+// of this page's date; the waitlist below measures Spanish demand.
+
+const faqs = [
+  {
+    q: 'Is there a TDLR-approved defensive driving course in Spanish?',
+    a: 'Yes. Texas allows a licensed driving safety provider to offer the 6-hour course in Spanish or another language, as long as the translation is affirmed true and correct and the department approves the course before use (16 TAC §84.504). A Spanish course from a licensed provider produces the same uniform certificate and dismisses a ticket exactly like the English version.',
+  },
+  {
+    q: '¿Hay un curso de manejo defensivo en español aprobado por TDLR en Texas?',
+    a: 'Sí. Texas permite que un proveedor con licencia ofrezca el curso de 6 horas en español u otro idioma, siempre que la traducción sea fiel y el departamento apruebe el curso antes de usarlo (16 TAC §84.504). Un curso en español de un proveedor con licencia produce el mismo certificado y desestima la multa igual que la versión en inglés.',
+  },
+  {
+    q: 'Is the Road Ready Safety course available in Spanish?',
+    a: 'Not yet. Our TDLR-approved course (CP1234) is delivered in English as of September 2026. We are evaluating a Spanish version, which requires a certified translation and TDLR approval before we can sell it. You can join the waitlist on this page and we will email you when it is available.',
+  },
+  {
+    q: 'Does the court accept a certificate from a Spanish-language course?',
+    a: 'Yes. The certificate is the same uniform certificate of completion TDLR issues for every approved course, in every language. Courts check the certificate number, not the language of instruction.',
+  },
+  {
+    q: 'Do I need to speak English to request defensive driving from a Texas court?',
+    a: 'No. You may request the course in writing on or before the appearance date, and many courts provide Spanish-language forms or a bilingual clerk. If you are unsure, call the court on your citation and ask for "clases de manejo defensivo para desestimar la multa." The request must reach the court before you take any course.',
+  },
+  {
+    q: '¿Puedo tomar el curso en inglés si entiendo algo de inglés?',
+    a: 'Sí, si puede leer inglés básico. Nuestro curso es de lectura, a su propio ritmo, sin examen final, con intentos ilimitados en las preguntas de cada módulo y con soporte por teléfono y correo electrónico. Puede pausar y continuar cuando quiera dentro del plazo de la corte.',
+  },
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Texas Defensive Driving Course in Spanish: What the Law Allows, What Counts in Court, and What Spanish Speakers Should Do Next (2026)',
+  description: 'Whether a Spanish-language driving safety course is TDLR-approved in Texas, whether courts accept its certificate, how Spanish speakers request the course from a court, and where Road Ready Safety stands on a Spanish version.',
+  inLanguage: 'en',
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-09-02',
+  dateModified: '2026-09-02',
+  mainEntityOfPage: `${siteUrl}/texas/spanish`,
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Texas Defensive Driving Course in Spanish: What's Allowed, What Courts Accept & What to Do (2026)"
+    description="Is there a TDLR-approved defensive driving course in Spanish? Yes. Whether courts accept its certificate, how Spanish speakers request the course, and where Road Ready Safety stands on a Spanish version. Resumen en español incluido."
+    keywords="texas defensive driving course in spanish, defensive driving course en español texas, curso de manejo defensivo texas, bilingual texas defensive driving course, driving safety course texas in spanish, clases de defensive driving en español"
+    url="/texas/spanish"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Spanish / Español</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          Texas Defensive Driving Course in Spanish: What the Law Allows, What Counts in Court, and What to Do Next
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">Yes, Texas allows a TDLR-approved driving safety course to be offered in Spanish</strong>, and a certificate from a Spanish-language course dismisses a ticket exactly like one from an English course. The rule is 16 TAC §84.504: a licensed provider may offer the course in a language other than English if it affirms the translation is true and correct and the department approves the course before use. The certificate is the same uniform certificate either way.</p>
+          <p><strong class="text-text">Our own course is English-only today.</strong> We are evaluating a Spanish version, which needs a certified translation and TDLR approval before we can sell it. This page tells Spanish-speaking drivers what they can do right now, includes a Spanish summary of the court process, and lets you tell us you want the Spanish course so we can gauge demand honestly.</p>
+        </div>
+
+        <div class="rounded-2xl border border-border bg-surface-muted p-5 sm:p-6 mb-10" id="rrs-spanish-waitlist">
+          <p class="text-xs font-semibold tracking-[0.12em] uppercase text-primary-deep mb-2" style="font-family: 'DM Sans', sans-serif;">Spanish course waitlist · Lista de espera</p>
+          <p class="text-sm text-text-body leading-6 mb-3" style="font-family: 'DM Sans', sans-serif;">Tell us you want the course in Spanish and we'll email you when it launches. <span lang="es">Déjenos su correo y le avisaremos cuando el curso esté disponible en español.</span></p>
+          <form class="rrs-waitlist-form flex flex-col sm:flex-row gap-2" novalidate>
+            <input type="email" name="email" required placeholder="you@email.com" autocomplete="email" class="min-w-0 flex-1 h-11 px-3 border border-border rounded-xl text-sm" />
+            <button type="submit" class="h-11 shrink-0 rounded-xl bg-primary-deep px-5 text-sm font-semibold text-white hover:bg-primary-hover" style="font-family: 'DM Sans', sans-serif;">Notify me · Avísame</button>
+          </form>
+          <p class="rrs-waitlist-error text-xs mt-2" style="display:none;color:#b91c1c">Something went wrong. Please try again. · Algo salió mal, intente de nuevo.</p>
+          <p class="rrs-waitlist-ok text-xs font-semibold mt-2" style="display:none;color:#047857">You're on the list. · Está en la lista.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Is a Spanish-language driving safety course TDLR approved?</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>It can be, and several licensed providers offer one. TDLR does not license a language; it licenses the provider and approves the course. A provider that wants to teach in Spanish submits the translated course with a written affirmation that the translation is true and correct, and TDLR approves it like any other course change (16 TAC §84.504). So the two questions to ask any Spanish course are the same two you would ask any course: does the provider show a current CP number, and was this version approved? How to check both is on our <a href="/texas/tdlr-approved" class="text-primary-deep font-medium hover:underline">TDLR-approved page</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Does a Spanish course count the same in court?</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Yes. The court receives the same uniform certificate of completion, with the same CP###-######## number, and validates it in the same TDLR system. Nothing on the certificate records the language of instruction. Eligibility, the request deadline, the 90-day completion window, the court's fee and the Type 3A driving record are identical too; all of it is in the <a href="/texas/ticket-dismissal" class="text-primary-deep font-medium hover:underline">ticket dismissal guide</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Can a Spanish speaker take the English course?</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>If you read basic English, yes. Our course is text-based and self-paced, with no final exam, unlimited attempts on each module's questions, and support by phone and email. You can stop and resume as often as you like within your court's deadline. What we will not tell you is that it is the same as a Spanish course: if reading English is a struggle, a Spanish-language course from a licensed provider is the better choice for you, and the certificate is just as good.</p>
+        </div>
+
+        <NextStepBlock page="spanish" lead="precourt" ineligibleNote="Prefer to read the steps in Spanish? The summary below covers the process from citation to dismissal." ineligibleHref="#resumen" ineligibleLabel="Ir al resumen en español" />
+
+        <div lang="es" id="resumen">
+          <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Resumen en español: cómo desestimar una multa de tránsito en Texas con un curso de manejo defensivo</h2>
+          <div class="space-y-4 text-text-body text-base leading-7 mb-6" style="font-family: 'DM Sans', sans-serif;">
+            <p>En Texas, un curso de seguridad vial de 6 horas aprobado por el Departamento de Licencias y Regulación de Texas (TDLR) puede desestimar una infracción de tránsito elegible. La corte tiene que aprobarlo antes de que usted tome el curso. Los pasos, en orden:</p>
+            <ol class="list-decimal pl-6 space-y-2">
+              <li><strong class="text-text">No pague la multa.</strong> Pagar en línea o por correo es declararse culpable y elimina la opción de desestimarla.</li>
+              <li><strong class="text-text">Pida el curso a la corte antes de la fecha de comparecencia</strong> impresa en la citación. Puede hacerlo en persona, por correo certificado o, en muchas cortes, por correo electrónico o en su portal. Pregunte por "driving safety course" o "defensive driving para desestimar la multa."</li>
+              <li><strong class="text-text">Entregue lo que la corte pida y pague su cuota.</strong> Normalmente: licencia de conducir de Texas vigente, prueba de seguro y su historial de manejo tipo 3A del DPS ($12 en línea). La cuota de la corte suele ser entre $109 y $169.</li>
+              <li><strong class="text-text">Complete un curso aprobado por TDLR dentro de 90 días.</strong> El curso es en línea. La ley fija el mínimo en 6 horas y el precio mínimo en $25.</li>
+              <li><strong class="text-text">Entregue el certificado a la corte antes de la fecha límite.</strong> La corte desestima el cargo y, por ley, no aparece en su historial de manejo.</li>
+            </ol>
+            <p><strong class="text-text">Quién no califica:</strong> exceso de velocidad de 25 mph o más sobre el límite, o 95 mph o más; infracciones en zona de construcción con trabajadores presentes; titulares de licencia comercial (CDL), incluso en un vehículo personal; y quien ya usó el curso para desestimar una multa en los últimos 12 meses. Si no califica, pregunte a la corte por "deferred disposition," un periodo de prueba de hasta 180 días que también termina en desestimación.</p>
+            <p><strong class="text-text">Nuestro curso hoy es en inglés.</strong> Cuesta $28 en total, incluye el certificado al instante y no tiene cargos adicionales. Si prefiere un curso en español, déjenos su correo arriba y le avisaremos cuando lo tengamos.</p>
+          </div>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How do Spanish speakers request the course from a Texas court?</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>The same way as everyone else, and language is rarely the obstacle. The request is a short written statement or a checkbox on the court's plea form, submitted on or before the appearance date; many larger courts publish their forms in Spanish, and clerks in most Texas courts handle Spanish requests daily. If you are not sure, call the number on the citation and ask whether the court has a Spanish form for the driving safety course request. What to write when there is no form is on the <a href="/texas/request-defensive-driving" class="text-primary-deep font-medium hover:underline">how-to-request page</a>, and your court's method, fee and forms are in the <a href="/texas/courts" class="text-primary-deep font-medium hover:underline">court directory</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Where Road Ready Safety stands on a Spanish course</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>We want to offer one, and we will not offer it badly. A Spanish version means a certified translation of the full six-hour script and every question, a signed declaration to TDLR that the translation is true and correct, and department approval before the first student enrolls. That is a few weeks of work we will start when enough drivers tell us they want it. The waitlist at the top of this page is how we count. We will update this page, and our <a href="/texas/transparency" class="text-primary-deep font-medium hover:underline">transparency page</a>, the day it changes.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions · Preguntas frecuentes</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;">{item.a}</p>
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Reading English is fine for you? The course is ready now</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Road Ready Safety is TDLR-approved under CP1234. The 6-hour course is <strong class="text-text">$28 all-in</strong>, works on your phone, saves your progress, and the <strong class="text-text">certificate downloads the moment you finish</strong>. Support is by phone and email, and if it is not a fit you can refund it any time before you complete it.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="#rrs-spanish-waitlist"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            Join the Spanish waitlist
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP1234). This page is informational and not legal advice; confirm requirements with the court on your citation. Esta página es informativa y no constituye asesoría legal.</p>
+          <p class="text-xs text-text-subtle">Last updated September 2, 2026. Language rule per 16 TAC §84.504; dismissal process per Tex. Code Crim. Proc. arts. 45A.351 to 45A.359; course minimum per Tex. Educ. Code §1001.352 (HB 3012, eff. Sept. 1, 2025); court fee range from our verified court dataset. Road Ready Safety's course language status is current as of this date.</p>
+        </div>
+
+      </div>
+    </article>
+
+    <script is:inline define:vars={{ listId }}>
+      (function () {
+        function init() {
+          var box = document.getElementById('rrs-spanish-waitlist');
+          if (!box) return;
+          var form = box.querySelector('.rrs-waitlist-form');
+          var err = box.querySelector('.rrs-waitlist-error');
+          var ok = box.querySelector('.rrs-waitlist-ok');
+          form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            err.style.display = 'none';
+            var input = form.querySelector('input[type=email]');
+            var email = (input.value || '').trim();
+            if (!email || email.indexOf('@') < 1) { err.style.display = 'block'; return; }
+            var btn = form.querySelector('button[type=submit]');
+            btn.disabled = true; btn.textContent = 'Sending…';
+            var payload = { data: { type: 'subscription', attributes: {
+              custom_source: 'Spanish course waitlist',
+              profile: { data: { type: 'profile', attributes: { email: email, properties: { spanish_course_waitlist: true, signup_page: 'spanish', signup_url: location.href, signup_source: 'spanish-waitlist' } } } }
+            }, relationships: { list: { data: { type: 'list', id: listId } } } } };
+            fetch('https://a.klaviyo.com/client/subscriptions/?company_id=U3BbdX', {
+              method: 'POST', headers: { 'Content-Type': 'application/json', 'revision': '2024-10-15' }, body: JSON.stringify(payload)
+            }).then(function (r) {
+              if (r.status >= 200 && r.status < 300) { form.style.display = 'none'; ok.style.display = 'block'; }
+              else { throw new Error('status ' + r.status); }
+            }).catch(function () { btn.disabled = false; btn.textContent = 'Notify me · Avísame'; err.style.display = 'block'; });
+          });
+        }
+        if (document.readyState !== 'loading') { init(); } else { document.addEventListener('DOMContentLoaded', init); }
+      })();
+    </script>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

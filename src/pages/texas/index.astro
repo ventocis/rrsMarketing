@@ -5,6 +5,22 @@ const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '#';
 const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
+
+const landingFaqs = [
+  { q: 'Is this Texas defensive driving course accepted by all Texas courts?', a: 'Yes. Road Ready Safety is a TDLR-approved driving safety provider (CP1234), and our uniform certificate of completion is accepted by every Texas court for ticket dismissal.' },
+  { q: 'Are there extra fees after completing the course?', a: 'No hidden fees. $28 all-in covers the course, the certificate, instant download, and court reporting. Some courts also require a copy of your DPS driving record (Type 3A), which is $12 paid directly to Texas DPS.' },
+  { q: 'How do I get my certificate?', a: 'Your certificate is available immediately on course completion. Download it from your dashboard and submit it to your court. There is no delivery fee and no wait.' },
+  { q: 'How long do I have to complete the Texas defensive driving course?', a: 'Texas gives you 90 days from the date the court grants the course. Your court may set a shorter paperwork deadline, so follow the date on the court\'s approval letter.' },
+  { q: 'Can I take the Texas defensive driving course on my phone?', a: 'Yes. The course runs on any phone, tablet or computer, and your progress saves automatically, so you can start on one device and finish on another.' },
+  { q: 'Is there a final exam?', a: 'No. There is no final exam. You get short knowledge checks with unlimited retakes, so you cannot fail out of the course.' },
+  { q: 'Are refunds available?', a: 'Yes. You can request a full refund any time before you complete the course or download your certificate.' },
+];
+
+const landingFaqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: landingFaqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
 ---
 
 {!isEnabled && (
@@ -13,12 +29,14 @@ const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
 
 {isEnabled && (
 <TexasLayout
-  title="Dismiss Your Texas Traffic Ticket Online — $28 Total | Road Ready Safety"
-  description="The easiest way to dismiss your Texas traffic ticket. TDLR-approved, all courts accepted. Download your free certificate instantly. 100% refund guaranteed."
-  keywords="Texas driver safety course, defensive driving, traffic school, online course, Texas approved"
+  title="Texas Defensive Driving Course Online: $28 All-In, TDLR-Approved"
+  description="TDLR-approved 6-hour Texas defensive driving course to dismiss a traffic ticket or earn an insurance discount. $28 all-in with the certificate included, accepted by every Texas court, finish it on your phone."
+  keywords="texas defensive driving course, texas defensive driving course online, driving safety course texas, tdlr approved defensive driving, texas defensive driving class, online defensive driving course texas"
   url="/texas"
   banner="Limited Time: Code SAVE3 Drops Your Total to $25. No Hidden Fees."
 >
+
+  <script type="application/ld+json" set:html={landingFaqSchema} />
 
   <!-- Hero Section -->
   <section class="bg-gradient-to-b from-info to-white pt-8 pb-16 lg:pt-16 lg:pb-[128px] relative overflow-hidden">
@@ -272,7 +290,7 @@ const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
               <span class="text-base text-text-body leading-6 font-semibold">All-In</span>
             </div>
           </div>
-          <div class="text-sm text-text-body leading-5 mb-4">One Price. $28. Includes your certificate, state fees, and reporting. No upsells.</div>
+          <div class="text-sm text-text-body leading-5 mb-4">One Price. $28. Includes your certificate and court reporting. No upsells.</div>
 
           <!-- Star Rating -->
           <div class="flex gap-3 items-center pb-6 pt-4 mb-6">
@@ -782,7 +800,7 @@ const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
           </summary>
           <div class="px-6 pb-5">
             <p class="text-base text-text-body leading-6">
-              No hidden fees. $28 all-in is all you pay — that covers the course, certificate, state fees, and reporting. Some courts may also require a copy of your driving record (DPS Type 3A), which has a separate fee paid directly to the DPS.
+              No hidden fees. $28 all-in is all you pay — that covers the course, the certificate, and court reporting. Some courts may also require a copy of your driving record (DPS Type 3A), which has a separate fee paid directly to the DPS.
             </p>
           </div>
         </details>

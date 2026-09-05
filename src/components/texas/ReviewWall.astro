@@ -1,0 +1,109 @@
+---
+/**
+ * ReviewWall — the /texas customer reviews section.
+ *
+ * The first `visible` reviews render normally; the rest sit inside a
+ * <details> that opens on click. No JavaScript: <details>/<summary> gives a
+ * keyboard-accessible, no-JS-fallback disclosure, and matches the pattern the
+ * FAQ on this page already uses.
+ *
+ * Two things this component is deliberate about, because reviews are other
+ * people's words about a regulated product:
+ *  - It renders each review's ACTUAL star rating. An earlier version of this
+ *    section hardcoded five stars for everyone, which would have shown a real
+ *    4-star review as 5.
+ *  - It only writes "Verified" for reviews Trustpilot actually badged as
+ *    verified; the rest read "via Trustpilot".
+ * Review text is never edited — quotes are reproduced as written.
+ */
+import reviews from '../../data/texas-reviews.json';
+
+interface Review {
+  name: string; initials: string; date: string; rating: number;
+  verified: boolean; quote: string; title?: string; featured?: boolean;
+}
+interface Props { visible?: number }
+const { visible = 5 } = Astro.props;
+
+const all = reviews as Review[];
+const shown = all.slice(0, visible);
+const rest = all.slice(visible);
+---
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+  {shown.map((r) => (
+    <div class:list={["bg-surface-muted rounded-[20px] p-8 flex flex-col gap-4 items-start", r.featured && "md:col-span-2"]}>
+      <div class="flex gap-1 items-start" aria-label={`Rated ${r.rating} out of 5 stars`}>
+        {[...Array(5)].map((_, i) => (
+          <img
+            src="/assets/icons/texas/star-testimonial.svg"
+            alt=""
+            class:list={["w-5 h-5", i >= r.rating && "opacity-25 grayscale"]}
+          />
+        ))}
+      </div>
+      {r.title && <p class="text-base font-bold text-text leading-6 -mb-1">{r.title}</p>}
+      <p class="text-lg text-text leading-[28px]">&ldquo;{r.quote}&rdquo;</p>
+      <div class="flex gap-3 items-center pt-2">
+        <div class="bg-info rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0">
+          <span class="text-sm font-semibold text-primary-deep">{r.initials}</span>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-base font-semibold text-text leading-6">{r.name}</span>
+          <span class="text-xs text-text-subtle leading-5">
+            {r.verified ? 'Verified via Trustpilot' : 'via Trustpilot'} &middot; {r.date}
+          </span>
+        </div>
+      </div>
+    </div>
+  ))}
+</div>
+
+{rest.length > 0 && (
+  <details class="rrs-reviews group w-full mt-6">
+    <summary
+      class="list-none cursor-pointer mx-auto flex w-fit items-center gap-2 rounded-[16px] border border-primary-deep px-8 h-[52px] text-base font-semibold text-primary-deep transition-colors hover:bg-primary-deep hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-deep"
+    >
+      <span class="group-open:hidden">Read {rest.length} more reviews</span>
+      <span class="hidden group-open:inline">Show fewer reviews</span>
+      <svg class="w-4 h-4 transition-transform group-open:rotate-180" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </summary>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full mt-6">
+      {rest.map((r) => (
+        <div class:list={["bg-surface-muted rounded-[20px] p-8 flex flex-col gap-4 items-start", r.featured && "md:col-span-2"]}>
+          <div class="flex gap-1 items-start" aria-label={`Rated ${r.rating} out of 5 stars`}>
+            {[...Array(5)].map((_, i) => (
+              <img
+                src="/assets/icons/texas/star-testimonial.svg"
+                alt=""
+                loading="lazy"
+                class:list={["w-5 h-5", i >= r.rating && "opacity-25 grayscale"]}
+              />
+            ))}
+          </div>
+          {r.title && <p class="text-base font-bold text-text leading-6 -mb-1">{r.title}</p>}
+          <p class="text-lg text-text leading-[28px]">&ldquo;{r.quote}&rdquo;</p>
+          <div class="flex gap-3 items-center pt-2">
+            <div class="bg-info rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0">
+              <span class="text-sm font-semibold text-primary-deep">{r.initials}</span>
+            </div>
+            <div class="flex flex-col">
+              <span class="text-base font-semibold text-text leading-6">{r.name}</span>
+              <span class="text-xs text-text-subtle leading-5">
+                {r.verified ? 'Verified via Trustpilot' : 'via Trustpilot'} &middot; {r.date}
+              </span>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </details>
+)}
+
+<style>
+  /* Safari still paints the default disclosure triangle without this. */
+  .rrs-reviews > summary::-webkit-details-marker { display: none; }
+</style>

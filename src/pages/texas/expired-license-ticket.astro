@@ -1,5 +1,6 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import YouTubeCard from '../../components/YouTubeCard.astro';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 
@@ -97,6 +98,8 @@ const faqSchema = JSON.stringify({
           <p>This fix applies to <strong class="text-text">driving with an expired license</strong> — a license that lapsed and can be renewed. It does not cover driving while suspended or revoked (a different, more serious charge under §521.457), driving without ever being licensed, or an expired <em>commercial</em> situation. If your citation says "DWLI" or references a suspension, talk to the clerk or an attorney — the $20 path isn't yours.</p>
           <p>And the recurring theme: defensive driving isn't the tool here either. An expired license isn't a moving violation, and the compliance route is faster and twenty times cheaper. If the same stop also produced a moving violation, run both tracks — §521.026 for the license, the <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">course</a> for the eligible moving charge. (Worth knowing: an expired license also blocks the course path independently, since the dismissal statute requires a valid Texas license — renewing fixes both problems at once.)</p>
         </div>
+
+        <YouTubeCard id="lKhv6FiHoIk" blurb="How to ask the court for the course, step by step." />
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
         <div class="space-y-8 mb-12">

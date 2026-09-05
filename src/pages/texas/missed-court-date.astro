@@ -1,5 +1,6 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import YouTubeCard from '../../components/YouTubeCard.astro';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 
@@ -99,6 +100,8 @@ const faqSchema = JSON.stringify({
           <p><strong class="text-text">Ask whether dismissal options survived.</strong> If the case hasn't gone to judgment, a judge still has discretion to allow defensive driving even though your answer date passed (art. 45A.352(c) allows a grant any time before final disposition) — and deferred disposition may be on the table too. Missing the date weakens your position; it doesn't always end it. Once the FTA program fee and the case are resolved, the court notifies the program and your renewal hold lifts.</p>
           <p>If a renewal is now blocked, it's one of two holds: <a href="/texas/omnibase-hold" class="text-primary-deep font-medium hover:underline">an OmniBase license hold</a> or <a href="/texas/registration-block" class="text-primary-deep font-medium hover:underline">a Scofflaw registration hold</a> — each page explains how to clear it.</p>
         </div>
+
+        <YouTubeCard id="pQC3u8qUx_M" blurb="What actually happens after a missed date — and the order it happens in." />
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
         <div class="space-y-8 mb-12">

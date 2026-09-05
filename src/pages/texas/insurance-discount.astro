@@ -1,5 +1,6 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import YouTubeCard from '../../components/YouTubeCard.astro';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 
@@ -106,6 +107,8 @@ const faqSchema = JSON.stringify({
         <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
           <p>TDLR recognizes the same 6-hour course for "<strong class="text-text">ticket dismissal or insurance discounts</strong>" — you don't need a citation or a court's permission to take it voluntarily. And if you <em>are</em> dismissing a ticket, the same completion can do double duty: court copy to the court, insurance copy to your agent. That's also the consolation path for drivers who can't use the course on their ticket — <a href="/texas/cdl-defensive-driving" class="text-primary-deep font-medium hover:underline">CDL holders</a>, <a href="/texas/speeding-25-over" class="text-primary-deep font-medium hover:underline">25-over citations</a>, or a <a href="/texas/12-month-rule" class="text-primary-deep font-medium hover:underline">second ticket inside 12 months</a>: the dismissal door may be closed, but the discount door isn't.</p>
         </div>
+
+        <YouTubeCard id="NaURcc6kmu8" blurb="What a conviction costs in premium over three years." />
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
         <div class="space-y-8 mb-12">

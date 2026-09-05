@@ -1,5 +1,6 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import YouTubeCard from '../../components/YouTubeCard.astro';
 import NextStepBlock from '../../components/texas/NextStepBlock.astro';
 import { alternatesFor, translationsOf, langLabel } from '../../lib/i18n';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
@@ -229,6 +230,8 @@ const howToSchema = JSON.stringify({
         <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
           <p>Yes, twice. The rules moved from art. 45.0511 into <strong class="text-text">Code of Criminal Procedure chapter 45A</strong> on January 1, 2025 (same substance, new numbering; a site still citing 45.0511 is running pre-2025 copy). Then <strong class="text-text">S.B. 296, effective September 1, 2025</strong>, allowed requests by certified mail, email or a court portal where offered, and let one course dismiss multiple eligible charges from the same stop. The same session's HB 3012 set the course price floor at a flat $25. Courts are still updating forms, so ask yours how it handles requests today.</p>
         </div>
+
+        <YouTubeCard id="LfEKvzl7_W8" blurb="Every legal way to keep a Texas ticket off your record." />
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
         <div class="space-y-8 mb-12">

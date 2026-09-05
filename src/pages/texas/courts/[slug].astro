@@ -3,6 +3,7 @@ import TexasLayout from '../../../layouts/TexasLayout.astro';
 import courtsData from '../../../data/texas-courts.json';
 import courtFaqData from '../../../data/court-faq-data.json';
 import NextStepBlock from '../../../components/texas/NextStepBlock.astro';
+import YouTubeCard from '../../../components/YouTubeCard.astro';
 
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '#';
@@ -142354,6 +142355,10 @@ const courtOfficeSchema = JSON.stringify({
         </div>
 
       </div><!-- /two col -->
+
+      <div class="max-w-[880px] mx-auto w-full px-4 sm:px-0">
+        <YouTubeCard id="lKhv6FiHoIk" blurb="How to ask a Texas court for the course, and what to send with the request." />
+      </div>
 
       <div class="max-w-[880px] mx-auto w-full px-4 sm:px-0">
         <NextStepBlock

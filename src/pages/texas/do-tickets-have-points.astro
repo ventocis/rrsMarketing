@@ -1,5 +1,6 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import YouTubeCard from '../../components/YouTubeCard.astro';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 
@@ -100,6 +101,8 @@ const faqSchema = JSON.stringify({
           <p>Because the conviction — not "points" — is what hurts you, keeping the conviction off your record is the whole game. Under Texas law (Code of Criminal Procedure Chapter 45A), a charge dismissed through a driving safety course may not be made part of your driving record or used against you.</p>
           <p>That's why hundreds of thousands of Texans still dismiss tickets with the course every year. See the full picture in <a href="/texas/defensive-driving-statistics" class="text-primary-deep font-medium hover:underline">Texas defensive driving by the numbers</a>, or start with <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">how dismissal works</a>.</p>
         </div>
+
+        <YouTubeCard id="NaURcc6kmu8" blurb="No points in Texas — but insurers still rate convictions." />
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
         <div class="space-y-8 mb-12">

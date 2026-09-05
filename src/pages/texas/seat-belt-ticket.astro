@@ -1,5 +1,6 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import YouTubeCard from '../../components/YouTubeCard.astro';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 
@@ -97,6 +98,8 @@ const faqSchema = JSON.stringify({
           <p>Run the numbers honestly. Paying a belt ticket means a conviction — but belt convictions are <em>non-moving</em> in most insurers' eyes and often rated lightly or not at all, unlike speeding. Against that: the course path costs the court fee (commonly $144) plus $28. For many drivers, deferred disposition — often cheaper for minor offenses — or even paying is the rational call <em>for this specific ticket</em>.</p>
           <p>When the course clearly wins: when the same stop produced a moving violation too (one course now clears every eligible charge from the stop), when your insurer does rate belt convictions (a few do), or when you're protecting a spotless record. Ask your insurer how they treat §545.413 convictions before spending the $144 — it's a five-minute call that decides the question. Child-passenger tickets are a different statute with different stakes: see the <a href="/texas/child-seat-ticket" class="text-primary-deep font-medium hover:underline">child seat guide</a>.</p>
         </div>
+
+        <YouTubeCard id="lKhv6FiHoIk" blurb="How to ask the court for the course, step by step." />
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
         <div class="space-y-8 mb-12">

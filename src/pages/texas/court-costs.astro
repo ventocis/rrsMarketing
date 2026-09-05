@@ -1,5 +1,6 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import YouTubeCard from '../../components/YouTubeCard.astro';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 
@@ -98,6 +99,8 @@ const faqSchema = JSON.stringify({
           <p>The $169 school-zone total is the same stack plus exactly one verified item: the <strong class="text-text">$25 child safety fund fine</strong> (CCP art. 102.014) assessed in municipal courts for rules-of-the-road offenses committed in a school crossing zone. $144 + $25 = $169 — the one piece of this arithmetic that's perfectly clean.</p>
           <p>And a wrinkle that surprises people with old tickets: court costs attach by <strong class="text-text">offense date</strong>, not payment date. The 2020 cost consolidation applies to offenses committed on or after January 1, 2020; older offenses carry the older (generally lower) schedules, which is why some court websites still list pre-2020 totals for pre-2020 tickets. None of this stack, by the way, includes the course itself ($28, paid to the provider) or the <a href="/texas/type-3a-driving-record" class="text-primary-deep font-medium hover:underline">Type 3A record</a> ($12, paid to DPS) — the true all-in for a standard dismissal is typically $184.</p>
         </div>
+
+        <YouTubeCard id="Y6sT-z7uFWQ" blurb="Where every dollar of the total actually goes." />
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
         <div class="space-y-8 mb-12">

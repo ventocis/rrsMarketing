@@ -1,6 +1,8 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
 import YouTubeCard from '../../components/YouTubeCard.astro';
+import SavingsEstimator from '../../components/texas/SavingsEstimator.astro';
+import { INSURERS } from '../../data/texas-insurers';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 
@@ -25,7 +27,15 @@ const faqs = [
   },
   {
     q: 'Does a course taken to dismiss a ticket also earn the discount?',
-    a: 'Frequently yes — the certificate has both a court copy and an insurance copy precisely so the same completion can serve both purposes. Submit the court copy to the court for the dismissal and ask your insurer whether the insurance copy qualifies you for their discount. Two benefits, one six-hour course.',
+    a: 'Sometimes — but not always, and one major insurer says no in print. GEICO requires the course to be completed "on a voluntary basis (not as a result of an order of a court or other governmental entity)," which excludes a course you took because a court granted your dismissal request. Other insurers do not publish a position either way. Your certificate does carry both a court copy and an insurance copy, so it costs nothing to ask — just do not assume both benefits before you have.',
+  },
+  {
+    q: 'Is there an age requirement for the defensive driving discount in Texas?',
+    a: 'At several major insurers, yes, and it is the condition drivers get caught by most. Farmers publishes "over age 55"; Nationwide notes "you may have to be 55 or over"; GEICO requires you to be at least 50. Others publish no age condition, which is not the same as having none. Ask your own insurer before you spend six hours.',
+  },
+  {
+    q: 'Which Texas insurers actually publish their defensive driving discount terms?',
+    a: 'Very few publish a number. GEICO publishes "up to 10% on applicable coverages" plus its age and voluntary-basis conditions. Farmers and Nationwide publish age conditions but no percentage. State Farm, Allstate, Progressive, Liberty Mutual and USAA confirm a course-based discount exists in some form but leave the terms to an agent. We quote each one word-for-word on its own page rather than filling the gaps with averages.',
   },
   {
     q: 'Can a CDL holder or someone with an ineligible ticket still get the discount?',
@@ -37,11 +47,11 @@ const articleSchema = JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'Article',
   headline: 'Does Defensive Driving Lower Your Insurance in Texas? The Honest Answer',
-  description: 'Texas no longer mandates a defensive-driving insurance discount — the old 10% rule died with the benchmark rate system. What TDI actually says, what insurers typically offer, and how to claim it.',
+  description: 'Texas no longer mandates a defensive-driving insurance discount. What eight major Texas insurers actually publish — including the age conditions at GEICO, Farmers and Nationwide that almost nobody mentions.',
   author: { '@type': 'Organization', name: 'Road Ready Safety' },
   publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
   datePublished: '2026-06-11',
-  dateModified: '2026-08-04',
+  dateModified: '2026-09-04',
   mainEntityOfPage: `${siteUrl}/texas/insurance-discount`,
 });
 
@@ -55,8 +65,8 @@ const faqSchema = JSON.stringify({
 {isEnabled ? (
   <TexasLayout
     title="Does Defensive Driving Lower Your Insurance in Texas? The Honest Answer (2026)"
-    description="Texas no longer mandates a defensive-driving discount — the old 10% rule died with the benchmark rate system in 2004. What TDI actually says today, what insurers typically offer, and exactly how to claim it."
-    keywords="defensive driving insurance discount texas, does defensive driving lower insurance texas, texas auto insurance discount course, defensive driving 10 percent discount, voluntary defensive driving texas"
+    description="Texas no longer mandates a defensive-driving discount. What eight major Texas insurers actually publish, quoted and sourced — including the age conditions at GEICO, Farmers and Nationwide that almost nobody mentions."
+    keywords="defensive driving insurance discount texas, does defensive driving lower insurance texas, which insurers give defensive driving discount texas, texas auto insurance discount course, defensive driving 10 percent discount, voluntary defensive driving texas"
     url="/texas/insurance-discount"
   >
     <script type="application/ld+json" set:html={articleSchema} />
@@ -87,10 +97,44 @@ const faqSchema = JSON.stringify({
           <p>Why we lead with this: a page still promising the mandatory 10% is telling you its information predates 2004. (It's the same tell as a site promising to "remove points" — <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">Texas hasn't had points since 2019</a>.) The discount is real at many insurers; the guarantee is not.</p>
         </div>
 
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What insurers typically offer</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p>Industry practice — and this is insurer marketing, not law — typically runs <strong class="text-text">a few percent, commonly cited as 2–10%, lasting around three years</strong>. Some insurers apply it to specific coverages rather than the whole premium; some don't offer it at all; a few restrict it to certain ages. The spread is wide enough that the only meaningful step is asking your own insurer the four questions below before you spend six hours on a course.</p>
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The condition nobody mentions: your age</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <p>Read enough pages about defensive-driving discounts and you'll come away thinking the only question is whether you take the course. It isn't. <strong class="text-text">Several of the largest insurers in Texas gate this discount on age</strong> — Farmers publishes "over age 55," Nationwide notes "you may have to be 55 or over," and GEICO requires you to be at least 50. If you're 30 with a clean record, the discount a course-provider ad promised you may not exist on your policy at all.</p>
+          <p>So we went and read what each insurer actually publishes, quoted it word for word, and linked the source. Where an insurer publishes nothing, this table says so rather than inventing a number.</p>
         </div>
+
+        <div class="overflow-x-auto mb-4 -mx-4 sm:mx-0 px-4 sm:px-0">
+          <table class="w-full min-w-[620px] text-sm border border-border rounded-xl overflow-hidden" style="font-family: 'DM Sans', sans-serif;">
+            <thead>
+              <tr class="bg-surface-muted text-left">
+                <th class="px-4 py-3 font-semibold text-text border-b border-border">Insurer</th>
+                <th class="px-4 py-3 font-semibold text-text border-b border-border">Age condition</th>
+                <th class="px-4 py-3 font-semibold text-text border-b border-border">Published amount</th>
+                <th class="px-4 py-3 font-semibold text-text border-b border-border">Court-ordered course</th>
+              </tr>
+            </thead>
+            <tbody>
+              {INSURERS.map(i => (
+                <tr class="border-b border-border last:border-0">
+                  <td class="px-4 py-3 align-top">
+                    <a href={`/texas/insurance-discount/${i.slug}`} class="text-primary-deep font-semibold hover:underline">{i.name}</a>
+                  </td>
+                  <td class="px-4 py-3 align-top text-text-body">{i.ageGate || <span class="text-text-subtle">None published</span>}</td>
+                  <td class="px-4 py-3 align-top text-text-body">{i.amount || <span class="text-text-subtle">Not published</span>}</td>
+                  <td class="px-4 py-3 align-top text-text-body">{i.courtOrdered === 'excluded' ? <strong class="text-text">Excluded</strong> : <span class="text-text-subtle">Not stated</span>}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p class="text-xs text-text-subtle mb-10" style="font-family: 'DM Sans', sans-serif;">Read from each insurer's own website on September 4, 2026. Road Ready Safety is not affiliated with or endorsed by any insurer listed. Terms are set by the insurer and change without notice — each page links the source so you can check it yourself.</p>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What it's worth, on your own numbers</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-2" style="font-family: 'DM Sans', sans-serif;">
+          <p>Most "savings calculators" in this category exist to produce a big number. This one asks you for the assumptions and does the arithmetic in front of you, because the honest answer depends entirely on figures only you and your insurer have.</p>
+        </div>
+
+        <SavingsEstimator />
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How to claim it — four questions, then the course</h2>
         <ol class="list-decimal pl-6 space-y-3 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
@@ -105,7 +149,7 @@ const faqSchema = JSON.stringify({
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">No ticket required — and ticket-takers get both benefits</h2>
         <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p>TDLR recognizes the same 6-hour course for "<strong class="text-text">ticket dismissal or insurance discounts</strong>" — you don't need a citation or a court's permission to take it voluntarily. And if you <em>are</em> dismissing a ticket, the same completion can do double duty: court copy to the court, insurance copy to your agent. That's also the consolation path for drivers who can't use the course on their ticket — <a href="/texas/cdl-defensive-driving" class="text-primary-deep font-medium hover:underline">CDL holders</a>, <a href="/texas/speeding-25-over" class="text-primary-deep font-medium hover:underline">25-over citations</a>, or a <a href="/texas/12-month-rule" class="text-primary-deep font-medium hover:underline">second ticket inside 12 months</a>: the dismissal door may be closed, but the discount door isn't.</p>
+          <p>TDLR recognizes the same 6-hour course for "<strong class="text-text">ticket dismissal or insurance discounts</strong>" — you don't need a citation or a court's permission to take it voluntarily. If you <em>are</em> dismissing a ticket, the same completion can sometimes do double duty: court copy to the court, insurance copy to your agent. Sometimes, not always — <a href="/texas/insurance-discount/geico" class="text-primary-deep font-medium hover:underline">GEICO excludes court-ordered courses in writing</a>, and most other insurers don't publish a position. Ask rather than assume; and remember the dismissal is the larger prize either way, since a conviction rates your premium for about three years. That's also the consolation path for drivers who can't use the course on their ticket — <a href="/texas/cdl-defensive-driving" class="text-primary-deep font-medium hover:underline">CDL holders</a>, <a href="/texas/speeding-25-over" class="text-primary-deep font-medium hover:underline">25-over citations</a>, or a <a href="/texas/12-month-rule" class="text-primary-deep font-medium hover:underline">second ticket inside 12 months</a>: the dismissal door may be closed, but the discount door isn't.</p>
         </div>
 
         <YouTubeCard id="NaURcc6kmu8" blurb="What a conviction costs in premium over three years." />
@@ -144,7 +188,7 @@ const faqSchema = JSON.stringify({
 
         <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
           <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational, not insurance advice — discount availability, size, and terms are determined solely by your insurer.</p>
-          <p class="text-xs text-text-subtle">Last updated August 4, 2026 — verified by the Road Ready Safety editorial team against current Texas Department of Insurance consumer guidance, the S.B. 14 (2003) file-and-use transition, and TDLR course-use guidance. Typical discount ranges are industry practice, not state requirements.</p>
+          <p class="text-xs text-text-subtle">Last updated September 4, 2026 — verified by the Road Ready Safety editorial team against current Texas Department of Insurance consumer guidance, the S.B. 14 (2003) file-and-use transition, and TDLR course-use guidance. Typical discount ranges are industry practice, not state requirements.</p>
         </div>
 
       </div>

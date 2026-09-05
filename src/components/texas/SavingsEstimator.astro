@@ -1,0 +1,173 @@
+---
+// Honest defensive-driving savings estimator.
+//
+// It deliberately does NOT predict your discount — nobody can, because Texas
+// insurers set their own terms and most do not publish them. What it does is
+// arithmetic on numbers YOU supply, so the assumptions stay visible and
+// adjustable instead of being buried in a made-up "average savings" figure.
+//
+// Two questions, because there are two readers: the one holding a ticket (whose
+// real number is the cost of a conviction) and the one with no ticket (whose
+// real number is a percentage off, over three years, minus $28).
+const coursePrice = 28;
+---
+
+<div class="rrs-est border border-border rounded-2xl overflow-hidden my-10" style="font-family: 'DM Sans', sans-serif;">
+  <div class="bg-surface-muted px-5 py-4 border-b border-border">
+    <p class="text-base font-bold text-text" style="font-family: 'Outfit', sans-serif;">What is this actually worth to you?</p>
+    <p class="text-sm text-text-body mt-1">Your numbers, your assumptions. We do not guess your discount — no one honestly can.</p>
+  </div>
+
+  <div class="p-5">
+    <div class="flex gap-2 mb-6" role="tablist">
+      <button type="button" data-tab="ticket" role="tab" aria-selected="true"
+        class="rrs-est-tab flex-1 px-4 py-2.5 rounded-xl text-sm font-semibold border border-primary-deep bg-primary-deep text-white transition-colors">
+        I have a ticket
+      </button>
+      <button type="button" data-tab="discount" role="tab" aria-selected="false"
+        class="rrs-est-tab flex-1 px-4 py-2.5 rounded-xl text-sm font-semibold border border-border text-primary-deep bg-white transition-colors">
+        No ticket — just the discount
+      </button>
+    </div>
+
+    <label class="block mb-5">
+      <span class="block text-sm font-semibold text-text mb-1.5">Your annual car insurance premium</span>
+      <span class="relative block">
+        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-text-subtle">$</span>
+        <input id="rrs-est-premium" type="number" inputmode="numeric" min="0" step="50" value="2000"
+          class="w-full h-12 pl-7 pr-3 rounded-xl border border-border text-base text-text focus:outline focus:outline-2 focus:outline-primary-deep" />
+      </span>
+      <span class="block text-xs text-text-subtle mt-1.5">On your declarations page. If you pay monthly, multiply by 12.</span>
+    </label>
+
+    <div class="rrs-est-panel" data-panel="ticket">
+      <label class="block mb-5">
+        <span class="block text-sm font-semibold text-text mb-1.5">
+          If convicted, how much would your premium rise? <span id="rrs-est-surcharge-out" class="text-primary-deep">25%</span>
+        </span>
+        <input id="rrs-est-surcharge" type="range" min="0" max="50" step="5" value="25" class="w-full accent-primary-deep" />
+        <span class="block text-xs text-text-subtle mt-1.5">Industry-typical increases for a moving-violation conviction run roughly 15–40%, for about three years. Insurers do not publish these; slide it to whatever you think is fair.</span>
+      </label>
+      <label class="block mb-5">
+        <span class="block text-sm font-semibold text-text mb-1.5">Your court's defensive driving fee</span>
+        <span class="relative block">
+          <span class="absolute left-3 top-1/2 -translate-y-1/2 text-text-subtle">$</span>
+          <input id="rrs-est-courtfee" type="number" inputmode="numeric" min="0" step="1" value="144"
+            class="w-full h-12 pl-7 pr-3 rounded-xl border border-border text-base text-text focus:outline focus:outline-2 focus:outline-primary-deep" />
+        </span>
+        <span class="block text-xs text-text-subtle mt-1.5">$144 is common, $169 in a school zone — your court's real figure is on its page in our directory.</span>
+      </label>
+    </div>
+
+    <div class="rrs-est-panel hidden" data-panel="discount">
+      <label class="block mb-5">
+        <span class="block text-sm font-semibold text-text mb-1.5">
+          Discount your insurer quoted you <span id="rrs-est-discount-out" class="text-primary-deep">5%</span>
+        </span>
+        <input id="rrs-est-discount" type="range" min="0" max="15" step="1" value="5" class="w-full accent-primary-deep" />
+        <span class="block text-xs text-text-subtle mt-1.5">Call and ask for the real number before you use this — and ask whether it applies to the whole premium or only some coverages, which can halve it.</span>
+      </label>
+      <label class="block mb-5">
+        <span class="block text-sm font-semibold text-text mb-1.5">
+          How many years does it last? <span id="rrs-est-years-out" class="text-primary-deep">3</span>
+        </span>
+        <input id="rrs-est-years" type="range" min="1" max="5" step="1" value="3" class="w-full accent-primary-deep" />
+      </label>
+    </div>
+
+    <div id="rrs-est-result" class="rounded-xl bg-surface-muted border border-border p-5"></div>
+
+    <p class="text-xs text-text-subtle mt-4">This is arithmetic on the figures you entered, not a quote or a prediction. Texas does not require insurers to offer a defensive-driving discount, and your insurer sets its own terms.</p>
+  </div>
+</div>
+
+<script is:inline define:vars={{ coursePrice }}>
+  (function () {
+    function init() {
+      var root = document.querySelector('.rrs-est');
+      if (!root || root.dataset.bound) return;
+      root.dataset.bound = '1';
+
+      var premium   = root.querySelector('#rrs-est-premium');
+      var surcharge = root.querySelector('#rrs-est-surcharge');
+      var courtfee  = root.querySelector('#rrs-est-courtfee');
+      var discount  = root.querySelector('#rrs-est-discount');
+      var years     = root.querySelector('#rrs-est-years');
+      var out       = root.querySelector('#rrs-est-result');
+      var mode      = 'ticket';
+
+      function money(n) {
+        return '$' + Math.round(n).toLocaleString('en-US');
+      }
+      function num(el, fallback) {
+        var v = parseFloat(el.value);
+        return isFinite(v) && v >= 0 ? v : fallback;
+      }
+
+      function render() {
+        var p = num(premium, 0);
+        root.querySelector('#rrs-est-surcharge-out').textContent = surcharge.value + '%';
+        root.querySelector('#rrs-est-discount-out').textContent = discount.value + '%';
+        root.querySelector('#rrs-est-years-out').textContent = years.value;
+
+        if (mode === 'ticket') {
+          var pct = num(surcharge, 0) / 100;
+          var fee = num(courtfee, 0);
+          var conviction = p * pct * 3;
+          var dismissal = fee + coursePrice;
+          var diff = conviction - dismissal;
+          out.innerHTML =
+            '<p class="text-sm font-semibold text-text mb-3" style="font-family:\'Outfit\',sans-serif;">Over the three years a conviction is rated</p>' +
+            '<dl class="space-y-2 text-sm">' +
+              '<div class="flex justify-between gap-4"><dt class="text-text-body">Extra premium if convicted</dt><dd class="font-semibold text-text tabular-nums">' + money(conviction) + '</dd></div>' +
+              '<div class="flex justify-between gap-4"><dt class="text-text-body">Court fee + our course ($' + coursePrice + ')</dt><dd class="font-semibold text-text tabular-nums">' + money(dismissal) + '</dd></div>' +
+            '</dl>' +
+            '<p class="mt-3 pt-3 border-t border-border text-base font-bold ' + (diff > 0 ? 'text-primary-deep' : 'text-text') + '" style="font-family:\'Outfit\',sans-serif;">' +
+              (diff > 0
+                ? 'Dismissing costs ' + money(diff) + ' less than being convicted.'
+                : 'On these numbers the conviction costs about the same or less — worth checking your court fee.') +
+            '</p>' +
+            '<p class="mt-2 text-xs text-text-subtle">Dismissal also leaves nothing on your record for the next insurer to find, which this figure does not capture.</p>';
+        } else {
+          var d = num(discount, 0) / 100;
+          var y = num(years, 3);
+          var saved = p * d * y;
+          var net = saved - coursePrice;
+          out.innerHTML =
+            '<p class="text-sm font-semibold text-text mb-3" style="font-family:\'Outfit\',sans-serif;">Over ' + y + ' year' + (y === 1 ? '' : 's') + '</p>' +
+            '<dl class="space-y-2 text-sm">' +
+              '<div class="flex justify-between gap-4"><dt class="text-text-body">Premium saved</dt><dd class="font-semibold text-text tabular-nums">' + money(saved) + '</dd></div>' +
+              '<div class="flex justify-between gap-4"><dt class="text-text-body">The course</dt><dd class="font-semibold text-text tabular-nums">' + money(coursePrice) + '</dd></div>' +
+            '</dl>' +
+            '<p class="mt-3 pt-3 border-t border-border text-base font-bold ' + (net > 0 ? 'text-primary-deep' : 'text-text') + '" style="font-family:\'Outfit\',sans-serif;">' +
+              (net > 0
+                ? money(net) + ' ahead, for six hours of your time.'
+                : 'At this discount the course does not pay for itself — confirm the real number with your insurer first.') +
+            '</p>';
+        }
+      }
+
+      root.querySelectorAll('.rrs-est-tab').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          mode = btn.dataset.tab;
+          root.querySelectorAll('.rrs-est-tab').forEach(function (b) {
+            var on = b.dataset.tab === mode;
+            b.setAttribute('aria-selected', on ? 'true' : 'false');
+            b.className = 'rrs-est-tab flex-1 px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors border ' +
+              (on ? 'border-primary-deep bg-primary-deep text-white' : 'border-border text-primary-deep bg-white');
+          });
+          root.querySelectorAll('.rrs-est-panel').forEach(function (pane) {
+            pane.classList.toggle('hidden', pane.dataset.panel !== mode);
+          });
+          render();
+        });
+      });
+
+      [premium, surcharge, courtfee, discount, years].forEach(function (el) {
+        el.addEventListener('input', render);
+      });
+      render();
+    }
+    if (document.readyState !== 'loading') { init(); } else { document.addEventListener('DOMContentLoaded', init); }
+  })();
+</script>

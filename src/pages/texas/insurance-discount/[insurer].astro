@@ -1,0 +1,225 @@
+---
+import TexasLayout from '../../../layouts/TexasLayout.astro';
+import YouTubeCard from '../../../components/YouTubeCard.astro';
+import { INSURERS, type Insurer } from '../../../data/texas-insurers';
+
+export function getStaticPaths() {
+  return INSURERS.map(insurer => ({ params: { insurer: insurer.slug }, props: { insurer } }));
+}
+
+const { insurer } = Astro.props as { insurer: Insurer };
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+const pageUrl = `/texas/insurance-discount/${insurer.slug}`;
+
+const verifiedLong = new Date(insurer.verified + 'T12:00:00Z').toLocaleDateString('en-US', {
+  month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC',
+});
+
+const faqs = [
+  {
+    q: `Does ${insurer.name} give a discount for defensive driving in Texas?`,
+    a: `${insurer.name} publishes this: "${insurer.published}" Texas does not require any insurer to offer this discount, so whether you get one — and how much — is ${insurer.name}'s decision, not the state's. Confirm it on your own policy before you enroll.`,
+  },
+  {
+    q: insurer.ageGate
+      ? `Is there an age requirement for the ${insurer.name} discount?`
+      : `Does ${insurer.name} publish an age requirement?`,
+    a: insurer.ageGate
+      ? `Yes — ${insurer.name} states it as: ${insurer.ageGate.toLowerCase()}. This is the condition drivers are most often caught by, because almost nothing else written about defensive-driving discounts mentions it. If you are under that age, ask whether any other course-based discount applies to you before spending six hours.`
+      : `No. ${insurer.name} does not publish an age condition, which is not the same as there being none — several major insurers apply one without stating it on the public page. It is the first question to ask.`,
+  },
+  {
+    q: `Will a course I took to dismiss a ticket also earn the ${insurer.name} discount?`,
+    a: insurer.courtOrdered === 'excluded'
+      ? `No — and ${insurer.name} is explicit about it. The published condition requires the course to be completed "on a voluntary basis (not as a result of an order of a court or other governmental entity)." A course you took because a court granted your dismissal request is court-ordered. It still dismisses your ticket, which is the larger financial win; it just will not also buy you this discount.`
+      : `${insurer.name} does not publish a position on this. Some insurers require the course to be voluntary rather than court-ordered, and they do not all say so publicly — so ask directly: "does a course I took for ticket dismissal qualify?" Get the answer before you count on the discount.`,
+  },
+  {
+    q: `How do I send my certificate to ${insurer.name}?`,
+    a: `${insurer.submit} Your certificate has a court copy and an insurance copy; the insurance copy is the one that goes to the insurer.`,
+  },
+  {
+    q: `Does the course have to be TDLR-approved?`,
+    a: `For Texas, expect yes. The standard six-hour driving safety course is regulated by the Texas Department of Licensing and Regulation, and a provider must hold a TDLR license number to issue a valid certificate. You can check any provider's license in our provider directory. Road Ready Safety is CP#1234.`,
+  },
+  {
+    q: `How long does a defensive driving discount usually last?`,
+    a: `Around three years is the common industry pattern, after which insurers typically want a fresh course. ${insurer.amount ? '' : `${insurer.name} does not publish a duration, so `}treat three years as a rule of thumb and confirm the real number with ${insurer.name} — it determines whether the course is worth retaking.`,
+  },
+];
+
+const headline = `${insurer.name} Defensive Driving Discount in Texas: What They Actually Publish`;
+const description = insurer.ageGate
+  ? `${insurer.name} publishes an age condition for its defensive driving discount (${insurer.ageGate.toLowerCase()}). The exact wording, whether a court-ordered course counts, and how to submit your Texas certificate.`
+  : `What ${insurer.name} actually publishes about its defensive driving discount in Texas — the exact wording, what they leave unsaid, the questions to ask, and how to submit your certificate.`;
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline,
+  description,
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-09-04',
+  dateModified: '2026-09-04',
+  mainEntityOfPage: `${siteUrl}${pageUrl}`,
+  citation: { '@type': 'WebPage', name: insurer.sourceLabel, url: insurer.sourceUrl },
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+
+const breadcrumbSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Texas defensive driving', item: `${siteUrl}/texas` },
+    { '@type': 'ListItem', position: 2, name: 'Insurance discount', item: `${siteUrl}/texas/insurance-discount` },
+    { '@type': 'ListItem', position: 3, name: insurer.name, item: `${siteUrl}${pageUrl}` },
+  ],
+});
+
+const others = INSURERS.filter(i => i.slug !== insurer.slug);
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title={`${insurer.name} Defensive Driving Discount in Texas: The Published Terms (2026)`}
+    description={description}
+    keywords={`${insurer.name.toLowerCase()} defensive driving discount, ${insurer.name.toLowerCase()} defensive driving course texas, ${insurer.name.toLowerCase()} insurance discount driving course, submit defensive driving certificate ${insurer.name.toLowerCase()}`}
+    url={pageUrl}
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+    <script type="application/ld+json" set:html={breadcrumbSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <a href="/texas/insurance-discount" class="text-primary-deep font-medium hover:underline">Insurance discount</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">{insurer.name}</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          {headline}
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>{insurer.headline}</p>
+          <p>Texas does not require any insurer to give a defensive-driving discount. The Legislature moved auto insurance to file-and-use rating in 2003 and the old mandate died with the benchmark system in 2004, so every term below is {insurer.name}'s own choice — <a href="/texas/insurance-discount" class="text-primary-deep font-medium hover:underline">the full legal picture is here</a>.</p>
+        </div>
+
+        <div class="border border-border rounded-xl overflow-hidden mb-10">
+          <div class="bg-surface-muted px-5 py-3 border-b border-border">
+            <p class="text-sm font-semibold text-text" style="font-family: 'Outfit', sans-serif;">What {insurer.name} publishes</p>
+          </div>
+          <div class="p-5" style="font-family: 'DM Sans', sans-serif;">
+            <blockquote class="text-base leading-7 text-text border-l-4 border-primary-deep pl-4 mb-4">"{insurer.published}"</blockquote>
+            <p class="text-sm text-text-subtle">
+              — <a href={insurer.sourceUrl} target="_blank" rel="noopener nofollow" class="text-primary-deep font-medium hover:underline">{insurer.sourceLabel}</a>, read {verifiedLong}
+            </p>
+          </div>
+          <dl class="grid grid-cols-1 sm:grid-cols-2 gap-px bg-border border-t border-border" style="font-family: 'DM Sans', sans-serif;">
+            <div class="bg-white p-4">
+              <dt class="text-xs font-semibold uppercase tracking-wide text-text-subtle mb-1">Age condition</dt>
+              <dd class="text-base text-text">{insurer.ageGate || 'None published'}</dd>
+            </div>
+            <div class="bg-white p-4">
+              <dt class="text-xs font-semibold uppercase tracking-wide text-text-subtle mb-1">Published amount</dt>
+              <dd class="text-base text-text">{insurer.amount || 'Not published'}</dd>
+            </div>
+            <div class="bg-white p-4">
+              <dt class="text-xs font-semibold uppercase tracking-wide text-text-subtle mb-1">Court-ordered course</dt>
+              <dd class="text-base text-text">{insurer.courtOrdered === 'excluded' ? 'Excluded — must be voluntary' : 'Not stated — ask'}</dd>
+            </div>
+            <div class="bg-white p-4">
+              <dt class="text-xs font-semibold uppercase tracking-wide text-text-subtle mb-1">How to submit</dt>
+              <dd class="text-base text-text">{insurer.submit}</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">Road Ready Safety is not affiliated with, endorsed by, or acting on behalf of {insurer.name}. We quote what {insurer.name} publishes so you can check it yourself; only {insurer.name} can tell you what applies to your policy.</p>
+        </div>
+
+        {insurer.courtOrdered === 'excluded' && (
+          <>
+            <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">If you have a ticket, read this part twice</h2>
+            <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+              <p>{insurer.name} requires the course to be taken "on a voluntary basis (not as a result of an order of a court or other governmental entity)." A course you take because a court granted your dismissal request is exactly what that sentence excludes.</p>
+              <p>This is worth being blunt about, because the whole internet tells you the same course does double duty. At {insurer.name} it does not. That does not make the course a bad idea — <strong class="text-text">dismissal is worth far more than the discount</strong>. A conviction sits on your record and rates your premium for roughly three years; a few percent off is not in the same league as never being surcharged at all. Take the course, dismiss the ticket, and treat the discount as unavailable here rather than being surprised later.</p>
+            </div>
+          </>
+        )}
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What to ask {insurer.name} before you enroll</h2>
+        <ol class="list-decimal pl-6 space-y-3 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <li><strong class="text-text">"Do I qualify — at my age, on this policy?"</strong>{' '}{insurer.ageGate ? `${insurer.name} publishes a condition of ${insurer.ageGate.toLowerCase()}, so this is the question that decides everything else.` : `${insurer.name} publishes no age condition, but that does not mean none is applied. Ask directly.`}</li>
+          <li><strong class="text-text">"How much, and on which coverages?"</strong> Several insurers apply the discount to liability and collision only, not the whole premium — which roughly halves what a headline percentage is worth.</li>
+          <li><strong class="text-text">"Does a course taken for ticket dismissal count?"</strong>{' '}{insurer.courtOrdered === 'excluded' ? `${insurer.name} has already answered this in print: no.` : 'Some insurers require it to be voluntary and do not say so publicly.'}</li>
+          <li><strong class="text-text">"How long does it last, and what do you need from me?"</strong> Three years is typical. Get the submission method in writing so the certificate is not sitting in an inbox nobody reads.</li>
+        </ol>
+
+        <YouTubeCard id="NaURcc6kmu8" blurb="What a conviction actually costs in premium — the number the discount is competing with." />
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;">{item.a}</p>
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The same six hours, either way</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Texas regulates the course, not the price: every TDLR-approved provider teaches the same six hours, and the certificate is the same document. Ours is <strong class="text-text">$28 all-in</strong>, online, with both the court copy and the insurance copy in the free instant download.</p>
+          <p>Call {insurer.name} first. We would rather you spend five minutes on the phone than six hours on a maybe.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start the $28 Course →
+          </a>
+          <a
+            href="/texas/insurance-discount"
+            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
+            style="font-family: 'DM Sans', sans-serif;"
+          >
+            Compare all insurers
+          </a>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Other insurers</h2>
+        <div class="flex flex-wrap gap-2 mb-10">
+          {others.map(o => (
+            <a href={`/texas/insurance-discount/${o.slug}`} class="inline-flex items-center px-4 py-2 rounded-full border border-border text-sm font-medium text-primary-deep hover:border-primary-deep no-underline transition-colors" style="font-family: 'DM Sans', sans-serif;">{o.name}</a>
+          ))}
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational, not insurance advice. We are not affiliated with or endorsed by {insurer.name}; discount availability, amount and terms are determined solely by the insurer and can change at any time.</p>
+          <p class="text-xs text-text-subtle">{insurer.name}'s published wording was read from <a href={insurer.sourceUrl} target="_blank" rel="noopener nofollow" class="hover:underline">{insurer.sourceLabel}</a> on {verifiedLong}. Texas has no defensive-driving discount mandate — verified against Texas Department of Insurance consumer guidance and the S.B. 14 (2003) file-and-use transition.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

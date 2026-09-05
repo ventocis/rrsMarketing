@@ -45,6 +45,8 @@ const staticRoutes = [
   '/texas/cdl-defensive-driving',
   '/texas/12-month-rule',
   '/texas/insurance-discount',
+  '/texas/deadline-calculator',
+  '/texas/ticket-cost-calculator',
   '/texas/deferred-disposition',
   '/texas/missed-court-date',
   '/texas/already-paid-ticket',

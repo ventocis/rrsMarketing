@@ -1,0 +1,294 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+import YouTubeCard from '../../components/YouTubeCard.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+// Violation presets. Fines are set by each court's own schedule within the
+// statutory $1–$200 cap (Tex. Transp. Code §542.401), so these are the typical
+// ranges our court research found — not quotes, and the tool says so.
+const violations = [
+  { id: 'speed-1-10',   label: 'Speeding, 1–10 over',        fine: 110, eligible: true,  note: 'The most common Texas citation.' },
+  { id: 'speed-11-20',  label: 'Speeding, 11–20 over',       fine: 145, eligible: true,  note: '' },
+  { id: 'speed-21-24',  label: 'Speeding, 21–24 over',       fine: 185, eligible: true,  note: 'Close to the statutory fine cap.' },
+  { id: 'speed-25',     label: 'Speeding, 25 or more over',  fine: 200, eligible: false, note: 'Excluded from course dismissal by statute.' },
+  { id: 'school-zone',  label: 'School zone speeding',       fine: 175, eligible: true,  note: 'Court fee is typically $169 rather than $144.', dscFee: 169 },
+  { id: 'construction', label: 'Construction zone speeding', fine: 250, eligible: true,  note: 'Fines double where workers are present.' },
+  { id: 'red-light',    label: 'Running a red light',        fine: 150, eligible: true,  note: 'Officer-issued. Camera notices are a different thing entirely.' },
+  { id: 'stop-sign',    label: 'Running a stop sign',        fine: 150, eligible: true,  note: '' },
+  { id: 'cell-phone',   label: 'Phone use while driving',    fine: 130, eligible: true,  note: '' },
+  { id: 'seat-belt',    label: 'Seat belt',                  fine: 130, eligible: true,  note: '' },
+  { id: 'expired-reg',  label: 'Expired registration',       fine: 130, eligible: true,  note: 'Often dismissible on proof of compliance instead — usually cheaper.' },
+  { id: 'no-insurance', label: 'No insurance (FMFR)',        fine: 260, eligible: false, note: 'Not dismissible by course — but the court must dismiss on proof you were covered.' },
+];
+
+const faqs = [
+  {
+    q: 'How much is a speeding ticket in Texas?',
+    a: 'The fine itself is capped at $200 by statute (Transp. Code §542.401) and set by each court, commonly landing between about $97 and $130 for low-speed offenses and climbing toward the cap above 20 over. Court costs are then added on top — roughly $126 in state-mandated charges on a conviction — which is why real totals usually run $200–$300 before insurance.',
+  },
+  {
+    q: 'Why is there no exact price for my ticket?',
+    a: "Because Texas does not have a statewide fine schedule. Each municipal and justice court sets its own amounts inside the statutory cap, so a stop-sign ticket genuinely costs different amounts in two neighboring cities. Your citation or your court's website has your number; this tool shows the shape of the decision, not a quote.",
+  },
+  {
+    q: 'Is the insurance increase really the bigger number?',
+    a: 'For most drivers, yes — and it is the part people leave out. A conviction stays on your record and is rated for about three years. On a $1,800–$2,400 annual premium, even a 10–15% surcharge is several hundred dollars a year. The fine is a one-time cost; the conviction is a recurring one.',
+  },
+  {
+    q: 'What does dismissal cost instead?',
+    a: 'About $184 all-in at a typical court: roughly $144 in court costs to be granted the course, $28 for our course, and $12 to DPS for the Type 3A driving record. Court costs vary — we have seen $109, $134, $139 and $169 — so use your court\'s real figure.',
+  },
+  {
+    q: 'What if I just ignore the ticket?',
+    a: "It becomes the most expensive option available. Missing your answer date can add a failure-to-appear charge, a warrant, an OmniBase hold that blocks your licence renewal, and a $50 fee on top of everything you already owed. The conviction still happens.",
+  },
+  {
+    q: 'Does paying the ticket online end it?',
+    a: 'It ends the court case and starts the expensive part. Paying is a plea of guilty or no contest, which is a conviction — it goes on your driving record where your insurer finds it at renewal. It is the single most common and most costly mistake with a Texas ticket.',
+  },
+];
+
+const appSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: 'Texas Traffic Ticket Cost Calculator',
+  description: 'Free tool comparing what a Texas traffic ticket costs if you pay it — fine, court costs, and three years of insurance surcharge — against what dismissal through defensive driving costs.',
+  url: `${siteUrl}/texas/ticket-cost-calculator`,
+  applicationCategory: 'FinanceApplication',
+  operatingSystem: 'Any',
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  provider: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+});
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+const breadcrumbSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Texas defensive driving', item: `${siteUrl}/texas` },
+    { '@type': 'ListItem', position: 2, name: 'Ticket cost calculator', item: `${siteUrl}/texas/ticket-cost-calculator` },
+  ],
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="How Much Does a Texas Traffic Ticket Really Cost? Calculator (2026)"
+    description="The fine is the small part. Work out what your Texas ticket actually costs once court costs and three years of insurance surcharge are counted — and what dismissing it costs instead."
+    keywords="how much is a texas traffic ticket, texas speeding ticket cost calculator, texas ticket fine plus court costs, how much does a ticket raise insurance texas, texas ticket cost"
+    url="/texas/ticket-cost-calculator"
+  >
+    <script type="application/ld+json" set:html={appSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+    <script type="application/ld+json" set:html={breadcrumbSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Ticket cost calculator</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          How Much Does a Texas Traffic Ticket Actually Cost?
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>The number on the citation is the small part. Texas caps the <strong class="text-text">fine</strong> at $200 (Transp. Code §542.401), then adds roughly <strong class="text-text">$126 in state-mandated court costs</strong> on a conviction — and then your insurer rates the conviction for about three years, which is usually the largest number of the three and the only one nobody quotes you.</p>
+          <p>Pick your violation, put in your own premium, and see the two paths side by side.</p>
+        </div>
+
+        <div class="rrs-cost border border-border rounded-2xl overflow-hidden mb-4" style="font-family: 'DM Sans', sans-serif;">
+          <div class="p-5 space-y-5">
+            <label class="block">
+              <span class="block text-sm font-semibold text-text mb-1.5">What were you cited for?</span>
+              <select id="rrs-cost-violation" class="w-full h-12 px-3 rounded-xl border border-border text-base text-text bg-white focus:outline focus:outline-2 focus:outline-primary-deep">
+                {violations.map(v => <option value={v.id} data-fine={v.fine} data-eligible={String(v.eligible)} data-dscfee={String(v.dscFee || 144)} data-note={v.note}>{v.label}</option>)}
+              </select>
+            </label>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <label class="block">
+                <span class="block text-sm font-semibold text-text mb-1.5">Fine on your citation</span>
+                <span class="relative block">
+                  <span class="absolute left-3 top-1/2 -translate-y-1/2 text-text-subtle">$</span>
+                  <input id="rrs-cost-fine" type="number" inputmode="numeric" min="0" step="5" class="w-full h-12 pl-7 pr-3 rounded-xl border border-border text-base text-text focus:outline focus:outline-2 focus:outline-primary-deep" />
+                </span>
+                <span class="block text-xs text-text-subtle mt-1.5">Pre-filled with a typical amount. Use your court's real figure if you have it.</span>
+              </label>
+              <label class="block">
+                <span class="block text-sm font-semibold text-text mb-1.5">Your court's defensive driving fee</span>
+                <span class="relative block">
+                  <span class="absolute left-3 top-1/2 -translate-y-1/2 text-text-subtle">$</span>
+                  <input id="rrs-cost-dscfee" type="number" inputmode="numeric" min="0" step="1" class="w-full h-12 pl-7 pr-3 rounded-xl border border-border text-base text-text focus:outline focus:outline-2 focus:outline-primary-deep" />
+                </span>
+                <span class="block text-xs text-text-subtle mt-1.5">$144 is common; we have verified $109 to $169. <a href="/texas/dsc-fees-by-court" class="text-primary-deep font-medium hover:underline">Fees by court</a>.</span>
+              </label>
+            </div>
+
+            <label class="block">
+              <span class="block text-sm font-semibold text-text mb-1.5">Your annual insurance premium</span>
+              <span class="relative block">
+                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-text-subtle">$</span>
+                <input id="rrs-cost-premium" type="number" inputmode="numeric" min="0" step="50" value="2000" class="w-full h-12 pl-7 pr-3 rounded-xl border border-border text-base text-text focus:outline focus:outline-2 focus:outline-primary-deep" />
+              </span>
+            </label>
+
+            <label class="block">
+              <span class="block text-sm font-semibold text-text mb-1.5">Expected surcharge if convicted <span id="rrs-cost-surcharge-out" class="text-primary-deep">15%</span></span>
+              <input id="rrs-cost-surcharge" type="range" min="0" max="40" step="5" value="15" class="w-full accent-primary-deep" />
+              <span class="block text-xs text-text-subtle mt-1.5">Insurers do not publish these. 10–15% is a common increase for a single moving violation; serious ones run higher. Set it where you think is fair.</span>
+            </label>
+          </div>
+
+          <div id="rrs-cost-out" class="border-t border-border p-5 bg-surface-muted"></div>
+        </div>
+
+        <p class="text-xs text-text-subtle mb-10" style="font-family: 'DM Sans', sans-serif;">Estimates, not quotes. Texas has no statewide fine schedule — every municipal and justice court sets its own amounts inside the statutory cap — and no insurer publishes its surcharge. The arithmetic uses the figures you entered.</p>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Why the fine is the least of it</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>A Texas conviction does not add points — <a href="/texas/do-tickets-have-points" class="text-primary-deep font-medium hover:underline">the points system was repealed in 2019</a> — but it does go on your driving record, and that is what insurers rate. On a $1,800–$2,400 premium, a 10–15% surcharge is roughly <strong class="text-text">$540–$1,080 over three years</strong>. That is the number the $28 course is really competing with, not the fine.</p>
+          <p>And the third path is worse than both. Ignoring the ticket adds a failure-to-appear charge, a <a href="/texas/ticket-warrant" class="text-primary-deep font-medium hover:underline">warrant</a>, a $50 fee and an <a href="/texas/omnibase-hold" class="text-primary-deep font-medium hover:underline">OmniBase hold</a> on your licence renewal — and you still end up convicted.</p>
+        </div>
+
+        <YouTubeCard id="kKQrQe0GUCs" blurb="What a Texas speeding ticket really costs, once everything is counted." />
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;">{item.a}</p>
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The cheaper path, in one evening</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>If your ticket is eligible, dismissal leaves nothing on your record for any insurer to rate — now or at your next renewal with a different company. Our course is <strong class="text-text">$28 all-in</strong>, with the certificate downloadable the moment you finish.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a href={enrollUrl} class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline" style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);">Start the $28 Course →</a>
+          <a href="/texas/deadline-calculator" class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors" style="font-family: 'DM Sans', sans-serif;">Check your deadline</a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This tool is informational, not legal or insurance advice.</p>
+          <p class="text-xs text-text-subtle">Last updated September 4, 2026 — fine cap verified against Tex. Transp. Code §542.401; court-cost structure against the Office of Court Administration cost charts ($62 state consolidated + $14 local, offenses on or after January 1, 2020); course-fee range from our own directory of 1,742 Texas courts.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}
+
+<script is:inline>
+  (function () {
+    // State-mandated charges added to a Texas moving-violation conviction:
+    // $62 state consolidated court cost + $14 local consolidated + the $50
+    // state traffic fine, which together are the bulk of the ~$126 that turns
+    // a $110 fine into a ~$236 bill.
+    var CONVICTION_COSTS = 126;
+    var COURSE = 28;
+    var TYPE_3A = 12;
+
+    function init() {
+      var root = document.querySelector('.rrs-cost');
+      if (!root || root.dataset.bound) return;
+      root.dataset.bound = '1';
+
+      var sel = root.querySelector('#rrs-cost-violation');
+      var fine = root.querySelector('#rrs-cost-fine');
+      var dscfee = root.querySelector('#rrs-cost-dscfee');
+      var premium = root.querySelector('#rrs-cost-premium');
+      var surcharge = root.querySelector('#rrs-cost-surcharge');
+      var out = root.querySelector('#rrs-cost-out');
+      var touched = { fine: false, dscfee: false };
+
+      function money(n) { return '$' + Math.round(n).toLocaleString('en-US'); }
+      function num(el, fb) { var v = parseFloat(el.value); return isFinite(v) && v >= 0 ? v : fb; }
+      function opt() { return sel.options[sel.selectedIndex]; }
+
+      function syncDefaults() {
+        var o = opt();
+        if (!touched.fine) fine.value = o.getAttribute('data-fine');
+        if (!touched.dscfee) dscfee.value = o.getAttribute('data-dscfee');
+      }
+
+      function render() {
+        var o = opt();
+        var eligible = o.getAttribute('data-eligible') === 'true';
+        var note = o.getAttribute('data-note') || '';
+        root.querySelector('#rrs-cost-surcharge-out').textContent = surcharge.value + '%';
+
+        var f = num(fine, 0);
+        var court = num(dscfee, 144);
+        var p = num(premium, 0);
+        var pct = num(surcharge, 0) / 100;
+
+        var payTotal = f + CONVICTION_COSTS;
+        var insurance = p * pct * 3;
+        var convicted = payTotal + insurance;
+        var dismissTotal = court + COURSE + TYPE_3A;
+        var diff = convicted - dismissTotal;
+
+        var rows =
+          '<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">' +
+            '<div class="rounded-xl bg-white border border-border p-4">' +
+              '<p class="text-sm font-bold text-text mb-3" style="font-family:\'Outfit\',sans-serif;">If you pay it</p>' +
+              '<dl class="space-y-1.5 text-sm">' +
+                '<div class="flex justify-between gap-3"><dt class="text-text-body">Fine</dt><dd class="tabular-nums text-text">' + money(f) + '</dd></div>' +
+                '<div class="flex justify-between gap-3"><dt class="text-text-body">Court costs on conviction</dt><dd class="tabular-nums text-text">' + money(CONVICTION_COSTS) + '</dd></div>' +
+                '<div class="flex justify-between gap-3"><dt class="text-text-body">Insurance, 3 years</dt><dd class="tabular-nums text-text">' + money(insurance) + '</dd></div>' +
+              '</dl>' +
+              '<p class="mt-3 pt-3 border-t border-border flex justify-between gap-3 text-base font-bold text-text" style="font-family:\'Outfit\',sans-serif;"><span>Total</span><span class="tabular-nums">' + money(convicted) + '</span></p>' +
+            '</div>' +
+            '<div class="rounded-xl bg-white border ' + (eligible ? 'border-primary-deep' : 'border-border') + ' p-4">' +
+              '<p class="text-sm font-bold text-text mb-3" style="font-family:\'Outfit\',sans-serif;">If you dismiss it</p>' +
+              (eligible
+                ? '<dl class="space-y-1.5 text-sm">' +
+                    '<div class="flex justify-between gap-3"><dt class="text-text-body">Court\'s course fee</dt><dd class="tabular-nums text-text">' + money(court) + '</dd></div>' +
+                    '<div class="flex justify-between gap-3"><dt class="text-text-body">Our course</dt><dd class="tabular-nums text-text">' + money(COURSE) + '</dd></div>' +
+                    '<div class="flex justify-between gap-3"><dt class="text-text-body">Type 3A record (DPS)</dt><dd class="tabular-nums text-text">' + money(TYPE_3A) + '</dd></div>' +
+                  '</dl>' +
+                  '<p class="mt-3 pt-3 border-t border-border flex justify-between gap-3 text-base font-bold text-text" style="font-family:\'Outfit\',sans-serif;"><span>Total</span><span class="tabular-nums">' + money(dismissTotal) + '</span></p>' +
+                  '<p class="mt-2 text-xs text-text-subtle">Nothing on your record, so no insurance line at all.</p>'
+                : '<p class="text-sm text-text-body leading-6">This offense is not eligible for course dismissal. The course cannot help with the charge itself — but the other routes can, and they are worth reading before you pay.</p>' +
+                  '<p class="mt-3"><a href="/texas/ways-to-dismiss-ticket" class="text-primary-deep font-semibold hover:underline">See the routes that do apply →</a></p>') +
+            '</div>' +
+          '</div>';
+
+        var verdict = eligible
+          ? '<p class="mt-4 text-base font-bold ' + (diff > 0 ? 'text-primary-deep' : 'text-text') + '" style="font-family:\'Outfit\',sans-serif;">' +
+              (diff > 0
+                ? 'Dismissing costs ' + money(diff) + ' less over three years.'
+                : 'On these numbers the two are close — but only one leaves your record clean.') +
+            '</p>'
+          : '';
+        var noteHtml = note ? '<p class="mt-3 text-sm text-text-body">' + note + '</p>' : '';
+        out.innerHTML = rows + verdict + noteHtml;
+      }
+
+      sel.addEventListener('change', function () { touched.fine = false; touched.dscfee = false; syncDefaults(); render(); });
+      fine.addEventListener('input', function () { touched.fine = true; render(); });
+      dscfee.addEventListener('input', function () { touched.dscfee = true; render(); });
+      premium.addEventListener('input', render);
+      surcharge.addEventListener('input', render);
+
+      syncDefaults();
+      render();
+    }
+    if (document.readyState !== 'loading') { init(); } else { document.addEventListener('DOMContentLoaded', init); }
+  })();
+</script>

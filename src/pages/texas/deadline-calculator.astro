@@ -1,0 +1,292 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+import YouTubeCard from '../../components/YouTubeCard.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+const listId = import.meta.env.VITE_KLAVIYO_REMINDER_LIST || 'UHAu4n';
+
+const faqs = [
+  {
+    q: 'How do I know my answer date?',
+    a: "It's printed on the citation itself — usually labeled the appearance date, answer date, or 'on or before' date. It is not something you calculate, and it is not the same at every court. If the ticket is lost, the court clerk can tell you, and our court directory has the phone number for all 1,742 Texas courts.",
+  },
+  {
+    q: 'What actually happens on the answer date?',
+    a: "Nothing automatic and nothing good. It's the deadline to respond to the charge — by requesting defensive driving, entering a plea, or appearing. Miss it and the court can add a failure-to-appear charge, issue a warrant, and report you to OmniBase, which blocks your driver licence renewal.",
+  },
+  {
+    q: 'Is the 90-day deadline the same everywhere?',
+    a: 'Ninety days from the court granting your request is the statutory maximum under Code of Criminal Procedure chapter 45A, and most courts use exactly that. Some grant less. The number that governs you is the one on the order the court sends back — this tool defaults to 90 days, and you can change it to match your order.',
+  },
+  {
+    q: 'Why does the tool tell me to finish a week early?',
+    a: "Because TDLR notes a new certificate can take up to five days to appear in its validation system, and courts that verify certificates electronically cannot see yours until it does. Add mail time on top if your court doesn't take email or online submission. Finishing on day 89 is how people miss a 90-day deadline.",
+  },
+  {
+    q: 'What if my answer date has already passed?',
+    a: 'Call the clerk today, before doing anything else. A judge has discretion to accept a late request any time before final disposition, and many will — but nobody can tell you whether yours will except that court. If a warrant or OmniBase hold has already issued, deal with that first.',
+  },
+  {
+    q: 'Does this tool send my information anywhere?',
+    a: 'The dates are calculated in your browser and are never transmitted. If you choose to enter an email for a reminder, that email address is sent to our reminder list and nothing else — no dates, no citation details.',
+  },
+];
+
+const appSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: 'Texas Defensive Driving Deadline Calculator',
+  description: 'Free tool that works out your Texas ticket answer date, your 90-day defensive driving completion deadline, and the dates you should actually work backwards from.',
+  url: `${siteUrl}/texas/deadline-calculator`,
+  applicationCategory: 'UtilityApplication',
+  operatingSystem: 'Any',
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  provider: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+});
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+const breadcrumbSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Texas defensive driving', item: `${siteUrl}/texas` },
+    { '@type': 'ListItem', position: 2, name: 'Deadline calculator', item: `${siteUrl}/texas/deadline-calculator` },
+  ],
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Texas Defensive Driving Deadline Calculator: Your Answer Date & 90-Day Window"
+    description="Work out how long you have to request defensive driving, and the real date your certificate must reach the court. Free, instant, and it accounts for the five-day certificate delay that catches people out."
+    keywords="texas defensive driving deadline, ticket answer date texas, 90 day defensive driving deadline, when is my ticket due texas, defensive driving deadline calculator"
+    url="/texas/deadline-calculator"
+  >
+    <script type="application/ld+json" set:html={appSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+    <script type="application/ld+json" set:html={breadcrumbSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Deadline calculator</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          Texas Defensive Driving Deadline Calculator
+        </h1>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Two deadlines decide whether this works, and they are not the same date. First, the <strong class="text-text">answer date printed on your citation</strong> — the day by which the court must hear from you. Second, the <strong class="text-text">90 days from the court granting your request</strong> in which the certificate has to arrive. Miss the first and you may lose the option entirely; miss the second and the charge comes back.</p>
+          <p>Enter what you have. Everything is calculated in your browser and nothing is sent anywhere.</p>
+        </div>
+
+        <div class="rrs-dl border border-border rounded-2xl overflow-hidden mb-10" data-list={listId} style="font-family: 'DM Sans', sans-serif;">
+          <div class="p-5 space-y-5">
+            <label class="block">
+              <span class="block text-sm font-semibold text-text mb-1.5">Answer date on your citation</span>
+              <input id="rrs-dl-answer" type="date" class="w-full h-12 px-3 rounded-xl border border-border text-base text-text focus:outline focus:outline-2 focus:outline-primary-deep" />
+              <span class="block text-xs text-text-subtle mt-1.5">Sometimes labeled "appearance date" or "on or before". Don't have the ticket? <a href="/texas/lost-ticket" class="text-primary-deep font-medium hover:underline">Find it here</a>.</span>
+            </label>
+
+            <div id="rrs-dl-answer-out"></div>
+
+            <div class="pt-5 border-t border-border">
+              <label class="block">
+                <span class="block text-sm font-semibold text-text mb-1.5">Date the court granted your request <span class="font-normal text-text-subtle">— optional, if it has</span></span>
+                <input id="rrs-dl-granted" type="date" class="w-full h-12 px-3 rounded-xl border border-border text-base text-text focus:outline focus:outline-2 focus:outline-primary-deep" />
+              </label>
+              <label class="block mt-4">
+                <span class="block text-sm font-semibold text-text mb-1.5">Days the court gave you <span id="rrs-dl-window-out" class="text-primary-deep">90</span></span>
+                <input id="rrs-dl-window" type="range" min="30" max="120" step="5" value="90" class="w-full accent-primary-deep" />
+                <span class="block text-xs text-text-subtle mt-1.5">90 is the statutory maximum and the usual grant. Change it if your order says otherwise.</span>
+              </label>
+            </div>
+
+            <div id="rrs-dl-granted-out"></div>
+          </div>
+
+          <form class="rrs-dl-form border-t border-border bg-surface-muted p-5" novalidate>
+            <p class="text-sm font-semibold text-text mb-1" style="font-family: 'Outfit', sans-serif;">Want a reminder before the deadline?</p>
+            <p class="text-sm text-text-body mb-3">One email when your date gets close. We send the reminder and nothing else.</p>
+            <div class="flex flex-col sm:flex-row gap-3">
+              <input type="email" required placeholder="you@example.com" class="flex-1 h-12 px-3 rounded-xl border border-border text-base text-text focus:outline focus:outline-2 focus:outline-primary-deep" />
+              <button type="submit" class="h-12 px-6 rounded-xl bg-primary hover:bg-primary-hover text-white font-semibold whitespace-nowrap transition-colors">Remind me</button>
+            </div>
+            <p class="rrs-dl-error text-sm text-red-600 mt-2" style="display:none"></p>
+            <p class="rrs-dl-ok text-sm font-medium text-primary-deep mt-2" style="display:none">Done — we'll be in touch before your deadline.</p>
+          </form>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The order these have to happen in</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Sequence matters more than speed. Courts routinely reject certificates dated <em>before</em> the order granting the course, so finishing early is not a shortcut — it is a rejection.</p>
+          <ol class="list-decimal pl-6 space-y-2">
+            <li><strong class="text-text">Request by the answer date.</strong> Plea, request, licence copy, insurance, and the court's fee. <a href="/texas/request-defensive-driving" class="text-primary-deep font-medium hover:underline">What to send, exactly</a>.</li>
+            <li><strong class="text-text">Wait for the order.</strong> It carries your real deadline. Nothing before this counts.</li>
+            <li><strong class="text-text">Take the course and order your <a href="/texas/type-3a-driving-record" class="text-primary-deep font-medium hover:underline">Type 3A record</a>.</strong> Six hours, and $12 from DPS.</li>
+            <li><strong class="text-text">Submit both, with a week to spare.</strong> New certificates can take up to five days to appear in TDLR's validation system.</li>
+          </ol>
+        </div>
+
+        <YouTubeCard id="lKhv6FiHoIk" blurb="Making the request that starts the 90-day clock." />
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;">{item.a}</p>
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">When the clock starts, the course is one evening</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Once the order arrives you have six hours of coursework and two documents to send. Ours is <strong class="text-text">$28 all-in, with the certificate downloadable the moment you finish</strong> — court copy and insurance copy included.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a href={enrollUrl} class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline" style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);">Start the $28 Course →</a>
+          <a href="/texas/courts" class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors" style="font-family: 'DM Sans', sans-serif;">Find your court</a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This tool is informational and not legal advice — the dates that bind you are the ones on your citation and on the court's order.</p>
+          <p class="text-xs text-text-subtle">Last updated September 4, 2026 — verified against Tex. Code Crim. Proc. arts. 45A.351–.359 (incl. the S.B. 296 amendments effective September 1, 2025) and TDLR driving safety course guidance.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}
+
+<script is:inline>
+  (function () {
+    function init() {
+      var root = document.querySelector('.rrs-dl');
+      if (!root || root.dataset.bound) return;
+      root.dataset.bound = '1';
+
+      var answer = root.querySelector('#rrs-dl-answer');
+      var granted = root.querySelector('#rrs-dl-granted');
+      var window_ = root.querySelector('#rrs-dl-window');
+      var aOut = root.querySelector('#rrs-dl-answer-out');
+      var gOut = root.querySelector('#rrs-dl-granted-out');
+
+      // Parse a yyyy-mm-dd input as a LOCAL date. `new Date("2026-09-04")` is
+      // parsed as UTC and can land on the previous day west of Greenwich —
+      // which is every timezone in Texas.
+      function parse(v) {
+        if (!v) return null;
+        var p = v.split('-').map(Number);
+        if (p.length !== 3 || !p[0]) return null;
+        var d = new Date(p[0], p[1] - 1, p[2]);
+        return isNaN(d.getTime()) ? null : d;
+      }
+      function today() { var n = new Date(); return new Date(n.getFullYear(), n.getMonth(), n.getDate()); }
+      function addDays(d, n) { var c = new Date(d.getTime()); c.setDate(c.getDate() + n); return c; }
+      function daysBetween(a, b) { return Math.round((b - a) / 86400000); }
+      function fmt(d) {
+        return d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+      }
+      function box(tone, title, body) {
+        var colors = {
+          urgent: 'border-red-300 bg-red-50',
+          soon:   'border-amber-300 bg-amber-50',
+          ok:     'border-border bg-surface-muted'
+        };
+        return '<div class="rounded-xl border p-4 ' + colors[tone] + '">' +
+          '<p class="text-base font-bold text-text mb-1" style="font-family:\'Outfit\',sans-serif;">' + title + '</p>' +
+          '<div class="text-sm text-text-body leading-6">' + body + '</div></div>';
+      }
+
+      function render() {
+        root.querySelector('#rrs-dl-window-out').textContent = window_.value;
+
+        var a = parse(answer.value);
+        if (!a) { aOut.innerHTML = ''; }
+        else {
+          var left = daysBetween(today(), a);
+          if (left < 0) {
+            aOut.innerHTML = box('urgent', 'That date has passed — call the clerk today',
+              'Your answer date was <strong>' + fmt(a) + '</strong>, ' + Math.abs(left) + ' day' + (Math.abs(left) === 1 ? '' : 's') + ' ago. ' +
+              'A judge can still accept a late request any time before final disposition, and many do — but only that court can tell you. ' +
+              'Call before anything else, and ask whether a <a class="text-primary-deep font-medium hover:underline" href="/texas/ticket-warrant">warrant or OmniBase hold</a> has issued.');
+          } else if (left === 0) {
+            aOut.innerHTML = box('urgent', 'Your answer date is today',
+              'Call the clerk first thing and ask how to make a same-day request. Many courts take them in person through the appearance date, and courts with portals accept them up to the deadline.');
+          } else {
+            aOut.innerHTML = box(left <= 5 ? 'urgent' : left <= 14 ? 'soon' : 'ok',
+              left + ' day' + (left === 1 ? '' : 's') + ' to request the course',
+              'Your request must reach the court by <strong>' + fmt(a) + '</strong>.' +
+              (left <= 5
+                ? ' That is tight for mail. If your court takes email or an online form, use it — and if it only takes certified mail, go today.'
+                : ' Mailing it? Certified mail, return receipt, postmarked on or before that date.'));
+          }
+        }
+
+        var g = parse(granted.value);
+        if (!g) { gOut.innerHTML = ''; return; }
+        var win = parseInt(window_.value, 10) || 90;
+        var due = addDays(g, win);
+        var safe = addDays(due, -7);
+        var leftDue = daysBetween(today(), due);
+        var body =
+          '<dl class="space-y-1.5">' +
+          '<div class="flex justify-between gap-4"><dt>Everything must reach the court by</dt><dd class="font-semibold text-text text-right">' + fmt(due) + '</dd></div>' +
+          '<div class="flex justify-between gap-4"><dt>Aim to finish the course by</dt><dd class="font-semibold text-text text-right">' + fmt(safe) + '</dd></div>' +
+          '</dl>' +
+          '<p class="mt-2">The week of margin is not caution for its own sake: a new certificate can take up to five days to show up in TDLR\'s validation system, and a court that checks electronically cannot see yours until it does.</p>';
+        gOut.innerHTML = box(leftDue < 0 ? 'urgent' : leftDue <= 14 ? 'soon' : 'ok',
+          leftDue < 0 ? 'That deadline has passed' : leftDue + ' day' + (leftDue === 1 ? '' : 's') + ' to finish and submit',
+          leftDue < 0
+            ? 'Your ' + win + '-day window closed on <strong>' + fmt(due) + '</strong>. Call the court now and ask about an extension or a <a class="text-primary-deep font-medium hover:underline" href="/texas/show-cause-hearing">show cause setting</a> — courts can extend, but not after the case is disposed.'
+            : body);
+      }
+
+      [answer, granted, window_].forEach(function (el) { el.addEventListener('input', render); el.addEventListener('change', render); });
+      render();
+
+      var form = root.querySelector('.rrs-dl-form');
+      var err = form.querySelector('.rrs-dl-error');
+      var ok = form.querySelector('.rrs-dl-ok');
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        err.style.display = 'none';
+        var input = form.querySelector('input[type=email]');
+        var email = (input.value || '').trim();
+        if (!email || email.indexOf('@') < 1) { err.textContent = 'Please enter a valid email address.'; err.style.display = 'block'; return; }
+        var btn = form.querySelector('button[type=submit]');
+        btn.disabled = true; btn.textContent = '…';
+        var qs = new URLSearchParams(location.search);
+        var payload = { data: { type: 'subscription', attributes: {
+          custom_source: 'Deadline calculator',
+          profile: { data: { type: 'profile', attributes: { email: email, properties: {
+            signup_page: 'deadline-calculator', signup_url: location.href, signup_source: 'deadline-calculator', signup_language: 'en',
+            utm_source: qs.get('utm_source') || '', utm_medium: qs.get('utm_medium') || '', utm_campaign: qs.get('utm_campaign') || ''
+          } } } }
+        }, relationships: { list: { data: { type: 'list', id: root.getAttribute('data-list') } } } } };
+        fetch('https://a.klaviyo.com/client/subscriptions/?company_id=U3BbdX', {
+          method: 'POST', headers: { 'Content-Type': 'application/json', 'revision': '2024-10-15' }, body: JSON.stringify(payload)
+        }).then(function (r) {
+          if (r.status >= 200 && r.status < 300) { form.querySelector('.flex').style.display = 'none'; ok.style.display = 'block'; }
+          else { throw new Error('status ' + r.status); }
+        }).catch(function () {
+          btn.disabled = false; btn.textContent = 'Remind me';
+          err.textContent = 'Something went wrong. Please try again.'; err.style.display = 'block';
+        });
+      });
+    }
+    if (document.readyState !== 'loading') { init(); } else { document.addEventListener('DOMContentLoaded', init); }
+  })();
+</script>

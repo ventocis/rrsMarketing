@@ -25,3 +25,6 @@ Thumbs.db
 
 # Claude Code
 .claude/launch.json
+
+# Large video source files — keep the repo lean; upload to S3/CloudFront out of band.
+public/assets/video/*.mp4

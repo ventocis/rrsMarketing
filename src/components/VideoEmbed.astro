@@ -6,15 +6,31 @@
 // the viewer clicks, with autoplay, so the page pays nothing for the player
 // (about 1 MB of script) until someone actually wants to watch. Privacy-friendly
 // (youtube-nocookie), 16:9, keyboard accessible.
+//
+// Title, description, duration and upload date come from src/data/videos.ts,
+// which was verified against YouTube — pass only the `id` and they are correct.
+// Schema is emitted only on the video's canonical page, so embedding the same
+// video on several pages does not create competing VideoObjects.
+import { VIDEOS, isoDuration, isCanonicalFor } from '../data/videos';
+
 interface Props {
   id: string;            // YouTube video ID
-  title: string;         // video title (schema name + iframe title)
-  description: string;   // short description for schema
-  duration?: string;     // ISO 8601, e.g. "PT53S" (optional)
-  uploadDate?: string;   // ISO date
+  title?: string;        // override the catalogue title (rare)
+  description?: string;  // override the catalogue description (rare)
+  duration?: string;     // ISO 8601 override for videos not in the catalogue
+  uploadDate?: string;   // ISO date override for videos not in the catalogue
+  schema?: boolean;      // force schema on/off; defaults to "only on the canonical page"
 }
-const { id, title, description, duration, uploadDate = '2026-06-16' } = Astro.props;
+const props = Astro.props as Props;
+const meta = VIDEOS[props.id];
 
+const title = props.title ?? meta?.title ?? 'Video';
+const description = props.description ?? meta?.description ?? title;
+const duration = meta ? isoDuration(meta.seconds) : props.duration;
+const uploadDate = meta?.uploadDate ?? props.uploadDate ?? '2026-06-16';
+const emitSchema = props.schema ?? (meta ? isCanonicalFor(props.id, Astro.url.pathname) : true);
+
+const id = props.id;
 const thumb = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
 const thumbHi = `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
 const embed = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
@@ -36,7 +52,7 @@ const schema = JSON.stringify({
   },
 });
 ---
-<script type="application/ld+json" set:html={schema} />
+{emitSchema && <script type="application/ld+json" set:html={schema} />}
 <figure class="my-8">
   <div
     class="rrs-yt relative w-full overflow-hidden rounded-xl border border-border bg-black"

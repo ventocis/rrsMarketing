@@ -1,5 +1,6 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import YouTubeCard from '../../components/YouTubeCard.astro';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 
@@ -98,6 +99,8 @@ const faqSchema = JSON.stringify({
           <p>Don't buy a Texas defensive driving course hoping the court will bend — the license requirement is statutory, not local policy, and the course can't dismiss your ticket without it. (Your home state may accept a course for its own point-reduction program — that's a different product under your state's rules; check with your home DMV before buying anything.)</p>
           <p>And don't ignore it because you live far away. An unresolved Texas citation grows the same way it does for Texans: failure-to-appear charge, warrant, collections — and under the interstate compacts (the Driver License Compact and the Nonresident Violator Compact), unresolved out-of-state tickets can trigger license action <em>at home</em>. Resolving it by mail through deferred costs an afternoon; ignoring it costs much more — see <a href="/texas/missed-court-date" class="text-primary-deep font-medium hover:underline">what happens when you miss the date</a>.</p>
         </div>
+
+        <YouTubeCard id="0ctV91T4DKo" blurb="Deferred disposition, and how it differs from the course." />
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
         <div class="space-y-8 mb-12">

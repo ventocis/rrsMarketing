@@ -4,6 +4,7 @@ import blogData from '../data/blog.json';
 import courtsData from '../data/texas-courts.json';
 import adeData from '../data/ade-texas.json';
 import { translatedPages } from '../lib/i18n';
+import { INSURERS } from '../data/texas-insurers';
 import { sitemapCourses, STATE_SUBROUTES } from '../data/courses/index';
 import { postsFor } from '../data/blog/index';
 
@@ -44,6 +45,9 @@ const staticRoutes = [
   '/texas/cdl-defensive-driving',
   '/texas/12-month-rule',
   '/texas/insurance-discount',
+  '/texas/traffic-ticket-report',
+  '/texas/deadline-calculator',
+  '/texas/ticket-cost-calculator',
   '/texas/deferred-disposition',
   '/texas/missed-court-date',
   '/texas/already-paid-ticket',
@@ -176,7 +180,10 @@ const courtSlugRoutes = ((courtsData as any).courts as Array<{ slug: string }>).
 
 const i18nRoutes = translatedPages.map(p => `/texas/${p.slug}`);
 
-const allRoutes = [...staticRoutes, ...adeRoutes, ...i18nRoutes, ...stateCourseRoutes, ...courseRoutes, ...courseRequirementsRoutes, ...blogRoutes, ...findRoutes, ...texasCourtsRoutes, ...courtSlugRoutes];
+// Per-insurer defensive-driving discount pages
+const insurerRoutes = INSURERS.map(i => `/texas/insurance-discount/${i.slug}`);
+
+const allRoutes = [...staticRoutes, ...adeRoutes, ...i18nRoutes, ...insurerRoutes, ...stateCourseRoutes, ...courseRoutes, ...courseRequirementsRoutes, ...blogRoutes, ...findRoutes, ...texasCourtsRoutes, ...courtSlugRoutes];
 
 const toEntry = (path: string) =>
   `  <url>\n    <loc>${siteUrl}${path}</loc>\n    <changefreq>weekly</changefreq>\n  </url>`;

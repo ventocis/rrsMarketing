@@ -1,5 +1,6 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import YouTubeCard from '../../components/YouTubeCard.astro';
 import NextStepBlock from '../../components/texas/NextStepBlock.astro';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
@@ -75,7 +76,7 @@ const faqSchema = JSON.stringify({
 
 {isEnabled ? (
   <TexasLayout
-    title="Deferred Disposition in Texas: What It Is, What It Costs, Who Qualifies & When to Use It (2026)"
+    title="Deferred Disposition in Texas: What It Is, What It Costs & Who Qualifies"
     description="Deferred disposition for Texas traffic tickets: the up-to-180-day probation that ends in dismissal, what it costs, who is excluded, what happens if you get another ticket, how it differs from deferred adjudication, and when defensive driving is the better path."
     keywords="deferred disposition texas, what is deferred disposition, deferred disposition meaning, deferred disposition for traffic ticket, deferred disposition vs deferred adjudication, is deferred disposition worth it, how much is deferred disposition, deferred disposition speeding ticket texas, violate deferred disposition"
     url="/texas/deferred-disposition"
@@ -158,6 +159,8 @@ const faqSchema = JSON.stringify({
           </ul>
           <p>The side-by-side decision table, with the statewide numbers, is on <a href="/texas/defensive-driving-vs-deferred-disposition" class="text-primary-deep font-medium hover:underline">deferred disposition vs defensive driving</a>.</p>
         </div>
+
+        <YouTubeCard id="0ctV91T4DKo" blurb="The two options side by side, with the trade-offs named." />
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
         <div class="space-y-8 mb-12">

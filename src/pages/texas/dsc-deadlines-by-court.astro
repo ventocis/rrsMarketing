@@ -1,5 +1,6 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import YouTubeCard from '../../components/YouTubeCard.astro';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 
@@ -170,6 +171,10 @@ const schema = JSON.stringify({
           <p><strong class="text-text">Check whether your clock starts at approval or payment.</strong> Glenn Heights starts the 90 days at payment — meaning a slow-to-pay driver shortens their own course window without realizing it. When your court's order arrives, the due date printed on it is the real number; calendar it that day.</p>
           <p><strong class="text-text">And if you've already missed a deadline</strong>, don't self-convict: judges keep discretion until final disposition, Robstown publishes a discretionary late path, and the worst realistic outcome usually starts with a <a href="/texas/show-cause-hearing" class="text-primary-deep font-medium hover:underline">show cause hearing</a> — a hearing, not a verdict. Call the clerk first.</p>
         </div>
+
+        <YouTubeCard id="lKhv6FiHoIk" blurb="Making the request that starts your 90-day clock." />
+
+        <p class="text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;"><a href="/texas/deadline-calculator" class="text-primary-deep font-medium hover:underline">Work out your own dates in the deadline calculator</a> →</p>
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
         <div class="space-y-8 mb-12">

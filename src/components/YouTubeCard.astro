@@ -1,37 +1,40 @@
 ---
 // Reusable "Watch on YouTube" card + VideoObject schema.
-// Props: id (YouTube video id), title, duration ("m:ss"), blurb (optional one-liner), uploadDate (ISO date).
+//
+// Title, duration and upload date come from src/data/videos.ts, which was
+// verified against YouTube — pass only the `id` and they are correct. Schema is
+// emitted only on the video's canonical page, so the same video appearing on
+// several pages does not create competing VideoObjects.
+import { VIDEOS, clockDuration, isoDuration, isCanonicalFor } from '../data/videos';
+
 interface Props {
   id: string;
-  title: string;
-  duration?: string;
-  blurb?: string;
-  uploadDate?: string;   // ISO date — required by Google for VideoObject rich results
+  title?: string;
+  duration?: string;     // "m:ss" override for videos not in the catalogue
+  blurb?: string;        // one-liner shown on the card
+  uploadDate?: string;   // ISO date override for videos not in the catalogue
+  schema?: boolean;      // force schema on/off; defaults to "only on the canonical page"
 }
-// uploadDate defaults to a known-good date so the schema is never missing this required field.
-const { id, title, duration = '', blurb = '', uploadDate = '2026-06-16' } = Astro.props;
+const props = Astro.props as Props;
+const meta = VIDEOS[props.id];
+
+const id = props.id;
+const title = props.title ?? meta?.title ?? 'Video';
+const blurb = props.blurb ?? '';
+const duration = meta ? clockDuration(meta.seconds) : (props.duration ?? '');
+const iso = meta ? isoDuration(meta.seconds) : '';
+const uploadDate = meta?.uploadDate ?? props.uploadDate ?? '2026-06-16';
+const emitSchema = props.schema ?? (meta ? isCanonicalFor(id, Astro.url.pathname) : true);
 
 const watchUrl = `https://www.youtube.com/watch?v=${id}`;
 const embedUrl = `https://www.youtube.com/embed/${id}`;
 const thumbUrl = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
 
-// "5:26" -> "PT5M26S"; "1:02:03" -> "PT1H2M3S"
-function isoDuration(d: string): string {
-  if (!d) return '';
-  const parts = d.split(':').map(n => parseInt(n, 10));
-  let h = 0, m = 0, s = 0;
-  if (parts.length === 3) [h, m, s] = parts;
-  else if (parts.length === 2) [m, s] = parts;
-  else [s] = parts;
-  return `PT${h ? h + 'H' : ''}${m ? m + 'M' : ''}${s ? s + 'S' : ''}` || 'PT0S';
-}
-const iso = isoDuration(duration);
-
 const videoSchema = JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'VideoObject',
   name: title,
-  description: blurb || title,
+  description: meta?.description || blurb || title,
   thumbnailUrl: thumbUrl,
   uploadDate,
   contentUrl: watchUrl,
@@ -41,7 +44,7 @@ const videoSchema = JSON.stringify({
 });
 ---
 
-<script type="application/ld+json" set:html={videoSchema} />
+{emitSchema && <script type="application/ld+json" set:html={videoSchema} />}
 
 <a
   href={watchUrl}

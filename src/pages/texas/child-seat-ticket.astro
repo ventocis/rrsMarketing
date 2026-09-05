@@ -1,5 +1,6 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import YouTubeCard from '../../components/YouTubeCard.astro';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 
@@ -97,6 +98,8 @@ const faqSchema = JSON.stringify({
           <p><strong class="text-text">Fix the seat situation first.</strong> Before you contact the court, get the right seat properly installed — free installation checks are widely available (many fire departments, hospitals, and Safe Kids coalitions do them, and some Texas courts run their own child passenger safety technician programs). Walking into court with the problem already solved transforms the conversation.</p>
           <p><strong class="text-text">Then ask the court for deferred disposition</strong> by your appearance date, and expect seat-related conditions. Bring documentation of the seat and the installation check. The fine-only stakes are real (up to $250) but the judge's real interest is the child's safety — demonstrated compliance is the strongest card you hold. If you're under 25, expect the standard driving safety course as an additional mandatory condition of any deferred (art. 45A.304); for everyone else the ordinary course can also be offered, but it's the judge's choice, not a statutory requirement anymore.</p>
         </div>
+
+        <YouTubeCard id="lKhv6FiHoIk" blurb="How to ask the court for the course, step by step." />
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
         <div class="space-y-8 mb-12">

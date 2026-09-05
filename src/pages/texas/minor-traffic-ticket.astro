@@ -1,5 +1,6 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import YouTubeCard from '../../components/YouTubeCard.astro';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 
@@ -53,7 +54,7 @@ const faqSchema = JSON.stringify({
 
 {isEnabled ? (
   <TexasLayout
-    title="Minor (Under 17) with a Texas Traffic Ticket: Open Court, Parent Required, Then the Options (2026)"
+    title="Texas Traffic Ticket for a Minor Under 17: Open Court, Parent Required"
     description="Texas defendants under 17 must plead in open court with a parent summoned to appear (art. 45A.452) — no mail-in resolution. What that means practically, and how the dismissal options work for teen drivers."
     keywords="minor traffic ticket texas, under 17 ticket texas, juvenile traffic ticket texas, teen ticket court parent texas, 16 year old speeding ticket texas"
     url="/texas/minor-traffic-ticket"
@@ -96,6 +97,8 @@ const faqSchema = JSON.stringify({
           <p><strong class="text-text">Before the date:</strong> confirm the appearance time with the clerk (and that the parent summons applies to you), bring the teen's license or permit and proof of insurance listing them, and decide which option you'll request. Some courts let you submit the course request paperwork at that first appearance — bring the fee.</p>
           <p><strong class="text-text">After approval:</strong> the 6-hour course can be done online at home (a parent making it a supervised evening is, in our experience, the version that actually gets finished), then the certificate and <a href="/texas/type-3a-driving-record" class="text-primary-deep font-medium hover:underline">Type 3A record</a> go back to the court inside 90 days. The payoff is identical to an adult's: dismissed charge, nothing on the record — which matters enormously when the driver is 16 and the family insurance policy is already groaning. Failure-to-appear consequences also land differently on minors (courts have additional tools for juveniles who blow off court), so treat the date as immovable.</p>
         </div>
+
+        <YouTubeCard id="lKhv6FiHoIk" blurb="How the course request works once you are in court." />
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
         <div class="space-y-8 mb-12">

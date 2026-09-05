@@ -1,5 +1,6 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import YouTubeCard from '../../components/YouTubeCard.astro';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 
@@ -53,8 +54,8 @@ const faqSchema = JSON.stringify({
 
 {isEnabled ? (
   <TexasLayout
-    title="Expired Registration Ticket in Texas: The $20 Fix-It Dismissal, Step by Step (2026)"
-    description="Texas law lets courts dismiss an expired-registration ticket if you register within 20 working days and pay a fee capped at $20 (Transp. Code §502.407). The exact deadline, the catch, and why defensive driving is the wrong tool here."
+    title="Expired Registration Ticket in Texas: What It Costs & the $20 Dismissal"
+    description="Texas courts may dismiss an expired-registration ticket for a $20 fee if you register within 20 working days of the citation. What the ticket costs, who qualifies for the fix-it dismissal, and the steps in order."
     keywords="expired registration ticket texas, dismiss expired registration ticket, 502.407 texas, fix it ticket texas registration, expired tags ticket texas"
     url="/texas/expired-registration-ticket"
   >
@@ -97,6 +98,8 @@ const faqSchema = JSON.stringify({
           <p><strong class="text-text">Don't pay the ticket — pay the registration.</strong> Paying the citation is a conviction, and a convicted charge can't be compliance-dismissed. The money goes to the county for registration and to the court only for the small fee. If the court's online portal shows a "pay now" amount, that's the conviction path — call the clerk instead and say you're seeking the §502.407 dismissal.</p>
           <p><strong class="text-text">Defensive driving is the wrong tool here.</strong> Expired registration isn't a moving violation, and even if a court entertained it, why pay ~$144 in court costs plus a $28 course when the statute prices this fix at $20? Save the course for a <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">moving violation that needs it</a> — and if the same stop produced one, handle both: the registration with §502.407, the moving violation with the course.</p>
         </div>
+
+        <YouTubeCard id="lKhv6FiHoIk" blurb="How to ask the court for the course, step by step." />
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
         <div class="space-y-8 mb-12">

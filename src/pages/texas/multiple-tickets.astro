@@ -1,5 +1,6 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import YouTubeCard from '../../components/YouTubeCard.astro';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 
@@ -53,7 +54,7 @@ const faqSchema = JSON.stringify({
 
 {isEnabled ? (
   <TexasLayout
-    title="Multiple Tickets in One Stop in Texas? One Course Can Now Dismiss Them All (2026)"
+    title="Can One Course Dismiss Multiple Texas Tickets? Yes, From the Same Stop"
     description="Since September 2025, one defensive driving course can dismiss every eligible charge from the same Texas traffic stop — a reversal of the old one-ticket rule. How it works, the per-charge fees, and the charges that can't ride along."
     keywords="multiple tickets one stop texas, two tickets defensive driving texas, dismiss multiple citations texas, sb 296 multiple charges, one course multiple tickets"
     url="/texas/multiple-tickets"
@@ -103,6 +104,8 @@ const faqSchema = JSON.stringify({
         <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
           <p>Because the rule is new, don't assume the clerk will volunteer it. When you make your request, list <strong class="text-text">every citation number from the stop</strong> and state that you're requesting the driving safety course for each eligible charge arising from the same criminal transaction under art. 45A.352(b). If a court's form only has room for one citation, attach a sheet listing the rest and confirm with the clerk that all are covered by the single course. Get the court's order confirming which charges are included before you take the course — that order is your protection if a charge gets missed.</p>
         </div>
+
+        <YouTubeCard id="uFsR2Rx47sU" blurb="How the once-every-12-months clock really works." />
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
         <div class="space-y-8 mb-12">

@@ -1,5 +1,6 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import YouTubeCard from '../../components/YouTubeCard.astro';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 
@@ -162,6 +163,8 @@ const faqSchema = JSON.stringify({
           <li><strong class="text-text">If it's timing</strong> — ask the clerk about a good-cause extension (art. 45A.355) before the deadline, or about the show-cause hearing if it's already passed. Show up; non-appearance is what converts problems into convictions.</li>
           <li><strong class="text-text">If it's eligibility</strong> — ask about <a href="/texas/speeding-25-over" class="text-primary-deep font-medium hover:underline">deferred disposition</a>, which has no speed bar and survives most of the problems that kill the course option.</li>
         </ol>
+
+        <YouTubeCard id="9VvjiOhSRSA" blurb="What a correctly submitted certificate looks like." />
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
         <div class="space-y-8 mb-12">

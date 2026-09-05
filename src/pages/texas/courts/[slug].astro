@@ -2,6 +2,8 @@
 import TexasLayout from '../../../layouts/TexasLayout.astro';
 import courtsData from '../../../data/texas-courts.json';
 import courtFaqData from '../../../data/court-faq-data.json';
+import NextStepBlock from '../../../components/texas/NextStepBlock.astro';
+import YouTubeCard from '../../../components/YouTubeCard.astro';
 
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '#';
@@ -6254,21 +6256,68 @@ const courtSeoData: Record<string, { title: string; description: string }> = {
 function joinOrNA(arr: string[] | undefined) {
   return arr && arr.length > 0 ? arr.join(', ') : 'Unavailable';
 }
+// --- Court naming, title and schema ------------------------------------------
+// People reach these pages by typing the court's own name ("wharton municipal
+// court"), so the <title> has to contain that phrase. The previous titles
+// ("Lakeway Traffic Ticket? How to Dismiss It") never did: only 1 of 938 custom
+// titles contained the word "Court", and the court pages converted 52,810
+// impressions into 581 clicks. The hand-written descriptions are kept as-is.
+const courtAddressLine: string = court.address?.[0] ?? '';
+const courtAddrParts: string[] = courtAddressLine.split(',').map((p: string) => p.trim());
+const courtStreet: string = courtAddrParts[0] || '';
+const courtCityName: string = courtAddrParts[1] || court.county;
+const courtZip: string = (courtAddrParts[2] || '').split('-')[0].trim();
+const courtPhoneNumber: string = court.phone?.[0] ?? '';
+
+function buildCourtName(c: any, short: boolean): string {
+  if (c.courtType === 'Municipal') return `${c.courtName} Municipal Court`;
+  if (c.courtType === 'Justice of the Peace') {
+    const pct = String(c.courtName || '').replace(/Precinct/gi, short ? 'Pct' : 'Precinct');
+    return short ? `${c.county} County JP ${pct}` : `${c.county} County Justice of the Peace, ${pct}`;
+  }
+  return `${c.county} County ${c.courtType} Court`;
+}
+const courtFullName = buildCourtName(court, false);
+const courtShortName = buildCourtName(court, true);
+const courtPageTitle = `${courtShortName}: Phone, Address & Defensive Driving`;
+const courtFallbackDescription = `${courtFullName} in ${courtCityName}, Texas${courtPhoneNumber ? ` — ${courtPhoneNumber}` : ''}. Address, contact details, and how to request a TDLR-approved driving safety course to dismiss a ticket at this court, plus the 90-day deadline and what to submit.`;
+
+// GovernmentOffice node so the court's phone and address can surface directly in
+// results. Rendered for every court, not just the ones with custom instructions.
+const courtOfficeSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'GovernmentOffice',
+  name: courtFullName,
+  ...(courtPhoneNumber ? { telephone: courtPhoneNumber } : {}),
+  ...(court.email?.[0] ? { email: court.email[0] } : {}),
+  ...(court.website?.[0] ? { url: court.website[0] } : {}),
+  address: {
+    '@type': 'PostalAddress',
+    ...(courtStreet ? { streetAddress: courtStreet } : {}),
+    addressLocality: courtCityName,
+    addressRegion: 'TX',
+    ...(courtZip ? { postalCode: courtZip } : {}),
+    addressCountry: 'US',
+  },
+  areaServed: { '@type': 'AdministrativeArea', name: `${court.county} County, Texas` },
+  isAccessibleForFree: true,
+  mainEntityOfPage: `https://roadreadysafety.com/texas/courts/${court.slug}`,
+});
 ---
 
 {!isEnabled && <meta http-equiv="refresh" content="0;url=/" />}
 
 {isEnabled && (
 <TexasLayout
-  title={isEnhanced && courtSeoData[court.slug]
-    ? courtSeoData[court.slug].title
-    : `${court.county} County ${court.courtType} Court — ${court.courtName} | Driver Safety Course`}
+  title={courtPageTitle}
   description={isEnhanced && courtSeoData[court.slug]
     ? courtSeoData[court.slug].description
-    : `${court.courtName} in ${court.county} County — we don't have this court's specific driver safety course steps yet; call the court clerk to confirm the fee and deadline. Plus how a $28 TDLR-approved course and same-day certificate work.`}
-  keywords={`${court.courtName}, ${court.county} County, Texas driver safety course, defensive driving, traffic school`}
+    : courtFallbackDescription}
+  keywords={`${courtFullName}, ${courtShortName}, ${court.courtName} ${court.courtType} court phone, ${court.county} County Texas court, defensive driving ${courtCityName}, driving safety course`}
   url={`/texas/courts/${court.slug}`}
 >
+
+  <script type="application/ld+json" set:html={courtOfficeSchema} />
 
   {isEnhanced && (() => {
     const addr = court.address?.[0] ?? '';
@@ -6427,10 +6476,17 @@ function joinOrNA(arr: string[] | undefined) {
           <span class="text-sm font-semibold text-primary">Driver Safety Course Information</span>
         </div>
         <h1 class="text-[40px] lg:text-[48px] font-bold text-text-body leading-[52px] lg:leading-[60px] text-center w-full">
-          {court.county} County<br />
-          {court.courtType} Court<br />
-          {court.courtName}
+          {courtFullName}
         </h1>
+        <p class="text-base text-text-subtle text-center">
+          {courtCityName}, {court.county} County, Texas
+          {courtPhoneNumber && (
+            <>
+              <span class="mx-1.5" aria-hidden="true">·</span>
+              <a href={`tel:${courtPhoneNumber.replace(/[^0-9+]/g, '')}`} class="text-primary-deep font-medium hover:underline">{courtPhoneNumber}</a>
+            </>
+          )}
+        </p>
         <p class="text-lg text-text-body leading-7 text-center max-w-3xl">
           Use this page to see how your court handles Texas Defensive Driving Courses (Driver's Safety Course). Always follow your court's instructions if they differ from what is listed here.
         </p>
@@ -142299,6 +142355,20 @@ function joinOrNA(arr: string[] | undefined) {
         </div>
 
       </div><!-- /two col -->
+
+      <div class="max-w-[880px] mx-auto w-full px-4 sm:px-0">
+        <YouTubeCard id="lKhv6FiHoIk" blurb="How to ask a Texas court for the course, and what to send with the request." />
+      </div>
+
+      <div class="max-w-[880px] mx-auto w-full px-4 sm:px-0">
+        <NextStepBlock
+          page={`court-${court.slug}`}
+          lead="precourt"
+          ineligibleNote={`Not sure this is the right court? Every Texas municipal and justice court is in our directory, searchable by city and county.`}
+          ineligibleHref="/texas/courts"
+          ineligibleLabel="Find your court"
+        />
+      </div>
     </div>
   </section>
 

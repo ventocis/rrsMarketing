@@ -37,6 +37,23 @@ const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
           </p>
         </div>
 
+        <!-- Which court has my ticket? The step the search box assumes you already did. -->
+        <div class="rrs-which bg-white border border-border rounded-2xl p-5 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-base font-bold text-text mb-1" style="font-family: 'Outfit', sans-serif;">Not sure which court has your ticket?</p>
+          <p class="text-sm text-text-body mb-4">Texas has about 1,700 of them, and the search below assumes you already know the name. Who wrote the ticket tells you where it went.</p>
+          <div class="flex flex-col sm:flex-row gap-3">
+            <button type="button" data-who="city" class="rrs-which-btn flex-1 text-left px-4 py-3 rounded-xl border border-border hover:border-primary-deep transition-colors bg-white">
+              <span class="block text-sm font-semibold text-text">A city police officer</span>
+              <span class="block text-xs text-text-subtle mt-0.5">Marked Police, PD, or a city name</span>
+            </button>
+            <button type="button" data-who="county" class="rrs-which-btn flex-1 text-left px-4 py-3 rounded-xl border border-border hover:border-primary-deep transition-colors bg-white">
+              <span class="block text-sm font-semibold text-text">A sheriff's deputy or DPS trooper</span>
+              <span class="block text-xs text-text-subtle mt-0.5">Marked Sheriff, DPS, or Highway Patrol</span>
+            </button>
+          </div>
+          <div class="rrs-which-out mt-4 text-sm text-text-body leading-6" hidden></div>
+        </div>
+
         <!-- Courts Filter & Listing -->
         <TexasCourtsFilter courts={courtsData.courts} client:load />
 
@@ -44,3 +61,39 @@ const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
     </section>
   </TexasLayout>
 )}
+
+<script is:inline>
+  (function () {
+    var ANSWERS = {
+      city:
+        '<div class="rounded-xl bg-surface-muted border border-border p-4">' +
+        '<p class="font-semibold text-text mb-1">Your ticket is in a <strong>municipal court</strong> — the one for that specific city.</p>' +
+        '<p>City officers file in the city\'s own court, so search the <strong>city name</strong> below, not the county. A ticket written in Lakeway goes to Lakeway Municipal Court even though Lakeway sits in Travis County.</p>' +
+        '<p class="mt-2"><a href="/texas/municipal-vs-jp-court" class="text-primary-deep font-medium hover:underline">Municipal vs JP courts, and why sending paperwork to the wrong one gets it rejected →</a></p>' +
+        '</div>',
+      county:
+        '<div class="rounded-xl bg-surface-muted border border-border p-4">' +
+        '<p class="font-semibold text-text mb-1">Your ticket is in a <strong>justice of the peace court</strong> — a numbered precinct in that county.</p>' +
+        '<p>Sheriffs and DPS troopers file with the JP precinct covering where they stopped you, so search the <strong>county name</strong> below and look for the precinct on your citation. The county courthouse is usually a different building from the JP office.</p>' +
+        '<p class="mt-2"><a href="/texas/municipal-vs-jp-court" class="text-primary-deep font-medium hover:underline">Municipal vs JP courts, and why sending paperwork to the wrong one gets it rejected →</a></p>' +
+        '</div>'
+    };
+    function init() {
+      var root = document.querySelector('.rrs-which');
+      if (!root || root.dataset.bound) return;
+      root.dataset.bound = '1';
+      var out = root.querySelector('.rrs-which-out');
+      root.querySelectorAll('.rrs-which-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          root.querySelectorAll('.rrs-which-btn').forEach(function (b) {
+            b.className = 'rrs-which-btn flex-1 text-left px-4 py-3 rounded-xl border transition-colors ' +
+              (b === btn ? 'border-primary-deep bg-surface-muted' : 'border-border hover:border-primary-deep bg-white');
+          });
+          out.innerHTML = ANSWERS[btn.dataset.who];
+          out.hidden = false;
+        });
+      });
+    }
+    if (document.readyState !== 'loading') { init(); } else { document.addEventListener('DOMContentLoaded', init); }
+  })();
+</script>

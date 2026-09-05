@@ -1,5 +1,6 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import YouTubeCard from '../../components/YouTubeCard.astro';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 
@@ -156,6 +157,10 @@ const schema = JSON.stringify({
           <p><strong class="text-text">A dozen courts publish no fee at all.</strong> Alvin, Dickinson, Granbury, Liberty Hill, Marshall, and others on our verified list simply don't post the number — they tell you to call. That's not a red flag; it's just small-court administration. The clerk will quote your citation's exact total in one call.</p>
           <p><strong class="text-text">And mind the payment-method fine print.</strong> Verified quirks that surprise people: several courts take no personal checks (Hutto, Sulphur Springs, Live Oak), some are exact-amount-only (Gatesville), and card payments often add 3–5% (Castle Hills, Balcones Heights, Magnolia). The fee is only annoying once; a bounced payment method can cost the deadline.</p>
         </div>
+
+        <YouTubeCard id="93jfA8YAEOU" blurb="Which fees are the court’s, and which are a provider’s." />
+
+        <p class="text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;"><a href="/texas/ticket-cost-calculator" class="text-primary-deep font-medium hover:underline">See what your court's fee means against a conviction</a> →</p>
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
         <div class="space-y-8 mb-12">

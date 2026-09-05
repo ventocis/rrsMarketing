@@ -12,14 +12,21 @@ const faqs = [
   { q: 'What if I fail the final exam?', a: 'You get unlimited retakes on all unit quizzes. There is no final exam. The goal is learning, not tricking you. Take your time and review the material as needed.' },
   { q: 'Are refunds available?', a: 'Yes! If you\'re not satisfied, you can request a full refund before you complete the course or receive your certificate.' },
 ];
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
 ---
 
 {isEnabled ? (
   <TexasLayout
-    title="Frequently Asked Questions — Texas Defensive Driving"
-    description="Everything you need to know about our Texas defensive driving course. Pricing, certificates, court acceptance, and more."
+    title="Texas Defensive Driving FAQ: Cost, Certificate, Courts & Deadlines"
+    description="Answers on the Texas defensive driving course: what $28 covers, when your certificate arrives, which courts accept it, how long you have, and how refunds work."
     url="/texas/faq"
   >
+    <script type="application/ld+json" set:html={faqSchema} />
     <section class="py-[112px] px-4 sm:px-6 lg:px-8 bg-surface-muted">
       <div class="max-w-4xl mx-auto flex flex-col gap-12">
 

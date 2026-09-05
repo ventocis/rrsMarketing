@@ -1,0 +1,240 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+import { courtStats as S } from '../../lib/court-stats';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    q: 'How many Texas courts still refuse emailed defensive driving requests?',
+    a: `${S.email.no} of the ${S.email.known.toLocaleString()} courts where we could establish an answer — ${S.email.pctNo}% — do not accept a defensive driving request by email. Texas law has expressly permitted court-authorized email and online-portal requests since September 1, 2025 (Code of Criminal Procedure art. 45A.352(a)(4)), but permission is not obligation: each court decides, and most have not moved.`,
+  },
+  {
+    q: 'What does a Texas court actually charge to grant defensive driving?',
+    a: `Across the ${S.fee.known} courts where we have a verified figure, the median is $${S.fee.median} and the mean $${S.fee.mean}. ${S.fee.pctExactly144}% charge exactly $144. The range runs from $${S.fee.min} to $${S.fee.max} — the same statutory service, ${Math.round((S.fee.max / S.fee.min - 1) * 100)}% more expensive at one end than the other.`,
+  },
+  {
+    q: 'Why is $144 so common if it is not set by law?',
+    a: `Only $${S.fee.stateFixed} of it is fixed by the state: a $62 state consolidated court cost, a $14 local consolidated cost, and a driving-safety-course fee capped at $10. The remaining amount is set locally, and Texas courts have converged on a total of $144 by convention rather than by statute — which is exactly why some courts land well below it and some well above.`,
+  },
+  {
+    q: 'Do all Texas courts require the Type 3A driving record?',
+    a: `No. We found no Type 3A requirement at ${S.type3a.no} of ${S.type3a.known.toLocaleString()} researched courts — ${S.type3a.pctNo}%. That is a $12 DPS order those drivers may not need. It cuts both ways, though: skipping the record where the court does want it is a rejected submission and a missed deadline, so confirm with your court rather than relying on the average.`,
+  },
+  {
+    q: 'How many courts require a notarized affidavit?',
+    a: `${S.notary.yes} of ${S.notary.known.toLocaleString()} — ${S.notary.pctYes}%. Several of those waive notarization if you appear in person instead of mailing the request, which is the cheapest way around a notary if you are near the courthouse.`,
+  },
+  {
+    q: 'Can I use this data?',
+    a: 'Yes. Cite Road Ready Safety and link to this page. If you are a reporter or researcher and want the underlying court-level detail, the individual court pages carry it, and you can contact us for the dataset.',
+  },
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'The Texas Traffic Ticket Report 2026: What 1,742 Courts Actually Do',
+  description: `An original study of every Texas municipal and justice court. ${S.email.pctNo}% still refuse emailed defensive driving requests a year after the law authorized them; the court fee ranges from $${S.fee.min} to $${S.fee.max} for the same service.`,
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-09-04',
+  dateModified: '2026-09-04',
+  mainEntityOfPage: `${siteUrl}/texas/traffic-ticket-report`,
+});
+const datasetSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Dataset',
+  name: 'Texas Traffic Ticket Report 2026 — court procedure dataset',
+  description: `Defensive driving request procedures, fees, accepted submission methods and document requirements for Texas municipal and justice courts. ${S.researched} of ${S.totalCourts} courts researched across ${S.counties} counties.`,
+  url: `${siteUrl}/texas/traffic-ticket-report`,
+  creator: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  spatialCoverage: { '@type': 'State', name: 'Texas' },
+  temporalCoverage: '2026',
+  license: 'https://creativecommons.org/licenses/by/4.0/',
+  isAccessibleForFree: true,
+});
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+const breadcrumbSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Texas defensive driving', item: `${siteUrl}/texas` },
+    { '@type': 'ListItem', position: 2, name: 'Texas Traffic Ticket Report', item: `${siteUrl}/texas/traffic-ticket-report` },
+  ],
+});
+
+const spread = Math.round((S.fee.max / S.fee.min - 1) * 100);
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title={`The Texas Traffic Ticket Report 2026: ${S.email.pctNo}% of Courts Still Won't Take Email`}
+    description={`An original study of Texas's ${S.totalCourts} municipal and justice courts. A year after the law authorized emailed defensive driving requests, ${S.email.pctNo}% of courts still refuse them — and the fee for the same service ranges from $${S.fee.min} to $${S.fee.max}.`}
+    keywords="texas traffic ticket statistics, texas court defensive driving fees, texas courts email requests, texas municipal court data, texas traffic ticket report"
+    url="/texas/traffic-ticket-report"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={datasetSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+    <script type="application/ld+json" set:html={breadcrumbSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Texas Traffic Ticket Report</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-4" style="font-family: 'Outfit', sans-serif;">
+          The Texas Traffic Ticket Report 2026
+        </h1>
+        <p class="text-lg text-text-body leading-8 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          What {S.totalCourts.toLocaleString()} Texas courts actually do when you ask to dismiss a ticket — and how little they agree.
+        </p>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-px bg-border border border-border rounded-xl overflow-hidden mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <div class="bg-white p-4">
+            <p class="text-2xl font-bold text-primary-deep" style="font-family: 'Outfit', sans-serif;">{S.email.pctNo}%</p>
+            <p class="text-xs text-text-body leading-5 mt-1">of courts still refuse emailed requests</p>
+          </div>
+          <div class="bg-white p-4">
+            <p class="text-2xl font-bold text-primary-deep" style="font-family: 'Outfit', sans-serif;">${S.fee.min}–${S.fee.max}</p>
+            <p class="text-xs text-text-body leading-5 mt-1">the fee range for the same service</p>
+          </div>
+          <div class="bg-white p-4">
+            <p class="text-2xl font-bold text-primary-deep" style="font-family: 'Outfit', sans-serif;">{S.type3a.pctNo}%</p>
+            <p class="text-xs text-text-body leading-5 mt-1">don't ask for the Type 3A record</p>
+          </div>
+          <div class="bg-white p-4">
+            <p class="text-2xl font-bold text-primary-deep" style="font-family: 'Outfit', sans-serif;">{S.notary.pctYes}%</p>
+            <p class="text-xs text-text-body leading-5 mt-1">still want a notarized affidavit</p>
+          </div>
+        </div>
+
+        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
+          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">
+            <strong class="text-text">Method.</strong> We maintain a directory of all {S.totalCourts.toLocaleString()} Texas municipal and justice of the peace courts across {S.counties} counties. Procedure has been researched for {S.researched.toLocaleString()} of them ({S.researchedPct}%), and fees verified at {S.fee.known}. Every rate below is stated against the number of courts where the answer is actually known, not against all {S.totalCourts.toLocaleString()} — the denominators are printed with each finding.
+          </p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Finding 1: the law changed, the courts mostly didn't</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <p>Senate Bill 296 took effect on September 1, 2025, adding email and online-portal requests to the methods a Texas court may accept for a driving safety course (Code Crim. Proc. art. 45A.352(a)(4)). A year on, <strong class="text-text">{S.email.no} of the {S.email.known.toLocaleString()} courts where we could establish an answer — {S.email.pctNo}% — still will not take one by email.</strong></p>
+          <p>The statute permits; it does not compel. Each court chooses, and the practical result is that the modern option exists on paper while in-person and mail remain the near-universal reality.</p>
+        </div>
+
+        <div class="overflow-x-auto mb-2 -mx-4 sm:mx-0 px-4 sm:px-0">
+          <table class="w-full min-w-[420px] text-sm border border-border rounded-xl overflow-hidden" style="font-family: 'DM Sans', sans-serif;">
+            <thead>
+              <tr class="bg-surface-muted text-left">
+                <th class="px-4 py-3 font-semibold text-text border-b border-border">How you may submit</th>
+                <th class="px-4 py-3 font-semibold text-text border-b border-border text-right">Courts</th>
+                <th class="px-4 py-3 font-semibold text-text border-b border-border text-right">Share</th>
+              </tr>
+            </thead>
+            <tbody>
+              {S.methods.rows.map(r => (
+                <tr class="border-b border-border last:border-0">
+                  <td class="px-4 py-2.5 text-text">{r.method}</td>
+                  <td class="px-4 py-2.5 text-text-body text-right tabular-nums">{r.count}</td>
+                  <td class="px-4 py-2.5 text-right">
+                    <span class="inline-flex items-center gap-2 justify-end w-full">
+                      <span class="hidden sm:block h-2 rounded-full bg-primary-deep/70" style={`width:${Math.max(r.pct, 2)}px`}></span>
+                      <span class="text-text-body tabular-nums">{r.pct}%</span>
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p class="text-xs text-text-subtle mb-10" style="font-family: 'DM Sans', sans-serif;">Base: the {S.methods.known} courts publishing at least one accepted method. Courts accept more than one, so shares sum above 100%. Email appears here at a lower count than the {S.email.yes} courts recorded above as accepting email, because this table counts only courts that name it in a published list of methods — a narrower and separately collected field.</p>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Finding 2: $144 is a habit, not a law</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <p>Ask what a Texas court charges to grant defensive driving and you will be told $144. Across the {S.fee.known} courts where we have a verified figure, that is right more often than not — <strong class="text-text">{S.fee.pctExactly144}% charge exactly $144</strong>, and the median is ${S.fee.median}. But only <strong class="text-text">${S.fee.stateFixed} of it is fixed by the state</strong>: $62 state consolidated court cost, $14 local consolidated cost, and a driving-safety-course fee capped at $10. Everything above that is set locally.</p>
+          <p>Which is why the tails exist. {S.fee.below} courts charge less than $144 and {S.fee.above} charge more, and the full range runs <strong class="text-text">${S.fee.min} to ${S.fee.max}</strong> — the identical statutory service costing {spread}% more at one end than the other, decided by which side of a county line you were driving on.</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
+          <div class="border border-border rounded-xl overflow-hidden">
+            <p class="bg-surface-muted px-4 py-2.5 text-sm font-semibold text-text border-b border-border" style="font-family: 'Outfit', sans-serif;">Lowest verified fees</p>
+            <ul class="divide-y divide-border" style="font-family: 'DM Sans', sans-serif;">
+              {S.fee.cheapest.map(c => (
+                <li class="flex justify-between gap-3 px-4 py-2.5 text-sm">
+                  <a href={`/texas/courts/${c.slug}`} class="text-primary-deep hover:underline">{c.court}</a>
+                  <span class="font-semibold text-text tabular-nums">${c.fee}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div class="border border-border rounded-xl overflow-hidden">
+            <p class="bg-surface-muted px-4 py-2.5 text-sm font-semibold text-text border-b border-border" style="font-family: 'Outfit', sans-serif;">Highest verified fees</p>
+            <ul class="divide-y divide-border" style="font-family: 'DM Sans', sans-serif;">
+              {S.fee.priciest.map(c => (
+                <li class="flex justify-between gap-3 px-4 py-2.5 text-sm">
+                  <a href={`/texas/courts/${c.slug}`} class="text-primary-deep hover:underline">{c.court}</a>
+                  <span class="font-semibold text-text tabular-nums">${c.fee}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Finding 3: a third of courts never asked for the $12 record</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>The Type 3A certified driving record from DPS costs $12 and is treated across the internet as a universal requirement of Texas ticket dismissal. It isn't. We found <strong class="text-text">no Type 3A requirement at {S.type3a.no} of {S.type3a.known.toLocaleString()} researched courts — {S.type3a.pctNo}%</strong>.</p>
+          <p>We are not telling anyone to skip it. The asymmetry matters: ordering a record your court did not want costs $12, while omitting one it did want costs you a rejected submission against a 90-day clock. But it is worth knowing that the requirement is a court's choice, and worth asking, because roughly a third of the time the answer is no. Our <a href="/texas/courts" class="text-primary-deep font-medium hover:underline">court directory</a> lists what each researched court requires.</p>
+          <p>The notary is the same shape of problem, smaller: <strong class="text-text">{S.notary.yes} of {S.notary.known.toLocaleString()} courts ({S.notary.pctYes}%) demand a notarized affidavit</strong> with a mailed request. Several waive it if you appear in person — which is, for anyone near the courthouse, the cheapest notary in Texas.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What it adds up to</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Texas gives every driver the same statutory right to dismiss an eligible ticket with a driving safety course. What it does not give them is the same process. Depending on which of {S.totalCourts.toLocaleString()} courts holds your citation, that right costs between ${S.fee.min} and ${S.fee.max}, may or may not require a $12 state record, may or may not require a notary, and — {S.email.pctNo}% of the time — cannot be exercised by email at all.</p>
+          <p>None of that is visible from the citation in your hand. It is the reason we built a page for every court instead of one page about courts in general.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;">{item.a}</p>
+            </div>
+          ))}
+        </div>
+
+        <div class="border border-border rounded-xl p-5 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">Citing this report</p>
+          <p class="text-sm text-text-body leading-6">Free to quote and republish with attribution. Suggested citation: <em>Road Ready Safety, "The Texas Traffic Ticket Report 2026," roadreadysafety.com/texas/traffic-ticket-report.</em> Journalists and researchers wanting the court-level dataset can <a href="/texas/contactus" class="text-primary-deep font-medium hover:underline">get in touch</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Find what your own court does</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>Averages are for reports. What binds you is one court's rules. Look yours up, then take the course — ours is <strong class="text-text">$28 all-in</strong>, with both certificate copies in the free instant download.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a href="/texas/courts" class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline" style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);">Find your court →</a>
+          <a href={enrollUrl} class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors" style="font-family: 'DM Sans', sans-serif;">Start the $28 Course</a>
+        </div>
+
+        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This report is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Published September 4, 2026. Figures are computed directly from our court dataset at build time. Statutory references: Tex. Code Crim. Proc. arts. 45A.351–.359 (incl. S.B. 296, effective September 1, 2025); court-cost structure from the Office of Court Administration cost charts for offenses on or after January 1, 2020. Court procedures change; each figure is a snapshot of what courts published when we researched them.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

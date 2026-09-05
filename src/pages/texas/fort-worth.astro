@@ -1,5 +1,6 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import YouTubeCard from '../../components/YouTubeCard.astro';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
@@ -238,6 +239,8 @@ const faqSchema = JSON.stringify({
         <div class="space-y-4 text-text-body text-base leading-7 mb-10 mt-4" style="font-family: 'DM Sans', sans-serif;">
           <p>Don't see your court? Search every Texas court in our <a href="/texas/courts" class="text-primary-deep font-medium hover:underline">court directory</a>.</p>
         </div>
+
+        <YouTubeCard id="GDdhttCVEkY" blurb="The four steps, the same at every Texas court." />
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
         <div class="space-y-8 mb-12">

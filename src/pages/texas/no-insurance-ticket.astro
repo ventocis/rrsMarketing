@@ -1,5 +1,6 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import YouTubeCard from '../../components/YouTubeCard.astro';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 
@@ -53,7 +54,7 @@ const faqSchema = JSON.stringify({
 
 {isEnabled ? (
   <TexasLayout
-    title="No Insurance Ticket in Texas: Defensive Driving Won't Fix It — But This Statute Might (2026)"
+    title="Can a No-Insurance Ticket Be Dismissed in Texas? Yes, If You Act Fast"
     description="A Texas no-insurance (FMFR) ticket can't be dismissed with defensive driving — but if you actually had coverage on the day, the court SHALL dismiss it on proof. The mandatory dismissal, the surcharge history, and what to do if you were truly uninsured."
     keywords="no insurance ticket texas, fmfr ticket texas, failure to maintain financial responsibility texas, dismiss no insurance ticket, show proof of insurance court texas"
     url="/texas/no-insurance-ticket"
@@ -96,6 +97,8 @@ const faqSchema = JSON.stringify({
           <p>A first FMFR conviction carries a fine of $175 to $350, and repeat offenses run higher with possible license-and-registration consequences. The old $250-a-year-for-three-years surcharge died with the Driver Responsibility Program in 2019 — and no statutory replacement fine attaches to a no-insurance conviction today. The lasting cost is the conviction itself: insurers treat it as a major rating event.</p>
           <p>Your realistic options: ask the court about <a href="/texas/deferred-disposition" class="text-primary-deep font-medium hover:underline">deferred disposition</a> — FMFR is a fine-only misdemeanor and deferred has no subtitle restriction, so judges can and often do grant it, frequently with a condition that you obtain and keep insurance; get insured immediately (it strengthens every conversation with the court); or negotiate. What you shouldn't do is take a defensive driving course expecting it to help this charge — it can't, and you'll have spent six hours fixing the wrong problem.</p>
         </div>
+
+        <YouTubeCard id="LfEKvzl7_W8" blurb="When the course is off the table, these are the routes left." />
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
         <div class="space-y-8 mb-12">

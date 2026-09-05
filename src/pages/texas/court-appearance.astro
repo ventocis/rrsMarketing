@@ -1,5 +1,6 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import YouTubeCard from '../../components/YouTubeCard.astro';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 
@@ -53,7 +54,7 @@ const faqSchema = JSON.stringify({
 
 {isEnabled ? (
   <TexasLayout
-    title="Do You Have to Go to Court for a Traffic Ticket in Texas? Usually Not — Here's Who Does (2026)"
+    title="Do You Have to Go to Court for a Texas Traffic Ticket? Usually Not"
     description="Most Texas traffic tickets never require setting foot in a courtroom — the 'appearance' can be written, mailed, or online. Who actually must show up (minors, some courts, some situations), and how to resolve a ticket from your kitchen table."
     keywords="do i have to go to court for a speeding ticket texas, court appearance traffic ticket texas, appear in court ticket texas, resolve ticket by mail texas, traffic court texas"
     url="/texas/court-appearance"
@@ -102,6 +103,8 @@ const faqSchema = JSON.stringify({
         <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
           <p>Ignoring the ticket. Do nothing by the answer date and the optional-appearance world ends: a failure-to-appear charge, a possible warrant, an OmniBase renewal hold — and now courts genuinely do want you in the building, sometimes via a <a href="/texas/missed-court-date" class="text-primary-deep font-medium hover:underline">safe-harbor visit</a> to clear a warrant. The single response that preserves the resolve-from-home world is any timely response at all. Sixty seconds of email beats every consequence on this list.</p>
         </div>
+
+        <YouTubeCard id="lKhv6FiHoIk" blurb="Resolving a ticket in writing, without a courtroom." />
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
         <div class="space-y-8 mb-12">

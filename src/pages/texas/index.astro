@@ -1,8 +1,13 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
-import YouTubeCard from '../../components/YouTubeCard.astro';
+import SalesVideo from '../../components/SalesVideo.astro';
 
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+
+// The 60-second sales video. Off unless explicitly enabled, so it can be
+// reviewed on QA first and killed with a one-line env change rather than a
+// code revert. See docs/texas-sales-video.md.
+const salesVideoEnabled = import.meta.env.VITE_TEXAS_SALES_VIDEO === 'true';
 
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '#';
 const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
@@ -245,6 +250,10 @@ const landingFaqSchema = JSON.stringify({
     </div>
   </section>
 
+  <!-- 60-second sales video. Sits between the promise (hero) and the buy box
+       (pricing) because that is where the "why you and not the cheaper one"
+       objection lives. Flag-gated; see docs/texas-sales-video.md. -->
+  {salesVideoEnabled && <SalesVideo enrollUrl={enrollUrl} price="28" />}
 
   <!-- Course Info + Pricing Card -->
   <section id="pricing" class="py-16 lg:py-[112px] bg-white">
@@ -344,8 +353,6 @@ const landingFaqSchema = JSON.stringify({
           Everything you need to know about the Texas defensive driving process
         </p>
       </div>
-
-      <YouTubeCard id="WVJ0ORmWv1Q" blurb="A look inside the six hours before you sign up." />
 
       <!-- Accordion Items -->
       <div class="flex flex-col gap-4">

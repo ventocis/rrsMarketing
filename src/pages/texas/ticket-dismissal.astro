@@ -1,5 +1,6 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import { courtStats as S } from '../../lib/court-stats';
 import YouTubeCard from '../../components/YouTubeCard.astro';
 import NextStepBlock from '../../components/texas/NextStepBlock.astro';
 import { alternatesFor, translationsOf, langLabel } from '../../lib/i18n';
@@ -26,7 +27,7 @@ const steps = [
   },
   {
     name: 'Give the court what it requires and pay its fee',
-    text: 'Typically proof of a valid Texas driver\'s license, proof of insurance, and your Type 3A certified driving record from Texas DPS ($12 online). The court charges its own fee when it grants the course, $109 to $169 in our verified data, most commonly $144.',
+    text: `Typically proof of a valid Texas driver's license, proof of insurance, and your Type 3A certified driving record from Texas DPS ($12 online). The court charges its own fee when it grants the course, $${S.fee.min} to $${S.fee.max} in our verified data, most commonly $144.`,
   },
   {
     name: 'Complete a TDLR-approved 6-hour course within 90 days',
@@ -57,7 +58,7 @@ const faqs = [
   },
   {
     q: 'How much does it cost to get a ticket dismissed in Texas?',
-    a: 'Three costs: the court\'s fee ($109 to $169 in our verified court data, commonly $144; $169 for school-zone violations at many courts), the course (at least $25 by law; $28 with the certificate included at Road Ready Safety), and the $12 Type 3A driving record if the court makes you order it yourself. Roughly $150 to $210 total, against a fine that is usually higher plus the insurance impact of a conviction.',
+    a: `Three costs: the court's fee ($${S.fee.min} to $${S.fee.max} in our verified court data, commonly $144; $169 for school-zone violations at many courts), the course (at least $25 by law; $28 with the certificate included at Road Ready Safety), and the $12 Type 3A driving record if the court makes you order it yourself. Roughly $150 to $210 total, against a fine that is usually higher plus the insurance impact of a conviction.`,
   },
   {
     q: 'How long do you have to complete defensive driving in Texas?',
@@ -81,7 +82,7 @@ const articleSchema = JSON.stringify({
   author: { '@type': 'Organization', name: 'Road Ready Safety' },
   publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
   datePublished: '2026-09-02',
-  dateModified: '2026-09-02',
+  dateModified: '2026-09-06',
   mainEntityOfPage: `${siteUrl}/texas/ticket-dismissal`,
 });
 
@@ -105,7 +106,7 @@ const howToSchema = JSON.stringify({
 {isEnabled ? (
   <TexasLayout
     title="Texas Defensive Driving Course for Ticket Dismissal: Who Qualifies, the 5 Steps, Deadlines & Cost (2026)"
-    description="How a TDLR-approved driving safety course dismisses a Texas traffic ticket: eligibility under CCP chapter 45A, the five steps in order, the 90-day deadline, court fees of $109 to $169, which tickets are excluded, and how individual courts handle it."
+    description={`How a TDLR-approved driving safety course dismisses a Texas traffic ticket: eligibility under CCP chapter 45A, the five steps in order, the 90-day deadline, court fees of $${S.fee.min} to $${S.fee.max}, which tickets are excluded, and how individual courts handle it.`}
     keywords="texas defensive driving course for ticket dismissal, ticket dismissal texas, how to get a ticket dismissed in texas, can defensive driving dismiss a ticket in texas, texas ticket dismissal requirements, dismiss ticket texas online, driving safety course ticket dismissal"
     url="/texas/ticket-dismissal"
     alternates={alternates}
@@ -194,7 +195,7 @@ const howToSchema = JSON.stringify({
         <div class="space-y-4 text-text-body text-base leading-7 mb-6" style="font-family: 'DM Sans', sans-serif;">
           <p>Roughly <strong class="text-text">$150 to $210</strong>, in three parts:</p>
           <ul class="list-disc pl-6 space-y-2">
-            <li><strong class="text-text">The court's fee.</strong> Set locally when the course is granted. Across the courts we have verified, <a href="/texas/dsc-fees-by-court" class="text-primary-deep font-medium hover:underline">$109 to $169</a>, most commonly $144, with $169 typical for school-zone violations. <a href="/texas/court-costs" class="text-primary-deep font-medium hover:underline">Where that money goes</a>.</li>
+            <li><strong class="text-text">The court's fee.</strong> Set locally when the course is granted. Across the courts we have verified, <a href="/texas/dsc-fees-by-court" class="text-primary-deep font-medium hover:underline">${S.fee.min} to ${S.fee.max}</a>, most commonly $144, with $169 typical for school-zone violations. <a href="/texas/court-costs" class="text-primary-deep font-medium hover:underline">Where that money goes</a>.</li>
             <li><strong class="text-text">The course.</strong> At least $25 by law (Tex. Educ. Code §1001.352, as amended by HB 3012 effective September 1, 2025). Road Ready Safety is $28 with the instant certificate included; before paying for any course, check whether certificate delivery is a separate charge.</li>
             <li><strong class="text-text">The Type 3A driving record</strong>, $12 online from DPS, if the court makes you order it yourself. <a href="/texas/type-3a-driving-record" class="text-primary-deep font-medium hover:underline">How to order it without the mix-ups</a>.</li>
           </ul>
@@ -213,7 +214,8 @@ const howToSchema = JSON.stringify({
             <li><strong class="text-text">Notarized affidavit courts.</strong> A minority of courts require a sworn statement with the certificate. Our <a href="/texas/notarized-affidavit" class="text-primary-deep font-medium hover:underline">verified list</a> tells you whether yours is one before you show up without it.</li>
             <li><strong class="text-text">Municipal versus JP.</strong> A city police ticket goes to municipal court; a sheriff or DPS ticket usually goes to a justice of the peace court. They use different forms and fees. <a href="/texas/municipal-vs-jp-court" class="text-primary-deep font-medium hover:underline">How to tell which one has your case</a>.</li>
           </ul>
-          <p>Find your court's fee, deadline, forms and request method in the <a href="/texas/courts" class="text-primary-deep font-medium hover:underline">court directory</a>, or start from the metro guides for <a href="/texas/houston" class="text-primary-deep font-medium hover:underline">Houston</a>, <a href="/texas/dallas" class="text-primary-deep font-medium hover:underline">Dallas</a>, <a href="/texas/fort-worth" class="text-primary-deep font-medium hover:underline">Fort Worth</a>, <a href="/texas/san-antonio" class="text-primary-deep font-medium hover:underline">San Antonio</a> <a href="/texas/austin" class="text-primary-deep font-medium hover:underline">Austin</a> and <a href="/texas/tyler" class="text-primary-deep font-medium hover:underline">Tyler</a>.</p>
+          <p>Find your court's fee, deadline, forms and request method in the <a href="/texas/courts" class="text-primary-deep font-medium hover:underline">court directory</a>, or start from the metro guides for <a href="/texas/houston" class="text-primary-deep font-medium hover:underline">Houston</a>, <a href="/texas/dallas" class="text-primary-deep font-medium hover:underline">Dallas</a>, <a href="/texas/fort-worth" class="text-primary-deep font-medium hover:underline">Fort Worth</a>, <a href="/texas/san-antonio" class="text-primary-deep font-medium hover:underline">San Antonio</a>, <a href="/texas/austin" class="text-primary-deep font-medium hover:underline">Austin</a> and <a href="/texas/tyler" class="text-primary-deep font-medium hover:underline">Tyler</a>.</p>
+          <p>Guides by ticket type: <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">speeding</a>, <a href="/texas/speeding-25-over" class="text-primary-deep font-medium hover:underline">25+ mph over</a>, <a href="/texas/red-light-ticket" class="text-primary-deep font-medium hover:underline">red light</a>, <a href="/texas/stop-sign-ticket" class="text-primary-deep font-medium hover:underline">stop sign</a>, <a href="/texas/cell-phone-ticket" class="text-primary-deep font-medium hover:underline">cell phone</a>, <a href="/texas/seat-belt-ticket" class="text-primary-deep font-medium hover:underline">seat belt</a>, <a href="/texas/child-seat-ticket" class="text-primary-deep font-medium hover:underline">child seat</a>, <a href="/texas/school-zone-ticket" class="text-primary-deep font-medium hover:underline">school zone</a>, <a href="/texas/construction-zone-ticket" class="text-primary-deep font-medium hover:underline">construction zone</a>, <a href="/texas/no-insurance-ticket" class="text-primary-deep font-medium hover:underline">no insurance</a>, <a href="/texas/expired-registration-ticket" class="text-primary-deep font-medium hover:underline">expired registration</a>, <a href="/texas/expired-license-ticket" class="text-primary-deep font-medium hover:underline">expired license</a>, <a href="/texas/equipment-violation-ticket" class="text-primary-deep font-medium hover:underline">equipment</a>, <a href="/texas/motorcycle-ticket" class="text-primary-deep font-medium hover:underline">motorcycle</a>, <a href="/texas/cdl-defensive-driving" class="text-primary-deep font-medium hover:underline">CDL</a>, <a href="/texas/under-25-ticket" class="text-primary-deep font-medium hover:underline">under 25</a>, <a href="/texas/minor-traffic-ticket" class="text-primary-deep font-medium hover:underline">minors</a>, <a href="/texas/out-of-state-driver" class="text-primary-deep font-medium hover:underline">out-of-state drivers</a>, and <a href="/texas/multiple-tickets" class="text-primary-deep font-medium hover:underline">more than one ticket from the same stop</a>. Not sure whether you have to show up in person? See <a href="/texas/court-appearance" class="text-primary-deep font-medium hover:underline">whether a court appearance is required</a>. For the statewide numbers behind all of this, read the <a href="/texas/traffic-ticket-report" class="text-primary-deep font-medium hover:underline">Texas Traffic Ticket Report</a>.</p>
         </div>
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Ticket dismissal vs deferred disposition vs paying: which should you pick?</h2>
@@ -267,7 +269,7 @@ const howToSchema = JSON.stringify({
 
         <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
           <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
-          <p class="text-xs text-text-subtle">Last updated September 2, 2026. Eligibility, exclusions, the 90-day window and the record protection per Tex. Code Crim. Proc. arts. 45A.351 to 45A.359 (recodified from art. 45.0511 effective Jan. 1, 2025) and S.B. 296 (eff. Sept. 1, 2025); CDL exclusion per 49 CFR 384.226 and art. 45A.351(c); course minimum per Tex. Educ. Code §1001.352 as amended by HB 3012 (eff. Sept. 1, 2025); Type 3A record per Texas DPS; court fee and deadline ranges from our verified court dataset, last refreshed August 2026.</p>
+          <p class="text-xs text-text-subtle">Last updated September 6, 2026. Eligibility, exclusions, the 90-day window and the record protection per Tex. Code Crim. Proc. arts. 45A.351 to 45A.359 (recodified from art. 45.0511 effective Jan. 1, 2025) and S.B. 296 (eff. Sept. 1, 2025); CDL exclusion per 49 CFR 384.226 and art. 45A.351(c); course minimum per Tex. Educ. Code §1001.352 as amended by HB 3012 (eff. Sept. 1, 2025); Type 3A record per Texas DPS; court fee and deadline ranges from our verified court dataset, last refreshed August 2026.</p>
         </div>
 
       </div>

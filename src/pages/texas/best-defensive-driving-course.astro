@@ -36,14 +36,6 @@ const articleSchema = JSON.stringify({
   author: { '@type': 'Organization', name: 'Road Ready Safety' },
   publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
 });
-const courseSchema = JSON.stringify({
-  '@context': 'https://schema.org',
-  '@type': 'Course',
-  name: 'Texas Defensive Driving Course (Driver Safety Course)',
-  description: 'TDLR-approved 6-hour online Texas defensive driving course for traffic ticket dismissal and insurance discounts. Free instant certificate download.',
-  provider: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
-  offers: { '@type': 'Offer', price: '28.00', priceCurrency: 'USD', url: `${siteUrl}/courses/tx-defensive` },
-});
 const faqSchema = JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
@@ -58,7 +50,6 @@ const faqSchema = JSON.stringify({
     url="/texas/best-defensive-driving-course"
   >
     <script type="application/ld+json" set:html={articleSchema} />
-    <script type="application/ld+json" set:html={courseSchema} />
     <script type="application/ld+json" set:html={faqSchema} />
 
     <article class="bg-white pb-16 lg:pb-24">

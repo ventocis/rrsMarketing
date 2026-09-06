@@ -1,19 +1,24 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
 import YouTubeCard from '../../components/YouTubeCard.astro';
+import { courtStats as S } from '../../lib/court-stats';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 
 const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
 
-// Verified directly against each court's published fee, June 2026.
+// Verified directly against each court's published fee, June 2026. The lowest fees in the
+// full dataset are computed at build time (src/lib/court-stats.ts) so this table cannot
+// claim a floor the court directory contradicts.
+const lowestVerified = S.fee.cheapest.map(c => ({ court: c.court, fee: `$${c.fee}`, note: 'Among the lowest verified DSC fees in our court directory', slug: c.slug }));
 const feeOutliers = [
-  { court: 'Nacogdoches', fee: '$109 / $134 school zone', note: 'The lowest verified DSC total in Texas', slug: 'nacogdoches-municipal-nacogdoches' },
+  ...lowestVerified,
+  { court: 'Nacogdoches', fee: '$109 / $134 school zone', note: 'One of the lowest verified DSC totals in Texas', slug: 'nacogdoches-municipal-nacogdoches' },
   { court: 'Katy', fee: '$114 / $139 school zone', note: 'One of the lowest verified metro fees', slug: 'harris-municipal-katy' },
   { court: 'Forney', fee: '$134 / $169 school zone', note: 'Includes the $10 administrative fee', slug: 'kaufman-municipal-forney' },
   { court: 'Port Isabel', fee: '$135 (per court form)', note: 'COVID-era form figure — confirm before paying', slug: 'cameron-municipal-port-isabel' },
   { court: 'Lancaster', fee: '$139 for most violations', note: 'Pairs with a strict 20-day request deadline', slug: 'dallas-municipal-lancaster' },
-  { court: 'Statewide convention', fee: '$144 / $169 school zone', note: 'The number ~85% of verified courts charge', slug: '' },
+  { court: 'Statewide convention', fee: '$144 / $169 school zone', note: `The number ${S.fee.pctExactly144}% of verified courts charge`, slug: '' },
 ];
 
 const pre2020 = [
@@ -26,7 +31,7 @@ const pre2020 = [
 const faqs = [
   {
     q: 'How much does the court charge for defensive driving in Texas?',
-    a: 'The overwhelming convention — about 85% of the 200+ courts we\'ve verified — is $144 for standard violations and $169 in a school zone. But it isn\'t a statutory number, and verified outliers run from $109 (Nacogdoches) to $114 (Katy), $134 (Forney), $135 (Port Isabel), and $139 (Lancaster). Your court\'s number is on its website, in our directory, or one call away.',
+    a: `The overwhelming convention — ${S.fee.pctExactly144}% of the ${S.fee.known} courts where we have a verified fee — is $144 for standard violations and $169 in a school zone. But it isn't a statutory number, and verified outliers run from $${S.fee.min} (${S.fee.cheapest[0].court}) through $109 (Nacogdoches), $114 (Katy), $134 (Forney), $135 (Port Isabel), and $139 (Lancaster). Your court's number is on its website, in our directory, or one call away.`,
   },
   {
     q: 'Why do some Texas courts charge less than $144 for defensive driving?',
@@ -55,12 +60,12 @@ const schema = JSON.stringify({
   '@graph': [
     {
       '@type': 'Article',
-      headline: 'Texas Defensive Driving Court Fees Are Not All $144: Verified Outliers from 200+ Courts',
-      description: 'Original research: DSC dismissal fees across verified Texas courts range from $109 to $169 — Nacogdoches, Katy, Forney, Lancaster and the pre-2020 tiers, documented court by court.',
+      headline: `Texas Defensive Driving Court Fees Are Not All $144: Verified Outliers from ${S.fee.known} Courts`,
+      description: `Original research: DSC dismissal fees across verified Texas courts range from $${S.fee.min} to $${S.fee.max} — Nacogdoches, Katy, Forney, Lancaster and the pre-2020 tiers, documented court by court.`,
       author: { '@type': 'Organization', name: 'Road Ready Safety' },
       publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
       datePublished: '2026-06-12',
-      dateModified: '2026-08-04',
+      dateModified: '2026-09-06',
       mainEntityOfPage: `${siteUrl}/texas/dsc-fees-by-court`,
     },
     {
@@ -73,8 +78,8 @@ const schema = JSON.stringify({
 
 {isEnabled ? (
   <TexasLayout
-    title="Texas Defensive Driving Court Fees by Court: $109 to $169, Verified (2026)"
-    description="Original research from 200+ verified Texas courts: the DSC dismissal fee is a $144 convention, not a law — and verified outliers charge $109 (Nacogdoches), $114 (Katy), $134 (Forney), and $139 (Lancaster). The full data."
+    title={`Texas Defensive Driving Court Fees by Court: $${S.fee.min} to $${S.fee.max}, Verified (2026)`}
+    description={`Original research from ${S.fee.known} verified Texas courts: the DSC dismissal fee is a $144 convention, not a law — and verified outliers charge as little as $${S.fee.min}, with $109 (Nacogdoches), $114 (Katy), $134 (Forney), and $139 (Lancaster) among them. The full data.`}
     keywords="defensive driving court fee texas, dsc fee by court, 144 dollar court fee texas, cheapest defensive driving court texas, court costs dismissal texas"
     url="/texas/dsc-fees-by-court"
   >
@@ -96,8 +101,8 @@ const schema = JSON.stringify({
         </h1>
 
         <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
-          <p>Ask what defensive driving costs at a Texas court and you'll hear $144 ($169 in a school zone) — and about 85% of the time that's right. But in verifying fees directly with more than <strong class="text-text">200 Texas courts</strong>, we found a real spread the generic guides never mention: <strong class="text-text">$109 in Nacogdoches, $114 in Katy, $134 in Forney, $139 in Lancaster</strong> — and several courts still publishing pre-2020 tiers for older tickets.</p>
-          <p>The spread exists because the total is court-composed, not statutory (<a href="/texas/court-costs" class="text-primary-deep font-medium hover:underline">the anatomy is here</a>). This page is the data: which verified courts charge what, and what it means for your wallet.</p>
+          <p>Ask what defensive driving costs at a Texas court and you'll hear $144 ($169 in a school zone) — and {S.fee.pctExactly144}% of the time that's right. But in verifying fees directly with <strong class="text-text">{S.fee.known} Texas courts</strong>, we found a real spread the generic guides never mention: <strong class="text-text">as little as ${S.fee.min} at a handful of small courts, $109 in Nacogdoches, $114 in Katy, $134 in Forney, $139 in Lancaster</strong> — and several courts still publishing pre-2020 tiers for older tickets.</p>
+          <p>The spread exists because the total is court-composed, not statutory (<a href="/texas/court-costs" class="text-primary-deep font-medium hover:underline">the anatomy is here</a>). This page is the data: which verified courts charge what, and what it means for your wallet. The statewide distribution is in the <a href="/texas/traffic-ticket-report" class="text-primary-deep font-medium hover:underline">Texas Traffic Ticket Report</a>.</p>
         </div>
 
         <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
@@ -153,7 +158,7 @@ const schema = JSON.stringify({
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What the spread actually tells you</h2>
         <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p><strong class="text-text">You can't shop courts — but you can stop overestimating.</strong> Your fee belongs to the court on your citation, period. The value of the data is calibration: drivers routinely assume the dismissal path costs more than it does, pay the ticket instead, and buy three years of insurance surcharges to avoid a fee that might have been $109. The all-in dismissal math — fee + $28 course + $12 record — beats the conviction at every verified price point, as our <a href="/texas/how-much-is-a-speeding-ticket" class="text-primary-deep font-medium hover:underline">cost comparison</a> shows.</p>
+          <p><strong class="text-text">You can't shop courts — but you can stop overestimating.</strong> Your fee belongs to the court on your citation, period. The value of the data is calibration: drivers routinely assume the dismissal path costs more than it does, pay the ticket instead, and buy three years of insurance surcharges to avoid a fee that might have been ${S.fee.min}. The all-in dismissal math — fee + $28 course + $12 record — beats the conviction at every verified price point, as our <a href="/texas/how-much-is-a-speeding-ticket" class="text-primary-deep font-medium hover:underline">cost comparison</a> shows.</p>
           <p><strong class="text-text">A dozen courts publish no fee at all.</strong> Alvin, Dickinson, Granbury, Liberty Hill, Marshall, and others on our verified list simply don't post the number — they tell you to call. That's not a red flag; it's just small-court administration. The clerk will quote your citation's exact total in one call.</p>
           <p><strong class="text-text">And mind the payment-method fine print.</strong> Verified quirks that surprise people: several courts take no personal checks (Hutto, Sulphur Springs, Live Oak), some are exact-amount-only (Gatesville), and card payments often add 3–5% (Castle Hills, Balcones Heights, Magnolia). The fee is only annoying once; a bounced payment method can cost the deadline.</p>
         </div>
@@ -196,7 +201,7 @@ const schema = JSON.stringify({
 
         <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
           <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; fees are set by your court and your citation's offense date controls the tier.</p>
-          <p class="text-xs text-text-subtle">Last updated August 4, 2026 — original dataset compiled and verified by the Road Ready Safety editorial team directly against the published fee schedules of 200+ Texas municipal and justice courts; statutory framework per Tex. Local Gov't Code §§133.102 &amp; 134.103 and Tex. Code Crim. Proc. arts. 45A.358 &amp; 102.014.</p>
+          <p class="text-xs text-text-subtle">Last updated September 6, 2026 — original dataset compiled and verified by the Road Ready Safety editorial team directly against the published fee schedules of {S.fee.known} Texas municipal and justice courts; statutory framework per Tex. Local Gov't Code §§133.102 &amp; 134.103 and Tex. Code Crim. Proc. arts. 45A.358 &amp; 102.014.</p>
         </div>
 
       </div>

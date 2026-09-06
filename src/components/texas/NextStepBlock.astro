@@ -102,9 +102,9 @@ const order = lead === 'eligible' ? ['eligible', 'precourt'] : ['precourt', 'eli
           <li>{t.step2} <a href="/texas/request-defensive-driving" class="text-primary-deep font-medium hover:underline">{t.step2Link}</a>.</li>
         </ol>
         <form class="rrs-next-form flex flex-col gap-2 mt-auto" novalidate>
-          <label class="text-xs text-text-body" style="font-family: 'DM Sans', sans-serif;">{t.reminderLabel}</label>
+          <label for={`${blockId}-email`} class="text-xs text-text-body" style="font-family: 'DM Sans', sans-serif;">{t.reminderLabel}</label>
           <div class="flex gap-2">
-            <input type="email" name="email" required placeholder={t.placeholder} autocomplete="email" class="min-w-0 flex-1 h-11 px-3 border border-border rounded-xl text-sm" dir="ltr" />
+            <input type="email" id={`${blockId}-email`} name="email" required placeholder={t.placeholder} autocomplete="email" class="min-w-0 flex-1 h-11 px-3 border border-border rounded-xl text-sm" dir="ltr" />
             <button type="submit" class="h-11 shrink-0 rounded-xl bg-primary-deep px-4 text-sm font-semibold text-white hover:bg-primary-hover" style="font-family: 'DM Sans', sans-serif;">{t.send}</button>
           </div>
           <p class="rrs-next-error text-xs" style="display:none;color:#b91c1c">{t.error}</p>

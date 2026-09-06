@@ -8,13 +8,14 @@ const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '#';
 const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
 
 const landingFaqs = [
-  { q: 'Is this Texas defensive driving course accepted by all Texas courts?', a: 'Yes. Road Ready Safety is a TDLR-approved driving safety provider (CP1234), and our uniform certificate of completion is accepted by every Texas court for ticket dismissal.' },
-  { q: 'Are there extra fees after completing the course?', a: 'No hidden fees. $28 all-in covers the course, the certificate, instant download, and court reporting. Some courts also require a copy of your DPS driving record (Type 3A), which is $12 paid directly to Texas DPS.' },
-  { q: 'How do I get my certificate?', a: 'Your certificate is available immediately on course completion. Download it from your dashboard and submit it to your court. There is no delivery fee and no wait.' },
-  { q: 'How long do I have to complete the Texas defensive driving course?', a: 'Texas gives you 90 days from the date the court grants the course. Your court may set a shorter paperwork deadline, so follow the date on the court\'s approval letter.' },
-  { q: 'Can I take the Texas defensive driving course on my phone?', a: 'Yes. The course runs on any phone, tablet or computer, and your progress saves automatically, so you can start on one device and finish on another.' },
-  { q: 'Is there a final exam?', a: 'No. There is no final exam. You get short knowledge checks with unlimited retakes, so you cannot fail out of the course.' },
-  { q: 'Are refunds available?', a: 'Yes. You can request a full refund any time before you complete the course or download your certificate.' },
+  // Keep these identical to the visible FAQ markup below: the FAQPage schema must match what the page shows.
+  { q: 'Is this accepted by all Texas courts?', a: 'Yes! We are a TDLR-approved provider, and our certificates are accepted by every court in Texas for ticket dismissal.' },
+  { q: 'Are there extra fees after completing the course?', a: 'No hidden fees. $28 all-in is all you pay — that covers the course, the certificate, and court reporting. Some courts may also require a copy of your driving record (DPS Type 3A), which has a separate fee paid directly to the DPS.' },
+  { q: 'How do I get my certificate?', a: 'Your certificate is available immediately upon course completion. You can download it right away from your account dashboard to submit to your court.' },
+  { q: 'How long do I have to complete the course?', a: 'Texas gives you 90 days from the date the court grants the course — not from the day you enroll. Your court may set a shorter deadline, so follow the date on its approval letter.' },
+  { q: 'Can I take the course on my phone?', a: 'Yes! The course is fully mobile-friendly. You can take it on any device — phone, tablet, or computer. Your progress automatically saves, so you can switch devices anytime.' },
+  { q: 'Is there a final exam?', a: 'You get unlimited retakes on all unit quizzes. There is no final exam. The goal is learning, not tricking you. Take your time and review the material as needed.' },
+  { q: 'Are refunds available?', a: 'Yes! If you\'re not satisfied, you can request a full refund before you complete the course or receive your certificate.' },
 ];
 
 const landingFaqSchema = JSON.stringify({
@@ -720,7 +721,7 @@ const landingFaqSchema = JSON.stringify({
           </summary>
           <div class="px-6 pb-5">
             <p class="text-base text-text-body leading-6">
-              You have up to 90 days from enrollment to complete the course. However, you must finish before your court's deadline for ticket dismissal.
+              Texas gives you 90 days from the date the court grants the course &mdash; not from the day you enroll. Your court may set a shorter deadline, so follow the date on its approval letter.
             </p>
           </div>
         </details>
@@ -739,7 +740,7 @@ const landingFaqSchema = JSON.stringify({
 
         <details class="group bg-white border border-border rounded-2xl overflow-hidden">
           <summary class="w-full px-6 py-5 flex items-center justify-between cursor-pointer list-none">
-            <span class="text-base font-semibold text-text leading-6 tracking-[-0.4px] text-left">What if I fail the final exam?</span>
+            <span class="text-base font-semibold text-text leading-6 tracking-[-0.4px] text-left">Is there a final exam?</span>
             <img src="/assets/icons/texas/chevron-faq.svg" alt="" class="w-4 h-4 transition-transform group-open:rotate-180 flex-shrink-0 ml-4" />
           </summary>
           <div class="px-6 pb-5">

@@ -1,4 +1,6 @@
 import type { APIRoute } from 'astro';
+import { readdirSync } from 'node:fs';
+import { join, relative, sep } from 'node:path';
 import coursesData from '../data/courses.json';
 import blogData from '../data/blog.json';
 import courtsData from '../data/texas-courts.json';
@@ -21,93 +23,6 @@ const staticRoutes = [
   '/partners',
   '/support/how-to-submit',
   '/texas',
-  '/texas/pricing',
-  '/texas/faq',
-  '/texas/helpcenter',
-  '/texas/terms',
-  '/texas/refund',
-  '/texas/accessibility',
-  '/texas/cost',
-  '/texas/best-defensive-driving-course',
-  '/texas/speeding-ticket',
-  '/texas/speeding-25-over',
-  '/texas/ticket-law-changes-2025',
-  '/texas/tdlr-approved',
-  '/texas/ticket-dismissal',
-  '/texas/spanish',
-  '/texas/fastest-defensive-driving-course',
-  '/texas/what-the-course-looks-like',
-  '/texas/tyler',
-  '/texas/amarillo',
-  '/texas/el-paso',
-  '/texas/lubbock',
-  '/texas/waco',
-  '/texas/wichita-falls',
-  '/texas/providers',
-  '/texas/type-3a-driving-record',
-  '/texas/certificate-rejected',
-  '/texas/transparency',
-  '/texas/cdl-defensive-driving',
-  '/texas/12-month-rule',
-  '/texas/insurance-discount',
-  '/texas/traffic-ticket-report',
-  '/texas/deadline-calculator',
-  '/texas/ticket-cost-calculator',
-  '/texas/deferred-disposition',
-  '/texas/missed-court-date',
-  '/texas/already-paid-ticket',
-  '/texas/request-defensive-driving',
-  '/texas/defensive-driving-certificate',
-  '/texas/school-zone-ticket',
-  '/texas/construction-zone-ticket',
-  '/texas/no-insurance-ticket',
-  '/texas/expired-registration-ticket',
-  '/texas/expired-license-ticket',
-  '/texas/equipment-violation-ticket',
-  '/texas/red-light-ticket',
-  '/texas/cell-phone-ticket',
-  '/texas/seat-belt-ticket',
-  '/texas/child-seat-ticket',
-  '/texas/motorcycle-ticket',
-  '/texas/out-of-state-driver',
-  '/texas/under-25-ticket',
-  '/texas/minor-traffic-ticket',
-  '/texas/ticket-warrant',
-  '/texas/court-costs',
-  '/texas/dismissal-timeline',
-  '/texas/lost-ticket',
-  '/texas/online-vs-classroom',
-  '/texas/stop-sign-ticket',
-  '/texas/defensive-driving-statistics',
-  '/texas/defensive-driving-vs-deferred-disposition',
-  '/texas/ways-to-dismiss-ticket',
-  '/texas/do-tickets-have-points',
-  '/texas/show-cause-hearing',
-  '/texas/multiple-tickets',
-  '/texas/how-much-is-a-speeding-ticket',
-  '/texas/fight-or-dismiss',
-  '/texas/court-appearance',
-  '/texas/municipal-vs-jp-court',
-  '/texas/ticket-insurance-impact',
-  '/texas/notarized-affidavit',
-  '/texas/houston',
-  '/texas/dallas',
-  '/texas/fort-worth',
-  '/texas/san-antonio',
-  '/texas/austin',
-  '/texas/look-up-your-ticket',
-  '/texas/omnibase-hold',
-  '/texas/registration-block',
-  '/texas/dsc-deadlines-by-court',
-  '/texas/dsc-fees-by-court',
-  '/texas/eligibility-tracker',
-  '/texas/vs',
-  '/texas/vs/onlinetxdefensivedriving',
-  '/texas/vs/aceable',
-  '/texas/vs/defensivedriving',
-  '/texas/vs/improv',
-  '/texas/vs/comedydriving',
-  '/texas/vs/safemotorist',
   // New York cluster
   '/new-york',
   '/new-york/does-defensive-driving-remove-points',
@@ -122,6 +37,27 @@ const staticRoutes = [
   '/new-york/cdl-defensive-driving',
   '/new-york/5-hour-pre-licensing',
 ];
+
+// Texas guide pages are generated from the files in src/pages/texas so a new page can never be
+// left out of the sitemap by hand. Dynamic routes ([slug], [i18n], [insurer]) are listed by their
+// own data below; /texas/contactus is a noindex redirect.
+// (Read from disk rather than import.meta.glob: importing page modules from another page breaks
+// Astro's static build pipeline. The endpoint is bundled into dist/, so resolve from the project
+// root, where `astro build` runs, not from import.meta.url.)
+const texasDir = join(process.cwd(), 'src', 'pages', 'texas');
+const walk = (dir: string): string[] =>
+  readdirSync(dir, { withFileTypes: true }).flatMap((e) =>
+    e.isDirectory() ? walk(join(dir, e.name)) : e.name.endsWith('.astro') ? [join(dir, e.name)] : [],
+  );
+const texasGuideRoutes = walk(texasDir)
+  .map((f) => relative(texasDir, f).split(sep).join('/'))
+  .filter((f) => !f.includes('[') && f !== 'contactus.astro')
+  .map((f) => '/texas/' + f.replace(/\/index\.astro$/, '').replace(/\.astro$/, ''))
+  .filter((r) => r !== '/texas/index' && r !== '/texas/courts')
+  .sort();
+if (texasGuideRoutes.length < 50) {
+  throw new Error(`sitemap: expected the Texas guide pages under ${texasDir}, found ${texasGuideRoutes.length}`);
+}
 
 // Adult Driver Education (ADE-1317) cluster — excluded from the sitemap until the
 // TDLR Driver Education Provider license is approved and VITE_ADE_ROUTES_ENABLED is true.
@@ -188,7 +124,7 @@ const i18nRoutes = translatedPages.map(p => `/texas/${p.slug}`);
 // Per-insurer defensive-driving discount pages
 const insurerRoutes = INSURERS.map(i => `/texas/insurance-discount/${i.slug}`);
 
-const allRoutes = [...staticRoutes, ...adeRoutes, ...i18nRoutes, ...insurerRoutes, ...stateCourseRoutes, ...courseRoutes, ...courseRequirementsRoutes, ...blogRoutes, ...findRoutes, ...texasCourtsRoutes, ...courtSlugRoutes];
+const allRoutes = [...staticRoutes, ...texasGuideRoutes, ...adeRoutes, ...i18nRoutes, ...insurerRoutes, ...stateCourseRoutes, ...courseRoutes, ...courseRequirementsRoutes, ...blogRoutes, ...findRoutes, ...texasCourtsRoutes, ...courtSlugRoutes];
 
 const toEntry = (path: string) =>
   `  <url>\n    <loc>${siteUrl}${path}</loc>\n    <changefreq>weekly</changefreq>\n  </url>`;

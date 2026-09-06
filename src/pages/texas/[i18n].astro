@@ -7,13 +7,18 @@
  */
 import TexasLayout from '../../layouts/TexasLayout.astro';
 import NextStepBlock from '../../components/texas/NextStepBlock.astro';
-import { translatedPages, alternatesFor, langLabel } from '../../lib/i18n';
+import { translatedPages, alternatesFor, langLabel, type TranslatedPage } from '../../lib/i18n';
+import { courtStats as S } from '../../lib/court-stats';
 
 export function getStaticPaths() {
   return translatedPages.map(p => ({ params: { i18n: p.slug }, props: { page: p } }));
 }
 
-const { page } = Astro.props;
+// Figures the English guides compute at build time appear in the translations as
+// {{FEE_MIN}} / {{FEE_MAX}} so the languages cannot drift from the court data.
+const fill = (s: string) =>
+  s.replace(/\{\{FEE_MIN\}\}/g, () => `$${S.fee.min}`).replace(/\{\{FEE_MAX\}\}/g, () => `$${S.fee.max}`);
+const page: TranslatedPage = JSON.parse(fill(JSON.stringify(Astro.props.page)));
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';

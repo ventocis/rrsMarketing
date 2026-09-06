@@ -1,6 +1,7 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
 import VideoEmbed from '../../components/VideoEmbed.astro';
+import { courtStats as S } from '../../lib/court-stats';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 
@@ -25,7 +26,7 @@ const faqs = [
   },
   {
     "q": "Do speeding ticket prices vary by city in Texas?",
-    "a": "Yes — the fine schedule is local (within the statutory cap), and court costs vary slightly by city additions. Our court directory documents verified totals across 200+ Texas courts, including the defensive-driving dismissal totals, which also vary (from $109 to $169)."
+    "a": `Yes — the fine schedule is local (within the statutory cap), and court costs vary slightly by city additions. Our court directory documents verified defensive-driving dismissal totals across ${S.fee.known} Texas courts, and they vary too (from $${S.fee.min} to $${S.fee.max}).`
   },
   {
     "q": "What happens if I just don't pay my speeding ticket?",

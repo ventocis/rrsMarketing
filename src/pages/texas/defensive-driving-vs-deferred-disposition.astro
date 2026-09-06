@@ -3,6 +3,7 @@ import TexasLayout from '../../layouts/TexasLayout.astro';
 import { alternatesFor, translationsOf, langLabel } from '../../lib/i18n';
 import YouTubeCard from '../../components/YouTubeCard.astro';
 import NextStepBlock from '../../components/texas/NextStepBlock.astro';
+import { courtStats as S } from '../../lib/court-stats';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 
@@ -17,7 +18,7 @@ const rows = [
   { k: 'License', course: 'Valid Texas license (military exception)', deferred: 'Any state' },
   { k: 'Repeat use', course: 'Once per 12 months', deferred: 'No statutory limit; judges tighten on repeats' },
   { k: 'Excluded', course: 'Work zone with workers, CDL holders, school bus, leaving scene', deferred: 'Work zone with workers, CDL holders' },
-  { k: 'Typical cost', course: '$109 to $169 court fee + $28 course + $12 record', deferred: 'Court costs + special expense fee up to the max fine; commonly $200 to $300' },
+  { k: 'Typical cost', course: `$${S.fee.min} to $${S.fee.max} court fee + $28 course + $12 record`, deferred: 'Court costs + special expense fee up to the max fine; commonly $200 to $300' },
   { k: 'Time to resolve', course: 'One evening for the course; done when the court processes it', deferred: 'Up to 180 days of staying ticket-free' },
   { k: 'Risk', course: 'None once the certificate is filed', deferred: 'A new ticket during the period can become a conviction on the old one' },
   { k: 'Record', course: 'Dismissed; cannot be used for any purpose', deferred: 'Dismissed if completed; conviction if violated' },
@@ -47,7 +48,7 @@ const faqs = [
   },
   {
     q: 'Which is cheaper, deferred disposition or defensive driving?',
-    a: 'Usually the course. Its court fee runs $109 to $169 across the courts we have verified, plus the $28 course and a $12 driving record. Deferred adds a special expense fee of up to the maximum fine ($200 for ordinary speeding) on top of court costs, commonly $200 to $300 total.',
+    a: `Usually the course. Its court fee runs $${S.fee.min} to $${S.fee.max} across the courts we have verified, plus the $28 course and a $12 driving record. Deferred adds a special expense fee of up to the maximum fine ($200 for ordinary speeding) on top of court costs, commonly $200 to $300 total.`,
   },
 ];
 
@@ -171,7 +172,7 @@ const faqSchema = JSON.stringify({
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Where the course wins for the driver</h2>
         <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
           <p><strong class="text-text">Certainty.</strong> The course is an entitlement: meet the conditions and the court must grant it, and the dismissal is complete when your certificate is filed. Deferred is a favor with a six-month tail; in our experience the drivers who regret a deferral are the ones who picked up a second ticket in month four and ended up with a conviction on the first.</p>
-          <p><strong class="text-text">Cost.</strong> The course path is typically $109 to $169 in court fees plus the $28 course and a $12 record. Deferred stacks a special expense fee of up to the maximum fine on top of court costs, commonly $200 to $300, and if the judge orders the course as a condition you pay for that too.</p>
+          <p><strong class="text-text">Cost.</strong> The course path is typically ${S.fee.min} to ${S.fee.max} in court fees plus the $28 course and a $12 record. Deferred stacks a special expense fee of up to the maximum fine on top of court costs, commonly $200 to $300, and if the judge orders the course as a condition you pay for that too.</p>
           <p><strong class="text-text">The insurance discount.</strong> The same certificate that dismisses the ticket is the one Texas insurers accept for a defensive driving discount, usually 5 to 10 percent for three years. A deferral earns nothing. Details on the <a href="/texas/insurance-discount" class="text-primary-deep font-medium hover:underline">insurance discount page</a>.</p>
         </div>
 

@@ -1,6 +1,7 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
 import YouTubeCard from '../../components/YouTubeCard.astro';
+import { courtStats as S } from '../../lib/court-stats';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 
@@ -13,7 +14,7 @@ const faqs = [
   },
   {
     "q": "Is the $144 defensive driving fee the same at every Texas court?",
-    "a": "It's remarkably common but not universal — it's a convention, not a statute. In our court-by-court research we've verified totals of $109 (Nacogdoches), $134 (Forney), and $139 (Lancaster), among others. Your court's number is on its website or one phone call away — and in our court directory."
+    "a": `It's remarkably common but not universal — it's a convention, not a statute. In our court-by-court research we've verified totals of $${S.fee.min} (${S.fee.cheapest[0].court}), $109 (Nacogdoches), $134 (Forney), and $139 (Lancaster), among others. Your court's number is on its website or one phone call away — and in our court directory.`
   },
   {
     "q": "Why is a school zone dismissal $169 instead of $144?",

@@ -48,7 +48,7 @@ export const VIDEOS: Record<string, VideoMeta> = {
   'jjZUVQVAXhE': {
     id: 'jjZUVQVAXhE',
     title: 'How to Choose a Texas Driver Safety Course Without Getting Overcharged',
-    description: 'How to pick a TDLR-approved Texas driver safety course, verify the provider licence number, and avoid paying more than the course is worth.',
+    description: 'How to pick a TDLR-approved Texas driver safety course, verify the provider license number, and avoid paying more than the course is worth.',
     seconds: 127, uploadDate: '2026-03-29', canonical: '/texas/tdlr-approved',
   },
   'Y6sT-z7uFWQ': {
@@ -96,7 +96,7 @@ export const VIDEOS: Record<string, VideoMeta> = {
   '60P2iJ_avLA': {
     id: '60P2iJ_avLA',
     title: 'CDL Holders & Defensive Driving in Texas: The Rules (2026)',
-    description: 'Federal law bars masking a CDL holder’s conviction, so defensive driving cannot dismiss a ticket you got while holding a commercial licence. What the rule actually says.',
+    description: 'Federal law bars masking a CDL holder’s conviction, so defensive driving cannot dismiss a ticket you got while holding a commercial license. What the rule actually says.',
     seconds: 55, uploadDate: '2026-06-17', canonical: '/texas/cdl-defensive-driving',
   },
   'py-eyHLLcXY': {

@@ -1,5 +1,6 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import { courtStats as S } from '../../lib/court-stats';
 import YouTubeCard from '../../components/YouTubeCard.astro';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
@@ -38,11 +39,11 @@ const faqs = [
   },
   {
     q: 'What does dismissal cost instead?',
-    a: 'About $184 all-in at a typical court: roughly $144 in court costs to be granted the course, $28 for our course, and $12 to DPS for the Type 3A driving record. Court costs vary — we have seen $109, $134, $139 and $169 — so use your court\'s real figure.',
+    a: `About $184 all-in at a typical court: roughly $144 in court costs to be granted the course, $28 for our course, and $12 to DPS for the Type 3A driving record. Court costs vary — ${S.fee.min} to $${S.fee.max} across the ${S.fee.known} courts we have verified — so use your court's real figure.`,
   },
   {
     q: 'What if I just ignore the ticket?',
-    a: "It becomes the most expensive option available. Missing your answer date can add a failure-to-appear charge, a warrant, an OmniBase hold that blocks your licence renewal, and a $50 fee on top of everything you already owed. The conviction still happens.",
+    a: "It becomes the most expensive option available. Missing your answer date can add a failure-to-appear charge, a warrant, an OmniBase hold that blocks your license renewal, and a $50 fee on top of everything you already owed. The conviction still happens.",
   },
   {
     q: 'Does paying the ticket online end it?',
@@ -129,7 +130,7 @@ const breadcrumbSchema = JSON.stringify({
                   <span class="absolute left-3 top-1/2 -translate-y-1/2 text-text-subtle">$</span>
                   <input id="rrs-cost-dscfee" type="number" inputmode="numeric" min="0" step="1" class="w-full h-12 pl-7 pr-3 rounded-xl border border-border text-base text-text focus:outline focus:outline-2 focus:outline-primary-deep" />
                 </span>
-                <span class="block text-xs text-text-subtle mt-1.5">$144 is common; we have verified $109 to $169. <a href="/texas/dsc-fees-by-court" class="text-primary-deep font-medium hover:underline">Fees by court</a>.</span>
+                <span class="block text-xs text-text-subtle mt-1.5">$144 is common; we have verified {S.fee.min} to ${S.fee.max}. <a href="/texas/dsc-fees-by-court" class="text-primary-deep font-medium hover:underline">Fees by court</a>.</span>
               </label>
             </div>
 
@@ -156,7 +157,7 @@ const breadcrumbSchema = JSON.stringify({
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Why the fine is the least of it</h2>
         <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
           <p>A Texas conviction does not add points — <a href="/texas/do-tickets-have-points" class="text-primary-deep font-medium hover:underline">the points system was repealed in 2019</a> — but it does go on your driving record, and that is what insurers rate. On a $1,800–$2,400 premium, a 10–15% surcharge is roughly <strong class="text-text">$540–$1,080 over three years</strong>. That is the number the $28 course is really competing with, not the fine.</p>
-          <p>And the third path is worse than both. Ignoring the ticket adds a failure-to-appear charge, a <a href="/texas/ticket-warrant" class="text-primary-deep font-medium hover:underline">warrant</a>, a $50 fee and an <a href="/texas/omnibase-hold" class="text-primary-deep font-medium hover:underline">OmniBase hold</a> on your licence renewal — and you still end up convicted.</p>
+          <p>And the third path is worse than both. Ignoring the ticket adds a failure-to-appear charge, a <a href="/texas/ticket-warrant" class="text-primary-deep font-medium hover:underline">warrant</a>, a $50 fee and an <a href="/texas/omnibase-hold" class="text-primary-deep font-medium hover:underline">OmniBase hold</a> on your license renewal — and you still end up convicted.</p>
         </div>
 
         <YouTubeCard id="kKQrQe0GUCs" blurb="What a Texas speeding ticket really costs, once everything is counted." />
@@ -183,7 +184,7 @@ const breadcrumbSchema = JSON.stringify({
 
         <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
           <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This tool is informational, not legal or insurance advice.</p>
-          <p class="text-xs text-text-subtle">Last updated September 4, 2026 — fine cap verified against Tex. Transp. Code §542.401; court-cost structure against the Office of Court Administration cost charts ($62 state consolidated + $14 local, offenses on or after January 1, 2020); course-fee range from our own directory of 1,742 Texas courts.</p>
+          <p class="text-xs text-text-subtle">Last updated September 4, 2026 — fine cap verified against Tex. Transp. Code §542.401; conviction court costs against the Office of Court Administration cost charts — $62 state consolidated + $14 local + the $50 state traffic fine (Tex. Transp. Code §542.4031) ≈ $126, for offenses on or after January 1, 2020; course-fee range from our own directory of 1,742 Texas courts.</p>
         </div>
 
       </div>

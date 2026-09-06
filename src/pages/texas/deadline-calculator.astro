@@ -13,7 +13,7 @@ const faqs = [
   },
   {
     q: 'What actually happens on the answer date?',
-    a: "Nothing automatic and nothing good. It's the deadline to respond to the charge — by requesting defensive driving, entering a plea, or appearing. Miss it and the court can add a failure-to-appear charge, issue a warrant, and report you to OmniBase, which blocks your driver licence renewal.",
+    a: "Nothing automatic and nothing good. It's the deadline to respond to the charge — by requesting defensive driving, entering a plea, or appearing. Miss it and the court can add a failure-to-appear charge, issue a warrant, and report you to OmniBase, which blocks your driver license renewal.",
   },
   {
     q: 'Is the 90-day deadline the same everywhere?',
@@ -114,10 +114,10 @@ const breadcrumbSchema = JSON.stringify({
           </div>
 
           <form class="rrs-dl-form border-t border-border bg-surface-muted p-5" novalidate>
-            <p class="text-sm font-semibold text-text mb-1" style="font-family: 'Outfit', sans-serif;">Want a reminder before the deadline?</p>
+            <p id="rrs-dl-remind" class="text-sm font-semibold text-text mb-1" style="font-family: 'Outfit', sans-serif;">Want a reminder before the deadline?</p>
             <p class="text-sm text-text-body mb-3">One email when your date gets close. We send the reminder and nothing else.</p>
             <div class="flex flex-col sm:flex-row gap-3">
-              <input type="email" required placeholder="you@example.com" class="flex-1 h-12 px-3 rounded-xl border border-border text-base text-text focus:outline focus:outline-2 focus:outline-primary-deep" />
+              <input type="email" id="rrs-dl-email" name="email" required aria-label="Your email address for a deadline reminder" placeholder="you@example.com" class="flex-1 h-12 px-3 rounded-xl border border-border text-base text-text focus:outline focus:outline-2 focus:outline-primary-deep" />
               <button type="submit" class="h-12 px-6 rounded-xl bg-primary hover:bg-primary-hover text-white font-semibold whitespace-nowrap transition-colors">Remind me</button>
             </div>
             <p class="rrs-dl-error text-sm text-red-600 mt-2" style="display:none"></p>
@@ -129,7 +129,7 @@ const breadcrumbSchema = JSON.stringify({
         <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
           <p>Sequence matters more than speed. Courts routinely reject certificates dated <em>before</em> the order granting the course, so finishing early is not a shortcut — it is a rejection.</p>
           <ol class="list-decimal pl-6 space-y-2">
-            <li><strong class="text-text">Request by the answer date.</strong> Plea, request, licence copy, insurance, and the court's fee. <a href="/texas/request-defensive-driving" class="text-primary-deep font-medium hover:underline">What to send, exactly</a>.</li>
+            <li><strong class="text-text">Request by the answer date.</strong> Plea, request, license copy, insurance, and the court's fee. <a href="/texas/request-defensive-driving" class="text-primary-deep font-medium hover:underline">What to send, exactly</a>.</li>
             <li><strong class="text-text">Wait for the order.</strong> It carries your real deadline. Nothing before this counts.</li>
             <li><strong class="text-text">Take the course and order your <a href="/texas/type-3a-driving-record" class="text-primary-deep font-medium hover:underline">Type 3A record</a>.</strong> Six hours, and $12 from DPS.</li>
             <li><strong class="text-text">Submit both, with a week to spare.</strong> New certificates can take up to five days to appear in TDLR's validation system.</li>

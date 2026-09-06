@@ -11,13 +11,13 @@ const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
 // last refreshed August 2026. Legal basis: Tex. Code Crim. Proc. arts. 45A.351–.359.
 
 const courts = [
-  { slug: 'smith-municipal-tyler', name: 'Tyler Municipal Court', note: 'City of Tyler police tickets. Request in person, by mail, or through the court\'s online portal by your appearance date. The court asks for a plea of guilty or no contest, court costs plus $10 paid in full, proof of insurance in your name, your Texas licence, the certificate, and a DPS driving record.' },
-  { slug: 'smith-justice-of-the-peace-precinct-1-place-1', name: 'Smith County JP Precinct 1 (Tyler, Ferguson St.)', note: 'Deputy and DPS tickets in central Tyler. $146 court fee. Submit the signed Driving Safety Course Request Form, proof of insurance, a copy of your licence, and the fee by the citation due date.' },
-  { slug: 'smith-justice-of-the-peace-precinct-2-place-1', name: 'Smith County JP Precinct 2 (Hwy 155 S, Tyler)', note: '$146 fee. Signed request form, proof of insurance, copy of licence, payment. South Tyler and the Hwy 155 corridor.' },
+  { slug: 'smith-municipal-tyler', name: 'Tyler Municipal Court', note: 'City of Tyler police tickets. Request in person, by mail, or through the court\'s online portal by your appearance date. The court asks for a plea of guilty or no contest, court costs plus $10 paid in full, proof of insurance in your name, your Texas license, the certificate, and a DPS driving record.' },
+  { slug: 'smith-justice-of-the-peace-precinct-1-place-1', name: 'Smith County JP Precinct 1 (Tyler, Ferguson St.)', note: 'Deputy and DPS tickets in central Tyler. $146 court fee. Submit the signed Driving Safety Course Request Form, proof of insurance, a copy of your license, and the fee by the citation due date.' },
+  { slug: 'smith-justice-of-the-peace-precinct-2-place-1', name: 'Smith County JP Precinct 2 (Hwy 155 S, Tyler)', note: '$146 fee. Signed request form, proof of insurance, copy of license, payment. South Tyler and the Hwy 155 corridor.' },
   { slug: 'smith-justice-of-the-peace-precinct-3-place-1', name: 'Smith County JP Precinct 3 (Troup)', note: '$146 fee. The request form with fee and proof of insurance must be postmarked by the citation due date. Requires the official DPS driving record and an affidavit that no course was in progress or completed in the prior 12 months.' },
-  { slug: 'smith-justice-of-the-peace-precinct-4-place-1', name: 'Smith County JP Precinct 4 (Winona)', note: '$146 fee. Proof of insurance and a copy of your licence with the fee. Northern Smith County.' },
-  { slug: 'smith-justice-of-the-peace-precinct-5-place-1', name: 'Smith County JP Precinct 5 (Lindale)', note: '$146 fee. Request form, proof of insurance on the offense date, copy of licence, the certificate within 90 days, the official DPS driving record, and a 12-month affidavit.' },
-  { slug: 'smith-municipal-whitehouse', name: 'Whitehouse Municipal Court', note: '$144 fee. Requests in person; bring your Texas licence and insurance showing you as a covered driver. Certificate after the course.' },
+  { slug: 'smith-justice-of-the-peace-precinct-4-place-1', name: 'Smith County JP Precinct 4 (Winona)', note: '$146 fee. Proof of insurance and a copy of your license with the fee. Northern Smith County.' },
+  { slug: 'smith-justice-of-the-peace-precinct-5-place-1', name: 'Smith County JP Precinct 5 (Lindale)', note: '$146 fee. Request form, proof of insurance on the offense date, copy of license, the certificate within 90 days, the official DPS driving record, and a 12-month affidavit.' },
+  { slug: 'smith-municipal-whitehouse', name: 'Whitehouse Municipal Court', note: '$144 fee. Requests in person; bring your Texas license and insurance showing you as a covered driver. Certificate after the course.' },
   { slug: 'smith-municipal-lindale', name: 'Lindale Municipal Court', note: 'Requests in person or through the city\'s online system. Confirm the fee with the clerk.' },
   { slug: 'smith-municipal-noonday', name: 'Noonday Municipal Court', note: 'Call the court to request. Requires a certified Type 3A driving record from DPS with the certificate.' },
   { slug: 'smith-municipal-arp', name: 'Arp Municipal Court', note: 'Request by phone or in person. Type 3A driving record required with the certificate.' },
@@ -112,7 +112,7 @@ const faqSchema = JSON.stringify({
         <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
           <ul class="list-disc pl-6 space-y-2">
             <li><strong class="text-text">Request the course by your appearance date.</strong> Do not pay the ticket first; paying is a guilty plea and a conviction.</li>
-            <li>You need a <strong class="text-text">valid Texas driver's licence and proof of insurance</strong>, and you plead guilty or no contest.</li>
+            <li>You need a <strong class="text-text">valid Texas driver's license and proof of insurance</strong>, and you plead guilty or no contest.</li>
             <li>Once every <strong class="text-text">12 months</strong>. Not available for speeding 25 or more mph over (or 95 mph and up), CDL holders, passing a school bus, or work-zone violations with workers present.</li>
             <li>After approval you have <strong class="text-text">90 days</strong> to finish a TDLR-approved 6-hour course and submit the certificate, plus a DPS driving record where the court requires one.</li>
             <li>Complete it and the charge is <strong class="text-text">dismissed and kept off your record</strong> under Code of Criminal Procedure chapter 45A.</li>

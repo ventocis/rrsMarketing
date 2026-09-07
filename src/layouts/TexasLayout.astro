@@ -1,5 +1,6 @@
 ---
 import Layout from './Layout.astro';
+import { termsUrl } from '../lib/portal';
 
 interface Props {
   title: string;
@@ -316,7 +317,7 @@ const currentYear = new Date().getFullYear();
           <h3 class="text-sm font-semibold text-white uppercase tracking-wider">Legal</h3>
           <nav class="flex flex-col gap-3">
             <a href="/privacy" class="text-sm text-text-subtle hover:text-white no-underline transition-colors">Privacy</a>
-            <a href="/texas/terms" class="text-sm text-text-subtle hover:text-white no-underline transition-colors">Terms</a>
+            <a href={termsUrl} class="text-sm text-text-subtle hover:text-white no-underline transition-colors">Terms</a>
             <a href="/texas/refund" class="text-sm text-text-subtle hover:text-white no-underline transition-colors">Refund</a>
             <a href="/texas/accessibility" class="text-sm text-text-subtle hover:text-white no-underline transition-colors">Accessibility</a>
           </nav>

@@ -1,6 +1,7 @@
 ---
 import Layout from './Layout.astro';
 import ade from '../data/ade-texas.json';
+import { termsUrl } from '../lib/portal';
 
 interface Props {
   title: string;
@@ -26,15 +27,15 @@ const currentYear = new Date().getFullYear();
 // 16 TAC 84.503(j)(4) — the DRIVER EDUCATION license number, never CP#1234.
 // Empty until TDLR approves; the route flag must stay off while it is empty.
 const deLicense = ade.provider.deLicenseNumber;
-const licenceLabel = deLicense
+const licenseLabel = deLicense
   ? `TDLR Approved · DE License #${deLicense}`
   : 'TDLR Driver Education Provider · License Pending';
 
-// While the DE licence is pending we may not advertise (16 TAC §84.80(e)), so every ADE
+// While the DE license is pending we may not advertise (16 TAC §84.80(e)), so every ADE
 // page is noindex regardless of environment. QA in particular is NOT protected by
 // robots.txt — it serves a permissive one because VITE_ENABLE_ANALYTICS is true there.
 // This lifts by itself once provider.deLicenseNumber is filled in.
-const licencePending = !deLicense;
+const licensePending = !deLicense;
 
 const nav = [
   { href: '/adult-drivers-ed/texas#who-needs-it', label: 'Do I Need This?' },
@@ -53,7 +54,7 @@ const supportLinks = [
 
 const legalLinks = [
   { href: '/privacy', label: 'Privacy' },
-  { href: '/adult-drivers-ed/texas/terms', label: 'Terms' },
+  { href: termsUrl, label: 'Terms' },
   { href: '/adult-drivers-ed/texas/refund', label: 'Refund' },
   { href: '/adult-drivers-ed/texas/accessibility', label: 'Accessibility' },
 ];
@@ -67,7 +68,7 @@ const adeLegalLinks = [
 ];
 ---
 
-<Layout title={title} description={description} keywords={keywords} url={url} noindex={licencePending}>
+<Layout title={title} description={description} keywords={keywords} url={url} noindex={licensePending}>
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify({
       '@context': 'https://schema.org',
@@ -159,7 +160,7 @@ const adeLegalLinks = [
     <div class="bg-surface-muted border-t border-border">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-1.5">
         <p class="text-[11px] text-text-muted text-center leading-4">
-          {ade.provider.legalName} d/b/a {ade.provider.dba} &middot; {licenceLabel}
+          {ade.provider.legalName} d/b/a {ade.provider.dba} &middot; {licenseLabel}
         </p>
       </div>
     </div>
@@ -216,7 +217,7 @@ const adeLegalLinks = [
           </a>
           <div class="inline-flex items-center gap-2 rounded-full px-3 py-2 w-fit border border-white/15">
             <img src="/assets/icons/texas/tdlr-badge-footer.svg" alt="" class="w-4 h-4" />
-            <span class="text-xs font-semibold text-info-border">{licenceLabel}</span>
+            <span class="text-xs font-semibold text-info-border">{licenseLabel}</span>
           </div>
         </div>
 
@@ -265,7 +266,7 @@ const adeLegalLinks = [
             &copy; {currentYear} {ade.provider.legalName} d/b/a {ade.provider.dba}. All rights reserved.
           </p>
           <p class="text-xs text-text-muted">
-            {licenceLabel}
+            {licenseLabel}
           </p>
         </div>
       </div>

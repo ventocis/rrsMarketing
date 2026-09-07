@@ -46,9 +46,7 @@ for (const file of courseFiles) {
     continue;
   }
   const banned = [...GLOBAL_BANNED, ...(course.claims?.banned ?? [])];
-  // The site-wide Terms document legitimately names every state's regulator and programs
-  // (Part 3), so it is excluded; every other page in the state's tree is checked.
-  const pages = walk(dir).filter((p) => !p.endsWith('/terms/index.html'));
+  const pages = walk(dir);
   let hits = 0;
   for (const page of pages) {
     const text = stripTags(readFileSync(page, 'utf-8'));

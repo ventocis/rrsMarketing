@@ -26,4 +26,4 @@ export function courseByParam(param: string): CourseData | undefined {
 }
 
 /** Static sub-routes every state site has, relative to the state route. */
-export const STATE_SUBROUTES = ['', '/pricing', '/how-it-works', '/faq', '/helpcenter', '/terms', '/refund', '/accessibility', '/blog'];
+export const STATE_SUBROUTES = ['', '/pricing', '/how-it-works', '/faq', '/helpcenter', '/refund', '/accessibility', '/blog'];

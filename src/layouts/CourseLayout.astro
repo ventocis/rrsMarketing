@@ -13,6 +13,7 @@
 import Layout from './Layout.astro';
 import type { CourseData } from '../data/courses/types';
 import { enrollUrl as buildEnrollUrl, loginUrl, contactUrl, siteUrl, isNoindex } from '../lib/courseFlags';
+import { termsUrl } from '../lib/portal';
 
 interface Props {
   course: CourseData;
@@ -46,10 +47,10 @@ const supportLinks = [
   { href: contactUrl, label: 'Contact Us' },
   { href: loginUrl, label: 'Log In' },
 ];
-// Privacy and Terms are the site-wide documents; refund and accessibility render per state.
+// Privacy is a site-wide page; Terms lives on the portal; refund and accessibility render per state.
 const legalLinks = [
   { href: '/privacy', label: 'Privacy' },
-  { href: `${route}/terms`, label: 'Terms' },
+  { href: termsUrl, label: 'Terms' },
   { href: `${route}/refund`, label: 'Refund' },
   { href: `${route}/accessibility`, label: 'Accessibility' },
 ];

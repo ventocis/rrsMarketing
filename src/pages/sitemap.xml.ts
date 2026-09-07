@@ -19,7 +19,6 @@ const staticRoutes = [
   '/faq',
   '/blog',
   '/privacy',
-  '/terms',
   '/partners',
   '/support/how-to-submit',
   '/texas',
@@ -70,7 +69,6 @@ const adeRoutes = adeEnabled
   ? [
       '/adult-drivers-ed/texas',
       '/adult-drivers-ed/texas/helpcenter',
-      '/adult-drivers-ed/texas/terms',
       '/adult-drivers-ed/texas/refund',
       '/adult-drivers-ed/texas/accessibility',
       '/adult-drivers-ed/texas/make-up-policy',

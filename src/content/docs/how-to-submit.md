@@ -42,7 +42,7 @@ Your court's accepted method, address and forms are in the [Texas court director
 
 ## Texas: if the court rejects the certificate
 
-The usual reasons are a name that does not match the licence or citation, a missing Type 3A, the wrong record type, a missing affidavit, or a certificate for a course the court never approved. Most are fixable within the window. [What to do when a certificate is rejected](/texas/certificate-rejected). If the name on the certificate is wrong, contact us before resubmitting; we correct it and reissue.
+The usual reasons are a name that does not match the license or citation, a missing Type 3A, the wrong record type, a missing affidavit, or a certificate for a course the court never approved. Most are fixable within the window. [What to do when a certificate is rejected](/texas/certificate-rejected). If the name on the certificate is wrong, contact us before resubmitting; we correct it and reissue.
 
 ---
 

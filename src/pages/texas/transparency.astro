@@ -1,6 +1,7 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
 import YouTubeCard from '../../components/YouTubeCard.astro';
+import { termsUrl } from '../../lib/portal';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 
@@ -170,7 +171,7 @@ const schema = JSON.stringify({
         </div>
 
         <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
-          <p class="text-sm text-text-subtle">This page describes Road Ready Safety's own processes and policies as currently operated; the legally controlling documents are our <a href="/texas/terms" class="text-primary hover:underline">Terms</a> and <a href="/texas/refund" class="text-primary hover:underline">Refund and Withdrawal Policy</a>, and policies may change. Court fees, deadlines, and eligibility are set by law and by your court — not by us. Nothing here is legal advice.</p>
+          <p class="text-sm text-text-subtle">This page describes Road Ready Safety's own processes and policies as currently operated; the legally controlling documents are our <a href={termsUrl} class="text-primary hover:underline">Terms</a> and <a href="/texas/refund" class="text-primary hover:underline">Refund and Withdrawal Policy</a>, and policies may change. Court fees, deadlines, and eligibility are set by law and by your court — not by us. Nothing here is legal advice.</p>
           <p class="text-xs text-text-subtle">Last updated August 4, 2026 — reviewed by the Road Ready Safety editorial team. License status verifiable against TDLR records; statutory price floor per Tex. Educ. Code §1001.352.</p>
         </div>
 

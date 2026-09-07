@@ -1,0 +1,30 @@
+---
+/**
+ * /texas/terms — the Terms of Service now live on the portal, not here. This page stays behind only to
+ * forward the old URL, which was in the sitemap for a long time and is still linked from
+ * elsewhere; deleting it outright would 404 every bookmark and search result.
+ *
+ * Same pattern as /texas/contactus. noindex so Google keeps the portal page, not this one.
+ */
+import { termsUrl } from '../../lib/portal';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta http-equiv="refresh" content={`0; url=${termsUrl}`} />
+    <link rel="canonical" href={termsUrl} />
+    <title>Redirecting…</title>
+    <script define:vars={{ termsUrl }}>
+      window.location.replace(termsUrl);
+    </script>
+  </head>
+  <body>
+    <p style="font-family: sans-serif; padding: 2rem; color: #616d7b;">
+      Redirecting to Terms of Service…
+      <a href={termsUrl} style="color: #0667D1;">Click here if you are not redirected.</a>
+    </p>
+  </body>
+</html>

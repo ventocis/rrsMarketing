@@ -1,0 +1,110 @@
+---
+import AdeLayout from '../../../layouts/AdeLayout.astro';
+import ade from '../../../data/ade-texas.json';
+
+const isProdSite =
+  import.meta.env.VITE_ENABLE_ANALYTICS === 'true' && import.meta.env.VITE_IS_QA !== 'true';
+const isLicensed = Boolean(ade.provider.deLicenseNumber);
+const isEnabled =
+  import.meta.env.VITE_ADE_ROUTES_ENABLED === 'true' && (isLicensed || !isProdSite);
+
+const provider = `${ade.provider.legalName} d/b/a ${ade.provider.dba}`;
+const licenseNo = ade.provider.deLicenseNumber || '[DE LICENSE #]';
+
+// 16 TAC §84.84 requires four items of departmental contact information. Values are taken from
+// TDLR complaint form 007all rev. 10-23, which is the more specific source for complaint intake.
+// Re-verify against TDLR's current published complaint sign and complaint page before launch.
+const tdlr = [
+  { label: 'Mailing address', value: 'P.O. Box 12157, Austin, Texas 78711-2157' },
+  { label: 'Telephone', value: '(800) 803-9202 (toll-free, in state) | (512) 539-5600', tel: '+18008039202' },
+  { label: 'Fax', value: '(512) 539-5698' },
+  { label: 'E-mail', value: 'Intake-complaints@tdlr.texas.gov', mail: 'Intake-complaints@tdlr.texas.gov' },
+  { label: 'Website', value: 'www.tdlr.texas.gov', href: 'https://www.tdlr.texas.gov' },
+  { label: 'Online complaint form', value: 'www.tdlr.texas.gov/complaints', href: 'https://www.tdlr.texas.gov/complaints' },
+];
+---
+
+{!isEnabled && <meta http-equiv="refresh" content="0;url=/" />}
+
+{isEnabled && (
+<AdeLayout
+  title="TDLR Complaints — Notice to Students and Consumers | Road Ready Safety"
+  description="How to contact the Texas Department of Licensing and Regulation with a question, concern, or complaint about Road Ready Safety's Texas adult driver education course."
+  url="/adult-drivers-ed/texas/public-interest-notice"
+>
+  <section class="py-16 lg:py-24 px-4 sm:px-6 lg:px-8 bg-surface-muted">
+    <div class="max-w-3xl mx-auto">
+
+      <div class="flex flex-col gap-4 items-center mb-10 text-center">
+        <div class="bg-info inline-flex items-center px-4 py-2 rounded-full">
+          <span class="text-sm font-semibold text-info-text leading-5">Public Interest Information</span>
+        </div>
+        <h1 class="text-[34px] lg:text-[42px] font-bold text-text leading-[1.15] tracking-[-1px]" style="font-family:'Outfit',sans-serif;">
+          Notice to Students and Consumers
+        </h1>
+        <p class="text-base text-text-body leading-6 max-w-2xl">
+          {provider} &middot; Published under 16 Texas Administrative Code &sect;&nbsp;84.84
+        </p>
+      </div>
+
+      <!-- The §84.84 notice itself. Plain text, full size, never collapsed or behind a
+           click-through — the submitted policy commits to exactly that format. -->
+      <div class="bg-white border border-border rounded-[20px] p-8 lg:p-12 flex flex-col gap-6">
+
+        <p class="text-[17px] text-text-body leading-[30px]">
+          {provider} is regulated by the Texas Department of Licensing and Regulation under
+          Chapter 1001 of the Texas Education Code and Chapter 84 of Title 16 of the Texas
+          Administrative Code, as a licensed Driver Education Provider, License No.{' '}
+          {isLicensed
+            ? licenseNo
+            : <mark class="bg-error-bg text-error font-semibold px-1.5 py-0.5 rounded not-italic">{licenseNo}</mark>}.
+        </p>
+        {!isLicensed && (
+          <p class="text-sm text-error bg-error-bg border border-error/20 rounded-xl px-4 py-3 leading-6">
+            Not publishable yet &mdash; the license number above is a placeholder. This page is visible on QA only.
+          </p>
+        )}
+
+        <p class="text-[17px] text-text-body leading-[30px]">
+          Questions, concerns, or complaints regarding this provider, its courses, its instructors,
+          or the Driver Education and Safety Program may be directed to the Department at:
+        </p>
+
+        <div class="bg-surface-muted border border-border rounded-2xl p-6 lg:p-8 flex flex-col gap-4">
+          <p class="text-[19px] font-bold text-text leading-7" style="font-family:'Outfit',sans-serif;">
+            Texas Department of Licensing and Regulation
+          </p>
+          <dl class="flex flex-col gap-3 m-0">
+            {tdlr.map((row) => (
+              <div class="flex flex-col sm:flex-row sm:gap-4">
+                <dt class="text-[15px] font-semibold text-text-muted sm:w-[190px] sm:flex-shrink-0 leading-[26px]">{row.label}</dt>
+                <dd class="text-[17px] text-text-body leading-[26px] m-0 break-words">
+                  {row.href
+                    ? <a href={row.href} class="text-primary underline" rel="noopener">{row.value}</a>
+                    : row.mail
+                      ? <a href={`mailto:${row.mail}`} class="text-primary underline">{row.value}</a>
+                      : row.tel
+                        ? <><a href={`tel:${row.tel}`} class="text-primary underline">(800) 803-9202</a> (toll-free, in state) | <a href="tel:+15125395600" class="text-primary underline">(512) 539-5600</a></>
+                        : row.value}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+
+        <p class="text-[17px] font-semibold text-text leading-[30px]">
+          You are not required to attempt to resolve a complaint with this provider before
+          contacting the Department. You may contact the Department directly at any time.
+        </p>
+      </div>
+
+      <p class="text-sm text-text-muted leading-6 text-center mt-8">
+        Reviewed at least annually and whenever the Department changes its contact information.
+        Questions for us rather than the Department go to{' '}
+        <a href={`mailto:${ade.provider.supportEmail}`} class="text-primary underline">{ade.provider.supportEmail}</a>.
+      </p>
+
+    </div>
+  </section>
+</AdeLayout>
+)}

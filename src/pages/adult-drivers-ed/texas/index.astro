@@ -21,7 +21,7 @@ const badges = [
   {
     icon: '/assets/icons/texas/tdlr-approved-icon.svg',
     title: 'TDLR-Approved',
-    body: 'The full six hours Texas requires for your first driver license.',
+    body: 'Approved by the Texas Department of Licensing and Regulation (TDLR) — the agency that signs off on driver education in Texas.',
   },
   {
     icon: '/assets/icons/texas/super-easy-icon.svg',
@@ -79,28 +79,35 @@ const steps = [
   {
     n: 1,
     title: 'Finish the six hours',
+    time: '6 hours, split over as many sittings as you like',
     body: 'Nine modules, self-paced. Most people finish across two or three sittings.',
   },
   {
     n: 2,
     title: 'Pass the final exam',
+    time: 'Included in the course',
     body: `${ade.exam.questions} questions — ${ade.exam.signsQuestions} on highway signs, ${ade.exam.lawsQuestions} on traffic laws. Miss it and you get two more tries.`,
   },
   {
     n: 3,
     title: 'Get your certificate',
-    body: 'A licensed Texas instructor signs off on your record and we email your certificate. Print it — the DPS wants a paper copy.',
+    time: 'After your instructor signs off',
+    body: 'A licensed Texas instructor signs off on your record and we email your certificate. It is called an ADE-1317 — the state\'s name for the adult driver education certificate. Print it; a paper copy is what gets accepted.',
   },
   {
     n: 4,
-    title: 'Watch Impact Texas Drivers',
+    title: 'Watch Impact Texas Adult Drivers (ITAD)',
+    where: 'On the DPS site',
     required: true,
-    body: 'Required for everyone getting a first Texas license, at any age. It is a free one-hour video from the DPS with its own certificate, separate from ours. Watch it within 90 days of your driving test and bring the printed certificate.',
+    time: 'Online, before your DPS visit',
+    body: 'A free one-hour video from Texas DPS, required once you hold an ADE-1317 certificate. You watch it on the DPS site, not here, and DPS emails you the certificate. It stays valid 90 days — watch it close to your skills test, because if 90 days pass before you pass, you start over.',
+    link: { href: 'https://impacttexasdrivers.dps.texas.gov/itad', label: 'Take ITAD on the DPS site' },
   },
   {
     n: 5,
     title: 'Go to the DPS',
-    body: 'Bring your certificates and your documents. You still take the vision screening and the driving test there.',
+    time: 'One visit, by appointment',
+    body: 'The Department of Public Safety (DPS) is where Texas issues licenses. Bring your certificates and your documents. You still take the vision screening and the driving test there.',
   },
 ];
 
@@ -154,7 +161,7 @@ const faqs = [
   },
   {
     q: 'What is Impact Texas Drivers?',
-    a: 'A free one-hour video from the Texas DPS about distracted driving. Everyone getting a first Texas license has to watch it, including drivers 25 and over. It is separate from this course and has its own certificate. Watch it within 90 days of your driving test and print the certificate — the DPS will not accept it on your phone.',
+    a: 'A free one-hour video program from the Texas Department of Public Safety about the consequences of distracted driving. If you complete this course and get your ADE-1317 certificate, DPS requires you to watch Impact Texas Adult Drivers (ITAD) before you take your driving skills test. It is separate from our course — you take it on the DPS site and DPS issues that certificate, not us. Drivers 25 and over take ITAD too; drivers 15 to 17 take a different two-hour program, ITTD. The certificate is valid for 90 days, so watch it close to your test date rather than early — if 90 days pass before you take the skills test, you have to redo it. It is tied to the skills test, so someone moving to Texas with a valid out-of-state license, who takes no skills test, does not need it.',
   },
   {
     q: 'How long do I have to finish?',
@@ -244,7 +251,7 @@ const faqSchema = {
                 Do I even need this?
               </a>
             </div>
-            <p class="text-sm text-text-body pt-1">
+            <p class="text-base text-text-body pt-1">
               Self-paced &middot; Stop and resume anytime &middot; {ade.course.completionDays} days to finish
             </p>
           </div>
@@ -377,7 +384,7 @@ const faqSchema = {
               Get My License
             </a>
 
-            <p class="text-xs text-text-muted leading-5 text-center">
+            <p class="text-sm text-text-muted leading-6 text-center">
               Full refund if you cancel within three days of signing up.
               <a href="/adult-drivers-ed/texas/refund" class="text-primary underline">Refund policy</a>.
             </p>
@@ -411,16 +418,24 @@ const faqSchema = {
               {s.n}
             </span>
             <div class="flex flex-col gap-1.5">
+              <p class="text-[11px] font-bold uppercase tracking-[0.12em] text-text-muted leading-4 mb-0.5">
+                Step {s.n} of {steps.length}{s.time ? ` · ${s.time}` : ''}
+              </p>
               <div class="flex flex-wrap items-center gap-2">
                 <h3 class="text-xl font-bold text-text leading-7" style="font-family:'Outfit',sans-serif;">{s.title}</h3>
                 <span class={`text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full ${s.n <= 3 ? 'bg-primary-deep text-white' : 'bg-surface-muted text-text-muted border border-border'}`}>
-                  {s.n <= 3 ? 'With us' : 'At the DPS'}
+                  {s.where ?? (s.n <= 3 ? 'With us' : 'At the DPS')}
                 </span>
                 {s.required && (
                   <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full bg-error-bg text-error">Required</span>
                 )}
               </div>
               <p class="text-base text-text-body leading-6">{s.body}</p>
+              {s.link && (
+                <a href={s.link.href} rel="noopener" class="text-base font-semibold text-primary underline w-fit mt-0.5">
+                  {s.link.label} &rarr;
+                </a>
+              )}
             </div>
           </div>
         ))}
@@ -429,27 +444,40 @@ const faqSchema = {
   </section>
 
   <!-- ================= CURRICULUM ================= -->
-  <section id="curriculum" class="py-16 lg:py-20 bg-white scroll-mt-24">
+  <section id="curriculum" class="py-16 lg:py-24 bg-white scroll-mt-24">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <div class="flex flex-col gap-4 items-center mb-8 text-center">
+        <div class="flex items-center gap-2.5">
+          <span class="h-[3px] w-7 rounded-full bg-primary"></span>
+          <span class="text-[11px] font-bold uppercase tracking-[0.16em] text-primary-deep">Curriculum</span>
+          <span class="h-[3px] w-7 rounded-full bg-primary"></span>
+        </div>
+        <h2 class="text-[32px] lg:text-[44px] font-bold text-text leading-[1.15] tracking-[-1px]" style="font-family:'Outfit',sans-serif;">
+          What this course covers
+        </h2>
+        <p class="text-lg text-text-body leading-7 max-w-2xl">
+          Nine modules, set by the state. Two of them include short required videos.
+        </p>
+      </div>
+
       <details class="group bg-surface-muted border border-border rounded-[20px] overflow-hidden">
-        <summary class="cursor-pointer list-none px-6 py-6 flex items-center justify-between gap-4 hover:bg-white/60 transition-colors">
-          <div class="flex flex-col gap-1">
-            <h2 class="text-[21px] lg:text-[24px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">
-              What&rsquo;s in the 6-hour course
-            </h2>
-            <p class="text-[15px] text-text-body leading-6">
-              Nine modules, set by the state. Tap to see them.
-            </p>
-          </div>
-          <svg class="flex-shrink-0 w-6 h-6 text-text-muted transition-transform group-open:rotate-45" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-            <path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-          </svg>
+        <summary class="cursor-pointer list-none px-6 py-5 flex items-center justify-between gap-4 hover:bg-white/60 transition-colors">
+          <span class="text-[17px] font-semibold text-text leading-6">See all nine modules</span>
+          <span class="flex items-center gap-2 flex-shrink-0">
+            <span class="text-[13px] text-text-muted group-open:hidden">Show</span>
+            <span class="text-[13px] text-text-muted hidden group-open:inline">Hide</span>
+            <svg class="w-5 h-5 text-text-muted transition-transform group-open:rotate-45" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </span>
         </summary>
 
-        <div class="px-6 pb-6 -mt-1">
+        <div class="px-6 pb-6">
           <ol class="flex flex-col gap-0 m-0 p-0 list-none border-t border-border">
             {ade.modules.map((m) => {
               const isFinal = m.n === ade.modules.length;
+              const hasVideo = m.n === 7;
               return (
                 <li class="flex gap-4 items-baseline py-3.5 border-b border-border last:border-b-0">
                   <span class={`flex-shrink-0 text-[13px] font-bold tabular-nums leading-6 ${isFinal ? 'text-primary' : 'text-text-subtle'}`} style="font-family:'Outfit',sans-serif;">
@@ -461,8 +489,11 @@ const faqSchema = {
                       {isFinal && (
                         <span class="text-[10px] font-bold uppercase tracking-wider text-primary-deep bg-info px-2 py-0.5 rounded-full">Final exam</span>
                       )}
+                      {hasVideo && (
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-primary-deep bg-info px-2 py-0.5 rounded-full">2 videos</span>
+                      )}
                     </div>
-                    <p class="text-[14px] text-text-muted leading-[22px]">{m.blurb}</p>
+                    <p class="text-[15px] text-text-muted leading-[24px]">{m.blurb}</p>
                   </div>
                 </li>
               );
@@ -485,7 +516,7 @@ const faqSchema = {
         <h2 class="text-[32px] lg:text-[44px] font-bold text-text leading-[1.15] tracking-[-1px]" style="font-family:'Outfit',sans-serif;">
           What Texans say about our courses
         </h2>
-        <p class="text-sm text-text-muted leading-6 max-w-2xl">
+        <p class="text-base text-text-muted leading-7 max-w-2xl">
           These reviews are from students of our <a href="/texas" class="text-primary underline">Texas defensive driving course</a>. Reviews of the adult drivers ed course will appear here as students finish it.
         </p>
       </div>

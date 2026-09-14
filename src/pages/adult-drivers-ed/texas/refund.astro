@@ -1,0 +1,141 @@
+---
+import AdeLayout from '../../../layouts/AdeLayout.astro';
+import ade from '../../../data/ade-texas.json';
+
+const isProdSite =
+  import.meta.env.VITE_ENABLE_ANALYTICS === 'true' && import.meta.env.VITE_IS_QA !== 'true';
+const isLicensed = Boolean(ade.provider.deLicenseNumber);
+const isEnabled =
+  import.meta.env.VITE_ADE_ROUTES_ENABLED === 'true' && (isLicensed || !isProdSite);
+
+const provider = `${ade.provider.legalName} d/b/a ${ade.provider.dba}`;
+const email = ade.provider.supportEmail;
+---
+
+{!isEnabled && <meta http-equiv="refresh" content="0;url=/" />}
+
+{isEnabled && (
+<AdeLayout
+  title="Refund & Attendance Policy — Texas Adult Drivers Ed | Road Ready Safety"
+  description="Cancellation, refund, termination and attendance terms for Road Ready Safety's Texas adult driver education course, including the three-day cancellation right."
+  url="/adult-drivers-ed/texas/refund"
+>
+  <section class="py-16 lg:py-24 px-4 sm:px-6 lg:px-8 bg-surface-muted">
+    <div class="max-w-3xl mx-auto">
+
+      <div class="flex flex-col gap-4 items-center mb-10 text-center">
+        <div class="bg-info inline-flex items-center px-4 py-2 rounded-full">
+          <span class="text-sm font-semibold text-info-text leading-5">Legal</span>
+        </div>
+        <h1 class="text-[34px] lg:text-[42px] font-bold text-text leading-[1.15] tracking-[-1px]" style="font-family:'Outfit',sans-serif;">
+          Refund &amp; Attendance Policy
+        </h1>
+        <p class="text-base text-text-body leading-6">{provider}</p>
+      </div>
+
+      <div class="bg-white border border-border rounded-[20px] p-8 lg:p-12 flex flex-col gap-10">
+
+        <section class="flex flex-col gap-4">
+          <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Cancellation &mdash; your three-day right</h2>
+          <p class="text-[17px] text-text-body leading-[30px]">You are entitled to a full refund of all money you have paid if:</p>
+          <ul class="flex flex-col gap-3 pl-5 m-0 list-disc marker:text-text-subtle">
+            <li class="text-[17px] text-text-body leading-[30px]">
+              You cancel this enrollment contract before midnight of the third day, other than a
+              Saturday, Sunday, or legal holiday, after the date you signed it; or
+            </li>
+            <li class="text-[17px] text-text-body leading-[30px]">
+              You provide proof that your enrollment resulted from a misrepresentation in Road
+              Ready&rsquo;s advertising or promotional materials, or from a representation made by
+              an owner or employee.
+            </li>
+          </ul>
+          <p class="text-[17px] text-text-body leading-[30px]">
+            You are not eligible for a full refund if, within that period, you have successfully
+            completed the course or received a failing grade on the comprehensive course examination.
+          </p>
+        </section>
+
+        <section class="flex flex-col gap-4">
+          <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Termination and refunds</h2>
+          <p class="text-[17px] text-text-body leading-[30px]">
+            If you do not enter the course, withdraw, or are terminated before completion, your
+            refund is based on the period of enrollment, calculated on course time expressed in
+            clock hours. The effective date of termination is the last day of attendance if Road
+            Ready terminates the enrollment, the date Road Ready receives your written notice, or
+            the tenth school day after your last day of attendance &mdash; whichever applies.
+          </p>
+          <p class="text-[17px] text-text-body leading-[30px]">
+            If tuition is collected in advance and you do not attend, withdraw, or are terminated,
+            Road Ready will retain not more than $50 from the total course tuition as an
+            administrative expense and will refund all fees or remaining tuition corresponding to
+            services you did not receive. Separately stated extra expenses are refunded if they were
+            shown to you before enrollment and you return any property purchased from Road Ready.
+          </p>
+          <p class="text-[17px] text-text-body leading-[30px]">
+            All refunds are completed before the 30th day after the effective date of termination. A
+            refund not made within that period accrues interest at an annual rate of 10 percent.
+            Refund requests may be submitted through your student account or by email to{' '}
+            <a href={`mailto:${email}`} class="text-primary underline">{email}</a>.
+          </p>
+        </section>
+
+        <section class="flex flex-col gap-4 bg-info border border-info-border rounded-2xl p-6 lg:p-8">
+          <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Road Ready refund guarantee</h2>
+          <p class="text-[17px] text-text-body leading-[30px]">
+            The rights above are the minimum Texas law gives you. Beyond them, we will refund your
+            full tuition, with no administrative fee, if you request it before you begin the
+            comprehensive final examination &mdash; whatever your reason and however far into the
+            course you are. Once you start the final exam, the refund terms stated apply. Email{' '}
+            <a href={`mailto:${email}`} class="text-primary underline">{email}</a> to request it.
+          </p>
+        </section>
+
+        <section class="flex flex-col gap-4">
+          <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">If we discontinue the course</h2>
+          <p class="text-[17px] text-text-body leading-[30px]">
+            If discontinuation of the course prevents you from completing it, all tuition and fees
+            you have paid automatically become refundable. If you submit a written request for a
+            refund, it will be fulfilled within thirty days after receipt.
+          </p>
+        </section>
+
+        <section id="attendance" class="flex flex-col gap-4 scroll-mt-28">
+          <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Attendance and make-up</h2>
+          <p class="text-[17px] text-text-body leading-[30px]">
+            All instruction, including any make-up work, must be completed within the timeline
+            stated above. You are responsible for making up any time missed.
+          </p>
+          <p class="text-[17px] text-text-body leading-[30px]">
+            Because this course is online and self-paced, there are no scheduled sessions to miss.
+            You may stop at any point and resume later; your progress is saved. Time not yet
+            completed is resumed rather than credited, and partial time in a lesson does not satisfy
+            that lesson. You receive the full {ade.course.instructionMinutes} minutes of instruction
+            regardless of how many sittings it takes. Any change to your completion deadline is at
+            Road Ready&rsquo;s discretion and must be agreed in writing.
+          </p>
+        </section>
+
+        <section class="flex flex-col gap-4 border-t border-border pt-8">
+          <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Complaints</h2>
+          <p class="text-[17px] text-text-body leading-[30px]">
+            Any grievances not resolved by the provider may be forwarded to the Texas Department of
+            Licensing and Regulation, Driver Education and Safety, P.O. Box 12157, Austin, Texas
+            78711, or by facsimile to <a href="tel:+15124639468" class="text-primary underline">(512) 463-9468</a>,
+            or electronically to:{' '}
+            <a href="https://www.tdlr.texas.gov/help/" rel="noopener" class="text-primary underline">https://www.tdlr.texas.gov/help/</a>.
+            The current telephone numbers of the department are{' '}
+            <a href="tel:+18008039202" class="text-primary underline">800-803-9202</a> or{' '}
+            <a href="tel:+15124636599" class="text-primary underline">(512) 463-6599</a>.
+          </p>
+          <p class="text-[17px] text-text-body leading-[30px]">
+            TDLR may also be reached at: TDLR, P.O. Box 12157, Austin, TX 78711-2157,{' '}
+            <a href="tel:+18008039202" class="text-primary underline">(800) 803-9202</a>, and{' '}
+            <a href="mailto:Intake-complaints@tdlr.texas.gov" class="text-primary underline">Intake-complaints@tdlr.texas.gov</a>
+          </p>
+        </section>
+
+      </div>
+    </div>
+  </section>
+</AdeLayout>
+)}

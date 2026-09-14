@@ -55,15 +55,11 @@ const supportLinks = [
 const legalLinks = [
   { href: '/privacy', label: 'Privacy' },
   { href: termsUrl, label: 'Terms' },
-  { href: '/adult-drivers-ed/texas/refund', label: 'Refund' },
-  { href: '/adult-drivers-ed/texas/accessibility', label: 'Accessibility' },
+  { href: '/adult-drivers-ed/texas/refund', label: 'Refund & Attendance Policy' },
 ];
 
 // ADE-only. Driving safety has no equivalent for these.
 const adeLegalLinks = [
-  { href: '/adult-drivers-ed/texas/make-up-policy', label: 'Make-Up Policy' },
-  { href: '/adult-drivers-ed/texas/final-exam-policy', label: 'Final Examination' },
-  { href: '/adult-drivers-ed/texas/instructor-of-record', label: 'Instructor of Record' },
   { href: '/adult-drivers-ed/texas/public-interest-notice', label: 'TDLR Complaints' }, // label fixed by the submitted §84.84 policy, Section 4
 ];
 ---
@@ -215,6 +211,19 @@ const adeLegalLinks = [
           <a href={`mailto:${ade.provider.supportEmail}`} class="text-sm text-info-border hover:text-white no-underline transition-colors">
             {ade.provider.supportEmail}
           </a>
+          <address class="not-italic text-sm text-text-subtle leading-6">
+            5900 Balcones Drive, Ste 100<br />
+            Austin, TX 78731<br />
+            <a href="tel:+18888855707" class="text-info-border hover:text-white no-underline transition-colors">(888) 885-5707</a>
+          </address>
+          <p class="text-sm text-text-subtle leading-6">
+            Monday&ndash;Friday, 9:00&nbsp;a.m.&ndash;5:00&nbsp;p.m. ET<br />
+            <span class="text-text-muted">(8:00&nbsp;a.m.&ndash;4:00&nbsp;p.m. Central)</span><br />
+            Excluding federal holidays
+          </p>
+          <p class="text-xs text-text-muted leading-5">
+            Instructor of record &middot; TDLR Instructor License #{ade.provider.instructorLicenseNumber}
+          </p>
           <div class="inline-flex items-center gap-2 rounded-full px-3 py-2 w-fit border border-white/15">
             <img src="/assets/icons/texas/tdlr-badge-footer.svg" alt="" class="w-4 h-4" />
             <span class="text-xs font-semibold text-info-border">{licenseLabel}</span>
@@ -260,6 +269,24 @@ const adeLegalLinks = [
           Completing this course {ade.exam.claimPhrasing}. It does not satisfy the driving skills test, the vision
           screening, or any other licensing requirement, and does not entitle any student to a driver license.
           All remaining licensing steps are between the student and the Texas Department of Public Safety.
+        </p>
+
+        <!-- 16 TAC §84.84 complaints notice. Wording is fixed by the filed policy — do not
+             paraphrase, reorder or "tidy" it. Both departmental contact sets are shown because
+             §84.82(f) recites one and TDLR complaint form 007all publishes the other. -->
+        <p class="text-xs text-text-muted leading-5 max-w-4xl">
+          Any grievances not resolved by the provider may be forwarded to the Texas Department of
+          Licensing and Regulation, Driver Education and Safety, P.O. Box 12157, Austin, Texas 78711,
+          or by facsimile to <a href="tel:+15124639468" class="text-text-subtle hover:text-white underline">(512) 463-9468</a>,
+          or electronically to: <a href="https://www.tdlr.texas.gov/help/" rel="noopener" class="text-text-subtle hover:text-white underline">https://www.tdlr.texas.gov/help/</a>.
+          The current telephone numbers of the department are
+          <a href="tel:+18008039202" class="text-text-subtle hover:text-white underline">800-803-9202</a> or
+          <a href="tel:+15124636599" class="text-text-subtle hover:text-white underline">(512) 463-6599</a>.
+        </p>
+        <p class="text-xs text-text-muted leading-5 max-w-4xl">
+          TDLR may also be reached at: TDLR, P.O. Box 12157, Austin, TX 78711-2157,
+          <a href="tel:+18008039202" class="text-text-subtle hover:text-white underline">(800) 803-9202</a>, and
+          <a href="mailto:Intake-complaints@tdlr.texas.gov" class="text-text-subtle hover:text-white underline">Intake-complaints@tdlr.texas.gov</a>
         </p>
         <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <p class="text-sm text-text-muted">

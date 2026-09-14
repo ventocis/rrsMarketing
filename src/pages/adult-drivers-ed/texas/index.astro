@@ -96,10 +96,12 @@ const steps = [
   },
   {
     n: 4,
-    title: 'Watch Impact Texas Drivers',
+    title: 'Watch Impact Texas Adult Drivers (ITAD)',
+    where: 'On the DPS site',
     required: true,
-    time: '1 hour, free, from the DPS',
-    body: 'Required for everyone getting a first Texas license, at any age. It is a free one-hour video from the DPS with its own certificate, separate from ours. Watch it within 90 days of your driving test and bring the printed certificate.',
+    time: 'Online, before your DPS visit',
+    body: 'A free one-hour video from Texas DPS, required once you hold an ADE-1317 certificate. You watch it on the DPS site, not here, and DPS emails you the certificate. It stays valid 90 days — watch it close to your skills test, because if 90 days pass before you pass, you start over.',
+    link: { href: 'https://impacttexasdrivers.dps.texas.gov/itad', label: 'Take ITAD on the DPS site' },
   },
   {
     n: 5,
@@ -159,7 +161,7 @@ const faqs = [
   },
   {
     q: 'What is Impact Texas Drivers?',
-    a: 'A free one-hour video from the Texas DPS about distracted driving. Everyone getting a first Texas license has to watch it, including drivers 25 and over. It is separate from this course and has its own certificate. Watch it within 90 days of your driving test and print the certificate — the DPS will not accept it on your phone.',
+    a: 'A free one-hour video program from the Texas Department of Public Safety about the consequences of distracted driving. If you complete this course and get your ADE-1317 certificate, DPS requires you to watch Impact Texas Adult Drivers (ITAD) before you take your driving skills test. It is separate from our course — you take it on the DPS site and DPS issues that certificate, not us. Drivers 25 and over take ITAD too; drivers 15 to 17 take a different two-hour program, ITTD. The certificate is valid for 90 days, so watch it close to your test date rather than early — if 90 days pass before you take the skills test, you have to redo it. It is tied to the skills test, so someone moving to Texas with a valid out-of-state license, who takes no skills test, does not need it.',
   },
   {
     q: 'How long do I have to finish?',
@@ -422,13 +424,18 @@ const faqSchema = {
               <div class="flex flex-wrap items-center gap-2">
                 <h3 class="text-xl font-bold text-text leading-7" style="font-family:'Outfit',sans-serif;">{s.title}</h3>
                 <span class={`text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full ${s.n <= 3 ? 'bg-primary-deep text-white' : 'bg-surface-muted text-text-muted border border-border'}`}>
-                  {s.n <= 3 ? 'With us' : 'At the DPS'}
+                  {s.where ?? (s.n <= 3 ? 'With us' : 'At the DPS')}
                 </span>
                 {s.required && (
                   <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full bg-error-bg text-error">Required</span>
                 )}
               </div>
               <p class="text-base text-text-body leading-6">{s.body}</p>
+              {s.link && (
+                <a href={s.link.href} rel="noopener" class="text-base font-semibold text-primary underline w-fit mt-0.5">
+                  {s.link.label} &rarr;
+                </a>
+              )}
             </div>
           </div>
         ))}

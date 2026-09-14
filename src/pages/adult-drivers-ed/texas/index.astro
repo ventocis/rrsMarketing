@@ -21,7 +21,7 @@ const badges = [
   {
     icon: '/assets/icons/texas/tdlr-approved-icon.svg',
     title: 'TDLR-Approved',
-    body: 'The full six hours Texas requires for your first driver license.',
+    body: 'Approved by the Texas Department of Licensing and Regulation (TDLR) — the agency that signs off on driver education in Texas.',
   },
   {
     icon: '/assets/icons/texas/super-easy-icon.svg',
@@ -79,28 +79,33 @@ const steps = [
   {
     n: 1,
     title: 'Finish the six hours',
+    time: '6 hours, split over as many sittings as you like',
     body: 'Nine modules, self-paced. Most people finish across two or three sittings.',
   },
   {
     n: 2,
     title: 'Pass the final exam',
+    time: 'Included in the course',
     body: `${ade.exam.questions} questions — ${ade.exam.signsQuestions} on highway signs, ${ade.exam.lawsQuestions} on traffic laws. Miss it and you get two more tries.`,
   },
   {
     n: 3,
     title: 'Get your certificate',
-    body: 'A licensed Texas instructor signs off on your record and we email your certificate. Print it — the DPS wants a paper copy.',
+    time: 'After your instructor signs off',
+    body: 'A licensed Texas instructor signs off on your record and we email your certificate. It is called an ADE-1317 — the state\'s name for the adult driver education certificate. Print it; a paper copy is what gets accepted.',
   },
   {
     n: 4,
     title: 'Watch Impact Texas Drivers',
     required: true,
+    time: '1 hour, free, from the DPS',
     body: 'Required for everyone getting a first Texas license, at any age. It is a free one-hour video from the DPS with its own certificate, separate from ours. Watch it within 90 days of your driving test and bring the printed certificate.',
   },
   {
     n: 5,
     title: 'Go to the DPS',
-    body: 'Bring your certificates and your documents. You still take the vision screening and the driving test there.',
+    time: 'One visit, by appointment',
+    body: 'The Department of Public Safety (DPS) is where Texas issues licenses. Bring your certificates and your documents. You still take the vision screening and the driving test there.',
   },
 ];
 
@@ -244,7 +249,7 @@ const faqSchema = {
                 Do I even need this?
               </a>
             </div>
-            <p class="text-sm text-text-body pt-1">
+            <p class="text-base text-text-body pt-1">
               Self-paced &middot; Stop and resume anytime &middot; {ade.course.completionDays} days to finish
             </p>
           </div>
@@ -377,7 +382,7 @@ const faqSchema = {
               Get My License
             </a>
 
-            <p class="text-xs text-text-muted leading-5 text-center">
+            <p class="text-sm text-text-muted leading-6 text-center">
               Full refund if you cancel within three days of signing up.
               <a href="/adult-drivers-ed/texas/refund" class="text-primary underline">Refund policy</a>.
             </p>
@@ -411,6 +416,9 @@ const faqSchema = {
               {s.n}
             </span>
             <div class="flex flex-col gap-1.5">
+              <p class="text-[11px] font-bold uppercase tracking-[0.12em] text-text-muted leading-4 mb-0.5">
+                Step {s.n} of {steps.length}{s.time ? ` · ${s.time}` : ''}
+              </p>
               <div class="flex flex-wrap items-center gap-2">
                 <h3 class="text-xl font-bold text-text leading-7" style="font-family:'Outfit',sans-serif;">{s.title}</h3>
                 <span class={`text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full ${s.n <= 3 ? 'bg-primary-deep text-white' : 'bg-surface-muted text-text-muted border border-border'}`}>
@@ -437,7 +445,7 @@ const faqSchema = {
             <h2 class="text-[21px] lg:text-[24px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">
               What&rsquo;s in the 6-hour course
             </h2>
-            <p class="text-[15px] text-text-body leading-6">
+            <p class="text-base text-text-body leading-6">
               Nine modules, set by the state. Tap to see them.
             </p>
           </div>
@@ -485,7 +493,7 @@ const faqSchema = {
         <h2 class="text-[32px] lg:text-[44px] font-bold text-text leading-[1.15] tracking-[-1px]" style="font-family:'Outfit',sans-serif;">
           What Texans say about our courses
         </h2>
-        <p class="text-sm text-text-muted leading-6 max-w-2xl">
+        <p class="text-base text-text-muted leading-7 max-w-2xl">
           These reviews are from students of our <a href="/texas" class="text-primary underline">Texas defensive driving course</a>. Reviews of the adult drivers ed course will appear here as students finish it.
         </p>
       </div>

@@ -70,6 +70,7 @@ const adeRoutes = adeEnabled
       '/adult-drivers-ed/texas',
       '/adult-drivers-ed/texas/helpcenter',
       '/adult-drivers-ed/texas/refund',
+      '/adult-drivers-ed/texas/accessibility',
       '/adult-drivers-ed/texas/public-interest-notice',
     ]
   : [];

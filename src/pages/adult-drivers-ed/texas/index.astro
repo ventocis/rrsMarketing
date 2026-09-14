@@ -46,7 +46,6 @@ const included = [
   'Two more attempts if you do not pass the first time',
   'Your certificate',
   `${ade.course.completionDays} days to finish, stopping and resuming anytime`,
-  'Unlimited review of anything you have already finished',
   'A licensed Texas instructor you can reach',
 ];
 
@@ -95,7 +94,8 @@ const steps = [
   {
     n: 4,
     title: 'Watch Impact Texas Drivers',
-    body: 'A free one-hour video from the DPS. Everyone getting a first Texas license watches it, at any age. Do it within 90 days of your driving test and bring the printed certificate.',
+    required: true,
+    body: 'Required for everyone getting a first Texas license, at any age. It is a free one-hour video from the DPS with its own certificate, separate from ours. Watch it within 90 days of your driving test and bring the printed certificate.',
   },
   {
     n: 5,
@@ -316,23 +316,6 @@ const faqSchema = {
     </div>
   </section>
 
-  <!-- ================= TRUST BAND ================= -->
-  <section class="border-y border-border bg-surface-muted">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
-      <div class="flex flex-wrap items-center justify-center gap-x-10 gap-y-3">
-        {['TDLR-approved course', 'Certificate included', '3-day full refund', 'Licensed Texas instructor'].map((t) => (
-          <div class="flex items-center gap-2">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <circle cx="8" cy="8" r="8" fill="#16A34A" opacity="0.12"/>
-              <path d="M4.8 8.2l2.1 2.1 4.3-4.4" stroke="#16A34A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <span class="text-sm font-medium text-text-body">{t}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
   <!-- ================= PRICING ================= -->
   <section id="pricing" class="py-16 lg:py-24 bg-white scroll-mt-24">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -404,17 +387,144 @@ const faqSchema = {
     </div>
   </section>
 
+  <!-- ================= STEPS ================= -->
+  <section class="py-16 lg:py-24 bg-gradient-to-b from-surface-muted to-white">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col gap-4 items-center mb-12 text-center">
+        <div class="flex items-center gap-2.5">
+          <span class="h-[3px] w-7 rounded-full bg-primary"></span>
+          <span class="text-[11px] font-bold uppercase tracking-[0.16em] text-primary-deep">The process</span>
+          <span class="h-[3px] w-7 rounded-full bg-primary"></span>
+        </div>
+        <h2 class="text-[32px] lg:text-[44px] font-bold text-text leading-[1.15] tracking-[-1px]" style="font-family:'Outfit',sans-serif;">
+          How to get your Texas driver license as an adult
+        </h2>
+        <p class="text-lg text-text-body leading-7 max-w-2xl">
+          We handle the first three steps. The last two are at the DPS.
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        {steps.map((s) => (
+          <div class={`rounded-[20px] p-6 lg:p-7 flex gap-5 items-start border ${s.n <= 3 ? 'bg-info/40 border-info-border' : 'bg-white border-border'}`}>
+            <span class={`flex-shrink-0 w-11 h-11 rounded-2xl flex items-center justify-center text-lg font-bold ${s.n <= 3 ? 'bg-primary text-white' : 'bg-surface-muted text-text-muted border border-border'}`}>
+              {s.n}
+            </span>
+            <div class="flex flex-col gap-1.5">
+              <div class="flex flex-wrap items-center gap-2">
+                <h3 class="text-xl font-bold text-text leading-7" style="font-family:'Outfit',sans-serif;">{s.title}</h3>
+                <span class={`text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full ${s.n <= 3 ? 'bg-primary-deep text-white' : 'bg-surface-muted text-text-muted border border-border'}`}>
+                  {s.n <= 3 ? 'With us' : 'At the DPS'}
+                </span>
+                {s.required && (
+                  <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full bg-error-bg text-error">Required</span>
+                )}
+              </div>
+              <p class="text-base text-text-body leading-6">{s.body}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CURRICULUM ================= -->
+  <section id="curriculum" class="py-16 lg:py-20 bg-white scroll-mt-24">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <details class="group bg-surface-muted border border-border rounded-[20px] overflow-hidden">
+        <summary class="cursor-pointer list-none px-6 py-6 flex items-center justify-between gap-4 hover:bg-white/60 transition-colors">
+          <div class="flex flex-col gap-1">
+            <h2 class="text-[21px] lg:text-[24px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">
+              What&rsquo;s in the 6-hour course
+            </h2>
+            <p class="text-[15px] text-text-body leading-6">
+              Nine modules, set by the state. Tap to see them.
+            </p>
+          </div>
+          <svg class="flex-shrink-0 w-6 h-6 text-text-muted transition-transform group-open:rotate-45" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </summary>
+
+        <div class="px-6 pb-6 -mt-1">
+          <ol class="flex flex-col gap-0 m-0 p-0 list-none border-t border-border">
+            {ade.modules.map((m) => {
+              const isFinal = m.n === ade.modules.length;
+              return (
+                <li class="flex gap-4 items-baseline py-3.5 border-b border-border last:border-b-0">
+                  <span class={`flex-shrink-0 text-[13px] font-bold tabular-nums leading-6 ${isFinal ? 'text-primary' : 'text-text-subtle'}`} style="font-family:'Outfit',sans-serif;">
+                    {String(m.n).padStart(2, '0')}
+                  </span>
+                  <div class="flex flex-col gap-0.5">
+                    <div class="flex flex-wrap items-center gap-2">
+                      <h3 class="text-[16px] font-semibold text-text leading-6">{m.title}</h3>
+                      {isFinal && (
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-primary-deep bg-info px-2 py-0.5 rounded-full">Final exam</span>
+                      )}
+                    </div>
+                    <p class="text-[14px] text-text-muted leading-[22px]">{m.blurb}</p>
+                  </div>
+                </li>
+              );
+            })}
+          </ol>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ================= SOCIAL PROOF ================= -->
+  <section class="py-16 lg:py-24 bg-surface-muted">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col gap-3 items-center mb-10 text-center">
+        <div class="flex items-center gap-2.5">
+          <span class="h-[3px] w-7 rounded-full bg-primary"></span>
+          <span class="text-[11px] font-bold uppercase tracking-[0.16em] text-primary-deep">Reviews</span>
+          <span class="h-[3px] w-7 rounded-full bg-primary"></span>
+        </div>
+        <h2 class="text-[32px] lg:text-[44px] font-bold text-text leading-[1.15] tracking-[-1px]" style="font-family:'Outfit',sans-serif;">
+          What Texans say about our courses
+        </h2>
+        <p class="text-sm text-text-muted leading-6 max-w-2xl">
+          These reviews are from students of our <a href="/texas" class="text-primary underline">Texas defensive driving course</a>. Reviews of the adult drivers ed course will appear here as students finish it.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {testimonials.map((t) => (
+          <div class="bg-white border border-border rounded-[20px] p-8 flex flex-col gap-4 items-start">
+            <div class="flex gap-1">
+              {[...Array(5)].map(() => (
+                <img src="/assets/icons/texas/star-testimonial.svg" alt="" class="w-5 h-5" />
+              ))}
+            </div>
+            <p class="text-lg text-text leading-[28px]">&ldquo;{t.quote}&rdquo;</p>
+            <div class="flex gap-3 items-center pt-2">
+              <div class="bg-info rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0">
+                <span class="text-sm font-semibold text-primary-deep">{t.initials}</span>
+              </div>
+              <div class="flex flex-col">
+                <span class="text-base font-semibold text-text leading-6">{t.name}</span>
+                <span class="text-xs text-text-subtle leading-5">Verified via Trustpilot &middot; {t.date}</span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
   <!-- ================= WHO NEEDS IT ================= -->
   <section id="who-needs-it" class="py-16 lg:py-24 bg-surface-muted scroll-mt-24">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex flex-col gap-4 items-center mb-12 text-center">
         <div class="flex items-center gap-2.5">
           <span class="h-[3px] w-7 rounded-full bg-primary"></span>
-          <span class="text-[11px] font-bold uppercase tracking-[0.16em] text-primary-deep">Eligibility</span>
+          <span class="text-[11px] font-bold uppercase tracking-[0.16em] text-primary-deep">Who it's for</span>
           <span class="h-[3px] w-7 rounded-full bg-primary"></span>
         </div>
         <h2 class="text-[32px] lg:text-[44px] font-bold text-text leading-[1.15] tracking-[-1px] max-w-3xl" style="font-family:'Outfit',sans-serif;">
-          Do you actually need this course?
+          Who should take this course
         </h2>
         <p class="text-lg text-text-body leading-7 max-w-2xl">
           It depends on your age. Find yourself below.
@@ -458,127 +568,6 @@ const faqSchema = {
                 Get My License &mdash; ${price}
               </a>
             )}
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= CURRICULUM ================= -->
-  <section id="curriculum" class="py-16 lg:py-24 bg-white scroll-mt-24">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex flex-col gap-4 items-center mb-12 text-center">
-        <div class="flex items-center gap-2.5">
-          <span class="h-[3px] w-7 rounded-full bg-primary"></span>
-          <span class="text-[11px] font-bold uppercase tracking-[0.16em] text-primary-deep">Curriculum</span>
-          <span class="h-[3px] w-7 rounded-full bg-primary"></span>
-        </div>
-        <h2 class="text-[32px] lg:text-[44px] font-bold text-text leading-[1.15] tracking-[-1px] max-w-3xl" style="font-family:'Outfit',sans-serif;">
-          What&rsquo;s in the 6-hour course
-        </h2>
-        <p class="text-lg text-text-body leading-7 max-w-2xl">
-          Nine modules. Here is what each one covers.
-        </p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {ade.modules.map((m) => {
-          const isFinal = m.n === ade.modules.length;
-          return (
-            <div class="group relative bg-white border border-border rounded-[20px] pl-7 pr-6 py-6 flex flex-col gap-3 overflow-hidden transition-all duration-200 hover:border-text-subtle hover:shadow-[0_16px_32px_-16px_rgba(17,23,34,0.22)] hover:-translate-y-0.5">
-              <span class={`absolute left-0 inset-y-0 w-[3px] ${isFinal ? 'bg-primary' : 'bg-info-border'}`}></span>
-              <div class="flex items-center gap-3">
-                <span class={`w-10 h-10 rounded-xl flex items-center justify-center text-[15px] font-bold tabular-nums leading-none ${
-                  isFinal ? 'bg-primary text-white' : 'bg-info text-primary-deep'
-                }`} style="font-family:'Outfit',sans-serif;">
-                  {String(m.n).padStart(2, '0')}
-                </span>
-                {isFinal && (
-                  <span class="text-[10px] font-bold uppercase tracking-[0.12em] text-primary-deep bg-info px-2 py-1 rounded-full">Final exam</span>
-                )}
-              </div>
-              <h3 class="text-[17px] font-bold text-text leading-6" style="font-family:'Outfit',sans-serif;">{m.title}</h3>
-              <p class="text-[15px] text-text-body leading-[24px]">{m.blurb}</p>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= STEPS ================= -->
-  <section class="py-16 lg:py-24 bg-gradient-to-b from-surface-muted to-white">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex flex-col gap-4 items-center mb-12 text-center">
-        <div class="flex items-center gap-2.5">
-          <span class="h-[3px] w-7 rounded-full bg-primary"></span>
-          <span class="text-[11px] font-bold uppercase tracking-[0.16em] text-primary-deep">The process</span>
-          <span class="h-[3px] w-7 rounded-full bg-primary"></span>
-        </div>
-        <h2 class="text-[32px] lg:text-[44px] font-bold text-text leading-[1.15] tracking-[-1px]" style="font-family:'Outfit',sans-serif;">
-          How to get your Texas driver license as an adult
-        </h2>
-        <p class="text-lg text-text-body leading-7 max-w-2xl">
-          We handle the first three steps. The last two are at the DPS.
-        </p>
-      </div>
-
-      <div class="flex flex-col gap-4">
-        {steps.map((s) => (
-          <div class={`rounded-[20px] p-6 lg:p-7 flex gap-5 items-start border ${s.n <= 3 ? 'bg-info/40 border-info-border' : 'bg-white border-border'}`}>
-            <span class={`flex-shrink-0 w-11 h-11 rounded-2xl flex items-center justify-center text-lg font-bold ${s.n <= 3 ? 'bg-primary text-white' : 'bg-surface-muted text-text-muted border border-border'}`}>
-              {s.n}
-            </span>
-            <div class="flex flex-col gap-1.5">
-              <div class="flex flex-wrap items-center gap-2">
-                <h3 class="text-xl font-bold text-text leading-7" style="font-family:'Outfit',sans-serif;">{s.title}</h3>
-                <span class={`text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full ${s.n <= 3 ? 'bg-primary-deep text-white' : 'bg-surface-muted text-text-muted border border-border'}`}>
-                  {s.n <= 3 ? 'With us' : 'At the DPS'}
-                </span>
-              </div>
-              <p class="text-base text-text-body leading-6">{s.body}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= SOCIAL PROOF ================= -->
-  <section class="py-16 lg:py-24 bg-surface-muted">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex flex-col gap-3 items-center mb-10 text-center">
-        <div class="flex items-center gap-2.5">
-          <span class="h-[3px] w-7 rounded-full bg-primary"></span>
-          <span class="text-[11px] font-bold uppercase tracking-[0.16em] text-primary-deep">Reviews</span>
-          <span class="h-[3px] w-7 rounded-full bg-primary"></span>
-        </div>
-        <h2 class="text-[32px] lg:text-[44px] font-bold text-text leading-[1.15] tracking-[-1px]" style="font-family:'Outfit',sans-serif;">
-          What Texans say about our courses
-        </h2>
-        <p class="text-sm text-text-muted leading-6 max-w-2xl">
-          These reviews are from students of our <a href="/texas" class="text-primary underline">Texas defensive driving course</a>. Reviews of the adult drivers ed course will appear here as students finish it.
-        </p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {testimonials.map((t) => (
-          <div class="bg-white border border-border rounded-[20px] p-8 flex flex-col gap-4 items-start">
-            <div class="flex gap-1">
-              {[...Array(5)].map(() => (
-                <img src="/assets/icons/texas/star-testimonial.svg" alt="" class="w-5 h-5" />
-              ))}
-            </div>
-            <p class="text-lg text-text leading-[28px]">&ldquo;{t.quote}&rdquo;</p>
-            <div class="flex gap-3 items-center pt-2">
-              <div class="bg-info rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0">
-                <span class="text-sm font-semibold text-primary-deep">{t.initials}</span>
-              </div>
-              <div class="flex flex-col">
-                <span class="text-base font-semibold text-text leading-6">{t.name}</span>
-                <span class="text-xs text-text-subtle leading-5">Verified via Trustpilot &middot; {t.date}</span>
-              </div>
-            </div>
           </div>
         ))}
       </div>
@@ -652,8 +641,6 @@ const faqSchema = {
             <span>Certificate included</span>
             <span>&middot;</span>
             <span>{ade.course.completionDays} days to finish</span>
-            <span>&middot;</span>
-            <span>3-day full refund</span>
           </div>
         </div>
       </div>

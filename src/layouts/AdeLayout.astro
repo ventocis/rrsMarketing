@@ -16,7 +16,7 @@ const {
   description = 'TDLR-approved Texas adult driver education. The six hours Texas requires for a first driver license, for $39.95 flat.',
   keywords = 'Texas adult drivers ed, adult driver education Texas, ADE-1317, 6 hour drivers ed Texas, Texas drivers ed for adults',
   url = '/adult-drivers-ed/texas',
-  banner = '$39.95 flat — no hidden fees, certificate included',
+  banner = '$39.95 all-in — no hidden fees, certificate included',
 } = Astro.props;
 
 const enrollUrl = import.meta.env.VITE_ADE_ENROLLMENT_URL || '#';
@@ -153,14 +153,6 @@ const adeLegalLinks = [
       </div>
     </div>
 
-    <!-- Provider identification strip — 16 TAC 84.503(j)(4) -->
-    <div class="bg-surface-muted border-t border-border">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-1.5">
-        <p class="text-[11px] text-text-muted text-center leading-4">
-          {ade.provider.legalName} d/b/a {ade.provider.dba} &middot; {licenseLabel}
-        </p>
-      </div>
-    </div>
 
     <div id="ade-menu" class="hidden lg:hidden border-t border-border bg-white">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex flex-col gap-4">

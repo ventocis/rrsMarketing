@@ -1,0 +1,142 @@
+---
+import AdeLayout from '../../../layouts/AdeLayout.astro';
+import ade from '../../../data/ade-texas.json';
+
+const isProdSite =
+  import.meta.env.VITE_ENABLE_ANALYTICS === 'true' && import.meta.env.VITE_IS_QA !== 'true';
+const isLicensed = Boolean(ade.provider.deLicenseNumber);
+const isEnabled =
+  import.meta.env.VITE_ADE_ROUTES_ENABLED === 'true' && (isLicensed || !isProdSite);
+
+const email = ade.provider.supportEmail;
+
+const features = [
+  'Course instruction is delivered in writing and self-paced, with no audio narration',
+  'Alt text on images',
+  'Keyboard navigation',
+  'Browser zoom compatibility (up to 200%)',
+  'Clear, legible fonts with adequate color contrast throughout the course',
+  'All quizzes and examinations presented and answered in writing',
+  'A captioned version of any course video, available on request',
+];
+
+// Hours must stay identical to the footer block in AdeLayout.astro — both are "posted hours"
+// under 16 TAC §84.503(i), and a student who sees two different sets cannot rely on either.
+const contact = [
+  { label: 'Email', value: email, mail: email },
+  { label: 'Phone', value: '(888) 885-5707', tel: '+18888855707' },
+  { label: 'Contact', value: 'Jackson Maitner' },
+  { label: 'Hours', value: '9:00 a.m.–5:00 p.m. ET (8:00 a.m.–4:00 p.m. Central), excluding Federal holidays' },
+  { label: 'Address', value: '5900 Balcones Drive, Ste 100 Austin, TX 78731' },
+];
+---
+
+{!isEnabled && <meta http-equiv="refresh" content="0;url=/" />}
+
+{isEnabled && (
+<AdeLayout
+  title="ADA Compliance Statement — Texas Adult Drivers Ed | Road Ready Safety"
+  description="Accessibility features, how to request an accommodation, and the ADA compliance statement for Road Ready Safety's Texas adult driver education course."
+  url="/adult-drivers-ed/texas/accessibility"
+>
+  <section class="py-16 lg:py-24 px-4 sm:px-6 lg:px-8 bg-surface-muted">
+    <div class="max-w-3xl mx-auto">
+
+      <div class="flex flex-col gap-4 items-center mb-10 text-center">
+        <div class="bg-info inline-flex items-center px-4 py-2 rounded-full">
+          <span class="text-sm font-semibold text-info-text leading-5">Accessibility</span>
+        </div>
+        <h1 class="text-[32px] lg:text-[40px] font-bold text-text leading-[1.15] tracking-[-1px]" style="font-family:'Outfit',sans-serif;">
+          Americans with Disabilities Act (ADA) Compliance Statement
+        </h1>
+        <p class="text-base text-text-body leading-6">
+          Texas Adult Driver Education Course<br />
+          {ade.provider.legalName} dba {ade.provider.dba}
+        </p>
+        <p class="text-sm text-text-muted leading-6">
+          Date: September 14, 2026 &nbsp;&middot;&nbsp; Course Type: Online Driver Education Exclusively for Adults (ADE-1317)
+        </p>
+      </div>
+
+      <div class="bg-white border border-border rounded-[20px] p-8 lg:p-12 flex flex-col gap-10">
+
+        <section class="flex flex-col gap-4">
+          <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Accessibility features</h2>
+          <p class="text-[17px] text-text-body leading-[30px]">
+            Our course platform provides the following visual accessibility features:
+          </p>
+          <ul class="flex flex-col gap-3 pl-5 m-0 list-disc marker:text-text-subtle">
+            {features.map((f) => (
+              <li class="text-[17px] text-text-body leading-[30px]">{f}</li>
+            ))}
+          </ul>
+        </section>
+
+        <section class="flex flex-col gap-4">
+          <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Requesting accommodations</h2>
+          <p class="text-[17px] text-text-body leading-[30px]">
+            Students who require accommodations should contact us as soon as possible after
+            enrollment. We will respond within two business days and work with the student to
+            provide reasonable accommodations on a case-by-case basis. There is no charge for an
+            accommodation, and we do not ask for a diagnosis or medical documentation.
+          </p>
+          <p class="text-[17px] text-text-body leading-[30px]">
+            If you are deaf or hard of hearing, you may request a captioned version of any video in
+            the course and we will provide one. Your course access and any completion deadline are
+            extended while we prepare it, so that using an accommodation never costs you time.
+          </p>
+
+          <dl class="bg-surface-muted border border-border rounded-2xl p-6 flex flex-col gap-3 m-0">
+            {contact.map((row) => (
+              <div class="flex flex-col sm:flex-row sm:gap-4">
+                <dt class="text-[15px] font-semibold text-text-muted sm:w-[110px] sm:flex-shrink-0 leading-[26px]">{row.label}</dt>
+                <dd class="text-[17px] text-text-body leading-[26px] m-0 break-words">
+                  {row.mail
+                    ? <a href={`mailto:${row.mail}`} class="text-primary underline">{row.value}</a>
+                    : row.tel
+                      ? <a href={`tel:${row.tel}`} class="text-primary underline">{row.value}</a>
+                      : row.value}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+
+        <section class="flex flex-col gap-4">
+          <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Feedback</h2>
+          <p class="text-[17px] text-text-body leading-[30px]">
+            If you encounter any accessibility barriers while using our course, please contact us at{' '}
+            <a href={`mailto:${email}`} class="text-primary underline">{email}</a> or{' '}
+            <a href="tel:+18888855707" class="text-primary underline">(888) 885-5707</a>. We welcome
+            feedback and will work to address concerns promptly.
+          </p>
+        </section>
+
+        <section class="flex flex-col gap-4">
+          <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Non-discrimination statement</h2>
+          <p class="text-[17px] text-text-body leading-[30px]">
+            {ade.provider.legalName} dba {ade.provider.dba} does not discriminate on the basis of
+            disability in admission to, access to, or operations of its driver education course. We
+            are committed to providing reasonable accommodations to qualified individuals with
+            disabilities.
+          </p>
+        </section>
+
+        <section class="flex flex-col gap-4 border-t border-border pt-8">
+          <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Regulatory basis</h2>
+          <p class="text-[17px] text-text-body leading-[30px]">
+            This statement is the provider&rsquo;s plan for complying with 16 Texas Administrative
+            Code &sect;84.48(a), provided with our original and renewal license applications as
+            required by Texas Education Code &sect;1001.1016(b)(2) and 16 TAC &sect;84.48(b). We make
+            reasonable modifications and provide aids and services, in the manner described by the
+            Americans with Disabilities Act of 1990 (42 U.S.C. &sect;12101 et seq.), so that a
+            student who is deaf or hard of hearing may fully participate in the course. Records of
+            accommodation requests and our responses are retained under 16 TAC &sect;84.81.
+          </p>
+        </section>
+
+      </div>
+    </div>
+  </section>
+</AdeLayout>
+)}

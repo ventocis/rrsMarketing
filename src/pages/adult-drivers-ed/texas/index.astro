@@ -437,27 +437,40 @@ const faqSchema = {
   </section>
 
   <!-- ================= CURRICULUM ================= -->
-  <section id="curriculum" class="py-16 lg:py-20 bg-white scroll-mt-24">
+  <section id="curriculum" class="py-16 lg:py-24 bg-white scroll-mt-24">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <div class="flex flex-col gap-4 items-center mb-8 text-center">
+        <div class="flex items-center gap-2.5">
+          <span class="h-[3px] w-7 rounded-full bg-primary"></span>
+          <span class="text-[11px] font-bold uppercase tracking-[0.16em] text-primary-deep">Curriculum</span>
+          <span class="h-[3px] w-7 rounded-full bg-primary"></span>
+        </div>
+        <h2 class="text-[32px] lg:text-[44px] font-bold text-text leading-[1.15] tracking-[-1px]" style="font-family:'Outfit',sans-serif;">
+          What this course covers
+        </h2>
+        <p class="text-lg text-text-body leading-7 max-w-2xl">
+          Nine modules, set by the state. Two of them include short required videos.
+        </p>
+      </div>
+
       <details class="group bg-surface-muted border border-border rounded-[20px] overflow-hidden">
-        <summary class="cursor-pointer list-none px-6 py-6 flex items-center justify-between gap-4 hover:bg-white/60 transition-colors">
-          <div class="flex flex-col gap-1">
-            <h2 class="text-[21px] lg:text-[24px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">
-              What&rsquo;s in the 6-hour course
-            </h2>
-            <p class="text-base text-text-body leading-6">
-              Nine modules, set by the state. Tap to see them.
-            </p>
-          </div>
-          <svg class="flex-shrink-0 w-6 h-6 text-text-muted transition-transform group-open:rotate-45" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-            <path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-          </svg>
+        <summary class="cursor-pointer list-none px-6 py-5 flex items-center justify-between gap-4 hover:bg-white/60 transition-colors">
+          <span class="text-[17px] font-semibold text-text leading-6">See all nine modules</span>
+          <span class="flex items-center gap-2 flex-shrink-0">
+            <span class="text-[13px] text-text-muted group-open:hidden">Show</span>
+            <span class="text-[13px] text-text-muted hidden group-open:inline">Hide</span>
+            <svg class="w-5 h-5 text-text-muted transition-transform group-open:rotate-45" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </span>
         </summary>
 
-        <div class="px-6 pb-6 -mt-1">
+        <div class="px-6 pb-6">
           <ol class="flex flex-col gap-0 m-0 p-0 list-none border-t border-border">
             {ade.modules.map((m) => {
               const isFinal = m.n === ade.modules.length;
+              const hasVideo = m.n === 7;
               return (
                 <li class="flex gap-4 items-baseline py-3.5 border-b border-border last:border-b-0">
                   <span class={`flex-shrink-0 text-[13px] font-bold tabular-nums leading-6 ${isFinal ? 'text-primary' : 'text-text-subtle'}`} style="font-family:'Outfit',sans-serif;">
@@ -469,8 +482,11 @@ const faqSchema = {
                       {isFinal && (
                         <span class="text-[10px] font-bold uppercase tracking-wider text-primary-deep bg-info px-2 py-0.5 rounded-full">Final exam</span>
                       )}
+                      {hasVideo && (
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-primary-deep bg-info px-2 py-0.5 rounded-full">2 videos</span>
+                      )}
                     </div>
-                    <p class="text-[14px] text-text-muted leading-[22px]">{m.blurb}</p>
+                    <p class="text-[15px] text-text-muted leading-[24px]">{m.blurb}</p>
                   </div>
                 </li>
               );

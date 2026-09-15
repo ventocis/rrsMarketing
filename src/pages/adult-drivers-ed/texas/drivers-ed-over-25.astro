@@ -1,6 +1,7 @@
 ---
 import AdeGuide from '../../../components/ade/AdeGuide.astro';
-import { law, itd, fees, CLAIM, waitTimes as W } from '../../../data/ade-eligibility';
+import {law, itd, fees, CLAIM} from '../../../data/ade-eligibility';
+import { dpsStats as W } from '../../../lib/dps-stats';
 
 const faqs = [
   { q: 'Do you need drivers ed at 25 in Texas?', a: 'No. DPS states there are no driver education requirements for ages 25 and older. §521.1601 only reaches people younger than 25, so once you are 25 the course is optional.' },
@@ -43,7 +44,7 @@ const faqs = [
       <li class="text-[17px] text-text-body leading-[30px]"><strong>The {itd.adultName} video.</strong> Still required before the driving skills test, at any adult age. This is the one people miss, and DPS will not test you without the certificate.</li>
       <li class="text-[17px] text-text-body leading-[30px]"><strong>The written knowledge test.</strong> Without a driver education certificate there is nothing to waive it, so you sit it at the office.</li>
       <li class="text-[17px] text-text-body leading-[30px]"><strong>The vision test and the driving skills test.</strong> Both in person, both unchanged.</li>
-      <li class="text-[17px] text-text-body leading-[30px]"><strong>The appointment queue.</strong> Median wait for a skills test was {W.driveTest.medianDays} days when we read the DPS report on {W.capturedOn}.</li>
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>The appointment queue.</strong> Median wait for a skills test was {W.driveTest.median} days when we read the DPS report on {W.capturedOn}.</li>
     </ul>
   </section>
 

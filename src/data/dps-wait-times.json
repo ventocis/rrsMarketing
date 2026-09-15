@@ -1,0 +1,1589 @@
+{
+ "_source": "https://www.dps.texas.gov/apps/Viewer/Document/Vue/WAITTIMES",
+ "_note": "Texas DPS publishes estimated days to the next available appointment and average in-office wait, per office, per transaction type. DPS refreshes it daily from the previous business day, so this is a dated snapshot. Extractor: ~/Claude/Texas Adult Driver Ed/_build/ade-growth/dps-wait-times.js",
+ "_capturedOn": "2026-09-15",
+ "_dpsAsOf": "09/15/2026",
+ "_excluded": [
+  "Opus test Location \u2014 a DPS test record, not a real office",
+  "Waco CDL \u2014 commercial license only, no Original transaction",
+  "Houston Gessner COMMERCIAL LICENSE ONLY \u2014 commercial license only"
+ ],
+ "_transactions": {
+  "originalDays": "Days to the next \"Original\" appointment \u2014 the first-license transaction",
+  "driveTestDays": "Days to the next \"Non CDL Drive Test\" appointment \u2014 the road test"
+ },
+ "offices": [
+  {
+   "office": "Abilene",
+   "originalDays": 2,
+   "originalWait": "00:00",
+   "driveTestDays": 14,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Alice",
+   "originalDays": 2,
+   "originalWait": "00:01",
+   "driveTestDays": 9,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Alpine",
+   "originalDays": 1,
+   "originalWait": "00:15",
+   "driveTestDays": 2,
+   "driveTestWait": "00:22"
+  },
+  {
+   "office": "Amarillo",
+   "originalDays": 2,
+   "originalWait": "00:00",
+   "driveTestDays": 4,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Anderson",
+   "originalDays": 0,
+   "originalWait": "00:01",
+   "driveTestDays": 29,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Andrews",
+   "originalDays": 2,
+   "originalWait": "00:05",
+   "driveTestDays": 3,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Angleton",
+   "originalDays": 2,
+   "originalWait": "00:00",
+   "driveTestDays": 9,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Anson",
+   "originalDays": 6,
+   "originalWait": "00:08",
+   "driveTestDays": 23,
+   "driveTestWait": "00:10"
+  },
+  {
+   "office": "Aransas Pass",
+   "originalDays": 3,
+   "originalWait": "00:00",
+   "driveTestDays": 14,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Athens",
+   "originalDays": 16,
+   "originalWait": "00:02",
+   "driveTestDays": 49,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Austin North",
+   "originalDays": 17,
+   "originalWait": "00:23",
+   "driveTestDays": 57,
+   "driveTestWait": "00:12"
+  },
+  {
+   "office": "Austin Northwest",
+   "originalDays": 25,
+   "originalWait": "00:28",
+   "driveTestDays": 44,
+   "driveTestWait": "00:08"
+  },
+  {
+   "office": "Austin South",
+   "originalDays": 17,
+   "originalWait": "00:24",
+   "driveTestDays": 69,
+   "driveTestWait": "00:02"
+  },
+  {
+   "office": "Baird",
+   "originalDays": 2,
+   "originalWait": "00:06"
+  },
+  {
+   "office": "Ballinger",
+   "originalDays": 7,
+   "originalWait": "00:01",
+   "driveTestDays": 37,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Bastrop",
+   "originalDays": 21,
+   "originalWait": "00:04",
+   "driveTestDays": 41,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Bay City",
+   "originalDays": 1,
+   "originalWait": "00:00",
+   "driveTestDays": 12,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Baytown",
+   "originalDays": 4,
+   "originalWait": "00:04",
+   "driveTestDays": 19,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Beaumont",
+   "originalDays": 2,
+   "originalWait": "00:04",
+   "driveTestDays": 29,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Beeville",
+   "originalDays": 3,
+   "originalWait": "00:01",
+   "driveTestDays": 10,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Big Lake",
+   "originalDays": 2,
+   "originalWait": "00:09"
+  },
+  {
+   "office": "Big Spring",
+   "originalDays": 2,
+   "originalWait": "00:02",
+   "driveTestDays": 4,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Boerne",
+   "originalDays": 41,
+   "originalWait": "00:14",
+   "driveTestDays": 66,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Bonham",
+   "originalDays": 28,
+   "originalWait": "00:18",
+   "driveTestDays": 84,
+   "driveTestWait": "00:14"
+  },
+  {
+   "office": "Borger",
+   "originalDays": 3,
+   "originalWait": "00:04",
+   "driveTestDays": 5,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Bowie",
+   "originalDays": 12,
+   "originalWait": "00:05",
+   "driveTestDays": 11,
+   "driveTestWait": "00:01"
+  },
+  {
+   "office": "Brady",
+   "originalDays": 3,
+   "originalWait": "00:00",
+   "driveTestDays": 8,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Breckenridge",
+   "originalDays": 7,
+   "originalWait": "00:00",
+   "driveTestDays": 22,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Brenham",
+   "originalDays": 4,
+   "originalWait": "00:00",
+   "driveTestDays": 16,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Brownfield",
+   "originalDays": 2,
+   "originalWait": "00:02",
+   "driveTestDays": 5,
+   "driveTestWait": "00:02"
+  },
+  {
+   "office": "Brownsville",
+   "originalDays": 10,
+   "originalWait": "00:12",
+   "driveTestDays": 19,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Brownwood",
+   "originalDays": 4,
+   "originalWait": "00:00",
+   "driveTestDays": 28,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Bryan",
+   "originalDays": 4,
+   "originalWait": "00:15",
+   "driveTestDays": 8,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Caldwell",
+   "originalDays": 5,
+   "originalWait": "00:02",
+   "driveTestDays": 16,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Cameron",
+   "originalDays": 24,
+   "originalWait": "00:04",
+   "driveTestDays": 45,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Canadian",
+   "originalDays": 8,
+   "originalWait": "00:14",
+   "driveTestDays": 14,
+   "driveTestWait": "00:05"
+  },
+  {
+   "office": "Canton",
+   "originalDays": 18,
+   "originalWait": "00:05",
+   "driveTestDays": 44,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Carrollton Mega Center",
+   "originalDays": 28,
+   "originalWait": "00:25",
+   "driveTestDays": 45,
+   "driveTestWait": "00:05"
+  },
+  {
+   "office": "Carthage",
+   "originalDays": 16,
+   "originalWait": "00:06",
+   "driveTestDays": 32,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Castroville",
+   "originalDays": 36,
+   "originalWait": "00:20",
+   "driveTestDays": 27,
+   "driveTestWait": "00:04"
+  },
+  {
+   "office": "Center",
+   "originalDays": 1,
+   "originalWait": "00:00",
+   "driveTestDays": 8,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Centerville",
+   "originalDays": 5,
+   "originalWait": "00:00",
+   "driveTestDays": 21,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Childress",
+   "originalDays": 3,
+   "originalWait": "00:00",
+   "driveTestDays": 3,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Clarendon",
+   "originalDays": 5,
+   "originalWait": "00:18",
+   "driveTestDays": 14,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Clarksville",
+   "originalDays": 21,
+   "originalWait": "00:02",
+   "driveTestDays": 54,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Cleburne",
+   "originalDays": 29,
+   "originalWait": "00:12",
+   "driveTestDays": 51,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Cleveland",
+   "originalDays": 6,
+   "originalWait": "00:00",
+   "driveTestDays": 25,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Coleman",
+   "originalDays": 5,
+   "originalWait": "00:00",
+   "driveTestDays": 26,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Colorado City",
+   "originalDays": 5,
+   "originalWait": "00:00",
+   "driveTestDays": 17,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Columbus",
+   "originalDays": 3,
+   "originalWait": "00:00",
+   "driveTestDays": 19,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Comanche",
+   "originalDays": 8,
+   "originalWait": "00:18",
+   "driveTestDays": 31,
+   "driveTestWait": "00:20"
+  },
+  {
+   "office": "Conroe",
+   "originalDays": 9,
+   "originalWait": "00:10",
+   "driveTestDays": 18,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Corpus Christi Mega Center",
+   "originalDays": 3,
+   "originalWait": "00:12",
+   "driveTestDays": 15,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Corsicana",
+   "originalDays": 17,
+   "originalWait": "00:07",
+   "driveTestDays": 53,
+   "driveTestWait": "00:01"
+  },
+  {
+   "office": "Cotulla",
+   "originalDays": 8,
+   "originalWait": "00:09",
+   "driveTestDays": 7,
+   "driveTestWait": "00:08"
+  },
+  {
+   "office": "Crane",
+   "originalDays": 3,
+   "originalWait": "00:08",
+   "driveTestDays": 11,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Crockett",
+   "originalDays": 6,
+   "originalWait": "00:04",
+   "driveTestDays": 19,
+   "driveTestWait": "00:06"
+  },
+  {
+   "office": "Crosbyton",
+   "originalDays": 6,
+   "originalWait": "00:00",
+   "driveTestDays": 9,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Crystal City",
+   "originalDays": 6,
+   "originalWait": "00:01",
+   "driveTestDays": 8,
+   "driveTestWait": "00:01"
+  },
+  {
+   "office": "Cuero",
+   "originalDays": 16,
+   "originalWait": "00:01",
+   "driveTestDays": 28,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Daingerfield",
+   "originalDays": 20,
+   "originalWait": "00:00",
+   "driveTestDays": 67,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Dalhart",
+   "originalDays": 19,
+   "originalWait": "00:18",
+   "driveTestDays": 26,
+   "driveTestWait": "00:16"
+  },
+  {
+   "office": "Dallas South Mega Center",
+   "originalDays": 21,
+   "originalWait": "00:22",
+   "driveTestDays": 50,
+   "driveTestWait": "00:22"
+  },
+  {
+   "office": "Decatur",
+   "originalDays": 24,
+   "originalWait": "00:03",
+   "driveTestDays": 62,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Del Rio",
+   "originalDays": 3,
+   "originalWait": "00:00",
+   "driveTestDays": 4,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Denton",
+   "originalDays": 33,
+   "originalWait": "00:32",
+   "driveTestDays": 50,
+   "driveTestWait": "00:20"
+  },
+  {
+   "office": "Denver City",
+   "originalDays": 3,
+   "originalWait": "00:07",
+   "driveTestDays": 4,
+   "driveTestWait": "00:19"
+  },
+  {
+   "office": "Dimmitt",
+   "originalDays": 5,
+   "originalWait": "00:00",
+   "driveTestDays": 7,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Dumas",
+   "originalDays": 9,
+   "originalWait": "00:18",
+   "driveTestDays": 18,
+   "driveTestWait": "00:15"
+  },
+  {
+   "office": "Eagle Pass",
+   "originalDays": 2,
+   "originalWait": "00:07",
+   "driveTestDays": 10,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Eastland",
+   "originalDays": 13,
+   "originalWait": "00:00",
+   "driveTestDays": 32,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Edinburg Mega Center",
+   "originalDays": 1,
+   "originalWait": "00:07",
+   "driveTestDays": 9,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "El Paso Gateway",
+   "originalDays": 14,
+   "originalWait": "00:22",
+   "driveTestDays": 5,
+   "driveTestWait": "00:17"
+  },
+  {
+   "office": "El Paso Hondo Pass",
+   "originalDays": 13,
+   "originalWait": "00:05",
+   "driveTestDays": 16,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "El Paso Northwest",
+   "originalDays": 11,
+   "originalWait": "00:19",
+   "driveTestDays": 11,
+   "driveTestWait": "00:10"
+  },
+  {
+   "office": "El Paso Scott Simpson",
+   "originalDays": 17,
+   "originalWait": "00:10",
+   "driveTestDays": 3,
+   "driveTestWait": "00:02"
+  },
+  {
+   "office": "Emory",
+   "originalDays": 16,
+   "originalWait": "00:05",
+   "driveTestDays": 41,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Fairfield",
+   "originalDays": 26,
+   "originalWait": "00:10",
+   "driveTestDays": 33,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Floresville",
+   "originalDays": 27,
+   "originalWait": "00:07",
+   "driveTestDays": 58,
+   "driveTestWait": "00:02"
+  },
+  {
+   "office": "Flower Mound",
+   "originalDays": 52,
+   "originalWait": "00:21",
+   "driveTestDays": 30,
+   "driveTestWait": "00:13"
+  },
+  {
+   "office": "Floydada",
+   "originalDays": 3,
+   "originalWait": "00:00",
+   "driveTestDays": 5,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Fort Bliss - MUST HAVE ACCESS TO MILITARY BASE",
+   "originalDays": 15,
+   "originalWait": "00:12",
+   "driveTestDays": 8,
+   "driveTestWait": "00:17"
+  },
+  {
+   "office": "Fort Hood",
+   "originalDays": 15,
+   "originalWait": "00:11"
+  },
+  {
+   "office": "Fort Stockton",
+   "originalDays": 1,
+   "originalWait": "00:03",
+   "driveTestDays": 2,
+   "driveTestWait": "00:04"
+  },
+  {
+   "office": "Fort Worth East",
+   "originalDays": 31,
+   "originalWait": "00:08"
+  },
+  {
+   "office": "Fort Worth Mega Center",
+   "originalDays": 29,
+   "originalWait": "00:25",
+   "driveTestDays": 48,
+   "driveTestWait": "00:14"
+  },
+  {
+   "office": "Fort Worth South",
+   "originalDays": 36,
+   "originalWait": "00:27",
+   "driveTestDays": 48,
+   "driveTestWait": "00:06"
+  },
+  {
+   "office": "Fredericksburg",
+   "originalDays": 19,
+   "originalWait": "00:06",
+   "driveTestDays": 57,
+   "driveTestWait": "00:01"
+  },
+  {
+   "office": "Friona",
+   "originalDays": 4,
+   "originalWait": "00:15",
+   "driveTestDays": 4,
+   "driveTestWait": "00:20"
+  },
+  {
+   "office": "Gainesville",
+   "originalDays": 25,
+   "originalWait": "00:02",
+   "driveTestDays": 66,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Galveston",
+   "originalDays": 2,
+   "originalWait": "00:00"
+  },
+  {
+   "office": "Garland",
+   "originalDays": 30,
+   "originalWait": "00:19",
+   "driveTestDays": 54,
+   "driveTestWait": "00:03"
+  },
+  {
+   "office": "Gatesville",
+   "originalDays": 22,
+   "originalWait": "00:04",
+   "driveTestDays": 33,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "George West",
+   "originalDays": 5,
+   "originalWait": "00:05",
+   "driveTestDays": 23,
+   "driveTestWait": "00:02"
+  },
+  {
+   "office": "Georgetown",
+   "originalDays": 17,
+   "originalWait": "00:27",
+   "driveTestDays": 57,
+   "driveTestWait": "00:04"
+  },
+  {
+   "office": "Giddings",
+   "originalDays": 19,
+   "originalWait": "00:12",
+   "driveTestDays": 60,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Gilmer",
+   "originalDays": 19,
+   "originalWait": "00:06",
+   "driveTestDays": 56,
+   "driveTestWait": "00:07"
+  },
+  {
+   "office": "Goldthwaite",
+   "originalDays": 16,
+   "originalWait": "00:09",
+   "driveTestDays": 36,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Gonzales",
+   "originalDays": 19,
+   "originalWait": "00:05",
+   "driveTestDays": 37,
+   "driveTestWait": "00:05"
+  },
+  {
+   "office": "Graham",
+   "originalDays": 8,
+   "originalWait": "00:04",
+   "driveTestDays": 44,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Grand Prairie",
+   "originalDays": 37,
+   "originalWait": "00:34",
+   "driveTestDays": 47,
+   "driveTestWait": "00:16"
+  },
+  {
+   "office": "Greenville",
+   "originalDays": 26,
+   "originalWait": "00:08",
+   "driveTestDays": 75,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Groesbeck",
+   "originalDays": 29,
+   "originalWait": "00:09",
+   "driveTestDays": 49,
+   "driveTestWait": "00:02"
+  },
+  {
+   "office": "Hallettsville",
+   "originalDays": 18,
+   "originalWait": "00:20",
+   "driveTestDays": 28,
+   "driveTestWait": "00:13"
+  },
+  {
+   "office": "Hamilton",
+   "originalDays": 23,
+   "originalWait": "00:05",
+   "driveTestDays": 37,
+   "driveTestWait": "00:01"
+  },
+  {
+   "office": "Harlingen",
+   "originalDays": 7,
+   "originalWait": "00:12",
+   "driveTestDays": 14,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Haskell",
+   "originalDays": 5,
+   "originalWait": "00:00",
+   "driveTestDays": 20,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Hearne",
+   "originalDays": 5,
+   "originalWait": "00:00",
+   "driveTestDays": 10,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Hebbronville",
+   "originalDays": 19,
+   "originalWait": "00:03",
+   "driveTestDays": 9,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Hemphill",
+   "originalDays": 2,
+   "originalWait": "00:09",
+   "driveTestDays": 7,
+   "driveTestWait": "00:17"
+  },
+  {
+   "office": "Hempstead",
+   "originalDays": 9,
+   "originalWait": "00:06",
+   "driveTestDays": 32,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Henderson",
+   "originalDays": 12,
+   "originalWait": "00:02",
+   "driveTestDays": 41,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Hereford",
+   "originalDays": 3,
+   "originalWait": "00:12",
+   "driveTestDays": 5,
+   "driveTestWait": "00:12"
+  },
+  {
+   "office": "Hillsboro",
+   "originalDays": 32,
+   "originalWait": "00:17",
+   "driveTestDays": 87,
+   "driveTestWait": "00:08"
+  },
+  {
+   "office": "Houston Dacoma",
+   "originalDays": 7,
+   "originalWait": "00:14",
+   "driveTestDays": 12,
+   "driveTestWait": "00:08"
+  },
+  {
+   "office": "Houston East (Tidwell)",
+   "originalDays": 4,
+   "originalWait": "00:27",
+   "driveTestDays": 13,
+   "driveTestWait": "00:03"
+  },
+  {
+   "office": "Houston Gessner Mega Center",
+   "originalDays": 4,
+   "originalWait": "00:17",
+   "driveTestDays": 8,
+   "driveTestWait": "00:19"
+  },
+  {
+   "office": "Houston North Mega Center",
+   "originalDays": 2,
+   "originalWait": "00:07",
+   "driveTestDays": 10,
+   "driveTestWait": "00:03"
+  },
+  {
+   "office": "Houston Southeast",
+   "originalDays": 2,
+   "originalWait": "00:08",
+   "driveTestDays": 12,
+   "driveTestWait": "00:02"
+  },
+  {
+   "office": "Humble",
+   "originalDays": 8,
+   "originalWait": "00:17",
+   "driveTestDays": 20,
+   "driveTestWait": "00:08"
+  },
+  {
+   "office": "Huntsville",
+   "originalDays": 3,
+   "originalWait": "00:01",
+   "driveTestDays": 16,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Jacksonville",
+   "originalDays": 18,
+   "originalWait": "00:00",
+   "driveTestDays": 37,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Jasper",
+   "originalDays": 3,
+   "originalWait": "00:02",
+   "driveTestDays": 11,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Jourdanton",
+   "originalDays": 25,
+   "originalWait": "00:00",
+   "driveTestDays": 51,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Junction",
+   "originalDays": 16,
+   "originalWait": "00:00",
+   "driveTestDays": 20,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Kermit",
+   "originalDays": 6,
+   "originalWait": "00:00",
+   "driveTestDays": 4,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Kerrville",
+   "originalDays": 17,
+   "originalWait": "00:05",
+   "driveTestDays": 38,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Kilgore",
+   "originalDays": 17,
+   "originalWait": "00:00"
+  },
+  {
+   "office": "Killeen",
+   "originalDays": 18,
+   "originalWait": "00:10",
+   "driveTestDays": 34,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Kingsville",
+   "originalDays": 1,
+   "originalWait": "00:00",
+   "driveTestDays": 9,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Lake Worth",
+   "originalDays": 45,
+   "originalWait": "00:35",
+   "driveTestDays": 55,
+   "driveTestWait": "00:13"
+  },
+  {
+   "office": "Lamesa",
+   "originalDays": 2,
+   "originalWait": "00:00",
+   "driveTestDays": 2,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Lampasas",
+   "originalDays": 26,
+   "originalWait": "00:00",
+   "driveTestDays": 58,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Laredo",
+   "originalDays": 19,
+   "originalWait": "00:34",
+   "driveTestDays": 9,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "League City",
+   "originalDays": 2,
+   "originalWait": "00:01",
+   "driveTestDays": 9,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Leon Valley Mega Center",
+   "originalDays": 35,
+   "originalWait": "00:20",
+   "driveTestDays": 43,
+   "driveTestWait": "00:19"
+  },
+  {
+   "office": "Levelland",
+   "originalDays": 3,
+   "originalWait": "00:07",
+   "driveTestDays": 7,
+   "driveTestWait": "00:08"
+  },
+  {
+   "office": "Lewisville",
+   "originalDays": 42,
+   "originalWait": "00:18",
+   "driveTestDays": 33,
+   "driveTestWait": "00:08"
+  },
+  {
+   "office": "Liberty",
+   "originalDays": 7,
+   "originalWait": "00:00",
+   "driveTestDays": 27,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Linden",
+   "originalDays": 19,
+   "originalWait": "00:02",
+   "driveTestDays": 61,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Littlefield",
+   "originalDays": 5,
+   "originalWait": "00:16",
+   "driveTestDays": 6,
+   "driveTestWait": "00:13"
+  },
+  {
+   "office": "Livingston",
+   "originalDays": 3,
+   "originalWait": "00:00",
+   "driveTestDays": 19,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Llano",
+   "originalDays": 15,
+   "originalWait": "00:24"
+  },
+  {
+   "office": "Lockhart",
+   "originalDays": 27,
+   "originalWait": "00:15",
+   "driveTestDays": 16,
+   "driveTestWait": "00:04"
+  },
+  {
+   "office": "Longview",
+   "originalDays": 15,
+   "originalWait": "00:04",
+   "driveTestDays": 52,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Lubbock",
+   "originalDays": 3,
+   "originalWait": "00:00",
+   "driveTestDays": 6,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Lufkin",
+   "originalDays": 2,
+   "originalWait": "00:01",
+   "driveTestDays": 18,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Madisonville",
+   "originalDays": 3,
+   "originalWait": "00:00",
+   "driveTestDays": 11,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Marble Falls",
+   "originalDays": 18,
+   "originalWait": "00:26",
+   "driveTestDays": 56,
+   "driveTestWait": "00:17"
+  },
+  {
+   "office": "Marlin",
+   "originalDays": 41,
+   "originalWait": "00:07",
+   "driveTestDays": 49,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Marshall",
+   "originalDays": 18,
+   "originalWait": "00:02",
+   "driveTestDays": 56,
+   "driveTestWait": "00:03"
+  },
+  {
+   "office": "McAllen",
+   "originalDays": 4,
+   "originalWait": "00:18",
+   "driveTestDays": 11,
+   "driveTestWait": "00:01"
+  },
+  {
+   "office": "McKinney",
+   "originalDays": 70,
+   "originalWait": "00:14",
+   "driveTestDays": 52,
+   "driveTestWait": "00:04"
+  },
+  {
+   "office": "Meridian",
+   "originalDays": 39,
+   "originalWait": "00:13",
+   "driveTestDays": 77,
+   "driveTestWait": "00:10"
+  },
+  {
+   "office": "Midland Mega Center",
+   "originalDays": 2,
+   "originalWait": "00:09",
+   "driveTestDays": 4,
+   "driveTestWait": "00:01"
+  },
+  {
+   "office": "Mineral Wells",
+   "originalDays": 20,
+   "originalWait": "00:04",
+   "driveTestDays": 55,
+   "driveTestWait": "00:01"
+  },
+  {
+   "office": "Mission",
+   "originalDays": 1,
+   "originalWait": "00:19"
+  },
+  {
+   "office": "Monahans",
+   "originalDays": 2,
+   "originalWait": "00:05",
+   "driveTestDays": 2,
+   "driveTestWait": "00:02"
+  },
+  {
+   "office": "Mount Pleasant",
+   "originalDays": 18,
+   "originalWait": "00:03",
+   "driveTestDays": 38,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Muleshoe",
+   "originalDays": 3,
+   "originalWait": "00:02",
+   "driveTestDays": 3,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Munday",
+   "originalDays": 7,
+   "originalWait": "00:02",
+   "driveTestDays": 19,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Nacogdoches",
+   "originalDays": 5,
+   "originalWait": "00:00",
+   "driveTestDays": 17,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "New Boston",
+   "originalDays": 20,
+   "originalWait": "00:10",
+   "driveTestDays": 59,
+   "driveTestWait": "00:05"
+  },
+  {
+   "office": "New Braunfels",
+   "originalDays": 17,
+   "originalWait": "00:11",
+   "driveTestDays": 41,
+   "driveTestWait": "00:07"
+  },
+  {
+   "office": "New Caney",
+   "originalDays": 13,
+   "originalWait": "00:00"
+  },
+  {
+   "office": "North Garland Mega Center",
+   "originalDays": 23,
+   "originalWait": "00:31",
+   "driveTestDays": 50,
+   "driveTestWait": "00:10"
+  },
+  {
+   "office": "Orange",
+   "originalDays": 2,
+   "originalWait": "00:01",
+   "driveTestDays": 20,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Ozona",
+   "originalDays": 2,
+   "originalWait": "00:16",
+   "driveTestDays": 3,
+   "driveTestWait": "00:10"
+  },
+  {
+   "office": "Palestine",
+   "originalDays": 17,
+   "originalWait": "00:01",
+   "driveTestDays": 35,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Pampa",
+   "originalDays": 2,
+   "originalWait": "00:12",
+   "driveTestDays": 4,
+   "driveTestWait": "00:09"
+  },
+  {
+   "office": "Panhandle",
+   "originalDays": 11,
+   "originalWait": "00:00",
+   "driveTestDays": 12,
+   "driveTestWait": "00:03"
+  },
+  {
+   "office": "Paris",
+   "originalDays": 16,
+   "originalWait": "00:03",
+   "driveTestDays": 54,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Pearsall",
+   "originalDays": 41,
+   "originalWait": "00:05",
+   "driveTestDays": 93,
+   "driveTestWait": "00:07"
+  },
+  {
+   "office": "Pecos",
+   "originalDays": 2,
+   "originalWait": "00:15",
+   "driveTestDays": 2,
+   "driveTestWait": "00:15"
+  },
+  {
+   "office": "Perryton",
+   "originalDays": 3,
+   "originalWait": "00:05",
+   "driveTestDays": 4,
+   "driveTestWait": "00:01"
+  },
+  {
+   "office": "Pflugerville Mega Center",
+   "originalDays": 14,
+   "originalWait": "00:41",
+   "driveTestDays": 42,
+   "driveTestWait": "00:17"
+  },
+  {
+   "office": "Pierce",
+   "originalDays": 2,
+   "originalWait": "00:00",
+   "driveTestDays": 14,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Plainview",
+   "originalDays": 2,
+   "originalWait": "00:06",
+   "driveTestDays": 5,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Plano",
+   "originalDays": 45,
+   "originalWait": "00:18",
+   "driveTestDays": 61,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Port Arthur",
+   "originalDays": 3,
+   "originalWait": "00:11",
+   "driveTestDays": 22,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Port Lavaca",
+   "originalDays": 15,
+   "originalWait": "00:11",
+   "driveTestDays": 17,
+   "driveTestWait": "00:10"
+  },
+  {
+   "office": "Post",
+   "originalDays": 3,
+   "originalWait": "00:00",
+   "driveTestDays": 5,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Presidio",
+   "originalDays": 5,
+   "originalWait": "00:03",
+   "driveTestDays": 8,
+   "driveTestWait": "00:04"
+  },
+  {
+   "office": "Quanah",
+   "originalDays": 4,
+   "originalWait": "00:06",
+   "driveTestDays": 11,
+   "driveTestWait": "00:04"
+  },
+  {
+   "office": "Quitman",
+   "originalDays": 19,
+   "originalWait": "00:19",
+   "driveTestDays": 41,
+   "driveTestWait": "00:06"
+  },
+  {
+   "office": "Rio Grande City",
+   "originalDays": 2,
+   "originalWait": "00:01",
+   "driveTestDays": 4,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Roby",
+   "originalDays": 13,
+   "originalWait": "00:07",
+   "driveTestDays": 18,
+   "driveTestWait": "00:16"
+  },
+  {
+   "office": "Rockwall",
+   "originalDays": 42,
+   "originalWait": "00:07",
+   "driveTestDays": 85,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Rosenberg Mega Center",
+   "originalDays": 3,
+   "originalWait": "00:11",
+   "driveTestDays": 8,
+   "driveTestWait": "00:04"
+  },
+  {
+   "office": "San Angelo",
+   "originalDays": 3,
+   "originalWait": "00:03",
+   "driveTestDays": 3,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "San Antonio Gen McMullen",
+   "originalDays": 31,
+   "originalWait": "00:26",
+   "driveTestDays": 44,
+   "driveTestWait": "00:09"
+  },
+  {
+   "office": "San Antonio Pat Booker",
+   "originalDays": 30,
+   "originalWait": "00:18",
+   "driveTestDays": 29,
+   "driveTestWait": "00:04"
+  },
+  {
+   "office": "San Antonio Southeast",
+   "originalDays": 33,
+   "originalWait": "00:18",
+   "driveTestDays": 37,
+   "driveTestWait": "00:11"
+  },
+  {
+   "office": "San Marcos",
+   "originalDays": 20,
+   "originalWait": "00:08",
+   "driveTestDays": 42,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Seguin",
+   "originalDays": 20,
+   "originalWait": "00:08",
+   "driveTestDays": 46,
+   "driveTestWait": "00:02"
+  },
+  {
+   "office": "Seminole",
+   "originalDays": 1,
+   "originalWait": "00:05",
+   "driveTestDays": 2,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Seymour",
+   "originalDays": 11,
+   "originalWait": "00:00",
+   "driveTestDays": 31,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Sherman",
+   "originalDays": 33,
+   "originalWait": "00:09",
+   "driveTestDays": 70,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Sinton",
+   "originalDays": 2,
+   "originalWait": "00:01",
+   "driveTestDays": 12,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Snyder",
+   "originalDays": 4,
+   "originalWait": "00:00",
+   "driveTestDays": 7,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Sonora",
+   "originalDays": 5,
+   "originalWait": "00:20",
+   "driveTestDays": 5,
+   "driveTestWait": "00:21"
+  },
+  {
+   "office": "Spring Mega Center",
+   "originalDays": 3,
+   "originalWait": "00:07",
+   "driveTestDays": 11,
+   "driveTestWait": "00:01"
+  },
+  {
+   "office": "Stanton",
+   "originalDays": 9,
+   "originalWait": "00:00",
+   "driveTestDays": 21,
+   "driveTestWait": "00:02"
+  },
+  {
+   "office": "Stephenville",
+   "originalDays": 17,
+   "originalWait": "00:16",
+   "driveTestDays": 38,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Sulphur Springs",
+   "originalDays": 16,
+   "originalWait": "00:00",
+   "driveTestDays": 47,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Sweetwater",
+   "originalDays": 5,
+   "originalWait": "00:08",
+   "driveTestDays": 17,
+   "driveTestWait": "00:05"
+  },
+  {
+   "office": "Taylor",
+   "originalDays": 15,
+   "originalWait": "00:11",
+   "driveTestDays": 45,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Temple",
+   "originalDays": 18,
+   "originalWait": "00:23",
+   "driveTestDays": 40,
+   "driveTestWait": "00:08"
+  },
+  {
+   "office": "Terrell",
+   "originalDays": 44,
+   "originalWait": "00:01",
+   "driveTestDays": 64,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Texarkana",
+   "originalDays": 17,
+   "originalWait": "00:13",
+   "driveTestDays": 67,
+   "driveTestWait": "00:05"
+  },
+  {
+   "office": "Texas City",
+   "originalDays": 4,
+   "originalWait": "00:00",
+   "driveTestDays": 27,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Tolar",
+   "originalDays": 20,
+   "originalWait": "00:07",
+   "driveTestDays": 47,
+   "driveTestWait": "00:01"
+  },
+  {
+   "office": "Tulia",
+   "originalDays": 5,
+   "originalWait": "00:00",
+   "driveTestDays": 10,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Tyler",
+   "originalDays": 15,
+   "originalWait": "00:12",
+   "driveTestDays": 24,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Uvalde",
+   "originalDays": 6,
+   "originalWait": "00:08",
+   "driveTestDays": 15,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Van Horn",
+   "originalDays": 3,
+   "originalWait": "00:12",
+   "driveTestDays": 6,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Vega",
+   "originalDays": 6,
+   "originalWait": "00:04",
+   "driveTestDays": 11,
+   "driveTestWait": "00:06"
+  },
+  {
+   "office": "Vernon",
+   "originalDays": 4,
+   "originalWait": "00:03",
+   "driveTestDays": 15,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Victoria",
+   "originalDays": 14,
+   "originalWait": "00:06",
+   "driveTestDays": 16,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Waco",
+   "originalDays": 32,
+   "originalWait": "00:11",
+   "driveTestDays": 64,
+   "driveTestWait": "00:02"
+  },
+  {
+   "office": "Wallisville",
+   "originalDays": 6,
+   "originalWait": "00:02",
+   "driveTestDays": 21,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Waxahachie",
+   "originalDays": 22,
+   "originalWait": "00:13",
+   "driveTestDays": 41,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Weatherford",
+   "originalDays": 26,
+   "originalWait": "00:05",
+   "driveTestDays": 66,
+   "driveTestWait": "00:01"
+  },
+  {
+   "office": "Weslaco",
+   "originalDays": 4,
+   "originalWait": "00:03",
+   "driveTestDays": 9,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Wichita Falls",
+   "originalDays": 4,
+   "originalWait": "00:03",
+   "driveTestDays": 18,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Woodville",
+   "originalDays": 3,
+   "originalWait": "00:00",
+   "driveTestDays": 16,
+   "driveTestWait": "00:00"
+  },
+  {
+   "office": "Zapata",
+   "originalDays": 9,
+   "originalWait": "00:02",
+   "driveTestDays": 10,
+   "driveTestWait": "00:00"
+  }
+ ],
+ "_coverage": "DPS listed 230 offices reporting an Original or Non CDL Drive Test appointment on 2026-09-15. Three were excluded (above), leaving 227."
+}

@@ -1,13 +1,14 @@
 ---
 import AdeGuide from '../../../components/ade/AdeGuide.astro';
-import { law, itd, fees, waitTimes as W, CLAIM } from '../../../data/ade-eligibility';
+import {law, itd, fees, CLAIM} from '../../../data/ade-eligibility';
+import { dpsStats as W } from '../../../lib/dps-stats';
 
 const faqs = [
   { q: 'Can I get a driver license for the first time as an adult in Texas?', a: 'Yes, at any age. There is no upper limit and no requirement that you started as a teenager. The process is the same one any adult applicant follows: documents, the tests, and the six-hour driver education course if you are under 25.' },
   { q: 'I am over 25 and have never driven. Do I need the course?', a: `Not as a legal requirement — DPS has no driver education requirement at 25 and older. Many first-time drivers take it anyway, because it ${CLAIM} and means one fewer test to sit cold.` },
   { q: 'Do I need a learner license first?', a: 'Texas learner licenses are issued to applicants aged 15 to 17. As an adult you apply for the driver license itself. You will still want practice before the driving skills test, and driving unlicensed to get it is not an option.' },
   { q: 'How do I practice if I have never driven?', a: 'Commercial driving schools offer behind-the-wheel lessons for adults, and a licensed driver can supervise practice in some circumstances. The six-hour course is classroom material only — it does not teach you to operate a car, and no online course does.' },
-  { q: 'How long will this take?', a: `The six hours are the fast part. The driving skills test is the slow part: when we read the DPS wait-time report on ${W.capturedOn}, the median wait across ${W.driveTest.measured} offices was ${W.driveTest.medianDays} days and ${W.driveTest.over30} offices were more than a month out.` },
+  { q: 'How long will this take?', a: `The six hours are the fast part. The driving skills test is the slow part: when we read the DPS wait-time report on ${W.capturedOn}, the median wait across ${W.driveTest.measured} offices was ${W.driveTest.median} days and ${W.driveTest.over30} offices were more than a month out.` },
 ];
 ---
 
@@ -52,7 +53,7 @@ const faqs = [
       <li class="text-[17px] text-text-body leading-[30px]"><strong>Documents:</strong> an afternoon, if you have them. Longer if you need a birth certificate or Social Security card.</li>
       <li class="text-[17px] text-text-body leading-[30px]"><strong>The course, if required:</strong> six hours, self-paced.</li>
       <li class="text-[17px] text-text-body leading-[30px]"><strong>Behind-the-wheel practice:</strong> the real variable, and the one worth not rushing.</li>
-      <li class="text-[17px] text-text-body leading-[30px]"><strong>The skills test appointment:</strong> median {W.driveTest.medianDays} days, {W.driveTest.over30} of {W.driveTest.measured} offices over a month.</li>
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>The skills test appointment:</strong> median {W.driveTest.median} days, {W.driveTest.over30} of {W.driveTest.measured} offices over a month.</li>
       <li class="text-[17px] text-text-body leading-[30px]"><strong>The card itself:</strong> about two to three weeks by mail after you pass, on top of the temporary license you leave with.</li>
     </ul>
     <p class="text-[17px] text-text-body leading-[30px]">

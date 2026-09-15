@@ -1,12 +1,13 @@
 ---
 import AdeGuide from '../../../components/ade/AdeGuide.astro';
-import { law, itd, fees, process, waitTimes as W, CLAIM } from '../../../data/ade-eligibility';
+import {law, itd, fees, process, CLAIM} from '../../../data/ade-eligibility';
+import { dpsStats as W } from '../../../lib/dps-stats';
 
 const steps = [
   { name: 'Work out whether you need driver education', text: `If you are ${law.requiredBand} and this is your first driver license, you need the six-hour adult course. If you are 25 or older, or you hold a valid license from another U.S. state, you do not.` },
   { name: 'Gather your documents', text: 'Proof of identity, proof of lawful presence or U.S. citizenship, proof of Texas residency, your Social Security number, and — if you own a vehicle — Texas registration and proof of insurance. DPS has a REAL ID Document Check tool that builds the list for your situation.' },
   { name: 'Take the six-hour course, if it applies to you', text: `Online and self-paced. Under §521.167 it ${CLAIM}, once a licensed driver education instructor confirms you passed those parts.` },
-  { name: 'Book your driving skills test', text: `Every DPS office is appointment only. Appointments open up to ${W.bookingHorizonMonths} months ahead, and the median wait for a skills test was ${W.driveTest.medianDays} days when we last read the DPS report.` },
+  { name: 'Book your driving skills test', text: `Every DPS office is appointment only. Appointments open up to ${6} months ahead, and the median wait for a skills test was ${W.driveTest.median} days when we last read the DPS report.` },
   { name: `Watch the ${itd.adultLengthHours}-hour ${itd.adultName} video`, text: `Required before the skills test for everyone 18 and over. The certificate is valid ${itd.certValidDays} days, so watch it after you know your appointment date, not before.` },
   { name: 'Go to your appointment', text: `Application form, documents, biometrics, photo, the $${fees.newLicense18to84} fee, vision test, then the knowledge test if it has not been waived, then the driving skills test.` },
   { name: 'Leave with a temporary license', text: `You get a paper temporary license the same day. Check every field on it before you leave. The card arrives by mail in about ${process.cardArrivesWeeks} weeks.` },
@@ -23,7 +24,7 @@ const faqs = [
   },
   {
     q: 'How long does the whole process take?',
-    a: `The course is six hours. The bottleneck is the driving skills test: DPS publishes per-office appointment availability, and when we read it the median wait was ${W.driveTest.medianDays} days, with ${W.driveTest.over30} of ${W.driveTest.measured} offices more than a month out. Plan around the appointment, not the course.`,
+    a: `The course is six hours. The bottleneck is the driving skills test: DPS publishes per-office appointment availability, and when we read it the median wait was ${W.driveTest.median} days, with ${W.driveTest.over30} of ${W.driveTest.measured} offices more than a month out. Plan around the appointment, not the course.`,
   },
   {
     q: 'What is on the Texas driver license exam?',
@@ -89,9 +90,9 @@ const faqs = [
       The course is six hours and you control when you do it. The appointment is the part you do not
       control. When we read the DPS wait-time report on {W.capturedOn}, the median wait for a
       non-commercial driving skills test across {W.driveTest.measured} offices was{' '}
-      <strong>{W.driveTest.medianDays} days</strong>, and {W.driveTest.over30} offices were more than
+      <strong>{W.driveTest.median} days</strong>, and {W.driveTest.over30} offices were more than
       a month out. The first-license transaction itself moved faster &mdash; a median of{' '}
-      {W.original.medianDays} days.
+      {W.original.median} days.
     </p>
     <p class="text-[17px] text-text-body leading-[30px]">
       The practical advice that falls out of that: book the appointment first, then fit the course and

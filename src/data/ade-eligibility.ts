@@ -83,29 +83,11 @@ export const fees = {
 } as const;
 
 /**
- * DPS-WAIT, captured 2026-09-15 from 234 offices / 936 rows.
- * DPS refreshes this daily from the previous business day, so these are a dated snapshot,
- * not a live figure. Pages using them must say the date. Extractor:
- * ~/Claude/Texas Adult Driver Ed/_build/ade-growth/dps-wait-times.js
+ * DPS appointment and in-office wait figures live in `src/lib/dps-stats.ts`, computed at
+ * build time from `src/data/dps-wait-times.json`. They are deliberately NOT duplicated here:
+ * one snapshot typed in two places is how two pages end up quoting different medians.
+ * Import { dpsStats } from '../../../lib/dps-stats' instead.
  */
-export const waitTimes = {
-  capturedOn: '2026-09-15',
-  offices: 234,
-  driveTest: {
-    measured: 220,
-    medianDays: 20,
-    maxDays: 93,
-    maxOffice: 'Pearsall',
-    over14: 136,
-    over30: 86,
-  },
-  original: { measured: 229, medianDays: 8, maxDays: 70 },
-  /** Appointments can be booked up to six months out; a limited number of same-day slots are first come, first served. */
-  bookingHorizonMonths: 6,
-} as const;
-
-/** True when the drive-test queue at the worst offices outlasts the ITD certificate. */
-export const itdExpiryRisk = waitTimes.driveTest.maxDays > itd.certValidDays;
 
 export const process = {
   appointmentOnly: true,

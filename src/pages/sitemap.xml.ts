@@ -82,6 +82,7 @@ const adeRoutes = adeEnabled
       '/adult-drivers-ed/texas/expired-out-of-state-license',
       '/adult-drivers-ed/texas/never-had-a-license',
       '/adult-drivers-ed/texas/impact-texas-adult-drivers',
+      '/adult-drivers-ed/texas/dps-wait-times',
     ]
   : [];
 

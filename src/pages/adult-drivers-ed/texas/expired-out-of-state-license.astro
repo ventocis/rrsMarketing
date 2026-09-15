@@ -1,0 +1,63 @@
+---
+import AdeGuide from '../../../components/ade/AdeGuide.astro';
+import { law, fees, itd } from '../../../data/ade-eligibility';
+
+const faqs = [
+  { q: 'My out-of-state license expired. Do I need Texas drivers ed?', a: `It depends how long ago. DPS waives the knowledge and skills exams and the adult driver education requirement for someone 18 or older holding a valid out-of-state license "or license not expired over two years". Past two years, the waiver no longer applies, and if you are ${law.requiredBand} the six-hour course comes back.` },
+  { q: 'How is the two-year window measured?', a: 'From the expiry date printed on the license, not from the last time you drove. Find the card before you assume either way — people routinely misremember expiry dates by a year.' },
+  { q: 'What if I cannot find my old license?', a: 'Contact the issuing state for a driving record or a replacement. DPS needs to see the license to accept it as the basis for a transfer, and surrendering it is part of the process.' },
+  { q: 'What if it expired more than two years ago?', a: `Then you are treated as a new applicant: the knowledge test, the driving skills test, the ${itd.adultName} video, and the six-hour adult driver education course if you are ${law.requiredBand}. At 25 or older the course is not required.` },
+];
+---
+
+<AdeGuide
+  title="Expired Out-of-State License and Texas Drivers Ed: The Two-Year Line | Road Ready Safety"
+  description="Texas waives driver education and the exams for an out-of-state license that is valid, or not expired more than two years. Past that line the requirement returns. How the window is measured."
+  url="/adult-drivers-ed/texas/expired-out-of-state-license"
+  eyebrow="Eligibility"
+  h1="Your out-of-state license expired. Now what?"
+  lede="There is a two-year line in the Texas rules, and almost nobody knows it is there. On one side your old license still does the work. On the other, Texas treats you as though you had never been licensed at all."
+  faqs={faqs}
+  sources={[
+    { label: 'Texas DPS, Moving to Texas: A Guide to Driver Licenses and IDs', href: 'https://www.dps.texas.gov/section/driver-license/moving-texas' },
+    { label: 'Tex. Transp. Code §521.1601, Driver Education Required; Exception', href: 'https://statutes.capitol.texas.gov/Docs/TN/htm/TN.521.htm' },
+  ]}
+>
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Where the line is</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      The statute exempts anyone holding &ldquo;a valid driver&rsquo;s license issued by another
+      state&rdquo;. DPS is more specific in practice, and more generous:
+    </p>
+    <blockquote class="border-l-4 border-border pl-5 py-1 m-0">
+      <p class="text-[17px] text-text-body leading-[30px] italic m-0">&ldquo;{law.dpsWaiverText}&rdquo;</p>
+      <cite class="text-sm text-text-muted not-italic">&mdash; Texas DPS, Moving to Texas</cite>
+    </blockquote>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      <strong>&ldquo;Or license not expired over two years.&rdquo;</strong> That clause is the whole
+      question. Inside two years, an expired card still buys you the transfer treatment: no knowledge
+      test, no skills test, no driver education. Outside it, none of that carries over.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Which side are you on?</h2>
+    <ul class="flex flex-col gap-3 pl-5 m-0 list-disc marker:text-text-subtle">
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>Expired within two years, any adult age.</strong> Treated as a transfer. Surrender the card, pay the ${fees.newLicense18to84} fee, take the vision test.</li>
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>Expired more than two years ago, and you are {law.requiredBand}.</strong> New applicant. Six-hour adult driver education course, knowledge test, skills test, {itd.adultName} video.</li>
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>Expired more than two years ago, and you are 25 or older.</strong> New applicant, but no driver education requirement. The tests and the video still apply.</li>
+    </ul>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      Measure from the expiry date on the card, not from the last time you drove. Find the license
+      before you plan around either answer.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Read next</h2>
+    <ul class="flex flex-col gap-3 pl-5 m-0 list-disc marker:text-text-subtle">
+      <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/new-resident-out-of-state-license">If the license is still valid</a></li>
+      <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/how-to-get-a-texas-license-as-an-adult">The full process if you are starting over</a></li>
+    </ul>
+  </section>
+</AdeGuide>

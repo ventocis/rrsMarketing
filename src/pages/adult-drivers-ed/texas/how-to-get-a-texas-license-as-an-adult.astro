@@ -1,0 +1,113 @@
+---
+import AdeGuide from '../../../components/ade/AdeGuide.astro';
+import { law, itd, fees, process, waitTimes as W, CLAIM } from '../../../data/ade-eligibility';
+
+const steps = [
+  { name: 'Work out whether you need driver education', text: `If you are ${law.requiredBand} and this is your first driver license, you need the six-hour adult course. If you are 25 or older, or you hold a valid license from another U.S. state, you do not.` },
+  { name: 'Gather your documents', text: 'Proof of identity, proof of lawful presence or U.S. citizenship, proof of Texas residency, your Social Security number, and — if you own a vehicle — Texas registration and proof of insurance. DPS has a REAL ID Document Check tool that builds the list for your situation.' },
+  { name: 'Take the six-hour course, if it applies to you', text: `Online and self-paced. Under §521.167 it ${CLAIM}, once a licensed driver education instructor confirms you passed those parts.` },
+  { name: 'Book your driving skills test', text: `Every DPS office is appointment only. Appointments open up to ${W.bookingHorizonMonths} months ahead, and the median wait for a skills test was ${W.driveTest.medianDays} days when we last read the DPS report.` },
+  { name: `Watch the ${itd.adultLengthHours}-hour ${itd.adultName} video`, text: `Required before the skills test for everyone 18 and over. The certificate is valid ${itd.certValidDays} days, so watch it after you know your appointment date, not before.` },
+  { name: 'Go to your appointment', text: `Application form, documents, biometrics, photo, the $${fees.newLicense18to84} fee, vision test, then the knowledge test if it has not been waived, then the driving skills test.` },
+  { name: 'Leave with a temporary license', text: `You get a paper temporary license the same day. Check every field on it before you leave. The card arrives by mail in about ${process.cardArrivesWeeks} weeks.` },
+];
+
+const faqs = [
+  {
+    q: 'How do I get a Texas driver license at 18 or older?',
+    a: `Seven steps: check whether driver education applies to you (required at ${law.requiredBand} for a first license), gather your identity, lawful presence and Texas residency documents, take the six-hour course if you need it, book a skills test appointment, watch the ${itd.adultName} video within ${itd.certValidDays} days of that appointment, attend and pass, then wait about ${process.cardArrivesWeeks} weeks for the card.`,
+  },
+  {
+    q: 'How much does a Texas driver license cost?',
+    a: `The DPS fee for a new Class C license at ages 18 to 84 is $${fees.newLicense18to84}, and the license lasts ${fees.newLicenseTermYears} years. A $1 administrative fee is included in that, and is not charged on mail transactions. Any driver education course is a separate cost.`,
+  },
+  {
+    q: 'How long does the whole process take?',
+    a: `The course is six hours. The bottleneck is the driving skills test: DPS publishes per-office appointment availability, and when we read it the median wait was ${W.driveTest.medianDays} days, with ${W.driveTest.over30} of ${W.driveTest.measured} offices more than a month out. Plan around the appointment, not the course.`,
+  },
+  {
+    q: 'What is on the Texas driver license exam?',
+    a: `Tex. Transp. Code §521.161 requires a test of vision, ability to identify highway signs, knowledge of Texas traffic laws, motorists' rights and responsibilities in relation to bicyclists, and the effect of distracted driving — plus a demonstration of your ability to drive.`,
+  },
+  {
+    q: 'Can I do any of it online?',
+    a: 'The driver education course is fully online. The license transaction is not: DPS offers all in-office driver license and ID services by appointment only, and the vision test and driving skills test happen in person. Some renewals can be done online, but a first license cannot.',
+  },
+];
+---
+
+<AdeGuide
+  title="How to Get a Texas Driver License as an Adult: The Full Process | Road Ready Safety"
+  description="Every step to a first Texas driver license at 18 or older — documents, driver education, the ITAD video, the skills test appointment, fees and timing, with each rule sourced to DPS or the statute."
+  url="/adult-drivers-ed/texas/how-to-get-a-texas-license-as-an-adult"
+  eyebrow="The full process"
+  h1="How to get a Texas driver license as an adult"
+  lede="Teenagers get walked through this by a school and a parent. Adults get a government website. Here is the whole path in order, with the requirement behind each step named, so nothing surprises you at the counter."
+  faqs={faqs}
+  sources={[
+    { label: 'Texas DPS, Apply for a Texas Driver License', href: 'https://www.dps.texas.gov/section/driver-license/apply-texas-driver-license' },
+    { label: 'Tex. Transp. Code §521.161, Examination of License Applicants', href: 'https://statutes.capitol.texas.gov/Docs/TN/htm/TN.521.htm' },
+    { label: 'Tex. Transp. Code §521.1601 and §521.167', href: 'https://statutes.capitol.texas.gov/Docs/TN/htm/TN.521.htm' },
+    { label: 'Texas DPS, Impact Texas Drivers (ITD) Program', href: 'https://www.dps.texas.gov/section/driver-license/impact-texas-drivers-itd-program' },
+    { label: 'Texas DPS, Driver License Fees', href: 'https://www.dps.texas.gov/section/driver-license/driver-license-fees' },
+    { label: `Texas DPS, Driver License Appointment and Office Wait Times (read ${W.capturedOn})`, href: 'https://www.dps.texas.gov/apps/Viewer/Document/Vue/WAITTIMES' },
+  ]}
+>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">The seven steps</h2>
+    <ol class="flex flex-col gap-5 pl-5 m-0 list-decimal marker:text-text-subtle marker:font-semibold">
+      {steps.map((s) => (
+        <li class="text-[17px] text-text-body leading-[30px]">
+          <strong class="text-text">{s.name}.</strong> {s.text}
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">What you bring</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      DPS turns people away for missing paperwork, and a lost appointment is expensive when the next
+      one is weeks out. Its own REAL ID Document Check tool builds a personalized list; the general
+      shape is:
+    </p>
+    <ul class="flex flex-col gap-3 pl-5 m-0 list-disc marker:text-text-subtle">
+      <li class="text-[17px] text-text-body leading-[30px]">Proof of U.S. citizenship, or of lawful presence if you are not a citizen</li>
+      <li class="text-[17px] text-text-body leading-[30px]">Proof of identity</li>
+      <li class="text-[17px] text-text-body leading-[30px]">Proof of Texas residency</li>
+      <li class="text-[17px] text-text-body leading-[30px]">Your Social Security number</li>
+      <li class="text-[17px] text-text-body leading-[30px]">Texas registration for every vehicle you own, and proof of insurance &mdash; or a statement that you do not own one</li>
+      <li class="text-[17px] text-text-body leading-[30px]">Your {itd.adultName} certificate, dated within {itd.certValidDays} days of the skills test</li>
+      <li class="text-[17px] text-text-body leading-[30px]">Your driver education certificate, if you are {law.requiredBand}</li>
+    </ul>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Where the time actually goes</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      The course is six hours and you control when you do it. The appointment is the part you do not
+      control. When we read the DPS wait-time report on {W.capturedOn}, the median wait for a
+      non-commercial driving skills test across {W.driveTest.measured} offices was{' '}
+      <strong>{W.driveTest.medianDays} days</strong>, and {W.driveTest.over30} offices were more than
+      a month out. The first-license transaction itself moved faster &mdash; a median of{' '}
+      {W.original.medianDays} days.
+    </p>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      The practical advice that falls out of that: book the appointment first, then fit the course and
+      the video around it. Doing it the other way round is how ITD certificates expire. We wrote that
+      up in detail in{' '}
+      <a class="underline hover:no-underline" href="/adult-drivers-ed/texas/impact-texas-adult-drivers">the 90-day certificate trap</a>.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Read next</h2>
+    <ul class="flex flex-col gap-3 pl-5 m-0 list-disc marker:text-text-subtle">
+      <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/do-i-need-adult-drivers-ed">Do you need adult drivers ed in Texas?</a></li>
+      <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/never-had-a-license">Never had a driver license, and you are an adult</a></li>
+      <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/new-resident-out-of-state-license">Moving to Texas with an out-of-state license</a></li>
+    </ul>
+  </section>
+
+</AdeGuide>

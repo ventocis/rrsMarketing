@@ -1,0 +1,72 @@
+---
+import AdeGuide from '../../../components/ade/AdeGuide.astro';
+import { law, newResident, transferIssuers, fees, itd } from '../../../data/ade-eligibility';
+
+const faqs = [
+  { q: 'Do I need Texas drivers ed if I move here with an out-of-state license?', a: `No. §521.1601(b) says the driver education rule does not apply to a person who holds a valid driver license issued by another state. DPS goes further: if you are 18 or older and hold a valid out-of-state license, or one not expired over two years, you are exempt from the knowledge and skills exams as well as the ITD and adult driver education requirements.` },
+  { q: 'How long do I have to switch to a Texas license?', a: `You can drive on a valid, unexpired license from another U.S. state, U.S. territory, Canadian province or qualifying country for up to ${newResident.graceDays} days after moving to Texas. After that you need the Texas license.` },
+  { q: 'Do I have to give up my old license?', a: 'Yes. DPS requires you to surrender the out-of-state license when you transfer, and issues you the equivalent Texas version.' },
+  { q: 'Do I need to register my car first?', a: 'Yes. DPS asks for evidence of Texas vehicle registration for each vehicle you own before you apply, and proof of vehicle registration applies specifically to new residents surrendering an out-of-state license.' },
+  { q: 'Do I still need the ITAD video?', a: `Not if your transfer waives the skills test — DPS lists ITD among the requirements waived for an 18-and-over holder of a valid out-of-state license. If for any reason you do end up taking a driving skills test, the ${itd.adultName} certificate is required and lasts ${itd.certValidDays} days.` },
+];
+---
+
+<AdeGuide
+  title="Moving to Texas With an Out-of-State License: No Drivers Ed Required | Road Ready Safety"
+  description="A valid license from another U.S. state exempts you from Texas adult driver education, the knowledge test and the skills test. What you surrender, what you register, and the 90-day window."
+  url="/adult-drivers-ed/texas/new-resident-out-of-state-license"
+  eyebrow="New residents"
+  h1="Moving to Texas with an out-of-state license"
+  lede="This is the easy version. If you hold a valid license from another U.S. state, Texas treats the move as a transfer: no driver education, no knowledge test, no skills test. There is still a clock, and there is still paperwork."
+  faqs={faqs}
+  sources={[
+    { label: 'Tex. Transp. Code §521.1601(b)', href: 'https://statutes.capitol.texas.gov/Docs/TN/htm/TN.521.htm' },
+    { label: 'Texas DPS, Moving to Texas: A Guide to Driver Licenses and IDs', href: 'https://www.dps.texas.gov/section/driver-license/moving-texas' },
+    { label: 'Texas DPS, Apply for a Texas Driver License', href: 'https://www.dps.texas.gov/section/driver-license/apply-texas-driver-license' },
+  ]}
+>
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">What the waiver covers</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">DPS states it in one sentence on its Moving to Texas page:</p>
+    <blockquote class="border-l-4 border-border pl-5 py-1 m-0">
+      <p class="text-[17px] text-text-body leading-[30px] italic m-0">&ldquo;{law.dpsWaiverText}&rdquo;</p>
+      <cite class="text-sm text-text-muted not-italic">&mdash; Texas DPS, Moving to Texas</cite>
+    </blockquote>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      Two things in there are worth pausing on. First, the waiver covers the driver education
+      requirement even though §521.1601 would otherwise catch anyone under {law.ageCeiling}. Second,
+      it is not limited to a currently valid license &mdash; DPS extends it to a license
+      <strong> not expired over two years</strong>, which is more generous than the statute reads on
+      its face. A transfer with no knowledge or skills exam comes from {transferIssuers.slice(0, -1).join(', ')} or {transferIssuers.at(-1)}.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">The {newResident.graceDays}-day clock</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      You may legally drive on your existing license for up to {newResident.graceDays} days after
+      moving to Texas. That is the window to register your vehicles, gather documents and get an
+      appointment &mdash; and appointments are the slow part, so start at the beginning of the window
+      rather than the end.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">What you still do</h2>
+    <ul class="flex flex-col gap-3 pl-5 m-0 list-disc marker:text-text-subtle">
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>Register your vehicles in Texas first.</strong> DPS asks for evidence of Texas registration for each vehicle you own, and singles out new residents surrendering an out-of-state license.</li>
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>Surrender the old license.</strong> You are issued the equivalent Texas version.</li>
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>Bring proof of identity, lawful presence, Texas residency and your Social Security number.</strong></li>
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>Pay the ${fees.newLicense18to84} fee</strong> and take the vision test.</li>
+    </ul>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">If your license is from another country</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      Different answer, and a much less forgiving one. The exemption is written for another
+      <em> state</em>, and Texas holds reciprocity with only five countries. We set that out in{' '}
+      <a class="underline hover:no-underline" href="/adult-drivers-ed/texas/foreign-license-texas">moving to Texas with a license from another country</a>.
+    </p>
+  </section>
+</AdeGuide>

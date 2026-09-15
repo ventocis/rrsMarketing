@@ -1,0 +1,153 @@
+---
+import AdeGuide from '../../../components/ade/AdeGuide.astro';
+import { law, reciprocityCountries, fees, itd, CLAIM } from '../../../data/ade-eligibility';
+
+// The decision this page exists to settle. Each row is a different legal answer, not a
+// rephrasing: §521.1601(a) sets the under-25 rule, (b) carves out another state's license,
+// and DPS's own Moving to Texas page extends that to U.S. territories, Canada and five
+// reciprocity countries.
+const rows = [
+  { who: 'You are 18–24 and this is your first driver license anywhere', need: 'Yes', why: 'The six-hour adult course is required before DPS can issue the license.' },
+  { who: 'You are 18–24 and hold a valid license from another U.S. state', need: 'No', why: 'Surrender it when you apply. The course, the exams and ITD are all waived.' },
+  { who: 'You are 18–24 and hold a valid license from a U.S. territory or Canada', need: 'No', why: 'DPS treats these as transfers, with no knowledge or skills exam.' },
+  { who: `You are 18–24 and hold a valid license from ${reciprocityCountries.slice(0, -1).join(', ')} or ${reciprocityCountries.at(-1)}`, need: 'Usually no', why: 'Texas has reciprocity with these five countries, so the exams may be waived.' },
+  { who: 'You are 18–24 and hold a license from any other country', need: 'Yes', why: 'A foreign license is not "another state". This is the case most people get wrong.' },
+  { who: 'You are 18–24 and your out-of-state license expired more than two years ago', need: 'Yes', why: 'The waiver depends on the license being valid, or expired no more than two years.' },
+  { who: 'You are 25 or older', need: 'No', why: 'No driver education requirement at any point. You may still choose the course.' },
+];
+
+const faqs = [
+  {
+    q: 'Do I need driver education to get a Texas driver license as an adult?',
+    a: 'Only if you are under 25. Texas Transportation Code §521.1601 says the Department may not issue a driver license to a person younger than 25 without a driver education certificate. DPS applies this as: a six-hour adult driver education course if you are 18 through 24 and applying for your first Texas driver license. There is no driver education requirement at 25 or older.',
+  },
+  {
+    q: 'I am 22 and moving to Texas with a license from another state. Do I need the course?',
+    a: 'No. §521.1601(b) says the rule does not apply to a person who holds a valid driver license issued by another state. DPS goes further on its Moving to Texas page: if you are 18 or older and hold a valid out-of-state license, or one not expired over two years, you are exempt from the knowledge and skills exams as well as the ITD and adult driver education requirements. You surrender the out-of-state license when you apply.',
+  },
+  {
+    q: 'I have a driver license from another country. Does that exempt me?',
+    a: `Usually not. The exemption in §521.1601(b) is for a license issued by another state, and a foreign license is not another state. DPS treats licenses from U.S. territories and Canada as transfers, and Texas has reciprocity with ${reciprocityCountries.join(', ')}. If your license was issued anywhere else and you are 18 through 24, you still need the six-hour adult driver education course. DPS also requires a license not in English or Spanish to be translated by a translation service or your consulate before you arrive.`,
+  },
+  {
+    q: 'Is adult driver education required at 25 in Texas?',
+    a: 'No. DPS states plainly that there are no driver education requirements for ages 25 and older. You still take the knowledge and skills exams unless you are transferring a license, and you still need an Impact Texas Adult Drivers certificate before the driving skills test.',
+  },
+  {
+    q: 'What does the six-hour course actually do for me?',
+    a: `Under §521.167, finishing an approved adult driver education course means you are not required to take the highway sign and traffic law parts of the DPS examination, once a licensed driver education instructor has confirmed you passed them. It does not remove the vision test or the driving skills test, and it is not a driver license.`,
+  },
+  {
+    q: 'How much is the license itself?',
+    a: `A new Class C driver license for ages 18 to 84 is $${fees.newLicense18to84} and lasts ${fees.newLicenseTermYears} years. That is the DPS fee and is separate from any course.`,
+  },
+];
+---
+
+<AdeGuide
+  title="Do You Need Adult Drivers Ed in Texas? The Rule, by Age and License | Road Ready Safety"
+  description="Texas requires adult driver education under 25. Whether it applies to you depends on your age and who issued your current license. The rule, quoted from §521.1601 and DPS."
+  url="/adult-drivers-ed/texas/do-i-need-adult-drivers-ed"
+  eyebrow="Eligibility"
+  h1="Do you need adult drivers ed in Texas?"
+  lede="If you are under 25, Texas law requires driver education before the state will issue your first license. Whether it applies to you turns on two things: your age, and who issued the license you already hold. Here is the rule, quoted from the statute and from DPS."
+  faqs={faqs}
+  sources={[
+    { label: 'Tex. Transp. Code §521.1601, Driver Education Required; Exception', href: 'https://statutes.capitol.texas.gov/Docs/TN/htm/TN.521.htm' },
+    { label: 'Tex. Transp. Code §521.167, Waiver of Certain Education and Examination Requirements', href: 'https://statutes.capitol.texas.gov/Docs/TN/htm/TN.521.htm' },
+    { label: 'Texas DPS, Apply for a Texas Driver License', href: 'https://www.dps.texas.gov/section/driver-license/apply-texas-driver-license' },
+    { label: 'Texas DPS, Moving to Texas: A Guide to Driver Licenses and IDs', href: 'https://www.dps.texas.gov/section/driver-license/moving-texas' },
+  ]}
+>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">The short answer</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      Texas Transportation Code §521.1601 says the Department of Public Safety may not issue a driver
+      license to a person younger than {law.ageCeiling} unless that person submits a driver education
+      certificate. DPS states the same rule in plainer words on its own application page:
+    </p>
+    <blockquote class="border-l-4 border-border pl-5 py-1 m-0">
+      <p class="text-[17px] text-text-body leading-[30px] italic m-0">&ldquo;{law.dpsRequirementText}&rdquo;</p>
+      <cite class="text-sm text-text-muted not-italic">&mdash; Texas DPS, Apply for a Texas Driver License</cite>
+    </blockquote>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      So the requirement is narrower than people assume. It is not about being a new driver. It is
+      about being under {law.ageCeiling} and not already holding a license the state recognises.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Find your situation</h2>
+    <div class="overflow-x-auto">
+      <table class="w-full border-collapse text-left">
+        <thead>
+          <tr class="border-b border-border">
+            <th class="py-3 pr-4 text-sm font-semibold text-text align-top">Your situation</th>
+            <th class="py-3 pr-4 text-sm font-semibold text-text align-top whitespace-nowrap">Course required?</th>
+            <th class="py-3 text-sm font-semibold text-text align-top">Why</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((r) => (
+            <tr class="border-b border-border align-top">
+              <td class="py-4 pr-4 text-[15px] text-text-body leading-6">{r.who}</td>
+              <td class="py-4 pr-4 text-[15px] font-semibold text-text leading-6 whitespace-nowrap">{r.need}</td>
+              <td class="py-4 text-[15px] text-text-body leading-6">{r.why}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">
+      The line most people get wrong: &ldquo;another state&rdquo; does not mean another country
+    </h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      The exemption in §521.1601(b) reads, in full: &ldquo;{law.exemptionText}&rdquo; That sentence is
+      doing more work than it looks. A license from Oklahoma exempts you. A license from Mexico,
+      India, Nigeria, the Philippines or Brazil does not, because none of those is a state.
+    </p>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      DPS softens the edges a little in practice. Its Moving to Texas page treats a license from a
+      U.S. territory or Canada as a transfer with no knowledge or skills exam, and Texas holds
+      reciprocity agreements with {reciprocityCountries.slice(0, -1).join(', ')} and {reciprocityCountries.at(-1)}.
+      Outside that list, if you are 18 through 24, the six-hour course applies to you even though you
+      have been driving legally for years somewhere else.
+    </p>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      One more practical detail from the same DPS page, and it catches people out at the counter:
+      a license that is not in English or Spanish must be translated by a translation service or
+      your consulate <em>before</em> you arrive in Texas.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">What the course does, and what it does not</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      Under §521.167, passing an approved adult driver education course means you are not required to
+      take the highway sign and traffic law parts of the DPS examination, once a licensed driver
+      education instructor confirms you passed them. In other words it {CLAIM}.
+    </p>
+    <p class="text-[17px] text-text-body leading-[30px]">It does not do any of the following, and any provider who tells you otherwise is overselling:</p>
+    <ul class="flex flex-col gap-3 pl-5 m-0 list-disc marker:text-text-subtle">
+      <li class="text-[17px] text-text-body leading-[30px]">It is not a driver license, and no course can promise you one.</li>
+      <li class="text-[17px] text-text-body leading-[30px]">It does not remove the vision test.</li>
+      <li class="text-[17px] text-text-body leading-[30px]">It does not remove the driving skills test, which is the part with the long queue at most DPS offices.</li>
+      <li class="text-[17px] text-text-body leading-[30px]">It does not replace {itd.adultName}, the {itd.adultLengthHours}-hour video you must show before the skills test.</li>
+    </ul>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Read next</h2>
+    <ul class="flex flex-col gap-3 pl-5 m-0 list-disc marker:text-text-subtle">
+      <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/how-to-get-a-texas-license-as-an-adult">How to get a Texas driver license as an adult, start to finish</a></li>
+      <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/foreign-license-texas">Moving to Texas with a license from another country</a></li>
+      <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/impact-texas-adult-drivers">Impact Texas Adult Drivers, and the 90-day certificate trap</a></li>
+      <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/drivers-ed-over-25">Do you need drivers ed at 25 or older in Texas?</a></li>
+    </ul>
+  </section>
+
+</AdeGuide>

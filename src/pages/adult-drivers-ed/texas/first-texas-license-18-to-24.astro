@@ -1,0 +1,73 @@
+---
+import AdeGuide from '../../../components/ade/AdeGuide.astro';
+import { law, itd, fees, CLAIM } from '../../../data/ade-eligibility';
+
+const faqs = [
+  { q: 'Do 18 to 24 year olds need drivers ed in Texas?', a: `Yes, for a first driver license. Tex. Transp. Code §521.1601 bars DPS from issuing a license to anyone under ${law.ageCeiling} without a driver education certificate, and DPS applies that as a six-hour adult driver education course for applicants ${law.requiredBand}. The exception is if you already hold a valid license issued by another U.S. state.` },
+  { q: 'How long is the adult drivers ed course in Texas?', a: 'Six hours, which Texas defines as 360 minutes with a minimum of 330 minutes of instruction. It is online and self-paced, so you can do it across several sittings rather than in one block.' },
+  { q: 'Does the course replace the DPS written test?', a: `It ${CLAIM}. Under §521.167 you are not required to take those parts of the examination once a licensed driver education instructor confirms you passed them. The vision test and the driving skills test still happen at DPS.` },
+  { q: 'What else do I need besides the course?', a: `The ${itd.adultName} video before your driving skills test, your identity, lawful presence and Texas residency documents, and the $${fees.newLicense18to84} DPS fee. The course is one requirement among several, not the whole process.` },
+  { q: 'What happens when I turn 25 partway through?', a: 'The requirement is tested when DPS issues the license, so if you apply at 25 or older there is no driver education requirement. If you are already close to 25 and not in a hurry, that is worth knowing. If you need to drive sooner, the six hours is the faster path.' },
+];
+---
+
+<AdeGuide
+  title="Texas Drivers Ed for 18 to 24 Year Olds: What the Law Requires | Road Ready Safety"
+  description="If you are 18 through 24 and applying for a first Texas driver license, the six-hour adult driver education course is required by §521.1601. What it covers, what it replaces, and what it does not."
+  url="/adult-drivers-ed/texas/first-texas-license-18-to-24"
+  eyebrow="Eligibility"
+  h1="Getting your first Texas license at 18 to 24"
+  lede="This is the age band the adult driver education requirement was written for. If you have never held a driver license and you are under 25, Texas will not issue one until you have completed the six-hour course."
+  faqs={faqs}
+  sources={[
+    { label: 'Tex. Transp. Code §521.1601, Driver Education Required; Exception', href: 'https://statutes.capitol.texas.gov/Docs/TN/htm/TN.521.htm' },
+    { label: 'Tex. Transp. Code §521.167, Waiver of Certain Education and Examination Requirements', href: 'https://statutes.capitol.texas.gov/Docs/TN/htm/TN.521.htm' },
+    { label: 'Texas DPS, Apply for a Texas Driver License', href: 'https://www.dps.texas.gov/section/driver-license/apply-texas-driver-license' },
+  ]}
+>
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Why the rule exists at this age</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      Texas has required driver education for teenagers for a long time. In 2010 it extended the idea
+      upward: §521.1601 now bars DPS from issuing a license to anyone younger than {law.ageCeiling}
+      without a driver education certificate. The intent was that people who missed driver education
+      in high school should not simply age out of it.
+    </p>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      The adult version is shorter than the teen course &mdash; six hours rather than 32 &mdash; and
+      there is no behind-the-wheel component and no parent involvement. It is a classroom requirement
+      delivered online.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">What six hours actually means</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      Texas defines the course as 360 minutes, of which at least 330 must be instruction and the
+      balance may be breaks. It is self-paced, so you are not sitting in one six-hour block unless you
+      want to. The content is set by the state, not the provider: licensing and registration,
+      right-of-way, signs and signals, controlling traffic flow, alcohol and other drugs, sharing the
+      road, managing risk, and a final examination on highway signs and traffic laws.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">The one real benefit, stated accurately</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      Under §521.167, finishing an approved course means you are not required to take the highway sign
+      and traffic law parts of the DPS examination, once a licensed driver education instructor
+      confirms you passed them. That is the whole of it. You still take the vision test. You still
+      take the driving skills test, and that is the part with the queue. And no course can promise you
+      a license.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Read next</h2>
+    <ul class="flex flex-col gap-3 pl-5 m-0 list-disc marker:text-text-subtle">
+      <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/how-to-get-a-texas-license-as-an-adult">The full process, start to finish</a></li>
+      <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/impact-texas-adult-drivers">Impact Texas Adult Drivers and the 90-day trap</a></li>
+      <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/do-i-need-adult-drivers-ed">Do you need adult drivers ed at all?</a></li>
+    </ul>
+  </section>
+</AdeGuide>

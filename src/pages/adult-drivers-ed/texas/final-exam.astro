@@ -1,0 +1,89 @@
+---
+import AdeGuide from '../../../components/ade/AdeGuide.astro';
+import { course, CLAIM } from '../../../data/ade-eligibility';
+
+const faqs = [
+  { q: 'What is on the Texas adult drivers ed final exam?', a: `Two parts: ${course.finalExamSigns} questions on highway signs and ${course.finalExamLaws} on traffic laws, ${course.finalExamQuestions} in total. You need ${course.finalExamPassPercent}% on each part. Those are the same two subjects §521.161 requires DPS to test, which is why passing them here ${CLAIM}.` },
+  { q: 'What score do I need to pass?', a: `${course.finalExamPassPercent}% on each part, taken separately — passing one does not carry the other. Texas sets mastery at 70% for this examination.` },
+  { q: 'How many times can I take it?', a: `${course.finalExamAttempts} attempts. If you miss more than 30% of the questions on an attempt, the course retests you using different questions, and you may review the material first. Fail three times and you fail the course.` },
+  { q: 'Does it show me the right answers?', a: 'No. Texas requires that the course not identify the correct answer on the final examination, so you get your result without an answer key. Knowledge checks during the course work differently and do show you where you went wrong.' },
+  { q: 'Is it open book?', a: 'The rules do not put an invigilator in your room, and you have just read the material. But the questions are written so the answer is not easily determined without having done the course, which is a requirement rather than a boast. Skimming is the reliable way to fail.' },
+  { q: 'What happens after I pass?', a: 'Your certificate is issued and a licensed driver education instructor confirms you passed the highway sign and traffic law portions. That confirmation is what DPS relies on.' },
+];
+---
+<AdeGuide
+  title="The Texas Adult Drivers Ed Final Exam: Format, Pass Mark and Retakes | Road Ready Safety"
+  description="Two parts, 40 questions, 70% on each, three attempts, no answer key. What the final examination covers and why it stands in for the DPS written test."
+  url="/adult-drivers-ed/texas/final-exam"
+  eyebrow="The course"
+  h1="The final examination"
+  lede="This is the examination that does the work — pass it and a licensed instructor confirms the written portions of the DPS exam for you. Here is its exact shape, including the parts people find surprising."
+  faqs={faqs}
+  sources={[
+    { label: '16 TAC §84.503(d)(4), which sets the two test banks, the placement and the retest rule' },
+    { label: 'Tex. Transp. Code §521.161 and §521.167', href: 'https://statutes.capitol.texas.gov/Docs/TN/htm/TN.521.htm' },
+    { label: 'Texas Program of Organized Instruction, Adult Six-Hour edition, Topic 4.1.9' },
+  ]}
+>
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">The shape of it</h2>
+    <div class="overflow-x-auto">
+      <table class="w-full border-collapse text-left">
+        <thead>
+          <tr class="border-b border-border">
+            <th class="py-3 pr-4 text-sm font-semibold text-text">Part</th>
+            <th class="py-3 pr-4 text-sm font-semibold text-text whitespace-nowrap">Questions</th>
+            <th class="py-3 text-sm font-semibold text-text whitespace-nowrap">To pass</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-b border-border">
+            <td class="py-3 pr-4 text-[15px] text-text-body leading-6">Part 1 &mdash; Highway signs</td>
+            <td class="py-3 pr-4 text-[15px] font-semibold text-text leading-6">{course.finalExamSigns}</td>
+            <td class="py-3 text-[15px] text-text-body leading-6">{course.finalExamPassPercent}%</td>
+          </tr>
+          <tr class="border-b border-border">
+            <td class="py-3 pr-4 text-[15px] text-text-body leading-6">Part 2 &mdash; Traffic laws</td>
+            <td class="py-3 pr-4 text-[15px] font-semibold text-text leading-6">{course.finalExamLaws}</td>
+            <td class="py-3 text-[15px] text-text-body leading-6">{course.finalExamPassPercent}%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      The two parts are scored separately and drawn from two separate question banks, because Texas
+      requires it that way &mdash; signs and laws are the two things §521.161 makes DPS test, so the
+      examination that replaces those portions has to cover them in equal measure.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Three things people are not expecting</h2>
+    <ul class="flex flex-col gap-3 pl-5 m-0 list-disc marker:text-text-subtle">
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>No answer key.</strong> The rules require the course not to identify the correct answer on the final examination. You are told how you did, not which ones you missed.</li>
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>A retake is a different exam.</strong> If you miss more than 30%, the retest draws different questions from the bank. You cannot learn the paper by failing it.</li>
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>{course.finalExamAttempts} attempts, then the course.</strong> Fail three times and you fail the course rather than simply trying again forever. You may review the material between attempts.</li>
+    </ul>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">How to pass it first time</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      There is no trick, and anyone offering one is selling a worse course. The questions are written
+      to be unanswerable without having done the instruction &mdash; that is a rule, not a design
+      choice. Two things genuinely help: pay attention to Module 4, which is where the signs material
+      lives and where the sign half of the exam comes from; and treat the {course.knowledgeChecks}{' '}
+      knowledge checks along the way as practice rather than obstacles, because they cover the same
+      ground and they <em>do</em> show you what you got wrong.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Read next</h2>
+    <ul class="flex flex-col gap-3 pl-5 m-0 list-disc marker:text-text-subtle">
+      <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/ade-1317-certificate">The certificate you get afterwards</a></li>
+      <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/texas-written-knowledge-test">What the DPS written test covers</a></li>
+      <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/whats-in-the-course">What the six hours cover</a></li>
+    </ul>
+  </section>
+</AdeGuide>

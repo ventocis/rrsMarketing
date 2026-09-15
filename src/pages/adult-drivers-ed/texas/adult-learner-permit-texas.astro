@@ -1,0 +1,74 @@
+---
+import AdeGuide from '../../../components/ade/AdeGuide.astro';
+import { law, fees } from '../../../data/ade-eligibility';
+
+const faqs = [
+  { q: 'Can an adult get a learner permit in Texas?', a: 'Texas learner licenses are issued under §521.222 to applicants 15 or older but under 18. An adult applies for the driver license itself rather than a learner license first, so the teen two-step does not apply to you.' },
+  { q: 'How do I practice driving legally before my test then?', a: 'Through a driving school, which provides an instructor and a dual-control car, or supervised practice where your circumstances permit it. What you cannot do is drive unsupervised without a license to build up practice — that is the thing the learner license exists to authorise for teenagers.' },
+  { q: 'Do I need to hold anything for six months like a teenager does?', a: 'The six-month holding period in Texas law attaches to a learner license, and learner licenses are a minor’s route. Adults are not serving a waiting period of that kind.' },
+  { q: 'What about the "restricted driver license" DPS mentions for third-party testing?', a: 'DPS lists a valid restricted driver license among the requirements for third-party skills testing at 18 and over. If you hold no Texas credential at all, ask the school or DPS what applies to your situation before booking — this is the one corner of the adult path where the wording is genuinely unclear, and we would rather say so than guess.' },
+  { q: 'Do I still need the six-hour course?', a: `If you are ${law.requiredBand} and this is a first license, yes. Your practice arrangements do not change that.` },
+];
+---
+<AdeGuide
+  title="Is There an Adult Learner Permit in Texas? | Road Ready Safety"
+  description="Texas learner licenses are for applicants aged 15 to 17. Adults apply for the license directly — what that means for practising, and the one piece of DPS wording worth asking about."
+  url="/adult-drivers-ed/texas/adult-learner-permit-texas"
+  eyebrow="Eligibility"
+  h1="Is there an adult learner permit in Texas?"
+  lede="Short answer: not in the way teenagers have one. The learner license is a minor's route, and that changes how an adult should think about getting practice before the driving test."
+  faqs={faqs}
+  sources={[
+    { label: 'Tex. Transp. Code §521.222, Learner License', href: 'https://statutes.capitol.texas.gov/Docs/TN/htm/TN.521.htm' },
+    { label: 'Tex. Transp. Code §521.204, Restrictions on Minor', href: 'https://statutes.capitol.texas.gov/Docs/TN/htm/TN.521.htm' },
+    { label: 'Texas DPS, Third Party Skills Testing Program', href: 'https://www.dps.texas.gov/section/driver-license/third-party-skills-testing-program' },
+  ]}
+>
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">What the statute says</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      §521.222 authorizes a learner license for a person who &ldquo;is 15 years of age or older but
+      under 18 years of age&rdquo;, who has passed the classroom phase of an approved driver
+      education course and every examination other than the driving test. It is the first half of the
+      graduated licensing system Texas built for teenagers.
+    </p>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      As an adult you are outside that system. You apply for the driver license, take the tests, and
+      are issued the license. There is no intermediate permit stage designed for you and no six-month
+      holding period to serve.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Which leaves a practical problem</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      The learner license exists so a teenager can legally accumulate driving hours before the test.
+      An adult who has never driven needs the same hours and has no equivalent instrument. The
+      realistic routes are a commercial driving school, which supplies an instructor and a
+      dual-control car, or supervised practice where your circumstances allow it.
+    </p>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      What is not a route is driving unlicensed to get the practice. It is the one shortcut that can
+      end with a conviction rather than a license.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">One piece of wording worth asking about</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      DPS&rsquo;s third-party skills testing page lists &ldquo;a valid restricted driver license&rdquo;
+      among the requirements for applicants 18 and over. What that means for someone holding no Texas
+      credential at all is not spelled out on the page, and we are not going to invent an answer.
+      If you are planning to use a third-party road test, ask the school or DPS how it applies to you
+      before you pay anything.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Read next</h2>
+    <ul class="flex flex-col gap-3 pl-5 m-0 list-disc marker:text-text-subtle">
+      <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/never-had-a-license">Getting a first license as an adult who has never driven</a></li>
+      <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/how-to-get-a-texas-license-as-an-adult">The full process</a></li>
+    </ul>
+  </section>
+</AdeGuide>

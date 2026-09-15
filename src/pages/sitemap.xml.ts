@@ -82,6 +82,19 @@ const adeRoutes = adeEnabled
       '/adult-drivers-ed/texas/expired-out-of-state-license',
       '/adult-drivers-ed/texas/never-had-a-license',
       '/adult-drivers-ed/texas/impact-texas-adult-drivers',
+      '/adult-drivers-ed/texas/dps-wait-times',
+      '/adult-drivers-ed/texas/texas-driver-license-documents',
+      '/adult-drivers-ed/texas/texas-written-knowledge-test',
+      '/adult-drivers-ed/texas/texas-driving-test',
+      '/adult-drivers-ed/texas/third-party-skills-testing',
+      '/adult-drivers-ed/texas/texas-driver-license-fees',
+      '/adult-drivers-ed/texas/whats-in-the-course',
+      '/adult-drivers-ed/texas/how-long-does-the-course-take',
+      '/adult-drivers-ed/texas/final-exam',
+      '/adult-drivers-ed/texas/ade-1317-certificate',
+      '/adult-drivers-ed/texas/what-the-course-does-not-do',
+      '/adult-drivers-ed/texas/adult-learner-permit-texas',
+      '/adult-drivers-ed/texas/temporary-visitors-and-students',
     ]
   : [];
 

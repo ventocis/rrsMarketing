@@ -1,6 +1,7 @@
 ---
 import AdeGuide from '../../../components/ade/AdeGuide.astro';
-import { itd, waitTimes as W, itdExpiryRisk } from '../../../data/ade-eligibility';
+import {itd} from '../../../data/ade-eligibility';
+import { dpsStats as W } from '../../../lib/dps-stats';
 
 // The finding: DPS requires the ITD certificate to be dated within 90 days of the skills test,
 // but publishes per-office drive-test queues that run past 90 days at the slowest offices.
@@ -90,7 +91,7 @@ const faqs = [
         <tbody>
           <tr class="border-b border-border">
             <td class="py-3 pr-4 text-[15px] text-text-body leading-6">Median wait</td>
-            <td class="py-3 text-[15px] font-semibold text-text leading-6">{W.driveTest.medianDays} days</td>
+            <td class="py-3 text-[15px] font-semibold text-text leading-6">{W.driveTest.median} days</td>
           </tr>
           <tr class="border-b border-border">
             <td class="py-3 pr-4 text-[15px] text-text-body leading-6">More than two weeks out</td>
@@ -102,15 +103,15 @@ const faqs = [
           </tr>
           <tr class="border-b border-border">
             <td class="py-3 pr-4 text-[15px] text-text-body leading-6">Longest queue in the state</td>
-            <td class="py-3 text-[15px] font-semibold text-text leading-6">{W.driveTest.maxDays} days ({W.driveTest.maxOffice})</td>
+            <td class="py-3 text-[15px] font-semibold text-text leading-6">{W.driveTest.max} days ({W.driveTest.maxOffice})</td>
           </tr>
         </tbody>
       </table>
     </div>
-    {itdExpiryRisk && (
+    {W.driveTest.overItd > 0 && (
       <p class="text-[17px] text-text-body leading-[30px]">
         <strong>Put those two rules together.</strong> At {W.driveTest.maxOffice} the wait for a
-        driving skills test was {W.driveTest.maxDays} days &mdash; longer than the{' '}
+        driving skills test was {W.driveTest.max} days &mdash; longer than the{' '}
         {itd.certValidDays} days an ITD certificate stays valid. Someone who did everything in the
         obvious order, watching the video as soon as they finished their course, would arrive at that
         appointment with an expired certificate and be turned away.
@@ -122,7 +123,7 @@ const faqs = [
     <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">So do it in this order</h2>
     <ul class="flex flex-col gap-3 pl-5 m-0 list-disc marker:text-text-subtle">
       <li class="text-[17px] text-text-body leading-[30px]"><strong>1. Finish your driver education course</strong> if you need one. DPS requires ITD to come {itd.order}.</li>
-      <li class="text-[17px] text-text-body leading-[30px]"><strong>2. Book the skills test and look at the date you were given.</strong> Appointments can be made up to {W.bookingHorizonMonths} months in advance, so the date you get may be a long way off.</li>
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>2. Book the skills test and look at the date you were given.</strong> Appointments can be made up to {6} months in advance, so the date you get may be a long way off.</li>
       <li class="text-[17px] text-text-body leading-[30px]"><strong>3. Count back {itd.certValidDays} days from that date.</strong> Watch the {itd.adultLengthHours}-hour video inside that window, not before it.</li>
       <li class="text-[17px] text-text-body leading-[30px]"><strong>4. Print the certificate and keep it with your documents.</strong></li>
     </ul>

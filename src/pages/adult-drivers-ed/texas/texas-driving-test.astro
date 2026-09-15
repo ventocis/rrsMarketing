@@ -1,0 +1,76 @@
+---
+import AdeGuide from '../../../components/ade/AdeGuide.astro';
+import { itd, CLAIM } from '../../../data/ade-eligibility';
+import { dpsStats as S, pct } from '../../../lib/dps-stats';
+
+const faqs = [
+  { q: 'Does adult drivers ed get me out of the driving test?', a: `No. The course ${CLAIM} — the written portions. The driving skills test is a separate requirement under §521.161 and no online course removes it. Anyone telling you otherwise is selling something they cannot deliver.` },
+  { q: 'How long is the wait for a driving test in Texas?', a: `A median of ${S.driveTest.median} days across the ${S.driveTest.measured} DPS offices that offer one, on ${S.capturedOn}. ${S.driveTest.over30} of those offices were more than a month out and the longest was ${S.driveTest.max} days at ${S.driveTest.maxOffice}.` },
+  { q: 'What do I need to bring to the driving test?', a: `Your ${itd.adultName} certificate, dated within ${itd.certValidDays} days — DPS will not test you without it — plus your documents, and a vehicle that is registered, insured and road-legal.` },
+  { q: 'Can I use my own car for the Texas driving test?', a: 'Yes, and most people do. It has to be registered, insured, and in safe working order. A vehicle that fails a basic safety check ends the appointment before it starts.' },
+  { q: 'Is there a way around the DPS queue?', a: `Yes — third-party skills testing. DPS certifies driver education schools to administer the Class C road test, and says in its own words that this "${S.driveTest.median > 0 ? 'reduces the time you must wait to take your driving test' : ''}". Fees are set by the school, not DPS.` },
+];
+---
+<AdeGuide
+  title="The Texas Driving Skills Test: What the Course Does Not Replace | Road Ready Safety"
+  description="Adult driver education satisfies the written portions of the DPS exam. It does not touch the driving test — the slowest part of the process, at a median 20-day wait. What to expect and how to shorten it."
+  url="/adult-drivers-ed/texas/texas-driving-test"
+  eyebrow="DPS process"
+  h1="The driving test, and why the course does not replace it"
+  lede="This is the honest limit of what any online course can do for you. It is also the step that decides how long the whole thing takes, because the appointment queue for it is the longest in the process."
+  faqs={faqs}
+  sources={[
+    { label: 'Tex. Transp. Code §521.161 and §521.167', href: 'https://statutes.capitol.texas.gov/Docs/TN/htm/TN.521.htm' },
+    { label: `Texas DPS, Driver License Appointment and Office Wait Times (read ${S.capturedOn})`, href: S.source },
+    { label: 'Texas DPS, Third Party Skills Testing Program', href: 'https://www.dps.texas.gov/section/driver-license/third-party-skills-testing-program' },
+    { label: 'Texas DPS, Impact Texas Drivers (ITD) Program', href: 'https://www.dps.texas.gov/section/driver-license/impact-texas-drivers-itd-program' },
+  ]}
+>
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">What the course does and does not reach</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      §521.167 waives the highway sign and traffic law parts of the DPS examination for someone who
+      has passed an approved course. It says nothing about the driving test, because the driving test
+      is a demonstration of whether you can operate a car &mdash; which no amount of reading
+      establishes. Expect to take it, and plan the rest of your timeline around it.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">The queue is the real cost</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      DPS publishes how far out each office is booking, refreshed daily. On {S.capturedOn}, across
+      the {S.driveTest.measured} offices offering a non-commercial road test:
+    </p>
+    <ul class="flex flex-col gap-3 pl-5 m-0 list-disc marker:text-text-subtle">
+      <li class="text-[17px] text-text-body leading-[30px]">Median wait: <strong>{S.driveTest.median} days</strong></li>
+      <li class="text-[17px] text-text-body leading-[30px]">Over a month out: <strong>{S.driveTest.over30} offices</strong> ({pct(S.driveTest.over30, S.driveTest.measured)}%)</li>
+      <li class="text-[17px] text-text-body leading-[30px]">Longest in the state: <strong>{S.driveTest.max} days</strong>, at {S.driveTest.maxOffice}</li>
+      <li class="text-[17px] text-text-body leading-[30px]">Quickest: <strong>{S.driveTest.min} {S.driveTest.min === 1 ? 'day' : 'days'}</strong></li>
+    </ul>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      Your office is in{' '}
+      <a class="underline hover:no-underline" href="/adult-drivers-ed/texas/dps-wait-times">the full table</a>. The
+      spread is wide enough that where you book matters more than when.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Three ways to shorten it</h2>
+    <ul class="flex flex-col gap-3 pl-5 m-0 list-disc marker:text-text-subtle">
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>Third-party skills testing.</strong> DPS certifies driver education schools to give the road test, and says the program exists partly to cut the wait. Fees are the school&rsquo;s own. See <a class="underline hover:no-underline" href="/adult-drivers-ed/texas/third-party-skills-testing">how it works</a>.</li>
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>Same-day appointments.</strong> Every office except the Carrollton Mega Center holds a limited number, first come first served. They go quickly.</li>
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>A different office.</strong> DPS&rsquo;s published estimate excludes cancellations, so the real wait is often shorter &mdash; but a neighbouring office is sometimes weeks quicker outright.</li>
+    </ul>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Do not let the video expire</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      You cannot take the test without an {itd.adultName} certificate dated within{' '}
+      {itd.certValidDays} days. With queues this long that is a live risk, and the fix is simply to
+      book the test first and watch the video second. The arithmetic is on{' '}
+      <a class="underline hover:no-underline" href="/adult-drivers-ed/texas/impact-texas-adult-drivers">the 90-day certificate trap</a>.
+    </p>
+  </section>
+</AdeGuide>

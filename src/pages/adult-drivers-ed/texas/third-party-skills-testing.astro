@@ -1,0 +1,87 @@
+---
+import AdeGuide from '../../../components/ade/AdeGuide.astro';
+import { tpst, itd, law } from '../../../data/ade-eligibility';
+import { dpsStats as S } from '../../../lib/dps-stats';
+
+const faqs = [
+  { q: 'What is third party skills testing in Texas?', a: `A DPS program that authorizes certified driver education schools to administer the driving test for Class C non-commercial applicants. DPS says it exists partly because it "${tpst.whyText}". The schools are audited: their instructors are tested and their drive route is approved by the Department.` },
+  { q: 'Is a third-party driving test as valid as a DPS one?', a: 'Yes. It is administered under DPS certification for the issuance of your Texas driver license. The difference is who runs it and how soon you can get in.' },
+  { q: 'What do I need to qualify at 18 to 24?', a: tpst.requires18to24.join('; ') + '.' },
+  { q: 'What do I need at 25 or older?', a: tpst.requires25plus.join('; ') + '.' },
+  { q: 'How much does a third-party driving test cost?', a: tpst.feesNote + ' So prices vary between schools, and you should ask before booking.' },
+  { q: 'Do I still need the ITAD video?', a: `Yes. DPS requires ITD completion for third-party testing the same as for its own, with the certificate dated within ${itd.certValidDays} days before the drive test.` },
+];
+---
+<AdeGuide
+  title="Third Party Skills Testing in Texas: Taking the Driving Test Without the DPS Queue | Road Ready Safety"
+  description="DPS certifies driver education schools to give the Class C road test, and says the program reduces waiting. Who qualifies at 18–24 and 25+, what it costs, and what you still need."
+  url="/adult-drivers-ed/texas/third-party-skills-testing"
+  eyebrow="DPS process"
+  h1="Third party skills testing"
+  lede={`The driving test is the slowest step — a median ${S.driveTest.median} days at DPS, and ${S.driveTest.over30} offices more than a month out. There is an official alternative, and DPS created it for exactly this reason.`}
+  faqs={faqs}
+  sources={[
+    { label: 'Texas DPS, Third Party Skills Testing Program', href: 'https://www.dps.texas.gov/section/driver-license/third-party-skills-testing-program' },
+    { label: `Texas DPS, Driver License Appointment and Office Wait Times (read ${S.capturedOn})`, href: S.source },
+    { label: 'Texas DPS, Impact Texas Drivers (ITD) Program', href: 'https://www.dps.texas.gov/section/driver-license/impact-texas-drivers-itd-program' },
+  ]}
+>
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">What it is</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      {tpst.what} DPS states the purpose plainly: the program ensures applicants have the skills to
+      drive safely, and &ldquo;{tpst.whyText}&rdquo;.
+    </p>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      These are not informal arrangements. To be certified, a school&rsquo;s instructors are tested by
+      the Department and the drive route itself is audited and approved.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Whether you qualify</h2>
+    <div class="flex flex-col gap-5">
+      <div class="flex flex-col gap-2">
+        <h3 class="text-[17px] font-semibold text-text leading-7">If you are {law.requiredBand}</h3>
+        <ul class="flex flex-col gap-2 pl-5 m-0 list-disc marker:text-text-subtle">
+          {tpst.requires18to24.map((r) => <li class="text-[17px] text-text-body leading-[30px]">{r}</li>)}
+        </ul>
+      </div>
+      <div class="flex flex-col gap-2">
+        <h3 class="text-[17px] font-semibold text-text leading-7">If you are 25 or older</h3>
+        <ul class="flex flex-col gap-2 pl-5 m-0 list-disc marker:text-text-subtle">
+          {tpst.requires25plus.map((r) => <li class="text-[17px] text-text-body leading-[30px]">{r}</li>)}
+        </ul>
+      </div>
+    </div>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      Note the phrase &ldquo;a valid restricted driver license&rdquo; in both lists. That is
+      DPS&rsquo;s wording, and it means third-party testing is not a route for someone with no Texas
+      credential at all &mdash; check your own status with the school before you pay.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">What DPS says about the course at 25 and over</h2>
+    <blockquote class="border-l-4 border-border pl-5 py-1 m-0">
+      <p class="text-[17px] text-text-body leading-[30px] italic m-0">&ldquo;{tpst.dpsRecommendsOver25}&rdquo;</p>
+      <cite class="text-sm text-text-muted not-italic">&mdash; Texas DPS, Third Party Skills Testing Program</cite>
+    </blockquote>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      We would not have put it that strongly ourselves, and we sell the course. It is DPS&rsquo;s own
+      view of first-time applicants over 25, offered on a page about something else entirely.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">The cost, honestly</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      {tpst.feesNote} DPS charges nothing for its own road test beyond the license fee, so a
+      third-party test is money you spend to buy time. Whether that is worth it depends entirely on
+      what your local office&rsquo;s queue looks like &mdash;{' '}
+      <a class="underline hover:no-underline" href="/adult-drivers-ed/texas/dps-wait-times">check it first</a>. At a
+      two-day office it is wasted money; at a two-month office it may be the difference between
+      having a job and not.
+    </p>
+  </section>
+</AdeGuide>

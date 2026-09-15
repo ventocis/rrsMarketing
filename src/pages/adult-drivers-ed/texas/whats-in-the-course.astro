@@ -1,0 +1,77 @@
+---
+import AdeGuide from '../../../components/ade/AdeGuide.astro';
+import ade from '../../../data/ade-texas.json';
+import { course, law, CLAIM } from '../../../data/ade-eligibility';
+
+const mods = ade.modules as Array<{ n: number; title: string; blurb: string }>;
+
+const faqs = [
+  { q: 'What is covered in Texas adult drivers ed?', a: `Nine modules set by the state: ${mods.map((m) => m.title).join(', ')}. The content is fixed by the Texas Program of Organized Instruction, so every approved provider teaches the same topics — what differs is how well.` },
+  { q: 'How many modules is the Texas adult course?', a: `${course.modules} modules across ${course.sections} sections, with ${course.knowledgeChecks} knowledge checks and a two-part final examination.` },
+  { q: 'Is the course the same at every provider?', a: 'The required topics are, because Texas prescribes them. Providers cannot add or remove subjects. The writing, the examples, the graphics and the examination are the provider’s own.' },
+  { q: 'Do I have to do it in order?', a: 'Yes. The course runs in sequence and you cannot skip ahead of a section before its timer has run. You can stop and come back as often as you like.' },
+  { q: 'Which module has the material for the DPS exam?', a: `Module 4, Traffic Control Devices, carries the signs material, and the traffic law content runs through Modules 2, 3 and 5. The final examination draws on both because it ${CLAIM}.` },
+];
+---
+<AdeGuide
+  title="What Is in the Texas Adult Drivers Ed Course, Module by Module | Road Ready Safety"
+  description="All nine modules of the Texas adult driver education course, what each covers, and why the topic list is identical at every approved provider."
+  url="/adult-drivers-ed/texas/whats-in-the-course"
+  eyebrow="The course"
+  h1="What the six hours actually cover"
+  lede="Texas writes the syllabus, not the provider. Here are the nine modules in order, what each one is for, and where the material that matters for the DPS exam sits."
+  faqs={faqs}
+  sources={[
+    { label: 'Texas Program of Organized Instruction, Adult Six-Hour edition, adopted at 16 TAC §84.3(b)' },
+    { label: '16 TAC §84.503, Online Driver Education Course Exclusively for Adults', href: 'https://www.tdlr.texas.gov/' },
+    { label: 'Tex. Transp. Code §521.167', href: 'https://statutes.capitol.texas.gov/Docs/TN/htm/TN.521.htm' },
+  ]}
+>
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">The nine modules</h2>
+    <div class="flex flex-col gap-4">
+      {mods.map((m) => (
+        <div class="border border-border rounded-2xl p-5 flex flex-col gap-1">
+          <span class="text-sm font-semibold text-text-muted leading-5">Module {m.n}</span>
+          <h3 class="text-[17px] font-semibold text-text leading-7">{m.title}</h3>
+          <p class="text-[15px] text-text-body leading-6 m-0">{m.blurb}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">How it is put together</h2>
+    <ul class="flex flex-col gap-3 pl-5 m-0 list-disc marker:text-text-subtle">
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>{course.sections} sections</strong> across the {course.modules} modules, each with a minimum time before you can advance.</li>
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>{course.knowledgeChecks} knowledge checks,</strong> one closing each module from 2 through 8.</li>
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>{course.videos} videos in Module 7,</strong> each followed by questions on what you just watched.</li>
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>{course.breaks} built-in breaks</strong> of fifteen minutes.</li>
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>A two-part final examination</strong> of {course.finalExamQuestions} questions.</li>
+    </ul>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Why every provider teaches the same list</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      Texas publishes a Program of Organized Instruction for the adult six-hour course, adopted into
+      the administrative code. It enumerates every required topic, down to lettered sub-requirements,
+      and a provider has to map its curriculum to all of them to be approved. Nobody can drop the
+      boring parts or add a shortcut.
+    </p>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      What a provider does control is whether the material reads like it was written for a person.
+      That is the only axis worth comparing on, and it is the reason to look at a sample before you
+      pay rather than at a price.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Read next</h2>
+    <ul class="flex flex-col gap-3 pl-5 m-0 list-disc marker:text-text-subtle">
+      <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/how-long-does-the-course-take">How long it really takes</a></li>
+      <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/final-exam">The final examination</a></li>
+      <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/what-the-course-does-not-do">What the course does not do</a></li>
+    </ul>
+  </section>
+</AdeGuide>

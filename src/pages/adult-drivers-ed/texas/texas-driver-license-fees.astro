@@ -1,0 +1,98 @@
+---
+import AdeGuide from '../../../components/ade/AdeGuide.astro';
+import { fees, tpst, itd, law } from '../../../data/ade-eligibility';
+
+const faqs = [
+  { q: 'How much is a Texas driver license?', a: `$${fees.newLicense18to84} for a new Class C license at ages 18 to 84, valid ${fees.newLicenseTermYears} years. A $1 administrative fee is included in that amount, and is not charged on transactions done by mail.` },
+  { q: 'How much does adult drivers ed cost in Texas?', a: 'Providers set their own price for the adult six-hour course; unlike the driving safety course there is no statutory price floor. Compare on what is included rather than headline price — a certificate fee added at the end is the usual way a low number stops being low.' },
+  { q: 'Is the Impact Texas Drivers video free?', a: `Yes. ${itd.adultName} is provided by DPS at no charge. It takes about ${itd.adultLengthHours} hour and the certificate is valid ${itd.certValidDays} days.` },
+  { q: 'What does a third-party driving test cost?', a: tpst.feesNote + ' Ask the school directly.' },
+  { q: 'How much is a replacement Texas license?', a: `$${fees.replacement}, and the expiration date does not change.` },
+  { q: 'Do I pay anything for the written or driving test?', a: 'Not separately at DPS. The application fee covers the transaction, including the tests DPS administers. A third-party road test is the exception, because you are paying a private school.' },
+];
+---
+<AdeGuide
+  title="What a Texas Driver License Actually Costs as an Adult | Road Ready Safety"
+  description="Every cost in the adult licensing process: the $33 DPS fee, the free ITAD video, the course, and the one optional charge that buys you time instead of a requirement."
+  url="/adult-drivers-ed/texas/texas-driver-license-fees"
+  eyebrow="DPS process"
+  h1="What it costs to get licensed as an adult"
+  lede="Four numbers, only two of which everyone pays. Here they are with the source for each, so you can budget the whole thing rather than discovering a fee at the counter."
+  faqs={faqs}
+  sources={[
+    { label: 'Texas DPS, Driver License Fees', href: 'https://www.dps.texas.gov/section/driver-license/driver-license-fees' },
+    { label: 'Texas DPS, Third Party Skills Testing Program', href: 'https://www.dps.texas.gov/section/driver-license/third-party-skills-testing-program' },
+    { label: 'Texas DPS, Impact Texas Drivers (ITD) Program', href: 'https://www.dps.texas.gov/section/driver-license/impact-texas-drivers-itd-program' },
+  ]}
+>
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">The costs</h2>
+    <div class="overflow-x-auto">
+      <table class="w-full border-collapse text-left">
+        <thead>
+          <tr class="border-b border-border">
+            <th class="py-3 pr-4 text-sm font-semibold text-text">What</th>
+            <th class="py-3 pr-4 text-sm font-semibold text-text whitespace-nowrap">Cost</th>
+            <th class="py-3 text-sm font-semibold text-text">Who pays it</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-b border-border align-top">
+            <td class="py-4 pr-4 text-[15px] text-text-body leading-6">DPS license fee, new Class C, ages 18&ndash;84</td>
+            <td class="py-4 pr-4 text-[15px] font-semibold text-text leading-6 whitespace-nowrap">${fees.newLicense18to84}</td>
+            <td class="py-4 text-[15px] text-text-body leading-6">Everyone. Valid {fees.newLicenseTermYears} years.</td>
+          </tr>
+          <tr class="border-b border-border align-top">
+            <td class="py-4 pr-4 text-[15px] text-text-body leading-6">{itd.adultName} video</td>
+            <td class="py-4 pr-4 text-[15px] font-semibold text-text leading-6 whitespace-nowrap">Free</td>
+            <td class="py-4 text-[15px] text-text-body leading-6">Everyone taking a driving skills test.</td>
+          </tr>
+          <tr class="border-b border-border align-top">
+            <td class="py-4 pr-4 text-[15px] text-text-body leading-6">Six-hour adult driver education course</td>
+            <td class="py-4 pr-4 text-[15px] font-semibold text-text leading-6 whitespace-nowrap">Provider sets it</td>
+            <td class="py-4 text-[15px] text-text-body leading-6">Required at {law.requiredBand}. Optional at 25+.</td>
+          </tr>
+          <tr class="border-b border-border align-top">
+            <td class="py-4 pr-4 text-[15px] text-text-body leading-6">Third-party road test</td>
+            <td class="py-4 pr-4 text-[15px] font-semibold text-text leading-6 whitespace-nowrap">School sets it</td>
+            <td class="py-4 text-[15px] text-text-body leading-6">Optional. Buys time, not a requirement.</td>
+          </tr>
+          <tr class="border-b border-border align-top">
+            <td class="py-4 pr-4 text-[15px] text-text-body leading-6">Limited term license, temporary visitors</td>
+            <td class="py-4 pr-4 text-[15px] font-semibold text-text leading-6 whitespace-nowrap">${fees.limitedTermVisitor}</td>
+            <td class="py-4 text-[15px] text-text-body leading-6">Instead of the standard fee, not on top.</td>
+          </tr>
+          <tr class="border-b border-border align-top">
+            <td class="py-4 pr-4 text-[15px] text-text-body leading-6">Replacement license</td>
+            <td class="py-4 pr-4 text-[15px] font-semibold text-text leading-6 whitespace-nowrap">${fees.replacement}</td>
+            <td class="py-4 text-[15px] text-text-body leading-6">Later, if you lose it.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      DPS offices take credit cards, cash, cheques, money orders and tap-to-pay including Apple Pay
+      and Google Pay.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">A note on course pricing</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      Texas sets a minimum price for the driving safety course used to dismiss a ticket. It does not
+      do the same for adult driver education, so providers price freely. The thing worth checking is
+      not the headline number but whether the certificate is included &mdash; a course advertised
+      cheaply and then charging for the document you actually need is the oldest trick in this
+      market. Ours includes it.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Read next</h2>
+    <ul class="flex flex-col gap-3 pl-5 m-0 list-disc marker:text-text-subtle">
+      <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/texas-driver-license-documents">What to bring to the appointment</a></li>
+      <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/third-party-skills-testing">Whether a third-party test is worth paying for</a></li>
+      <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/ade-1317-certificate">The ADE-1317 certificate</a></li>
+    </ul>
+  </section>
+</AdeGuide>

@@ -72,6 +72,16 @@ const adeRoutes = adeEnabled
       '/adult-drivers-ed/texas/refund',
       '/adult-drivers-ed/texas/accessibility',
       '/adult-drivers-ed/texas/public-interest-notice',
+      // Guide cluster (phase 1). Same gate as the rest: listed only once the DE license exists.
+      '/adult-drivers-ed/texas/do-i-need-adult-drivers-ed',
+      '/adult-drivers-ed/texas/how-to-get-a-texas-license-as-an-adult',
+      '/adult-drivers-ed/texas/first-texas-license-18-to-24',
+      '/adult-drivers-ed/texas/drivers-ed-over-25',
+      '/adult-drivers-ed/texas/new-resident-out-of-state-license',
+      '/adult-drivers-ed/texas/foreign-license-texas',
+      '/adult-drivers-ed/texas/expired-out-of-state-license',
+      '/adult-drivers-ed/texas/never-had-a-license',
+      '/adult-drivers-ed/texas/impact-texas-adult-drivers',
     ]
   : [];
 

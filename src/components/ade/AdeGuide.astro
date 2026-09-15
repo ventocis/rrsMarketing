@@ -1,0 +1,126 @@
+---
+/**
+ * Shared shell for the /adult-drivers-ed/texas/* guide pages.
+ *
+ * Handles the route gate, the header, the Article + FAQPage JSON-LD, the FAQ block and the
+ * sources footer, so each guide page carries content and nothing else. Mirrors the /texas
+ * guide convention: answer-first H1, FAQ schema, and a dated source list on every page.
+ */
+import AdeLayout from '../../layouts/AdeLayout.astro';
+import ade from '../../data/ade-texas.json';
+
+interface Faq { q: string; a: string }
+interface Source { label: string; href?: string }
+
+interface Props {
+  title: string;
+  description: string;
+  url: string;
+  eyebrow: string;
+  h1: string;
+  lede: string;
+  faqs?: Faq[];
+  sources?: Source[];
+  updated?: string;
+}
+
+const { title, description, url, eyebrow, h1, lede, faqs = [], sources = [], updated = 'September 15, 2026' } = Astro.props;
+
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+// Same route gate every other ADE page uses. 16 TAC §84.80(e) bars provider-name advertising,
+// enrolment and payment before the Driver Education Provider license is approved, so on the
+// production site these pages stay dark until ade-texas.json carries a DE license number.
+// Keeping the gate here means a new guide page cannot forget it.
+const isProdSite =
+  import.meta.env.VITE_ENABLE_ANALYTICS === 'true' && import.meta.env.VITE_IS_QA !== 'true';
+const isLicensed = Boolean(ade.provider.deLicenseNumber);
+const isEnabled =
+  import.meta.env.VITE_ADE_ROUTES_ENABLED === 'true' && (isLicensed || !isProdSite);
+
+const schema: Record<string, unknown>[] = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: h1,
+    description,
+    url: `${siteUrl}${url}`,
+    dateModified: '2026-09-15',
+    author: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+    publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+    isAccessibleForFree: true,
+  },
+];
+if (faqs.length) {
+  schema.push({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  });
+}
+---
+
+{!isEnabled && <meta http-equiv="refresh" content="0;url=/" />}
+
+{isEnabled && (
+<AdeLayout title={title} description={description} url={url}>
+  <Fragment slot="head">
+    {schema.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
+  </Fragment>
+
+  <section class="py-16 lg:py-24 px-4 sm:px-6 lg:px-8 bg-surface-muted">
+    <div class="max-w-3xl mx-auto">
+
+      <div class="flex flex-col gap-4 items-center mb-10 text-center">
+        <div class="bg-info inline-flex items-center px-4 py-2 rounded-full">
+          <span class="text-sm font-semibold text-info-text leading-5">{eyebrow}</span>
+        </div>
+        <h1 class="text-[32px] lg:text-[40px] font-bold text-text leading-[1.15] tracking-[-1px]" style="font-family:'Outfit',sans-serif;">
+          {h1}
+        </h1>
+        <p class="text-[17px] text-text-body leading-[30px] max-w-2xl">{lede}</p>
+      </div>
+
+      <div class="bg-white border border-border rounded-[20px] p-8 lg:p-12 flex flex-col gap-10">
+        <slot />
+
+        {faqs.length > 0 && (
+          <section class="flex flex-col gap-4">
+            <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">
+              Common questions
+            </h2>
+            <div class="flex flex-col gap-6">
+              {faqs.map((f) => (
+                <div class="flex flex-col gap-2">
+                  <h3 class="text-[17px] font-semibold text-text leading-7">{f.q}</h3>
+                  <p class="text-[17px] text-text-body leading-[30px] m-0">{f.a}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {sources.length > 0 && (
+          <section class="flex flex-col gap-3 border-t border-border pt-8">
+            <h2 class="text-base font-semibold text-text leading-6">Sources</h2>
+            <ul class="flex flex-col gap-2 pl-5 m-0 list-disc marker:text-text-subtle">
+              {sources.map((s) => (
+                <li class="text-sm text-text-muted leading-6">
+                  {s.href ? <a class="underline hover:no-underline" href={s.href} rel="nofollow noopener" target="_blank">{s.label}</a> : s.label}
+                </li>
+              ))}
+            </ul>
+            <p class="text-sm text-text-muted leading-6 m-0">
+              Last updated {updated}. Texas rules change; where a page quotes an agency, the agency&rsquo;s own page governs.
+            </p>
+          </section>
+        )}
+      </div>
+    </div>
+  </section>
+</AdeLayout>
+)}

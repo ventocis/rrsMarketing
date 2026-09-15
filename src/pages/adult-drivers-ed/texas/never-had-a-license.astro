@@ -1,0 +1,72 @@
+---
+import AdeGuide from '../../../components/ade/AdeGuide.astro';
+import { law, itd, fees, waitTimes as W, CLAIM } from '../../../data/ade-eligibility';
+
+const faqs = [
+  { q: 'Can I get a driver license for the first time as an adult in Texas?', a: 'Yes, at any age. There is no upper limit and no requirement that you started as a teenager. The process is the same one any adult applicant follows: documents, the tests, and the six-hour driver education course if you are under 25.' },
+  { q: 'I am over 25 and have never driven. Do I need the course?', a: `Not as a legal requirement — DPS has no driver education requirement at 25 and older. Many first-time drivers take it anyway, because it ${CLAIM} and means one fewer test to sit cold.` },
+  { q: 'Do I need a learner license first?', a: 'Texas learner licenses are issued to applicants aged 15 to 17. As an adult you apply for the driver license itself. You will still want practice before the driving skills test, and driving unlicensed to get it is not an option.' },
+  { q: 'How do I practice if I have never driven?', a: 'Commercial driving schools offer behind-the-wheel lessons for adults, and a licensed driver can supervise practice in some circumstances. The six-hour course is classroom material only — it does not teach you to operate a car, and no online course does.' },
+  { q: 'How long will this take?', a: `The six hours are the fast part. The driving skills test is the slow part: when we read the DPS wait-time report on ${W.capturedOn}, the median wait across ${W.driveTest.measured} offices was ${W.driveTest.medianDays} days and ${W.driveTest.over30} offices were more than a month out.` },
+];
+---
+
+<AdeGuide
+  title="Never Had a Driver License? Getting One as an Adult in Texas | Road Ready Safety"
+  description="There is no age limit on a first Texas driver license. What the process looks like when you are starting from nothing at 25, 35 or 50 — including what the six-hour course does and does not teach."
+  url="/adult-drivers-ed/texas/never-had-a-license"
+  eyebrow="First-time drivers"
+  h1="Never had a driver license, and you are an adult"
+  lede="Plenty of people reach thirty, forty or fifty without ever getting licensed — city living, no car, never got round to it, a bad early experience. Texas has no upper age limit and no penalty for starting late. Here is what the path actually looks like."
+  faqs={faqs}
+  sources={[
+    { label: 'Texas DPS, Apply for a Texas Driver License', href: 'https://www.dps.texas.gov/section/driver-license/apply-texas-driver-license' },
+    { label: 'Tex. Transp. Code §521.1601 and §521.167', href: 'https://statutes.capitol.texas.gov/Docs/TN/htm/TN.521.htm' },
+    { label: `Texas DPS, Driver License Appointment and Office Wait Times (read ${W.capturedOn})`, href: 'https://www.dps.texas.gov/apps/Viewer/Document/Vue/WAITTIMES' },
+  ]}
+>
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Your age decides one thing only</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      Whether the six-hour course is required. Under {law.ageCeiling}, it is. At 25 and over, it is
+      not. Nothing else about the process changes with age: the documents, the fee, the vision test,
+      the knowledge test, the {itd.adultName} video and the driving skills test are the same at 22 and
+      at 52.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">The honest limit of any online course</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      The adult driver education course is classroom material. It covers the law, the signs,
+      right-of-way, risk, and it {CLAIM}. It does not teach you to drive a car, and neither does any
+      other online course. If you have genuinely never driven, budget for behind-the-wheel practice
+      separately &mdash; a commercial driving school, or supervised practice where that is permitted.
+      You cannot practice by driving unlicensed.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">A realistic timeline</h2>
+    <ul class="flex flex-col gap-3 pl-5 m-0 list-disc marker:text-text-subtle">
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>Documents:</strong> an afternoon, if you have them. Longer if you need a birth certificate or Social Security card.</li>
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>The course, if required:</strong> six hours, self-paced.</li>
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>Behind-the-wheel practice:</strong> the real variable, and the one worth not rushing.</li>
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>The skills test appointment:</strong> median {W.driveTest.medianDays} days, {W.driveTest.over30} of {W.driveTest.measured} offices over a month.</li>
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>The card itself:</strong> about two to three weeks by mail after you pass, on top of the temporary license you leave with.</li>
+    </ul>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      The DPS fee for a new license at 18 to 84 is ${fees.newLicense18to84}, and it lasts{' '}
+      {fees.newLicenseTermYears} years.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Read next</h2>
+    <ul class="flex flex-col gap-3 pl-5 m-0 list-disc marker:text-text-subtle">
+      <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/how-to-get-a-texas-license-as-an-adult">The full process, start to finish</a></li>
+      <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/drivers-ed-over-25">If you are 25 or older</a></li>
+      <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/impact-texas-adult-drivers">The ITAD video and its 90-day limit</a></li>
+    </ul>
+  </section>
+</AdeGuide>

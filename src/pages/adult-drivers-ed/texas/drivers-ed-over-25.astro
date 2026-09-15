@@ -1,0 +1,72 @@
+---
+import AdeGuide from '../../../components/ade/AdeGuide.astro';
+import { law, itd, fees, CLAIM, waitTimes as W } from '../../../data/ade-eligibility';
+
+const faqs = [
+  { q: 'Do you need drivers ed at 25 in Texas?', a: 'No. DPS states there are no driver education requirements for ages 25 and older. §521.1601 only reaches people younger than 25, so once you are 25 the course is optional.' },
+  { q: 'What do I still have to do at 25 or older?', a: `Everything else: the application, identity, lawful presence and Texas residency documents, the $${fees.newLicense18to84} fee, the vision test, the knowledge test, the driving skills test, and the ${itd.adultName} video before that skills test. Only the driver education requirement drops away.` },
+  { q: 'Is the course still worth taking at 25 or older?', a: `It can be, for one concrete reason: under §521.167 it ${CLAIM}, so you would not sit the written portions at the office. Whether that is worth six hours and the price is a judgment call, and it depends on how comfortable you feel walking into a written test on Texas traffic law.` },
+  { q: 'Do I still need the ITAD video at 25 or older?', a: `Yes. DPS lists ${itd.adultName} as required for drivers aged 18 through 24 who must take an adult driver education course, and for drivers 25 years or older. The video requirement does not have the same age cut-off as the course.` },
+];
+---
+
+<AdeGuide
+  title="Do You Need Drivers Ed at 25 or Older in Texas? No — Here Is What You Do Need | Road Ready Safety"
+  description="Texas driver education is required only under 25. At 25 and older the course is optional, but the ITAD video, the knowledge test and the skills test are not. What changes and what does not."
+  url="/adult-drivers-ed/texas/drivers-ed-over-25"
+  eyebrow="Eligibility"
+  h1="Do you need drivers ed at 25 or older in Texas?"
+  lede="No. The requirement stops at 25. But several things people assume are part of the same rule do not stop, and one of them will turn you away at the counter if you skip it."
+  faqs={faqs}
+  sources={[
+    { label: 'Tex. Transp. Code §521.1601, Driver Education Required; Exception', href: 'https://statutes.capitol.texas.gov/Docs/TN/htm/TN.521.htm' },
+    { label: 'Texas DPS, Apply for a Texas Driver License', href: 'https://www.dps.texas.gov/section/driver-license/apply-texas-driver-license' },
+    { label: 'Texas DPS, Impact Texas Drivers (ITD) Program', href: 'https://www.dps.texas.gov/section/driver-license/impact-texas-drivers-itd-program' },
+  ]}
+>
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">The rule, and where it stops</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      §521.1601 prevents DPS from issuing a license to a person younger than {law.ageCeiling} without
+      a driver education certificate. It says nothing about anyone older, and DPS puts the same point
+      in a parenthesis on its application page: &ldquo;No driver education requirements for ages 25
+      and older.&rdquo;
+    </p>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      The test is your age when DPS issues the license, not when you start the process.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">What does not change at 25</h2>
+    <ul class="flex flex-col gap-3 pl-5 m-0 list-disc marker:text-text-subtle">
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>The {itd.adultName} video.</strong> Still required before the driving skills test, at any adult age. This is the one people miss, and DPS will not test you without the certificate.</li>
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>The written knowledge test.</strong> Without a driver education certificate there is nothing to waive it, so you sit it at the office.</li>
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>The vision test and the driving skills test.</strong> Both in person, both unchanged.</li>
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>The appointment queue.</strong> Median wait for a skills test was {W.driveTest.medianDays} days when we read the DPS report on {W.capturedOn}.</li>
+    </ul>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Should you take it anyway?</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      There is one honest argument for it. Under §521.167 the course {CLAIM}, which means the written
+      portions are handled before you ever reach the office. If you have never driven, or you learned
+      abroad and Texas signage is unfamiliar, six hours of structured material and a practice
+      examination is a reasonable trade for not sitting a written test cold.
+    </p>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      If you are a confident driver who simply never got round to the license, you may not need it.
+      We would rather say that plainly than sell you six hours you do not have to take.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Read next</h2>
+    <ul class="flex flex-col gap-3 pl-5 m-0 list-disc marker:text-text-subtle">
+      <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/how-to-get-a-texas-license-as-an-adult">The full process, start to finish</a></li>
+      <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/impact-texas-adult-drivers">The ITAD video and its 90-day limit</a></li>
+      <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/never-had-a-license">Never had a license, and you are past 25</a></li>
+    </ul>
+  </section>
+</AdeGuide>

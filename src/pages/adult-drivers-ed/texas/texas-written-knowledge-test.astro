@@ -1,0 +1,87 @@
+---
+import AdeGuide from '../../../components/ade/AdeGuide.astro';
+import { law, process, course, CLAIM } from '../../../data/ade-eligibility';
+
+const faqs = [
+  { q: 'What is on the Texas written driving test?', a: `Tex. Transp. Code §521.161 sets the content: your ability to identify and understand highway signs that regulate, warn or direct traffic; your knowledge of Texas traffic laws; motorists' rights and responsibilities in relation to bicyclists; and the effect of using a wireless communication device or otherwise driving distracted. Vision is tested separately, and the driving skills test is separate again.` },
+  { q: 'Does adult drivers ed replace the written test?', a: `It ${CLAIM}. Under §521.167 you are not required to take the highway sign and traffic law parts of the DPS examination once a licensed driver education instructor confirms you passed them in the course. The vision test and the driving skills test remain.` },
+  { q: 'Do I still take a test if I do the course?', a: `Yes — inside the course. The course ends with a two-part examination of ${course.finalExamQuestions} questions, ${course.finalExamSigns} on highway signs and ${course.finalExamLaws} on traffic laws, and you need ${course.finalExamPassPercent}% on each part. That is the examination DPS accepts in place of its own written portions.` },
+  { q: 'Is the Texas written test hard?', a: 'It is a knowledge test on material that is published in full. The Texas Driver Handbook covers everything on it, and so does an approved driver education course. People who fail it generally have not read either.' },
+  { q: 'Can I take the written test online?', a: 'Not as a standalone DPS transaction for a first license. Either you sit the written portions at a DPS office, or you complete an approved driver education course and a licensed instructor certifies those portions for you.' },
+];
+---
+<AdeGuide
+  title="The Texas Written Knowledge Test: What Is on It, and What the Course Replaces | Road Ready Safety"
+  description="Texas law sets exactly what the written exam covers — signs, traffic laws, bicyclists and distracted driving. What an approved adult driver education course satisfies, and what it does not."
+  url="/adult-drivers-ed/texas/texas-written-knowledge-test"
+  eyebrow="DPS process"
+  h1="The Texas written knowledge test"
+  lede="The content of this exam is not a mystery — it is written into the Transportation Code. Here is what the statute requires it to cover, and exactly which parts an approved course handles for you."
+  faqs={faqs}
+  sources={[
+    { label: 'Tex. Transp. Code §521.161, Examination of License Applicants', href: 'https://statutes.capitol.texas.gov/Docs/TN/htm/TN.521.htm' },
+    { label: 'Tex. Transp. Code §521.167, Waiver of Certain Education and Examination Requirements', href: 'https://statutes.capitol.texas.gov/Docs/TN/htm/TN.521.htm' },
+    { label: 'Texas DPS, Apply for a Texas Driver License', href: 'https://www.dps.texas.gov/section/driver-license/apply-texas-driver-license' },
+  ]}
+>
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">What the law says the exam must cover</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      §521.161(b) lists it. The examination must include a test of the applicant&rsquo;s:
+    </p>
+    <ul class="flex flex-col gap-3 pl-5 m-0 list-disc marker:text-text-subtle">
+      <li class="text-[17px] text-text-body leading-[30px]">vision;</li>
+      <li class="text-[17px] text-text-body leading-[30px]">ability to identify and understand highway signs in English that regulate, warn, or direct traffic;</li>
+      <li class="text-[17px] text-text-body leading-[30px]">knowledge of the traffic laws of this state;</li>
+      <li class="text-[17px] text-text-body leading-[30px]">knowledge of motorists&rsquo; rights and responsibilities in relation to bicyclists; and</li>
+      <li class="text-[17px] text-text-body leading-[30px]">knowledge of the effect of using a wireless communication device, or other distraction, on safe operation of a vehicle;</li>
+      <li class="text-[17px] text-text-body leading-[30px]">plus a demonstration of the ability to actually drive.</li>
+    </ul>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      Two items on that list surprise people: bicyclists and distracted driving are named in the
+      statute, not general safety filler. Both are taught in the course for that reason.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Which parts the course satisfies</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      §521.167 is precise about this, and it is worth quoting rather than paraphrasing:
+    </p>
+    <blockquote class="border-l-4 border-border pl-5 py-1 m-0">
+      <p class="text-[17px] text-text-body leading-[30px] italic m-0">&ldquo;{law.examWaiver}&rdquo;</p>
+      <cite class="text-sm text-text-muted not-italic">&mdash; Tex. Transp. Code §521.167</cite>
+    </blockquote>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      So: <strong>the highway sign and traffic law parts, and only those.</strong> Vision is still
+      tested at the office. The driving skills test still happens. And the waiver depends on a
+      licensed driver education instructor determining that you passed those portions &mdash; which
+      is what the examination at the end of the course is for.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">You do not avoid a test, you move it</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      The course ends with a {course.finalExamQuestions}-question examination in two parts &mdash;{' '}
+      {course.finalExamSigns} on highway signs, {course.finalExamLaws} on traffic laws &mdash; and
+      you need {course.finalExamPassPercent}% on each. What changes is where you sit it and how it
+      feels: at home, untimed by a queue, after six hours of the material, with{' '}
+      {course.finalExamAttempts} attempts rather than a single cold sitting at a counter.
+    </p>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      Whether that trade is worth it is a fair question, and the answer differs by person. We set out
+      both sides in <a class="underline hover:no-underline" href="/adult-drivers-ed/texas/drivers-ed-over-25">the page for drivers 25 and over</a>,
+      who are not required to take the course at all.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Read next</h2>
+    <ul class="flex flex-col gap-3 pl-5 m-0 list-disc marker:text-text-subtle">
+      <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/texas-driving-test">The driving skills test, which the course does not replace</a></li>
+      <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/final-exam">What the course examination looks like</a></li>
+      <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/whats-in-the-course">What the six hours cover</a></li>
+    </ul>
+  </section>
+</AdeGuide>

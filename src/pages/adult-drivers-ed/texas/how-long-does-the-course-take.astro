@@ -1,0 +1,90 @@
+---
+import AdeGuide from '../../../components/ade/AdeGuide.astro';
+import { course } from '../../../data/ade-eligibility';
+
+const faqs = [
+  { q: 'How long is Texas adult drivers ed?', a: `Six hours, which Texas defines as ${course.totalMinutes} minutes total: a minimum of 330 minutes of instruction plus ${course.breakMinutes} minutes of break. Our build runs ${course.instructionMinutes} minutes of instruction across ${course.sections} sections.` },
+  { q: 'Can I finish the course in one day?', a: `Yes. There is no minimum number of days and no daily cap — the only constraint is the clock inside the course. If you sat down and worked straight through, including the two fifteen-minute breaks, you would finish in about ${Math.floor(course.totalMinutes / 60)} hours.` },
+  { q: 'Can I take breaks and come back?', a: 'Yes, as often as you like. Your progress is saved at the section you reached. Most people do it across two or three sittings rather than in one block.' },
+  { q: 'Why can I not skip ahead?', a: `Because Texas requires the course to deliver a minimum amount of instruction, and the timers are how an online provider demonstrates it. Each section holds for its own minimum before the Continue button unlocks. Reading faster than the timer does not shorten the course.` },
+  { q: 'Is there a deadline to finish?', a: 'Providers set a completion window and ours is generous, but the certificate is what DPS wants and you control when you start. The real deadline to plan around is your driving test appointment, not the course.' },
+];
+---
+<AdeGuide
+  title="How Long Does Texas Adult Drivers Ed Take? | Road Ready Safety"
+  description="Six hours means 360 minutes in Texas: 330 of instruction plus 30 of break. Whether you can finish in a day, why you cannot skip ahead, and where the time actually goes."
+  url="/adult-drivers-ed/texas/how-long-does-the-course-take"
+  eyebrow="The course"
+  h1="How long the course really takes"
+  lede="Six hours is not marketing shorthand — it is a number written into the rules, and the software enforces it. Here is exactly how that time is divided, and what you can and cannot compress."
+  faqs={faqs}
+  sources={[
+    { label: '16 TAC §84.503(b)(1), which sets the 360-minute course and the 330-minute instruction minimum' },
+    { label: 'Texas Program of Organized Instruction, Adult Six-Hour edition' },
+  ]}
+>
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Where the time goes</h2>
+    <div class="overflow-x-auto">
+      <table class="w-full border-collapse text-left">
+        <thead>
+          <tr class="border-b border-border">
+            <th class="py-3 pr-4 text-sm font-semibold text-text">Part</th>
+            <th class="py-3 pr-4 text-sm font-semibold text-text whitespace-nowrap">Minutes</th>
+            <th class="py-3 text-sm font-semibold text-text">Required?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-b border-border">
+            <td class="py-3 pr-4 text-[15px] text-text-body leading-6">Instruction, {course.sections} sections across {course.modules} modules</td>
+            <td class="py-3 pr-4 text-[15px] font-semibold text-text leading-6">{course.instructionMinutes}</td>
+            <td class="py-3 text-[15px] text-text-body leading-6">Minimum 330 by rule</td>
+          </tr>
+          <tr class="border-b border-border">
+            <td class="py-3 pr-4 text-[15px] text-text-body leading-6">Two built-in breaks</td>
+            <td class="py-3 pr-4 text-[15px] font-semibold text-text leading-6">{course.breakMinutes}</td>
+            <td class="py-3 text-[15px] text-text-body leading-6">Yes, and they are timed too</td>
+          </tr>
+          <tr class="border-b border-border">
+            <td class="py-3 pr-4 text-[15px] font-semibold text-text leading-6">Total course time</td>
+            <td class="py-3 pr-4 text-[15px] font-semibold text-text leading-6">{course.totalMinutes}</td>
+            <td class="py-3 text-[15px] text-text-body leading-6">The six hours Texas means</td>
+          </tr>
+          <tr class="border-b border-border">
+            <td class="py-3 pr-4 text-[15px] text-text-body leading-6">Knowledge checks and the final examination</td>
+            <td class="py-3 pr-4 text-[15px] text-text-body leading-6">Untimed</td>
+            <td class="py-3 text-[15px] text-text-body leading-6">On top, at your own pace</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      The assessments carry no timer and no instruction credit, so they are genuinely as fast or slow
+      as you want them to be.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Why the Continue button waits</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      Every section holds for a minimum time before it lets you move on. That is not a trick to pad
+      the course; it is how an online provider demonstrates to the state that it delivered the
+      instruction it promised. Reading quickly does not shorten it, and neither does leaving the tab
+      open in the background &mdash; the time is attached to the section, not to your patience.
+    </p>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      The practical consequence: plan around six hours of your life, in whatever shape suits you.
+      Two evenings is the most common pattern. One Saturday works too.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">The course is not your bottleneck</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      Worth saying plainly, because people optimise the wrong step: six hours is the fastest part of
+      getting licensed. The driving test appointment is the slow part, and at most offices it is
+      measured in weeks. Book that first and fit the course around it &mdash;{' '}
+      <a class="underline hover:no-underline" href="/adult-drivers-ed/texas/dps-wait-times">here is the wait at every office</a>.
+    </p>
+  </section>
+</AdeGuide>

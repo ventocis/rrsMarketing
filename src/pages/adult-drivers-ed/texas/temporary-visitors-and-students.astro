@@ -1,0 +1,77 @@
+---
+import AdeGuide from '../../../components/ade/AdeGuide.astro';
+import { law, fees, newResident, reciprocityCountries, residency } from '../../../data/ade-eligibility';
+
+const faqs = [
+  { q: 'Can an international student get a Texas driver license?', a: `Yes, if you can document lawful presence. Texas issues a limited term driver license to temporary visitors. It costs $${fees.limitedTermVisitor} and expires when your period of lawful presence expires, or after one year if your status is recorded as "duration of status".` },
+  { q: 'Do I need adult drivers ed on a student visa?', a: `Your visa status does not decide it — your age and your existing license do. If you are ${law.requiredBand} and hold no license from a U.S. state, a U.S. territory, Canada or a reciprocity country, the six-hour course applies to you like anyone else.` },
+  { q: 'Can I drive on my home country license while I study?', a: `DPS allows you to drive on a valid, unexpired license from another U.S. state, U.S. territory, Canadian province or qualifying country for up to ${newResident.graceDays} days after moving to Texas. After that you need the Texas license.` },
+  { q: 'Does my foreign license need translating?', a: residency ? `Yes, if it is not in English or Spanish. ${newResident.translationRule}` : '' },
+  { q: 'What is a limited term driver license?', a: 'A standard Texas driver license with an expiry tied to your immigration status rather than the usual eight-year term. It drives the same; it just has to be renewed when your status is renewed.' },
+  { q: 'How do I prove Texas residency as a student?', a: `The same two printed documents anyone else brings — a lease is the usual one for students, and a utility or service bill dated within ${residency.utilityWindowDays} days is the other. ${residency.thirtyDayRule}` },
+];
+---
+<AdeGuide
+  title="Texas Driver License for International Students and Temporary Visitors | Road Ready Safety"
+  description="Lawful presence, the limited term license, the 90-day grace period, and whether adult driver education applies to you on a student or work visa."
+  url="/adult-drivers-ed/texas/temporary-visitors-and-students"
+  eyebrow="New residents"
+  h1="If you are here on a visa"
+  lede="Texas licenses temporary visitors who can document lawful presence, on a license that expires with your status. Whether you also need the six-hour course has nothing to do with your visa and everything to do with your age and your existing license."
+  faqs={faqs}
+  sources={[
+    { label: 'Texas DPS, U.S. Citizenship or Lawful Presence Requirement', href: 'https://www.dps.texas.gov/section/driver-license/us-citizenship-or-lawful-presence-requirement' },
+    { label: 'Texas DPS, Moving to Texas: A Guide to Driver Licenses and IDs', href: 'https://www.dps.texas.gov/section/driver-license/moving-texas' },
+    { label: 'Texas DPS, Driver License Fees', href: 'https://www.dps.texas.gov/section/driver-license/driver-license-fees' },
+    { label: 'Tex. Transp. Code §521.1601', href: 'https://statutes.capitol.texas.gov/Docs/TN/htm/TN.521.htm' },
+  ]}
+>
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">The limited term license</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      Texas issues a limited term driver license to temporary visitors who can document lawful
+      presence. The fee is ${fees.limitedTermVisitor} &mdash; the same as a standard license, not a
+      surcharge &mdash; and it expires when your period of lawful presence expires, or after one year
+      if your status is recorded as &ldquo;duration of status&rdquo;, which covers most students.
+    </p>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      It is an ordinary Texas driver license in every practical respect. The only difference is the
+      expiry date and the need to renew it alongside your status.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Whether the course applies to you</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      Your visa is irrelevant to this question. §521.1601 turns on two things only: whether you are
+      under {law.ageCeiling}, and whether you hold a valid license issued by another state.
+    </p>
+    <ul class="flex flex-col gap-3 pl-5 m-0 list-disc marker:text-text-subtle">
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>{law.requiredBand}, license from home country</strong> &mdash; the course applies, unless that country is {reciprocityCountries.slice(0, -1).join(', ')} or {reciprocityCountries.at(-1)}, or a U.S. territory or Canada.</li>
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>{law.requiredBand}, no license at all</strong> &mdash; the course applies.</li>
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>25 or older</strong> &mdash; no driver education requirement, whatever your status.</li>
+    </ul>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      The detail of the foreign-license rule is on{' '}
+      <a class="underline hover:no-underline" href="/adult-drivers-ed/texas/foreign-license-texas">its own page</a>,
+      including the translation requirement you should handle before you travel.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Two timing things students get caught by</h2>
+    <ul class="flex flex-col gap-3 pl-5 m-0 list-disc marker:text-text-subtle">
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>The {newResident.graceDays}-day window.</strong> You may drive on a qualifying foreign license for {newResident.graceDays} days after moving. Semester schedules make it easy to let that lapse.</li>
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>The 30-day residency proof.</strong> {residency.thirtyDayRule} A lease dated at move-in usually satisfies it; a bill that only starts after you arrive may not, if you apply too early.</li>
+    </ul>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Read next</h2>
+    <ul class="flex flex-col gap-3 pl-5 m-0 list-disc marker:text-text-subtle">
+      <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/foreign-license-texas">Moving to Texas with a foreign license</a></li>
+      <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/texas-driver-license-documents">What to bring to the appointment</a></li>
+      <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/do-i-need-adult-drivers-ed">Do you need the course at all?</a></li>
+    </ul>
+  </section>
+</AdeGuide>

@@ -106,3 +106,67 @@ export const process = {
 /** Approved claim language. §84.40(j) bars promising license issuance; never write 'skip the DPS written test'. */
 export const CLAIM =
   'satisfies the highway sign and traffic law portions of the DPS knowledge exam';
+
+/** DPS, Texas Residency Requirement for Driver Licenses and ID Cards (read 2026-09-15). */
+export const residency = {
+  documentsRequired: 2,
+  thirtyDayRule:
+    'One of the two documents must show the applicant has lived in Texas for at least 30 days.',
+  thirtyDayWaived:
+    'The 30-day requirement is waived for applicants surrendering a valid, unexpired driver license or ID from another state, and for commercial applicants.',
+  sameSourceRule:
+    'Both documents may come from the same source only if it is a local government or service provider offering multiple residential services — a water bill and a gas bill from the same utility are acceptable; two months of the same bill are not.',
+  utilityWindowDays: 180,
+  affidavit: 'Applicants who cannot produce two acceptable documents may be eligible to complete a Texas Residency Affidavit.',
+  printedOnly: 'Documents must be printed. Printed electronic statements are acceptable; a phone screen is not.',
+  examples: [
+    'Deed, mortgage statement, payment booklet, or a residential rental or lease agreement',
+    'Valid Texas voter registration card',
+    'Valid Texas motor vehicle registration or title',
+    'Valid Texas boat registration or title',
+    'Valid Texas license to carry',
+    'Utility or residential service bill dated within 180 days — electric, water, gas, internet, cable, streaming services, lawn service or cell phone',
+    'Selective Service card',
+    'Current homeowner\u2019s or renter\u2019s insurance',
+  ],
+} as const;
+
+/** DPS, Third Party Skills Testing Program (read 2026-09-15). */
+export const tpst = {
+  what:
+    'Driver education schools certified by DPS to administer the Class C non-commercial driving test.',
+  /** DPS’s own stated purpose, which is why it matters given the appointment queues. */
+  whyText: 'reduces the time you must wait to take your driving test',
+  requires18to24: [
+    'A valid DE-964/DEE-964 or ADE-1317/ADEE-1317 showing a completed driver education course',
+    'A valid restricted driver license',
+    'The ITAD video, with a certificate dated within 90 days before the drive test',
+  ],
+  requires25plus: [
+    'A valid restricted driver license',
+    'The ITAD video, with a certificate dated within 90 days before the drive test',
+  ],
+  feesNote: 'Fees for a drive test administered by a driver education school are not regulated by the Department.',
+  /** DPS says this itself, unprompted, about first-time applicants over 25. */
+  dpsRecommendsOver25:
+    'If you are older than 25 and are applying for a Texas driver license for the first time, you are not required to have completed driver education, however it is highly recommended.',
+} as const;
+
+/** The delivered course, from the approved build (Exhibit 2B / Exhibit 3A). */
+export const course = {
+  instructionMinutes: 331.5,
+  totalMinutes: 361.5,
+  breakMinutes: 30,
+  breaks: 2,
+  modules: 9,
+  sections: 95,
+  knowledgeChecks: 7,
+  videos: 2,
+  finalExamQuestions: 40,
+  finalExamSigns: 20,
+  finalExamLaws: 20,
+  finalExamPassPercent: 70,
+  finalExamAttempts: 3,
+  certificateCode: 'ADE-1317',
+  certificateDays: 15,
+} as const;

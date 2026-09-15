@@ -1,0 +1,88 @@
+---
+import AdeGuide from '../../../components/ade/AdeGuide.astro';
+import { course, law, CLAIM } from '../../../data/ade-eligibility';
+
+const faqs = [
+  { q: 'What is an ADE-1317 certificate?', a: `The Texas adult driver education certificate of completion. A licensed provider issues it after you pass the six-hour course, and it is the document DPS wants from you if you are ${law.requiredBand} and applying for a first Texas driver license.` },
+  { q: 'How long does it take to get the certificate?', a: `Texas gives a provider up to ${course.certificateDays} working days after the course completion date to issue it. Ours is issued as soon as you pass, but the rule is the rule and a provider quoting ${course.certificateDays} working days is not doing anything wrong.` },
+  { q: 'Does the ADE-1317 expire?', a: 'The certificate itself does not carry a short expiry the way the Impact Texas Drivers certificate does. The one with a 90-day clock is ITAD, and people confuse the two constantly.' },
+  { q: 'What do I do with the certificate?', a: `Bring it to your DPS appointment with your other documents. It is the proof that you completed driver education, and it is what lets a licensed instructor confirm the highway sign and traffic law portions on your behalf.` },
+  { q: 'What if I lose it?', a: 'Ask the provider that issued it for a replacement. Providers are required to keep student records, so a certificate can be reissued.' },
+  { q: 'Is ADE-1317 the same as DE-964?', a: 'No. DE-964 is the minor driver education certificate, for the 32-hour teen course. ADE-1317 is the adult six-hour equivalent. DPS accepts either for third-party skills testing at 18 to 24, but they are not interchangeable documents.' },
+];
+---
+<AdeGuide
+  title="The ADE-1317 Certificate: What It Is and How You Get It | Road Ready Safety"
+  description="The Texas adult driver education certificate — who needs one, the 15-working-day issuance rule, what to do with it, and why it is not the certificate with the 90-day clock."
+  url="/adult-drivers-ed/texas/ade-1317-certificate"
+  eyebrow="The course"
+  h1="The ADE-1317 certificate"
+  lede="This is the piece of paper the whole six hours exists to produce. It is also routinely confused with a different certificate that expires in 90 days, which is an expensive mistake to make."
+  faqs={faqs}
+  sources={[
+    { label: '16 TAC §84.503(h), the 15-working-day issuance rule' },
+    { label: 'Tex. Transp. Code §521.1601 and §521.167', href: 'https://statutes.capitol.texas.gov/Docs/TN/htm/TN.521.htm' },
+    { label: 'Texas DPS, Third Party Skills Testing Program', href: 'https://www.dps.texas.gov/section/driver-license/third-party-skills-testing-program' },
+  ]}
+>
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">What it is and who needs it</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      The ADE-1317 is the certificate of completion for the Texas adult six-hour driver education
+      course. If you are {law.requiredBand} and applying for a first Texas driver license, §521.1601
+      means DPS cannot issue the license without one. If you are 25 or older it is optional, and some
+      people take the course anyway because it {CLAIM}.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">The two certificates people mix up</h2>
+    <div class="overflow-x-auto">
+      <table class="w-full border-collapse text-left">
+        <thead>
+          <tr class="border-b border-border">
+            <th class="py-3 pr-4 text-sm font-semibold text-text">Certificate</th>
+            <th class="py-3 pr-4 text-sm font-semibold text-text">Comes from</th>
+            <th class="py-3 text-sm font-semibold text-text">Clock</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-b border-border align-top">
+            <td class="py-4 pr-4 text-[15px] text-text-body leading-6"><strong>ADE-1317</strong><br />driver education completion</td>
+            <td class="py-4 pr-4 text-[15px] text-text-body leading-6">Your course provider, after you pass</td>
+            <td class="py-4 text-[15px] text-text-body leading-6">No short expiry</td>
+          </tr>
+          <tr class="border-b border-border align-top">
+            <td class="py-4 pr-4 text-[15px] text-text-body leading-6"><strong>ITAD</strong><br />Impact Texas Adult Drivers</td>
+            <td class="py-4 pr-4 text-[15px] text-text-body leading-6">DPS, free, after a one-hour video</td>
+            <td class="py-4 text-[15px] font-semibold text-text leading-6">Valid 90 days</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      You need both to sit a driving skills test at 18 to 24. Only one of them expires, and it is not
+      this one. The trap that follows from that is set out in{' '}
+      <a class="underline hover:no-underline" href="/adult-drivers-ed/texas/impact-texas-adult-drivers">the 90-day certificate trap</a>.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">The {course.certificateDays}-working-day rule</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      Texas gives a provider up to {course.certificateDays} working days after your completion date
+      to issue the certificate. That is a ceiling, not a target, and a good provider issues it
+      immediately &mdash; but it is worth knowing the rule before you book a DPS appointment for the
+      day after you finish. If a provider quotes you the full {course.certificateDays} days, they are
+      within the rules and you should plan accordingly.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Read next</h2>
+    <ul class="flex flex-col gap-3 pl-5 m-0 list-disc marker:text-text-subtle">
+      <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/texas-driver-license-documents">Everything to bring to the appointment</a></li>
+      <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/final-exam">The examination that produces it</a></li>
+    </ul>
+  </section>
+</AdeGuide>

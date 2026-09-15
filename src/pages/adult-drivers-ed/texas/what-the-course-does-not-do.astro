@@ -1,0 +1,64 @@
+---
+import AdeGuide from '../../../components/ade/AdeGuide.astro';
+import { itd, CLAIM, law } from '../../../data/ade-eligibility';
+import { dpsStats as S } from '../../../lib/dps-stats';
+
+const faqs = [
+  { q: 'Does adult drivers ed give me a Texas driver license?', a: 'No, and no provider may promise that. The course produces a certificate. DPS issues licenses, after its own tests and its own checks.' },
+  { q: 'Does the course teach me to drive?', a: 'No. It is classroom instruction — law, signs, right-of-way, risk. Learning to operate a car happens behind the wheel, with a driving school or supervised practice. Any online course claiming otherwise is misdescribing itself.' },
+  { q: 'Does it replace the driving test?', a: `No. It ${CLAIM} — the written portions only. The driving skills test is untouched, and it is the step with a median ${S.driveTest.median}-day queue.` },
+  { q: 'Does it replace the ITAD video?', a: `No. DPS says directly that the ITD programs do not replace the distracted driving module in the six-hour course. They are separate requirements and you do both.` },
+  { q: 'Will it get me an insurance discount?', a: 'That is between you and your insurer, and it varies by carrier and by age. Adult driver education is a licensing requirement rather than a discount product, and we would rather you ask your insurer than take our word for it.' },
+  { q: 'So why take it?', a: `If you are ${law.requiredBand}, because DPS cannot issue your first license without it. If you are 25 or older, because it ${CLAIM} and means one fewer test sat cold — which DPS itself calls "highly recommended" for first-time applicants over 25.` },
+];
+---
+<AdeGuide
+  title="What Texas Adult Drivers Ed Does Not Do | Road Ready Safety"
+  description="An honest list of what the six-hour course cannot do for you: it is not a license, not a driving lesson, not a replacement for the road test or the ITAD video."
+  url="/adult-drivers-ed/texas/what-the-course-does-not-do"
+  eyebrow="The course"
+  h1="What the course does not do"
+  lede="Most pages about this course are written to sell it. This one is the opposite list, because the fastest way to waste your money is to buy it expecting something it was never going to deliver."
+  faqs={faqs}
+  sources={[
+    { label: 'Tex. Transp. Code §521.161 and §521.167', href: 'https://statutes.capitol.texas.gov/Docs/TN/htm/TN.521.htm' },
+    { label: 'Texas DPS, Impact Texas Drivers (ITD) Program', href: 'https://www.dps.texas.gov/section/driver-license/impact-texas-drivers-itd-program' },
+    { label: '16 TAC §84.40(j), which bars a provider from promising license issuance' },
+  ]}
+>
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Five things it is not</h2>
+    <ul class="flex flex-col gap-4 pl-5 m-0 list-disc marker:text-text-subtle">
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>It is not a driver license.</strong> It produces a certificate. Texas rules actually forbid a provider from promising you a license, which tells you how often somebody has tried.</li>
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>It does not teach you to drive.</strong> Six hours of reading cannot. If you have never been behind a wheel, budget for lessons separately &mdash; that is the real work, and this is the paperwork around it.</li>
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>It does not replace the driving test.</strong> It {CLAIM}, and nothing more. The road test remains, with a median {S.driveTest.median}-day wait and {S.driveTest.over30} offices more than a month out.</li>
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>It does not replace the {itd.adultName} video.</strong> DPS states this itself. Two separate requirements that happen to overlap in subject matter.</li>
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>It does not shorten any queue.</strong> Finishing in one evening does not move your appointment. If the queue is your problem, <a class="underline hover:no-underline" href="/adult-drivers-ed/texas/third-party-skills-testing">third-party testing</a> is the lever, not the course.</li>
+    </ul>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">What it does do</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      One thing, precisely: under §521.167, passing an approved course means you are not required to
+      take the highway sign and traffic law parts of the DPS examination, once a licensed driver
+      education instructor confirms you passed them. If you are {law.requiredBand} that is not
+      optional &mdash; DPS cannot issue your first license without the certificate at all.
+    </p>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      If you are 25 or over, it is a genuine choice, and we have written the case both ways on{' '}
+      <a class="underline hover:no-underline" href="/adult-drivers-ed/texas/drivers-ed-over-25">the page for drivers 25 and older</a>.
+      Sometimes the answer is that you do not need us.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Why say all this</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      Because the complaints in this industry are almost never about course quality. They are about
+      someone who bought a course believing it did something it does not, found out at a DPS counter,
+      and lost an appointment that was weeks out. Being clear up front costs us a few sales and saves
+      a lot of people a bad afternoon.
+    </p>
+  </section>
+</AdeGuide>

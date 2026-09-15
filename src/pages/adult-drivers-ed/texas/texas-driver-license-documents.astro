@@ -1,0 +1,83 @@
+---
+import AdeGuide from '../../../components/ade/AdeGuide.astro';
+import { residency, fees, itd, law } from '../../../data/ade-eligibility';
+import { dpsStats as S } from '../../../lib/dps-stats';
+
+const faqs = [
+  { q: 'What documents do I need for a Texas driver license?', a: `Proof of identity, proof of U.S. citizenship or lawful presence, proof of your Social Security number, and ${residency.documentsRequired} printed documents proving Texas residency. If you own a vehicle you also bring Texas registration and proof of insurance. DPS has a REAL ID Document Check tool that builds the list for your exact situation.` },
+  { q: 'How do I prove Texas residency?', a: `Two printed documents, both showing your name and Texas residential address. ${residency.thirtyDayRule} ${residency.thirtyDayWaived}` },
+  { q: 'Can I use two bills from the same company?', a: residency.sameSourceRule },
+  { q: 'Does a phone screenshot count?', a: residency.printedOnly },
+  { q: 'What if I do not have two residency documents?', a: residency.affidavit + ' Ask about it when you book, not when you arrive.' },
+  { q: 'Does a streaming subscription really count?', a: `Yes. DPS lists streaming services among acceptable utility or residential service bills, alongside electric, water, gas, internet, cable, lawn service and cell phone. The bill must be dated within ${residency.utilityWindowDays} days and carry your name and Texas address.` },
+];
+---
+<AdeGuide
+  title="What to Bring to Your Texas Driver License Appointment | Road Ready Safety"
+  description="The exact documents DPS asks for: identity, lawful presence, Social Security number and two printed proofs of Texas residency — including the 30-day rule and when it is waived."
+  url="/adult-drivers-ed/texas/texas-driver-license-documents"
+  eyebrow="DPS process"
+  h1="What to bring to your DPS appointment"
+  lede={`Being turned away for paperwork is expensive when the next road-test appointment is a median of ${S.driveTest.median} days out. This is what DPS asks for, and the residency rule that catches most people.`}
+  faqs={faqs}
+  sources={[
+    { label: 'Texas DPS, Texas Residency Requirement for Driver Licenses and ID Cards', href: 'https://www.dps.texas.gov/section/driver-license/texas-residency-requirement-driver-licenses-and-id-cards' },
+    { label: 'Texas DPS, Apply for a Texas Driver License', href: 'https://www.dps.texas.gov/section/driver-license/apply-texas-driver-license' },
+  ]}
+>
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">The four things</h2>
+    <ul class="flex flex-col gap-3 pl-5 m-0 list-disc marker:text-text-subtle">
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>Proof of identity.</strong></li>
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>Proof of U.S. citizenship,</strong> or of lawful presence if you are not a citizen.</li>
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>Your Social Security number.</strong></li>
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>{residency.documentsRequired} printed documents proving Texas residency</strong> &mdash; the part that goes wrong.</li>
+    </ul>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      If you own a vehicle, add Texas registration and proof of insurance for each one. If you are
+      {' '}{law.requiredBand}, add your driver education certificate. If you are taking a driving
+      skills test, add your {itd.adultName} certificate dated within {itd.certValidDays} days.
+      DPS&rsquo;s REAL ID Document Check tool builds a personalized list, and it is worth the two
+      minutes.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">The residency rule, in detail</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      Two printed documents, both carrying your name and your Texas residential address.
+      {' '}{residency.thirtyDayRule}
+    </p>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      <strong>The waiver worth knowing:</strong> {residency.thirtyDayWaived} So a new resident
+      transferring a license does not have to wait out a month before applying.
+    </p>
+    <p class="text-[17px] text-text-body leading-[30px]"><strong>Two traps:</strong></p>
+    <ul class="flex flex-col gap-3 pl-5 m-0 list-disc marker:text-text-subtle">
+      <li class="text-[17px] text-text-body leading-[30px]">{residency.sameSourceRule}</li>
+      <li class="text-[17px] text-text-body leading-[30px]">{residency.printedOnly}</li>
+    </ul>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">What counts as a residency document</h2>
+    <ul class="flex flex-col gap-3 pl-5 m-0 list-disc marker:text-text-subtle">
+      {residency.examples.map((e) => <li class="text-[17px] text-text-body leading-[30px]">{e}</li>)}
+    </ul>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      The utility category is broader than people assume &mdash; a streaming subscription bill in
+      your name at your Texas address is on the DPS list. And if you genuinely cannot produce two,
+      {' '}{residency.affidavit.charAt(0).toLowerCase() + residency.affidavit.slice(1)} Raise it when
+      you book rather than at the counter.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Read next</h2>
+    <ul class="flex flex-col gap-3 pl-5 m-0 list-disc marker:text-text-subtle">
+      <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/how-to-get-a-texas-license-as-an-adult">The full process, start to finish</a></li>
+      <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/texas-driver-license-fees">What it all costs</a></li>
+      <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/dps-wait-times">How long the wait is at your office</a></li>
+    </ul>
+  </section>
+</AdeGuide>

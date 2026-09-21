@@ -10,8 +10,6 @@ import TrustSection from '../components/TrustSection.astro';
 import FaqSection from '../components/FaqSection.astro';
 
 const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
-// Redesigned hero with the Texas quick-buy; off unless the flag is set (see HomeHeroFeatured.astro).
-const featuredOn = import.meta.env.VITE_HOME_FEATURED_COURSES === 'true';
 ---
 
 <Layout
@@ -39,46 +37,8 @@ const featuredOn = import.meta.env.VITE_HOME_FEATURED_COURSES === 'true';
   <Header />
 
   <main>
-    {featuredOn ? <HomeHeroFeatured /> : (
-    <!-- Hero + Course Finder -->
-    <section
-      class="relative border-b border-border py-16 lg:py-24 overflow-hidden"
-      id="find-course"
-      style="font-family: 'Inter', sans-serif;"
-    >
-      <div class="absolute inset-0 bg-gradient-to-b from-info opacity-50 to-white pointer-events-none"></div>
-      <div class="relative max-w-[1152px] mx-auto px-4 sm:px-6 lg:px-8 z-10 w-full">
-        <div class="grid grid-cols-1 lg:grid-cols-2 items-center gap-12 lg:gap-16">
-
-          <!-- Left: heading + finder form -->
-          <div class="max-w-[65ch] text-center lg:text-left">
-            <h1 class="mb-6 text-[40px] leading-[52px] font-extrabold text-text tracking-[-0.02em]">
-              Dismiss your ticket. Lower your rates. Get it done fast.
-            </h1>
-            <p class="text-base leading-[22px] text-text-body mb-12">
-              State-approved, mobile-friendly, and built to save your progress. Learn at your pace, pass the quizzes, and get your certificate without the hassle.
-            </p>
-            <div class="max-w-xl mx-auto lg:mx-0 mt-12">
-              <!-- HeroFinder is a React island — only this form hydrates client-side -->
-              <HeroFinder variant="hero" client:load />
-            </div>
-          </div>
-
-          <!-- Right: illustration -->
-          <div class="hidden lg:block">
-            <img
-              src="/assets/illustrations/product-explainer.svg"
-              alt="Modern traffic course interface showing mobile and desktop compatibility"
-              class="h-64 md:h-80 lg:h-96 xl:h-[28rem] mx-auto lg:ml-auto"
-              width="448"
-              height="448"
-              loading="eager"
-            />
-          </div>
-        </div>
-      </div>
-    </section>
-    )}
+    <!-- Hero: Texas quick-buy, proof, and the state finder on demand (see HomeHeroFeatured.astro) -->
+    <HomeHeroFeatured />
 
     <UspSection />
     <HowSection />

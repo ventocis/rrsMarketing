@@ -1,4 +1,4 @@
-Effective Date: 2/25/2026  |  Last Updated: 2/25/2026
+Effective Date: 2/25/2026  |  Last Updated: 9/21/2026
 
 www.roadreadysafety.com
 
@@ -107,8 +107,10 @@ We and our third-party service providers use cookies, web beacons, pixel tags, a
 ### 5.1 Types of Technologies We Use
 
 - Essential cookies: required for site functionality, login sessions, and course progress tracking
-- Analytics cookies: help us understand how users navigate the site (e.g., Google Analytics)
+- Analytics cookies: help us understand how users navigate the site. We use Google Tag Manager and Google Analytics
 - Advertising/marketing pixels: used to measure ad performance and deliver targeted advertising for platforms we actively use
+- Embedded content: pages containing video use YouTube's privacy-enhanced player, which may set cookies and contact Google when you play a video
+- Web fonts: our pages load typefaces from Google Fonts, which receives your IP address as part of that request
 
 ### 5.2 Your Cookie Choices
 
@@ -198,11 +200,23 @@ The Services are not directed to children under the age of 13, and we do not kno
 
 The Services may contain links to third-party websites, including our referral partners, payment processors, and regulatory portals. We are not responsible for the privacy practices of third parties, and this Privacy Policy does not apply to their sites. We encourage you to review the privacy policies of any third-party sites you visit.
 
-## 12. Changes to This Privacy Policy
+## 12. Our Use of Artificial Intelligence
+
+We use AI tools to help develop and maintain this website, our software, and our course materials. This section explains where AI is and is not involved, because you are entitled to know.
+
+**Where we use it.** AI assists us in drafting and editing website copy, writing and reviewing software, and preparing course content. Everything published is reviewed by a person before it goes live, and a human remains responsible for it.
+
+**Where we do not use it.** AI does not decide anything that affects your course or your license. It does not grade your final examination, decide whether you passed, decide whether you receive a certificate, or evaluate an accommodation request. Under Texas law a licensed driver education instructor makes the determination that a student has successfully completed and passed the course, and that decision is made by a person.
+
+**Your information.** We do not submit your personal information to third-party AI services to train their models, and we do not sell or share your personal information with AI developers for that purpose. Where an AI tool is used in support of a service you have requested, it is subject to the same confidentiality and security obligations described in Section 6.
+
+**Questions and objections.** If you would like to know whether AI was involved in something affecting you, or you object to its use, contact us using the details in Section 14 and a person will respond.
+
+## 13. Changes to This Privacy Policy
 
 We may update this Privacy Policy from time to time. When we make material changes, we will update the Effective Date and Last Updated date at the top of this page, and where required by law, notify you by email or prominent notice on the Site. Your continued use of the Services following notice of changes constitutes acceptance of the updated Policy.
 
-## 13. Contact Us
+## 14. Contact Us
 
 If you have questions about this Privacy Policy, wish to exercise your privacy rights, or need to report a data concern, please contact us:
 

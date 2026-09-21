@@ -16,6 +16,8 @@ export interface FeaturedCourse {
   learnMoreHref: string;
   /** Short line above the buttons on desktop, e.g. "Texas defensive driving · $28 all-in". */
   offerLine: string;
+  /** Two or three short reassurance lines shown as a checklist under the headline. */
+  heroPoints: string[];
   /** Trust proof shown beside the offer (desktop) or under it (mobile). */
   proof: {
     /** Must be a verbatim, contiguous excerpt of that reviewer's stored quote in
@@ -37,6 +39,10 @@ export const FEATURED_COURSES: FeaturedCourse[] = [
     enrollFallback: '/courses/tx-defensive',
     learnMoreHref: '/texas',
     offerLine: 'Texas defensive driving · $28 all-in',
+    heroPoints: [
+      'State-approved. Works on your phone.',
+      'Get your certificate the moment you finish.',
+    ],
     proof: {
       reviewExcerpt: 'Simple. No hidden fees. Seamless experience.',
       reviewerName: 'Ryan Johnson',

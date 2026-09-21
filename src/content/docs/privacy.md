@@ -200,17 +200,15 @@ The Services are not directed to children under the age of 13, and we do not kno
 
 The Services may contain links to third-party websites, including our referral partners, payment processors, and regulatory portals. We are not responsible for the privacy practices of third parties, and this Privacy Policy does not apply to their sites. We encourage you to review the privacy policies of any third-party sites you visit.
 
-## 12. Our Use of Artificial Intelligence
+## 12. Artificial Intelligence
 
-We use AI tools to help develop and maintain this website, our software, and our course materials. This section explains where AI is and is not involved, because you are entitled to know.
+Road Ready Safety may use artificial intelligence tools in the research, development, and maintenance of the Site, our software, and our course materials.
 
-**Where we use it.** AI assists us in drafting and editing website copy, writing and reviewing software, and preparing course content. Everything published is reviewed by a person before it goes live, and a human remains responsible for it.
+We do not provide your personal information to third-party artificial intelligence providers for the purpose of training their models, and we do not sell or share your personal information for that purpose.
 
-**Where we do not use it.** AI does not decide anything that affects your course or your license. It does not grade your final examination, decide whether you passed, decide whether you receive a certificate, or evaluate an accommodation request. Under Texas law a licensed driver education instructor makes the determination that a student has successfully completed and passed the course, and that decision is made by a person.
+We do not rely solely on automated processing, including artificial intelligence, to make decisions that produce legal or similarly significant effects concerning you. Determinations regarding course completion are made by a licensed instructor in accordance with applicable state law.
 
-**Your information.** We do not submit your personal information to third-party AI services to train their models, and we do not sell or share your personal information with AI developers for that purpose. Where an AI tool is used in support of a service you have requested, it is subject to the same confidentiality and security obligations described in Section 6.
-
-**Questions and objections.** If you would like to know whether AI was involved in something affecting you, or you object to its use, contact us using the details in Section 14 and a person will respond.
+Questions regarding this Section may be directed to us using the contact information in Section 14.
 
 ## 13. Changes to This Privacy Policy
 

@@ -1,0 +1,168 @@
+---
+/**
+ * HomeHeroFeatured — the root homepage hero when VITE_HOME_FEATURED_COURSES is on.
+ *
+ * WHY IT LOOKS LIKE THIS
+ * The old hero stacked three equally heavy boxes (intro, offer card, a tall grey
+ * finder form) next to an illustration that said nothing. Homepage visitors are
+ * mostly brand searchers ready to buy, about half of them in Texas, and Texas is
+ * the only course on sale. So:
+ *   - one clear primary action: Start now → checkout, Learn more → /texas
+ *   - the illustration's space goes to proof (a real review + three facts),
+ *     which answers "is this site legit" for a $28 course from an unfamiliar name
+ *   - the state finder is demoted to a closed disclosure. It still works exactly
+ *     as before once opened; it just stops being the tallest thing on the screen.
+ *
+ * LAYOUT
+ *   desktop  [ headline + offer + finder disclosure ] [ proof ]
+ *   mobile   headline → boxed purchase panel → proof → finder disclosure
+ * The offer is one block of markup: boxed with a large price on phones, unboxed
+ * and inline on desktop.
+ *
+ * The finder island hydrates with client:visible. Inside a closed <details> it
+ * has no box, so its JavaScript only loads for people who actually open it.
+ *
+ * MEASUREMENT (dataLayer): `enroll_click` {cta_location: 'home_featured'} on the
+ * primary button, `finder_open` the first time the disclosure is opened. Even
+ * without GTM receiving these, a GA4 path of "/" → /public/checkout with no
+ * /texas between can only come from this button. Baseline: the homepage turned
+ * 17–18% of visits into purchases, June to mid-September 2026.
+ */
+import HeroFinder from './HeroFinder';
+import { FEATURED_COURSES } from '../data/featured-courses';
+import reviews from '../data/texas-reviews.json';
+
+// Vite only substitutes env vars read by their literal name; a dynamic
+// import.meta.env[key] lookup silently yields undefined.
+const ENROLL_URLS: Record<string, string | undefined> = {
+  'tx-bdi': import.meta.env.VITE_TEXAS_ENROLLMENT_URL,
+};
+
+const course = FEATURED_COURSES[0];
+const enrollUrl = ENROLL_URLS[course.id] || course.enrollFallback;
+
+// The homepage quotes a customer. Refuse to build if the excerpt is not their words.
+const review = (reviews as Array<{ name: string; quote: string; rating: number; verified: boolean }>)
+  .find((r) => r.name === course.proof.reviewerName);
+if (!review || !review.quote.includes(course.proof.reviewExcerpt)) {
+  throw new Error(`featured-courses: "${course.proof.reviewExcerpt}" is not a verbatim excerpt of ${course.proof.reviewerName}'s review`);
+}
+---
+
+<section
+  class="relative border-b border-border py-12 lg:py-20 overflow-hidden"
+  id="find-course"
+  style="font-family: 'Inter', sans-serif;"
+>
+  <div class="absolute inset-0 bg-gradient-to-b from-info opacity-50 to-white pointer-events-none"></div>
+  <div class="relative max-w-[1152px] mx-auto px-4 sm:px-6 lg:px-8 z-10 w-full">
+    <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] gap-x-16 gap-y-6">
+
+      <!-- Headline + offer -->
+      <div class="lg:col-start-1 lg:row-start-1">
+        <h1 class="text-[32px] leading-[40px] lg:text-[44px] lg:leading-[54px] font-extrabold text-text tracking-[-0.02em] mb-4 text-center lg:text-left">
+          Dismiss your ticket online. Keep it off your record.
+        </h1>
+        <p class="text-base lg:text-lg leading-7 text-text-body mb-8 text-center lg:text-left">
+          State-approved. Works on your phone. Certificate the moment you finish.
+        </p>
+
+        <!-- Boxed purchase panel on phones; unboxed and inline from lg up -->
+        <div class="bg-white border-2 border-primary rounded-[16px] p-5 lg:bg-transparent lg:border-0 lg:rounded-none lg:p-0">
+          <div class="flex items-center justify-between gap-3 mb-3 lg:hidden">
+            <span class="bg-info text-info-text text-xs font-semibold leading-4 px-2.5 py-1 rounded-full">{course.badge}</span>
+            <span class="text-xs leading-4 text-text-body">{course.credential}</span>
+          </div>
+          <p class="text-lg leading-7 font-semibold text-text lg:hidden">{course.name}</p>
+          <p class="mb-4 lg:hidden">
+            <span class="text-[36px] leading-[44px] font-extrabold text-text tracking-[-0.02em]">${course.price}</span>
+            <span class="text-sm text-text-body ml-1">all-in · certificate included</span>
+          </p>
+          <p class="hidden lg:block text-base font-semibold text-text mb-3">{course.offerLine}</p>
+
+          <div class="flex flex-col sm:flex-row gap-3">
+            <a
+              href={enrollUrl}
+              data-featured-enroll={course.id}
+              class="bg-primary hover:bg-primary-hover text-white h-[52px] px-8 rounded-[14px] text-base font-semibold inline-flex items-center justify-center no-underline transition-colors"
+            >
+              <span class="lg:hidden">Start now</span>
+              <span class="hidden lg:inline">Start now &mdash; ${course.price}</span>
+            </a>
+            <a
+              href={course.learnMoreHref}
+              class="border border-border hover:border-primary bg-white text-text h-[52px] px-8 rounded-[14px] text-base font-medium inline-flex items-center justify-center no-underline transition-colors"
+            >
+              Learn more
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Proof: beside the offer on desktop, under it on phones -->
+      <aside class="lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:self-start lg:mt-2 bg-white border border-border rounded-[16px] p-6" aria-label="Why drivers trust Road Ready Safety">
+        <div class="flex items-center gap-2 mb-3">
+          <div class="flex gap-0.5" aria-label={`Rated ${review.rating} out of 5 stars`}>
+            {[...Array(5)].map((_, i) => (
+              <img src="/assets/icons/texas/star-testimonial.svg" alt="" class:list={["w-4 h-4", i >= review.rating && "opacity-25 grayscale"]} />
+            ))}
+          </div>
+          <span class="text-xs text-text-body">{review.verified ? 'Verified via Trustpilot' : 'via Trustpilot'}</span>
+        </div>
+        <blockquote class="text-lg leading-7 text-text m-0 mb-2">&ldquo;{course.proof.reviewExcerpt}&rdquo;</blockquote>
+        <p class="text-sm text-text-body mb-5">{review.name}</p>
+        <ul class="list-none p-0 m-0 pt-5 border-t border-border space-y-3">
+          {course.proof.checks.map((c) => (
+            <li class="flex items-start gap-2.5 text-sm leading-5 text-text">
+              <svg class="w-5 h-5 shrink-0 text-primary" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span>{c}</span>
+            </li>
+          ))}
+        </ul>
+      </aside>
+
+      <!-- State finder: closed until someone asks for it -->
+      <details class="rrs-finder group lg:col-start-1 lg:row-start-2">
+        <summary class="list-none cursor-pointer flex items-center justify-center lg:justify-start gap-2 text-sm font-medium text-text-body hover:text-text py-2 w-fit mx-auto lg:mx-0 rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+          <span>Not in Texas? <span class="text-primary underline underline-offset-2">Find your state's course</span></span>
+          <svg class="w-4 h-4 transition-transform group-open:rotate-180" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </summary>
+        <div class="mt-3 max-w-xl mx-auto lg:mx-0">
+          <HeroFinder variant="hero" client:visible />
+        </div>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Safari paints the default disclosure triangle without this. */
+  .rrs-finder > summary::-webkit-details-marker { display: none; }
+</style>
+
+<script is:inline>
+  (function () {
+    if (window.__rrsHomeHeroTagged) return;
+    window.__rrsHomeHeroTagged = true;
+    document.addEventListener('click', function (e) {
+      var link = e.target && e.target.closest && e.target.closest('a[data-featured-enroll]');
+      if (!link) return;
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ event: 'enroll_click', cta_location: 'home_featured', course_id: link.getAttribute('data-featured-enroll') });
+    });
+    function bind() {
+      var d = document.querySelector('details.rrs-finder');
+      if (!d || d.dataset.bound) return;
+      d.dataset.bound = '1';
+      var sent = false;
+      d.addEventListener('toggle', function () {
+        if (!d.open || sent) return;
+        sent = true;
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({ event: 'finder_open', location: 'home_hero' });
+      });
+    }
+    if (document.readyState !== 'loading') bind(); else document.addEventListener('DOMContentLoaded', bind);
+  })();
+</script>

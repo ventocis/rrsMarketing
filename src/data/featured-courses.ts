@@ -14,6 +14,16 @@ export interface FeaturedCourse {
    *  by course id in FeaturedCourses.astro (Vite needs the literal var name there). */
   enrollFallback: string;
   learnMoreHref: string;
+  /** Short line above the buttons on desktop, e.g. "Texas defensive driving · $28 all-in". */
+  offerLine: string;
+  /** Trust proof shown beside the offer (desktop) or under it (mobile). */
+  proof: {
+    /** Must be a verbatim, contiguous excerpt of that reviewer's stored quote in
+     *  texas-reviews.json — HomeHeroFeatured.astro fails the build if it is not. */
+    reviewExcerpt: string;
+    reviewerName: string;
+    checks: string[];
+  };
 }
 
 export const FEATURED_COURSES: FeaturedCourse[] = [
@@ -26,5 +36,15 @@ export const FEATURED_COURSES: FeaturedCourse[] = [
     price: '28',
     enrollFallback: '/courses/tx-defensive',
     learnMoreHref: '/texas',
+    offerLine: 'Texas defensive driving · $28 all-in',
+    proof: {
+      reviewExcerpt: 'Simple. No hidden fees. Seamless experience.',
+      reviewerName: 'Ryan Johnson',
+      checks: [
+        'TDLR-approved · CP#1234',
+        'Accepted by Texas courts for ticket dismissal',
+        'Certificate the moment you finish, no extra fee',
+      ],
+    },
   },
 ];

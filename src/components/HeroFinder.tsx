@@ -6,6 +6,8 @@ import { stateNames } from '../utils/states';
 
 interface Props {
   variant?: 'hero' | 'cta';
+  /** Overrides the default "Find the right course" heading. */
+  heading?: string;
 }
 
 const reasons = [
@@ -26,7 +28,7 @@ const courses = coursesData as Array<{
 
 const map = finderMap as Record<string, string[]>;
 
-export default function HeroFinder({ variant = 'hero' }: Props) {
+export default function HeroFinder({ variant = 'hero', heading = 'Find the right course' }: Props) {
   const [selectedState, setSelectedState] = useState('');
   const [selectedReason, setSelectedReason] = useState('');
   const [selectedCourse, setSelectedCourse] = useState('');
@@ -95,7 +97,7 @@ export default function HeroFinder({ variant = 'hero' }: Props) {
       <form className="grid grid-cols-1 lg:grid-cols-2 gap-6" onSubmit={handleSubmit}>
         <div className="col-span-1 lg:col-span-2">
           <h2 className={`text-xl leading-[30px] font-medium mb-4 ${isCta ? 'text-white' : 'text-text'}`}>
-            Find the right course
+            {heading}
           </h2>
           <p className={`text-xs leading-4 mb-4 ${isCta ? 'text-white/80' : 'text-text-body'}`}>
             Select your state and reason. If there are multiple options, we'll show you the choices.

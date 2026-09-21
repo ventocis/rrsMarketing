@@ -3,12 +3,15 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import HeroFinder from '../components/HeroFinder';
+import FeaturedCourses from '../components/FeaturedCourses.astro';
 import UspSection from '../components/UspSection.astro';
 import HowSection from '../components/HowSection.astro';
 import TrustSection from '../components/TrustSection.astro';
 import FaqSection from '../components/FaqSection.astro';
 
 const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+// Featured-course card above the finder; off unless the flag is set (see FeaturedCourses.astro).
+const featuredOn = import.meta.env.VITE_HOME_FEATURED_COURSES === 'true';
 ---
 
 <Layout
@@ -51,12 +54,13 @@ const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
             <h1 class="mb-6 text-[40px] leading-[52px] font-extrabold text-text tracking-[-0.02em]">
               Dismiss your ticket. Lower your rates. Get it done fast.
             </h1>
-            <p class="text-base leading-[22px] text-text-body mb-12">
+            <p class:list={["text-base leading-[22px] text-text-body", featuredOn ? "mb-6" : "mb-12"]}>
               State-approved, mobile-friendly, and built to save your progress. Learn at your pace, pass the quizzes, and get your certificate without the hassle.
             </p>
-            <div class="max-w-xl mx-auto lg:mx-0 mt-12">
+            <div class:list={["max-w-xl mx-auto lg:mx-0", featuredOn ? "mt-0" : "mt-12"]}>
               <!-- HeroFinder is a React island — only this form hydrates client-side -->
-              <HeroFinder variant="hero" client:load />
+              <FeaturedCourses />
+              <HeroFinder variant="hero" heading={featuredOn ? 'Another state? Find the right course' : undefined} client:load />
             </div>
           </div>
 

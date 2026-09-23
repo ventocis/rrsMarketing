@@ -1,0 +1,23 @@
+---
+/**
+ * Trustpilot rating, stars drawn to the actual score (4.2 fills 84% of five stars).
+ * Jackson, 2026-09-23: show the score only, never a review count.
+ */
+import { TRUSTPILOT_SCORE } from '../../data/trustpilot';
+
+interface Props { score?: number; tone?: 'light' | 'dark' }
+const { score = TRUSTPILOT_SCORE, tone = 'light' } = Astro.props;
+const pct = Math.round((score / 5) * 100);
+const stars = [0, 1, 2, 3, 4];
+---
+<span class="inline-flex items-center gap-2 text-sm">
+  <span class="relative inline-flex" role="img" aria-label={`Rated ${score} out of 5 on Trustpilot`}>
+    <span class="flex gap-0.5 opacity-25 grayscale" aria-hidden="true">
+      {stars.map(() => <img src="/assets/icons/texas/star-testimonial.svg" alt="" class="w-4 h-4" />)}
+    </span>
+    <span class="absolute inset-y-0 left-0 overflow-hidden flex gap-0.5" style={`width:${pct}%;`} aria-hidden="true">
+      {stars.map(() => <img src="/assets/icons/texas/star-testimonial.svg" alt="" class="w-4 h-4 flex-shrink-0" />)}
+    </span>
+  </span>
+  <span class={`font-semibold ${tone === 'dark' ? 'text-info-border' : 'text-text'}`}>{score} on Trustpilot</span>
+</span>

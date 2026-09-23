@@ -1,0 +1,24 @@
+---
+/**
+ * Closing call-to-action over the road photo.
+ *
+ * CourseLayout (and AdeLayout) give <main> 72px of bottom padding on phones and tablets,
+ * room for the sticky price bar. As the last section, this band pulls itself down over that
+ * padding so it meets the footer with no white strip, without editing the shared layout.
+ */
+import RoadPhoto from './RoadPhoto.astro';
+
+interface Props { heading: string; copy: string; ctaLabel: string; ctaHref: string }
+const { heading, copy, ctaLabel, ctaHref } = Astro.props;
+---
+<section class="relative overflow-hidden -mb-[72px] lg:mb-0">
+  <div class="absolute inset-0" aria-hidden="true">
+    <RoadPhoto class="w-full h-full" position="50% 65%" />
+  </div>
+  <div class="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-black/10" aria-hidden="true"></div>
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-[168px] lg:py-36 flex flex-col gap-6 items-start text-white">
+    <h2 class="text-[40px] lg:text-[60px] max-w-2xl font-extrabold tracking-[-0.02em] leading-[1.1]" style="font-family:'Outfit',sans-serif;">{heading}</h2>
+    <p class="text-lg text-white/90 leading-8 max-w-xl m-0">{copy}</p>
+    <a href={ctaHref} class="bg-white text-primary-navy hover:bg-info h-[52px] px-8 rounded-full text-base font-semibold inline-flex items-center justify-center no-underline transition-colors w-full sm:w-auto">{ctaLabel}</a>
+  </div>
+</section>

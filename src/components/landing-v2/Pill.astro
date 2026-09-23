@@ -1,0 +1,8 @@
+---
+/** Section label pill for landing-v2 pages. Matches the homepage's "Why Choose Us" pill. */
+interface Props { tone?: 'light' | 'dark' | 'tint' }
+const { tone = 'light' } = Astro.props;
+---
+<span class={`inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold leading-5 ${
+  tone === 'dark' ? 'bg-white/10 text-info-border ring-1 ring-white/15' : tone === 'tint' ? 'bg-white text-info-text' : 'bg-info text-info-text'
+}`}><slot /></span>

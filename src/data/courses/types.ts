@@ -123,6 +123,12 @@ export interface CourseData {
     courseDescription: string;
   };
   banner: string;
+  /**
+   * 'minimal': CourseLayout drops the header nav links and the provider strip, and shows one
+   * Contact Support link instead (the landing-v2 design). Legal name and approval status stay
+   * in the footer. Unset = today's header.
+   */
+  headerStyle?: 'minimal';
   nav: NavItem[];
   hero: {
     eyebrow: string;

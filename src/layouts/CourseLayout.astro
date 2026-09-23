@@ -34,6 +34,8 @@ const licenceLabel = course.provider.approvalNumber
   ? course.provider.approvalLabel.replace('{{number}}', course.provider.approvalNumber)
   : course.provider.approvalPendingLabel;
 const noindex = isNoindex(course);
+// landing-v2 design: no nav links or provider strip in the header, one Contact Support link.
+const minimalHeader = course.headerStyle === 'minimal';
 
 const courseLinks = [
   { href: route, label: course.course.shortName },
@@ -124,14 +126,16 @@ const breadcrumbSchema = {
           </div>
         </a>
 
+        {!minimalHeader && (
         <nav class="hidden lg:flex items-center gap-8" aria-label="Primary">
           {course.nav.map((item) => (
             <a href={item.href} class="text-sm font-medium text-text-body hover:text-text no-underline transition-colors">{item.label}</a>
           ))}
         </nav>
+        )}
 
         <div class="hidden lg:flex items-center gap-3">
-          <a href={loginUrl} class="h-10 px-5 border border-border text-text rounded-xl text-sm font-semibold flex items-center justify-center no-underline hover:bg-surface-muted transition-colors">Log In</a>
+          {minimalHeader && <a href={contactUrl} class="text-sm font-medium text-text-body hover:text-text no-underline transition-colors mr-3">Contact Support</a>}<a href={loginUrl} class="h-10 px-5 border border-border text-text rounded-xl text-sm font-semibold flex items-center justify-center no-underline hover:bg-surface-muted transition-colors">Log In</a>
           <a href={enrollUrl} class="h-10 px-5 bg-primary hover:bg-primary-hover text-white rounded-xl text-sm font-semibold flex items-center justify-center no-underline transition-colors shadow-[0px_4px_6px_-1px_rgba(17,23,34,0.1)]">{course.hero.ctaLabel}</a>
         </div>
 
@@ -153,6 +157,7 @@ const breadcrumbSchema = {
     </div>
 
     <!-- Provider identification strip: legal entity + this state's approval status. -->
+    {!minimalHeader && (
     <div class="bg-surface-muted border-t border-border">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-1.5">
         <p class="text-[11px] text-text-muted text-center leading-4">
@@ -160,10 +165,13 @@ const breadcrumbSchema = {
         </p>
       </div>
     </div>
+    )}
 
     <div id="course-menu" class="hidden lg:hidden border-t border-border bg-white">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex flex-col gap-4">
-        {course.nav.map((item) => (
+        {minimalHeader ? (
+          <a href={contactUrl} class="text-sm font-medium text-text-body hover:text-text no-underline py-2">Contact Support</a>
+        ) : course.nav.map((item) => (
           <a href={item.href} class="text-sm font-medium text-text-body hover:text-text no-underline py-2">{item.label}</a>
         ))}
         <hr class="border-border" />

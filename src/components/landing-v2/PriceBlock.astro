@@ -1,0 +1,67 @@
+---
+/**
+ * What's included + the price card. Plain props, so any course (state sites, Texas ADE) can
+ * feed it from its own data file. Used in the landing page's "What's included" tab and at the
+ * top of a pricing page, so both show the same card.
+ */
+interface LineItem { label: string; value: string; good?: boolean }
+interface Props {
+  price: string;
+  /** Small label above the price, e.g. the course's short name. */
+  label: string;
+  totalLabel: string;
+  included: string[];
+  notCharged: string[];
+  lineItems: LineItem[];
+  refundNote: string;
+  refundHref: string;
+  enrollUrl: string;
+  ctaLabel?: string;
+  /** Heading above the list; omitted in the landing tab, where the tab label says it. */
+  heading?: string;
+  headingTag?: 'h1' | 'h2';
+}
+const {
+  price, label, totalLabel, included, notCharged, lineItems, refundNote, refundHref, enrollUrl,
+  ctaLabel = 'Start the Course', heading, headingTag = 'h2',
+} = Astro.props;
+const Heading = headingTag;
+const outfit = "font-family:'Outfit',sans-serif;";
+---
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+  <div class="flex flex-col gap-6">
+    {heading && (
+      <Heading class="text-[34px] lg:text-[52px] font-extrabold tracking-[-0.02em] leading-[1.1] text-primary-navy m-0" style={outfit}>{heading}</Heading>
+    )}
+    <ul class="flex flex-col gap-3 list-none p-0 m-0">
+      {included.map((item) => (
+        <li class="flex gap-3 items-start text-base text-text-body leading-7">
+          <svg class="mt-1 flex-shrink-0" width="20" height="20" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="8" fill="#16A34A" opacity="0.14"/><path d="M4.8 8.2l2.1 2.1 4.3-4.4" stroke="#16A34A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          {item}
+        </li>
+      ))}
+    </ul>
+    <div>
+      <p class="text-sm font-bold text-text uppercase tracking-wider mb-3">Never charged</p>
+      <div class="flex flex-wrap gap-2">
+        {notCharged.map((t) => <span class="rounded-full border border-border bg-surface-muted px-3 py-1.5 text-sm text-text-body">{t}</span>)}
+      </div>
+    </div>
+  </div>
+  <div class="rounded-[28px] bg-info p-6 lg:p-10">
+    <div class="rounded-[20px] bg-white ring-1 ring-border p-7 flex flex-col gap-5">
+      <div>
+        <span class="text-sm font-semibold text-text-muted uppercase tracking-wider">{label}</span>
+        <p class="text-[56px] font-extrabold text-primary-navy leading-none mt-1 mb-1 tabular-nums" style={outfit}>${price}</p>
+        <span class="text-base text-text-body">{totalLabel}</span>
+      </div>
+      <div class="flex flex-col gap-2 border-t border-border pt-4">
+        {lineItems.map((li) => (
+          <div class="flex justify-between text-sm"><span class="text-text-body">{li.label}</span><span class={`font-semibold tabular-nums ${li.good ? 'text-success' : 'text-text'}`}>{li.value}</span></div>
+        ))}
+      </div>
+      <a href={enrollUrl} class="bg-primary hover:bg-primary-hover text-white h-[52px] px-8 rounded-full text-base font-semibold inline-flex items-center justify-center no-underline transition-colors shadow-[0_8px_20px_-8px_rgba(36,84,230,0.55)] w-full">{ctaLabel}</a>
+      <p class="text-xs text-text-muted text-center m-0">{refundNote} <a href={refundHref} class="underline text-primary">Refund policy</a></p>
+    </div>
+  </div>
+</div>

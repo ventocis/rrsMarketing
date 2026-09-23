@@ -1,0 +1,407 @@
+---
+/**
+ * North Dakota landing page in the landing-v2 design (approved by Jackson 2026-09-23).
+ *
+ * Why a rest-param route: `north-dakota/[...override]` outranks the shared
+ * `[state]/index.astro` for /north-dakota only, and getStaticPaths returns nothing when
+ * the state is disabled, so production (no NDDOT approval yet) emits no file at all,
+ * exactly like the shared template would. A plain `north-dakota/index.astro` would have
+ * published ND to production before approval: tested and rejected.
+ *
+ * Facts (price, hours, modules, FAQs, links, legal name, deadlines) come from nd-ddc.json,
+ * the same file every other ND page reads. Only headings and connecting copy live here.
+ * Components in src/components/landing-v2 are shared with the Texas ADE page.
+ */
+import CourseLayout from '../../layouts/CourseLayout.astro';
+import Pill from '../../components/landing-v2/Pill.astro';
+import Rating from '../../components/landing-v2/Rating.astro';
+import RoadPhoto from '../../components/landing-v2/RoadPhoto.astro';
+import PriceBlock from '../../components/landing-v2/PriceBlock.astro';
+import FinalBand from '../../components/landing-v2/FinalBand.astro';
+import SampleCertificate from '../../components/landing-v2/SampleCertificate.astro';
+import nd from '../../data/courses/nd-ddc.json';
+import reviews from '../../data/reviews.json';
+import type { CourseData } from '../../data/courses/types';
+import { isEnabled, enrollUrl as buildEnrollUrl, contactUrl } from '../../lib/courseFlags';
+
+export function getStaticPaths() {
+  return isEnabled(nd as CourseData) ? [{ params: { override: undefined } }] : [];
+}
+
+const course = nd as CourseData;
+const enrollUrl = buildEnrollUrl(course);
+const route = course.state.route;
+const price = course.course.priceUsd;
+const modules = course.course.modules;
+const faqs = course.faqs;
+const ndLaw = 'https://ndlegis.gov/cencode/t39c06-1.html';
+const exam = course.exam;
+const deadline = course.deadline;
+const suspensionNote = course.audiences.items.find((a) => a.tone === 'muted')?.bullets[0] ?? '';
+
+const steps = [
+  {
+    divider: false, n: '01', t: 'Enroll',
+    b: `Pay $${price} and set up your account, then start right away on your phone or computer. If you chose the course at court, enroll the same day. The 30-day clock is already running.`,
+  },
+  {
+    divider: true, n: '02', t: 'Learn and pass',
+    b: `Work through eight short modules at your own pace. After each of the first seven there's a three-question knowledge check, with unlimited tries and the answers shown. Then pass the ${exam.questions}-question final: ${exam.passCount} correct to pass, and free retakes with different questions and no waiting period.`,
+  },
+  {
+    divider: true, n: '03', t: 'Send it to NDDOT',
+    b: 'Your certificate is ready to download the moment you pass. Email it to drs@nd.gov or mail it to the Driver License Division, and NDDOT applies the reduction. We don\'t report it for you. If you chose the course at court, NDDOT needs it within 30 days.',
+  },
+];
+const progress = modules.slice(0, 5).map((m, i) => ({ title: m.title, done: i !== 4 }));
+
+type Review = { initials: string; name: string; date: string; quote: string };
+const reviewList = reviews as Review[];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+
+const btnPrimary =
+  'bg-primary hover:bg-primary-hover text-white h-[52px] px-8 rounded-full text-base font-semibold inline-flex items-center justify-center gap-2 no-underline transition-colors shadow-[0_8px_20px_-8px_rgba(36,84,230,0.55)]';
+const btnSecondary =
+  'bg-info hover:brightness-95 text-info-text h-[52px] px-8 rounded-full text-base font-semibold inline-flex items-center justify-center no-underline transition-colors';
+const h2 = 'font-extrabold tracking-[-0.02em] leading-[1.1]';
+const outfit = "font-family:'Outfit',sans-serif;";
+---
+
+<CourseLayout
+  course={course}
+  title={course.seo.title}
+  description={course.seo.description}
+  keywords={course.seo.keywords}
+  url={route}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  </Fragment>
+
+  <!-- ============ 1. HERO — rating, headline, one paragraph, trust row, one button; outcome on the right ============ -->
+  <section class="bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-14 lg:pt-28 lg:pb-32 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <div class="flex flex-col gap-6 items-start">
+        <Rating />
+
+        <h1 class={`text-[34px] lg:text-[60px] text-primary-navy ${h2}`} style={outfit}>
+          North Dakota Defensive Driving Course Online
+        </h1>
+
+        <p class="text-lg lg:text-xl text-text-body leading-8 max-w-[34rem]">
+          Take three points off your North Dakota record, or keep the points from a small ticket off it entirely.
+          Four hours online, ${price} total, and your certificate is ready to download the moment you pass.
+        </p>
+
+        <ul class="flex flex-wrap gap-3 list-none p-0 m-0" aria-label="Course basics">
+          {['4 hours, self-paced', 'Works on your phone', 'Certificate included'].map((t) => (
+            <li class="inline-flex items-center gap-2 rounded-full border border-border bg-white px-4 py-2 text-sm font-medium text-text">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="8" fill="#16A34A" opacity="0.14"/><path d="M4.8 8.2l2.1 2.1 4.3-4.4" stroke="#16A34A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              {t}
+            </li>
+          ))}
+        </ul>
+
+        <a href={enrollUrl} class={`${btnPrimary} w-full sm:w-auto mt-2`}>Start the Course &mdash; ${price}</a>
+        <p class="text-sm text-text-muted leading-6 m-0">
+          Full refund any time before you finish. No deadline unless you elected the course at court.
+          <a href="#who-needs-it" class="text-primary font-semibold underline underline-offset-2 whitespace-nowrap">Which option is mine?</a>
+        </p>
+      </div>
+
+      <!-- Outcome visual. Dropped on phones, as Boat-Ed does, so the headline and button come first. -->
+      <div class="relative hidden lg:block pb-16">
+        <RoadPhoto class="w-full aspect-[4/3] rounded-[28px]" position="50% 60%" eager desktopOnly />
+        <SampleCertificate courseName={course.course.name} hours={course.course.hours} sampleNumber="ND-000123" class="absolute -left-8 bottom-0" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 2. WHO IT'S FOR — dark band, three criteria cards, one paragraph with the law ============ -->
+  <section id="who-needs-it" class="relative overflow-hidden bg-primary-navy text-white scroll-mt-28">
+    <div class="absolute inset-0 opacity-40 pointer-events-none" aria-hidden="true"
+      style="background: radial-gradient(60% 80% at 80% 0%, rgba(36,84,230,.55), transparent 70%), radial-gradient(50% 70% at 0% 100%, rgba(124,195,249,.25), transparent 70%);"></div>
+    <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 flex flex-col items-center gap-8 text-center">
+      <h2 class={`text-[32px] lg:text-[44px] ${h2}`} style={outfit}>Is this course for you?</h2>
+      <Pill tone="dark">Who it helps</Pill>
+      <ul class="grid md:grid-cols-3 gap-4 lg:gap-6 w-full list-none p-0 m-0">
+        {[
+          { t: 'You have points on your record', d: 'M4 12h16M4 6h16M4 18h10' },
+          { t: 'You got a small ticket and want to keep the points off your record', d: 'M7 3h7l5 5v13H7zM14 3v5h5' },
+          { t: 'You\'re getting close to 12 points, when North Dakota suspends your license', d: 'M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z' },
+        ].map((c) => (
+          <li class="flex items-center gap-4 rounded-[20px] border border-white/25 bg-white/5 px-6 py-6 text-left">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 text-info-border" aria-hidden="true"><path d={c.d} /></svg>
+            <span class="text-lg font-bold leading-6" style={outfit}>{c.t}</span>
+          </li>
+        ))}
+      </ul>
+      <div class="flex flex-col gap-4 max-w-3xl text-base lg:text-lg text-info-border leading-8">
+        <p class="m-0">
+          Finish an approved course and NDDOT takes three points off, once every 12 months and up to 9 points in any three-year period.
+          For a new ticket worth 5 points or fewer, you can choose the course at court when you post bond, and the points are never entered.
+          NDDOT needs your certificate within 30 days of that choice. It's the same course either way.
+        </p>
+        <p class="m-0">
+          The course won't undo a suspension. {suspensionNote}
+          Learn more from the <a href={course.state.agencyUrl} class="underline text-white" target="_blank" rel="noopener noreferrer">North Dakota Department of Transportation</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3. THREE STEPS — one bordered panel, big headline, 01/02/03, two buttons ============ -->
+  <section class="bg-white py-20 lg:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="rounded-[28px] border border-info-border overflow-hidden">
+        <div class="bg-info px-6 py-10 lg:px-14 lg:py-14 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+          <div class="flex flex-col gap-5 items-start">
+            <Pill tone="tint">3 easy steps</Pill>
+            <h2 class={`text-[40px] lg:text-[64px] text-primary-navy ${h2}`} style={outfit}>
+              Your path to
+              <span class="relative inline-block">
+                fewer points
+                <svg class="absolute left-0 -bottom-4 w-full h-4" viewBox="0 0 200 16" preserveAspectRatio="none" aria-hidden="true"><path d="M3 12 C 60 2, 140 2, 197 9" fill="none" stroke="#2454E6" stroke-width="3.5" stroke-linecap="round"/></svg>
+              </span>
+            </h2>
+          </div>
+          <div class="hidden lg:flex justify-end">
+            <SampleCertificate courseName={course.course.name} hours={course.course.hours} sampleNumber="ND-000123" />
+          </div>
+        </div>
+        <ol class="grid md:grid-cols-3 list-none p-0 m-0 bg-white">
+          {steps.map((s) => (
+            <li class={`px-6 py-10 lg:px-10 flex flex-col gap-3 ${s.divider ? 'border-t md:border-t-0 md:border-l border-info-border' : ''}`}>
+              <span class="text-[44px] font-extrabold leading-none text-primary tabular-nums" style={outfit}>{s.n}</span>
+              <h3 class="text-2xl font-bold text-text" style={outfit}>{s.t}</h3>
+              <p class="text-base text-text-body leading-7 m-0">{s.b}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+      <div class="flex justify-center mt-10">
+        <a href={enrollUrl} class={btnPrimary}>Start the Course</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 4. HOW IT WORKS — tabs: what you'll learn (accordion + product card) / what's included (price) ============ -->
+  <section class="bg-white pb-20 lg:pb-28" id="how-it-works">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center gap-5 text-center">
+      <h2 class={`text-[32px] lg:text-[44px] text-text ${h2}`} style={outfit}>A course you'll actually finish</h2>
+      <p class="text-lg text-text-body leading-8 max-w-2xl m-0">
+        Short lessons in plain English. Stop and resume whenever you like; most people finish in one or two evenings.
+      </p>
+
+      <div class="nd-tabs mt-6 inline-flex rounded-full bg-info p-1.5 max-w-full overflow-x-auto" role="tablist" aria-label="Course details">
+        <button type="button" role="tab" id="tab-learn" aria-controls="panel-learn" aria-selected="false" tabindex="-1"
+          class="nd-tab rounded-full px-6 h-11 text-base font-semibold whitespace-nowrap transition-colors aria-selected:bg-primary aria-selected:text-white text-text-body">What you'll learn</button>
+        <button type="button" role="tab" id="tab-price" aria-controls="panel-price" aria-selected="true"
+          class="nd-tab rounded-full px-6 h-11 text-base font-semibold whitespace-nowrap transition-colors aria-selected:bg-primary aria-selected:text-white text-text-body">What's included</button>
+      </div>
+    </div>
+
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
+      <!-- Tab 1 -->
+      <div id="panel-learn" role="tabpanel" aria-labelledby="tab-learn" hidden class="nd-panel"><div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+        <div>
+        <p class="text-base text-text-body leading-7 mt-0 mb-6">{course.curriculum.intro}</p>
+        <div class="border-t border-border">
+          {modules.map((m, i) => (
+            <details class="group border-b border-border" open={i === 0}>
+              <summary class="cursor-pointer list-none flex items-center justify-between gap-4 py-5">
+                <span class="text-lg font-bold text-text" style={outfit}>{m.title}</span>
+                <svg class="flex-shrink-0 w-5 h-5 text-text-muted transition-transform group-open:rotate-180 motion-reduce:transition-none" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </summary>
+              <p class="text-base text-text-body leading-7 pb-5 m-0">{m.blurb}</p>
+            </details>
+          ))}
+        </div>
+        </div>
+
+        <!-- Product card: our own course UI, standing in for Boat-Ed's video card -->
+        <div class="rounded-[28px] bg-info p-8 lg:p-10" aria-hidden="true">
+          <div class="rounded-[20px] bg-white shadow-[0_24px_48px_-20px_rgba(2,25,84,0.35)] p-6 flex flex-col gap-4">
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-semibold text-primary-deep">Course progress</span>
+              <span class="text-sm font-semibold text-text tabular-nums">5 of {modules.length - 1}</span>
+            </div>
+            <div class="h-2 rounded-full bg-info overflow-hidden"><div class="h-full w-[62%] bg-primary rounded-full"></div></div>
+            <ul class="flex flex-col gap-2 list-none p-0 m-0">
+              {progress.map((m) => (
+                <li class="flex items-center gap-3 rounded-xl bg-surface-muted px-4 py-3">
+                  <span class={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 ${m.done ? 'bg-primary' : 'bg-white ring-2 ring-primary'}`}>
+                    {m.done && <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.2 2.2 4.8-4.8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>}
+                  </span>
+                  <span class="text-sm text-text-body truncate">{m.title}</span>
+                </li>
+              ))}
+            </ul>
+            <div class="rounded-xl bg-primary text-white text-sm font-semibold text-center py-3">Continue module 5</div>
+          </div>
+        </div>
+      </div>
+
+      </div>
+      <!-- Tab 2 -->
+      <div id="panel-price" role="tabpanel" aria-labelledby="tab-price" class="nd-panel">
+        <PriceBlock
+          price={price}
+          label={course.course.shortName}
+          totalLabel={course.pricing.totalLabel}
+          included={course.pricing.included}
+          notCharged={course.pricing.notCharged}
+          lineItems={course.pricing.lineItems}
+          refundNote={course.pricing.refundNote}
+          refundHref={`${route}/refund`}
+          enrollUrl={enrollUrl}
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 6. REVIEWS — dark band, heading left, sliding quote cards right ============ -->
+  <section class="bg-surface-dark text-white py-20 lg:py-28 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-[minmax(0,22rem)_1fr] gap-10 lg:gap-16 items-center">
+      <div class="flex flex-col gap-6">
+        <Rating tone="dark" />
+        <h2 class={`text-[36px] lg:text-[52px] ${h2}`} style={outfit}>What drivers are saying</h2>
+        <div class="flex gap-3">
+          <button type="button" class="nd-rev-prev w-14 h-14 rounded-2xl bg-white/10 hover:bg-white/15 flex items-center justify-center" aria-label="Previous review">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          </button>
+          <button type="button" class="nd-rev-next w-14 h-14 rounded-2xl bg-primary hover:bg-primary-hover flex items-center justify-center" aria-label="Next review">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+      </div>
+      <ul class="nd-rev-track flex gap-6 overflow-x-auto snap-x snap-mandatory list-none p-0 m-0 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        {reviewList.map((r) => (
+          <li class="snap-start flex-shrink-0 w-[85%] sm:w-[440px] rounded-[24px] bg-primary-deep flex flex-col">
+            <div class="p-8 flex flex-col gap-5 flex-1">
+              <span class="self-start rounded-full bg-white text-surface-dark text-xs font-bold px-3 py-1.5">Verified on Trustpilot</span>
+              <span class="flex gap-1" aria-label="5 out of 5 stars">
+                {[0, 1, 2, 3, 4].map(() => <img src="/assets/icons/texas/star-testimonial.svg" alt="" class="w-6 h-6" />)}
+              </span>
+              <blockquote class="text-xl lg:text-2xl leading-snug m-0">&ldquo;{r.quote}&rdquo;</blockquote>
+            </div>
+            <div class="border-t border-white/15 px-8 py-5 text-sm font-semibold text-info-border">{r.name} &middot; Texas Driver Safety Course &middot; {r.date}</div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ 7. FAQ — heading left, divider-line accordion right ============ -->
+  <section class="bg-white py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-[minmax(0,26rem)_1fr] gap-10 lg:gap-20 items-start">
+      <div class="flex flex-col gap-5 lg:sticky lg:top-32">
+        <h2 class={`text-[36px] lg:text-[52px] text-text ${h2}`} style={outfit}>Popular questions</h2>
+        <p class="text-lg text-text-body leading-8 m-0">Still not sure? Ask us before you pay. Real people answer by phone and email.</p>
+        <div class="flex flex-wrap gap-3">
+          <a href={contactUrl} class={btnSecondary}>Contact us</a>
+        </div>
+        <a href={`${route}/faq`} class="text-primary font-semibold underline underline-offset-2">See every question</a>
+      </div>
+      <div class="border-t border-border">
+        {faqs.map((f, i) => (
+          <details class="group border-b border-border" open={i === 0}>
+            <summary class="cursor-pointer list-none flex items-start justify-between gap-6 py-6">
+              <h3 class="text-lg lg:text-xl font-bold text-text m-0" style={outfit}>{f.q}</h3>
+              <svg class="mt-1 flex-shrink-0 w-5 h-5 text-text-muted transition-transform group-open:rotate-180 motion-reduce:transition-none" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </summary>
+            <p class="text-base text-text-body leading-7 pb-6 pr-10 m-0">{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 10. BUILT FOR NORTH DAKOTA — Boat-Ed's "official & approved" band, honest version ============ -->
+  <section class="bg-primary-navy text-white py-20 lg:py-28">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center gap-6 text-center">
+      <Pill tone="dark">Built for North Dakota's rules</Pill>
+      <h2 class={`text-[32px] lg:text-[44px] ${h2}`} style={outfit}>Made for North Dakota's point-reduction program</h2>
+      <p class="text-base lg:text-lg text-info-border leading-8 max-w-3xl m-0">
+        NDDOT approves defensive driving courses and lists them on its website. Our approval is pending.
+        The course covers what NDDOT asks for: defensive driving, spotting hazards early, and short checks that help the lessons stick.
+      </p>
+      <ul class="grid md:grid-cols-3 gap-4 lg:gap-6 w-full list-none p-0 m-0 mt-4">
+        {[
+          { label: 'North Dakota Department of Transportation', href: course.state.agencyUrl },
+          { label: 'NDCC 39-06.1-13: the point reduction', href: ndLaw },
+          { label: 'NDCC 39-06.1-10.1: in lieu of points', href: ndLaw },
+        ].map((l) => (
+          <li>
+            <a href={l.href} target="_blank" rel="noopener noreferrer" class="flex items-center h-full gap-4 rounded-[20px] border border-white/25 bg-white/5 px-6 py-6 text-left text-lg font-semibold text-white underline underline-offset-4 decoration-info-border hover:bg-white/10">
+              {l.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+      {deadline && (
+        <div class="w-full max-w-3xl mt-4 rounded-[20px] bg-white text-left p-6 lg:p-8 flex flex-col gap-3">
+          <span class="text-xs font-bold uppercase tracking-wider text-primary-deep">{deadline.eyebrow}</span>
+          <h3 class="text-xl lg:text-2xl font-bold text-primary-navy m-0" style={outfit}>{deadline.heading}</h3>
+          <p class="text-base text-text-body leading-7 m-0">{deadline.body}</p>
+          <p class="text-sm text-text-muted m-0">{deadline.cite}</p>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- ============ 11. FINAL CALL TO ACTION — full-width photo band ============ -->
+  <FinalBand
+    heading="Take three points off your North Dakota record"
+    copy={`Four hours online. $${price}, certificate included. Start tonight and finish on your own schedule.`}
+    ctaLabel={`Start the Course \u2014 $${price}`}
+    ctaHref={enrollUrl}
+  />
+</CourseLayout>
+
+<script is:inline>
+  (function () {
+    // Tabs: one delegated listener, no dependency on the ViewTransitions router.
+    document.addEventListener('click', function (e) {
+      var tab = e.target.closest && e.target.closest('.nd-tab');
+      if (tab) {
+        document.querySelectorAll('.nd-tab').forEach(function (t) {
+          var on = t === tab;
+          t.setAttribute('aria-selected', String(on));
+          t.tabIndex = on ? 0 : -1;
+          var panel = document.getElementById(t.getAttribute('aria-controls'));
+          if (panel) panel.hidden = !on;
+        });
+        return;
+      }
+      var prev = e.target.closest && e.target.closest('.nd-rev-prev');
+      var next = e.target.closest && e.target.closest('.nd-rev-next');
+      if (prev || next) {
+        var track = document.querySelector('.nd-rev-track');
+        if (!track) return;
+        var card = track.querySelector('li');
+        var step = card ? card.getBoundingClientRect().width + 24 : 400;
+        track.scrollBy({ left: next ? step : -step, behavior: 'smooth' });
+      }
+    });
+    // Arrow keys move between tabs.
+    document.addEventListener('keydown', function (e) {
+      var tab = e.target.closest && e.target.closest('.nd-tab');
+      if (!tab || (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft')) return;
+      var tabs = Array.prototype.slice.call(document.querySelectorAll('.nd-tab'));
+      var i = tabs.indexOf(tab);
+      var n = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+      n.focus(); n.click();
+    });
+  })();
+</script>
+
+<style is:global>
+  /* Tailwind base styles are off in this repo, so make [hidden] win explicitly. */
+  .nd-panel[hidden] { display: none !important; }
+</style>

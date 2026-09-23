@@ -1,0 +1,46 @@
+---
+/**
+ * The road photo Jackson supplied on 2026-09-23: a generic two-lane road, not a specific
+ * place, so any state's page can use it.
+ *
+ * desktopOnly: for the hero, which is hidden below 1024px. Browsers still fetch images
+ * inside display:none, so on phones the <img> falls back to a 1x1 gif and the real photo
+ * is only offered through desktop-width <source>s.
+ */
+interface Props {
+  class?: string;
+  /** CSS object-position, to frame the road. */
+  position?: string;
+  eager?: boolean;
+  desktopOnly?: boolean;
+}
+const { class: cls = '', position = 'center', eager = false, desktopOnly = false } = Astro.props;
+const dir = '/assets/images/landing-v2';
+const webp = `${dir}/road-800.webp 800w, ${dir}/road-1600.webp 1600w`;
+const jpg = `${dir}/road-800.jpg 800w, ${dir}/road-1600.jpg 1600w`;
+const sizes = desktopOnly ? '50vw' : '100vw';
+const blank = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+---
+<picture>
+  {desktopOnly ? (
+    <Fragment>
+      <source media="(min-width: 1024px)" type="image/webp" srcset={webp} sizes={sizes} />
+      <source media="(min-width: 1024px)" type="image/jpeg" srcset={jpg} sizes={sizes} />
+    </Fragment>
+  ) : (
+    <source type="image/webp" srcset={webp} sizes={sizes} />
+  )}
+  <img
+    src={desktopOnly ? blank : `${dir}/road-1600.jpg`}
+    srcset={desktopOnly ? undefined : jpg}
+    sizes={desktopOnly ? undefined : sizes}
+    width="1600"
+    height="1068"
+    alt="A straight two-lane road between green fields and trees under a cloudy blue sky"
+    loading={eager ? 'eager' : 'lazy'}
+    fetchpriority={eager ? 'high' : 'auto'}
+    decoding="async"
+    class={`object-cover ${cls}`}
+    style={`object-position:${position};`}
+  />
+</picture>

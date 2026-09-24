@@ -1,0 +1,217 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+import NextStepBlock from '../../components/texas/NextStepBlock.astro';
+import { practiceQuestions } from '../../data/texas-practice-test';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const total = practiceQuestions.length;
+const passMark = Math.ceil(total * 0.7);
+const letters = ['A', 'B', 'C', 'D'];
+
+const faqs = [
+  {
+    q: 'Is the Texas defensive driving test hard?',
+    a: 'No. TDLR requires 70% mastery, either on chapter exams or on one comprehensive exam, and the questions cover what the course just taught. In our course there is no final exam: you take a short quiz after each chapter, with unlimited attempts, so you cannot fail out.',
+  },
+  {
+    q: 'Can you fail Texas defensive driving?',
+    a: 'Not in our course. Each chapter quiz can be retaken as many times as you need until you reach 70%. Some courses use a single final exam instead; if you are in one of those, ask the provider how many attempts you get.',
+  },
+  {
+    q: 'Is this practice test from the real course?',
+    a: 'No. We wrote these 20 questions for this page and checked them against our course question bank to make sure none of them is a real quiz question. They cover the same kind of Texas traffic law and ticket-dismissal rules the course teaches, and each answer cites the statute it comes from.',
+  },
+  {
+    q: 'What score do I need to pass Texas defensive driving?',
+    a: '70%. That is the mastery standard in TDLR\'s Course of Organized Instruction for the six-hour driving safety course, whether a provider tests by chapter or with one comprehensive exam.',
+  },
+  {
+    q: 'Is the Texas defensive driving final exam open book?',
+    a: 'The rules do not ask you to memorize anything ahead of time. In our course each quiz follows the chapter it covers, you can go back over the material, and you can retake a quiz until you pass. There is no separate final exam.',
+  },
+  {
+    q: 'Where can I find Texas defensive driving final exam answers?',
+    a: 'You will not need them. With chapter quizzes and unlimited retakes, the course is built so anyone who reads the material passes. Answer lists posted online are for other providers\' exams, are often out of date, and do not match the questions you will see.',
+  },
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Texas Defensive Driving Practice Test: 20 Free Questions With Answers',
+  description: 'A free 20-question practice test on Texas traffic law and ticket-dismissal rules, with answers, explanations and statute citations.',
+  datePublished: '2026-09-24',
+  dateModified: '2026-09-24',
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+});
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Texas Defensive Driving Practice Test: 20 Free Questions"
+    description="Try 20 free questions on Texas traffic law and ticket dismissal, with answers and the law behind each. The real course needs 70%, and our quizzes allow unlimited retakes."
+    url="/texas/defensive-driving-practice-test"
+    keywords="texas defensive driving practice test, texas defensive driving test answers, texas defensive driving final exam, is the texas defensive driving test hard, can you fail defensive driving texas, texas driving safety course quiz"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          Texas Defensive Driving Practice Test
+        </h1>
+
+        <div class="bg-info border border-info-border rounded-2xl p-6 mb-10">
+          <p class="text-sm font-semibold text-primary-deep mb-2" style="font-family: 'Outfit', sans-serif;">Short answer</p>
+          <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;">
+            The Texas defensive driving test is not hard. <strong class="text-text">You need 70%</strong>, and the questions cover what the course just taught you. In our course there is <strong class="text-text">no final exam</strong>: a short quiz follows each chapter and you can <strong class="text-text">retake it as many times as you need</strong>. The 20 questions below are free practice on the same kind of material. Each one shows the answer and the Texas law behind it.
+          </p>
+        </div>
+
+        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <p>We wrote these questions for this page. None of them is a question from our course, so taking this test will not spoil anything. Five cover how ticket dismissal works. Fifteen cover Texas rules of the road that a lot of drivers get wrong: the Move Over law, dark traffic signals, left on red, high beams.</p>
+          <p>Pick an answer for each question, then press <strong class="text-text">Check my answers</strong>. You need {passMark} of {total} to hit the 70% mark.</p>
+        </div>
+
+        <form id="practice-test" class="space-y-6 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          {practiceQuestions.map((item, i) => (
+            <fieldset class="border border-border rounded-2xl p-5 sm:p-6" data-q={item.id} data-answer={item.answer}>
+              <legend class="sr-only">Question {i + 1}</legend>
+              <p class="text-xs font-semibold uppercase tracking-wide text-text-subtle mb-2">Question {i + 1} of {total} · {item.topic}</p>
+              <h2 class="text-lg font-semibold text-text mb-4 leading-snug" style="font-family: 'Outfit', sans-serif;">{item.q}</h2>
+              <div class="space-y-2">
+                {item.options.map((opt, j) => (
+                  <label class="pt-option flex items-start gap-3 rounded-xl border border-border px-4 py-3 cursor-pointer hover:bg-surface-muted" data-idx={j}>
+                    <input type="radio" name={item.id} value={j} class="mt-1 shrink-0" />
+                    <span class="text-text-body text-base leading-6"><span class="font-semibold text-text">{letters[j]}.</span>{' '}{opt}</span>
+                  </label>
+                ))}
+              </div>
+              <details class="pt-explain mt-4">
+                <summary class="text-sm font-semibold text-primary-deep cursor-pointer">Show answer</summary>
+                <p class="mt-2 text-text-body text-base leading-7"><strong class="text-text">Answer: {letters[item.answer]}. {item.options[item.answer]}.</strong>{' '}{item.explain}{' '}<span class="text-sm text-text-subtle">Source: {item.source}.</span></p>
+              </details>
+            </fieldset>
+          ))}
+
+          <div class="flex flex-wrap items-center gap-4">
+            <button type="submit" class="bg-primary hover:bg-primary-hover text-white h-[52px] px-7 rounded-[14px] text-base font-semibold">Check my answers</button>
+            <button type="reset" id="pt-reset" class="text-primary-deep font-semibold hover:underline">Start over</button>
+          </div>
+        </form>
+
+        <div id="pt-result" class="hidden rounded-2xl border p-6 mb-10" role="status" aria-live="polite" style="font-family: 'DM Sans', sans-serif;">
+          <p id="pt-score" class="text-2xl font-bold text-text mb-2" style="font-family: 'Outfit', sans-serif;"></p>
+          <p id="pt-verdict" class="text-text-body text-base leading-7 mb-4"></p>
+          <a href={enrollUrl} class="inline-flex bg-primary hover:bg-primary-hover text-white h-[52px] px-7 rounded-[14px] text-base font-semibold items-center no-underline">Start the $28 course</a>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-12 mb-4" style="font-family: 'Outfit', sans-serif;">How the real test works</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <ul class="list-disc pl-6 space-y-3">
+            <li><strong class="text-text">The passing score is 70%, set by TDLR.</strong> Every approved provider has to use it, on chapter exams or on one comprehensive exam.</li>
+            <li><strong class="text-text">Our course uses chapter quizzes, not a final.</strong> Each quiz covers the chapter you just read, so the material is fresh.</li>
+            <li><strong class="text-text">Unlimited retakes.</strong> A wrong answer costs you a retry, not the course. Nobody fails out.</li>
+            <li><strong class="text-text">The six hours are the hard part, not the questions.</strong> Page timers keep you on each page for a minimum time. See <a href="/texas/defensive-driving-timer" class="text-primary-deep font-medium hover:underline">how the timer works</a> and <a href="/texas/fastest-defensive-driving-course" class="text-primary-deep font-medium hover:underline">how to finish in one day</a>.</li>
+            <li><strong class="text-text">You get the certificate the moment you finish,</strong> as a download, at no extra cost.</li>
+          </ul>
+          <p>Want to see the chapters before you pay? <a href="/texas/what-the-course-looks-like" class="text-primary-deep font-medium hover:underline">Here is what is in each of the 17 modules</a>.</p>
+        </div>
+
+        <NextStepBlock page="practice-test" lead="eligible" />
+
+        <h2 class="text-2xl font-bold text-text mt-12 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;">{item.a}</p>
+            </div>
+          ))}
+        </div>
+
+        <div class="pt-4 border-t border-border">
+          <a href={enrollUrl} class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline" style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);">
+            Take the $28 Course, Unlimited Quiz Retakes
+          </a>
+          <p class="text-xs text-text-subtle mt-6" style="font-family: 'DM Sans', sans-serif;">Last updated September 24, 2026. Questions written by Road Ready Safety for this page; none is drawn from our course question bank. Statutes checked against the Texas Code of Criminal Procedure ch. 45A and Texas Transportation Code chs. 541, 544, 545 and 547 on statutes.capitol.texas.gov. Course length and 70% mastery standard per TDLR's Course of Organized Instruction for Six-Hour Driving Safety and 16 TAC §84.500. City phone ordinances vary; check local rules.</p>
+        </div>
+
+      </div>
+    </article>
+
+    <script is:inline>
+      const form = document.getElementById('practice-test');
+      const result = document.getElementById('pt-result');
+      const scoreEl = document.getElementById('pt-score');
+      const verdictEl = document.getElementById('pt-verdict');
+      const GOOD = ['border-green-600', 'bg-green-50'];
+      const BAD = ['border-red-500', 'bg-red-50'];
+
+      function clearMarks() {
+        form?.querySelectorAll('.pt-option').forEach(el => el.classList.remove(...GOOD, ...BAD));
+        form?.querySelectorAll('.pt-explain').forEach(d => (d.open = false));
+      }
+
+      form?.addEventListener('submit', e => {
+        e.preventDefault();
+        clearMarks();
+        const sets = Array.from(form.querySelectorAll('fieldset[data-q]'));
+        let right = 0;
+        let answered = 0;
+        for (const fs of sets) {
+          const correct = Number(fs.dataset.answer);
+          const picked = fs.querySelector('input:checked');
+          fs.querySelector(`.pt-option[data-idx="${correct}"]`)?.classList.add(...GOOD);
+          if (!picked) continue;
+          answered++;
+          if (Number(picked.value) === correct) right++;
+          else {
+            picked.closest('.pt-option')?.classList.add(...BAD);
+            const d = fs.querySelector('.pt-explain');
+            if (d) d.open = true;
+          }
+        }
+        const total = sets.length;
+        const pct = Math.round((right / total) * 100);
+        const passed = pct >= 70;
+        if (scoreEl) scoreEl.textContent = `You scored ${right} of ${total} (${pct}%)`;
+        if (verdictEl) {
+          verdictEl.textContent = answered < total
+            ? `You left ${total - answered} blank. The correct answers are highlighted in green. `
+            : '';
+          verdictEl.textContent += passed
+            ? 'That clears the 70% the real course requires. The course itself is easier than this: each quiz covers the chapter you just read, and you can retake it.'
+            : 'That is under 70%, and that is fine. The real course teaches all of this first, quizzes you right after each chapter, and lets you retake every quiz until you pass.';
+        }
+        if (result) {
+          result.classList.remove('hidden', ...GOOD, ...BAD);
+          result.classList.add(...(passed ? GOOD : ['border-border', 'bg-surface-muted']));
+          result.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        window.dataLayer?.push({ event: 'practice_test_submit', practice_score: pct, practice_answered: answered });
+      });
+
+      form?.addEventListener('reset', () => {
+        clearMarks();
+        result?.classList.add('hidden');
+      });
+    </script>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

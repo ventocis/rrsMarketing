@@ -37,20 +37,19 @@ const faqs = course.faqs;
 const ndLaw = 'https://ndlegis.gov/cencode/t39c06-1.html';
 const exam = course.exam;
 const deadline = course.deadline;
-const suspensionNote = course.audiences.items.find((a) => a.tone === 'muted')?.bullets[0] ?? '';
 
 const steps = [
   {
     divider: false, n: '01', t: 'Enroll',
-    b: `Pay $${price} and set up your account, then start right away on your phone or computer. If you chose the course at court, enroll the same day. The 30-day clock is already running.`,
+    b: `Pay $${price} and start right away on your phone or computer. Chose the course at court? Enroll the same day, because your 30-day clock has already started.`,
   },
   {
     divider: true, n: '02', t: 'Learn and pass',
-    b: `Work through eight short modules at your own pace. After each of the first seven there's a three-question knowledge check, with unlimited tries and the answers shown. Then pass the ${exam.questions}-question final: ${exam.passCount} correct to pass, and free retakes with different questions and no waiting period.`,
+    b: `Eight short modules at your own pace, with a three-question check after each of the first seven. Then the ${exam.questions}-question final: ${exam.passCount} correct passes, and retakes are free.`,
   },
   {
     divider: true, n: '03', t: 'Send it to NDDOT',
-    b: 'Your certificate is ready to download the moment you pass. Email it to drs@nd.gov or mail it to the Driver License Division, and NDDOT applies the reduction. We don\'t report it for you. If you chose the course at court, NDDOT needs it within 30 days.',
+    b: 'Download your certificate the moment you pass and email it to drs@nd.gov, or mail it. NDDOT applies the reduction; we don\'t send it for you. Chose the course at court? NDDOT needs it within 30 days.',
   },
 ];
 const progress = modules.slice(0, 5).map((m, i) => ({ title: m.title, done: i !== 4 }));
@@ -108,10 +107,6 @@ const outfit = "font-family:'Outfit',sans-serif;";
         </ul>
 
         <a href={enrollUrl} class={`${btnPrimary} w-full sm:w-auto mt-2`}>Start the Course &mdash; ${price}</a>
-        <p class="text-sm text-text-muted leading-6 m-0">
-          Full refund any time before you finish. No deadline unless you elected the course at court.
-          <a href="#who-needs-it" class="text-primary font-semibold underline underline-offset-2 whitespace-nowrap">Which option is mine?</a>
-        </p>
       </div>
 
       <!-- Outcome visual. Dropped on phones, as Boat-Ed does, so the headline and button come first. -->
@@ -143,13 +138,14 @@ const outfit = "font-family:'Outfit',sans-serif;";
       </ul>
       <div class="flex flex-col gap-4 max-w-3xl text-base lg:text-lg text-info-border leading-8">
         <p class="m-0">
-          Finish an approved course and NDDOT takes three points off, once every 12 months and up to 9 points in any three-year period.
-          For a new ticket worth 5 points or fewer, you can choose the course at court when you post bond, and the points are never entered.
-          NDDOT needs your certificate within 30 days of that choice. It's the same course either way.
+          Finish an approved course and NDDOT takes 3 points off your record, once every 12 months and up to 9 points in 3 years.
+          Got a ticket worth 5 points or fewer? Choose the course at court when you post bond and those points never go on your record.
+          Just get your certificate to NDDOT within 30 days.
         </p>
         <p class="m-0">
-          The course won't undo a suspension. {suspensionNote}
-          Learn more from the <a href={course.state.agencyUrl} class="underline text-white" target="_blank" rel="noopener noreferrer">North Dakota Department of Transportation</a>.
+          The course can't undo a suspension. North Dakota suspends at 12 points, 7 days for each point over 11, and the reduction applies after you serve it.
+          Under 18, the license is canceled at 6 points.
+          More from the <a href={course.state.agencyUrl} class="underline text-white" target="_blank" rel="noopener noreferrer">North Dakota Department of Transportation</a>.
         </p>
       </div>
     </div>

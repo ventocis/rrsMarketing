@@ -1,6 +1,12 @@
 ---
 import AdeLayout from '../../../layouts/AdeLayout.astro';
 import ade from '../../../data/ade-texas.json';
+import Pill from '../../../components/landing-v2/Pill.astro';
+import Rating from '../../../components/landing-v2/Rating.astro';
+import RoadPhoto from '../../../components/landing-v2/RoadPhoto.astro';
+import PriceBlock from '../../../components/landing-v2/PriceBlock.astro';
+import FinalBand from '../../../components/landing-v2/FinalBand.astro';
+import { law, tpst } from '../../../data/ade-eligibility';
 
 // 16 TAC §84.80(e) bars provider-name advertising, enrollment and payment before the
 // TDLR Driver Education Provider license is approved. So production additionally requires
@@ -16,29 +22,6 @@ const enrollUrl = import.meta.env.VITE_ADE_ENROLLMENT_URL || '#';
 const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
 
 const price = ade.course.priceUsd;
-
-const badges = [
-  {
-    icon: '/assets/icons/texas/tdlr-approved-icon.svg',
-    title: 'TDLR-Approved',
-    body: 'Approved by the Texas Department of Licensing and Regulation (TDLR) — the agency that signs off on driver education in Texas.',
-  },
-  {
-    icon: '/assets/icons/texas/super-easy-icon.svg',
-    title: 'Exam Built In',
-    body: 'Finish the course and you have satisfied the highway sign and traffic law portions of the DPS knowledge exam.',
-  },
-  {
-    icon: '/assets/icons/texas/guarantee-icon.svg',
-    title: 'One Flat Price',
-    body: `$${price}. Certificate included. Nothing added at checkout.`,
-  },
-  {
-    icon: '/assets/icons/texas/mobile-friendly-icon.svg',
-    title: 'Works on Your Phone',
-    body: 'Self-paced and saves as you go. Ten minutes at a time is fine.',
-  },
-];
 
 const included = [
   'All six hours Texas requires',
@@ -202,6 +185,42 @@ const faqSchema = {
     acceptedAnswer: { '@type': 'Answer', text: f.a },
   })),
 };
+
+// ---- landing-v2 design (2026-09-23). Everything below only arranges the facts above. ----
+const guideHref = '/adult-drivers-ed/texas/do-i-need-adult-drivers-ed';
+const statuteHref = 'https://statutes.capitol.texas.gov/Docs/TN/htm/TN.521.htm';
+const ctaLabel = 'Start the Course';
+
+const chips = ['Exam built in', 'Works on your phone', 'Certificate included'];
+
+// DPS's own sentences, split so the waiver and the 25+ note read as quotes (ade-eligibility.ts, DPS-APP).
+const dpsBand = law.dpsRequirementText.split('. ')[0];
+const dpsWaiver = 'waived for new residents 18 or older who are surrendering a valid, unexpired driver license from another state';
+
+const stepTag = (s: (typeof steps)[number]) => s.where ?? (s.n <= 3 ? 'With us' : 'At the DPS');
+const stepNum = (n: number) => String(n).padStart(2, '0');
+
+const lineItems = [
+  { label: 'Course', value: `$${price}` },
+  { label: 'Certificate', value: 'Included', good: true },
+  { label: 'Processing fee', value: '$0.00', good: true },
+  { label: 'Exam retakes', value: '$0.00', good: true },
+];
+
+const texasLinks = [
+  { label: 'Texas Department of Licensing and Regulation (TDLR)', href: 'https://www.tdlr.texas.gov/' },
+  { label: 'Tex. Transp. Code §521.1601: driver education under 25', href: statuteHref },
+  { label: 'DPS: apply for a Texas driver license', href: 'https://www.dps.texas.gov/section/driver-license/apply-texas-driver-license' },
+  { label: 'DPS: Impact Texas Adult Drivers (ITAD)', href: 'https://impacttexasdrivers.dps.texas.gov/itad' },
+];
+
+const btnPrimary =
+  'bg-primary hover:bg-primary-hover text-white h-[52px] px-8 rounded-full text-base font-semibold inline-flex items-center justify-center gap-2 no-underline transition-colors shadow-[0_8px_20px_-8px_rgba(36,84,230,0.55)]';
+const btnSecondary =
+  'bg-info hover:brightness-95 text-info-text h-[52px] px-8 rounded-full text-base font-semibold inline-flex items-center justify-center no-underline transition-colors';
+const h2 = 'font-extrabold tracking-[-0.02em] leading-[1.1]';
+const outfit = "font-family:'Outfit',sans-serif;";
+const check = 'M4.8 8.2l2.1 2.1 4.3-4.4';
 ---
 
 {!isEnabled && <meta http-equiv="refresh" content="0;url=/" />}
@@ -211,472 +230,372 @@ const faqSchema = {
   title={`Texas Adult Drivers Ed Online — 6 Hours, $${price} Flat | Road Ready Safety`}
   description={`TDLR-approved Texas adult driver education for ages 18 and up. All six hours the state requires, the exam built in, and one flat price of $${price} with the certificate included.`}
   url="/adult-drivers-ed/texas"
+  headerStyle="minimal"
 >
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   </Fragment>
 
-  <!-- ================= HERO ================= -->
-  <section class="bg-gradient-to-b from-info to-white pt-10 pb-16 lg:pt-16 lg:pb-24 relative overflow-hidden">
-    <div class="absolute inset-0 opacity-30 pointer-events-none">
-      <div class="absolute bg-info-border blur-[32px] rounded-full w-64 h-64 left-10 top-[150px]"></div>
-      <div class="absolute bg-[#b9e2fe] blur-[32px] rounded-full w-96 h-96 bottom-20 right-10"></div>
-    </div>
+  <!-- ============ 1. HERO ============ -->
+  <section class="bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-14 lg:pt-24 lg:pb-28 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <div class="flex flex-col gap-6 items-start">
+        <span class="inline-flex items-center gap-1.5 rounded-full bg-info text-info-text text-sm font-semibold px-4 py-2">
+          <svg width="14" height="14" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1l1.12 2.27L10 3.64l-2 1.95.47 2.75L6 7.02 3.53 8.34 4 5.59 2 3.64l2.88-.37L6 1z" fill="currentColor"/></svg>
+          TDLR-Approved &middot; Texas {ade.course.code}
+        </span>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-      <div class="flex flex-col lg:flex-row gap-10 lg:gap-16 items-center justify-center">
+        <h1 class={`text-[34px] lg:text-[56px] text-primary-navy ${h2}`} style={outfit}>
+          Texas Adult Drivers Ed Online &mdash; All 6 Hours for ${price}
+        </h1>
 
-        <div class="w-full lg:w-[600px] flex flex-col gap-6 items-center lg:items-start">
-          <div class="inline-flex items-center gap-1.5 bg-primary-deep/10 border border-primary-deep/20 text-primary-deep text-xs font-semibold px-3 py-1.5 rounded-full">
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1l1.12 2.27L10 3.64l-2 1.95.47 2.75L6 7.02 3.53 8.34 4 5.59 2 3.64l2.88-.37L6 1z" fill="currentColor"/></svg>
-            TDLR-Approved &middot; Texas {ade.course.code}
-          </div>
+        <p class="text-lg lg:text-xl text-text-body leading-8 max-w-[36rem] m-0">
+          The 6 hours Texas requires for a first driver license, at one flat price with the
+          certificate included. The highway sign and traffic law exam happens right here,
+          inside the course. No classroom, no behind-the-wheel hours.
+        </p>
 
-          <h1 class="text-[34px] lg:text-[56px] font-bold text-primary-navy leading-[40px] lg:leading-[62px] tracking-[-1.5px] text-center lg:text-left" style="font-family:'Outfit',sans-serif;">
-            Texas Adult Drivers Ed Online &mdash; All 6 Hours for ${price}
-          </h1>
+        <ul class="flex flex-wrap gap-3 list-none p-0 m-0" aria-label="Course basics">
+          {chips.map((t) => (
+            <li class="inline-flex items-center gap-2 rounded-full border border-border bg-white px-4 py-2 text-sm font-medium text-text">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="8" fill="#16A34A" opacity="0.14"/><path d={check} stroke="#16A34A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              {t}
+            </li>
+          ))}
+        </ul>
 
-          <p class="text-[17px] lg:text-xl text-text-body leading-[28px] max-w-[600px] text-center lg:text-left">
-            The 6 hours Texas requires for a first driver license, at one flat price with the
-            certificate included. The highway sign and traffic law exam happens right here,
-            inside the course. No classroom, no behind-the-wheel hours.
-          </p>
-
-          <div class="flex flex-col gap-3 pt-2 w-full items-center lg:items-start">
-            <div class="flex flex-col sm:flex-row gap-4 w-full items-center lg:items-start">
-              <a href={enrollUrl} class="bg-primary hover:bg-primary-hover text-white h-[56px] px-[36px] rounded-[16px] shadow-[0px_20px_25px_-5px_rgba(17,23,34,0.10),0px_8px_10px_-6px_rgba(17,23,34,0.05)] text-[18px] font-semibold flex items-center justify-center leading-[28px] no-underline text-center w-full sm:w-auto transition-colors">
-                Get My License &mdash; ${price}
-              </a>
-              <a href="#who-needs-it" class="bg-white border border-border text-text h-[56px] px-[36px] rounded-[16px] shadow-[0px_4px_6px_-1px_rgba(17,23,34,0.07)] text-[18px] font-semibold flex items-center justify-center leading-[28px] no-underline text-center w-full sm:w-auto hover:bg-surface-muted transition-colors">
-                Do I even need this?
-              </a>
-            </div>
-            <p class="text-base text-text-body pt-1">
-              Self-paced &middot; Stop and resume anytime &middot; {ade.course.completionDays} days to finish
-            </p>
-          </div>
-        </div>
-
-        <!-- Course progress mockup -->
-        <div class="relative w-full lg:w-[420px] hidden lg:flex items-start justify-end">
-          <div class="relative w-full max-w-[260px]">
-            <div class="aspect-[320/675.55] bg-surface-dark rounded-[48px] p-2 shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)]">
-              <div class="bg-white rounded-[40px] h-full overflow-hidden">
-                <div class="bg-surface-muted h-8 flex items-center justify-center">
-                  <div class="bg-surface-dark h-5 w-20 rounded-full"></div>
-                </div>
-                <div class="p-4 space-y-4">
-                  <div class="bg-info rounded-2xl p-4 relative h-[84px]">
-                    <p class="text-primary-deep text-xs font-semibold mb-2">Course Progress</p>
-                    <div class="absolute left-4 right-4 top-10 bg-info-border h-2 rounded-full overflow-hidden">
-                      <div class="bg-info-text h-full w-2/3 rounded-full"></div>
-                    </div>
-                    <p class="absolute left-4 right-4 top-[52px] text-info-text text-xs">6 of 9 modules complete</p>
-                  </div>
-                  <div class="space-y-2">
-                    {ade.modules.slice(0, 4).map((m) => (
-                      <div class="bg-surface-muted rounded-xl p-3 flex gap-3 items-center">
-                        <div class="rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 bg-primary">
-                          <img src="/assets/icons/texas/checkmark-white.svg" alt="" class="w-3 h-3" />
-                        </div>
-                        <span class="text-[11px] text-text-body leading-4 truncate">{m.title}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <a href={enrollUrl} class="w-full bg-primary text-white rounded-xl py-3.5 text-sm font-semibold flex items-center justify-center no-underline">
-                    Continue Module 7
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div class="absolute bg-white rounded-2xl shadow-[0px_20px_25px_-5px_rgba(17,23,34,0.1)] p-4 left-[-72px] top-28 flex gap-3 items-center">
-              <div class="bg-info rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0">
-                <img src="/assets/icons/texas/check-circle.svg" alt="" class="w-5 h-5" />
-              </div>
-              <div>
-                <p class="text-sm font-semibold text-text leading-5">Exam included</p>
-                <p class="text-xs text-text-body leading-4">Signs + traffic laws</p>
-              </div>
-            </div>
-
-            <div class="absolute bg-white rounded-2xl shadow-[0px_20px_25px_-5px_rgba(17,23,34,0.1)] px-4 py-3 right-[-56px] bottom-24">
-              <p class="text-[22px] font-bold text-primary-navy leading-6">${price}</p>
-              <p class="text-xs text-text-body leading-4">all in</p>
-            </div>
-          </div>
-        </div>
+        <a href={enrollUrl} class={`${btnPrimary} w-full sm:w-auto mt-2`}>{ctaLabel} &mdash; ${price}</a>
+        <p class="text-sm text-text-muted leading-6 m-0">
+          Self-paced &middot; Stop and resume anytime &middot; {ade.course.completionDays} days to finish.
+          <a href="#who-needs-it" class="text-primary font-semibold underline underline-offset-2 whitespace-nowrap">Do I even need this?</a>
+        </p>
       </div>
 
-      <!-- Feature badges -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-16">
-        {badges.map((b) => (
-          <div class="bg-white/70 border border-border rounded-[20px] px-5 py-7 flex flex-col gap-4 items-center text-center">
-            <div class="relative flex items-center justify-center w-[64px] h-[64px] border border-border rounded-2xl bg-white">
-              <img src={b.icon} alt="" class="w-8 h-8" />
-            </div>
-            <h3 class="text-lg font-semibold text-text leading-6" style="font-family:'Outfit',sans-serif;">{b.title}</h3>
-            <p class="text-sm text-text-body leading-5">{b.body}</p>
+      <!-- Photo with the course-progress card. Not a certificate: the ADE-1317 is a TDLR-controlled form. -->
+      <div class="relative hidden lg:block pb-16">
+        <RoadPhoto class="w-full aspect-[4/3] rounded-[28px]" position="50% 60%" eager desktopOnly />
+        <div class="absolute right-6 top-6 rounded-2xl bg-white shadow-[0_20px_25px_-5px_rgba(17,23,34,0.15)] px-4 py-3" aria-hidden="true">
+          <p class="text-[22px] font-bold text-primary-navy leading-6 m-0" style={outfit}>${price}</p>
+          <p class="text-xs text-text-body leading-4 m-0">all in</p>
+        </div>
+        <div class="absolute -left-8 bottom-0 w-[340px] rounded-[20px] bg-white ring-1 ring-border shadow-[0_24px_48px_-16px_rgba(2,25,84,0.35)] p-5 flex flex-col gap-3" aria-hidden="true">
+          <div class="flex items-center justify-between">
+            <span class="text-sm font-semibold text-primary-deep">Course Progress</span>
+            <span class="text-xs font-semibold text-text tabular-nums">6 of 9 modules complete</span>
           </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= PRICING ================= -->
-  <section id="pricing" class="py-16 lg:py-24 bg-white scroll-mt-24">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex flex-col lg:flex-row gap-12 items-start">
-
-        <div class="w-full lg:w-1/2 flex flex-col gap-6">
-          <div class="flex items-center gap-2.5">
-            <span class="h-[3px] w-7 rounded-full bg-primary"></span>
-            <span class="text-[11px] font-bold uppercase tracking-[0.16em] text-primary-deep">Pricing</span>
-          </div>
-          <h2 class="text-[32px] lg:text-[44px] font-bold text-text leading-[1.15] tracking-[-1px]" style="font-family:'Outfit',sans-serif;">
-            One price. Here is everything inside it.
-          </h2>
-          <ul class="flex flex-col gap-3 list-none p-0 m-0">
-            {included.map((item) => (
-              <li class="flex gap-3 items-start">
-                <span class="mt-1 flex-shrink-0 w-5 h-5 rounded-full bg-success-bg flex items-center justify-center">
-                  <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.2l2.2 2.2 4.8-4.8" stroke="#16A34A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div class="h-2 rounded-full bg-info overflow-hidden"><div class="h-full w-2/3 bg-primary rounded-full"></div></div>
+          <ul class="flex flex-col gap-1.5 list-none p-0 m-0">
+            {ade.modules.slice(0, 4).map((m) => (
+              <li class="flex items-center gap-3 rounded-xl bg-surface-muted px-3 py-2">
+                <span class="w-5 h-5 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
+                  <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.2 2.2 4.8-4.8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </span>
-                <span class="text-base text-text-body leading-6">{item}</span>
+                <span class="text-[13px] text-text-body truncate">{m.title}</span>
               </li>
             ))}
           </ul>
-
-          <div class="border-t border-border pt-6 mt-2">
-            <p class="text-sm font-bold text-text uppercase tracking-wider mb-3">And what we never charge for</p>
-            <div class="flex flex-wrap gap-2">
-              {notCharged.map((item) => (
-                <span class="inline-flex items-center gap-1.5 bg-surface-muted border border-border text-text-body text-sm px-3 py-1.5 rounded-full">
-                  <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 3l6 6M9 3l-6 6" stroke="#64748B" stroke-width="1.6" stroke-linecap="round"/></svg>
-                  {item}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div class="w-full lg:w-1/2 lg:max-w-[440px] lg:ml-auto">
-          <div class="bg-surface-muted border border-border rounded-[24px] p-8 flex flex-col gap-6">
-            <div class="flex flex-col gap-1">
-              <span class="text-sm font-semibold text-text-muted uppercase tracking-wider">Texas Adult Drivers Ed</span>
-              <div class="flex items-baseline gap-2">
-                <span class="text-[56px] font-bold text-primary-navy leading-none" style="font-family:'Outfit',sans-serif;">${price}</span>
-              </div>
-              <span class="text-base text-text-body">Total. Not a deposit, not a starting price.</span>
-            </div>
-
-            <div class="bg-white border border-border rounded-2xl p-4 flex flex-col gap-2">
-              <div class="flex justify-between text-sm"><span class="text-text-body">Course</span><span class="font-semibold text-text">${price}</span></div>
-              <div class="flex justify-between text-sm"><span class="text-text-body">Certificate</span><span class="font-semibold text-success">Included</span></div>
-              <div class="flex justify-between text-sm"><span class="text-text-body">Processing fee</span><span class="font-semibold text-success">$0.00</span></div>
-              <div class="flex justify-between text-sm"><span class="text-text-body">Exam retakes</span><span class="font-semibold text-success">$0.00</span></div>
-              <div class="border-t border-border pt-2 mt-1 flex justify-between text-base">
-                <span class="font-bold text-text">What you pay</span><span class="font-bold text-text">${price}</span>
-              </div>
-            </div>
-
-            <a href={enrollUrl} class="bg-primary hover:bg-primary-hover text-white h-[56px] rounded-[16px] text-[18px] font-semibold flex items-center justify-center no-underline transition-colors shadow-[0px_8px_16px_-6px_rgba(36,84,230,0.5)]">
-              Get My License
-            </a>
-
-            <p class="text-sm text-text-muted leading-6 text-center">
-              Full refund if you cancel within three days of signing up.
-              <a href="/adult-drivers-ed/texas/refund" class="text-primary underline">Refund policy</a>.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= STEPS ================= -->
-  <section class="py-16 lg:py-24 bg-gradient-to-b from-surface-muted to-white">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex flex-col gap-4 items-center mb-12 text-center">
-        <div class="flex items-center gap-2.5">
-          <span class="h-[3px] w-7 rounded-full bg-primary"></span>
-          <span class="text-[11px] font-bold uppercase tracking-[0.16em] text-primary-deep">The process</span>
-          <span class="h-[3px] w-7 rounded-full bg-primary"></span>
-        </div>
-        <h2 class="text-[32px] lg:text-[44px] font-bold text-text leading-[1.15] tracking-[-1px]" style="font-family:'Outfit',sans-serif;">
-          How to get your Texas driver license as an adult
-        </h2>
-        <p class="text-lg text-text-body leading-7 max-w-2xl">
-          We handle the first three steps. The last two are at the DPS.
-        </p>
-      </div>
-
-      <div class="flex flex-col gap-4">
-        {steps.map((s) => (
-          <div class={`rounded-[20px] p-6 lg:p-7 flex gap-5 items-start border ${s.n <= 3 ? 'bg-info/40 border-info-border' : 'bg-white border-border'}`}>
-            <span class={`flex-shrink-0 w-11 h-11 rounded-2xl flex items-center justify-center text-lg font-bold ${s.n <= 3 ? 'bg-primary text-white' : 'bg-surface-muted text-text-muted border border-border'}`}>
-              {s.n}
+          <div class="rounded-xl bg-primary text-white text-sm font-semibold text-center py-2.5">Continue Module 7</div>
+          <div class="flex items-center gap-3 border-t border-border pt-3">
+            <span class="w-8 h-8 rounded-full bg-info flex items-center justify-center flex-shrink-0">
+              <img src="/assets/icons/texas/check-circle.svg" alt="" class="w-4 h-4" />
             </span>
-            <div class="flex flex-col gap-1.5">
-              <p class="text-[11px] font-bold uppercase tracking-[0.12em] text-text-muted leading-4 mb-0.5">
-                Step {s.n} of {steps.length}{s.time ? ` · ${s.time}` : ''}
-              </p>
-              <div class="flex flex-wrap items-center gap-2">
-                <h3 class="text-xl font-bold text-text leading-7" style="font-family:'Outfit',sans-serif;">{s.title}</h3>
-                <span class={`text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full ${s.n <= 3 ? 'bg-primary-deep text-white' : 'bg-surface-muted text-text-muted border border-border'}`}>
-                  {s.where ?? (s.n <= 3 ? 'With us' : 'At the DPS')}
-                </span>
-                {s.required && (
-                  <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full bg-error-bg text-error">Required</span>
-                )}
-              </div>
-              <p class="text-base text-text-body leading-6">{s.body}</p>
-              {s.link && (
-                <a href={s.link.href} rel="noopener" class="text-base font-semibold text-primary underline w-fit mt-0.5">
-                  {s.link.label} &rarr;
-                </a>
-              )}
-            </div>
+            <span class="text-sm font-semibold text-text leading-5">Exam included <span class="block text-xs font-normal text-text-body">Signs + traffic laws</span></span>
           </div>
-        ))}
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ================= CURRICULUM ================= -->
-  <section id="curriculum" class="py-16 lg:py-24 bg-white scroll-mt-24">
-    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-
-      <div class="flex flex-col gap-4 items-center mb-8 text-center">
-        <div class="flex items-center gap-2.5">
-          <span class="h-[3px] w-7 rounded-full bg-primary"></span>
-          <span class="text-[11px] font-bold uppercase tracking-[0.16em] text-primary-deep">Curriculum</span>
-          <span class="h-[3px] w-7 rounded-full bg-primary"></span>
-        </div>
-        <h2 class="text-[32px] lg:text-[44px] font-bold text-text leading-[1.15] tracking-[-1px]" style="font-family:'Outfit',sans-serif;">
-          What this course covers
-        </h2>
-        <p class="text-lg text-text-body leading-7 max-w-2xl">
-          Nine modules, set by the state. Two of them include short required videos.
-        </p>
-      </div>
-
-      <details class="group bg-surface-muted border border-border rounded-[20px] overflow-hidden">
-        <summary class="cursor-pointer list-none px-6 py-5 flex items-center justify-between gap-4 hover:bg-white/60 transition-colors">
-          <span class="text-[17px] font-semibold text-text leading-6">See all nine modules</span>
-          <span class="flex items-center gap-2 flex-shrink-0">
-            <span class="text-[13px] text-text-muted group-open:hidden">Show</span>
-            <span class="text-[13px] text-text-muted hidden group-open:inline">Hide</span>
-            <svg class="w-5 h-5 text-text-muted transition-transform group-open:rotate-45" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-              <path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-            </svg>
-          </span>
-        </summary>
-
-        <div class="px-6 pb-6">
-          <ol class="flex flex-col gap-0 m-0 p-0 list-none border-t border-border">
-            {ade.modules.map((m) => {
-              const isFinal = m.n === ade.modules.length;
-              const hasVideo = m.n === 7;
-              return (
-                <li class="flex gap-4 items-baseline py-3.5 border-b border-border last:border-b-0">
-                  <span class={`flex-shrink-0 text-[13px] font-bold tabular-nums leading-6 ${isFinal ? 'text-primary' : 'text-text-subtle'}`} style="font-family:'Outfit',sans-serif;">
-                    {String(m.n).padStart(2, '0')}
-                  </span>
-                  <div class="flex flex-col gap-0.5">
-                    <div class="flex flex-wrap items-center gap-2">
-                      <h3 class="text-[16px] font-semibold text-text leading-6">{m.title}</h3>
-                      {isFinal && (
-                        <span class="text-[10px] font-bold uppercase tracking-wider text-primary-deep bg-info px-2 py-0.5 rounded-full">Final exam</span>
-                      )}
-                      {hasVideo && (
-                        <span class="text-[10px] font-bold uppercase tracking-wider text-primary-deep bg-info px-2 py-0.5 rounded-full">2 videos</span>
-                      )}
-                    </div>
-                    <p class="text-[15px] text-text-muted leading-[24px]">{m.blurb}</p>
-                  </div>
-                </li>
-              );
-            })}
-          </ol>
-        </div>
-      </details>
-    </div>
-  </section>
-
-  <!-- ================= SOCIAL PROOF ================= -->
-  <section class="py-16 lg:py-24 bg-surface-muted">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex flex-col gap-3 items-center mb-10 text-center">
-        <div class="flex items-center gap-2.5">
-          <span class="h-[3px] w-7 rounded-full bg-primary"></span>
-          <span class="text-[11px] font-bold uppercase tracking-[0.16em] text-primary-deep">Reviews</span>
-          <span class="h-[3px] w-7 rounded-full bg-primary"></span>
-        </div>
-        <h2 class="text-[32px] lg:text-[44px] font-bold text-text leading-[1.15] tracking-[-1px]" style="font-family:'Outfit',sans-serif;">
-          What Texans say about our courses
-        </h2>
-        <p class="text-base text-text-muted leading-7 max-w-2xl">
-          These reviews are from students of our <a href="/texas" class="text-primary underline">Texas defensive driving course</a>. Reviews of the adult drivers ed course will appear here as students finish it.
-        </p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {testimonials.map((t) => (
-          <div class="bg-white border border-border rounded-[20px] p-8 flex flex-col gap-4 items-start">
-            <div class="flex gap-1">
-              {[...Array(5)].map(() => (
-                <img src="/assets/icons/texas/star-testimonial.svg" alt="" class="w-5 h-5" />
-              ))}
-            </div>
-            <p class="text-lg text-text leading-[28px]">&ldquo;{t.quote}&rdquo;</p>
-            <div class="flex gap-3 items-center pt-2">
-              <div class="bg-info rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0">
-                <span class="text-sm font-semibold text-primary-deep">{t.initials}</span>
-              </div>
-              <div class="flex flex-col">
-                <span class="text-base font-semibold text-text leading-6">{t.name}</span>
-                <span class="text-xs text-text-subtle leading-5">Verified via Trustpilot &middot; {t.date}</span>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= WHO NEEDS IT ================= -->
-  <section id="who-needs-it" class="py-16 lg:py-24 bg-surface-muted scroll-mt-24">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex flex-col gap-4 items-center mb-12 text-center">
-        <div class="flex items-center gap-2.5">
-          <span class="h-[3px] w-7 rounded-full bg-primary"></span>
-          <span class="text-[11px] font-bold uppercase tracking-[0.16em] text-primary-deep">Who it's for</span>
-          <span class="h-[3px] w-7 rounded-full bg-primary"></span>
-        </div>
-        <h2 class="text-[32px] lg:text-[44px] font-bold text-text leading-[1.15] tracking-[-1px] max-w-3xl" style="font-family:'Outfit',sans-serif;">
-          Who should take this course
-        </h2>
-        <p class="text-lg text-text-body leading-7 max-w-2xl">
-          It depends on your age. Find yourself below.
-        </p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+  <!-- ============ 2. WHO IT'S FOR ============ -->
+  <section id="who-needs-it" class="relative overflow-hidden bg-primary-navy text-white scroll-mt-28">
+    <div class="absolute inset-0 opacity-40 pointer-events-none" aria-hidden="true"
+      style="background: radial-gradient(60% 80% at 80% 0%, rgba(36,84,230,.55), transparent 70%), radial-gradient(50% 70% at 0% 100%, rgba(124,195,249,.25), transparent 70%);"></div>
+    <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 flex flex-col items-center gap-8 text-center">
+      <h2 class={`text-[32px] lg:text-[44px] ${h2}`} style={outfit}>Is this course for you?</h2>
+      <Pill tone="dark">It depends on your age</Pill>
+      <ul class="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6 w-full list-none p-0 m-0">
         {audiences.map((a) => (
-          <div class={`relative rounded-[24px] p-8 flex flex-col gap-5 transition-transform ${
-            a.tone === 'primary'
-              ? 'bg-primary-navy ring-1 ring-white/20 shadow-[0_24px_48px_-16px_rgba(2,25,84,0.45)] md:-translate-y-2 md:pb-10'
-              : a.tone === 'info'
-                ? 'bg-info border border-info-border'
-                : 'bg-white border border-border'
-          }`}>
+          <li class={`flex flex-col gap-4 rounded-[20px] px-6 py-7 text-left ${a.tone === 'primary' ? 'bg-white text-primary-navy' : 'border border-white/25 bg-white/5'}`}>
             <div class="flex items-center justify-between gap-3">
-              <span class={`text-[26px] font-bold leading-none ${a.tone === 'primary' ? 'text-white' : 'text-text'}`} style="font-family:'Outfit',sans-serif;">
-                {a.age}
-              </span>
-              <span class={`text-[11px] font-bold uppercase tracking-[0.12em] px-2.5 py-1 rounded-full whitespace-nowrap ${
-                a.tone === 'primary'
-                  ? 'bg-white text-primary-navy'
-                  : a.tone === 'info'
-                    ? 'bg-white text-info-text border border-info-border'
-                    : 'bg-surface-muted text-text-muted border border-border'
-              }`}>
-                {a.status}
-              </span>
+              <span class="text-[26px] font-bold leading-none" style={outfit}>{a.age}</span>
+              <span class={`text-[11px] font-bold uppercase tracking-[0.12em] px-2.5 py-1 rounded-full whitespace-nowrap ${a.tone === 'primary' ? 'bg-primary text-white' : 'bg-white/10 text-info-border ring-1 ring-white/20'}`}>{a.status}</span>
             </div>
-
-            <div class={`h-px w-full ${a.tone === 'primary' ? 'bg-white/20' : 'bg-border'}`}></div>
-
-            <h3 class={`text-[21px] font-bold leading-7 ${a.tone === 'primary' ? 'text-white' : 'text-text'}`} style="font-family:'Outfit',sans-serif;">
-              {a.heading}
-            </h3>
-            <p class={`text-[16px] leading-[26px] flex-1 ${a.tone === 'primary' ? 'text-white/90' : 'text-text-body'}`}>
-              {a.body}
-            </p>
-            {a.tone === 'primary' && (
-              <a href={enrollUrl} class="bg-white text-primary-navy h-12 px-6 rounded-xl text-base font-semibold flex items-center justify-center no-underline hover:bg-info transition-colors">
-                Get My License &mdash; ${price}
-              </a>
-            )}
-          </div>
+            <h3 class="text-xl font-bold leading-7 m-0" style={outfit}>{a.heading}</h3>
+            <p class={`text-base leading-7 m-0 ${a.tone === 'primary' ? 'text-text-body' : 'text-info-border'}`}>{a.body}</p>
+          </li>
         ))}
+      </ul>
+      <div class="flex flex-col gap-4 max-w-3xl text-base lg:text-lg text-info-border leading-8">
+        <p class="m-0">
+          Texas won't issue a first license to anyone under 25 who hasn't finished driver education
+          (<a href={statuteHref} class="underline text-white" target="_blank" rel="noopener noreferrer">Transportation Code §521.1601</a>).
+          The Department of Public Safety (DPS) puts it this way: &ldquo;{dpsBand}.&rdquo; The requirement is {dpsWaiver}.
+        </p>
+        <p class="m-0">
+          For first-time applicants over 25, DPS says you are &ldquo;not required to have completed driver education, however it is highly recommended.&rdquo;
+          Not sure where you fit? <a href={guideHref} class="underline text-white font-semibold">Do I need adult drivers ed?</a>
+        </p>
       </div>
     </div>
   </section>
 
-  <!-- ================= FAQ ================= -->
-  <section id="faq" class="py-16 lg:py-24 bg-white scroll-mt-24">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex flex-col gap-4 items-center mb-10 text-center">
-        <div class="flex items-center gap-2.5">
-          <span class="h-[3px] w-7 rounded-full bg-primary"></span>
-          <span class="text-[11px] font-bold uppercase tracking-[0.16em] text-primary-deep">Questions</span>
-          <span class="h-[3px] w-7 rounded-full bg-primary"></span>
+  <!-- ============ 3. FIVE STEPS ============ -->
+  <section class="bg-white py-20 lg:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="rounded-[28px] border border-info-border overflow-hidden">
+        <div class="bg-info px-6 py-10 lg:px-14 lg:py-14 grid grid-cols-1 lg:grid-cols-2 gap-8 items-end">
+          <div class="flex flex-col gap-5 items-start">
+            <Pill tone="tint">{steps.length} steps</Pill>
+            <h2 class={`text-[40px] lg:text-[64px] text-primary-navy ${h2}`} style={outfit}>
+              Your path to
+              <span class="relative inline-block">
+                the DPS
+                <svg class="absolute left-0 -bottom-4 w-full h-4" viewBox="0 0 200 16" preserveAspectRatio="none" aria-hidden="true"><path d="M3 12 C 60 2, 140 2, 197 9" fill="none" stroke="#2454E6" stroke-width="3.5" stroke-linecap="round"/></svg>
+              </span>
+            </h2>
+          </div>
+          <p class="text-lg lg:text-xl text-text-body leading-8 m-0 lg:text-right">
+            We handle the first three steps. The last two are at the DPS.
+          </p>
         </div>
-        <h2 class="text-[32px] lg:text-[44px] font-bold text-text leading-[1.15] tracking-[-1px]" style="font-family:'Outfit',sans-serif;">
-          Questions people actually ask
-        </h2>
+        <ol class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-info-border list-none p-0 m-0 border-t border-info-border">
+          {steps.map((s) => (
+            <li class="bg-white px-6 py-10 lg:px-10 flex flex-col gap-3">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="text-[44px] font-extrabold leading-none text-primary tabular-nums mr-2" style={outfit}>{stepNum(s.n)}</span>
+                <span class={`text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full ${s.n <= 3 ? 'bg-primary-deep text-white' : 'bg-surface-muted text-text-muted border border-border'}`}>{stepTag(s)}</span>
+                {s.required && <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full bg-error-bg text-error">Required</span>}
+              </div>
+              <h3 class="text-2xl font-bold text-text m-0" style={outfit}>{s.title}</h3>
+              <p class="text-xs font-bold uppercase tracking-[0.12em] text-text-muted m-0">{s.time}</p>
+              <p class="text-base text-text-body leading-7 m-0">{s.body}</p>
+              {s.link && (
+                <a href={s.link.href} rel="noopener" class="text-base font-semibold text-primary underline w-fit">{s.link.label} &rarr;</a>
+              )}
+            </li>
+          ))}
+          <li class="bg-info px-6 py-10 lg:px-10 flex flex-col gap-4 justify-center items-start">
+            <p class="text-2xl font-bold text-primary-navy m-0" style={outfit}>Steps 1 to 3 start here.</p>
+            <a href={enrollUrl} class={btnPrimary}>{ctaLabel}</a>
+          </li>
+        </ol>
       </div>
+    </div>
+  </section>
 
-      <div class="flex flex-col gap-3">
-        {faqs.map((f, i) => (
-          <details class="group bg-surface-muted border border-border rounded-[16px] overflow-hidden" open={i === 0}>
-            <summary class="cursor-pointer list-none px-6 py-5 flex items-center justify-between gap-4">
-              <h3 class="text-lg font-semibold text-text leading-7">{f.q}</h3>
-              <svg class="flex-shrink-0 w-5 h-5 text-text-muted transition-transform group-open:rotate-45" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                <path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-              </svg>
-            </summary>
-            <div class="px-6 pb-6 -mt-1">
-              <p class="text-base text-text-body leading-7">{f.a}</p>
+  <!-- ============ 4. TABS: what's included (#pricing) / what you'll learn (#curriculum) ============ -->
+  <section id="pricing" class="bg-white pb-20 lg:pb-28 scroll-mt-28">
+    <span id="curriculum" class="block scroll-mt-28" aria-hidden="true"></span>
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center gap-5 text-center">
+      <h2 class={`text-[32px] lg:text-[44px] text-text ${h2}`} style={outfit}>A course you'll actually finish</h2>
+      <p class="text-lg text-text-body leading-8 max-w-2xl m-0">
+        Self-paced and saves as you go. Ten minutes at a time is fine. Most people finish across two or three sittings.
+      </p>
+
+      <div class="mt-6 inline-flex rounded-full bg-info p-1.5 max-w-full overflow-x-auto" role="tablist" aria-label="Course details">
+        <button type="button" role="tab" id="ade-tab-learn" aria-controls="ade-panel-learn" aria-selected="false" tabindex="-1"
+          class="ade-tab rounded-full px-6 h-11 text-base font-semibold whitespace-nowrap transition-colors aria-selected:bg-primary aria-selected:text-white text-text-body">What you'll learn</button>
+        <button type="button" role="tab" id="ade-tab-price" aria-controls="ade-panel-price" aria-selected="true"
+          class="ade-tab rounded-full px-6 h-11 text-base font-semibold whitespace-nowrap transition-colors aria-selected:bg-primary aria-selected:text-white text-text-body">What's included</button>
+      </div>
+    </div>
+
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
+      <div id="ade-panel-learn" role="tabpanel" aria-labelledby="ade-tab-learn" hidden class="ade-panel"><div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+        <div>
+          <p class="text-base text-text-body leading-7 mt-0 mb-6">Nine modules, set by the state. Two of them include short required videos.</p>
+          <div class="border-t border-border">
+            {ade.modules.map((m, i) => (
+              <details class="group border-b border-border" open={i === 0}>
+                <summary class="cursor-pointer list-none flex items-center justify-between gap-4 py-5">
+                  <span class="flex flex-wrap items-center gap-x-3 gap-y-1 text-left">
+                    <span class="text-sm font-bold tabular-nums text-text-subtle" style={outfit}>{stepNum(m.n)}</span>
+                    <span class="text-lg font-bold text-text" style={outfit}>{m.title}</span>
+                    {m.n === ade.modules.length && <span class="text-[10px] font-bold uppercase tracking-wider text-primary-deep bg-info px-2 py-0.5 rounded-full">Final exam</span>}
+                    {m.n === 7 && <span class="text-[10px] font-bold uppercase tracking-wider text-primary-deep bg-info px-2 py-0.5 rounded-full">2 videos</span>}
+                  </span>
+                  <svg class="flex-shrink-0 w-5 h-5 text-text-muted transition-transform group-open:rotate-180 motion-reduce:transition-none" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </summary>
+                <p class="text-base text-text-body leading-7 pb-5 m-0">{m.blurb}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+
+        <!-- The final exam, from facts already on this page. -->
+        <div class="rounded-[28px] bg-info p-8 lg:p-10">
+          <div class="rounded-[20px] bg-white shadow-[0_24px_48px_-20px_rgba(2,25,84,0.35)] p-7 flex flex-col gap-5">
+            <span class="text-sm font-semibold text-text-muted uppercase tracking-wider">The final exam</span>
+            <p class="text-[56px] font-extrabold text-primary-navy leading-none m-0 tabular-nums" style={outfit}>{ade.exam.questions}<span class="text-2xl font-bold text-text-body"> questions</span></p>
+            <div class="grid grid-cols-2 gap-3">
+              <div class="rounded-xl bg-surface-muted px-4 py-3"><p class="text-2xl font-bold text-text m-0 tabular-nums" style={outfit}>{ade.exam.signsQuestions}</p><p class="text-sm text-text-body m-0">on highway signs</p></div>
+              <div class="rounded-xl bg-surface-muted px-4 py-3"><p class="text-2xl font-bold text-text m-0 tabular-nums" style={outfit}>{ade.exam.lawsQuestions}</p><p class="text-sm text-text-body m-0">on traffic laws</p></div>
             </div>
+            <p class="text-base text-text-body leading-7 m-0">Included in the course. Miss it and you get two more tries, with different questions each time.</p>
+          </div>
+        </div>
+      </div></div>
+
+      <div id="ade-panel-price" role="tabpanel" aria-labelledby="ade-tab-price" class="ade-panel">
+        <PriceBlock
+          price={price}
+          label="Texas Adult Drivers Ed"
+          totalLabel="Total. Not a deposit, not a starting price. Nothing added at checkout."
+          included={included}
+          notCharged={notCharged}
+          notChargedLabel="And what we never charge for"
+          lineItems={lineItems}
+          totalRow={{ label: 'What you pay', value: `$${price}` }}
+          refundNote="Full refund if you cancel within three days of signing up."
+          refundHref="/adult-drivers-ed/texas/refund"
+          enrollUrl={enrollUrl}
+          ctaLabel={ctaLabel}
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 5. REVIEWS ============ -->
+  <section class="bg-surface-dark text-white py-20 lg:py-28 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-[minmax(0,24rem)_1fr] gap-10 lg:gap-16 items-center">
+      <div class="flex flex-col gap-6">
+        <Rating tone="dark" />
+        <h2 class={`text-[34px] lg:text-[46px] ${h2}`} style={outfit}>What drivers say about our Texas driving safety course</h2>
+        <p class="text-base text-info-border leading-7 m-0">
+          These reviews are from students of our <a href="/texas" class="text-white underline">Texas defensive driving course</a>. Reviews of the adult drivers ed course will appear here as students finish it.
+        </p>
+        <div class="flex gap-3">
+          <button type="button" class="ade-rev-prev w-14 h-14 rounded-2xl bg-white/10 hover:bg-white/15 flex items-center justify-center" aria-label="Previous review">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          </button>
+          <button type="button" class="ade-rev-next w-14 h-14 rounded-2xl bg-primary hover:bg-primary-hover flex items-center justify-center" aria-label="Next review">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+      </div>
+      <ul class="ade-rev-track flex gap-6 overflow-x-auto snap-x snap-mandatory list-none p-0 m-0 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        {testimonials.map((t) => (
+          <li class="snap-start flex-shrink-0 w-[85%] sm:w-[440px] rounded-[24px] bg-primary-deep flex flex-col">
+            <div class="p-8 flex flex-col gap-5 flex-1">
+              <span class="self-start rounded-full bg-white text-surface-dark text-xs font-bold px-3 py-1.5">Verified via Trustpilot</span>
+              <span class="flex gap-1" aria-label="5 out of 5 stars">
+                {[0, 1, 2, 3, 4].map(() => <img src="/assets/icons/texas/star-testimonial.svg" alt="" class="w-6 h-6" />)}
+              </span>
+              <blockquote class="text-xl lg:text-2xl leading-snug m-0">&ldquo;{t.quote}&rdquo;</blockquote>
+            </div>
+            <div class="border-t border-white/15 px-8 py-5 text-sm font-semibold text-info-border">{t.name} &middot; Texas Driver Safety Course &middot; {t.date}</div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ 6. FAQ ============ -->
+  <section id="faq" class="bg-white py-20 lg:py-28 scroll-mt-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-[minmax(0,26rem)_1fr] gap-10 lg:gap-20 items-start">
+      <div class="flex flex-col gap-5 lg:sticky lg:top-32">
+        <h2 class={`text-[36px] lg:text-[52px] text-text ${h2}`} style={outfit}>Questions people actually ask</h2>
+        <p class="text-lg text-text-body leading-8 m-0">Still have a question? Ask us before you pay.</p>
+        <div class="flex flex-wrap gap-3">
+          <a href={contactUrl} class={btnSecondary}>Contact us</a>
+        </div>
+        <a href={guideHref} class="text-primary font-semibold underline underline-offset-2">Do I need adult drivers ed?</a>
+      </div>
+      <div class="border-t border-border">
+        {faqs.map((f, i) => (
+          <details class="group border-b border-border" open={i === 0}>
+            <summary class="cursor-pointer list-none flex items-start justify-between gap-6 py-6">
+              <h3 class="text-lg lg:text-xl font-bold text-text m-0" style={outfit}>{f.q}</h3>
+              <svg class="mt-1 flex-shrink-0 w-5 h-5 text-text-muted transition-transform group-open:rotate-180 motion-reduce:transition-none" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </summary>
+            <p class="text-base text-text-body leading-7 pb-6 pr-10 m-0">{f.a}</p>
           </details>
         ))}
       </div>
-
-      <div class="mt-10 bg-info border border-info-border rounded-[20px] p-8 flex flex-col gap-3 items-center text-center">
-        <h3 class="text-xl font-semibold text-text leading-7" style="font-family:'Outfit',sans-serif;">Still have a question?</h3>
-        <p class="text-base text-text-body leading-6 max-w-xl">Ask us before you pay.</p>
-        <a href={contactUrl} class="mt-2 bg-white border border-border text-text h-12 px-6 rounded-xl text-base font-semibold flex items-center justify-center no-underline hover:bg-surface-muted transition-colors">
-          Contact us
-        </a>
-      </div>
     </div>
   </section>
 
-  <!-- ================= FINAL CTA ================= -->
-  <section class="py-16 lg:py-24 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="bg-primary-navy rounded-[28px] px-6 py-14 lg:px-16 lg:py-20 relative overflow-hidden">
-        <div class="absolute inset-0 opacity-20 pointer-events-none">
-          <div class="absolute bg-primary blur-[64px] rounded-full w-96 h-96 -left-20 -top-20"></div>
-          <div class="absolute bg-info-text blur-[64px] rounded-full w-96 h-96 -right-20 -bottom-20"></div>
-        </div>
-
-        <div class="relative z-10 flex flex-col gap-6 items-center text-center">
-          <h2 class="text-[32px] lg:text-[46px] font-bold text-white leading-[1.12] tracking-[-1.2px] max-w-3xl" style="font-family:'Outfit',sans-serif;">
-            Six hours. One flat price. Start whenever you want.
-          </h2>
-          <p class="text-lg text-white/80 leading-7 max-w-2xl">
-            Stop whenever you need to and come back to the exact spot you left.
-          </p>
-
-          <a href={enrollUrl} class="bg-white text-primary-navy h-[56px] px-10 rounded-[16px] text-[18px] font-semibold flex items-center justify-center no-underline hover:bg-info transition-colors mt-2">
-            Get My License &mdash; ${price}
-          </a>
-
-          <div class="flex flex-wrap gap-x-6 gap-y-2 justify-center pt-4 text-sm text-white/70">
-            <span>TDLR-approved</span>
-            <span>&middot;</span>
-            <span>Certificate included</span>
-            <span>&middot;</span>
-            <span>{ade.course.completionDays} days to finish</span>
-          </div>
-        </div>
-      </div>
+  <!-- ============ 7. MADE FOR TEXAS — only sentences already on this page, plus official links ============ -->
+  <section class="bg-primary-navy text-white py-20 lg:py-28">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center gap-6 text-center">
+      <Pill tone="dark">Built for Texas's rules</Pill>
+      <h2 class={`text-[32px] lg:text-[44px] ${h2}`} style={outfit}>Made for Texas's adult driver education rules</h2>
+      <p class="text-base lg:text-lg text-info-border leading-8 max-w-3xl m-0">
+        Approved by the Texas Department of Licensing and Regulation (TDLR) &mdash; the agency that signs off on driver education in Texas.
+        Nine modules, set by the state. Finish the course and you have satisfied the highway sign and traffic law portions of the DPS knowledge exam.
+      </p>
+      <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6 w-full list-none p-0 m-0 mt-4">
+        {texasLinks.map((l) => (
+          <li>
+            <a href={l.href} target="_blank" rel="noopener noreferrer" class="flex items-center h-full gap-4 rounded-[20px] border border-white/25 bg-white/5 px-6 py-6 text-left text-lg font-semibold text-white underline underline-offset-4 decoration-info-border hover:bg-white/10">
+              {l.label}
+            </a>
+          </li>
+        ))}
+      </ul>
     </div>
   </section>
 
+  <!-- ============ 8. FINAL CALL TO ACTION ============ -->
+  <FinalBand
+    heading="Six hours. One flat price. Start whenever you want."
+    copy="Stop whenever you need to and come back to the exact spot you left."
+    ctaLabel={`${ctaLabel} — $${price}`}
+    ctaHref={enrollUrl}
+  />
+  <script is:inline>
+    (function () {
+      if (window.__rrsAdeLandingV2) return;
+      window.__rrsAdeLandingV2 = true;
+      // Tabs + review carousel: one delegated listener, no dependency on the ViewTransitions router.
+      function selectTab(tab) {
+        document.querySelectorAll('.ade-tab').forEach(function (t) {
+          var on = t === tab;
+          t.setAttribute('aria-selected', String(on));
+          t.tabIndex = on ? 0 : -1;
+          var panel = document.getElementById(t.getAttribute('aria-controls'));
+          if (panel) panel.hidden = !on;
+        });
+      }
+      // #pricing and #curriculum are linked from every ADE page's header and footer:
+      // open the matching tab, then land on the section.
+      function fromHash() {
+        var id = { '#pricing': 'ade-tab-price', '#curriculum': 'ade-tab-learn' }[location.hash];
+        var tab = id && document.getElementById(id);
+        if (!tab) return;
+        selectTab(tab);
+        var target = document.getElementById(location.hash.slice(1));
+        if (target) target.scrollIntoView();
+      }
+      document.addEventListener('click', function (e) {
+        var tab = e.target.closest && e.target.closest('.ade-tab');
+        if (tab) { selectTab(tab); return; }
+        var prev = e.target.closest && e.target.closest('.ade-rev-prev');
+        var next = e.target.closest && e.target.closest('.ade-rev-next');
+        if (prev || next) {
+          var track = document.querySelector('.ade-rev-track');
+          if (!track) return;
+          var card = track.querySelector('li');
+          var step = card ? card.getBoundingClientRect().width + 24 : 400;
+          track.scrollBy({ left: next ? step : -step, behavior: 'smooth' });
+        }
+      });
+      document.addEventListener('keydown', function (e) {
+        var tab = e.target.closest && e.target.closest('.ade-tab');
+        if (!tab || (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft')) return;
+        var tabs = Array.prototype.slice.call(document.querySelectorAll('.ade-tab'));
+        var n = tabs[(tabs.indexOf(tab) + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+        n.focus(); n.click();
+      });
+      window.addEventListener('hashchange', fromHash);
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fromHash); else fromHash();
+    })();
+  </script>
+  
+  <style is:global>
+    /* Tailwind base styles are off in this repo, so make [hidden] win explicitly. */
+    .ade-panel[hidden] { display: none !important; }
+  </style>
 </AdeLayout>
 )}
+

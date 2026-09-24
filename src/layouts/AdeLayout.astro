@@ -9,6 +9,12 @@ interface Props {
   keywords?: string;
   url?: string;
   banner?: string;
+  /**
+   * 'minimal': the landing-v2 header. No nav links; one Contact Support link instead.
+   * Only the landing page sets it; every guide page keeps today's header, whose
+   * #who-needs-it / #curriculum / #pricing / #faq links still land on the landing page.
+   */
+  headerStyle?: 'minimal';
 }
 
 const {
@@ -17,7 +23,9 @@ const {
   keywords = 'Texas adult drivers ed, adult driver education Texas, ADE-1317, 6 hour drivers ed Texas, Texas drivers ed for adults',
   url = '/adult-drivers-ed/texas',
   banner = '$39.95 all-in — no hidden fees, certificate included',
+  headerStyle,
 } = Astro.props;
+const minimalHeader = headerStyle === 'minimal';
 
 const enrollUrl = import.meta.env.VITE_ADE_ENROLLMENT_URL || '#';
 const loginUrl = import.meta.env.VITE_LOGIN_URL || '#';
@@ -126,14 +134,16 @@ const adeLegalLinks = [
           </div>
         </a>
 
+        {!minimalHeader && (
         <nav class="hidden lg:flex items-center gap-8">
           {nav.map((item) => (
             <a href={item.href} class="text-sm font-medium text-text-body hover:text-text no-underline transition-colors">{item.label}</a>
           ))}
         </nav>
+        )}
 
         <div class="hidden lg:flex items-center gap-3">
-          <a href={loginUrl} class="h-10 px-5 border border-border text-text rounded-xl text-sm font-semibold flex items-center justify-center no-underline hover:bg-surface-muted transition-colors">Log In</a>
+          {minimalHeader && <a href={contactUrl} class="text-sm font-medium text-text-body hover:text-text no-underline transition-colors mr-3">Contact Support</a>}<a href={loginUrl} class="h-10 px-5 border border-border text-text rounded-xl text-sm font-semibold flex items-center justify-center no-underline hover:bg-surface-muted transition-colors">Log In</a>
           <a href={enrollUrl} class="h-10 px-5 bg-primary hover:bg-primary-hover text-white rounded-xl text-sm font-semibold flex items-center justify-center no-underline transition-colors shadow-[0px_4px_6px_-1px_rgba(17,23,34,0.1)]">Get My License</a>
         </div>
 
@@ -156,7 +166,9 @@ const adeLegalLinks = [
 
     <div id="ade-menu" class="hidden lg:hidden border-t border-border bg-white">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex flex-col gap-4">
-        {nav.map((item) => (
+        {minimalHeader ? (
+          <a href={contactUrl} class="text-sm font-medium text-text-body hover:text-text no-underline py-2">Contact Support</a>
+        ) : nav.map((item) => (
           <a href={item.href} class="text-sm font-medium text-text-body hover:text-text no-underline py-2">{item.label}</a>
         ))}
         <hr class="border-border" />

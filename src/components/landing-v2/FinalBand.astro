@@ -8,12 +8,20 @@
  */
 import RoadPhoto from './RoadPhoto.astro';
 
-interface Props { heading: string; copy: string; ctaLabel: string; ctaHref: string }
-const { heading, copy, ctaLabel, ctaHref } = Astro.props;
+interface Props {
+  heading: string;
+  copy: string;
+  ctaLabel: string;
+  ctaHref: string;
+  photo?: 'road' | 'texas-dallas';
+  /** CSS object-position for the photo. */
+  position?: string;
+}
+const { heading, copy, ctaLabel, ctaHref, photo, position = '50% 65%' } = Astro.props;
 ---
 <section class="relative overflow-hidden -mb-[72px] lg:mb-0">
   <div class="absolute inset-0" aria-hidden="true">
-    <RoadPhoto class="w-full h-full" position="50% 65%" />
+    <RoadPhoto class="w-full h-full" position={position} photo={photo} />
   </div>
   <div class="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-black/10" aria-hidden="true"></div>
   <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-[168px] lg:py-36 flex flex-col gap-6 items-start text-white">

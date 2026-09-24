@@ -1,7 +1,8 @@
 ---
 /**
- * The road photo Jackson supplied on 2026-09-23: a generic two-lane road, not a specific
- * place, so any state's page can use it.
+ * Landing-v2 photos. 'road' (default): the generic two-lane road Jackson supplied on
+ * 2026-09-23, used by North Dakota. 'texas-dallas': the Margaret Hunt Hill Bridge in Dallas
+ * with a Texas flag (Jackson, 2026-09-24), used by Texas ADE.
  *
  * desktopOnly: for the hero, which is hidden below 1024px. Browsers still fetch images
  * inside display:none, so on phones the <img> falls back to a 1x1 gif and the real photo
@@ -13,11 +14,17 @@ interface Props {
   position?: string;
   eager?: boolean;
   desktopOnly?: boolean;
+  photo?: 'road' | 'texas-dallas';
 }
-const { class: cls = '', position = 'center', eager = false, desktopOnly = false } = Astro.props;
+const { class: cls = '', position = 'center', eager = false, desktopOnly = false, photo = 'road' } = Astro.props;
+const photos = {
+  road: { height: 1068, alt: 'A straight two-lane road between green fields and trees under a cloudy blue sky' },
+  'texas-dallas': { height: 1062, alt: 'A Texas flag flying from the white arch of a Dallas highway bridge, with the downtown skyline behind' },
+};
+const { height, alt } = photos[photo];
 const dir = '/assets/images/landing-v2';
-const webp = `${dir}/road-800.webp 800w, ${dir}/road-1600.webp 1600w`;
-const jpg = `${dir}/road-800.jpg 800w, ${dir}/road-1600.jpg 1600w`;
+const webp = `${dir}/${photo}-800.webp 800w, ${dir}/${photo}-1600.webp 1600w`;
+const jpg = `${dir}/${photo}-800.jpg 800w, ${dir}/${photo}-1600.jpg 1600w`;
 const sizes = desktopOnly ? '50vw' : '100vw';
 const blank = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
 ---
@@ -31,12 +38,12 @@ const blank = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAA
     <source type="image/webp" srcset={webp} sizes={sizes} />
   )}
   <img
-    src={desktopOnly ? blank : `${dir}/road-1600.jpg`}
+    src={desktopOnly ? blank : `${dir}/${photo}-1600.jpg`}
     srcset={desktopOnly ? undefined : jpg}
     sizes={desktopOnly ? undefined : sizes}
     width="1600"
-    height="1068"
-    alt="A straight two-lane road between green fields and trees under a cloudy blue sky"
+    height={height}
+    alt={alt}
     loading={eager ? 'eager' : 'lazy'}
     fetchpriority={eager ? 'high' : 'auto'}
     decoding="async"

@@ -265,15 +265,11 @@ const check = 'M4.8 8.2l2.1 2.1 4.3-4.4';
         </ul>
 
         <a href={enrollUrl} class={`${btnPrimary} w-full sm:w-auto mt-2`}>{ctaLabel} &mdash; ${price}</a>
-        <p class="text-sm text-text-muted leading-6 m-0">
-          Self-paced &middot; Stop and resume anytime &middot; {ade.course.completionDays} days to finish.
-          <a href="#who-needs-it" class="text-primary font-semibold underline underline-offset-2 whitespace-nowrap">Do I even need this?</a>
-        </p>
       </div>
 
       <!-- Photo with the course-progress card. Not a certificate: the ADE-1317 is a TDLR-controlled form. -->
       <div class="relative hidden lg:block pb-16">
-        <RoadPhoto class="w-full aspect-[4/3] rounded-[28px]" position="50% 60%" eager desktopOnly />
+        <RoadPhoto class="w-full aspect-[4/3] rounded-[28px]" position="50% 50%" photo="texas-dallas" eager desktopOnly />
         <div class="absolute right-6 top-6 rounded-2xl bg-white shadow-[0_20px_25px_-5px_rgba(17,23,34,0.15)] px-4 py-3" aria-hidden="true">
           <p class="text-[22px] font-bold text-primary-navy leading-6 m-0" style={outfit}>${price}</p>
           <p class="text-xs text-text-body leading-4 m-0">all in</p>
@@ -349,7 +345,7 @@ const check = 'M4.8 8.2l2.1 2.1 4.3-4.4';
             <h2 class={`text-[40px] lg:text-[64px] text-primary-navy ${h2}`} style={outfit}>
               Your path to
               <span class="relative inline-block">
-                the DPS
+                a Texas license
                 <svg class="absolute left-0 -bottom-4 w-full h-4" viewBox="0 0 200 16" preserveAspectRatio="none" aria-hidden="true"><path d="M3 12 C 60 2, 140 2, 197 9" fill="none" stroke="#2454E6" stroke-width="3.5" stroke-linecap="round"/></svg>
               </span>
             </h2>
@@ -460,10 +456,8 @@ const check = 'M4.8 8.2l2.1 2.1 4.3-4.4';
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-[minmax(0,24rem)_1fr] gap-10 lg:gap-16 items-center">
       <div class="flex flex-col gap-6">
         <Rating tone="dark" />
-        <h2 class={`text-[34px] lg:text-[46px] ${h2}`} style={outfit}>What drivers say about our Texas driving safety course</h2>
-        <p class="text-base text-info-border leading-7 m-0">
-          These reviews are from students of our <a href="/texas" class="text-white underline">Texas defensive driving course</a>. Reviews of the adult drivers ed course will appear here as students finish it.
-        </p>
+        <h2 class={`text-[34px] lg:text-[46px] ${h2}`} style={outfit}>What students say about our courses</h2>
+        <p class="text-base text-info-border leading-7 m-0">Recent reviews from our students on Trustpilot.</p>
         <div class="flex gap-3">
           <button type="button" class="ade-rev-prev w-14 h-14 rounded-2xl bg-white/10 hover:bg-white/15 flex items-center justify-center" aria-label="Previous review">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
@@ -542,6 +536,8 @@ const check = 'M4.8 8.2l2.1 2.1 4.3-4.4';
     copy="Stop whenever you need to and come back to the exact spot you left."
     ctaLabel={`${ctaLabel} — $${price}`}
     ctaHref={enrollUrl}
+    photo="texas-dallas"
+    position="50% 30%"
   />
   <script is:inline>
     (function () {

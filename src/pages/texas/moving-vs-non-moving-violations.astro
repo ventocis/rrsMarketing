@@ -1,0 +1,152 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+import NextStepBlock from '../../components/texas/NextStepBlock.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const moving = [
+  { v: 'Speeding, 10% or more over the limit', note: 'Any amount over in a school crossing zone', href: '/texas/speeding-ticket' },
+  { v: 'Running a stop sign, including a rolling stop', note: '', href: '/texas/stop-sign-ticket' },
+  { v: 'Running a red light', note: '', href: '/texas/red-light-ticket' },
+  { v: 'Failure to yield right-of-way', note: '', href: '' },
+  { v: 'Unsafe lane change, following too closely', note: '', href: '' },
+  { v: 'Child not in a required car seat', note: 'Named as a moving violation in the rule', href: '/texas/child-seat-ticket' },
+];
+const notMoving = [
+  { v: 'Expired registration', note: 'Can be dismissed for up to $20 if you renew in time', href: '/texas/expired-registration-ticket' },
+  { v: 'No proof of insurance', note: 'Dismissed if you had insurance that day', href: '/texas/no-insurance-ticket' },
+  { v: 'Expired driver license', note: '', href: '/texas/expired-license-ticket' },
+  { v: 'Speeding less than 10% over the limit', note: 'Outside a school crossing zone', href: '/texas/speeding-ticket' },
+  { v: 'Texting while driving (§545.4251)', note: 'Excluded by the DPS rule', href: '/texas/cell-phone-ticket' },
+  { v: 'Parking tickets', note: 'Not a driving offense', href: '' },
+];
+
+const faqs = [
+  {
+    q: 'What is a moving violation in Texas?',
+    a: 'Texas DPS defines it as an act committed while operating a motor vehicle on a public street or highway that is a hazard to traffic and is prohibited by state law or city ordinance (37 Tex. Admin. Code §15.89). Speeding, running a stop sign or red light, and failure to yield are the common ones. Paperwork offenses like expired registration or no proof of insurance are not.',
+  },
+  {
+    q: 'Is expired registration a moving violation in Texas?',
+    a: 'No. It is a vehicle-registration offense, not a driving-behavior offense, and it cannot be dismissed with defensive driving. Instead, the court can dismiss it for a fee of up to $20 if you renew by the 20th working day after the ticket or before your first court date, whichever is later (Transp. Code §502.407).',
+  },
+  {
+    q: 'Is running a stop sign a moving violation?',
+    a: 'Yes. Failing to stop at a stop sign, including a rolling stop, is a moving violation. It is usually eligible for dismissal with defensive driving.',
+  },
+  {
+    q: 'Is a no insurance ticket a moving violation?',
+    a: 'No. Driving without insurance is a financial responsibility offense. If you had a valid policy on the day of the stop, show the court proof and it must dismiss the charge (Transp. Code §601.193).',
+  },
+  {
+    q: 'Is speeding 5 mph over a moving violation in Texas?',
+    a: 'Under the DPS rule, speeding less than 10% over the posted limit is not counted as a moving violation, unless it happened in a school crossing zone. At a 60 mph limit, that means under 66 mph.',
+  },
+  {
+    q: 'Does a dismissed ticket count as a moving violation?',
+    a: 'No. The DPS rule excludes offenses resolved through deferred disposition or a driving safety course (Tex. Code Crim. Proc. ch. 45A, subchapters G and H). That is the main reason to dismiss a moving violation instead of paying it.',
+  },
+  {
+    q: 'Why does it matter whether a ticket is a moving violation?',
+    a: 'Moving violations are what count toward a license suspension for too many convictions (4 in 12 months, or 7 in 24 months), what insurers look at most, and, for drivers under 25, what makes a ticket eligible for defensive driving.',
+  },
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Moving vs. Non-Moving Violations in Texas',
+  datePublished: '2026-09-25',
+  dateModified: '2026-09-25',
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+});
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+const p = "font-family: 'DM Sans', sans-serif;";
+const h = "font-family: 'Outfit', sans-serif;";
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Is It a Moving Violation? Texas Moving vs. Non-Moving Tickets"
+    description="Is expired registration a moving violation in Texas? No. Is running a stop sign? Yes. Here's the DPS definition, a list of each, why it matters for your record, and how each kind gets dismissed."
+    url="/texas/moving-vs-non-moving-violations"
+    keywords="is expired registration a moving violation, is running a stop sign a moving violation, moving violation texas, non moving violation texas, is no insurance a moving violation texas, does expired registration go on your record, what is a moving violation in texas"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+        <p class="text-sm text-text-body mb-6" style={p}><a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a></p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style={h}>Moving vs. Non-Moving Violations in Texas</h1>
+
+        <div class="bg-info border border-info-border rounded-2xl p-6 mb-10">
+          <p class="text-sm font-semibold text-primary-deep mb-2" style={h}>Short answer</p>
+          <p class="text-text-body text-base leading-7" style={p}>
+            A <strong class="text-text">moving violation</strong> is something you did while driving that endangers traffic: <strong class="text-text">speeding, running a stop sign or red light, failure to yield</strong>. A <strong class="text-text">non-moving violation</strong> is about paperwork or the car: <strong class="text-text">expired registration, no proof of insurance, an expired license</strong>. Moving violations are the ones that follow you, on your record and with your insurer. Each kind gets dismissed a different way.
+          </p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-4 mb-4" style={p}>
+          <div class="rounded-2xl border border-border p-5">
+            <h2 class="text-xl font-bold text-text mb-3" style={h}>Moving violations</h2>
+            <ul class="space-y-3">
+              {moving.map(m => (
+                <li class="text-base leading-6">
+                  {m.href ? <a href={m.href} class="text-primary-deep font-medium hover:underline">{m.v}</a> : <span class="text-text font-medium">{m.v}</span>}
+                  {m.note && <span class="block text-sm text-text-body">{m.note}</span>}
+                </li>
+              ))}
+            </ul>
+            <p class="text-sm text-text-body mt-4"><strong class="text-text">Usual fix:</strong> defensive driving, if you're eligible.</p>
+          </div>
+          <div class="rounded-2xl border border-border p-5">
+            <h2 class="text-xl font-bold text-text mb-3" style={h}>Not moving violations</h2>
+            <ul class="space-y-3">
+              {notMoving.map(m => (
+                <li class="text-base leading-6">
+                  {m.href ? <a href={m.href} class="text-primary-deep font-medium hover:underline">{m.v}</a> : <span class="text-text font-medium">{m.v}</span>}
+                  {m.note && <span class="block text-sm text-text-body">{m.note}</span>}
+                </li>
+              ))}
+            </ul>
+            <p class="text-sm text-text-body mt-4"><strong class="text-text">Usual fix:</strong> fix the problem (renew, show proof) and ask the court to dismiss.</p>
+          </div>
+        </div>
+        <p class="text-sm text-text-body mb-10" style={p}>Based on the DPS definition in 37 Tex. Admin. Code §15.89, which also publishes a detailed offense table. When in doubt about a specific charge, ask the court clerk.</p>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style={h}>Why the difference matters</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style={p}>
+          <ul class="list-disc pl-6 space-y-3">
+            <li><strong class="text-text">Your license.</strong> Four moving-violation convictions in 12 months, or seven in 24, can get your license suspended.</li>
+            <li><strong class="text-text">Your insurance.</strong> Insurers rate moving violations most heavily, typically for about three years. <a href="/texas/ticket-insurance-impact" class="text-primary-deep font-medium hover:underline">How much a ticket raises insurance</a>.</li>
+            <li><strong class="text-text">How you get it dismissed.</strong> Moving violations: defensive driving or deferred disposition. Paperwork tickets: fix the problem and show the court. Defensive driving is the wrong tool for expired registration or insurance.</li>
+            <li><strong class="text-text">A dismissed ticket doesn't count.</strong> The DPS rule leaves out offenses resolved through defensive driving or deferred disposition. That's the point of dismissing instead of paying.</li>
+          </ul>
+        </div>
+
+        <NextStepBlock page="moving-vs-non-moving" lead="precourt" ineligibleNote="Got a paperwork ticket like expired registration or no insurance? You usually fix it and show the court, no course needed." ineligibleHref="/texas/expired-registration-ticket" ineligibleLabel="Expired registration steps" />
+
+        <h2 class="text-2xl font-bold text-text mt-12 mb-4" style={h}>Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style={h}>{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style={p}>{item.a}</p>
+            </div>
+          ))}
+        </div>
+
+        <p class="text-xs text-text-subtle pt-4 border-t border-border" style={p}>Last updated September 25, 2026. Definition and exclusions per 37 Tex. Admin. Code §15.89 (as amended effective January 1, 2025); registration dismissal per Tex. Transp. Code §502.407; insurance defense per §601.193. Not legal advice.</p>
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

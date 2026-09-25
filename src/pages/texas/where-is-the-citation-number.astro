@@ -1,0 +1,174 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+import NextStepBlock from '../../components/texas/NextStepBlock.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    q: 'Where is the citation number on a Texas ticket?',
+    a: 'On most Texas tickets it is printed near the top of the form, usually on the right, and labeled "Citation No.", "Citation Number", "Ticket No." or similar. Each police department, sheriff and DPS uses its own form, so the exact spot varies, but it is almost always in the top section, above your name and the violation.',
+  },
+  {
+    q: 'How do I find my citation number without the ticket?',
+    a: 'Work out which court has your ticket first: a city police officer means that city\'s municipal court; a sheriff\'s deputy, constable or DPS trooper usually means the county justice of the peace court. Then search that court\'s online case lookup by your name and date of birth, or call the clerk with your name, date of birth and driver license number. For DPS trooper tickets, the DPS Citation Search covers roughly the last 24 months.',
+  },
+  {
+    q: 'Do I need the citation number to handle my ticket?',
+    a: 'No. Courts can find your case by name and date of birth, and a driver license number helps. The citation number just makes the search faster. What you cannot afford to lose track of is the answer date, because missing it is what causes a failure-to-appear charge.',
+  },
+  {
+    q: 'Is the citation number the same as the case number?',
+    a: 'Not always. Some courts use the citation number as the case number. Others give your case a separate docket or case number once it is filed. Either one will find your case; if the court asks for a case number you do not have, give them the citation number or your name and date of birth.',
+  },
+  {
+    q: 'Why can\'t I find my citation online?',
+    a: 'Usually because it has not been filed yet (it can take one to two weeks after the stop), because the court has no online lookup, or because you are searching the wrong court. There is no single statewide database of Texas tickets. Call the clerk if the answer date is getting close.',
+  },
+  {
+    q: 'Can I look up a ticket by license plate?',
+    a: 'Generally no. Texas court lookups search by name, date of birth, driver license or citation number. Tickets are issued to the driver, not the car, so a plate search will not find a moving-violation ticket.',
+  },
+];
+
+const labels = [
+  { n: 1, t: 'Citation number', d: 'Top section, often top right. Labeled "Citation No." or "Ticket No."' },
+  { n: 2, t: 'Court name and address', d: 'Which court has your case: a city municipal court or a county justice of the peace precinct.' },
+  { n: 3, t: 'Appearance or answer date', d: 'The deadline to respond. Ask for defensive driving on or before this date.' },
+  { n: 4, t: 'Violation', d: 'What you were cited for, often with the statute number and, for speeding, your speed and the limit.' },
+  { n: 5, t: 'Officer and agency', d: 'Who wrote the ticket. This tells you which court to call if you lost the paper.' },
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Where Is the Citation Number on a Texas Ticket?',
+  datePublished: '2026-09-25',
+  dateModified: '2026-09-25',
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+});
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+const p = "font-family: 'DM Sans', sans-serif;";
+const h = "font-family: 'Outfit', sans-serif;";
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Where Is the Citation Number on a Texas Ticket? (With Picture)"
+    description="The citation number is usually at the top of a Texas ticket, labeled Citation No. or Ticket No. See where it is, what the other boxes mean, and how to find it if you lost the ticket."
+    url="/texas/where-is-the-citation-number"
+    keywords="where is the citation number on a ticket texas, how to find citation number, citation number without ticket, how to find my citation number, where to find ticket number on speeding ticket, lost ticket citation number texas"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+        <p class="text-sm text-text-body mb-6" style={p}><a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a></p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style={h}>Where Is the Citation Number on a Texas Ticket?</h1>
+
+        <div class="bg-info border border-info-border rounded-2xl p-6 mb-10">
+          <p class="text-sm font-semibold text-primary-deep mb-2" style={h}>Short answer</p>
+          <p class="text-text-body text-base leading-7" style={p}>
+            On most Texas tickets the citation number is <strong class="text-text">near the top of the form, usually on the right</strong>, labeled "Citation No." or "Ticket No." Each agency prints its own form, so the exact spot varies. <strong class="text-text">Lost the ticket?</strong> You don't need the number: the court can find your case by <strong class="text-text">name and date of birth</strong>. The steps are below.
+          </p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style={h}>What a Texas ticket looks like</h2>
+        <p class="text-text-body text-base leading-7 mb-4" style={p}>A simplified drawing of a typical Texas citation. Your ticket won't match exactly, but the same five pieces of information are on every one.</p>
+
+        <figure class="mb-6">
+          <svg viewBox="0 0 640 520" role="img" aria-labelledby="tkt-title tkt-desc" class="w-full h-auto rounded-2xl border border-border bg-white">
+            <title id="tkt-title">Diagram of a typical Texas traffic citation</title>
+            <desc id="tkt-desc">The citation number sits in the top right corner. Below it are the court name and address, the appearance date, the driver section, the violation, and the officer and agency at the bottom.</desc>
+            <rect x="20" y="20" width="600" height="480" rx="10" fill="#fbfaf6" stroke="#9aa3b2" stroke-width="2" />
+            <text x="40" y="58" font-size="18" font-weight="700" fill="#1f2937" font-family="Outfit, sans-serif">STATE OF TEXAS · NOTICE TO APPEAR</text>
+            <text x="40" y="80" font-size="12" fill="#6b7280" font-family="DM Sans, sans-serif">Police Department / Sheriff / DPS</text>
+            <rect x="420" y="36" width="185" height="54" rx="6" fill="#dbeafe" stroke="#1d4ed8" stroke-width="2.5" />
+            <text x="432" y="56" font-size="11" fill="#1e3a8a" font-family="DM Sans, sans-serif">CITATION NO.</text>
+            <text x="432" y="80" font-size="20" font-weight="700" fill="#1e3a8a" font-family="monospace">A1234567</text>
+            <circle cx="605" cy="36" r="13" fill="#1d4ed8" /><text x="605" y="41" font-size="13" font-weight="700" fill="#fff" text-anchor="middle" font-family="DM Sans, sans-serif">1</text>
+
+            <rect x="40" y="104" width="560" height="54" rx="6" fill="#fff" stroke="#cbd5e1" />
+            <text x="52" y="124" font-size="11" fill="#6b7280" font-family="DM Sans, sans-serif">COURT</text>
+            <text x="52" y="146" font-size="14" fill="#1f2937" font-family="DM Sans, sans-serif">Municipal Court / Justice Court, Pct. __ · Address · Phone</text>
+            <circle cx="600" cy="104" r="13" fill="#1d4ed8" /><text x="600" y="109" font-size="13" font-weight="700" fill="#fff" text-anchor="middle" font-family="DM Sans, sans-serif">2</text>
+
+            <rect x="40" y="168" width="270" height="54" rx="6" fill="#fef3c7" stroke="#b45309" stroke-width="2" />
+            <text x="52" y="188" font-size="11" fill="#92400e" font-family="DM Sans, sans-serif">APPEAR ON OR BEFORE</text>
+            <text x="52" y="210" font-size="15" font-weight="700" fill="#92400e" font-family="DM Sans, sans-serif">MM / DD / YYYY</text>
+            <circle cx="310" cy="168" r="13" fill="#1d4ed8" /><text x="310" y="173" font-size="13" font-weight="700" fill="#fff" text-anchor="middle" font-family="DM Sans, sans-serif">3</text>
+
+            <rect x="330" y="168" width="270" height="54" rx="6" fill="#fff" stroke="#cbd5e1" />
+            <text x="342" y="188" font-size="11" fill="#6b7280" font-family="DM Sans, sans-serif">DATE / TIME OF OFFENSE</text>
+            <text x="342" y="210" font-size="14" fill="#1f2937" font-family="DM Sans, sans-serif">MM / DD / YYYY  ·  00:00</text>
+
+            <rect x="40" y="232" width="560" height="84" rx="6" fill="#fff" stroke="#cbd5e1" />
+            <text x="52" y="252" font-size="11" fill="#6b7280" font-family="DM Sans, sans-serif">DRIVER</text>
+            <text x="52" y="274" font-size="14" fill="#1f2937" font-family="DM Sans, sans-serif">Name · Address · Date of birth</text>
+            <text x="52" y="298" font-size="14" fill="#1f2937" font-family="DM Sans, sans-serif">Driver license no. · Vehicle · Plate</text>
+
+            <rect x="40" y="326" width="560" height="84" rx="6" fill="#fff" stroke="#cbd5e1" />
+            <text x="52" y="346" font-size="11" fill="#6b7280" font-family="DM Sans, sans-serif">VIOLATION</text>
+            <text x="52" y="368" font-size="14" fill="#1f2937" font-family="DM Sans, sans-serif">Speeding · Transp. Code §545.351</text>
+            <text x="52" y="392" font-size="14" fill="#1f2937" font-family="DM Sans, sans-serif">Speed __ mph · Posted limit __ mph · Location</text>
+            <circle cx="600" cy="326" r="13" fill="#1d4ed8" /><text x="600" y="331" font-size="13" font-weight="700" fill="#fff" text-anchor="middle" font-family="DM Sans, sans-serif">4</text>
+
+            <rect x="40" y="420" width="560" height="60" rx="6" fill="#fff" stroke="#cbd5e1" />
+            <text x="52" y="440" font-size="11" fill="#6b7280" font-family="DM Sans, sans-serif">OFFICER</text>
+            <text x="52" y="464" font-size="14" fill="#1f2937" font-family="DM Sans, sans-serif">Officer name · Badge / ID no. · Agency</text>
+            <circle cx="600" cy="420" r="13" fill="#1d4ed8" /><text x="600" y="425" font-size="13" font-weight="700" fill="#fff" text-anchor="middle" font-family="DM Sans, sans-serif">5</text>
+          </svg>
+          <figcaption class="text-sm text-text-body mt-2" style={p}>Illustration only, not a real ticket. Layouts differ by agency.</figcaption>
+        </figure>
+
+        <ol class="space-y-3 mb-10" style={p}>
+          {labels.map(l => (
+            <li class="flex gap-3">
+              <span class="shrink-0 w-7 h-7 rounded-full bg-primary text-white text-sm font-bold flex items-center justify-center">{l.n}</span>
+              <span class="text-text-body text-base leading-7"><strong class="text-text">{l.t}.</strong>{' '}{l.d}</span>
+            </li>
+          ))}
+        </ol>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style={h}>How to find your citation number without the ticket</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style={p}>
+          <ol class="list-decimal pl-6 space-y-3">
+            <li><strong class="text-text">Work out which court has it.</strong> A city police officer means that city's municipal court. A sheriff's deputy, constable or DPS trooper usually means the county justice of the peace court for where you were stopped. <a href="/texas/municipal-vs-jp-court" class="text-primary-deep font-medium hover:underline">How to tell which court</a>.</li>
+            <li><strong class="text-text">Search that court's case lookup</strong> by your name and date of birth. Many larger courts have one; smaller courts often don't.</li>
+            <li><strong class="text-text">Or call the clerk</strong> with your name, date of birth and driver license number. They can read you the citation number, the charge and the answer date. Find the number in our <a href="/texas/courts" class="text-primary-deep font-medium hover:underline">directory of Texas courts</a>.</li>
+            <li><strong class="text-text">Stopped by a DPS trooper?</strong> The DPS Citation Search covers highway patrol tickets from about the last 24 months. <a href="/texas/look-up-your-ticket" class="text-primary-deep font-medium hover:underline">More ways to look up a ticket</a>.</li>
+          </ol>
+          <p>Give it a week or two after the stop. A brand-new ticket may not be in the court's system yet.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style={h}>Once you have it: the date matters more than the number</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style={p}>
+          <p>The answer date on the ticket is your deadline to respond. If you want to keep the ticket off your record, <strong class="text-text">ask the court for defensive driving on or before that date</strong>, and don't pay the ticket first: paying counts as a guilty plea. <a href="/texas/request-defensive-driving" class="text-primary-deep font-medium hover:underline">How to request defensive driving</a>.</p>
+        </div>
+
+        <NextStepBlock page="where-is-the-citation-number" lead="precourt" />
+
+        <h2 class="text-2xl font-bold text-text mt-12 mb-4" style={h}>Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style={h}>{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style={p}>{item.a}</p>
+            </div>
+          ))}
+        </div>
+
+        <p class="text-xs text-text-subtle pt-4 border-t border-border" style={p}>Last updated September 25, 2026. Illustration is a generic composite, not any agency's actual form. Court lookup methods per Road Ready Safety's research of Texas municipal and justice courts; DPS Citation Search coverage per Texas DPS.</p>
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

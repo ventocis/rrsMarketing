@@ -1,0 +1,143 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+import NextStepBlock from '../../components/texas/NextStepBlock.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+// Every range below is the statutory fine, checked on statutes.capitol.texas.gov
+// on 2026-09-25. Court costs are separate and added on a conviction.
+const rows = [
+  { v: 'Speeding (under 25 over)', fine: '$1 – $200', law: 'Transp. Code §542.401', dsc: 'Yes', href: '/texas/speeding-ticket' },
+  { v: 'Speeding 25+ mph over or 95+ mph', fine: '$1 – $200', law: 'Transp. Code §542.401', dsc: 'No', href: '/texas/speeding-25-over' },
+  { v: 'Running a stop sign / rolling stop', fine: '$1 – $200', law: 'Transp. Code §§544.010, 542.401', dsc: 'Yes', href: '/texas/stop-sign-ticket' },
+  { v: 'Running a red light', fine: '$1 – $200', law: 'Transp. Code §§544.007, 542.401', dsc: 'Yes', href: '/texas/red-light-ticket' },
+  { v: 'Failure to yield right-of-way', fine: '$1 – $200', law: 'Transp. Code §§545.151–.156, 542.401', dsc: 'Yes', href: '' },
+  { v: 'Texting while driving, first offense', fine: '$25 – $99', law: 'Transp. Code §545.4251(e)', dsc: 'Yes', href: '/texas/cell-phone-ticket' },
+  { v: 'Texting while driving, repeat', fine: '$100 – $200', law: 'Transp. Code §545.4251(e)', dsc: 'Yes', href: '/texas/cell-phone-ticket' },
+  { v: 'No seat belt (you, 15 or older)', fine: '$25 – $50', law: 'Transp. Code §545.413(d)', dsc: 'Usually', href: '/texas/seat-belt-ticket' },
+  { v: 'Passenger under 17 not buckled', fine: '$100 – $200', law: 'Transp. Code §545.413(d)', dsc: 'Usually', href: '/texas/seat-belt-ticket' },
+  { v: 'Expired registration', fine: 'Up to $200, or dismissed for up to $20 if you renew in time', law: 'Transp. Code §§502.471, 502.407', dsc: 'No, use the renewal dismissal', href: '/texas/expired-registration-ticket' },
+  { v: 'No insurance, first offense', fine: '$175 – $350, or dismissed if you had insurance that day', law: 'Transp. Code §§601.191, 601.193', dsc: 'No', href: '/texas/no-insurance-ticket' },
+  { v: 'No insurance, repeat', fine: '$350 – $1,000', law: 'Transp. Code §601.191(c)', dsc: 'No', href: '/texas/no-insurance-ticket' },
+  { v: 'Reckless driving', fine: 'Up to $200 and/or up to 30 days in jail', law: 'Transp. Code §545.401', dsc: 'No', href: '/texas/is-speeding-a-felony' },
+];
+
+const faqs = [
+  {
+    q: 'How much is a traffic ticket in Texas?',
+    a: 'Most moving violations, including speeding, running a stop sign or a red light, and failure to yield, carry a fine of $1 to $200 under Transportation Code §542.401. Each court sets its own amount inside that range. On a conviction, roughly $126 in state-mandated court costs is added on top, so a typical ticket costs about $225 to $325 before any insurance increase.',
+  },
+  {
+    q: 'How much is a ticket for running a stop sign in Texas?',
+    a: 'The fine is $1 to $200, set by the court, plus court costs if you are convicted. A rolling stop is the same offense as not stopping at all. It is a moving violation, so it can usually be dismissed with defensive driving.',
+  },
+  {
+    q: 'How much is a ticket for expired registration in Texas?',
+    a: 'Up to $200. But the court can dismiss it for a fee of no more than $20 if you renew by the 20th working day after the ticket or before your first court date, whichever is later, and show proof.',
+  },
+  {
+    q: 'How much is a no insurance ticket in Texas?',
+    a: '$175 to $350 for a first offense and $350 to $1,000 after that, plus court costs. If you actually had insurance on the day you were stopped, show the court proof and it must dismiss the charge.',
+  },
+  {
+    q: 'Are fines doubled in Texas construction zones?',
+    a: 'Yes, when workers are present and the ticket says so on its face. Both the minimum and the maximum fine double. Seat belt and a few equipment offenses are excluded.',
+  },
+  {
+    q: 'Can I get the fine reduced if I can\'t afford it?',
+    a: 'Yes. The judge must ask whether you can pay, and can allow payments over time, community service, or a full or partial waiver (Tex. Code Crim. Proc. arts. 45A.252–45A.257). Ask the court before your answer date.',
+  },
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Texas Traffic Ticket Fines: How Much Is a Ticket?',
+  datePublished: '2026-09-25',
+  dateModified: '2026-09-25',
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+});
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+const p = "font-family: 'DM Sans', sans-serif;";
+const h = "font-family: 'Outfit', sans-serif;";
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="How Much Is a Traffic Ticket in Texas? Fines by Violation (2026)"
+    description="Texas ticket fines from the statute: speeding and stop sign $1–$200, no insurance $175–$350, texting $25–$99, expired registration dismissed for $20. Plus court costs and how to avoid paying."
+    url="/texas/traffic-ticket-fines"
+    keywords="how much is a ticket in texas, texas traffic ticket fines, how much is a stop sign ticket in texas, how much is a ticket for expired registration in texas, how much is a no insurance ticket in texas, how much is a rolling stop ticket, texas ticket fine chart"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[960px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+        <p class="text-sm text-text-body mb-6" style={p}><a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a></p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style={h}>How Much Is a Traffic Ticket in Texas?</h1>
+
+        <div class="bg-info border border-info-border rounded-2xl p-6 mb-10">
+          <p class="text-sm font-semibold text-primary-deep mb-2" style={h}>Short answer</p>
+          <p class="text-text-body text-base leading-7" style={p}>
+            Most Texas moving violations, including <strong class="text-text">speeding, running a stop sign or red light, and failure to yield, carry a $1 to $200 fine</strong>. Each court picks the amount. If you're convicted, <strong class="text-text">about $126 in state court costs</strong> is added, so a typical ticket runs <strong class="text-text">$225 to $325</strong> before any insurance increase. Some tickets have their own ranges, and several can be dismissed for much less. The table has every common one.
+          </p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style={h}>Texas ticket fines by violation</h2>
+        <div class="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 mb-4 rounded-xl border border-border">
+          <table class="w-full min-w-[720px] text-sm border-collapse" style={p}>
+            <thead>
+              <tr class="bg-surface-muted text-left border-b border-border">
+                <th class="py-3 px-3 font-semibold text-text">Violation</th>
+                <th class="py-3 px-3 font-semibold text-text">Fine set by law</th>
+                <th class="py-3 px-3 font-semibold text-text">Defensive driving can dismiss it?</th>
+                <th class="py-3 px-3 font-semibold text-text">Law</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map(r => (
+                <tr class="border-b border-border align-top">
+                  <td class="py-3 px-3 text-text font-medium">{r.href ? <a href={r.href} class="text-primary-deep hover:underline">{r.v}</a> : r.v}</td>
+                  <td class="py-3 px-3 text-text-body">{r.fine}</td>
+                  <td class="py-3 px-3 text-text-body">{r.dsc}</td>
+                  <td class="py-3 px-3 text-text-body whitespace-nowrap">{r.law}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p class="text-sm text-text-body mb-10" style={p}>Fines are the ranges in the statute; your court picks the amount. Court costs are added on a conviction. <strong class="text-text">In a construction or maintenance work zone with workers present, the minimum and maximum fines double</strong> (Transp. Code §542.404). "Defensive driving can dismiss it" assumes you meet the other eligibility rules: a Texas license, no CDL, and no course in the last 12 months.</p>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style={h}>The fine is the small part</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style={p}>
+          <p>Paying a ticket is a guilty or no-contest plea. The conviction goes on your driving record, and insurers can rate it for about three years. A 10% to 15% increase on a typical premium adds up to several hundred dollars, more than the fine. <a href="/texas/ticket-cost-calculator" class="text-primary-deep font-medium hover:underline">Work out your real cost</a>.</p>
+          <p>For an eligible moving violation, the cheaper path is usually defensive driving: you pay the court's fee instead of the fine (most commonly $144), take a $28 course, and the ticket is dismissed and kept off your record. <a href="/texas/ticket-dismissal" class="text-primary-deep font-medium hover:underline">How ticket dismissal works</a>.</p>
+          <p>Can't afford the fine? Tell the court before your answer date. The judge must consider your ability to pay and can allow payments, community service, or a waiver (Tex. Code Crim. Proc. arts. 45A.252–45A.257).</p>
+        </div>
+
+        <NextStepBlock page="traffic-ticket-fines" lead="precourt" />
+
+        <h2 class="text-2xl font-bold text-text mt-12 mb-4" style={h}>Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style={h}>{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style={p}>{item.a}</p>
+            </div>
+          ))}
+        </div>
+
+        <p class="text-xs text-text-subtle pt-4 border-t border-border" style={p}>Last updated September 25, 2026. Fine ranges from the Texas Transportation Code sections cited, checked on statutes.capitol.texas.gov. Court-cost estimate per the Office of Court Administration cost charts, as used in our ticket cost calculator. Typical defensive driving court fee from Road Ready Safety's research of Texas courts. Not legal advice.</p>
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

@@ -1,0 +1,139 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+import NextStepBlock from '../../components/texas/NextStepBlock.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const paths = [
+  { path: 'Pay the ticket', cost: 'Fine ($1–$200 for most tickets) + about $126 court costs', record: 'Conviction on your driving record', insurance: 'Can be rated for about 3 years', court: 'No' },
+  { path: 'Defensive driving', cost: 'Court fee (most often $144) + $28 course + $12 driving record', record: 'Dismissed, stays off your record', insurance: 'Nothing to rate', court: 'No, request in writing' },
+  { path: 'Deferred disposition', cost: 'Court fee, set by the court', record: 'Dismissed if you stay ticket-free during probation', insurance: 'Nothing to rate if dismissed', court: 'Usually no' },
+  { path: 'Plead not guilty', cost: 'Your time; fine and costs if you lose', record: 'Depends on the outcome', insurance: 'Depends on the outcome', court: 'Yes' },
+];
+
+const faqs = [
+  {
+    q: 'Do I have to go to court for a traffic ticket in Texas?',
+    a: 'Usually not. You have to respond by the answer date on the ticket, but most people do that without a courtroom: paying online, or asking for defensive driving or deferred disposition in writing, by mail, or by email or portal where the court allows it. You only have to appear in person if you plead not guilty, if the court requires it for your offense, or if the court orders you to.',
+  },
+  {
+    q: 'Can I just pay my speeding ticket online instead of going to court?',
+    a: 'Yes, most Texas courts take online payment. But paying is a plea of guilty or no contest, so it ends with a conviction on your driving record, which insurers can rate for about three years. It also ends your chance to dismiss the ticket. If you are eligible, request defensive driving before you pay anything.',
+  },
+  {
+    q: 'How long do you have to pay a traffic ticket in Texas?',
+    a: 'Until the answer or appearance date printed on the ticket, which is usually a few weeks after the stop. That is also the deadline to ask for defensive driving. If you cannot pay in full, ask the court before that date: judges must allow payments over time when you cannot pay at once, and can allow community service or a waiver (Tex. Code Crim. Proc. arts. 45A.252–45A.257).',
+  },
+  {
+    q: 'Can I dismiss my ticket after I pay it?',
+    a: 'Generally no. Paying closes the case with a conviction, so decide before you pay.',
+  },
+  {
+    q: 'Do I have to appear in court for a citation?',
+    a: 'A citation is a written promise to appear, but you keep that promise by responding by the date on it, not necessarily by showing up in person. Ignoring it is what gets you in trouble: a failure-to-appear charge, a warrant, and a hold on renewing your license.',
+  },
+  {
+    q: 'What happens if I do nothing?',
+    a: 'The court can add a failure-to-appear charge, issue a warrant, and report you to the Failure to Appear program so you cannot renew your license until it is resolved. It costs more than any of the paths above.',
+  },
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Should You Just Pay Your Texas Ticket Online?',
+  datePublished: '2026-09-25',
+  dateModified: '2026-09-25',
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+});
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+const p = "font-family: 'DM Sans', sans-serif;";
+const h = "font-family: 'Outfit', sans-serif;";
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Should You Just Pay Your Texas Ticket Online? What Paying Really Does"
+    description="You can pay most Texas tickets online without going to court, but paying is a guilty plea and a conviction on your record. Compare paying, defensive driving and deferred, and how long you have."
+    url="/texas/should-i-pay-my-ticket-online"
+    keywords="should i pay my ticket online texas, do i have to go to court for a speeding ticket, can i pay my ticket online without going to court, how long do you have to pay a traffic ticket in texas, do you have to appear in court for a citation, does paying a ticket go on your record texas"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[960px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+        <p class="text-sm text-text-body mb-6" style={p}><a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a></p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style={h}>Should You Just Pay Your Texas Ticket Online?</h1>
+
+        <div class="bg-info border border-info-border rounded-2xl p-6 mb-10">
+          <p class="text-sm font-semibold text-primary-deep mb-2" style={h}>Short answer</p>
+          <p class="text-text-body text-base leading-7" style={p}>
+            You <strong class="text-text">can</strong> pay most Texas tickets online without ever going to court. But <strong class="text-text">paying is a guilty plea</strong>. It puts a <strong class="text-text">conviction on your driving record</strong> that insurers can rate for about three years, and it <strong class="text-text">ends your chance to dismiss the ticket</strong>. If you're eligible, asking for defensive driving also needs no court visit and keeps the ticket off your record. Either way, <strong class="text-text">decide before the answer date on your ticket</strong>.
+          </p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style={h}>Your four options, side by side</h2>
+        <div class="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 mb-4 rounded-xl border border-border">
+          <table class="w-full min-w-[760px] text-sm border-collapse" style={p}>
+            <thead>
+              <tr class="bg-surface-muted text-left border-b border-border">
+                {['Option', 'What you pay', 'Your record', 'Insurance', 'Go to court?'].map(x => <th class="py-3 px-3 font-semibold text-text">{x}</th>)}
+              </tr>
+            </thead>
+            <tbody>
+              {paths.map((r, i) => (
+                <tr class={i === 1 ? 'bg-info border-b border-info-border align-top' : 'border-b border-border align-top'}>
+                  <td class="py-3 px-3 text-text font-semibold">{r.path}</td>
+                  <td class="py-3 px-3 text-text-body">{r.cost}</td>
+                  <td class="py-3 px-3 text-text-body">{r.record}</td>
+                  <td class="py-3 px-3 text-text-body">{r.insurance}</td>
+                  <td class="py-3 px-3 text-text-body">{r.court}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p class="text-sm text-text-body mb-10" style={p}>Fines per Transp. Code §542.401; court costs per Office of Court Administration charts; typical court fee from our research of Texas courts. Defensive driving has eligibility rules: a Texas license, no CDL, not 25+ mph over, and no course in the last 12 months. <a href="/texas/defensive-driving-vs-deferred-disposition" class="text-primary-deep font-medium hover:underline">Defensive driving vs. deferred disposition</a>.</p>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style={h}>When paying really is the right call</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style={p}>
+          <ul class="list-disc pl-6 space-y-3">
+            <li><strong class="text-text">It's a paperwork ticket you can't fix,</strong> and the fine is small. (If you can fix it, like renewing an expired registration, do that instead. <a href="/texas/moving-vs-non-moving-violations" class="text-primary-deep font-medium hover:underline">Moving vs. non-moving tickets</a>.)</li>
+            <li><strong class="text-text">You already used defensive driving in the last 12 months</strong> and the court won't give you deferred disposition.</li>
+            <li><strong class="text-text">You hold a CDL</strong> and your other options are worse. <a href="/texas/cdl-defensive-driving" class="text-primary-deep font-medium hover:underline">Options for CDL holders</a>.</li>
+          </ul>
+          <p>Otherwise, run the numbers first. <a href="/texas/ticket-cost-calculator" class="text-primary-deep font-medium hover:underline">Our calculator</a> adds the three years of insurance that the payment page leaves out.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style={h}>How long you have</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style={p}>
+          <p>Until the <strong class="text-text">answer or appearance date printed on your ticket</strong>. It's the deadline to pay, and also to ask for defensive driving. Can't find it? <a href="/texas/where-is-the-citation-number" class="text-primary-deep font-medium hover:underline">What's where on a Texas ticket</a>. Already past it? <a href="/texas/missed-court-date" class="text-primary-deep font-medium hover:underline">What to do after a missed date</a>.</p>
+          <p>Can't afford to pay in full? Ask the court <em>before</em> the date. Judges must allow payments over time when you can't pay at once, and can order community service or a waiver instead.</p>
+        </div>
+
+        <NextStepBlock page="should-i-pay-online" lead="precourt" />
+
+        <h2 class="text-2xl font-bold text-text mt-12 mb-4" style={h}>Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style={h}>{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style={p}>{item.a}</p>
+            </div>
+          ))}
+        </div>
+
+        <p class="text-xs text-text-subtle pt-4 border-t border-border" style={p}>Last updated September 25, 2026. Payment alternatives per Tex. Code Crim. Proc. arts. 45A.252–45A.257; defensive driving per arts. 45A.351–45A.356; fines per Tex. Transp. Code §542.401. Not legal advice; confirm details with your court.</p>
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

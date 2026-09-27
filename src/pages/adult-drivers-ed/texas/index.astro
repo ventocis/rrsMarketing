@@ -58,36 +58,24 @@ const audiences = [
 const steps = [
   {
     n: 1,
-    title: 'Finish the six hours',
-    time: '6 hours, split over as many sittings as you like',
+    title: 'Take the course',
+    where: 'With us',
+    time: 'Six hours online, final exam and ADE-1317 certificate included',
   },
   {
     n: 2,
-    title: 'Pass the final exam',
-    time: 'Included in the course',
-  },
-  {
-    n: 3,
-    title: 'Get your certificate',
-    time: 'After your instructor signs off',
-  },
-  {
-    n: 4,
     title: 'Watch Impact Texas Adult Drivers (ITAD)',
+    where: 'On the DPS site',
     required: true,
-    time: 'Online, before your DPS visit',
+    time: 'Free, online, before your DPS visit',
     link: { href: 'https://impacttexasdrivers.dps.texas.gov/itad', label: 'Take ITAD on the DPS site' },
   },
   {
-    n: 5,
+    n: 3,
     title: 'Go to the DPS',
+    where: 'At the DPS',
     time: 'One visit, by appointment',
   },
-];
-
-const stepGroups = [
-  { label: 'With us', items: steps.filter((s) => s.n <= 3) },
-  { label: 'At the DPS', items: steps.filter((s) => s.n > 3) },
 ];
 
 const testimonials = [
@@ -333,36 +321,44 @@ const check = 'M4.8 8.2l2.1 2.1 4.3-4.4';
     </div>
   </section>
 
-  <!-- ============ 3. FIVE STEPS ============ -->
-  <!-- One narrow column, divider lines instead of boxes, one line per step. -->
+  <!-- ============ 3. THREE STEPS ============ -->
   <section class="bg-white py-20 lg:py-24">
-    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-      <Pill tone="tint">{steps.length} steps</Pill>
-      <h2 class={`mt-5 text-[36px] lg:text-[52px] text-primary-navy ${h2}`} style={outfit}>Your path to a Texas license</h2>
-      <p class="text-lg text-text-body leading-8 mt-4 mb-0">We handle the first three steps. The last two are at the DPS.</p>
-
-      {stepGroups.map((group) => (
-        <div class="mt-12">
-          <p class="text-xs font-bold uppercase tracking-[0.14em] text-text-muted m-0 pb-3 border-b border-border">{group.label}</p>
-          <ol class="list-none p-0 m-0" start={group.items[0].n}>
-            {group.items.map((s) => (
-              <li class="flex items-baseline gap-5 py-5 border-b border-border">
-                <span class="w-8 shrink-0 text-2xl font-extrabold leading-none text-primary tabular-nums" style={outfit}>{s.n}</span>
-                <div class="flex-1 min-w-0">
-                  <h3 class="text-xl font-bold text-text m-0 leading-7" style={outfit}>{s.title}</h3>
-                  <p class="text-[15px] text-text-muted leading-6 mt-1 mb-0">{s.time}</p>
-                  {s.link && <a href={s.link.href} rel="noopener" class="inline-block mt-1 text-[15px] font-semibold text-primary underline">{s.link.label} &rarr;</a>}
-                </div>
-                {s.required && <span class="shrink-0 self-center text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full bg-error-bg text-error">Required</span>}
-              </li>
-            ))}
-          </ol>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="rounded-[28px] border border-info-border overflow-hidden">
+        <div class="bg-info px-6 py-10 lg:px-14 lg:py-14 grid grid-cols-1 lg:grid-cols-2 gap-8 items-end">
+          <div class="flex flex-col gap-5 items-start">
+            <Pill tone="tint">{steps.length} steps</Pill>
+            <h2 class={`text-[40px] lg:text-[64px] text-primary-navy ${h2}`} style={outfit}>
+              Your path to
+              <span class="relative inline-block">
+                a Texas license
+                <svg class="absolute left-0 -bottom-4 w-full h-4" viewBox="0 0 200 16" preserveAspectRatio="none" aria-hidden="true"><path d="M3 12 C 60 2, 140 2, 197 9" fill="none" stroke="#2454E6" stroke-width="3.5" stroke-linecap="round"/></svg>
+              </span>
+            </h2>
+          </div>
+          <div class="flex flex-col gap-5 items-start lg:items-end">
+            <p class="text-lg lg:text-xl text-text-body leading-8 m-0 lg:text-right">
+              Step 1 is with us. The last two are with the DPS.
+            </p>
+            <a href={enrollUrl} class={btnPrimary}>{ctaLabel}</a>
+          </div>
         </div>
-      ))}
-
-      <div class="mt-10 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
-        <p class="text-base text-text-body m-0 sm:order-2">Steps 1 to 3 start here.</p>
-        <a href={enrollUrl} class={btnPrimary}>{ctaLabel}</a>
+        <ol class="grid grid-cols-1 lg:grid-cols-3 gap-px bg-info-border list-none p-0 m-0 border-t border-info-border">
+          {steps.map((s) => (
+            <li class="bg-white px-6 py-10 lg:px-10 flex flex-col gap-3">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="text-[44px] font-extrabold leading-none text-primary tabular-nums mr-2" style={outfit}>{stepNum(s.n)}</span>
+                <span class={`text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full ${s.n === 1 ? 'bg-primary-deep text-white' : 'bg-surface-muted text-text-muted border border-border'}`}>{s.where}</span>
+                {s.required && <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full bg-error-bg text-error">Required</span>}
+              </div>
+              <h3 class="text-2xl font-bold text-text m-0" style={outfit}>{s.title}</h3>
+              <p class="text-base text-text-body leading-7 m-0">{s.time}</p>
+              {s.link && (
+                <a href={s.link.href} rel="noopener" class="text-base font-semibold text-primary underline w-fit">{s.link.label} &rarr;</a>
+              )}
+            </li>
+          ))}
+        </ol>
       </div>
     </div>
   </section>

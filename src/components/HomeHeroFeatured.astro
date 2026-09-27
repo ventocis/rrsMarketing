@@ -14,25 +14,22 @@
  *   - one clear primary action: Start now → checkout, Learn more → /texas
  *   - the illustration's space goes to proof (a real review + three facts),
  *     which answers "is this site legit" for a $28 course from an unfamiliar name
- *   - the state finder is demoted to a closed disclosure. It still works exactly
- *     as before once opened; it just stops being the tallest thing on the screen.
+ *   - the "Not in Texas? Find your state's course" disclosure was removed from
+ *     the hero on 2026-09-27 at Jackson's request. The state finder still lives
+ *     further down the homepage (HeroFinder variant="cta" in pages/index.astro).
  *
  * LAYOUT
- *   desktop  [ headline + offer + finder disclosure ] [ proof ]
- *   mobile   headline → boxed purchase panel → proof → finder disclosure
+ *   desktop  [ headline + offer ] [ proof ]
+ *   mobile   headline → boxed purchase panel → proof
  * The offer is one block of markup: boxed with a large price on phones, unboxed
  * and inline on desktop.
  *
- * The finder island hydrates with client:visible. Inside a closed <details> it
- * has no box, so its JavaScript only loads for people who actually open it.
- *
  * MEASUREMENT (dataLayer): `enroll_click` {cta_location: 'home_featured'} on the
- * primary button, `finder_open` the first time the disclosure is opened. Even
+ * primary button. Even
  * without GTM receiving these, a GA4 path of "/" → /public/checkout with no
  * /texas between can only come from this button. Baseline: the homepage turned
  * 17–18% of visits into purchases, June to mid-September 2026.
  */
-import HeroFinder from './HeroFinder';
 import { FEATURED_COURSES } from '../data/featured-courses';
 import reviews from '../data/texas-reviews.json';
 
@@ -142,26 +139,12 @@ if (!review || !review.quote.includes(course.proof.reviewExcerpt)) {
         </p>
       </aside>
 
-      <!-- State finder: closed until someone asks for it -->
-      <details class="rrs-finder group lg:col-start-1 lg:row-start-2">
-        <summary class="list-none cursor-pointer inline-flex items-center gap-2.5 bg-white border border-border hover:border-primary rounded-[10px] px-4 h-11 text-sm font-medium text-text transition-colors w-fit mx-auto lg:mx-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary shadow-[0_1px_2px_rgba(16,24,40,0.05)]">
-          <span>Not in Texas? Find your state's course</span>
-          <svg class="w-4 h-4 transition-transform group-open:rotate-180" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </summary>
-        <div class="mt-3 max-w-xl mx-auto lg:mx-0">
-          <HeroFinder variant="hero" client:visible />
-        </div>
-      </details>
 
     </div>
   </div>
 </section>
 
 <style>
-  /* Safari paints the default disclosure triangle without this. */
-  .rrs-finder > summary::-webkit-details-marker { display: none; }
-  /* <details> is block-level, so the inline-flex summary needs a flex parent to centre on phones. */
-  .rrs-finder { display: flex; flex-direction: column; }
 
   .rrs-hero-wash {
     background:
@@ -186,18 +169,5 @@ if (!review || !review.quote.includes(course.proof.reviewExcerpt)) {
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({ event: 'enroll_click', cta_location: 'home_featured', course_id: link.getAttribute('data-featured-enroll') });
     });
-    function bind() {
-      var d = document.querySelector('details.rrs-finder');
-      if (!d || d.dataset.bound) return;
-      d.dataset.bound = '1';
-      var sent = false;
-      d.addEventListener('toggle', function () {
-        if (!d.open || sent) return;
-        sent = true;
-        window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push({ event: 'finder_open', location: 'home_hero' });
-      });
-    }
-    if (document.readyState !== 'loading') bind(); else document.addEventListener('DOMContentLoaded', bind);
   })();
 </script>

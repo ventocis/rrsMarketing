@@ -1,0 +1,141 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+import NextStepBlock from '../../components/texas/NextStepBlock.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const ladder = [
+  { what: 'Speeding, any amount over', cls: 'Fine-only misdemeanor', max: '$200 fine, no jail', law: 'Transp. Code §542.401' },
+  { what: 'Speeding in a work zone with workers present', cls: 'Fine-only misdemeanor', max: 'Fine doubled, up to $400, no jail', law: 'Transp. Code §542.404' },
+  { what: 'Reckless driving', cls: 'Misdemeanor', max: '$200 fine and/or 30 days in jail', law: 'Transp. Code §545.401' },
+  { what: 'Racing on a highway, first offense', cls: 'Class B misdemeanor', max: '$2,000 fine and/or 180 days in jail', law: 'Transp. Code §545.420(d); Penal Code §12.22' },
+  { what: 'Racing, while intoxicated or with an open container, or a second offense', cls: 'Class A misdemeanor', max: '$4,000 fine and/or 1 year in jail', law: 'Transp. Code §545.420(e); Penal Code §12.21' },
+  { what: 'Racing that injures someone', cls: 'Felony (third degree; second degree for serious injury or death)', max: 'Prison', law: 'Transp. Code §545.420(g), (h)' },
+];
+
+const faqs = [
+  {
+    q: 'Is going 25 over the speed limit a felony in Texas?',
+    a: 'No. Speeding in Texas is a fine-only misdemeanor at any speed, with a fine of up to $200 (Transp. Code §542.401). Going 25 mph or more over does have one real consequence: you cannot use defensive driving to dismiss the ticket. Deferred disposition is usually still available.',
+  },
+  {
+    q: 'Can you go to jail for speeding in Texas?',
+    a: 'Not for the speeding ticket itself. It is punishable by fine only, and for speeding the officer must give you a written notice to appear instead of arresting you once you sign the promise to appear (Transp. Code §543.004). Jail becomes possible if the officer charges reckless driving (up to 30 days) or racing (up to 180 days for a first offense), or if you ignore the ticket and a warrant is issued.',
+  },
+  {
+    q: 'How fast over the speed limit is a felony in Texas?',
+    a: 'There is no speed that makes speeding a felony. Driving becomes a felony only in other offenses, such as racing that injures someone, a third racing conviction, or intoxication-related offenses.',
+  },
+  {
+    q: 'Is 100 mph a felony in Texas?',
+    a: 'Speeding at 100 mph is still a fine-only speeding offense, but it is 95 mph or faster, so defensive driving cannot dismiss it. At that speed an officer may also charge reckless driving, which carries up to 30 days in jail.',
+  },
+  {
+    q: 'What is reckless driving in Texas?',
+    a: 'Driving "in wilful or wanton disregard for the safety of persons or property" (Transp. Code §545.401). It is a separate charge from speeding, the officer decides whether to bring it, and it carries a fine of up to $200, up to 30 days in jail, or both.',
+  },
+  {
+    q: 'What happens if I ignore a speeding ticket?',
+    a: 'The court can issue a warrant, report you to the Failure to Appear program so you cannot renew your license, and add a failure-to-appear charge. A warrant is the one way a fine-only ticket can end with an arrest. Respond by the date on the ticket.',
+  },
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Is Speeding a Felony in Texas? Can You Go to Jail?',
+  datePublished: '2026-09-25',
+  dateModified: '2026-09-25',
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+});
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+const p = "font-family: 'DM Sans', sans-serif;";
+const h = "font-family: 'Outfit', sans-serif;";
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Is Going 25 Over a Felony in Texas? Can You Go to Jail for Speeding?"
+    description="No. Speeding in Texas is a fine-only misdemeanor at any speed, up to $200. Jail only enters with reckless driving, racing, or an ignored ticket. What 25+ over does change, and your options."
+    url="/texas/is-speeding-a-felony"
+    keywords="is 25 over a felony in texas, is going 25 over the speed limit a felony, can you go to jail for speeding in texas, how fast over the speed limit is a felony in texas, can you go to jail for speeding 25 over, is 100 mph a felony in texas, reckless driving texas"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+        <p class="text-sm text-text-body mb-6" style={p}><a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a></p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style={h}>Is Speeding a Felony in Texas? Can You Go to Jail?</h1>
+
+        <div class="bg-info border border-info-border rounded-2xl p-6 mb-10">
+          <p class="text-sm font-semibold text-primary-deep mb-2" style={h}>Short answer</p>
+          <p class="text-text-body text-base leading-7" style={p}>
+            <strong class="text-text">No.</strong> In Texas, speeding is a <strong class="text-text">fine-only misdemeanor at any speed</strong>, with a fine of up to $200. It is never a felony, and you <strong class="text-text">can't be jailed for the speeding ticket itself</strong>. Jail only comes in if the officer charges <strong class="text-text">reckless driving or racing</strong>, or if you <strong class="text-text">ignore the ticket</strong> and the court issues a warrant. What going 25+ over does change: <strong class="text-text">defensive driving can't dismiss it</strong>.
+          </p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style={h}>When a fast-driving ticket gets more serious</h2>
+        <div class="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 mb-4 rounded-xl border border-border">
+          <table class="w-full min-w-[680px] text-sm border-collapse" style={p}>
+            <thead>
+              <tr class="bg-surface-muted text-left border-b border-border">
+                <th class="py-3 px-3 font-semibold text-text">Charge</th>
+                <th class="py-3 px-3 font-semibold text-text">Level</th>
+                <th class="py-3 px-3 font-semibold text-text">Maximum penalty</th>
+                <th class="py-3 px-3 font-semibold text-text">Law</th>
+              </tr>
+            </thead>
+            <tbody>
+              {ladder.map(r => (
+                <tr class="border-b border-border align-top">
+                  <td class="py-3 px-3 text-text font-medium">{r.what}</td>
+                  <td class="py-3 px-3 text-text-body">{r.cls}</td>
+                  <td class="py-3 px-3 text-text-body">{r.max}</td>
+                  <td class="py-3 px-3 text-text-body">{r.law}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p class="text-sm text-text-body mb-10" style={p}>Look at the charge written on your ticket. If it says speeding, the first two rows are the whole story. Reckless driving and racing are separate charges the officer has to write.</p>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style={h}>What 25 mph over actually changes</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style={p}>
+          <ul class="list-disc pl-6 space-y-3">
+            <li><strong class="text-text">No defensive driving dismissal.</strong> Speeding 25 mph or more over the limit, or 95 mph or faster, is excluded (Tex. Code Crim. Proc. art. 45A.352(a)(5)).</li>
+            <li><strong class="text-text">Deferred disposition is usually still open.</strong> You pay a fee, stay ticket-free for a probation period, and the charge is dismissed. <a href="/texas/speeding-25-over" class="text-primary-deep font-medium hover:underline">Your options at 25+ over</a>.</li>
+            <li><strong class="text-text">Insurers notice.</strong> A conviction for a large speed is rated for about three years. <a href="/texas/ticket-insurance-impact" class="text-primary-deep font-medium hover:underline">How tickets affect insurance</a>.</li>
+          </ul>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style={h}>The real jail risk: ignoring the ticket</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style={p}>
+          <p>A fine-only ticket doesn't put you in jail, but a <strong class="text-text">warrant</strong> can get you arrested and booked. Miss your answer date and the court can issue one, add a failure-to-appear charge, and block your license renewal. If you've already missed it, act now: <a href="/texas/missed-court-date" class="text-primary-deep font-medium hover:underline">what to do after a missed court date</a> and <a href="/texas/ticket-warrant" class="text-primary-deep font-medium hover:underline">how to check for a warrant</a>.</p>
+        </div>
+
+        <NextStepBlock page="is-speeding-a-felony" lead="precourt" ineligibleNote="Cited at 25+ mph over or 95+ mph? Defensive driving can't dismiss it, but deferred disposition usually can." />
+
+        <h2 class="text-2xl font-bold text-text mt-12 mb-4" style={h}>Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style={h}>{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style={p}>{item.a}</p>
+            </div>
+          ))}
+        </div>
+
+        <p class="text-xs text-text-subtle pt-4 border-t border-border" style={p}>Last updated September 25, 2026. Penalties from Tex. Transp. Code §§542.401, 542.404, 543.004, 545.401, 545.420 and Tex. Penal Code §§12.21, 12.22, checked on statutes.capitol.texas.gov; dismissal exclusion per Tex. Code Crim. Proc. art. 45A.352. This page explains the law in general and is not legal advice. If you've been charged with reckless driving or racing, talk to a lawyer.</p>
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

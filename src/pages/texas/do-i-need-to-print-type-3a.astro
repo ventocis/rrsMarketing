@@ -1,0 +1,153 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+import NextStepBlock from '../../components/texas/NextStepBlock.astro';
+import faqData from '../../data/court-faq-data.json';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+// Among researched courts that require a Type 3A, how many take paperwork
+// electronically (email or an online portal) versus only on paper. Computed at
+// build time so the page can't drift from the data.
+const research = Object.values(faqData as Record<string, any>);
+const electronic = (v: any) =>
+  v.emailAccepted === true ||
+  (v.submissionMethods ?? []).some((m: unknown) => {
+    const s = String(m).toLowerCase();
+    return !s.includes('payment') && /email|online|portal|upload|e-file|efile/.test(s);
+  });
+const t3 = research.filter(v => v.requiresType3A === true);
+const t3Electronic = t3.filter(electronic).length;
+const t3Paper = t3.length - t3Electronic;
+const pct = (n: number) => Math.round((n / t3.length) * 100);
+const n = (x: number) => x.toLocaleString('en-US');
+
+const faqs = [
+  {
+    q: 'Do I need to print my Type 3A driving record for court?',
+    a: `Only if your court takes paperwork on paper. The Type 3A you buy online from Texas DPS is a PDF. If your court accepts email or an online upload, send the PDF. If it only takes filings in person or by mail, print it. Of the ${n(t3.length)} Texas courts we have researched that require a Type 3A, ${n(t3Electronic)} (${pct(t3Electronic)}%) take paperwork electronically and ${n(t3Paper)} (${pct(t3Paper)}%) list only in-person, mail or fax.`,
+  },
+  {
+    q: 'Can I email my Type 3A driving record to the court?',
+    a: 'Yes, if the court accepts email filings. Send the unaltered PDF from DPS, attached alongside your defensive driving certificate and anything else the court lists. Do not screenshot it or re-save it as an image, because the court may need to see the original certified document.',
+  },
+  {
+    q: 'Is a printed copy of the online Type 3A accepted?',
+    a: 'The PDF you buy from DPS is the certified record, and a printout of it is what paper-filing courts expect to receive. Print the whole document, every page, and do not write on it. If your court says it needs a different form of certification, ask the clerk before you file.',
+  },
+  {
+    q: 'Do all Texas courts require a Type 3A?',
+    a: 'No. In our research, about a third of Texas courts do not require one for defensive driving. Check your court\'s instructions before you buy it; if you are unsure, get it, because it costs $12 and a missing record is a common reason a dismissal gets delayed.',
+  },
+  {
+    q: 'How much is a Type 3A driving record and how fast do I get it?',
+    a: 'Ordered online from Texas DPS it is $12 (a $10 DPS fee plus a $2 Texas.gov fee) and arrives as an instant PDF. By mail it takes weeks, so order online if you are on a deadline.',
+  },
+  {
+    q: 'When should I order the Type 3A?',
+    a: 'Around the time you finish the course, and well before your court\'s deadline. Many people order it the same day they download their certificate and send both together.',
+  },
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Do I Need to Print My Type 3A Driving Record for Court?',
+  datePublished: '2026-09-25',
+  dateModified: '2026-09-25',
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+});
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+const p = "font-family: 'DM Sans', sans-serif;";
+const h = "font-family: 'Outfit', sans-serif;";
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Do I Need to Print My Type 3A Driving Record for Court?"
+    description={`Only if your court takes paper. The DPS Type 3A is a PDF: email or upload it where accepted, print it where not. ${pct(t3Electronic)}% of Texas courts that require it take it electronically.`}
+    url="/texas/do-i-need-to-print-type-3a"
+    keywords="do i need to print type 3a driving record, can i email type 3a to court, type 3a driving record pdf, when dismissing speeding ticket do i need to print type 3a, type 3a electronic copy court texas"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+        <p class="text-sm text-text-body mb-6" style={p}><a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a></p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style={h}>Do I Need to Print My Type 3A Driving Record?</h1>
+
+        <div class="bg-info border border-info-border rounded-2xl p-6 mb-10">
+          <p class="text-sm font-semibold text-primary-deep mb-2" style={h}>Short answer</p>
+          <p class="text-text-body text-base leading-7" style={p}>
+            <strong class="text-text">Only if your court takes paperwork on paper.</strong> The Type 3A you buy online from Texas DPS comes as a PDF. If your court accepts <strong class="text-text">email or an online upload, send the PDF</strong>. If it only takes filings <strong class="text-text">in person or by mail, print it</strong>, every page. In our research, {n(t3Electronic)} of the {n(t3.length)} Texas courts that require a Type 3A ({pct(t3Electronic)}%) take paperwork electronically.
+          </p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style={h}>Print or send: how to decide in 30 seconds</h2>
+        <div class="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 mb-4 rounded-xl border border-border">
+          <table class="w-full text-sm border-collapse" style={p}>
+            <thead>
+              <tr class="bg-surface-muted text-left border-b border-border">
+                <th class="py-3 px-3 font-semibold text-text">Your court takes paperwork by…</th>
+                <th class="py-3 px-3 font-semibold text-text">What to do with the Type 3A</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b border-border"><td class="py-3 px-3 text-text">Email</td><td class="py-3 px-3 text-text-body">Attach the original PDF from DPS. Don't screenshot or convert it.</td></tr>
+              <tr class="border-b border-border"><td class="py-3 px-3 text-text">Online portal or upload</td><td class="py-3 px-3 text-text-body">Upload the original PDF.</td></tr>
+              <tr class="border-b border-border"><td class="py-3 px-3 text-text">Mail</td><td class="py-3 px-3 text-text-body">Print every page. Mail it with your certificate and affidavit.</td></tr>
+              <tr class="border-b border-border"><td class="py-3 px-3 text-text">In person or drop box</td><td class="py-3 px-3 text-text-body">Print every page and bring it with the rest of your paperwork.</td></tr>
+              <tr><td class="py-3 px-3 text-text">Fax</td><td class="py-3 px-3 text-text-body">Print it to fax it. Keep the printout.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="text-sm text-text-body mb-10" style={p}>Not sure how your court takes filings? Look it up in our <a href="/texas/courts" class="text-primary-deep font-medium hover:underline">Texas court directory</a>, or check the letter the court sent when it granted defensive driving.</p>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style={h}>What the numbers show</h2>
+        <div class="grid sm:grid-cols-2 gap-4 mb-4" style={p}>
+          <div class="rounded-2xl border border-border p-5">
+            <p class="text-3xl font-bold text-primary-navy" style={h}>{pct(t3Electronic)}%</p>
+            <p class="text-sm text-text-body mt-1">of courts requiring a Type 3A take paperwork by email or online ({n(t3Electronic)} of {n(t3.length)}). You can send the PDF.</p>
+          </div>
+          <div class="rounded-2xl border border-border p-5">
+            <p class="text-3xl font-bold text-primary-navy" style={h}>{pct(t3Paper)}%</p>
+            <p class="text-sm text-text-body mt-1">list only in-person, mail or fax ({n(t3Paper)} of {n(t3.length)}). You'll need to print it.</p>
+          </div>
+        </div>
+        <p class="text-sm text-text-body mb-10" style={p}>From Road Ready Safety's research of {n(research.length)} Texas municipal and justice courts. "Electronic" means the court lists email or an online portal for filings; payment-only portals are not counted.</p>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style={h}>Get it right the first time</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style={p}>
+          <ul class="list-disc pl-6 space-y-3">
+            <li><strong class="text-text">Order it online from DPS:</strong> $12 total, instant PDF. <a href="/texas/type-3a-driving-record" class="text-primary-deep font-medium hover:underline">Step-by-step ordering guide</a>.</li>
+            <li><strong class="text-text">Order it around the time you finish the course</strong> and send it with your certificate.</li>
+            <li><strong class="text-text">Send everything together:</strong> course certificate, Type 3A, and the affidavit if your court asks for one.</li>
+            <li><strong class="text-text">Keep the original PDF</strong> even if you mail a printout, in case the court asks again.</li>
+          </ul>
+        </div>
+
+        <NextStepBlock page="print-type-3a" lead="eligible" />
+
+        <h2 class="text-2xl font-bold text-text mt-12 mb-4" style={h}>Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style={h}>{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style={p}>{item.a}</p>
+            </div>
+          ))}
+        </div>
+
+        <p class="text-xs text-text-subtle pt-4 border-t border-border" style={p}>Last updated September 25, 2026. Court figures computed at build time from Road Ready Safety's research of Texas municipal and justice courts. Type 3A price and delivery per Texas DPS and Texas.gov. Court procedures change; confirm with your court.</p>
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

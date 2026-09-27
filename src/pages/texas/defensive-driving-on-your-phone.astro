@@ -1,0 +1,151 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+import NextStepBlock from '../../components/texas/NextStepBlock.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    q: 'Can I take Texas defensive driving on my phone?',
+    a: 'Yes. Online Texas defensive driving courses are approved to be taken on any device, and ours runs in your phone\'s web browser. There is no app to install. Your progress saves as you go, so you can start on your phone and finish on a laptop, or the other way around.',
+  },
+  {
+    q: 'Do I need to download an app?',
+    a: 'No. Open the course in Safari, Chrome or any modern mobile browser and sign in. That is all.',
+  },
+  {
+    q: 'Does the phone course count the same as a computer or classroom course?',
+    a: 'Yes. It is the same TDLR-approved six-hour course with the same state certificate. Courts care that the provider is TDLR-approved, not which device you used.',
+  },
+  {
+    q: 'Can I switch between my phone and computer?',
+    a: 'Yes. Sign in with the same account on either device and you pick up where you left off, including the time you have already completed.',
+  },
+  {
+    q: 'How do I get my certificate on my phone?',
+    a: 'When you finish, the certificate downloads as a PDF. Save it to your phone\'s files or email it to yourself, then submit it the way your court asks. If your court needs a Type 3A driving record, you can order that from Texas DPS on your phone too.',
+  },
+  {
+    q: 'Is the course a video I have to watch?',
+    a: 'No. It is short reading pages with images and quick check-in questions, which is easier on a small screen than a long video. There is no narration, so you do not need headphones.',
+  },
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Take Texas Defensive Driving on Your Phone',
+  datePublished: '2026-09-24',
+  dateModified: '2026-09-24',
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+});
+const howToSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'How to take Texas defensive driving on your phone',
+  totalTime: 'PT6H',
+  step: [
+    { '@type': 'HowToStep', name: 'Get the court\'s approval', text: 'Request defensive driving from your court on or before the answer date on your ticket.' },
+    { '@type': 'HowToStep', name: 'Enroll from your phone', text: 'Open the course in your mobile browser, create an account and pay the $28 total.' },
+    { '@type': 'HowToStep', name: 'Work through the modules', text: 'Read each page until its timer ends. Take the two 30-minute breaks. Progress saves if you stop.' },
+    { '@type': 'HowToStep', name: 'Pass the chapter quizzes', text: 'Answer the short quiz after each chapter. You need 70% and can retake as needed.' },
+    { '@type': 'HowToStep', name: 'Save your certificate', text: 'Download the certificate PDF the moment you finish and submit it to your court with any other documents it requires.' },
+  ],
+});
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Texas Defensive Driving on Your Phone (No App Needed)"
+    description="Yes, you can take Texas defensive driving on your phone. It runs in your browser, saves your progress across devices, and your certificate downloads the minute you finish. $28 total."
+    url="/texas/defensive-driving-on-your-phone"
+    keywords="texas defensive driving on phone, can i take defensive driving on my phone texas, texas defensive driving app, mobile defensive driving texas, defensive driving on iphone, texas defensive driving course mobile friendly"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={howToSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          Take Texas Defensive Driving on Your Phone
+        </h1>
+
+        <div class="bg-info border border-info-border rounded-2xl p-6 mb-10">
+          <p class="text-sm font-semibold text-primary-deep mb-2" style="font-family: 'Outfit', sans-serif;">Short answer</p>
+          <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;">
+            Yes. The Road Ready Safety course <strong class="text-text">runs in your phone's browser, with no app to install</strong>. It counts exactly the same as taking it on a computer or in a classroom. <strong class="text-text">Your progress saves as you go</strong>, so you can start on your phone at lunch and finish on a laptop at night. When you're done, the <strong class="text-text">certificate downloads right to your phone</strong>. $28 total.
+          </p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Why it works well on a small screen</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <ul class="list-disc pl-6 space-y-3">
+            <li><strong class="text-text">Short reading pages, not long videos.</strong> Each page is a few paragraphs and an image. No buffering, no headphones, and it works on a weak signal.</li>
+            <li><strong class="text-text">Stop any time.</strong> Close the browser and your place and your completed time are saved. There are also two built-in 30-minute breaks.</li>
+            <li><strong class="text-text">Switch devices freely.</strong> Sign in on another phone, tablet or computer and pick up where you stopped.</li>
+            <li><strong class="text-text">Quizzes you can retake.</strong> A short quiz follows each chapter. You need 70%, and you can try again as often as you need.</li>
+            <li><strong class="text-text">The certificate is a download, not a mailing.</strong> Save the PDF to your phone the minute you finish and send it to the court the same day.</li>
+          </ul>
+          <p>Want to see it first? <a href="/texas/what-the-course-looks-like" class="text-primary-deep font-medium hover:underline">Here is what every module looks like</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Start to finish on your phone</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <ol class="list-decimal pl-6 space-y-3">
+            <li><strong class="text-text">Get the court's OK first.</strong> Ask your court for defensive driving on or before the answer date on your ticket. Some courts take the request by email or through a portal. <a href="/texas/request-defensive-driving" class="text-primary-deep font-medium hover:underline">How to request it</a>.</li>
+            <li><strong class="text-text">Enroll from your phone.</strong> Create an account and pay $28. That is the whole price, certificate included.</li>
+            <li><strong class="text-text">Read through the modules.</strong> Each page has a minimum time; the Next button lights up when it ends. Six hours total, which is the state minimum for every approved course.</li>
+            <li><strong class="text-text">Pass the chapter quizzes.</strong> 70% to pass, unlimited retries.</li>
+            <li><strong class="text-text">Save the certificate and send it in.</strong> Download the PDF, add the Type 3A driving record if your court wants one (you can order it from Texas DPS on your phone), and submit everything the way your court asks.</li>
+          </ol>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Tips for doing it on a phone</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <ul class="list-disc pl-6 space-y-3">
+            <li><strong class="text-text">Never do it while driving.</strong> It's a phone, it's a driving course, and yes, people try.</li>
+            <li><strong class="text-text">Plug in for long sessions.</strong> Six hours of screen time drains a battery.</li>
+            <li><strong class="text-text">If a page seems stuck, refresh once.</strong> Your time and place are kept.</li>
+            <li><strong class="text-text">Use Wi-Fi if you can,</strong> though the pages are light and work fine on mobile data.</li>
+            <li><strong class="text-text">Save the certificate somewhere you can find it,</strong> such as Files on iPhone or Downloads on Android, and email a copy to yourself.</li>
+          </ul>
+        </div>
+
+        <NextStepBlock page="phone" lead="eligible" />
+
+        <h2 class="text-2xl font-bold text-text mt-12 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;">{item.a}</p>
+            </div>
+          ))}
+        </div>
+
+        <div class="pt-4 border-t border-border">
+          <a href={enrollUrl} class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline" style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);">
+            Start on Your Phone for $28
+          </a>
+          <p class="text-xs text-text-subtle mt-6" style="font-family: 'DM Sans', sans-serif;">Last updated September 24, 2026. Course length and 70% mastery standard per TDLR's Course of Organized Instruction for Six-Hour Driving Safety; court requirement per Tex. Code Crim. Proc. art. 45A.352. Type 3A driving record is ordered from Texas DPS.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

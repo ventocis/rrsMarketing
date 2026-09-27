@@ -1,0 +1,201 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+const contactUrl = import.meta.env.VITE_CONTACT_US_URL || 'https://roadreadysafety.com/support';
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+// Snapshot of our public Trustpilot profile. Update the numbers and the date
+// together, by hand, from the live page. Themes are paraphrased (no quoting),
+// counted from the reviews visible on the profile on the snapshot date.
+const trustpilotUrl = 'https://www.trustpilot.com/review/roadreadysafety.com';
+const snapshot = {
+  date: 'September 24, 2026',
+  score: '4.2',
+  count: 13,
+  bars: [
+    { stars: 5, pct: 77 },
+    { stars: 4, pct: 15 },
+    { stars: 3, pct: 0 },
+    { stars: 2, pct: 8 },
+    { stars: 1, pct: 0 },
+  ],
+};
+const themes = [
+  { title: 'No hidden fees', body: 'The most common point. Six reviewers said the price they saw was the price they paid, with the certificate included, and one contrasted that with courses that add a certificate charge at the end.' },
+  { title: 'Helpful support', body: 'Six reviewers mentioned getting help quickly: fixing a mistyped email over a weekend, updating a course, or sorting out a certificate download.' },
+  { title: 'Simple to use', body: 'Several described the course as easy to follow and easy to navigate, with the two breaks and the quizzes keeping it moving.' },
+  { title: 'Certificate right away', body: 'Three reviewers called out being able to print or save the certificate the moment they finished.' },
+];
+const critiques = [
+  { title: 'No video or audio (4 stars)', body: 'One reviewer liked the course but took off a star because it is text only. That is accurate. The course is reading with images, by design, and there is no narration. If you learn better from video, a video-format course will suit you better, and it will be the same six hours.' },
+  { title: 'Lessons felt machine-written, quizzes too easy (2 stars)', body: 'One reviewer felt the lessons read as if written by AI and that the quizzes tested test-taking more than understanding. That is a fair thing to weigh. The quizzes are short on purpose: the state sets a 70% mastery bar, each quiz follows the chapter it covers, and you can retake it. If you want to judge the writing yourself, the module list below shows what every chapter covers.' },
+];
+
+const faqs = [
+  {
+    q: 'Is Road Ready Safety legit?',
+    a: `Yes. Road Ready Safety is a Texas driving safety course provider licensed by TDLR under license CP1234, with a current status you can check on TDLR's license search. It is rated ${snapshot.score} out of 5 on Trustpilot from ${snapshot.count} reviews (as of ${snapshot.date}), and the company is based at 5900 Balcones Drive, Suite 100, Austin, TX 78731.`,
+  },
+  {
+    q: 'Is Road Ready Safety accepted by Texas courts?',
+    a: 'Yes. Texas law requires a TDLR-approved driving safety course for ticket dismissal, and Road Ready Safety is TDLR-approved. The certificate is the standard Texas uniform certificate of completion.',
+  },
+  {
+    q: 'What do Road Ready Safety reviews say?',
+    a: 'The most common praise is no hidden fees, quick support, an easy-to-use course, and a certificate you can download right away. The two critical reviews said the course has no video or audio, and that the lessons and quizzes felt too simple.',
+  },
+  {
+    q: 'Can I get a refund from Road Ready Safety?',
+    a: 'Yes. Texas law gives you a full refund if you cancel in writing before midnight of the third calendar day after you enroll, not counting weekends and legal holidays, even if you have started the course. The full policy, including later withdrawals, is on our refund page.',
+  },
+  {
+    q: 'How do I contact Road Ready Safety?',
+    a: 'Call (888) 885-5707, email info@roadreadysafety.com, or use the support page.',
+  },
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Is Road Ready Safety Legit? Reviews, TDLR License and Refund Policy',
+  datePublished: '2026-09-24',
+  dateModified: '2026-09-24',
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+});
+const orgSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Road Ready Safety',
+  url: siteUrl,
+  telephone: '+1-888-885-5707',
+  email: 'info@roadreadysafety.com',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: '5900 Balcones Drive, Suite 100',
+    addressLocality: 'Austin',
+    addressRegion: 'TX',
+    postalCode: '78731',
+    addressCountry: 'US',
+  },
+  sameAs: [trustpilotUrl],
+});
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Road Ready Safety Reviews: Is It Legit? (TDLR License CP1234)"
+    description="Is Road Ready Safety legit? Yes: TDLR license CP1234, rated 4.2 on Trustpilot. What reviewers praise, the two complaints with our answers, refunds, and how to reach us."
+    url="/texas/road-ready-safety-reviews"
+    keywords="road ready safety reviews, is road ready safety legit, road ready safety legit, roadreadysafety.com reviews, road ready safety trustpilot, road ready safety defensive driving review, road ready safety scam"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={orgSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          Is Road Ready Safety Legit? Reviews, License and Refunds
+        </h1>
+
+        <div class="bg-info border border-info-border rounded-2xl p-6 mb-10">
+          <p class="text-sm font-semibold text-primary-deep mb-2" style="font-family: 'Outfit', sans-serif;">Short answer</p>
+          <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;">
+            Yes. Road Ready Safety is <strong class="text-text">licensed by TDLR as provider CP1234</strong>, and Texas courts accept its certificate for ticket dismissal. On <a href={trustpilotUrl} class="text-primary-deep font-medium hover:underline" rel="noopener" target="_blank">Trustpilot</a> it is rated <strong class="text-text">{snapshot.score} out of 5 from {snapshot.count} reviews</strong>. Reviewers most often mention no hidden fees and quick support. The two critical reviews are below too, with our answers. This page is written by us, so every claim links somewhere you can check it.
+          </p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Check us in two minutes</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <ul class="list-disc pl-6 space-y-3">
+            <li><strong class="text-text">State license:</strong> search "CP1234" or "Road Ready Safety" on the <a href="https://www.tdlr.texas.gov/LicenseSearch/" class="text-primary-deep font-medium hover:underline" rel="noopener" target="_blank">TDLR license search</a>. Every approved Texas provider has a CP number. No CP number, no court dismissal.</li>
+            <li><strong class="text-text">Independent reviews:</strong> read all of them, good and bad, on <a href={trustpilotUrl} class="text-primary-deep font-medium hover:underline" rel="noopener" target="_blank">our Trustpilot page</a>. We invite every customer to leave one.</li>
+            <li><strong class="text-text">A real address and phone:</strong> 5900 Balcones Drive, Suite 100, Austin, TX 78731. <a href="tel:+18888855707" class="text-primary-deep font-medium hover:underline">(888) 885-5707</a>.</li>
+            <li><strong class="text-text">A price that doesn't change at checkout:</strong> $28 total, certificate included. See <a href="/texas/pricing" class="text-primary-deep font-medium hover:underline">pricing</a>.</li>
+            <li><strong class="text-text">A written refund policy:</strong> full refund if you cancel in writing within three days of enrolling (weekends and holidays don't count), as Texas law requires. See the <a href="/texas/refund" class="text-primary-deep font-medium hover:underline">refund policy</a>.</li>
+          </ul>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Our Trustpilot rating</h2>
+        <div class="rounded-2xl border border-border p-6 mb-4" style="font-family: 'DM Sans', sans-serif;">
+          <div class="flex items-baseline gap-3 mb-4">
+            <span class="text-4xl font-bold text-primary-navy" style="font-family: 'Outfit', sans-serif;">{snapshot.score}</span>
+            <span class="text-text-body">out of 5 · {snapshot.count} reviews</span>
+          </div>
+          <div class="space-y-2">
+            {snapshot.bars.map(b => (
+              <div class="flex items-center gap-3 text-sm">
+                <span class="w-14 text-text-body">{b.stars} star</span>
+                <span class="flex-1 h-2.5 rounded-full bg-surface-muted overflow-hidden"><span class="block h-full bg-primary" style={`width:${b.pct}%`}></span></span>
+                <span class="w-10 text-right text-text-body">{b.pct}%</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <p class="text-sm text-text-body mb-10" style="font-family: 'DM Sans', sans-serif;">As shown on Trustpilot on {snapshot.date}. The live score may have changed; <a href={trustpilotUrl} class="text-primary-deep font-medium hover:underline" rel="noopener" target="_blank">see it on Trustpilot</a>.</p>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What reviewers like</h2>
+        <div class="grid sm:grid-cols-2 gap-4 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          {themes.map(t => (
+            <div class="rounded-2xl border border-border p-5">
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{t.title}</h3>
+              <p class="text-text-body text-base leading-7">{t.body}</p>
+            </div>
+          ))}
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What reviewers didn't like, and our answer</h2>
+        <div class="space-y-4 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          {critiques.map(c => (
+            <div class="rounded-2xl border border-border p-5">
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{c.title}</h3>
+              <p class="text-text-body text-base leading-7">{c.body}</p>
+            </div>
+          ))}
+          <p class="text-text-body text-base leading-7">Want to judge the course for yourself before paying? <a href="/texas/what-the-course-looks-like" class="text-primary-deep font-medium hover:underline">See every module and how the quizzes work</a>, or try our <a href="/texas/defensive-driving-practice-test" class="text-primary-deep font-medium hover:underline">free practice test</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Who this course is right for</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <ul class="list-disc pl-6 space-y-3">
+            <li><strong class="text-text">Good fit:</strong> you want the lowest total price, a certificate the minute you finish, and a course you can read at your own pace on a phone or computer.</li>
+            <li><strong class="text-text">Not the best fit:</strong> you want video lessons or narration, or you need the course in Spanish (<a href="/texas/spanish" class="text-primary-deep font-medium hover:underline">ours is English for now</a>).</li>
+          </ul>
+          <p>Had a problem with us? <a href={contactUrl} class="text-primary-deep font-semibold hover:underline">Tell us</a> and a person will answer.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-12 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;">{item.a}</p>
+            </div>
+          ))}
+        </div>
+
+        <div class="pt-4 border-t border-border">
+          <a href={enrollUrl} class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline" style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);">
+            Take the $28 Course
+          </a>
+          <p class="text-xs text-text-subtle mt-6" style="font-family: 'DM Sans', sans-serif;">Last updated {snapshot.date}. Rating and review themes from Road Ready Safety's public Trustpilot profile on that date; themes are summarized, not quoted. License per TDLR records (provider CP1234). Refund terms per our published refund policy and Tex. Educ. Code §1001.401.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

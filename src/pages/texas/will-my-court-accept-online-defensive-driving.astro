@@ -1,0 +1,168 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+import NextStepBlock from '../../components/texas/NextStepBlock.astro';
+import { courtStats as s } from '../../lib/court-stats';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const n = (x: number) => x.toLocaleString('en-US');
+const methodRows = s.methods.rows.filter(r => r.count >= 10).slice(0, 6);
+
+const faqs = [
+  {
+    q: 'Will my Texas court accept an online defensive driving course?',
+    a: 'Yes, if the course is approved by TDLR. The law that lets you dismiss a ticket (Tex. Code Crim. Proc. art. 45A.352) requires "a driving safety course approved by the Texas Department of Licensing and Regulation." It does not say classroom, and it does not let the court pick the provider. Online courses are approved under the same program and produce the same state certificate.',
+  },
+  {
+    q: 'Can a Texas judge make me take a classroom course instead of online?',
+    a: 'For ticket dismissal under Chapter 45A, the requirement is a TDLR-approved driving safety course. The statute does not require a classroom. What courts do control is the paperwork: the deadline, how you submit it, and whether they want a notarized affidavit.',
+  },
+  {
+    q: 'Why would a court reject an online defensive driving certificate?',
+    a: 'Almost never because it was online. The common reasons are taking the course before the court granted it, missing the deadline, leaving out the Type 3A driving record, a name or birthday that does not match the citation, or having used defensive driving in the 12 months before the offense.',
+  },
+  {
+    q: 'Do I need permission from the court before taking the course?',
+    a: 'Yes. You must request the course on or before the answer date on your ticket, in person, by certified mail, or through a court email address or portal if the court has one. Take the course after the court grants the request, not before.',
+  },
+  {
+    q: 'How do I find out exactly what my court wants?',
+    a: `Look up your court in our directory of ${n(s.totalCourts)} Texas municipal and justice courts. For the courts we have researched, the page lists the fee, deadline, how to submit, and whether a Type 3A record or a notary is required.`,
+  },
+  {
+    q: 'Is Road Ready Safety accepted by Texas courts?',
+    a: 'Yes. Road Ready Safety is TDLR-approved (provider CP1234). The certificate is the standard Texas uniform certificate of completion that courts accept statewide for dismissal of an eligible ticket.',
+  },
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Will Your Texas Court Accept Online Defensive Driving?',
+  description: `What Texas law says about online defensive driving for ticket dismissal, and what ${n(s.researched)} researched courts require on paperwork.`,
+  datePublished: '2026-09-24',
+  dateModified: '2026-09-24',
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+});
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Will My Texas Court Accept Online Defensive Driving?"
+    description={`Yes, if the course is TDLR-approved. That is all the law asks. Courts differ on paperwork, so see what ${n(s.researched)} Texas courts require: deadlines, filing and the Type 3A.`}
+    url="/texas/will-my-court-accept-online-defensive-driving"
+    keywords="does my court accept online defensive driving texas, is online defensive driving accepted by all texas courts, can judge require classroom defensive driving texas, court approved defensive driving texas online, online defensive driving accepted texas courts"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          Will Your Texas Court Accept Online Defensive Driving?
+        </h1>
+
+        <div class="bg-info border border-info-border rounded-2xl p-6 mb-10">
+          <p class="text-sm font-semibold text-primary-deep mb-2" style="font-family: 'Outfit', sans-serif;">Short answer</p>
+          <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;">
+            <strong class="text-text">Yes, as long as the course is approved by TDLR.</strong> Texas law requires "a driving safety course approved by the Texas Department of Licensing and Regulation" to dismiss a ticket. It does not require a classroom, and it does not let the court choose the provider. Where courts really differ is the paperwork: <strong class="text-text">the deadline, how you submit, and whether they want a Type 3A driving record or a notary</strong>. Those are the things that get certificates rejected.
+          </p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What the law actually says</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Article 45A.352 of the Texas Code of Criminal Procedure says the judge <em>shall</em> require you to complete a TDLR-approved driving safety course if you are eligible and request it on time. The only thing the law asks of the course is TDLR approval. Online and classroom courses are approved under the same program and issue the same uniform certificate of completion.</p>
+          <p>So the question to ask is not "online or classroom?" It is "is this provider approved?" Every approved provider has a license number that starts with CP. Ours is <strong class="text-text">CP1234</strong>. You can check any provider in our <a href="/texas/tdlr-approved" class="text-primary-deep font-medium hover:underline">list of TDLR-approved courses</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Where courts differ: the paperwork</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <p>We have researched the defensive driving procedure at <strong class="text-text">{n(s.researched)} of Texas's {n(s.totalCourts)} municipal and justice courts</strong> ({s.researchedPct}%). Here is what varies, counted only among courts where we know the answer.</p>
+        </div>
+
+        <div class="grid sm:grid-cols-3 gap-4 mb-8" style="font-family: 'DM Sans', sans-serif;">
+          <div class="rounded-2xl border border-border p-5">
+            <p class="text-3xl font-bold text-primary-navy" style="font-family: 'Outfit', sans-serif;">{s.type3a.pctYes}%</p>
+            <p class="text-sm text-text-body mt-1">require a Type 3A driving record from DPS ({n(s.type3a.yes)} of {n(s.type3a.known)})</p>
+          </div>
+          <div class="rounded-2xl border border-border p-5">
+            <p class="text-3xl font-bold text-primary-navy" style="font-family: 'Outfit', sans-serif;">{s.notary.pctYes}%</p>
+            <p class="text-sm text-text-body mt-1">require a notarized affidavit ({n(s.notary.yes)} of {n(s.notary.known)})</p>
+          </div>
+          <div class="rounded-2xl border border-border p-5">
+            <p class="text-3xl font-bold text-primary-navy" style="font-family: 'Outfit', sans-serif;">${s.fee.min}–${s.fee.max}</p>
+            <p class="text-sm text-text-body mt-1">court fee for defensive driving, paid to the court ({n(s.fee.known)} courts with a verified fee; {s.fee.pctExactly144}% charge exactly $144)</p>
+          </div>
+        </div>
+
+        <h3 class="text-lg font-semibold text-text mb-3" style="font-family: 'Outfit', sans-serif;">How courts take the paperwork</h3>
+        <div class="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 mb-4 rounded-xl border border-border">
+          <table class="w-full text-sm border-collapse" style="font-family: 'DM Sans', sans-serif;">
+            <thead>
+              <tr class="bg-surface-muted text-left border-b border-border">
+                <th class="py-3 px-3 font-semibold text-text">Submission method accepted</th>
+                <th class="py-3 px-3 font-semibold text-text">Courts</th>
+                <th class="py-3 px-3 font-semibold text-text">Share</th>
+              </tr>
+            </thead>
+            <tbody>
+              {methodRows.map(r => (
+                <tr class="border-b border-border">
+                  <td class="py-3 px-3 text-text">{r.method}</td>
+                  <td class="py-3 px-3 text-text-body">{n(r.count)}</td>
+                  <td class="py-3 px-3 text-text-body">{r.pct}%</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p class="text-sm text-text-body mb-10" style="font-family: 'DM Sans', sans-serif;">Out of {n(s.methods.known)} courts with a known method. Most courts accept more than one, so shares add up to more than 100%. A 2025 law (S.B. 296) lets courts take requests by email or portal, but many still do not. Full findings in our <a href="/texas/traffic-ticket-report" class="text-primary-deep font-medium hover:underline">Texas Traffic Ticket Report</a>.</p>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Four steps so your certificate is accepted</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <ol class="list-decimal pl-6 space-y-3">
+            <li><strong class="text-text">Ask the court first.</strong> Request defensive driving on or before the answer date on your ticket. A course taken before the court grants it usually does not count. <a href="/texas/request-defensive-driving" class="text-primary-deep font-medium hover:underline">How to request it</a>.</li>
+            <li><strong class="text-text">Pick any TDLR-approved course.</strong> Online is fine. Check for the CP license number.</li>
+            <li><strong class="text-text">Finish inside your court's deadline.</strong> State law allows 90 days, and your court's letter may set its own date. Leave a week of cushion.</li>
+            <li><strong class="text-text">Send exactly what your court lists.</strong> Usually the certificate, the Type 3A record, and the affidavit. Make sure the name and birthday match your ticket. If something goes wrong, see <a href="/texas/certificate-rejected" class="text-primary-deep font-medium hover:underline">what to do if a certificate is rejected</a>.</li>
+          </ol>
+          <p><a href="/texas/courts" class="text-primary-deep font-semibold hover:underline">Look up your court's exact requirements →</a></p>
+        </div>
+
+        <NextStepBlock page="will-my-court-accept-online" lead="precourt" />
+
+        <h2 class="text-2xl font-bold text-text mt-12 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;">{item.a}</p>
+            </div>
+          ))}
+        </div>
+
+        <div class="pt-4 border-t border-border">
+          <a href={enrollUrl} class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline" style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);">
+            Take the $28 TDLR-Approved Course
+          </a>
+          <p class="text-xs text-text-subtle mt-6" style="font-family: 'DM Sans', sans-serif;">Last updated September 24, 2026. Course requirement per Tex. Code Crim. Proc. art. 45A.352 (as amended by S.B. 296, 2025); 90-day period per art. 45A.356. Court figures are computed from Road Ready Safety's own research of Texas municipal and justice courts each time this page is built, and each rate is reported only against courts where the answer is known. Court procedures change; confirm with your court.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

@@ -38,7 +38,7 @@ export const FEATURED_COURSES: FeaturedCourse[] = [
     price: '28',
     enrollFallback: '/courses/tx-defensive',
     learnMoreHref: '/texas',
-    offerLine: 'Texas defensive driving · $28 all-in',
+    offerLine: '$28 all-in · certificate included',
     heroPoints: [
       'State-approved. Works on your phone.',
       'Get your certificate the moment you finish.',

@@ -202,13 +202,6 @@ const lineItems = [
   { label: 'Exam retakes', value: '$0.00', good: true },
 ];
 
-const texasLinks = [
-  { label: 'Texas Department of Licensing and Regulation (TDLR)', href: 'https://www.tdlr.texas.gov/' },
-  { label: 'Tex. Transp. Code §521.1601: driver education under 25', href: statuteHref },
-  { label: 'DPS: apply for a Texas driver license', href: 'https://www.dps.texas.gov/section/driver-license/apply-texas-driver-license' },
-  { label: 'DPS: Impact Texas Adult Drivers (ITAD)', href: 'https://impacttexasdrivers.dps.texas.gov/itad' },
-];
-
 const btnPrimary =
   'bg-primary hover:bg-primary-hover text-white h-[52px] px-8 rounded-full text-base font-semibold inline-flex items-center justify-center gap-2 no-underline transition-colors shadow-[0_8px_20px_-8px_rgba(36,84,230,0.55)]';
 const btnSecondary =
@@ -501,27 +494,6 @@ const check = 'M4.8 8.2l2.1 2.1 4.3-4.4';
           </details>
         ))}
       </div>
-    </div>
-  </section>
-
-  <!-- ============ 7. MADE FOR TEXAS — only sentences already on this page, plus official links ============ -->
-  <section class="bg-primary-navy text-white py-20 lg:py-28">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center gap-6 text-center">
-      <Pill tone="dark">Built for Texas's rules</Pill>
-      <h2 class={`text-[32px] lg:text-[44px] ${h2}`} style={outfit}>Made for Texas's adult driver education rules</h2>
-      <p class="text-base lg:text-lg text-info-border leading-8 max-w-3xl m-0">
-        Approved by the Texas Department of Licensing and Regulation (TDLR) &mdash; the agency that signs off on driver education in Texas.
-        Nine modules, set by the state. Finish the course and you have satisfied the highway sign and traffic law portions of the DPS knowledge exam.
-      </p>
-      <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6 w-full list-none p-0 m-0 mt-4">
-        {texasLinks.map((l) => (
-          <li>
-            <a href={l.href} target="_blank" rel="noopener noreferrer" class="flex items-center h-full gap-4 rounded-[20px] border border-white/25 bg-white/5 px-6 py-6 text-left text-lg font-semibold text-white underline underline-offset-4 decoration-info-border hover:bg-white/10">
-              {l.label}
-            </a>
-          </li>
-        ))}
-      </ul>
     </div>
   </section>
 

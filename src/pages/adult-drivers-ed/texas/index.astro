@@ -40,21 +40,18 @@ const audiences = [
     status: 'Not yet',
     tone: 'muted',
     heading: 'Your course is a different one',
-    body: 'Drivers under 18 take a longer course that includes supervised driving hours behind the wheel. This one begins at 18.',
   },
   {
     age: '18 to 24',
     status: 'Required',
     tone: 'primary',
     heading: 'Texas requires this course',
-    body: 'If you are 18 to 24 and getting your first Texas license, the state requires these six hours. You have to finish all of it.',
   },
   {
     age: '25 and over',
     status: 'Optional',
     tone: 'info',
     heading: 'Not required. Still worth it.',
-    body: 'Texas does not require the course once you turn 25. People take it anyway because the sign and traffic law exam is part of it.',
   },
 ];
 
@@ -63,35 +60,34 @@ const steps = [
     n: 1,
     title: 'Finish the six hours',
     time: '6 hours, split over as many sittings as you like',
-    body: 'Nine modules, self-paced. Most people finish across two or three sittings.',
   },
   {
     n: 2,
     title: 'Pass the final exam',
     time: 'Included in the course',
-    body: `${ade.exam.questions} questions — ${ade.exam.signsQuestions} on highway signs, ${ade.exam.lawsQuestions} on traffic laws. Miss it and you get two more tries.`,
   },
   {
     n: 3,
     title: 'Get your certificate',
     time: 'After your instructor signs off',
-    body: 'A licensed Texas instructor signs off on your record and we email your certificate. It is called an ADE-1317 — the state\'s name for the adult driver education certificate. Print it; a paper copy is what gets accepted.',
   },
   {
     n: 4,
     title: 'Watch Impact Texas Adult Drivers (ITAD)',
-    where: 'On the DPS site',
     required: true,
     time: 'Online, before your DPS visit',
-    body: 'A free one-hour video from Texas DPS, required once you hold an ADE-1317 certificate. You watch it on the DPS site, not here, and DPS emails you the certificate. It stays valid 90 days — watch it close to your skills test, because if 90 days pass before you pass, you start over.',
     link: { href: 'https://impacttexasdrivers.dps.texas.gov/itad', label: 'Take ITAD on the DPS site' },
   },
   {
     n: 5,
     title: 'Go to the DPS',
     time: 'One visit, by appointment',
-    body: 'The Department of Public Safety (DPS) is where Texas issues licenses. Bring your certificates and your documents. You still take the vision screening and the driving test there.',
   },
+];
+
+const stepGroups = [
+  { label: 'With us', items: steps.filter((s) => s.n <= 3) },
+  { label: 'At the DPS', items: steps.filter((s) => s.n > 3) },
 ];
 
 const testimonials = [
@@ -197,7 +193,6 @@ const chips = ['Exam built in', 'Works on your phone', 'Certificate included'];
 const dpsBand = law.dpsRequirementText.split('. ')[0];
 const dpsWaiver = 'waived for new residents 18 or older who are surrendering a valid, unexpired driver license from another state';
 
-const stepTag = (s: (typeof steps)[number]) => s.where ?? (s.n <= 3 ? 'With us' : 'At the DPS');
 const stepNum = (n: number) => String(n).padStart(2, '0');
 
 const lineItems = [
@@ -321,60 +316,60 @@ const check = 'M4.8 8.2l2.1 2.1 4.3-4.4';
           </li>
         ))}
       </ul>
-      <div class="flex flex-col gap-4 max-w-3xl text-base lg:text-lg text-info-border leading-8">
+      <!-- First sentence shows; the rest sits in a <details> so it stays in the HTML for search engines. -->
+      <div class="rrs-readmore max-w-3xl text-base lg:text-lg text-info-border leading-8">
         <p class="m-0">
           Texas won't issue a first license to anyone under 25 who hasn't finished driver education
-          (<a href={statuteHref} class="underline text-white" target="_blank" rel="noopener noreferrer">Transportation Code §521.1601</a>).
-          The Department of Public Safety (DPS) puts it this way: &ldquo;{dpsBand}.&rdquo; The requirement is {dpsWaiver}.
+          (<a href={statuteHref} class="underline text-white" target="_blank" rel="noopener noreferrer">Transportation Code §521.1601</a>)<span class="rrs-readmore-period">.</span><span class="rrs-readmore-dots" aria-hidden="true">&hellip;</span>
         </p>
-        <p class="m-0">
-          For first-time applicants over 25, DPS says you are &ldquo;not required to have completed driver education, however it is highly recommended.&rdquo;
-          Not sure where you fit? <a href={guideHref} class="underline text-white font-semibold">Do I need adult drivers ed?</a>
-        </p>
+        <details class="rrs-readmore-details">
+          <summary class="rrs-readmore-toggle mt-2 inline-flex cursor-pointer list-none font-semibold text-white underline underline-offset-4">
+            <span class="rrs-readmore-more">Read more</span><span class="rrs-readmore-less">Read less</span>
+          </summary>
+          <div class="flex flex-col gap-4 mt-3">
+            <p class="m-0">
+              The Department of Public Safety (DPS) puts it this way: &ldquo;{dpsBand}.&rdquo; The requirement is {dpsWaiver}.
+            </p>
+            <p class="m-0">
+              For first-time applicants over 25, DPS says you are &ldquo;not required to have completed driver education, however it is highly recommended.&rdquo;
+              Not sure where you fit? <a href={guideHref} class="underline text-white font-semibold">Do I need adult drivers ed?</a>
+            </p>
+          </div>
+        </details>
       </div>
     </div>
   </section>
 
   <!-- ============ 3. FIVE STEPS ============ -->
+  <!-- One narrow column, divider lines instead of boxes, one line per step. -->
   <section class="bg-white py-20 lg:py-24">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="rounded-[28px] border border-info-border overflow-hidden">
-        <div class="bg-info px-6 py-10 lg:px-14 lg:py-14 grid grid-cols-1 lg:grid-cols-2 gap-8 items-end">
-          <div class="flex flex-col gap-5 items-start">
-            <Pill tone="tint">{steps.length} steps</Pill>
-            <h2 class={`text-[40px] lg:text-[64px] text-primary-navy ${h2}`} style={outfit}>
-              Your path to
-              <span class="relative inline-block">
-                a Texas license
-                <svg class="absolute left-0 -bottom-4 w-full h-4" viewBox="0 0 200 16" preserveAspectRatio="none" aria-hidden="true"><path d="M3 12 C 60 2, 140 2, 197 9" fill="none" stroke="#2454E6" stroke-width="3.5" stroke-linecap="round"/></svg>
-              </span>
-            </h2>
-          </div>
-          <p class="text-lg lg:text-xl text-text-body leading-8 m-0 lg:text-right">
-            We handle the first three steps. The last two are at the DPS.
-          </p>
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Pill tone="tint">{steps.length} steps</Pill>
+      <h2 class={`mt-5 text-[36px] lg:text-[52px] text-primary-navy ${h2}`} style={outfit}>Your path to a Texas license</h2>
+      <p class="text-lg text-text-body leading-8 mt-4 mb-0">We handle the first three steps. The last two are at the DPS.</p>
+
+      {stepGroups.map((group) => (
+        <div class="mt-12">
+          <p class="text-xs font-bold uppercase tracking-[0.14em] text-text-muted m-0 pb-3 border-b border-border">{group.label}</p>
+          <ol class="list-none p-0 m-0" start={group.items[0].n}>
+            {group.items.map((s) => (
+              <li class="flex items-baseline gap-5 py-5 border-b border-border">
+                <span class="w-8 shrink-0 text-2xl font-extrabold leading-none text-primary tabular-nums" style={outfit}>{s.n}</span>
+                <div class="flex-1 min-w-0">
+                  <h3 class="text-xl font-bold text-text m-0 leading-7" style={outfit}>{s.title}</h3>
+                  <p class="text-[15px] text-text-muted leading-6 mt-1 mb-0">{s.time}</p>
+                  {s.link && <a href={s.link.href} rel="noopener" class="inline-block mt-1 text-[15px] font-semibold text-primary underline">{s.link.label} &rarr;</a>}
+                </div>
+                {s.required && <span class="shrink-0 self-center text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full bg-error-bg text-error">Required</span>}
+              </li>
+            ))}
+          </ol>
         </div>
-        <ol class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-info-border list-none p-0 m-0 border-t border-info-border">
-          {steps.map((s) => (
-            <li class="bg-white px-6 py-10 lg:px-10 flex flex-col gap-3">
-              <div class="flex flex-wrap items-center gap-2">
-                <span class="text-[44px] font-extrabold leading-none text-primary tabular-nums mr-2" style={outfit}>{stepNum(s.n)}</span>
-                <span class={`text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full ${s.n <= 3 ? 'bg-primary-deep text-white' : 'bg-surface-muted text-text-muted border border-border'}`}>{stepTag(s)}</span>
-                {s.required && <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full bg-error-bg text-error">Required</span>}
-              </div>
-              <h3 class="text-2xl font-bold text-text m-0" style={outfit}>{s.title}</h3>
-              <p class="text-xs font-bold uppercase tracking-[0.12em] text-text-muted m-0">{s.time}</p>
-              <p class="text-base text-text-body leading-7 m-0">{s.body}</p>
-              {s.link && (
-                <a href={s.link.href} rel="noopener" class="text-base font-semibold text-primary underline w-fit">{s.link.label} &rarr;</a>
-              )}
-            </li>
-          ))}
-          <li class="bg-info px-6 py-10 lg:px-10 flex flex-col gap-4 justify-center items-start">
-            <p class="text-2xl font-bold text-primary-navy m-0" style={outfit}>Steps 1 to 3 start here.</p>
-            <a href={enrollUrl} class={btnPrimary}>{ctaLabel}</a>
-          </li>
-        </ol>
+      ))}
+
+      <div class="mt-10 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
+        <p class="text-base text-text-body m-0 sm:order-2">Steps 1 to 3 start here.</p>
+        <a href={enrollUrl} class={btnPrimary}>{ctaLabel}</a>
       </div>
     </div>
   </section>
@@ -589,6 +584,16 @@ const check = 'M4.8 8.2l2.1 2.1 4.3-4.4';
   </script>
   
   <style is:global>
+    /* "Read more" on the requirement paragraph */
+    .rrs-readmore-toggle::-webkit-details-marker { display: none; }
+    .rrs-readmore-less { display: none; }
+    .rrs-readmore-details[open] .rrs-readmore-more { display: none; }
+    .rrs-readmore-details[open] .rrs-readmore-less { display: inline; }
+    .rrs-readmore-period { display: none; }
+    .rrs-readmore:has(.rrs-readmore-details[open]) .rrs-readmore-dots { display: none; }
+    .rrs-readmore:has(.rrs-readmore-details[open]) .rrs-readmore-period { display: inline; }
+    .rrs-readmore-details[open] > summary { order: 2; }
+    .rrs-readmore-details[open] { display: flex; flex-direction: column; }
     /* Tailwind base styles are off in this repo, so make [hidden] win explicitly. */
     .ade-panel[hidden] { display: none !important; }
   </style>

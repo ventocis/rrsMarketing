@@ -65,10 +65,10 @@ if (!review || !review.quote.includes(course.proof.reviewExcerpt)) {
       <!-- Headline + offer -->
       <div class="lg:col-start-1 lg:row-start-1">
         <!-- Course name next to the seal, so the headline has a subject -->
-        <div class="flex items-center gap-3 mb-4 w-fit mx-auto lg:mx-0">
-          <img src="/assets/images/badges/texas-approved-tdlr.png" width="56" height="56" alt="Texas approved: TDLR-approved course" class="rounded-full mix-blend-multiply w-12 h-12 lg:w-14 lg:h-14 shrink-0" decoding="async" />
-          <p class="m-0 text-base lg:text-lg font-bold text-primary-deep leading-6">{course.name}</p>
-        </div>
+        <p class="flex items-center gap-2 w-fit mx-auto lg:mx-0 mb-5 rounded-full bg-white/70 border border-info-border pl-1.5 pr-4 py-1 text-sm font-semibold text-primary-deep leading-5">
+          <img src="/assets/images/badges/texas-approved-tdlr.png" width="28" height="28" alt="Texas approved: TDLR-approved course" class="w-7 h-7 shrink-0" decoding="async" />
+          {course.name}
+        </p>
         <h1 class="text-[32px] leading-[40px] lg:text-[44px] lg:leading-[54px] font-extrabold text-text tracking-[-0.02em] mb-5 text-center lg:text-left">
           Dismiss your ticket online.<br class="hidden lg:block" /> Keep it off your record.
         </h1>

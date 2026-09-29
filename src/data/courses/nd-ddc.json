@@ -1,5 +1,5 @@
 {
-  "_note": "Single source of truth for the North Dakota marketing site. Course facts trace to the portal sheet 'ND DDC Full Course Prod Import' and ~/Claude/North Dakota Point Reduction/ND Research & Submission Plan.md. Regulatory facts cite NDCC 39-06.1-10, -10.1 and -13. approvalNumber: NDDOT lists approved courses rather than numbering them; enter the approval date (e.g. 'Approved 2026') once NDDOT confirms. claims.banned is enforced by scripts/check-claims.mjs.",
+  "_note": "Single source of truth for the North Dakota marketing site. Course facts trace to the portal sheet 'ND DDC Full Course Prod Import' and ~/Claude/North Dakota Point Reduction/ND Research & Submission Plan.md. Regulatory facts cite NDCC 39-06.1-10, -10.1 and -13. approvalNumber: NDDOT lists approved courses rather than numbering them, so this holds 'Approved 2026' (Jackson confirmed approval 2026-09-29) and the label shows no number. A non-empty value is what lets production build the pages, index them and list them in the sitemap. claims.banned is enforced by scripts/check-claims.mjs.",
   "state": {
     "code": "ND",
     "name": "North Dakota",
@@ -12,8 +12,8 @@
   "provider": {
     "legalName": "Road Ready Driver Instruction LLC",
     "dba": "Road Ready Safety",
-    "approvalNumber": "",
-    "approvalLabel": "NDDOT-Approved Defensive Driving Course · {{number}}",
+    "approvalNumber": "Approved 2026",
+    "approvalLabel": "NDDOT-Approved Defensive Driving Course",
     "approvalPendingLabel": "North Dakota Defensive Driving Course · NDDOT Approval Pending",
     "supportEmail": "info@roadreadysafety.com",
     "supportPhone": "(888) 885-5707",

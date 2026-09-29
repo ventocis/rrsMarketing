@@ -36,7 +36,6 @@ const modules = course.course.modules;
 const faqs = course.faqs;
 const ndLaw = 'https://ndlegis.gov/cencode/t39c06-1.html';
 const exam = course.exam;
-const deadline = course.deadline;
 
 const steps = [
   {
@@ -82,12 +81,17 @@ const outfit = "font-family:'Outfit',sans-serif;";
     <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   </Fragment>
 
-  <!-- ============ 1. HERO — rating, headline, one paragraph, trust row, one button; outcome on the right ============ -->
+  <!-- ============ 1. HERO — approval seal, headline, one paragraph, trust row, one button; outcome on the right ============ -->
   <section class="bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-14 lg:pt-28 lg:pb-32 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
       <div class="flex flex-col gap-6 items-start">
-        <Rating />
-
+        <!-- Approval seal and label, same pill as the /texas hero. Shown only once the approval is on file. -->
+        {course.provider.approvalNumber && (
+          <p class="flex items-center gap-2 w-fit m-0 rounded-full bg-white/70 border border-info-border pl-1.5 pr-4 py-1 text-sm font-semibold text-primary-deep leading-5">
+            <img src="/assets/images/badges/north-dakota-approved.png" width="28" height="28" alt="North Dakota approved: NDDOT-approved defensive driving course" class="w-7 h-7 shrink-0" decoding="async" />
+            {course.state.agencyShort}-Approved Course
+          </p>
+        )}
         <h1 class={`text-[34px] lg:text-[60px] text-primary-navy ${h2}`} style={outfit}>
           North Dakota Defensive Driving Course Online
         </h1>
@@ -136,17 +140,29 @@ const outfit = "font-family:'Outfit',sans-serif;";
           </li>
         ))}
       </ul>
-      <div class="flex flex-col gap-4 max-w-3xl text-base lg:text-lg text-info-border leading-8">
+      <!-- First sentence shows; the rest sits in a <details> so it stays in the HTML for search engines. -->
+      <div class="rrs-readmore max-w-3xl text-base lg:text-lg text-info-border leading-8">
         <p class="m-0">
-          Finish an approved course and NDDOT takes 3 points off your record, once every 12 months and up to 9 points in 3 years.
-          Got a ticket worth 5 points or fewer? Choose the course at court when you post bond and those points never go on your record.
-          Just get your certificate to NDDOT within 30 days.
+          Finish an approved course and NDDOT takes 3 points off your record, once every 12 months and up to 9 points in 3 years
+          (<a href={ndLaw} class="underline text-white" target="_blank" rel="noopener noreferrer">NDCC 39-06.1-13</a>)<span class="rrs-readmore-period">.</span><span class="rrs-readmore-dots" aria-hidden="true">&hellip;</span>
         </p>
-        <p class="m-0">
-          The course can't undo a suspension. North Dakota suspends at 12 points, 7 days for each point over 11, and the reduction applies after you serve it.
-          Under 18, the license is canceled at 6 points.
-          More from the <a href={course.state.agencyUrl} class="underline text-white" target="_blank" rel="noopener noreferrer">North Dakota Department of Transportation</a>.
-        </p>
+        <details class="rrs-readmore-details">
+          <summary class="rrs-readmore-toggle mt-2 inline-flex cursor-pointer list-none font-semibold text-white underline underline-offset-4">
+            <span class="rrs-readmore-more">Read more</span><span class="rrs-readmore-less">Read less</span>
+          </summary>
+          <div class="flex flex-col gap-4 mt-3">
+            <p class="m-0">
+              Got a ticket worth 5 points or fewer? Choose the course at court when you post bond and those points never go on your record
+              (<a href={ndLaw} class="underline text-white" target="_blank" rel="noopener noreferrer">NDCC 39-06.1-10.1</a>).
+              Just get your certificate to NDDOT within 30 days.
+            </p>
+            <p class="m-0">
+              The course can't undo a suspension. North Dakota suspends at 12 points, 7 days for each point over 11, and the reduction applies after you serve it.
+              Under 18, the license is canceled at 6 points.
+              More from the <a href={course.state.agencyUrl} class="underline text-white" target="_blank" rel="noopener noreferrer">North Dakota Department of Transportation</a>.
+            </p>
+          </div>
+        </details>
       </div>
     </div>
   </section>
@@ -318,39 +334,6 @@ const outfit = "font-family:'Outfit',sans-serif;";
     </div>
   </section>
 
-  <!-- ============ 10. BUILT FOR NORTH DAKOTA — Boat-Ed's "official & approved" band, honest version ============ -->
-  <section class="bg-primary-navy text-white py-20 lg:py-28">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center gap-6 text-center">
-      <Pill tone="dark">Built for North Dakota's rules</Pill>
-      <h2 class={`text-[32px] lg:text-[44px] ${h2}`} style={outfit}>Made for North Dakota's point-reduction program</h2>
-      <p class="text-base lg:text-lg text-info-border leading-8 max-w-3xl m-0">
-        NDDOT approves defensive driving courses and lists them on its website. Our approval is pending.
-        The course covers what NDDOT asks for: defensive driving, spotting hazards early, and short checks that help the lessons stick.
-      </p>
-      <ul class="grid md:grid-cols-3 gap-4 lg:gap-6 w-full list-none p-0 m-0 mt-4">
-        {[
-          { label: 'North Dakota Department of Transportation', href: course.state.agencyUrl },
-          { label: 'NDCC 39-06.1-13: the point reduction', href: ndLaw },
-          { label: 'NDCC 39-06.1-10.1: in lieu of points', href: ndLaw },
-        ].map((l) => (
-          <li>
-            <a href={l.href} target="_blank" rel="noopener noreferrer" class="flex items-center h-full gap-4 rounded-[20px] border border-white/25 bg-white/5 px-6 py-6 text-left text-lg font-semibold text-white underline underline-offset-4 decoration-info-border hover:bg-white/10">
-              {l.label}
-            </a>
-          </li>
-        ))}
-      </ul>
-      {deadline && (
-        <div class="w-full max-w-3xl mt-4 rounded-[20px] bg-white text-left p-6 lg:p-8 flex flex-col gap-3">
-          <span class="text-xs font-bold uppercase tracking-wider text-primary-deep">{deadline.eyebrow}</span>
-          <h3 class="text-xl lg:text-2xl font-bold text-primary-navy m-0" style={outfit}>{deadline.heading}</h3>
-          <p class="text-base text-text-body leading-7 m-0">{deadline.body}</p>
-          <p class="text-sm text-text-muted m-0">{deadline.cite}</p>
-        </div>
-      )}
-    </div>
-  </section>
-
   <!-- ============ 11. FINAL CALL TO ACTION — full-width photo band ============ -->
   <FinalBand
     heading="Take three points off your North Dakota record"
@@ -398,6 +381,16 @@ const outfit = "font-family:'Outfit',sans-serif;";
 </script>
 
 <style is:global>
+  /* "Read more" on the law paragraph */
+  .rrs-readmore-toggle::-webkit-details-marker { display: none; }
+  .rrs-readmore-less { display: none; }
+  .rrs-readmore-details[open] .rrs-readmore-more { display: none; }
+  .rrs-readmore-details[open] .rrs-readmore-less { display: inline; }
+  .rrs-readmore-period { display: none; }
+  .rrs-readmore:has(.rrs-readmore-details[open]) .rrs-readmore-dots { display: none; }
+  .rrs-readmore:has(.rrs-readmore-details[open]) .rrs-readmore-period { display: inline; }
+  .rrs-readmore-details[open] > summary { order: 2; }
+  .rrs-readmore-details[open] { display: flex; flex-direction: column; }
   /* Tailwind base styles are off in this repo, so make [hidden] win explicitly. */
   .nd-panel[hidden] { display: none !important; }
 </style>

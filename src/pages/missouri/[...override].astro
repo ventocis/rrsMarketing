@@ -9,13 +9,12 @@
  * Every other /missouri page still uses the shared templates; the minimal header is applied
  * to this page only, by passing a copy of the course data to CourseLayout.
  *
- * Facts (price, hours, modules, exam, FAQs, deadline, DOR address) come from mo-dip.json, the
+ * Facts (price, hours, modules, exam, FAQs) come from mo-dip.json, the
  * same file every other Missouri page reads. Only headings and connecting copy live here.
  * Law checked 2026-09-28 against RSMo 302.302 (version effective 28 Aug 2026) and the DOR's
  * Tickets and Points FAQ.
  */
 import CourseLayout from '../../layouts/CourseLayout.astro';
-import Pill from '../../components/landing-v2/Pill.astro';
 import Rating from '../../components/landing-v2/Rating.astro';
 import RoadPhoto from '../../components/landing-v2/RoadPhoto.astro';
 import PriceBlock from '../../components/landing-v2/PriceBlock.astro';
@@ -41,14 +40,33 @@ const exam = course.exam;
 const deadline = course.deadline;
 const statuteHref = 'https://revisor.mo.gov/main/OneSection.aspx?section=302.302';
 const dorHref = 'https://dor.mo.gov/faq/driver-license/tickets-points.html';
-const dorAddress = 'Missouri Department of Revenue, Driver License Bureau, PO Box 200, Jefferson City, MO 65105-0200';
 const ctaLabel = course.hero.ctaLabel;
 
-const chips = [`${hours} hours, self-paced`, 'Works on your phone', 'Certificate and DOR form included'];
+const chips = [`${hours} hours, self-paced`, 'Works on your phone', 'Instant certificate included'];
 
-// Short card titles; the heading and bullets under each come from the data file.
-const audienceTitles = ['Court said yes', 'Not asked yet', 'Old points'];
-const audiences = course.audiences.items.map((a, i) => ({ ...a, title: audienceTitles[i] ?? a.label, featured: i === 0 }));
+// Two plain lists, per Jackson 2026-09-29: who the course is for and who it is not for.
+// Same facts as the law paragraph under the cards (RSMo 302.302) and the FAQs.
+const audiences = [
+  {
+    title: 'This course is for you if',
+    yes: true,
+    items: [
+      'Your court, or the Fine Collection Center, said you can take a Driver Improvement Program',
+      'Your ticket is for speeding or another ordinary moving violation',
+      "You haven't used the program in the last 36 months",
+      'You can finish within 60 days of your plea or conviction',
+    ],
+  },
+  {
+    title: "It's not for you if",
+    yes: false,
+    items: [
+      "You haven't asked your court yet. Ask first, then come back",
+      'You have a commercial driver license, or got the ticket in a commercial vehicle',
+      'You want to remove points already on your record. The course only stops the points from this ticket',
+    ],
+  },
+];
 
 const stepNum = (n: number) => String(n).padStart(2, '0');
 const steps = [
@@ -56,19 +74,19 @@ const steps = [
     n: 1,
     where: 'At your court',
     title: "Get the court's OK",
-    body: 'Ask the court handling your ticket, or the Fine Collection Center, whether you can complete a Driver Improvement Program. Only the court can say yes.',
+    body: 'Ask your court, or the Fine Collection Center, if you can take the program.',
   },
   {
     n: 2,
     where: 'With us',
     title: 'Take the course',
-    body: `${hours} hours online, then the ${exam.questions}-question final: ${exam.passCount} correct passes, with unlimited retakes. Your certificate and DOR form are emailed the moment you pass.`,
+    body: `${hours} hours online, at your own pace. Download your certificate the moment you pass.`,
   },
   {
     n: 3,
     where: 'By mail',
-    title: 'Send the form to the DOR',
-    body: `Mail the completion form to the ${dorAddress}. Give your court a copy if it asked for one.`,
+    title: 'Mail your form',
+    body: 'Send your completion form to the Missouri Department of Revenue. Give your court a copy if it asks for one.',
   },
 ];
 
@@ -108,15 +126,13 @@ const check = 'M4.8 8.2l2.1 2.1 4.3-4.4';
   <section class="bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-14 lg:pt-24 lg:pb-28 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
       <div class="flex flex-col gap-6 items-start">
-        <Rating />
-
         <h1 class={`text-[34px] lg:text-[56px] text-primary-navy ${h2}`} style={outfit}>
-          Missouri Driver Improvement Program Online &mdash; All {hours} Hours for ${price}
+          Missouri Driver Improvement Program Online
         </h1>
 
         <p class="text-lg lg:text-xl text-text-body leading-8 max-w-[36rem] m-0">
-          When your court authorizes it, the points for your ticket are not assessed.
-          One flat price, with your certificate and the Department of Revenue form emailed the moment you pass.
+          Keep the points from your ticket off your record.
+          Once your court says yes, take the {hours}-hour course online, at your own pace, for ${price}.
         </p>
 
         <ul class="flex flex-wrap gap-3 list-none p-0 m-0" aria-label="Course basics">
@@ -172,25 +188,22 @@ const check = 'M4.8 8.2l2.1 2.1 4.3-4.4';
       style="background: radial-gradient(60% 80% at 80% 0%, rgba(36,84,230,.55), transparent 70%), radial-gradient(50% 70% at 0% 100%, rgba(124,195,249,.25), transparent 70%);"></div>
     <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 flex flex-col items-center gap-8 text-center">
       <h2 class={`text-[32px] lg:text-[44px] ${h2}`} style={outfit}>{course.audiences.heading}</h2>
-      <Pill tone="dark">It depends on your court</Pill>
-      <ul class="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6 w-full list-none p-0 m-0">
+      <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6 w-full max-w-5xl list-none p-0 m-0">
         {audiences.map((a) => (
-          <li class={`flex flex-col gap-4 rounded-[20px] px-6 py-7 text-left ${a.featured ? 'bg-white text-primary-navy' : 'border border-white/25 bg-white/5'}`}>
-            <div class="flex items-center justify-between gap-3">
-              <span class="text-[22px] font-bold leading-tight" style={outfit}>{a.title}</span>
-              <span class={`text-[11px] font-bold uppercase tracking-[0.12em] px-2.5 py-1 rounded-full whitespace-nowrap ${a.featured ? 'bg-primary text-white' : 'bg-white/10 text-info-border ring-1 ring-white/20'}`}>{a.status}</span>
-            </div>
-            <h3 class="text-xl font-bold leading-7 m-0" style={outfit}>{a.heading}</h3>
-            {a.bullets && (
-              <ul class={`flex flex-col gap-2 list-none p-0 m-0 text-base leading-7 ${a.featured ? 'text-text-body' : 'text-info-border'}`}>
-                {a.bullets.map((b) => (
-                  <li class="flex items-start gap-2">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="mt-1.5 flex-shrink-0" aria-hidden="true"><path d={check} stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <span>{b}</span>
-                  </li>
-                ))}
-              </ul>
-            )}
+          <li class={`flex flex-col gap-5 rounded-[20px] px-6 py-7 lg:px-8 lg:py-8 text-left ${a.yes ? 'bg-white text-primary-navy' : 'border border-white/25 bg-white/5'}`}>
+            <h3 class="text-[22px] lg:text-2xl font-bold leading-tight m-0" style={outfit}>{a.title}</h3>
+            <ul class={`flex flex-col gap-3 list-none p-0 m-0 text-base lg:text-lg leading-7 ${a.yes ? 'text-text-body' : 'text-info-border'}`}>
+              {a.items.map((item) => (
+                <li class="flex items-start gap-3">
+                  {a.yes ? (
+                    <svg width="20" height="20" viewBox="0 0 16 16" fill="none" class="mt-1 flex-shrink-0" aria-hidden="true"><circle cx="8" cy="8" r="8" fill="#16A34A" opacity="0.14"/><path d={check} stroke="#16A34A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  ) : (
+                    <svg width="20" height="20" viewBox="0 0 16 16" fill="none" class="mt-1 flex-shrink-0" aria-hidden="true"><circle cx="8" cy="8" r="8" fill="#FFFFFF" opacity="0.14"/><path d="M5.5 5.5l5 5M10.5 5.5l-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                  )}
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
           </li>
         ))}
       </ul>
@@ -292,7 +305,7 @@ const check = 'M4.8 8.2l2.1 2.1 4.3-4.4';
     </div>
   </section>
 
-  <!-- ============ 4. THREE STEPS + the 60-day rule ============ -->
+  <!-- ============ 4. THREE STEPS, then the 60-day rule as a small note ============ -->
   <section class="bg-white pb-20 lg:pb-28">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="rounded-[28px] border border-info-border overflow-hidden">
@@ -322,15 +335,17 @@ const check = 'M4.8 8.2l2.1 2.1 4.3-4.4';
             </li>
           ))}
         </ol>
-        {deadline && (
-          <div class="border-t border-info-border bg-white px-6 py-8 lg:px-10 flex flex-col gap-2">
-            <span class="text-xs font-bold uppercase tracking-wider text-primary-deep">{deadline.eyebrow}</span>
-            <h3 class="text-xl lg:text-2xl font-bold text-primary-navy m-0" style={outfit}>{deadline.heading}</h3>
-            <p class="text-base text-text-body leading-7 m-0 max-w-4xl">{deadline.body}</p>
-            <p class="text-sm text-text-muted m-0">{deadline.cite}</p>
-          </div>
-        )}
       </div>
+      {deadline && (
+        <div class="mt-6 mx-auto max-w-3xl rounded-2xl border border-border bg-surface-muted px-5 py-4 flex items-start gap-3">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 flex-shrink-0 text-primary-deep" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <p class="text-sm lg:text-base text-text-body leading-6 m-0">
+            <strong class="text-text">{deadline.eyebrow}.</strong>
+            Finish the course within 60 days of your plea or conviction to keep the points off your record.
+            <a href={statuteHref} class="underline text-primary whitespace-nowrap" target="_blank" rel="noopener noreferrer">RSMo 302.302</a>
+          </p>
+        </div>
+      )}
     </div>
   </section>
 

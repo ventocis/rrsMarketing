@@ -18,6 +18,13 @@ export interface StatePost {
   faq?: { q: string; a: string }[];
   sources?: { name: string; url: string }[];
   content: string;
+  /** Short <title> for search results, when the headline is too long. Used by the Missouri guides. */
+  seoTitle?: string;
+  /** The answer in two or three sentences, shown in a box above the article. */
+  answer?: string;
+  keyFacts?: { label: string; value: string }[];
+  /** Slugs of the guides to link at the end. */
+  related?: string[];
 }
 
 const byState: Record<string, StatePost[]> = {

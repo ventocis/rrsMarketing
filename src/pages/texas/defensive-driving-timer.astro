@@ -1,0 +1,131 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+import NextStepBlock from '../../components/texas/NextStepBlock.astro';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+
+const faqs = [
+  {
+    q: 'Can you skip the timer in Texas defensive driving?',
+    a: 'No. TDLR requires every approved course to be six hours, with at least five hours of instruction, and online courses enforce that with timers. A course that let you skip them would lose its approval, and a certificate from an unapproved course will not dismiss your ticket.',
+  },
+  {
+    q: 'Is there a Texas defensive driving course with no timer?',
+    a: 'Not an approved one. Some sites advertise "no timer" or "finish in 2 hours." For Texas ticket dismissal that means either the course is not TDLR-approved or the claim is not true. Check the provider\'s CP license number before you pay.',
+  },
+  {
+    q: 'How does the timer work?',
+    a: 'In our course each page has a minimum viewing time. When it runs out, the Next button turns on. Reading faster does not shorten the page, but you never wait longer than the page requires, and completed time is saved if you stop.',
+  },
+  {
+    q: 'Does the timer keep running if I leave?',
+    a: 'Your completed time is saved when you leave, and you pick up where you stopped. You do not lose finished pages.',
+  },
+  {
+    q: 'Can I finish Texas defensive driving in one day?',
+    a: 'Yes. Six hours plus the two 30-minute breaks. Start in the morning and you can have your certificate by mid-afternoon.',
+  },
+  {
+    q: 'When are the breaks?',
+    a: 'Our course has two 30-minute breaks, after Module 6 and after Module 11. They are built in, and your place is saved while you are away.',
+  },
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Can You Skip the Timer in Texas Defensive Driving?',
+  datePublished: '2026-09-24',
+  dateModified: '2026-09-24',
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+});
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Can You Skip the Timer in Texas Defensive Driving?"
+    description="No approved Texas course lets you skip the timer: the state requires 6 hours. How the timer works, why a 'no timer' course won't dismiss your ticket, and how to finish in one day."
+    url="/texas/defensive-driving-timer"
+    keywords="texas defensive driving no timer, skip timer defensive driving texas, texas defensive driving without timer, defensive driving timer hack, fastest texas defensive driving, texas defensive driving 2 hours"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          Can You Skip the Timer in Texas Defensive Driving?
+        </h1>
+
+        <div class="bg-info border border-info-border rounded-2xl p-6 mb-10">
+          <p class="text-sm font-semibold text-primary-deep mb-2" style="font-family: 'Outfit', sans-serif;">Short answer</p>
+          <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;">
+            <strong class="text-text">No.</strong> Texas requires every approved defensive driving course to be <strong class="text-text">six hours, with at least five hours of instruction</strong>, and online courses enforce it with timers. A course that lets you skip them is not TDLR-approved, and <strong class="text-text">its certificate won't dismiss your ticket</strong>. What you can do is make the six hours painless: finish in one day, stop and resume whenever you like, and get the certificate the minute you're done.
+          </p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Why the timer exists</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Dismissing a ticket with defensive driving is a deal the state offers: you spend six hours on a safety course, and the ticket stays off your record. TDLR, which licenses every provider, sets the six-hour length for online and classroom courses alike. Online providers have to prove you spent the time, so they time each page. If a provider let people skip, it would be putting its license, and your dismissal, at risk.</p>
+          <p>That is why "no timer" and "done in 2 hours" offers are a red flag. <strong class="text-text">Before you pay anyone, find their CP license number</strong> on the <a href="/texas/tdlr-approved" class="text-primary-deep font-medium hover:underline">list of TDLR-approved courses</a>. Ours is CP1234.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How our timer works</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <ul class="list-disc pl-6 space-y-3">
+            <li><strong class="text-text">Each page has a minimum time.</strong> When it ends, the Next button turns on. You read at your own pace alongside it.</li>
+            <li><strong class="text-text">No videos to sit through.</strong> It is reading with images, so you are never stuck waiting on a narrator.</li>
+            <li><strong class="text-text">Two 30-minute breaks,</strong> after Module 6 and after Module 11.</li>
+            <li><strong class="text-text">Stop whenever you want.</strong> Completed time and your place are saved, on any device.</li>
+            <li><strong class="text-text">Quizzes you can retake.</strong> A short quiz follows each chapter; you need 70% and can try again as often as you need.</li>
+          </ul>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The fastest legal way through</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <ol class="list-decimal pl-6 space-y-3">
+            <li><strong class="text-text">Do it in one sitting.</strong> Start in the morning; with both breaks you can be done by mid-afternoon.</li>
+            <li><strong class="text-text">Order your Type 3A driving record from Texas DPS at the same time,</strong> if your court wants one. It is $12 and arrives as an instant PDF.</li>
+            <li><strong class="text-text">Download the certificate the moment you finish</strong> and submit everything to the court the same day.</li>
+            <li><strong class="text-text">Don't cut it close.</strong> TDLR says a new certificate can take up to five days to show in its system, so finish at least a week before your court's deadline.</li>
+          </ol>
+          <p>More detail on <a href="/texas/fastest-defensive-driving-course" class="text-primary-deep font-medium hover:underline">finishing the course in one day</a>, <a href="/texas/defensive-driving-on-your-phone" class="text-primary-deep font-medium hover:underline">taking it on your phone</a>, and <a href="/texas/defensive-driving-practice-test" class="text-primary-deep font-medium hover:underline">what the quizzes are like</a>.</p>
+        </div>
+
+        <NextStepBlock page="timer" lead="eligible" />
+
+        <h2 class="text-2xl font-bold text-text mt-12 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;">{item.a}</p>
+            </div>
+          ))}
+        </div>
+
+        <div class="pt-4 border-t border-border">
+          <a href={enrollUrl} class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline" style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);">
+            Start Now, Finish Today, $28
+          </a>
+          <p class="text-xs text-text-subtle mt-6" style="font-family: 'DM Sans', sans-serif;">Last updated September 24, 2026. Course length and instruction minimum per TDLR's Course of Organized Instruction for Six-Hour Driving Safety (Dec. 2024) and 16 TAC §84.500; court requirement for a TDLR-approved course per Tex. Code Crim. Proc. art. 45A.352; certificate validation lag per TDLR; Type 3A record per Texas DPS.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

@@ -1,0 +1,182 @@
+---
+/**
+ * North Dakota guide article. Overrides the shared `[state]/blog/[slug].astro` for
+ * /north-dakota/blog/* only (a static path segment outranks a dynamic one). Same design as the
+ * guide template under src/pages/missouri/blog. Emits nothing while North Dakota is disabled.
+ *
+ * What this adds over the shared template, for search and answer engines:
+ *  - a short <title> (post.seoTitle) separate from the on-page headline
+ *  - the answer in a box at the top, then the facts at a glance
+ *  - the FAQ shown on the page, so the FAQPage schema describes visible content
+ *  - a way to buy near the top and again at the end, both linking back to /north-dakota
+ *  - related guides chosen per post (post.related), so the guides link to each other
+ *
+ * Posts live in src/data/blog/nd.json. Every legal fact in them is sourced in post.sources.
+ */
+import { marked } from 'marked';
+import CourseLayout from '../../../layouts/CourseLayout.astro';
+import nd from '../../../data/courses/nd-ddc.json';
+import { postsFor, type StatePost } from '../../../data/blog/index';
+import { isEnabled, enrollUrl as buildEnrollUrl, siteUrl } from '../../../lib/courseFlags';
+import type { CourseData } from '../../../data/courses/types';
+
+export function getStaticPaths() {
+  if (!isEnabled(nd as CourseData)) return [];
+  return postsFor('ND').map((post) => ({ params: { slug: post.slug }, props: { post } }));
+}
+
+const course = nd as CourseData;
+const { post } = Astro.props as { post: StatePost };
+const route = course.state.route;
+const url = `${route}/blog/${post.slug}`;
+const enrollUrl = buildEnrollUrl(course);
+const price = course.course.priceUsd;
+const hours = course.course.hours;
+const html = marked(post.content) as string;
+const updated = post.updated ?? post.date;
+
+const all = postsFor('ND');
+const picked = (post.related ?? []).map((s) => all.find((p) => p.slug === s)).filter(Boolean) as StatePost[];
+const related = (picked.length ? picked : all.filter((p) => p.slug !== post.slug)).slice(0, 4);
+
+function formatDate(d: string) {
+  return new Date(d).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+}
+
+const org = { '@type': 'Organization', name: course.provider.dba, legalName: course.provider.legalName, url: siteUrl };
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: post.title,
+  description: post.description,
+  datePublished: post.date,
+  dateModified: updated,
+  url: `${siteUrl}${url}`,
+  mainEntityOfPage: `${siteUrl}${url}`,
+  inLanguage: 'en-US',
+  author: org,
+  publisher: { ...org, logo: { '@type': 'ImageObject', url: `${siteUrl}/assets/icons/texas/logo-shield.svg` } },
+  about: { '@type': 'Thing', name: 'North Dakota defensive driving course for point reduction' },
+  isPartOf: { '@type': 'WebPage', url: `${siteUrl}${route}`, name: course.course.name },
+  citation: (post.sources ?? []).map((s) => ({ '@type': 'CreativeWork', name: s.name, url: s.url })),
+};
+const faqSchema = post.faq && post.faq.length
+  ? { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: post.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) }
+  : null;
+
+const outfit = "font-family:'Outfit',sans-serif;";
+---
+
+<CourseLayout course={course} title={post.seoTitle ?? post.title} description={post.description} url={url}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+    {faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
+  </Fragment>
+
+  <article class="bg-white">
+    <div class="max-w-[768px] mx-auto px-4 sm:px-6 py-10 md:py-16">
+      <nav class="mb-8 text-sm" aria-label="Breadcrumb">
+        <ol class="flex flex-wrap items-center gap-2 list-none p-0 m-0 text-text-body">
+          <li><a href={route} class="hover:text-primary no-underline">{course.course.name}</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href={`${route}/blog`} class="hover:text-primary no-underline">Guides</a></li>
+        </ol>
+      </nav>
+
+      <header class="mb-8 flex flex-col gap-4">
+        <h1 class="text-3xl md:text-[40px] font-bold text-text leading-[1.15] tracking-[-0.02em] m-0" style={outfit}>{post.title}</h1>
+        <p class="text-sm text-text-muted m-0">
+          By Road Ready Safety &middot; Checked against North Dakota law on <time datetime={updated}>{formatDate(updated)}</time>
+        </p>
+      </header>
+
+      {post.answer && (
+        <div class="rounded-[20px] bg-info border border-info-border p-6 md:p-7 mb-6">
+          <p class="text-xs font-bold uppercase tracking-wider text-primary-deep m-0 mb-2">Short answer</p>
+          <p class="text-lg text-text leading-8 m-0">{post.answer}</p>
+        </div>
+      )}
+
+      {post.keyFacts && post.keyFacts.length > 0 && (
+        <dl class="grid grid-cols-1 sm:grid-cols-2 gap-px bg-border border border-border rounded-[20px] overflow-hidden m-0 mb-6">
+          {post.keyFacts.map((k) => (
+            <div class="bg-white px-5 py-4">
+              <dt class="text-xs font-semibold uppercase tracking-wider text-text-muted">{k.label}</dt>
+              <dd class="text-base font-semibold text-text leading-6 m-0 mt-1">{k.value}</dd>
+            </div>
+          ))}
+        </dl>
+      )}
+
+      <aside class="rounded-[20px] border border-border p-5 md:p-6 mb-10 flex flex-col sm:flex-row sm:items-center gap-4" aria-label="Take the course">
+        <p class="text-base text-text-body leading-7 m-0 flex-1">
+          <strong class="text-text">Ready to start?</strong> Our {course.course.name} is {hours} hours online, ${price} total, with the certificate included.
+          <a href={route} class="text-primary-deep font-semibold underline underline-offset-2 whitespace-nowrap">About the course</a>
+        </p>
+        <a href={enrollUrl} class="bg-primary hover:bg-primary-hover text-white h-12 px-6 rounded-full text-base font-semibold inline-flex items-center justify-center no-underline transition-colors whitespace-nowrap">{course.hero.ctaLabel} &mdash; ${price}</a>
+      </aside>
+
+      <div class="nd-guide prose prose-base max-w-none" set:html={html} />
+
+      {post.faq && post.faq.length > 0 && (
+        <section class="mt-12">
+          <h2 class="text-2xl font-bold text-text m-0 mb-5" style={outfit}>Quick answers</h2>
+          <div class="flex flex-col gap-5">
+            {post.faq.map((f) => (
+              <div class="border-l-4 border-info-border pl-5">
+                <h3 class="text-lg font-bold text-text m-0 mb-1" style={outfit}>{f.q}</h3>
+                <p class="text-base text-text-body leading-7 m-0">{f.a}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {post.sources && post.sources.length > 0 && (
+        <section class="mt-10 pt-6 border-t border-border">
+          <h2 class="text-base font-semibold text-text uppercase tracking-wider mb-3" style={outfit}>Sources</h2>
+          <ul class="list-disc pl-5 text-sm text-text-body flex flex-col gap-1.5 m-0">
+            {post.sources.map((s) => (
+              <li><a href={s.url} target="_blank" rel="noopener noreferrer" class="text-primary-deep underline underline-offset-2">{s.name}</a></li>
+            ))}
+          </ul>
+          <p class="text-sm text-text-muted leading-6 mt-4 mb-0">
+            We read each source on {formatDate(updated)}. This guide is general information, not legal advice.
+            NDDOT applies any point reduction, and your court handles an election in lieu of points.
+            See a mistake? Email <a href={`mailto:${course.provider.supportEmail}`} class="text-primary-deep underline">{course.provider.supportEmail}</a>.
+          </p>
+        </section>
+      )}
+
+      <aside class="mt-12 bg-primary-navy rounded-[24px] p-8 flex flex-col gap-4 text-white">
+        <h2 class="text-2xl font-bold leading-tight m-0" style={outfit}>{course.course.name}</h2>
+        <p class="text-white/85 leading-7 m-0">{hours} hours online, ${price} total. Your certificate is ready to download the moment you pass. Full refund any time before you finish.</p>
+        <div class="flex flex-col sm:flex-row gap-3">
+          <a href={enrollUrl} class="bg-white text-primary-navy h-12 px-6 rounded-xl text-base font-semibold flex items-center justify-center no-underline hover:bg-info transition-colors">{course.hero.ctaLabel} &mdash; ${price}</a>
+          <a href={route} class="border border-white/30 text-white h-12 px-6 rounded-xl text-base font-semibold flex items-center justify-center no-underline hover:bg-white/10 transition-colors">About the course</a>
+        </div>
+      </aside>
+
+      {related.length > 0 && (
+        <section class="mt-12">
+          <h2 class="text-lg font-bold text-text mb-4" style={outfit}>More North Dakota guides</h2>
+          <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3 list-none p-0 m-0">
+            {related.map((r) => (
+              <li class="border border-border rounded-2xl p-5">
+                <a href={`${route}/blog/${r.slug}`} class="font-semibold text-text no-underline hover:text-primary">{r.title}</a>
+              </li>
+            ))}
+          </ul>
+          <a href={`${route}/blog`} class="inline-block mt-4 text-primary font-semibold underline underline-offset-2">All North Dakota guides</a>
+        </section>
+      )}
+    </div>
+  </article>
+</CourseLayout>
+
+<style is:global>
+  /* Tables in guides: scroll sideways on phones instead of widening the page. */
+  .nd-guide table { display: block; overflow-x: auto; width: 100%; }
+  .nd-guide th, .nd-guide td { padding: 0.6rem 0.9rem 0.6rem 0; vertical-align: top; }
+  .nd-guide th { white-space: nowrap; }
+</style>

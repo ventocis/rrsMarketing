@@ -81,10 +81,17 @@ const outfit = "font-family:'Outfit',sans-serif;";
     <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   </Fragment>
 
-  <!-- ============ 1. HERO — rating, headline, one paragraph, trust row, one button; outcome on the right ============ -->
+  <!-- ============ 1. HERO — approval seal, headline, one paragraph, trust row, one button; outcome on the right ============ -->
   <section class="bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-14 lg:pt-28 lg:pb-32 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
       <div class="flex flex-col gap-6 items-start">
+        <!-- Approval seal and label, same pill as the /texas hero. Shown only once the approval is on file. -->
+        {course.provider.approvalNumber && (
+          <p class="flex items-center gap-2 w-fit m-0 rounded-full bg-white/70 border border-info-border pl-1.5 pr-4 py-1 text-sm font-semibold text-primary-deep leading-5">
+            <img src="/assets/images/badges/north-dakota-approved.png" width="28" height="28" alt="North Dakota approved: NDDOT-approved defensive driving course" class="w-7 h-7 shrink-0" decoding="async" />
+            {course.state.agencyShort}-Approved Course
+          </p>
+        )}
         <h1 class={`text-[34px] lg:text-[60px] text-primary-navy ${h2}`} style={outfit}>
           North Dakota Defensive Driving Course Online
         </h1>

@@ -35,5 +35,6 @@ const byState: Record<string, StatePost[]> = {
 };
 
 export function postsFor(stateCode: string): StatePost[] {
-  return (byState[stateCode.toUpperCase()] ?? []).slice().sort((a, b) => (a.date < b.date ? 1 : -1));
+  // Newest first; posts with the same date keep their order in the file, so a state's main guide can lead.
+  return (byState[stateCode.toUpperCase()] ?? []).slice().sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
 }

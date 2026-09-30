@@ -3,13 +3,18 @@
  *
  * Modeled on the Texas ADE guard (src/pages/adult-drivers-ed/texas/index.astro):
  *
- *   QA / local   → a state renders when its code is in VITE_STATE_COURSES_ENABLED.
- *   Production   → ALSO requires provider.approvalNumber to be filled in the course data file.
+ *   Production   → a state renders when provider.approvalNumber is filled in its course data
+ *                  file. That is the only production gate.
+ *   QA / local   → a state renders when it is approved OR its code is in
+ *                  VITE_STATE_COURSES_ENABLED, so unapproved states can be previewed.
  *
  * Production is identified by the existing env pair VITE_ENABLE_ANALYTICS=true and
  * VITE_IS_QA!=true, so nothing here needs .env.production (a CODEOWNERS-protected file).
- * A developer's .env.local flag cannot ship an unapproved state to production, because the
- * approval number lives in source, not in an env file.
+ * Until 2026-09-30 production also required the state's code in VITE_STATE_COURSES_ENABLED,
+ * which lives in .env.production; North Dakota's approval sat in source for a day while its
+ * page stayed dark because that file had never been updated. The approval number is the
+ * gate that carries the legal meaning, so it is now the only one production checks. A
+ * developer's .env.local flag still cannot ship an unapproved state to production.
  *
  * Why this matters: every one of these states bars advertising a course before it is approved
  * (e.g. Ohio OAC 4501-21-08(C): "No person shall advertise in any manner a course of adult ...
@@ -40,9 +45,9 @@ export function isLicensed(course: CourseGateInput): boolean {
   return Boolean(course.provider.approvalNumber && course.provider.approvalNumber.trim());
 }
 
-/** Page renders at all. QA/local: flag only. Prod: flag AND approval number. */
+/** Page renders at all. Prod: approval number alone. QA/local: approval OR the preview flag. */
 export function isEnabled(course: CourseGateInput): boolean {
-  return isFlagOn(course) && (isLicensed(course) || !isProdSite);
+  return isProdSite ? isLicensed(course) : isLicensed(course) || isFlagOn(course);
 }
 
 /** noindex until approved, in every environment (QA serves a permissive robots.txt). */

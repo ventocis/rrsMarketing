@@ -1,7 +1,8 @@
 ---
 /**
- * Homepage hero (Jackson, 2026-09-30): the headline and two reassurance lines, centered,
- * with the "Pick your state" course cards directly under them (HomeCourseRow.astro).
+ * Homepage hero (Jackson, 2026-09-30): the headline, centered, with the "Pick your state"
+ * course cards directly under it (HomeCourseRow.astro). The two reassurance lines moved
+ * onto every card.
  * The old Texas purchase panel and review card moved into the cards.
  */
 import { FEATURED_COURSES } from '../data/featured-courses';
@@ -20,18 +21,10 @@ const course = FEATURED_COURSES[0];
   <div class="rrs-hero-dots absolute inset-y-0 right-0 w-1/2 pointer-events-none hidden lg:block" aria-hidden="true"></div>
 
   <div class="relative max-w-[1152px] mx-auto px-4 sm:px-6 lg:px-8 z-10 w-full">
-    <div class="flex flex-col items-center text-center gap-5 mb-8 lg:mb-10">
+    <div class="flex flex-col items-center text-center mb-8 lg:mb-10">
       <h1 class="text-[32px] leading-[40px] lg:text-[48px] lg:leading-[56px] font-extrabold text-text tracking-[-0.02em] m-0 max-w-3xl">
         Dismiss your ticket online.<br class="hidden sm:block" /> Keep it off your record.
       </h1>
-      <ul class="list-none p-0 m-0 flex flex-col sm:flex-row sm:flex-wrap sm:justify-center gap-x-8 gap-y-2">
-        {course.heroPoints.map((pt) => (
-          <li class="flex items-start sm:items-center gap-2.5 text-base lg:text-lg leading-7 text-text-body text-left">
-            <svg class="w-5 h-5 mt-1 sm:mt-0 shrink-0 text-text" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="8.25" stroke="currentColor" stroke-width="1.5"/><path d="M6.5 10.3l2.4 2.4 4.6-4.9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span>{pt}</span>
-          </li>
-        ))}
-      </ul>
     </div>
 
     <HomeCourseRow embedded />

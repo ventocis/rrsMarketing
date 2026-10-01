@@ -32,6 +32,9 @@
  */
 import { FEATURED_COURSES } from '../data/featured-courses';
 import reviews from '../data/texas-reviews.json';
+import nd from '../data/courses/nd-ddc.json';
+import type { CourseData } from '../data/courses/types';
+import { isEnabled } from '../lib/courseFlags';
 
 // Vite only substitutes env vars read by their literal name; a dynamic
 // import.meta.env[key] lookup silently yields undefined.
@@ -41,6 +44,8 @@ const ENROLL_URLS: Record<string, string | undefined> = {
 
 const course = FEATURED_COURSES[0];
 const enrollUrl = ENROLL_URLS[course.id] || course.enrollFallback;
+// One line under the buttons so a North Dakota visitor knows they're in the right place.
+const ndLive = isEnabled(nd as CourseData);
 
 // The homepage quotes a customer. Refuse to build if the excerpt is not their words.
 const review = (reviews as Array<{ name: string; quote: string; rating: number; verified: boolean }>)
@@ -114,6 +119,11 @@ if (!review || !review.quote.includes(course.proof.reviewExcerpt)) {
               Learn more
             </a>
           </div>
+          {ndLive && (
+            <p class="mt-4 mb-0 text-sm text-text-body text-center lg:text-left">
+              In North Dakota? <a href="/north-dakota" class="font-semibold text-primary-deep underline underline-offset-2">Your course is here &rarr;</a>
+            </p>
+          )}
         </div>
       </div>
 

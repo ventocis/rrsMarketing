@@ -1,57 +1,18 @@
 ---
 /**
- * HomeHeroFeatured — the root homepage hero.
- *
- * Live for everyone since 2026-09-21. It was first built behind a
- * VITE_HOME_FEATURED_COURSES switch (QA only); Jackson chose to ship it without
- * the switch, so there is no flag and no settings file involved any more.
- *
- * WHY IT LOOKS LIKE THIS
- * The old hero stacked three equally heavy boxes (intro, offer card, a tall grey
- * finder form) next to an illustration that said nothing. Homepage visitors are
- * mostly brand searchers ready to buy, about half of them in Texas, and Texas is
- * the only course on sale. So:
- *   - one clear primary action: Start now → checkout, Learn more → /texas
- *   - the illustration's space goes to proof (a real review + three facts),
- *     which answers "is this site legit" for a $28 course from an unfamiliar name
- *   - the "Not in Texas? Find your state's course" disclosure was removed from
- *     the hero on 2026-09-27 at Jackson's request. The state finder still lives
- *     further down the homepage (HeroFinder variant="cta" in pages/index.astro).
- *
- * LAYOUT
- *   desktop  [ headline + offer ] [ proof ]
- *   mobile   headline → boxed purchase panel → proof
- * The offer is one block of markup: boxed with a large price on phones, unboxed
- * and inline on desktop.
- *
- * MEASUREMENT (dataLayer): `enroll_click` {cta_location: 'home_featured'} on the
- * primary button. Even
- * without GTM receiving these, a GA4 path of "/" → /public/checkout with no
- * /texas between can only come from this button. Baseline: the homepage turned
- * 17–18% of visits into purchases, June to mid-September 2026.
+ * Homepage hero (Jackson, 2026-09-30): the headline, centered, with the "Pick your state"
+ * course cards directly under it (HomeCourseRow.astro). The two reassurance lines moved
+ * onto every card.
+ * The old Texas purchase panel and review card moved into the cards.
  */
 import { FEATURED_COURSES } from '../data/featured-courses';
-import reviews from '../data/texas-reviews.json';
-
-// Vite only substitutes env vars read by their literal name; a dynamic
-// import.meta.env[key] lookup silently yields undefined.
-const ENROLL_URLS: Record<string, string | undefined> = {
-  'tx-bdi': import.meta.env.VITE_TEXAS_ENROLLMENT_URL,
-};
+import HomeCourseRow from './HomeCourseRow.astro';
 
 const course = FEATURED_COURSES[0];
-const enrollUrl = ENROLL_URLS[course.id] || course.enrollFallback;
-
-// The homepage quotes a customer. Refuse to build if the excerpt is not their words.
-const review = (reviews as Array<{ name: string; quote: string; rating: number; verified: boolean }>)
-  .find((r) => r.name === course.proof.reviewerName);
-if (!review || !review.quote.includes(course.proof.reviewExcerpt)) {
-  throw new Error(`featured-courses: "${course.proof.reviewExcerpt}" is not a verbatim excerpt of ${course.proof.reviewerName}'s review`);
-}
 ---
 
 <section
-  class="rrs-hero relative border-b border-border py-12 lg:py-20 overflow-hidden"
+  class="rrs-hero relative border-b border-border pt-12 pb-10 lg:pt-20 lg:pb-16 overflow-hidden"
   id="find-course"
   style="font-family: 'Inter', sans-serif;"
 >
@@ -60,91 +21,13 @@ if (!review || !review.quote.includes(course.proof.reviewExcerpt)) {
   <div class="rrs-hero-dots absolute inset-y-0 right-0 w-1/2 pointer-events-none hidden lg:block" aria-hidden="true"></div>
 
   <div class="relative max-w-[1152px] mx-auto px-4 sm:px-6 lg:px-8 z-10 w-full">
-    <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] gap-x-12 gap-y-6">
-
-      <!-- Headline + offer -->
-      <div class="lg:col-start-1 lg:row-start-1">
-        <!-- Course name next to the seal, so the headline has a subject -->
-        <p class="flex items-center gap-2 w-fit mx-auto lg:mx-0 mb-5 rounded-full bg-white/70 border border-info-border pl-1.5 pr-4 py-1 text-sm font-semibold text-primary-deep leading-5">
-          <img src="/assets/images/badges/texas-approved-tdlr.png" width="28" height="28" alt="Texas approved: TDLR-approved course" class="w-7 h-7 shrink-0" decoding="async" />
-          {course.name}
-        </p>
-        <h1 class="text-[32px] leading-[40px] lg:text-[44px] lg:leading-[54px] font-extrabold text-text tracking-[-0.02em] mb-5 text-center lg:text-left">
-          Dismiss your ticket online.<br class="hidden lg:block" /> Keep it off your record.
-        </h1>
-
-        <ul class="list-none p-0 m-0 mb-7 space-y-2 w-fit mx-auto lg:mx-0">
-          {course.heroPoints.map((pt) => (
-            <li class="flex items-start gap-2.5 text-base lg:text-lg leading-7 text-text-body">
-              <svg class="w-5 h-5 mt-1 shrink-0 text-text" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="8.25" stroke="currentColor" stroke-width="1.5"/><path d="M6.5 10.3l2.4 2.4 4.6-4.9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <span>{pt}</span>
-            </li>
-          ))}
-        </ul>
-
-        <!-- Boxed purchase panel on phones; unboxed and inline from lg up -->
-        <div class="bg-white border-2 border-primary rounded-[20px] p-5 shadow-[0_10px_30px_-12px_rgba(17,23,34,0.18)] lg:bg-transparent lg:border-0 lg:rounded-none lg:p-0 lg:shadow-none">
-          <div class="flex items-center justify-between gap-3 mb-3 lg:hidden">
-            <span class="bg-info text-info-text text-xs font-semibold leading-4 px-2.5 py-1 rounded-full">{course.badge}</span>
-            <span class="text-xs leading-4 text-text-body">{course.credential}</span>
-          </div>
-          <p class="mb-4 lg:hidden">
-            <span class="text-[36px] leading-[44px] font-extrabold text-text tracking-[-0.02em]">${course.price}</span>
-            <span class="text-sm text-text-body ml-1">all-in · certificate included</span>
-          </p>
-
-          <p class="hidden lg:inline-flex items-center rounded-full border border-[#FBB991] bg-[#FFF1E8] px-3.5 py-1.5 text-sm font-semibold text-text mb-4">
-            {course.offerLine}
-          </p>
-
-          <div class="flex flex-col sm:flex-row gap-3">
-            <a
-              href={enrollUrl}
-              data-featured-enroll={course.id}
-              class="bg-primary hover:bg-primary-hover text-white h-[52px] pl-7 pr-5 rounded-full text-base font-semibold inline-flex items-center justify-center gap-2 no-underline transition-colors shadow-[0_8px_20px_-8px_rgba(36,84,230,0.55)]"
-            >
-              <span class="lg:hidden">Start now</span>
-              <span class="hidden lg:inline">Start now for ${course.price}</span>
-              <svg class="w-4 h-4" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M7.5 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-            <a
-              href={course.learnMoreHref}
-              class="border-[1.5px] border-primary hover:bg-white text-primary-deep bg-white/60 h-[52px] px-7 rounded-full text-base font-semibold inline-flex items-center justify-center no-underline transition-colors"
-            >
-              Learn more
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Proof: beside the offer on desktop, under it on phones -->
-      <aside class="lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:self-start lg:mt-1 bg-white rounded-[20px] p-6 lg:p-7 border border-border shadow-[0_24px_60px_-20px_rgba(17,23,34,0.28)]" aria-label="Why drivers trust Road Ready Safety">
-        <div class="flex items-center gap-2.5 mb-3">
-          <div class="flex gap-0.5" aria-label={`Rated ${review.rating} out of 5 stars`}>
-            {[...Array(5)].map((_, i) => (
-              <svg class:list={["w-[18px] h-[18px]", i < review.rating ? "text-accent" : "text-border"]} viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 1.8l2.5 5.2 5.7.8-4.1 4 1 5.7-5.1-2.7-5.1 2.7 1-5.7-4.1-4 5.7-.8z"/></svg>
-            ))}
-          </div>
-          <span class="text-xs text-text-body">{review.verified ? 'Verified via Trustpilot' : 'via Trustpilot'}</span>
-        </div>
-        <blockquote class="text-lg leading-8 text-text m-0 mb-2">&ldquo;{course.proof.reviewExcerpt}&rdquo;</blockquote>
-        <p class="text-sm text-text-body mb-5">{review.name}</p>
-        <ul class="list-none p-0 m-0 pt-5 border-t border-border space-y-3.5">
-          {course.proof.checks.map((c) => (
-            <li class="flex items-start gap-3 text-[15px] leading-6 text-text">
-              <svg class="w-5 h-5 mt-0.5 shrink-0" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="10" class="fill-primary"/><path d="M6 10.4l2.6 2.6L14 7.4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <span>{c}</span>
-            </li>
-          ))}
-        </ul>
-        <p class="flex items-center gap-2 text-sm text-text-body mt-5 pt-5 border-t border-border m-0">
-          <svg class="w-4 h-4 shrink-0" viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="4" y="9" width="12" height="8" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M6.8 9V6.6a3.2 3.2 0 016.4 0V9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-          Secure checkout
-        </p>
-      </aside>
-
-
+    <div class="flex flex-col items-center text-center mb-8 lg:mb-10">
+      <h1 class="text-[32px] leading-[40px] lg:text-[48px] lg:leading-[56px] font-extrabold text-text tracking-[-0.02em] m-0 max-w-3xl">
+        Dismiss your ticket online.<br class="hidden sm:block" /> Keep it off your record.
+      </h1>
     </div>
+
+    <HomeCourseRow embedded />
   </div>
 </section>
 

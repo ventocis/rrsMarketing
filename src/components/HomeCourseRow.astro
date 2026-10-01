@@ -1,0 +1,203 @@
+---
+/**
+ * "Pick your state" row under the homepage hero (Jackson, 2026-09-30).
+ *
+ * One card per course a visitor can buy today, each with its own approval seal, three
+ * checks and two buttons, then one customer review under the cards. The hero stays
+ * Texas-only; this row is where a North Dakota (and later Missouri) visitor finds out
+ * they are in the right place.
+ *
+ * State courses appear only when their pages are live AND the approval is on file, in every
+ * environment, so QA matches what production will show once the state's flag is set. The row renders only
+ * with however many courses are live (Texas alone today in production), and Missouri joins
+ * automatically once approved.
+ */
+import { FEATURED_COURSES } from '../data/featured-courses';
+import nd from '../data/courses/nd-ddc.json';
+import mo from '../data/courses/mo-dip.json';
+import reviews from '../data/reviews.json';
+import type { CourseData } from '../data/courses/types';
+import { isEnabled, isLicensed, enrollUrl as stateEnrollUrl } from '../lib/courseFlags';
+
+interface Card {
+  id: string;
+  seal: string;
+  sealAlt: string;
+  approval: string;
+  name: string;
+  line: string;
+  checks: string[];
+  price: string;
+  enrollUrl: string;
+  learnMoreHref: string;
+}
+
+// The two lines every course shares, from the Texas hero copy, shown on every card.
+const shared = FEATURED_COURSES[0].heroPoints;
+const tx = FEATURED_COURSES[0];
+const cards: Card[] = [
+  {
+    id: tx.id,
+    seal: '/assets/images/badges/texas-approved-tdlr.png',
+    sealAlt: 'Texas approved: TDLR-approved course',
+    approval: tx.credential,
+    name: tx.name,
+    line: 'Dismiss a ticket and keep it off your record. 6 hours online.',
+    checks: ['Accepted by Texas courts for ticket dismissal', ...shared],
+    price: tx.price,
+    enrollUrl: import.meta.env.VITE_TEXAS_ENROLLMENT_URL || tx.enrollFallback,
+    learnMoreHref: tx.learnMoreHref,
+  },
+];
+
+const ndCourse = nd as CourseData;
+if (isEnabled(ndCourse) && isLicensed(ndCourse)) {
+  cards.push({
+    id: ndCourse.course.key,
+    seal: '/assets/images/badges/north-dakota-approved.png',
+    sealAlt: 'North Dakota approved: NDDOT-approved course',
+    approval: `${ndCourse.state.agencyShort}-approved`,
+    name: ndCourse.course.name,
+    line: `Take 3 points off your record, or keep a small ticket's points off. ${ndCourse.course.hours} hours online.`,
+    checks: ['3 points off, once every 12 months', 'Elect it at court for a ticket of 5 points or fewer', ...shared],
+    price: ndCourse.course.priceUsd,
+    enrollUrl: stateEnrollUrl(ndCourse),
+    learnMoreHref: ndCourse.state.route,
+  });
+}
+
+const moCourse = mo as CourseData;
+if (isEnabled(moCourse) && isLicensed(moCourse)) {
+  cards.push({
+    id: moCourse.course.key,
+    seal: '/assets/icons/texas/tdlr-approved-icon.svg',
+    sealAlt: 'Missouri Safety Center-approved program',
+    approval: 'Missouri Safety Center-approved',
+    name: moCourse.course.name,
+    line: `Keep the points from a ticket off your record when your court approves it. ${moCourse.course.hours} hours online.`,
+    checks: ['Points for the violation are not assessed', 'Finish within 60 days of your plea', ...shared],
+    price: moCourse.course.priceUsd,
+    enrollUrl: stateEnrollUrl(moCourse),
+    learnMoreHref: moCourse.state.route,
+  });
+}
+
+interface Props { /** Rendered inside the hero: no section wrapper, no heading, lighter panel. */ embedded?: boolean }
+const { embedded = false } = Astro.props;
+// Texas alone still renders: with the hero's purchase panel gone, this is the homepage's buy button.
+const show = cards.length > 0;
+// A different reviewer than the hero quotes, so the page doesn't repeat itself.
+const review = (reviews as Array<{ name: string; quote: string }>).find((r) => r.name === 'Tommie Garner') ?? reviews[0];
+const cols = cards.length >= 3 ? 'lg:grid-cols-3' : cards.length === 2 ? 'md:grid-cols-2' : 'max-w-xl mx-auto';
+---
+
+{show && !embedded && (
+  <section class="bg-white py-14 lg:py-20 border-b border-border" style="font-family: 'Inter', sans-serif;" aria-labelledby="pick-state-heading">
+    <div class="max-w-[1152px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col gap-3 items-center text-center mb-8 lg:mb-10">
+        <h2 id="pick-state-heading" class="text-[28px] lg:text-[36px] font-bold text-text tracking-[-0.02em] leading-[1.2] m-0">Pick your state. You're in the right place.</h2>
+        <p class="text-base text-text-body leading-6 m-0">Every course is approved by the state that requires it, with the certificate included.</p>
+      </div>
+      <div class={`rounded-[24px] border p-3 sm:p-4 lg:p-5 ${embedded ? 'border-white/80 bg-white/55' : 'border-border bg-surface-muted'}`} aria-label="Courses we offer">
+        <ul class={`grid grid-cols-1 ${cols} gap-3 sm:gap-4 lg:gap-5 list-none p-0 m-0`}>
+          {cards.map((c) => (
+            <li class="bg-white rounded-[20px] border border-border p-6 lg:p-7 flex flex-col gap-4" style="box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);">
+              <p class="flex items-center gap-2 w-fit m-0 rounded-full bg-info border border-info-border pl-1 pr-3 py-0.5 text-xs font-semibold text-primary-deep leading-5">
+                <img src={c.seal} width="24" height="24" alt={c.sealAlt} class="w-6 h-6 shrink-0" loading="lazy" decoding="async" />
+                {c.approval}
+              </p>
+              <h3 class="text-xl lg:text-[22px] font-bold text-text leading-7 m-0">{c.name}</h3>
+              <p class="text-base text-text-body leading-6 m-0">{c.line}</p>
+              <ul class="list-none p-0 m-0 space-y-2.5 flex-1">
+                {c.checks.map((k) => (
+                  <li class="flex items-start gap-2.5 text-[15px] leading-6 text-text">
+                    <svg class="w-5 h-5 mt-0.5 shrink-0" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="10" class="fill-primary"/><path d="M6 10.4l2.6 2.6L14 7.4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span>{k}</span>
+                  </li>
+                ))}
+              </ul>
+              <p class="m-0 pt-2">
+                <span class="text-[32px] leading-none font-extrabold text-text tracking-[-0.02em]">${c.price}</span>
+                <span class="text-sm text-text-body ml-1">all-in · certificate included</span>
+              </p>
+              <div class="flex flex-col sm:flex-row gap-3">
+                <a href={c.enrollUrl} data-course-row-enroll={c.id} class="bg-primary hover:bg-primary-hover text-white h-12 px-6 rounded-full text-base font-semibold inline-flex items-center justify-center gap-2 no-underline transition-colors flex-1">
+                  Start now
+                  <svg class="w-4 h-4" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M7.5 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+                <a href={c.learnMoreHref} class="border-[1.5px] border-primary hover:bg-info text-primary-deep bg-white h-12 px-6 rounded-full text-base font-semibold inline-flex items-center justify-center no-underline transition-colors flex-1">Learn more</a>
+              </div>
+            </li>
+          ))}
+        </ul>
+      
+        <!-- One review under the cards: stars and source top left, the promise top right, the quote below -->
+      <div class="mt-3 sm:mt-4 lg:mt-5 bg-white rounded-[20px] border border-border px-6 py-5 lg:px-7 flex flex-col gap-3">
+        <div class="flex flex-wrap items-center justify-between gap-x-6 gap-y-2">
+          <div class="flex items-center gap-2.5">
+            <div class="flex gap-0.5" aria-label="Rated 5 out of 5 stars">
+              {[0, 1, 2, 3, 4].map(() => (
+                <svg class="w-[18px] h-[18px] text-accent" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 1.8l2.5 5.2 5.7.8-4.1 4 1 5.7-5.1-2.7-5.1 2.7 1-5.7-4.1-4 5.7-.8z"/></svg>
+              ))}
+            </div>
+            <span class="text-xs text-text-body">Verified via Trustpilot</span>
+          </div>
+          <p class="text-sm text-text-body m-0">Secure checkout &middot; Nothing added at checkout</p>
+        </div>
+        <blockquote class="text-base lg:text-lg leading-7 text-text m-0">&ldquo;{review.quote}&rdquo; <span class="text-sm text-text-body whitespace-nowrap">&mdash; {review.name}</span></blockquote>
+      </div>
+    </div>
+    </div>
+  </section>
+)}
+{show && embedded && (
+  <div class={`rounded-[24px] border p-3 sm:p-4 lg:p-5 ${embedded ? 'border-white/80 bg-white/55' : 'border-border bg-surface-muted'}`} aria-label="Courses we offer">
+    <ul class={`grid grid-cols-1 ${cols} gap-3 sm:gap-4 lg:gap-5 list-none p-0 m-0`}>
+      {cards.map((c) => (
+        <li class="bg-white rounded-[20px] border border-border p-6 lg:p-7 flex flex-col gap-4" style="box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);">
+          <p class="flex items-center gap-2 w-fit m-0 rounded-full bg-info border border-info-border pl-1 pr-3 py-0.5 text-xs font-semibold text-primary-deep leading-5">
+            <img src={c.seal} width="24" height="24" alt={c.sealAlt} class="w-6 h-6 shrink-0" loading="lazy" decoding="async" />
+            {c.approval}
+          </p>
+          <h3 class="text-xl lg:text-[22px] font-bold text-text leading-7 m-0">{c.name}</h3>
+          <p class="text-base text-text-body leading-6 m-0">{c.line}</p>
+          <ul class="list-none p-0 m-0 space-y-2.5 flex-1">
+            {c.checks.map((k) => (
+              <li class="flex items-start gap-2.5 text-[15px] leading-6 text-text">
+                <svg class="w-5 h-5 mt-0.5 shrink-0" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="10" class="fill-primary"/><path d="M6 10.4l2.6 2.6L14 7.4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>{k}</span>
+              </li>
+            ))}
+          </ul>
+          <p class="m-0 pt-2">
+            <span class="text-[32px] leading-none font-extrabold text-text tracking-[-0.02em]">${c.price}</span>
+            <span class="text-sm text-text-body ml-1">all-in · certificate included</span>
+          </p>
+          <div class="flex flex-col sm:flex-row gap-3">
+            <a href={c.enrollUrl} data-course-row-enroll={c.id} class="bg-primary hover:bg-primary-hover text-white h-12 px-6 rounded-full text-base font-semibold inline-flex items-center justify-center gap-2 no-underline transition-colors flex-1">
+              Start now
+              <svg class="w-4 h-4" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M7.5 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a href={c.learnMoreHref} class="border-[1.5px] border-primary hover:bg-info text-primary-deep bg-white h-12 px-6 rounded-full text-base font-semibold inline-flex items-center justify-center no-underline transition-colors flex-1">Learn more</a>
+          </div>
+        </li>
+      ))}
+    </ul>
+  
+    <!-- One review under the cards: stars and source top left, the promise top right, the quote below -->
+  <div class="mt-3 sm:mt-4 lg:mt-5 bg-white rounded-[20px] border border-border px-6 py-5 lg:px-7 flex flex-col gap-3">
+    <div class="flex flex-wrap items-center justify-between gap-x-6 gap-y-2">
+      <div class="flex items-center gap-2.5">
+        <div class="flex gap-0.5" aria-label="Rated 5 out of 5 stars">
+          {[0, 1, 2, 3, 4].map(() => (
+            <svg class="w-[18px] h-[18px] text-accent" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 1.8l2.5 5.2 5.7.8-4.1 4 1 5.7-5.1-2.7-5.1 2.7 1-5.7-4.1-4 5.7-.8z"/></svg>
+          ))}
+        </div>
+        <span class="text-xs text-text-body">Verified via Trustpilot</span>
+      </div>
+      <p class="text-sm text-text-body m-0">Secure checkout &middot; Nothing added at checkout</p>
+    </div>
+    <blockquote class="text-base lg:text-lg leading-7 text-text m-0">&ldquo;{review.quote}&rdquo; <span class="text-sm text-text-body whitespace-nowrap">&mdash; {review.name}</span></blockquote>
+  </div>
+</div>
+)}

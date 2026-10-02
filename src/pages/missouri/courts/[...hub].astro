@@ -1,0 +1,83 @@
+---
+/**
+ * Missouri courts hub, /missouri/courts. A rest route (like missouri/[...override].astro) so it
+ * can emit nothing while Missouri is disabled. Lists every court in src/data/missouri-courts.json and
+ * explains, once, how the Driver Improvement Program works in any Missouri court. Emits nothing
+ * while Missouri is disabled.
+ */
+import CourseLayout from '../../../layouts/CourseLayout.astro';
+import mo from '../../../data/courses/mo-dip.json';
+import { moCourts } from '../../../data/missouri-courts';
+import { isEnabled, enrollUrl as buildEnrollUrl } from '../../../lib/courseFlags';
+import type { CourseData } from '../../../data/courses/types';
+
+export function getStaticPaths() {
+  return isEnabled(mo as CourseData) ? [{ params: { hub: undefined } }] : [];
+}
+
+const course = mo as CourseData;
+const route = course.state.route;
+const enrollUrl = buildEnrollUrl(course);
+const price = course.course.priceUsd;
+const courts = [...moCourts].sort((a, b) => a.name.localeCompare(b.name));
+const outfit = "font-family:'Outfit',sans-serif;";
+---
+
+<CourseLayout
+  course={course}
+  title="Missouri Courts: Driver Improvement Program"
+  description="Missouri traffic courts: contact details, court originator numbers for Form 4444, and how to ask any Missouri court for the Driver Improvement Program."
+  url={`${route}/courts`}
+>
+  <article class="bg-white">
+    <div class="max-w-[768px] mx-auto px-4 sm:px-6 py-10 md:py-16">
+      <nav class="mb-8 text-sm" aria-label="Breadcrumb">
+        <ol class="flex flex-wrap items-center gap-2 list-none p-0 m-0 text-text-body">
+          <li><a href={route} class="hover:text-primary no-underline">{course.course.name}</a></li>
+        </ol>
+      </nav>
+
+      <header class="mb-8 flex flex-col gap-4">
+        <h1 class="text-3xl md:text-[40px] font-bold text-text leading-[1.15] tracking-[-0.02em] m-0" style={outfit}>Missouri courts and the Driver Improvement Program</h1>
+        <p class="text-lg text-text-body leading-8 m-0">
+          Find your court for its address, phone and what it publishes about the program. Use the court named on your ticket.
+        </p>
+      </header>
+
+      <div class="rounded-[20px] bg-info border border-info-border p-6 md:p-7 mb-10">
+        <p class="text-xs font-bold uppercase tracking-wider text-primary-deep m-0 mb-2">How it works in every Missouri court</p>
+        <p class="text-lg text-text leading-8 m-0">
+          The judge decides. Ask the court to order the Driver Improvement Program in lieu of points before you pay, because paying is a guilty plea.
+          If the court agrees, finish an approved 8-hour course within 60 days of your conviction and take Form 4444 to the clerk.
+          The points stay off. The conviction stays on your record.
+        </p>
+      </div>
+
+      <section class="mb-10">
+        <h2 class="text-2xl font-bold text-text m-0 mb-5" style={outfit}>Courts</h2>
+        <ul class="grid grid-cols-1 gap-3 list-none p-0 m-0">
+          {courts.map((c) => (
+            <li class="border border-border rounded-2xl p-5 flex flex-col gap-1">
+              <a href={`${route}/courts/${c.slug}`} class="text-lg font-semibold text-text no-underline hover:text-primary">{c.name}</a>
+              <span class="text-sm text-text-body">{c.typeLabel} · {c.county} · {c.phone}</span>
+            </li>
+          ))}
+        </ul>
+        <p class="text-base text-text-body leading-7 mt-5 mb-0">
+          Don't see your court? The steps are the same everywhere.
+          Read <a href={`${route}/blog/how-to-ask-missouri-court-for-driver-improvement-program`} class="text-primary-deep underline underline-offset-2">how to ask a Missouri court for the program</a>
+          and <a href={`${route}/blog/missouri-court-originator-number-driver-improvement`} class="text-primary-deep underline underline-offset-2">how to find your court originator number</a>.
+        </p>
+      </section>
+
+      <aside class="bg-primary-navy rounded-[24px] p-8 flex flex-col gap-4 text-white">
+        <h2 class="text-2xl font-bold leading-tight m-0" style={outfit}>{course.course.name}</h2>
+        <p class="text-white/85 leading-7 m-0">{course.course.hours} hours online, ${price} total, Form 4444 included. Approved by the Missouri Safety Center, provider {course.provider.approvalNumber || 'approval pending'}.</p>
+        <div class="flex flex-col sm:flex-row gap-3">
+          <a href={enrollUrl} class="bg-white text-primary-navy h-12 px-6 rounded-xl text-base font-semibold flex items-center justify-center no-underline hover:bg-info transition-colors">{course.hero.ctaLabel} &mdash; ${price}</a>
+          <a href={route} class="border border-white/30 text-white h-12 px-6 rounded-xl text-base font-semibold flex items-center justify-center no-underline hover:bg-white/10 transition-colors">About the course</a>
+        </div>
+      </aside>
+    </div>
+  </article>
+</CourseLayout>

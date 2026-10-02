@@ -9,6 +9,7 @@ import { translatedPages } from '../lib/i18n';
 import { INSURERS } from '../data/texas-insurers';
 import { sitemapCourses, STATE_SUBROUTES } from '../data/courses/index';
 import { postsFor } from '../data/blog/index';
+import { moCourts } from '../data/missouri-courts';
 
 // Generate sitemap at build time from known static routes
 const siteUrl = (import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com').replace(/\/$/, '');
@@ -104,7 +105,10 @@ const stateCourseRoutes = sitemapCourses.flatMap((c) => {
   const base = c.state.route;
   const subs = STATE_SUBROUTES.map((s) => `${base}${s}`);
   const posts = postsFor(c.state.code).map((p) => `${base}/blog/${p.slug}`);
-  const extras = c.state.code === 'OH' ? [`${base}/12-point-suspension`] : [];
+  const extras =
+    c.state.code === 'OH' ? [`${base}/12-point-suspension`]
+    : c.state.code === 'MO' ? [`${base}/courts`, ...moCourts.map((court) => `${base}/courts/${court.slug}`)]
+    : [];
   return [...subs, ...posts, ...extras];
 });
 

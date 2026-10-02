@@ -1,0 +1,91 @@
+{
+  "_note": "Missouri court pages (/missouri/courts/<slug>). One record per court that actually hears traffic cases. Every field is from the court's or city's own site, read on `checked`, and re-verified by a second model (research ledger: ~/Claude/Missouri 8hr Driver Improvement/court-pages-research/06-verification-ledger.md). Never put vendor, law-firm or course-seller text here. `ori` is the court originator number for MO Form 4444: fill it ONLY when the court itself publishes it (or confirms it in writing); otherwise null. Statewide DIP steps live in the page template, not here.",
+  "courts": [
+    {
+      "slug": "kansas-city-municipal-court",
+      "name": "Kansas City Municipal Court",
+      "seoTitle": "Kansas City Municipal Court: Keep the Points Off",
+      "description": "Kansas City Municipal Court address, phone and how tickets are paid, plus the steps to ask for Missouri's Driver Improvement Program and fill in Form 4444.",
+      "type": "municipal",
+      "typeLabel": "City court",
+      "county": "Jackson County",
+      "countyNote": "Kansas City spans parts of Jackson, Clay, Platte and Cass counties. This court hears tickets written under Kansas City's city ordinances.",
+      "address": "511 E. 11th Street, Kansas City, MO 64106",
+      "phone": "(816) 513-2700",
+      "email": "court@kcmo.org",
+      "website": "https://www.kcmo.gov/city-hall/departments/municipal-court",
+      "hours": "8 a.m. to 5 p.m., Monday to Friday, except holidays",
+      "ori": null,
+      "hears": "Tickets written under Kansas City ordinances, mostly by Kansas City police.",
+      "alsoHears": [],
+      "payment": "If a fine amount is printed on the ticket, you can plead guilty and pay on Case.net (Plead and Pay) before the court date on the ticket. Paying is a guilty plea.",
+      "appearance": "A ticket with no fine amount printed on it needs a court appearance. The court says a ticket that is normally payable may become non-payable if it was issued with other non-payable tickets or involves a vehicle accident.",
+      "dipWording": null,
+      "courtSays": "The court's pages explain that guilty pleas and findings on moving violations are reported to the Department of Revenue within 7 days, including SIS (suspended imposition of sentence) and \"No Point\" outcomes, and that \"the court's role is limited to reporting the disposition.\" They don't describe the Driver Improvement Program, so ask the court before you pay.",
+      "otherCourt": "A ticket from the Highway Patrol or a county deputy usually goes to the circuit court for the county, not this court. Use the court named on your ticket.",
+      "cityGuide": "kansas-city-traffic-ticket",
+      "sources": [
+        { "name": "Kansas City Municipal Court: Missouri DMV reporting", "url": "https://www.kcmo.gov/city-hall/departments/municipal-court/missouri-dmv-reporting" },
+        { "name": "Kansas City Municipal Court: About your ticket", "url": "https://www.kcmo.gov/city-hall/departments/municipal-court/about-your-ticket" },
+        { "name": "Kansas City Municipal Court: Contact", "url": "https://www.kcmo.gov/city-hall/departments/municipal-court/about-municipal-court/contact-municipal-court" }
+      ],
+      "checked": "2026-10-02"
+    },
+    {
+      "slug": "st-louis-county-municipal-court",
+      "name": "St. Louis County Municipal Court",
+      "seoTitle": "St. Louis County Municipal Court: Keep the Points Off",
+      "description": "St. Louis County Municipal Court in Clayton: address, phone, the towns it hears, and the steps to ask for Missouri's Driver Improvement Program.",
+      "type": "municipal",
+      "typeLabel": "County ordinance court",
+      "county": "St. Louis County",
+      "countyNote": null,
+      "address": "105 South Central Ave, S27, Clayton, MO 63105",
+      "phone": "(314) 615-8760",
+      "email": "Municipal-Court-Filings@stlouiscountymo.gov",
+      "website": "https://stlouiscountymo.gov/st-louis-county-government/municipal-court/",
+      "hours": "8 a.m. to 4:30 p.m., Monday to Friday",
+      "ori": null,
+      "hears": "Ordinance violations in unincorporated St. Louis County, plus the towns that contract with it for court services.",
+      "alsoHears": ["Pasadena Hills", "Twin Oaks", "Green Park", "Village of Marlborough", "Norwood Court"],
+      "payment": null,
+      "appearance": null,
+      "dipWording": null,
+      "courtSays": "The court's page doesn't describe the Driver Improvement Program or how to pay. Call or email the court before you pay or plead.",
+      "otherCourt": "A ticket for a state-law violation goes to the St. Louis County Circuit Court (21st Circuit), not this court. Many cities in the county also run their own courts. Use the court named on your ticket.",
+      "cityGuide": "st-louis-traffic-ticket",
+      "sources": [
+        { "name": "St. Louis County Municipal Court", "url": "https://stlouiscountymo.gov/st-louis-county-government/municipal-court/" }
+      ],
+      "checked": "2026-10-02"
+    },
+    {
+      "slug": "boone-county-circuit-court",
+      "name": "Boone County Circuit Court (13th Circuit) traffic",
+      "seoTitle": "Boone County Circuit Court Traffic: DIP and Points",
+      "description": "Boone County Circuit Court traffic tickets: the court's own Driver Improvement Program rules, its court originator number MO010033J for Form 4444, and how to pay.",
+      "type": "circuit",
+      "typeLabel": "Circuit court (state tickets)",
+      "county": "Boone County",
+      "countyNote": null,
+      "address": "Boone County Courthouse, 705 E. Walnut, Columbia, MO 65201",
+      "phone": "(573) 886-4000",
+      "email": null,
+      "website": "https://www.courts.mo.gov/hosted/circuit13/courtoffices/trafficAcct/bneaccounting.htm",
+      "hours": null,
+      "ori": "MO010033J",
+      "hears": "State traffic tickets in Boone County, such as Highway Patrol and sheriff tickets.",
+      "alsoHears": ["Ashland", "Centralia", "Hallsville", "Sturgeon"],
+      "payment": "Violation Bureau tickets can be paid on Case.net (Plead and Pay), at least 24 hours before the next court date. Paying is a guilty plea.",
+      "appearance": "The court lists these as tickets you can't pay online and must appear for: \"driving without a valid license, no insurance/no proof of insurance, speeding in excess of 25 mph, and tickets where an accident was involved.\"",
+      "dipWording": "If the court has allowed/ordered you to attend the Driver Improvement Program (DIP) you must do so within 60 days of case disposition. Neither the court nor Department of Revenue can give you an extension on the 60 days. Failure to complete the program within 60 days of disposition could result in points being assessed to your license. Upon completion of the program you will receive a certificate. The original certificate needs to be forwarded to our office promptly. In order to participate in an on-line class, you will need the court originator number. Our court originator number is: MO010033J.",
+      "courtSays": "This court publishes its own Driver Improvement Program rules and its court originator number. It wants the original completion certificate sent to its office promptly.",
+      "otherCourt": "A ticket written under Columbia city ordinances goes to the Columbia Municipal Court, 600 E. Broadway, instead. Use the court named on your ticket.",
+      "cityGuide": "columbia-traffic-ticket",
+      "sources": [
+        { "name": "13th Judicial Circuit, Boone County: Accounting and Traffic", "url": "https://www.courts.mo.gov/hosted/circuit13/courtoffices/trafficAcct/bneaccounting.htm" }
+      ],
+      "checked": "2026-10-02"
+    }
+  ]
+}

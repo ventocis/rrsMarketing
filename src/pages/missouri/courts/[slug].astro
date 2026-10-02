@@ -1,0 +1,245 @@
+---
+/**
+ * Missouri court page, /missouri/courts/<slug>. One small template, all court facts from
+ * src/data/missouri-courts.json, so adding a court is a JSON edit (Texas's court pages grew into
+ * a 143k-line route file; this design avoids that).
+ *
+ * Missouri is not Texas: the Driver Improvement Program (DIP) is the judge's call, it keeps the
+ * points off but not the conviction, and few courts publish anything about it. So each page is
+ * the verified statewide steps + this court's verified logistics + the Form 4444 court box,
+ * including the court originator number when the court itself publishes one.
+ *
+ * Statewide facts checked 2026-10-02: RSMo 302.302.5 (eff. 28 Aug 2026), RSMo 302.345 (CDL),
+ * Supreme Court Rule 37.49 (paying = guilty plea), OSCA Municipal Clerk Manual 3.7 (the clerk
+ * signs Form 4444 and sends it to DOR within 15 days; ask for DIP in lieu of points), Missouri
+ * Safety Center process sheet (4-20-2026). Emits nothing while Missouri is disabled.
+ */
+import CourseLayout from '../../../layouts/CourseLayout.astro';
+import mo from '../../../data/courses/mo-dip.json';
+import { moCourts, type MoCourt } from '../../../data/missouri-courts';
+import { isEnabled, enrollUrl as buildEnrollUrl, siteUrl } from '../../../lib/courseFlags';
+import type { CourseData } from '../../../data/courses/types';
+
+export function getStaticPaths() {
+  if (!isEnabled(mo as CourseData)) return [];
+  return moCourts.map((court) => ({ params: { slug: court.slug }, props: { court } }));
+}
+
+const course = mo as CourseData;
+const { court } = Astro.props as { court: MoCourt };
+const route = course.state.route;
+const url = `${route}/courts/${court.slug}`;
+const enrollUrl = buildEnrollUrl(course);
+const price = course.course.priceUsd;
+const hours = course.course.hours;
+const tel = court.phone.replace(/[^0-9]/g, '');
+const outfit = "font-family:'Outfit',sans-serif;";
+
+function formatDate(d: string) {
+  return new Date(d).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+}
+
+const steps = [
+  { t: 'Ask the court before you pay', b: `Paying the ticket is a guilty plea, and the points follow the conviction. Ask the ${court.name} to order the Driver Improvement Program in lieu of points. A court can order the class without stopping the points, so use those words.` },
+  { t: 'Get your conviction date', b: 'You need it to enroll, and it starts your 60 days.' },
+  { t: 'Take an approved 8-hour course', b: `Finish within 60 days of your conviction date. Ours is ${hours} hours online, $${price}, on the Missouri Safety Center's approved list.` },
+  { t: 'Take Form 4444 to the clerk', b: 'You get MO Form 4444 when you pass. The court clerk signs it.' },
+  { t: 'Make sure it reaches the state in 15 days', b: 'By court rule the clerk sends the signed form to the Department of Revenue within 15 days. Some courts hand it back for you to mail. Ask which, and keep a copy.' },
+];
+
+const faq = [
+  { q: `Will the ${court.name} let me take the Driver Improvement Program?`, a: 'The judge decides case by case. There is no guarantee, so ask before you pay or plead.' },
+  { q: 'Does the program remove the ticket?', a: 'No. The conviction stays on your driving record. The program keeps the points for that violation off your license.' },
+  { q: 'Who can use it?', a: 'Drivers with a Missouri license and a Missouri ticket for speeding, careless and imprudent driving or another ordinary moving violation, once every 36 months. It is not available to anyone who holds a commercial driver license.' },
+  { q: 'What court information do I need to enroll?', a: court.ori
+      ? `The court's name, your case number, your conviction date and the court originator number, which for this court is ${court.ori}.`
+      : 'The court\'s name, your case number, your conviction date and the court originator number. This court doesn\'t publish its originator number, so ask the clerk.' },
+  { q: 'Are there other ways to handle the ticket?', a: 'Some prosecutors offer other outcomes, such as amending the charge. Ask the court or an attorney. We can\'t advise on your case.' },
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'GovernmentOffice',
+      name: court.name,
+      address: court.address,
+      telephone: court.phone,
+      url: court.website,
+      areaServed: court.county + ', Missouri',
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: course.course.name, item: `${siteUrl}${route}` },
+        { '@type': 'ListItem', position: 2, name: 'Missouri courts', item: `${siteUrl}${route}/courts` },
+        { '@type': 'ListItem', position: 3, name: court.name, item: `${siteUrl}${url}` },
+      ],
+    },
+    { '@type': 'FAQPage', mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+  ],
+};
+---
+
+<CourseLayout course={course} title={court.seoTitle} description={court.description} url={url}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  </Fragment>
+
+  <article class="bg-white">
+    <div class="max-w-[768px] mx-auto px-4 sm:px-6 py-10 md:py-16">
+      <nav class="mb-8 text-sm" aria-label="Breadcrumb">
+        <ol class="flex flex-wrap items-center gap-2 list-none p-0 m-0 text-text-body">
+          <li><a href={route} class="hover:text-primary no-underline">{course.course.name}</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href={`${route}/courts`} class="hover:text-primary no-underline">Missouri courts</a></li>
+        </ol>
+      </nav>
+
+      <header class="mb-8 flex flex-col gap-3">
+        <p class="text-xs font-bold uppercase tracking-wider text-primary-deep m-0">{court.typeLabel} · {court.county}</p>
+        <h1 class="text-3xl md:text-[40px] font-bold text-text leading-[1.15] tracking-[-0.02em] m-0" style={outfit}>{court.name}</h1>
+        <p class="text-lg text-text-body leading-8 m-0">{court.hears}</p>
+        <p class="text-sm text-text-muted m-0">Checked against the court's own pages on <time datetime={court.checked}>{formatDate(court.checked)}</time></p>
+      </header>
+
+      <!-- Court card -->
+      <dl class="grid grid-cols-1 sm:grid-cols-2 gap-px bg-border border border-border rounded-[20px] overflow-hidden m-0 mb-6">
+        <div class="bg-white px-5 py-4">
+          <dt class="text-xs font-semibold uppercase tracking-wider text-text-muted">Address</dt>
+          <dd class="text-base font-semibold text-text leading-6 m-0 mt-1">{court.address}</dd>
+        </div>
+        <div class="bg-white px-5 py-4">
+          <dt class="text-xs font-semibold uppercase tracking-wider text-text-muted">Phone</dt>
+          <dd class="text-base font-semibold text-text leading-6 m-0 mt-1"><a href={`tel:+1${tel}`} class="text-primary-deep no-underline">{court.phone}</a></dd>
+        </div>
+        {court.email && (
+          <div class="bg-white px-5 py-4">
+            <dt class="text-xs font-semibold uppercase tracking-wider text-text-muted">Email</dt>
+            <dd class="text-base font-semibold text-text leading-6 m-0 mt-1 break-all"><a href={`mailto:${court.email}`} class="text-primary-deep no-underline">{court.email}</a></dd>
+          </div>
+        )}
+        {court.hours && (
+          <div class="bg-white px-5 py-4">
+            <dt class="text-xs font-semibold uppercase tracking-wider text-text-muted">Hours</dt>
+            <dd class="text-base font-semibold text-text leading-6 m-0 mt-1">{court.hours}</dd>
+          </div>
+        )}
+        <div class="bg-white px-5 py-4 sm:col-span-2">
+          <dt class="text-xs font-semibold uppercase tracking-wider text-text-muted">Website</dt>
+          <dd class="text-base font-semibold text-text leading-6 m-0 mt-1 break-all"><a href={court.website} target="_blank" rel="noopener noreferrer" class="text-primary-deep underline underline-offset-2">Official court page</a></dd>
+        </div>
+      </dl>
+
+      {court.alsoHears.length > 0 && (
+        <p class="text-base text-text-body leading-7 m-0 mb-6">
+          <strong class="text-text">Also hears tickets from:</strong> {court.alsoHears.join(', ')}.
+        </p>
+      )}
+      {court.countyNote && <p class="text-base text-text-body leading-7 m-0 mb-6">{court.countyNote}</p>}
+
+      <!-- Form 4444 court box -->
+      <section class="rounded-[20px] bg-info border border-info-border p-6 md:p-7 mb-10">
+        <h2 class="text-xl font-bold text-text m-0 mb-3" style={outfit}>For your Form 4444</h2>
+        <p class="text-base text-text-body leading-7 m-0 mb-4">The completion form has a court box. Here is what goes in it for this court.</p>
+        <dl class="flex flex-col gap-3 m-0">
+          <div>
+            <dt class="text-xs font-semibold uppercase tracking-wider text-text-muted">Court originator number</dt>
+            <dd class="text-lg font-semibold text-text m-0 mt-1">
+              {court.ori
+                ? <span>{court.ori} <span class="text-sm font-normal text-text-body">(published by the court)</span></span>
+                : <span class="text-base font-normal text-text-body">Not published by this court. Ask the clerk at {court.phone}. It starts with MO and ends with J. It is not printed on your copy of the ticket.</span>}
+            </dd>
+          </div>
+          <div>
+            <dt class="text-xs font-semibold uppercase tracking-wider text-text-muted">Court name</dt>
+            <dd class="text-base text-text m-0 mt-1">As printed on your ticket or court paperwork</dd>
+          </div>
+          <div>
+            <dt class="text-xs font-semibold uppercase tracking-wider text-text-muted">Case number and conviction date</dt>
+            <dd class="text-base text-text m-0 mt-1">From your court paperwork or Case.net</dd>
+          </div>
+        </dl>
+      </section>
+
+      <!-- What the court says -->
+      <section class="mb-10">
+        <h2 class="text-2xl font-bold text-text m-0 mb-4" style={outfit}>What this court says about the Driver Improvement Program</h2>
+        {court.dipWording && (
+          <blockquote class="border-l-4 border-info-border pl-5 m-0 mb-4 text-base text-text-body leading-7 italic">"{court.dipWording}"</blockquote>
+        )}
+        <p class="text-base text-text-body leading-7 m-0">{court.courtSays}</p>
+      </section>
+
+      {(court.payment || court.appearance) && (
+        <section class="mb-10">
+          <h2 class="text-2xl font-bold text-text m-0 mb-4" style={outfit}>Paying or going to court</h2>
+          {court.payment && <p class="text-base text-text-body leading-7 m-0 mb-3">{court.payment}</p>}
+          {court.appearance && <p class="text-base text-text-body leading-7 m-0">{court.appearance}</p>}
+        </section>
+      )}
+
+      <aside class="rounded-[20px] border border-border p-5 md:p-6 mb-10 flex flex-col sm:flex-row sm:items-center gap-4" aria-label="Take the course">
+        <p class="text-base text-text-body leading-7 m-0 flex-1">
+          <strong class="text-text">Court said yes?</strong> Our {course.course.name} is {hours} hours online, ${price} total, with Form 4444 included.
+        </p>
+        <a href={enrollUrl} class="bg-primary hover:bg-primary-hover text-white h-12 px-6 rounded-full text-base font-semibold inline-flex items-center justify-center no-underline transition-colors whitespace-nowrap">{course.hero.ctaLabel} &mdash; ${price}</a>
+      </aside>
+
+      <!-- Statewide steps -->
+      <section class="mb-10">
+        <h2 class="text-2xl font-bold text-text m-0 mb-5" style={outfit}>How to keep the points off, step by step</h2>
+        <ol class="flex flex-col gap-4 list-none p-0 m-0">
+          {steps.map((s, i) => (
+            <li class="flex gap-4">
+              <span class="shrink-0 w-8 h-8 rounded-full bg-primary-navy text-white text-sm font-bold flex items-center justify-center">{i + 1}</span>
+              <div>
+                <h3 class="text-lg font-bold text-text m-0 mb-1" style={outfit}>{s.t}</h3>
+                <p class="text-base text-text-body leading-7 m-0">{s.b}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <p class="text-base text-text-body leading-7 m-0 mb-10">{court.otherCourt}</p>
+
+      <section class="mb-10">
+        <h2 class="text-2xl font-bold text-text m-0 mb-5" style={outfit}>Quick answers</h2>
+        <div class="flex flex-col gap-5">
+          {faq.map((f) => (
+            <div class="border-l-4 border-info-border pl-5">
+              <h3 class="text-lg font-bold text-text m-0 mb-1" style={outfit}>{f.q}</h3>
+              <p class="text-base text-text-body leading-7 m-0">{f.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section class="mb-10">
+        <h2 class="text-lg font-bold text-text mb-4" style={outfit}>Related guides</h2>
+        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3 list-none p-0 m-0">
+          {court.cityGuide && <li class="border border-border rounded-2xl p-5"><a href={`${route}/blog/${court.cityGuide}`} class="font-semibold text-text no-underline hover:text-primary">The full guide to tickets in this area</a></li>}
+          <li class="border border-border rounded-2xl p-5"><a href={`${route}/blog/how-to-ask-missouri-court-for-driver-improvement-program`} class="font-semibold text-text no-underline hover:text-primary">How to ask a Missouri court for the program</a></li>
+          <li class="border border-border rounded-2xl p-5"><a href={`${route}/blog/missouri-court-originator-number-driver-improvement`} class="font-semibold text-text no-underline hover:text-primary">What is the court originator number?</a></li>
+          <li class="border border-border rounded-2xl p-5"><a href={`${route}/blog/missouri-form-4444`} class="font-semibold text-text no-underline hover:text-primary">Missouri Form 4444, step by step</a></li>
+        </ul>
+      </section>
+
+      <section class="pt-6 border-t border-border">
+        <h2 class="text-base font-semibold text-text uppercase tracking-wider mb-3" style={outfit}>Sources</h2>
+        <ul class="list-disc pl-5 text-sm text-text-body flex flex-col gap-1.5 m-0">
+          {court.sources.map((s) => (
+            <li><a href={s.url} target="_blank" rel="noopener noreferrer" class="text-primary-deep underline underline-offset-2">{s.name}</a></li>
+          ))}
+          <li><a href="https://revisor.mo.gov/main/OneSection.aspx?section=302.302" target="_blank" rel="noopener noreferrer" class="text-primary-deep underline underline-offset-2">Missouri Revised Statutes 302.302: the point system and the driver-improvement program</a></li>
+          <li><a href="https://mosafetycenter.com/grants/driver-improvement-program/" target="_blank" rel="noopener noreferrer" class="text-primary-deep underline underline-offset-2">Missouri Safety Center: Driver Improvement Program</a></li>
+        </ul>
+        <p class="text-sm text-text-muted leading-6 mt-4 mb-0">
+          Road Ready Safety is a private company, not the court. We don't look up tickets or cases. This page is general information, not legal advice; the court decides whether you can use the program.
+          See a mistake? Email <a href={`mailto:${course.provider.supportEmail}`} class="text-primary-deep underline">{course.provider.supportEmail}</a>.
+        </p>
+      </section>
+    </div>
+  </article>
+</CourseLayout>

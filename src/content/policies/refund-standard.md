@@ -18,7 +18,7 @@ If you withdraw before you complete the course, we refund everything you paid. I
 
 ## 4. After completion: no refund
 
-Once you have completed the course the certificate has been earned and, where {{stateName}} requires it, reported. No refund is available after completion. If you believe your completion was recorded in error, contact support and we will review the record.
+Once you have completed the course the certificate has been earned (and, in states where we report completions, reported). No refund is available after completion. If you believe your completion was recorded in error, contact support and we will review the record.
 
 ## 5. Special situations
 

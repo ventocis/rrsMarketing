@@ -46,6 +46,7 @@ const courseLinks = [
 ];
 const supportLinks = [
   { href: `${route}/helpcenter`, label: 'Help Center' },
+  { href: `mailto:${course.provider.supportEmail}`, label: course.provider.supportEmail },
   { href: contactUrl, label: 'Contact Us' },
   { href: loginUrl, label: 'Log In' },
 ];
@@ -155,17 +156,6 @@ const breadcrumbSchema = {
         </button>
       </div>
     </div>
-
-    <!-- Provider identification strip: legal entity + this state's approval status. -->
-    {!minimalHeader && (
-    <div class="bg-surface-muted border-t border-border">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-1.5">
-        <p class="text-[11px] text-text-muted text-center leading-4">
-          {course.provider.legalName} d/b/a {course.provider.dba} &middot; {licenceLabel}
-        </p>
-      </div>
-    </div>
-    )}
 
     <div id="course-menu" class="hidden lg:hidden border-t border-border bg-white">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex flex-col gap-4">

@@ -126,6 +126,13 @@ const check = 'M4.8 8.2l2.1 2.1 4.3-4.4';
   <section class="bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-14 lg:pt-24 lg:pb-28 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
       <div class="flex flex-col gap-6 items-start">
+        <!-- Approval seal and label, same pill as the /texas and /north-dakota heroes. Shown only once the approval is on file. -->
+        {course.provider.approvalNumber && (
+          <p class="flex items-center gap-2 w-fit m-0 rounded-full bg-white/70 border border-info-border pl-1.5 pr-4 py-1 text-sm font-semibold text-primary-deep leading-5">
+            <img src="/assets/images/badges/missouri-approved.png" width="28" height="28" alt={`Missouri approved: Missouri Safety Center-approved Driver Improvement Program, provider ${course.provider.approvalNumber}`} class="w-7 h-7 shrink-0" decoding="async" />
+            Missouri-Approved Course · {course.provider.approvalNumber}
+          </p>
+        )}
         <h1 class={`text-[34px] lg:text-[56px] text-primary-navy ${h2}`} style={outfit}>
           Missouri Driver Improvement Program Online
         </h1>

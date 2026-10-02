@@ -19,7 +19,7 @@ const route = course.state.route;
 const ex = course.exam;
 
 const stats = [
-  { label: 'Instruction', value: `${course.course.hours} hours`, note: course.course.completionDays ? `${course.course.completionDays} days to finish once you start` : 'No completion deadline set by the state' },
+  { label: 'Instruction', value: `${course.course.hours} hours`, note: course.course.completionNote ?? (course.course.completionDays ? `${course.course.completionDays} days to finish once you start` : 'No completion deadline set by the state') },
   { label: 'Final exam', value: `${ex.questions} questions`, note: `${ex.passPercent}% to pass (${ex.passCount} of ${ex.questions})` },
   { label: 'Attempts', value: ex.attempts === null ? 'Unlimited' : `${ex.attempts}`, note: ex.cooldownHours ? `${ex.cooldownHours} hours between attempts` : 'No waiting period' },
   { label: 'Knowledge checks', value: course.course.knowledgeChecks ? `${course.course.knowledgeChecks.count}` : 'None', note: course.course.knowledgeChecks ? 'One per unit' : 'Final exam only' },

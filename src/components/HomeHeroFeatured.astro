@@ -7,16 +7,12 @@
  *   mobile   headline → cards → review (buy buttons first on a phone)
  *
  * The headline no longer says "dismiss": only Texas dismisses; North Dakota takes points off
- * and Missouri keeps them off. The line under it names what each live state's course does,
- * built from the same approval gate as the cards, so a state appears only once approved.
+ * and Missouri keeps them off. Each card says what its course does. "Pick your state" shows on
+ * desktop only (Jackson, 2026-10-02).
  * Proof sits once, in the review card, instead of on every course card (HomeCourseRow.astro).
  */
 import { FEATURED_COURSES } from '../data/featured-courses';
 import reviews from '../data/texas-reviews.json';
-import nd from '../data/courses/nd-ddc.json';
-import mo from '../data/courses/mo-dip.json';
-import type { CourseData } from '../data/courses/types';
-import { isEnabled, isLicensed } from '../lib/courseFlags';
 import HomeCourseRow from './HomeCourseRow.astro';
 
 const course = FEATURED_COURSES[0];
@@ -28,15 +24,6 @@ if (!review || !review.quote.includes(course.proof.reviewExcerpt)) {
   throw new Error(`featured-courses: "${course.proof.reviewExcerpt}" is not a verbatim excerpt of ${course.proof.reviewerName}'s review`);
 }
 
-const live = (c: unknown) => isEnabled(c as CourseData) && isLicensed(c as CourseData);
-const outcomes = [
-  'dismiss a Texas ticket',
-  ...(live(nd) ? ['take points off in North Dakota'] : []),
-  ...(live(mo) ? ['keep them off in Missouri'] : []),
-];
-const sub = outcomes.length > 1
-  ? `${outcomes.slice(0, -1).join(', ')}${outcomes.length > 2 ? ',' : ''} or ${outcomes[outcomes.length - 1]}.`
-  : `${outcomes[0]}.`;
 const promises = ['Works on your phone', 'Certificate the moment you finish', 'Nothing added at checkout'];
 ---
 
@@ -52,12 +39,9 @@ const promises = ['Works on your phone', 'Certificate the moment you finish', 'N
   <div class="relative max-w-[1152px] mx-auto px-4 sm:px-6 lg:px-8 z-10 w-full">
     <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] gap-x-12 gap-y-8 lg:gap-y-14 items-center">
       <div class="text-center lg:text-left lg:col-start-1 lg:row-start-1">
-        <h1 class="text-[32px] leading-[40px] lg:text-[48px] lg:leading-[56px] font-extrabold text-text tracking-[-0.02em] m-0 mb-4 [text-wrap:balance]">
+        <h1 class="text-[32px] leading-[40px] lg:text-[48px] lg:leading-[56px] font-extrabold text-text tracking-[-0.02em] m-0 mb-6 [text-wrap:balance]">
           State-approved traffic courses, online.
         </h1>
-        <p class="text-base sm:text-lg lg:text-xl text-text-body leading-7 sm:leading-8 m-0 mb-6 max-w-[34rem] mx-auto lg:mx-0 [text-wrap:balance]">
-          {sub.charAt(0).toUpperCase() + sub.slice(1)}
-        </p>
         <ul class="list-none p-0 m-0 w-fit mx-auto lg:mx-0 flex flex-col sm:flex-row sm:flex-wrap items-start sm:justify-center lg:justify-start gap-x-5 gap-y-2.5 text-left">
           {promises.map((pt) => (
             <li class="flex items-center gap-2 text-[15px] leading-6 text-text">
@@ -88,7 +72,7 @@ const promises = ['Works on your phone', 'Certificate the moment you finish', 'N
 
       <!-- Cards: under the headline on phones (review after them), full width under both on desktop -->
       <div class="order-2 lg:order-none lg:col-span-2 lg:row-start-2">
-        <h2 class="text-sm font-bold uppercase tracking-wider text-primary-deep text-center lg:text-left m-0 mb-4">Pick your state</h2>
+        <h2 class="hidden lg:block text-sm font-bold uppercase tracking-wider text-primary-deep m-0 mb-4">Pick your state</h2>
         <HomeCourseRow embedded />
       </div>
     </div>

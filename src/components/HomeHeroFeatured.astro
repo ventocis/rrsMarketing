@@ -52,13 +52,13 @@ const promises = ['Works on your phone', 'Certificate the moment you finish', 'N
   <div class="relative max-w-[1152px] mx-auto px-4 sm:px-6 lg:px-8 z-10 w-full">
     <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] gap-x-12 gap-y-8 lg:gap-y-14 items-center">
       <div class="text-center lg:text-left lg:col-start-1 lg:row-start-1">
-        <h1 class="text-[32px] leading-[40px] lg:text-[48px] lg:leading-[56px] font-extrabold text-text tracking-[-0.02em] m-0 mb-4">
+        <h1 class="text-[32px] leading-[40px] lg:text-[48px] lg:leading-[56px] font-extrabold text-text tracking-[-0.02em] m-0 mb-4 [text-wrap:balance]">
           State-approved traffic courses, online.
         </h1>
-        <p class="text-lg lg:text-xl text-text-body leading-8 m-0 mb-6 max-w-[34rem] mx-auto lg:mx-0">
+        <p class="text-base sm:text-lg lg:text-xl text-text-body leading-7 sm:leading-8 m-0 mb-6 max-w-[34rem] mx-auto lg:mx-0 [text-wrap:balance]">
           {sub.charAt(0).toUpperCase() + sub.slice(1)}
         </p>
-        <ul class="list-none p-0 m-0 flex flex-col sm:flex-row sm:flex-wrap items-center lg:items-start justify-center lg:justify-start gap-x-5 gap-y-2">
+        <ul class="list-none p-0 m-0 w-fit mx-auto lg:mx-0 flex flex-col sm:flex-row sm:flex-wrap items-start sm:justify-center lg:justify-start gap-x-5 gap-y-2.5 text-left">
           {promises.map((pt) => (
             <li class="flex items-center gap-2 text-[15px] leading-6 text-text">
               <svg class="w-5 h-5 shrink-0" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="10" class="fill-primary"/><path d="M6 10.4l2.6 2.6L14 7.4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>

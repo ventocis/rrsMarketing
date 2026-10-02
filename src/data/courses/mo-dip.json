@@ -1,5 +1,5 @@
 {
-  "_note": "Single source of truth for the Missouri marketing site. Course facts trace to the portal sheet 'MO DIP — v3 PROD Upload — 2026-07-29'. Regulatory facts cite RSMo 302.302 and the Missouri Department of Revenue. The existing TicketSchool affiliate listing (courses.json mo-dip, $29.95) is retired when this site launches. claims.banned is enforced by scripts/check-claims.mjs.",
+  "_note": "Single source of truth for the Missouri marketing site. Course facts trace to the portal sheet 'MO DIP — v3 PROD Upload — 2026-07-29'. Regulatory facts cite RSMo 302.302 and the Missouri Department of Revenue. The existing TicketSchool affiliate listing (courses.json mo-dip, $29.95) is retired when this site launches. approvalNumber: Missouri Safety Center provider ID OL031 (Jackson confirmed approval with MSC 2026-10-02). A non-empty value is what lets production build, index and list the Missouri pages. claims.banned is enforced by scripts/check-claims.mjs.",
   "state": {
     "code": "MO",
     "name": "Missouri",
@@ -12,7 +12,7 @@
   "provider": {
     "legalName": "Road Ready Driver Instruction LLC",
     "dba": "Road Ready Safety",
-    "approvalNumber": "",
+    "approvalNumber": "OL031",
     "approvalLabel": "Missouri Safety Center-Approved Driver Improvement Program · {{number}}",
     "approvalPendingLabel": "Missouri Driver Improvement Program · Approval Pending",
     "supportEmail": "info@roadreadysafety.com",
@@ -114,7 +114,7 @@
     "description": "Missouri's 8-hour Driver Improvement Program online. Keep ticket points off your record when your court authorizes it. $24.99 total, instant certificate.",
     "keywords": "Missouri driver improvement program online, Missouri DIP course, Missouri 8 hour driver improvement, avoid points Missouri ticket, Missouri Safety Center approved DIP",
     "credential": "Missouri Driver Improvement Program Certificate of Completion",
-    "courseDescription": "Eight-hour online Driver Improvement Program for Missouri drivers authorized by a court or the Fine Collection Center to complete DIP so that points for a violation are not assessed, under RSMo 302.302. Self-paced with a 25-question final exam."
+    "courseDescription": "Eight-hour online Driver Improvement Program for Missouri drivers authorized by a court to complete DIP so that points for a violation are not assessed, under RSMo 302.302. Self-paced with a 25-question final exam."
   },
   "banner": "$24.99 total — instant certificate included. Nothing added at checkout.",
   "nav": [
@@ -244,7 +244,7 @@
         "tone": "info",
         "heading": "Get the court's OK, then enroll",
         "bullets": [
-          "Ask your court or the Fine Collection Center",
+          "Ask the court handling your ticket",
           "Only the court can waive the points",
           "Come back the day the answer is yes"
         ]
@@ -288,7 +288,7 @@
       {
         "n": 1,
         "title": "Get the court's authorization, then enroll",
-        "body": "Confirm your court or the Fine Collection Center authorized DIP. Then pay $24.99 and confirm your details. Your 60 days started at your plea, so enroll the same day."
+        "body": "Confirm your court authorized DIP. Then pay $24.99 and confirm your details. Your 60 days started at your plea, so enroll the same day."
       },
       {
         "n": 2,
@@ -322,7 +322,7 @@
   "benefits": [
     {
       "headline": "Points for the violation are not assessed",
-      "body": "Under RSMo 302.302, when a court or the Fine Collection Center authorizes a driver to complete an approved Driver Improvement Program, the points for that violation are not assessed on the driver's record. The conviction itself still records.",
+      "body": "Under RSMo 302.302, when a court authorizes a driver to complete an approved Driver Improvement Program, the points for that violation are not assessed on the driver's record. The conviction itself still records.",
       "cite": "RSMo 302.302; Missouri DOR"
     },
     {
@@ -339,7 +339,7 @@
   "faqs": [
     {
       "q": "Do I need the court's permission to use DIP?",
-      "a": "Yes. The points are waived only when the court handling your ticket, or the Fine Collection Center, authorizes you to complete a Driver Improvement Program. Ask before you enroll. The course is still worth taking without authorization, but it will not change your record."
+      "a": "Yes. The points are waived only when the court handling your ticket authorizes you to complete a Driver Improvement Program. Ask before you enroll. The course is still worth taking without authorization, but it will not change your record."
     },
     {
       "q": "How long do I have?",
@@ -401,7 +401,7 @@
     {
       "q": "How to get the court's authorization",
       "steps": [
-        "Contact the court handling your ticket, or the Fine Collection Center if your ticket was sent there",
+        "Contact the court handling your ticket",
         "Ask whether you may complete a Driver Improvement Program to avoid points",
         "If yes, note the date of your plea or conviction. Your 60 days run from that date",
         "Then enroll"
@@ -478,7 +478,7 @@
   ],
   "footer": {
     "blurb": "Missouri's eight-hour Driver Improvement Program online, at one flat price with the certificate and Department of Revenue form included.",
-    "disclaimer": "Points for a violation are waived only when a court or the Fine Collection Center authorizes completion of an approved Driver Improvement Program and the program is completed within sixty days of the plea or conviction (RSMo 302.302). The conviction itself remains on the record. Road Ready Safety is a private company and is not affiliated with the Missouri Safety Center, the Missouri Department of Revenue or any court."
+    "disclaimer": "Points for a violation are waived only when a court authorizes completion of an approved Driver Improvement Program and the program is completed within sixty days of the plea or conviction (RSMo 302.302). The conviction itself remains on the record. Road Ready Safety is a private company and is not affiliated with the Missouri Safety Center, the Missouri Department of Revenue or any court."
   },
   "claims": {
     "banned": [

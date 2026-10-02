@@ -10,7 +10,7 @@ _Last updated: {{today}}_
 
 Tell us as early as possible, ideally at or shortly after enrollment, by contacting support at **{{supportEmail}}** or **{{supportPhone}}**. Describe the accommodation you are requesting and the nature of the limitation. We review each request individually and may ask for appropriate documentation when it is needed to decide what is reasonable.
 
-Examples of accommodations we can provide include extended time on assessments, alternative formats, assistance with navigation, and help scheduling identity-verification steps. Accommodations cannot remove a requirement the state imposes on every student, such as the minimum instruction time or the identity checks, but we will work with you to meet those requirements in a way that works for you.
+Examples of accommodations we can provide include extended time on assessments, alternative formats, assistance with navigation, and help with any identity-verification steps the course includes. Accommodations cannot remove a requirement the state imposes on every student, such as the minimum instruction time or any identity checks the state requires, but we will work with you to meet those requirements in a way that works for you.
 
 ## 3. Our commitment
 

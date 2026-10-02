@@ -145,6 +145,6 @@ Your acceptance of these Terms at checkout, together with the course-specific di
 
 ## 3.5 Missouri Driver Improvement Program (Missouri Safety Center)
 
-- **What the course does.** When a court or the Fine Collection Center authorizes a driver to complete an approved Driver Improvement Program, the points for that violation are not assessed. The course must be completed within sixty (60) days of the plea or conviction and may be used for this purpose once in any thirty-six (36) month period (RSMo 302.302). The court decides whether to authorize the program.
+- **What the course does.** When a court authorizes a driver to complete an approved Driver Improvement Program, the points for that violation are not assessed. The course must be completed within sixty (60) days of the plea or conviction and may be used for this purpose once in any thirty-six (36) month period (RSMo 302.302). The court decides whether to authorize the program.
 - **Reporting.** The completion form is sent to the Missouri Department of Revenue, Driver License Bureau, PO Box 200, Jefferson City, MO 65105-0200, by the student or by us where the court permits, and to the court if instructed.
 - **Complaints.** Missouri Safety Center, University of Central Missouri, Warrensburg, MO 64093; (660) 543-4830.

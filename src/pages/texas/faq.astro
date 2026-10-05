@@ -1,29 +1,41 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import { TEXAS_COURSE, TEXAS_PRICE_LABEL } from '../../data/texas-course';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const contactUrl = import.meta.env.VITE_CONTACT_US_URL || 'https://roadreadysafety.com/support';
 
+const courseLen = `${TEXAS_COURSE.hours} hours`;
 const faqs = [
-  { q: 'Is this accepted by all Texas courts?', a: 'Yes! We are a TDLR-approved provider, and our certificates are accepted by every court in Texas for ticket dismissal.' },
-  { q: 'Are there extra fees after completing the course?', a: 'No hidden fees. $28 all-in is all you pay. However, some courts may require you to submit a copy of your driving record (DPS Type 3A), which has a separate fee paid directly to the DPS.' },
-  { q: 'How do I get my certificate?', a: 'Your certificate is available immediately upon course completion. You can download it right away from your account dashboard to submit to your court.' },
-  { q: 'How long do I have to complete the course?', a: 'Texas gives you 90 days from the date the court grants the course — not from the day you enroll. Your court may set a shorter deadline, so follow the date on its approval letter.' },
-  { q: 'Can I take the course on my phone?', a: 'Yes! The course is fully mobile-friendly. You can take it on any device — phone, tablet, or computer. Your progress automatically saves, so you can switch devices anytime.' },
-  { q: 'What if I fail the final exam?', a: 'You get unlimited retakes on all unit quizzes. There is no final exam. The goal is learning, not tricking you. Take your time and review the material as needed.' },
-  { q: 'Are refunds available?', a: 'Yes! If you\'re not satisfied, you can request a full refund before you complete the course or receive your certificate.' },
+  { q: 'How long is the defensive driving course in Texas?', a: `${courseLen}. Texas requires every approved driving safety course to run 6 hours, with at least 5 hours of instruction plus the required breaks, so no TDLR-approved course is shorter and a site advertising a faster one is not telling you the whole story. You can finish in one sitting or over several days; the course saves your place. How the time is actually spent is on our <a href="/texas/fastest-defensive-driving-course" class="text-primary-deep font-medium hover:underline">course length page</a>.` },
+  { q: 'How often can you take defensive driving in Texas?', a: `For ticket dismissal, once every 12 months. The court cannot grant the course if you completed one for dismissal within the 12 months before the date of the new offense (Tex. Code Crim. Proc. art. 45A.352). The clock runs from your last completion date, not from the old ticket. Since September 1, 2025 one course can dismiss several eligible charges from the same stop. For an insurance discount there is no limit; your insurer sets its own renewal rule. Details on the <a href="/texas/12-month-rule" class="text-primary-deep font-medium hover:underline">12-month rule page</a>.` },
+  { q: 'Who is eligible for defensive driving in Texas?', a: `You qualify if you hold a valid Texas driver's license or permit (active-duty military and their dependents may use any state's license), request the course on or before the appearance date on the citation, have not used a dismissal course in the previous 12 months, carry proof of insurance, and were cited for an eligible moving violation (Tex. Code Crim. Proc. arts. 45A.351 to 45A.353). Not eligible: 25 mph or more over the limit, 95 mph or faster, a work zone with workers present, passing a stopped school bus, leaving the scene, and anyone holding a commercial driver's license. The <a href="/texas/eligibility-tracker" class="text-primary-deep font-medium hover:underline">eligibility checker</a> walks through it in a minute.` },
+  { q: 'How do I request defensive driving from my court?', a: `Tell the court on or before the appearance date printed on your citation that you want to take a driving safety course, then pay the court's fee. Since S.B. 296 (September 1, 2025) you can request by certified mail, email or the court's online portal where offered, as well as in person. Request first, then take the course; a certificate dated before the court's approval may not be counted. What to say, with a letter you can copy, is on the <a href="/texas/request-defensive-driving" class="text-primary-deep font-medium hover:underline">how-to-request page</a>.` },
+  { q: 'How long do I have to complete the course?', a: `90 days from the date the court grants it (Tex. Code Crim. Proc. art. 45A.351), not from the day you enroll. Courts can extend for good cause if you ask before the deadline. Many courts also set their own paperwork deadline inside the 90 days, from 10 to 180 days in our verified court data, so follow the date on the court's letter.` },
+  { q: 'How much does the course cost, and are there extra fees?', a: `${TEXAS_PRICE_LABEL} all-in at Road Ready Safety, with the certificate included. By law every approved course costs at least $${TEXAS_COURSE.legalMinimumPrice} (Tex. Educ. Code §1001.352). Two costs are outside any course: the court's own fee, set locally when it grants the course, and the Type 3A driving record from Texas DPS, $12 online, if the court makes you order it. The full breakdown is on the <a href="/texas/cost" class="text-primary-deep font-medium hover:underline">cost page</a>.` },
+  { q: 'Is this course accepted by all Texas courts?', a: `Yes. Road Ready Safety is a TDLR-licensed driving safety provider (${TEXAS_COURSE.providerNumber}), and the certificate is the uniform certificate every Texas court accepts. The court still has to approve you for the course before you take it; approval of the course and approval of you are two separate steps. You can verify any provider on <a href="/texas/tdlr-approved" class="text-primary-deep font-medium hover:underline">TDLR's license search</a>.` },
+  { q: 'How do I get my certificate, and how fast?', a: `Download it the moment you finish. The certificate of completion appears in your account as an instant PDF with the court copy and the insurance copy, at no extra charge. You submit the court copy to your court, by email, upload, mail or in person depending on the court. TDLR notes a new certificate can take up to 5 days to appear in its validation tool, so submit with a few days of cushion. More on the <a href="/texas/defensive-driving-certificate" class="text-primary-deep font-medium hover:underline">certificate page</a>.` },
+  { q: 'What is a Type 3A driving record and do I need one?', a: `The certified copy of your complete Texas driving record from DPS, and most courts require it with your certificate. Order it online at texas.gov for $12 and download it immediately; the uncertified Type 3 and the three-year Type 2A are not accepted. Your course provider cannot issue it. <a href="/texas/type-3a-driving-record" class="text-primary-deep font-medium hover:underline">How to order the right one</a>.` },
+  { q: 'Can I take the course on my phone?', a: `Yes. The course runs in a browser on a phone, tablet or computer with no app to install, and your progress saves automatically so you can switch devices. <a href="/texas/defensive-driving-on-your-phone" class="text-primary-deep font-medium hover:underline">What it looks like on a phone</a>.` },
+  { q: 'Is there a final exam?', a: `No final exam. Each unit ends with a short quiz, and you get unlimited retakes. Texas requires a 70% mastery standard on the course's quizzes; the retakes are how you meet it without pressure.` },
+  { q: 'Will defensive driving lower my insurance in Texas?', a: `Often, but it is the insurer's choice. Texas no longer mandates a discount; each company sets its own terms, and several large insurers limit it by age or exclude court-ordered courses. Ask your agent before enrolling, then send the insurance copy of your certificate. What each major insurer publishes is on the <a href="/texas/insurance-discount" class="text-primary-deep font-medium hover:underline">insurance discount page</a>.` },
+  { q: 'Can I take defensive driving if I have a CDL or an out-of-state license?', a: `Not for dismissal. Commercial driver's license holders are excluded by federal anti-masking rules and Texas law, even for a ticket in a personal car; out-of-state license holders do not meet the Texas-license requirement unless they are active-duty military or dependents. Both can take the course voluntarily for an insurance discount, and deferred disposition may still be open for the ticket. See the <a href="/texas/cdl-defensive-driving" class="text-primary-deep font-medium hover:underline">CDL page</a> and the <a href="/texas/out-of-state-driver" class="text-primary-deep font-medium hover:underline">out-of-state driver page</a>.` },
+  { q: 'Is the course available in Spanish?', a: `Not yet. Our course is delivered in English. TDLR allows an approved provider to offer the course in Spanish once the translation is approved (16 TAC §84.504), and we are evaluating it. The process in Spanish and a waitlist are on the <a href="/texas/spanish" class="text-primary-deep font-medium hover:underline">Spanish page</a>.` },
+  { q: 'What is the difference between defensive driving and deferred disposition?', a: `Defensive driving is a statutory dismissal: meet the conditions, finish the course, file the certificate, and the charge is dismissed. Deferred disposition is a judge's discretionary probation of up to 180 days, after which the charge is dismissed if you stay ticket-free. Take the course if you qualify; use deferred when the course is closed to you. The side-by-side is on <a href="/texas/defensive-driving-vs-deferred-disposition" class="text-primary-deep font-medium hover:underline">deferred disposition vs defensive driving</a>.` },
+  { q: 'Are refunds available?', a: `Yes. If you have not completed the course or received your certificate, you can request a full refund. The policy is on the <a href="/texas/refund" class="text-primary-deep font-medium hover:underline">refund page</a>.` },
 ];
 
 const faqSchema = JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
-  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a.replace(/<[^>]+>/g, '') } })),
 });
 ---
 
 {isEnabled ? (
   <TexasLayout
-    title="Texas Defensive Driving FAQ: Cost, Certificate, Courts & Deadlines"
-    description="Answers on the Texas defensive driving course: what $28 covers, when your certificate arrives, which courts accept it, how long you have, and how refunds work."
+    title="Texas Defensive Driving FAQ: How Long It Takes, How Often You Can Take It, Who Qualifies (2026)"
+    description="Straight answers on the Texas defensive driving course: it is 6 hours, once every 12 months for dismissal, who is eligible, the 90-day deadline, what it costs, how the certificate arrives, and whether it lowers your insurance."
+    keywords="how long is defensive driving course in texas, how often can you take defensive driving in texas, eligibility for defensive driving in texas, texas defensive driving faq, texas driving safety course questions"
     url="/texas/faq"
   >
     <script type="application/ld+json" set:html={faqSchema} />
@@ -35,11 +47,12 @@ const faqSchema = JSON.stringify({
             <span class="text-sm font-semibold text-info-text leading-5" style="font-family: 'DM Sans', sans-serif;">Got Questions?</span>
           </div>
           <h1 class="text-[36px] font-bold text-text text-center leading-[40px] tracking-[-0.9px]" style="font-family: 'Outfit', sans-serif;">
-            Frequently Asked Questions
+            Texas Defensive Driving Course: Frequently Asked Questions
           </h1>
           <p class="text-base text-text-body text-center leading-6" style="font-family: 'DM Sans', sans-serif;">
-            Everything you need to know about our Texas defensive driving course.
+            How long the course takes, how often you can use it, who qualifies, what it costs, and what happens after you finish. Each answer links to the full guide. New here? Start with the <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving course</a> page.
           </p>
+          <p class="text-xs text-text-subtle text-center" style="font-family: 'DM Sans', sans-serif;">Last updated October 5, 2026. Course length and mastery per TDLR's Course of Organized Instruction and 16 TAC §§84.500, 84.504; eligibility, exclusions, the 12-month rule and the 90-day window per Tex. Code Crim. Proc. arts. 45A.351 to 45A.353 and S.B. 296 (eff. Sept. 1, 2025); price floor per Tex. Educ. Code §1001.352; Type 3A record per Texas DPS.</p>
         </div>
 
         <div class="flex flex-col gap-4">
@@ -50,7 +63,7 @@ const faqSchema = JSON.stringify({
                 <img src="/assets/icons/texas/chevron-faq.svg" alt="" class="w-4 h-4 transition-transform duration-200 group-open:rotate-180 flex-shrink-0 ml-4" />
               </summary>
               <div class="px-6 pb-5 pt-0 border-t border-border">
-                <p class="text-base text-text-body leading-6 pt-4" style="font-family: 'DM Sans', sans-serif;">{item.a}</p>
+                <p class="text-base text-text-body leading-6 pt-4" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
               </div>
             </details>
           ))}

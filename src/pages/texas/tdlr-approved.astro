@@ -50,12 +50,12 @@ const faqs = [
 const articleSchema = JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'Article',
-  headline: 'TDLR-Approved Driving Safety Courses in Texas: What Approval Means, How to Check Any Course, and What the State\'s Licensing File Shows (2026)',
+  headline: 'TDLR-Approved Driving Safety Course: What Approval Means, How to Verify Any Texas Provider, and What the State\'s Licensing File Shows (2026)',
   description: 'What "TDLR-approved" actually means for a Texas defensive driving course, how to verify any provider and any certificate with TDLR\'s own tools, the $25 price floor, the Spanish-language rule, and what the state\'s licensing file reveals about the 410 licensed providers.',
   author: { '@type': 'Organization', name: 'Road Ready Safety' },
   publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
   datePublished: '2026-06-11',
-  dateModified: '2026-09-02',
+  dateModified: '2026-10-05',
   mainEntityOfPage: `${siteUrl}/texas/tdlr-approved`,
 });
 
@@ -72,9 +72,9 @@ const faqSchema = JSON.stringify({
 
 {isEnabled ? (
   <TexasLayout
-    title="TDLR-Approved Driving Safety Courses in Texas: What It Means & How to Check Any Course (2026)"
-    description="What TDLR approval actually means for a Texas defensive driving course, how to verify any provider and certificate with TDLR's own tools, the $25 price floor, the Spanish rule, and what the state's licensing file shows about the 410 licensed providers."
-    keywords="tdlr approved driving safety course, tdlr approved defensive driving course, list of texas approved defensive driving courses, verify tdlr course, CP number texas, tdlr dessearch, texas approved defensive driving course online, texas state approved defensive driving"
+    title="TDLR Approved Driving Safety Course: How to Verify Any Texas Provider (2026)"
+    description="What TDLR approval means for a Texas driving safety course, the step-by-step license search that verifies any provider, how to tell the official TDLR list from private look-alike directories, the $25 price floor, and what the state's licensing file shows."
+    keywords="tdlr approved driving safety course, texas approved driving safety course online, state approved defensive driving course, list of texas approved defensive driving courses, texas dps approved defensive driving course, tdlr approved defensive driving course, verify tdlr course, CP number texas, tdlr dessearch"
     url="/texas/tdlr-approved"
   >
     <script type="application/ld+json" set:html={articleSchema} />
@@ -84,18 +84,19 @@ const faqSchema = JSON.stringify({
       <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
 
         <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
-          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving course</a>
           <span class="mx-2 text-text-subtle">›</span>
           <span class="text-text">TDLR-approved courses</span>
         </p>
 
         <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
-          TDLR-Approved Driving Safety Courses in Texas: What Approval Means, How to Check Any Course, and What the State's Licensing File Shows
+          TDLR-Approved Driving Safety Course: What Approval Means, How to Verify Any Texas Provider, and What the State's Licensing File Shows
         </h1>
 
         <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
           <p>A TDLR-approved driving safety course is one offered by a company the <strong class="text-text">Texas Department of Licensing and Regulation has licensed as a driving safety provider</strong>, identified by a course provider number in the format <strong class="text-text">CP###</strong>. Only a licensed provider can issue the uniform certificate a Texas court accepts to dismiss a ticket, and every approved 6-hour course satisfies that requirement identically. Approval admits a course; it does not rank it.</p>
-          <p>Below: the one-minute check for any course and any certificate, what the state's own licensing file shows once you read it, what the law says a course must cost, and the two things that catch people after they have already paid.</p>
+          <p>Below: the one-minute check for any course and any certificate, how to tell the state's list from the private directories that imitate it, what the licensing file shows once you read it, what the law says a course must cost, and the two things that catch people after they have already paid.</p>
+          <p>One naming note. Searches for a "DPS approved" or "state approved" defensive driving course all mean the same thing: TDLR is the state agency that approves the course. DPS does not approve courses; it sells the driving record you submit with the certificate.</p>
         </div>
 
         <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
@@ -110,6 +111,16 @@ const faqSchema = JSON.stringify({
           <p class="text-sm font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">Before you pay: check the provider</p>
           <p class="text-sm text-text-body leading-7" style="font-family: 'DM Sans', sans-serif;">Confirm the site shows a <strong class="text-text">CP### course provider number</strong> and that the number belongs to a <strong class="text-text">current</strong> license in <a href="https://www.tdlr.texas.gov/licensesearch/" target="_blank" rel="noopener noreferrer" class="text-primary-deep font-medium hover:underline">TDLR's license search</a>. A provider that will not display its CP number is a red flag. Ours is CP1234.</p>
         </div>
+        <div class="bg-white border border-border rounded-[14px] p-5 mb-4">
+          <p class="text-sm font-semibold text-text mb-3" style="font-family: 'Outfit', sans-serif;">The license search, step by step</p>
+          <ol class="list-decimal pl-5 space-y-2 text-sm text-text-body leading-7" style="font-family: 'DM Sans', sans-serif;">
+            <li>Open <a href="https://www.tdlr.texas.gov/LicenseSearch/" target="_blank" rel="noopener noreferrer" class="text-primary-deep font-medium hover:underline">tdlr.texas.gov/LicenseSearch</a>.</li>
+            <li>Under <strong class="text-text">Inquire by License Type</strong>, choose <strong class="text-text">Driving Safety Provider</strong>. (Driver Education Provider is a different license for the teen and adult driver-ed courses; a driving safety course for ticket dismissal is not that.)</li>
+            <li>To check one company, use <strong class="text-text">Inquire by License #</strong> and type the digits after "CP", or <strong class="text-text">Inquire by Name</strong> with the business name. The search takes numbers only in the license field, so "1234", not "CP1234".</li>
+            <li>Match the result to the site you are on: same business name, same number, and a license status that is current, not expired.</li>
+            <li>No result, or a status you cannot read? Call TDLR at 800-803-9202 before you pay. The number is on the search page itself.</li>
+          </ol>
+        </div>
         <div class="bg-surface-muted border border-border rounded-[14px] p-5 mb-6">
           <p class="text-sm font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">After you finish: validate the certificate</p>
           <p class="text-sm text-text-body leading-7" style="font-family: 'DM Sans', sans-serif;">Go to <a href="https://www.tdlr.texas.gov/dessearch" target="_blank" rel="noopener noreferrer" class="text-primary-deep font-medium hover:underline">DESSearch</a> and enter your certificate number, formatted <strong class="text-text">CP###-########</strong>. TDLR notes a certificate "may take up to 5 days after the issuance date to appear," so a brand-new certificate not showing up the same hour is normal. Courts use this same tool.</p>
@@ -123,6 +134,17 @@ const faqSchema = JSON.stringify({
           <p>Yes, but it is a licensing file, not a shopping list. TDLR publishes a downloadable <a href="https://www.tdlr.texas.gov/licensesearch/licfile.asp" target="_blank" rel="noopener noreferrer" class="text-primary-deep font-medium hover:underline">licensee data file</a> alongside its license search. As of <strong class="text-text">September 2, 2026</strong> the driving safety provider file holds <strong class="text-text">420 rows: 410 current licenses and 10 expired</strong>.</p>
           <p>Here is what the file looks like once you read it, because it changes how you should shop. <strong class="text-text">131 of the 410 current licenses trace to just five street addresses</strong>: 67 at one Austin address, 24 at one address in California, 19 at one Houston address, 16 at one address in Washington state, and 5 in Plano. Many of those licenses are registered under slogans rather than business names, entries along the lines of "$25 - NO HIDDEN FEES / FREE - CERTIFICATE" and "ONLY $25 - EASY TO PASS." Sixteen of the twenty most recently issued licenses are keyword-named entries of this kind, thirteen of them from the single out-of-state address. They are not 410 competing schools. They are a few dozen operators buying directory positions.</p>
           <p>None of that makes those courses invalid; a current license is a current license. It does mean the state's list can tell you who is licensed, not who is reputable. Treat the CP number as the check, and the name as marketing.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How do I tell the official TDLR list from a look-alike directory?</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>The official list lives only on <strong class="text-text">tdlr.texas.gov</strong>: the license search and the licensee data file linked above. Everything else titled "approved Texas defensive driving courses", "state approved list" or "TDLR course directory" is a private website, and most of them are advertising. Three ways to tell them apart:</p>
+          <ul class="list-disc pl-5 space-y-2">
+            <li><strong class="text-text">The address bar.</strong> The state's pages end in <code>.texas.gov</code>. A <code>.com</code> that uses the TDLR name or seal in its own title is not the agency.</li>
+            <li><strong class="text-text">Ranking.</strong> TDLR's search returns licensees in a plain list with a status and an expiration date. It does not rank, star, review or recommend a course. A page that calls one course "best" or "cheapest" is making an editorial or paid choice, and that includes ours.</li>
+            <li><strong class="text-text">Completeness.</strong> TDLR's file holds every current license, 410 of them in September 2026. A directory showing a dozen "approved" courses is a selection, not the list.</li>
+          </ul>
+          <p>Use a private directory the way you would use any review site, then confirm the CP number on tdlr.texas.gov before you pay. The confirmation takes a minute and it is the only part that counts in court.</p>
         </div>
 
         <NextStepBlock page="tdlr-approved" lead="eligible" />
@@ -189,7 +211,7 @@ const faqSchema = JSON.stringify({
 
         <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
           <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
-          <p class="text-xs text-text-subtle">Last updated September 2, 2026. License counts and the license-concentration figures are transcribed from TDLR's Driving Safety Provider licensing file (vsDriverSafetyProvider.csv) pulled September 2, 2026; verification mechanics confirmed against TDLR DESSearch; $25 minimum per Tex. Educ. Code §1001.352 as amended by HB 3012 (eff. Sept. 1, 2025); language rule per 16 TAC §84.504; Type 3A driving record per Texas DPS.</p>
+          <p class="text-xs text-text-subtle">Last updated October 5, 2026. License-search steps confirmed against TDLR's License Search form (license types and search fields) on October 5, 2026. License counts and the license-concentration figures are transcribed from TDLR's Driving Safety Provider licensing file (vsDriverSafetyProvider.csv) pulled September 2, 2026; verification mechanics confirmed against TDLR DESSearch; $25 minimum per Tex. Educ. Code §1001.352 as amended by HB 3012 (eff. Sept. 1, 2025); language rule per 16 TAC §84.504; Type 3A driving record per Texas DPS.</p>
         </div>
 
       </div>

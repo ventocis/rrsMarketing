@@ -2,11 +2,53 @@
 import TexasLayout from '../../layouts/TexasLayout.astro';
 import { alternatesFor, translationsOf, langLabel } from '../../lib/i18n';
 import VideoEmbed from '../../components/VideoEmbed.astro';
+import courtsData from '../../data/texas-courts.json';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 
 const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
 const alternates = alternatesFor('/texas/look-up-your-ticket');
+
+// The 25 largest Texas cities by population, each mapped to its municipal court record in
+// src/data/texas-courts.json. `portalUrl` (where present) is the court's own online citation
+// lookup / payment page from our verified court research; otherwise we link the court website.
+const TOP_CITIES: { city: string; slug: string }[] = [
+  { city: 'Houston', slug: 'harris-municipal-houston' },
+  { city: 'San Antonio', slug: 'bexar-municipal-san-antonio' },
+  { city: 'Dallas', slug: 'dallas-municipal-dallas' },
+  { city: 'Austin', slug: 'travis-municipal-austin' },
+  { city: 'Fort Worth', slug: 'tarrant-municipal-fort-worth' },
+  { city: 'El Paso', slug: 'el-paso-municipal-el-paso' },
+  { city: 'Arlington', slug: 'tarrant-municipal-arlington' },
+  { city: 'Corpus Christi', slug: 'nueces-municipal-corpus-christi' },
+  { city: 'Plano', slug: 'collin-municipal-plano' },
+  { city: 'Lubbock', slug: 'lubbock-municipal-lubbock' },
+  { city: 'Laredo', slug: 'webb-municipal-laredo' },
+  { city: 'Irving', slug: 'dallas-municipal-irving' },
+  { city: 'Garland', slug: 'dallas-municipal-garland' },
+  { city: 'Frisco', slug: 'collin-municipal-frisco' },
+  { city: 'McKinney', slug: 'collin-municipal-mckinney' },
+  { city: 'Amarillo', slug: 'potter-municipal-amarillo' },
+  { city: 'Grand Prairie', slug: 'dallas-municipal-grand-prairie' },
+  { city: 'Brownsville', slug: 'cameron-municipal-brownsville' },
+  { city: 'Killeen', slug: 'bell-municipal-killeen' },
+  { city: 'Denton', slug: 'denton-municipal-denton' },
+  { city: 'Pasadena', slug: 'harris-municipal-pasadena' },
+  { city: 'Mesquite', slug: 'dallas-municipal-mesquite' },
+  { city: 'McAllen', slug: 'hidalgo-municipal-mcallen' },
+  { city: 'Waco', slug: 'mclennan-municipal-waco' },
+  { city: 'Midland', slug: 'midland-municipal-midland' },
+];
+const PAY_PORTAL_HOSTS = /municipalonlinepayments|municipalrecordsearch|courtpa\.|courtworks|CitationWebportal|court\/search|govtportal|tylertech|go2gov|trafficpayment|eservices/i;
+const topCityRows = TOP_CITIES.map(({ city, slug }) => {
+  const court = (courtsData as any).courts.find((c: any) => c.slug === slug);
+  if (!court) throw new Error(`look-up-your-ticket: no court record for ${slug}`);
+  const portal: string | undefined = court.portalUrl;
+  const site: string | undefined = court.website?.[0];
+  const href = portal || site;
+  const kind = portal ? (PAY_PORTAL_HOSTS.test(portal) ? 'Lookup / pay portal' : 'Citation options page') : site ? 'Court website' : '';
+  return { city, county: court.county, slug, href, kind, phone: court.phone?.[0] || '' };
+});
 const translations = translationsOf('/texas/look-up-your-ticket');
 
 const faqs = [
@@ -35,12 +77,12 @@ const faqs = [
 const articleSchema = JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'Article',
-  headline: "How to Look Up a Texas Traffic Ticket — and Why You Shouldn't Just Pay It",
+  headline: "Texas Citation Lookup: Where to Find Your Ticket, Court by Court, and Why You Shouldn't Just Pay It",
   description: "There's no single statewide place to look up a Texas ticket. Here's where to actually find and pay yours — and why paying is a guilty plea you may be able to avoid by dismissing it instead.",
   author: { '@type': 'Organization', name: 'Road Ready Safety' },
   publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
   datePublished: '2026-06-13',
-  dateModified: '2026-08-04',
+  dateModified: '2026-10-05',
   mainEntityOfPage: `${siteUrl}/texas/look-up-your-ticket`,
 });
 
@@ -53,9 +95,9 @@ const faqSchema = JSON.stringify({
 
 {isEnabled ? (
   <TexasLayout
-    title="Texas Traffic Ticket Lookup: DPS Citation Search & Court Portals (2026)"
-    description="There is no single statewide Texas ticket lookup. DPS Citation Search covers Highway Patrol citations from about the last 24 months; city and county tickets live with the specific court. Where to search, where the citation number is, and why paying is a conviction."
-    keywords="texas citation lookup, look up texas traffic ticket, pay texas ticket online, find my ticket texas, texas ticket lookup by license, should I pay my texas ticket"
+    title="Texas Citation Lookup: Find and Pay Your Ticket, Court by Court (2026)"
+    description="There is no single statewide Texas citation lookup. DPS Citation Search covers Highway Patrol tickets only; city and county tickets live with the court. Lookup and payment portals for the 25 largest Texas cities, and why you should check for defensive driving before you pay."
+    keywords="texas citation lookup, texas ticket lookup, check for tickets in texas, pay ticket online texas, look up texas traffic ticket, find my ticket texas, texas ticket lookup by license, should I pay my texas ticket"
     url="/texas/look-up-your-ticket"
    alternates={alternates}>
     <script type="application/ld+json" set:html={articleSchema} />
@@ -65,7 +107,7 @@ const faqSchema = JSON.stringify({
       <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
 
         <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
-          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving course</a>
           <span class="mx-2 text-text-subtle">›</span>
           <span class="text-text">Look up your ticket</span>
         </p>
@@ -77,7 +119,7 @@ const faqSchema = JSON.stringify({
         )}
 
         <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
-          How to Look Up a Texas Traffic Ticket — and Why You Shouldn't Just Pay It
+          Texas Citation Lookup: Where to Find Your Ticket, Court by Court, and Why You Shouldn't Just Pay It
         </h1>
 
         <VideoEmbed id="FYfE_HmhKac" title="How to Look Up Your Texas Traffic Ticket Online (2026)" description="How to find your Texas ticket online — identify the right court (municipal vs. JP) and search the portal by name or citation number." />
@@ -110,10 +152,47 @@ const faqSchema = JSON.stringify({
         </div>
         </div>
 
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Ticket lookup and payment portals for the 25 largest Texas cities</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-4" style="font-family: 'DM Sans', sans-serif;">
+          <p>A city police ticket goes to that city's municipal court, and each court runs its own lookup. The table links the court's own online citation page where we have verified one, and the court website otherwise, plus our page on that court with its fees, deadlines and defensive-driving rules. A sheriff's or DPS ticket in these same cities usually goes to a county justice of the peace court instead; find it in the <a href="/texas/courts" class="text-primary-deep font-medium hover:underline">court directory</a>.</p>
+        </div>
+        <div class="overflow-x-auto mb-4">
+          <table class="w-full text-sm border-collapse" style="font-family: 'DM Sans', sans-serif;">
+            <thead>
+              <tr class="bg-surface-muted text-left">
+                <th class="py-3 px-3 font-semibold text-text">City</th>
+                <th class="py-3 px-3 font-semibold text-text">County</th>
+                <th class="py-3 px-3 font-semibold text-text">Look up or pay online</th>
+                <th class="py-3 px-3 font-semibold text-text">Court details</th>
+              </tr>
+            </thead>
+            <tbody>
+              {topCityRows.map((r, i) => (
+                <tr class={`border-b border-border align-top ${i % 2 === 0 ? '' : 'bg-surface-muted/40'}`}>
+                  <td class="py-3 px-3 font-semibold text-text">{r.city}</td>
+                  <td class="py-3 px-3 text-text-body">{r.county}</td>
+                  <td class="py-3 px-3 text-text-body">
+                    {r.href ? (
+                      <a href={r.href} target="_blank" rel="noopener noreferrer nofollow" class="text-primary-deep font-medium hover:underline">{r.kind}</a>
+                    ) : (
+                      <span>Call {r.phone}</span>
+                    )}
+                  </td>
+                  <td class="py-3 px-3 text-text-body"><a href={`/texas/courts/${r.slug}`} class="text-primary-deep font-medium hover:underline">{r.city} Municipal Court</a></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Portal links come from our court research (verified between May and September 2026) and go to the court's own site, not ours. A "Citation options page" is the court's page on how to resolve a ticket, which is where some cities put the pay link. Houston, San Antonio, Dallas and Austin run their lookups inside their court websites; the court page link gets you there. Harris County's justice of the peace courts use a separate system at jp.hctx.net.</p>
+          <p><strong class="text-text">Before you pay through any of these portals, check whether you can take defensive driving instead.</strong> Paying is a conviction. Requesting the course by your appearance date keeps the same ticket off your record for about the same money, and most of these courts let you make that request online or by email. The <a href="/texas/ticket-dismissal" class="text-primary-deep font-medium hover:underline">ticket dismissal guide</a> has the eligibility rules and the five steps.</p>
+        </div>
+
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Before you pay: paying is a guilty plea</h2>
         <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
           <p>When you pay a Texas ticket online, you're not just "handling it" — you're entering a plea of guilty (or no contest), and the result is a <strong>conviction on your driving record</strong>. Convictions can raise your insurance and stack toward a license suspension (4 in 12 months, or 7 in 24).</p>
-          <p>Here's the part the payment portal won't tell you: there are really <strong>two ways to plead guilty</strong>. You can pay and take the conviction — or you can request a driving safety course and, once you complete it, the charge is <strong>dismissed and kept off your record</strong> under Texas law. Same plea, very different outcome. We compare the paths in <a href="/texas/fight-or-dismiss" class="text-primary-deep font-medium hover:underline">pay, fight, or dismiss</a> and <a href="/texas/ways-to-dismiss-ticket" class="text-primary-deep font-medium hover:underline">every way to dismiss a Texas ticket</a>.</p>
+          <p>Here's the part the payment portal won't tell you: there are really <strong>two ways to plead guilty</strong>. You can pay and take the conviction — or you can request a driving safety course and, once you complete it, the charge is <strong>dismissed and kept off your record</strong> under Texas law. Same plea, very different outcome. What paying actually does to your record is on <a href="/texas/should-i-pay-my-ticket-online" class="text-primary-deep font-medium hover:underline">should you just pay your ticket online</a>. We compare the paths in <a href="/texas/fight-or-dismiss" class="text-primary-deep font-medium hover:underline">pay, fight, or dismiss</a> and <a href="/texas/ways-to-dismiss-ticket" class="text-primary-deep font-medium hover:underline">every way to dismiss a Texas ticket</a>.</p>
         </div>
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Can you still dismiss it? A quick eligibility check</h2>
@@ -172,7 +251,7 @@ const faqSchema = JSON.stringify({
 
         <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
           <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
-          <p class="text-xs text-text-subtle">Last updated August 4, 2026 — verified by the Road Ready Safety editorial team against Texas DPS (citation search), the Texas Failure to Appear program, and Tex. Code Crim. Proc. ch. 45A.</p>
+          <p class="text-xs text-text-subtle">Last updated October 5, 2026. Verified by the Road Ready Safety editorial team against Texas DPS (citation search), the Texas Failure to Appear program, Tex. Code Crim. Proc. ch. 45A, and our court dataset (portal links verified May to September 2026).</p>
         </div>
 
       </div>

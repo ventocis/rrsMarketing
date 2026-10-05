@@ -22,7 +22,7 @@ const faqs = [
   },
   {
     q: 'How much does a Type 3A cost and how fast can I get it?',
-    a: 'Ordered online it\'s $12.00 ($10 record fee plus a $2 Texas.gov administration fee) and you can download and print the certified PDF immediately after payment. Ordered by mail with DPS form DR-1 it\'s $10.00, but DPS says to allow 2–3 weeks for delivery — too slow for most court deadlines.',
+    a: 'Ordered online it\'s $12.00 ($10 record fee plus a $2 Texas.gov administration fee) and you can download and print the certified PDF immediately after payment. Ordered by mail with DPS form DR-1 it\'s $10.00, but DPS says to allow three weeks from the date it receives the request, which is too slow for most court deadlines.',
   },
   {
     q: 'Is Type 3 the same as Type 3A?',
@@ -45,12 +45,12 @@ const faqs = [
 const articleSchema = JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'Article',
-  headline: 'Type 3A Driving Record for Texas Defensive Driving: What It Is, What It Costs, and How to Order It',
+  headline: 'Your Texas Driving Record: Every Type DPS Sells, What It Costs, and the Type 3A Courts Want',
   description: 'The Type 3A is the certified DPS driving record Texas courts require for defensive driving ticket dismissal. Exact costs, the record-type table, ordering steps, and the mistakes that get submissions rejected.',
   author: { '@type': 'Organization', name: 'Road Ready Safety' },
   publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
   datePublished: '2026-06-11',
-  dateModified: '2026-08-04',
+  dateModified: '2026-10-05',
   mainEntityOfPage: `${siteUrl}/texas/type-3a-driving-record`,
 });
 
@@ -63,9 +63,9 @@ const faqSchema = JSON.stringify({
 
 {isEnabled ? (
   <TexasLayout
-    title="Texas Type 3A Driving Record: $12 Online, Instant PDF to Print for Court"
-    description="The Type 3A is the certified DPS record Texas courts require alongside a defensive driving certificate. It costs $12 online and downloads immediately as a printable PDF. How to order the right record type and the mix-ups that get submissions rejected."
-    keywords="type 3a driving record texas, certified driving record defensive driving, texas dps driving record, type 3a vs type 3, order driving record texas, DR-1 form texas"
+    title="Texas Driving Record: Every DPS Type, Fees, How to Order, and the Type 3A Courts Want (2026)"
+    description="Texas DPS sells six driver record types. Which one courts want for defensive driving (the certified Type 3A), what each costs, how to order online in minutes or by mail in three weeks, and the mix-ups that get submissions rejected."
+    keywords="texas driving record, texas dps driving record, request driving record texas, certified driving record texas, type 3a driving record, type 3a driving record texas, type 3a vs type 3, order driving record texas, DR-1 form texas"
     url="/texas/type-3a-driving-record"
   >
     <script type="application/ld+json" set:html={articleSchema} />
@@ -75,7 +75,7 @@ const faqSchema = JSON.stringify({
       <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
 
         <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
-          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving course</a>
           <span class="mx-2 text-text-subtle">›</span>
           <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">Speeding ticket guide</a>
           <span class="mx-2 text-text-subtle">›</span>
@@ -83,14 +83,19 @@ const faqSchema = JSON.stringify({
         </p>
 
         <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
-          The Type 3A Driving Record: What Texas Courts Actually Want, and How to Order It in Two Minutes
+          Your Texas Driving Record: Every Type DPS Sells, What It Costs, and the Type 3A Courts Want
         </h1>
 
         <VideoEmbed id="ltb0_xv0FPE" title="Texas Type 3A Driving Record: What It Is & How to Get One (2026)" description="What a Type 3A driving record is, why Texas courts require it for defensive driving, and how to order the certified copy." />
 
         <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
           <p>The <strong class="text-text">Type 3A is the certified copy of your complete Texas driving record</strong>, issued by the Texas Department of Public Safety, and it's the document most Texas courts require alongside your course certificate to dismiss a ticket with defensive driving. DPS's own record-type chart marks the 3A as the record <em>"acceptable for Defensive Driving Course (DDC)"</em> — and the uncertified Type 3, the three-year Type 2A, and everything else on the menu are not.</p>
-          <p>The good news: ordered online, it costs <strong class="text-text">$12.00 and downloads instantly as a certified PDF</strong>. The bad news: order the wrong type, or fail DPS's identity check, and you can burn days you may not have. Here's the whole thing, verified against DPS's current fee schedule and forms.</p>
+          <p>Ordered online, it costs <strong class="text-text">$12.00 and downloads instantly as a certified PDF</strong>. Order the wrong type, or fail DPS's identity check, and you can burn days you may not have. Here's the whole thing, checked against DPS's record-type page and forms.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">When does a Texas court ask for your driving record?</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Three situations, and only the first is routine. <strong class="text-text">Defensive driving dismissal:</strong> the dismissal statute has the court check your record before it grants the course and again when you turn in the certificate, so almost every court asks for the certified Type 3A with your request or with your certificate (Tex. Code Crim. Proc. ch. 45A; which document, and when, is the court's call). <!-- TODO-VERIFY: cite the exact 45A article that requires presentation of the driving record with the certificate (former art. 45.0511(c)); source statutes.capitol.texas.gov CCP ch. 45A --> <strong class="text-text">Deferred disposition and occupational licenses:</strong> a judge may want the full history before granting probation, and an occupational (essential need) license petition needs a certified record. <strong class="text-text">Employers and insurers</strong> usually pull their own copy through DPS rather than asking you for one. Which record each court wants is on its page in our <a href="/texas/courts" class="text-primary-deep font-medium hover:underline">court directory</a>; the <a href="/texas/do-i-need-to-print-type-3a" class="text-primary-deep font-medium hover:underline">print-or-upload question</a> has its own answer.</p>
         </div>
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Every Texas driver record type — and why only one works</h2>
@@ -118,7 +123,7 @@ const faqSchema = JSON.stringify({
             </tbody>
           </table>
         </div>
-        <p class="text-xs text-text-subtle mb-10" style="font-family: 'DM Sans', sans-serif;">Online prices include the $2.00 Texas.gov administration fee on top of the DPS base fee. Source: Texas DPS record-type chart and form DR-1 fee schedule, verified June 2026.</p>
+        <p class="text-xs text-text-subtle mb-10" style="font-family: 'DM Sans', sans-serif;">Mail prices are the DPS base fees on its driver-records page (checked October 5, 2026); online prices add the Texas.gov administration fee shown at checkout. <!-- TODO-VERIFY: the $2.00 Texas.gov online fee and the $12.00 Type 3A online total against the live txapps.texas.gov checkout; DPS's own page lists only the $10.00 base fee --> Source: Texas DPS driver-records page and form DR-1.</p>
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How to order your Type 3A online (instant)</h2>
         <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
@@ -132,7 +137,7 @@ const faqSchema = JSON.stringify({
         </ul>
         <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
           <p>Select <strong class="text-text">Type 3A</strong>, pay the $12.00, and the certified record is delivered as a PDF you can download and print immediately. That PDF <em>is</em> the certified record — you don't wait for anything in the mail.</p>
-          <p>If the online check won't authenticate you (most commonly because your SSN isn't on file with DPS), the fallback is mail: DPS form <strong class="text-text">DR-1</strong> with a $10.00 fee — but DPS says to allow <strong class="text-text">2–3 weeks for delivery</strong>, which can eat most of a court deadline. If you're stuck on the mail path, tell your court clerk early.</p>
+          <p>If the online check won't authenticate you (most commonly because your SSN isn't on file with DPS), the fallback is mail: DPS form <strong class="text-text">DR-1</strong> with a $10.00 fee — but DPS says to allow <strong class="text-text">three weeks from the date it receives your request</strong>, which can eat most of a court deadline. If you're stuck on the mail path, tell your court clerk early.</p>
         </div>
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">When to order it — check your court first</h2>
@@ -145,7 +150,7 @@ const faqSchema = JSON.stringify({
           <p><strong class="text-text">Ordering Type 3 instead of 3A.</strong> Same content, no certification — and the certification is the entire point. The $4.50 you save costs you a rejection.</p>
           <p><strong class="text-text">Ordering Type 2A because it says "certified."</strong> It's certified but only covers three years; DPS explicitly marks it not acceptable for defensive driving.</p>
           <p><strong class="text-text">Identity details that don't match.</strong> If the name or personal information on your record doesn't match your citation and course paperwork, the court can't connect the documents. This is court practice rather than a published DPS rule, but in our experience it's one of the most common avoidable problems — the same reason we make students contact support to correct sensitive details on a certificate instead of self-editing. Use your legal name, exactly as it appears on your license, on everything.</p>
-          <p><strong class="text-text">Waiting on the mail version with a deadline coming.</strong> 2–3 weeks of processing against a 90-day window that's already half gone is how people end up paying tickets they'd already done the course for.</p>
+          <p><strong class="text-text">Waiting on the mail version with a deadline coming.</strong> Three weeks of processing against a 90-day window that's already half gone is how people end up paying tickets they'd already done the course for.</p>
         </div>
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
@@ -182,7 +187,7 @@ const faqSchema = JSON.stringify({
 
         <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
           <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; record requirements and timing rules are set by your court — confirm with the court on your citation.</p>
-          <p class="text-xs text-text-subtle">Last updated August 4, 2026 — verified by the Road Ready Safety editorial team against the Texas DPS record-type chart, the DPS online driver record FAQ and fee schedule, and DPS form DR-1 (Rev. 10/16). Prices and processing times are DPS's and may change.</p>
+          <p class="text-xs text-text-subtle">Last updated October 5, 2026. Record types, base fees, online requirements and the three-week mail time re-checked against the Texas DPS driver-records page on October 5, 2026; form DR-1 (Rev. 10/16). Prices and processing times are DPS's and may change.</p>
         </div>
 
       </div>

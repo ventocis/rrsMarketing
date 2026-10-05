@@ -93,7 +93,7 @@ const outfit = "font-family:'Outfit',sans-serif;";
           </p>
         )}
         <h1 class={`text-[34px] lg:text-[60px] text-primary-navy ${h2}`} style={outfit}>
-          North Dakota Defensive Driving Course Online
+          North Dakota (ND) Defensive Driving Course Online
         </h1>
 
         <p class="text-lg lg:text-xl text-text-body leading-8 max-w-[34rem]">
@@ -274,6 +274,64 @@ const outfit = "font-family:'Outfit',sans-serif;";
           enrollUrl={enrollUrl}
         />
       </div>
+    </div>
+  </section>
+
+  <!-- ============ 5. PLAIN ANSWERS — traffic school, time, cost, free options; links to the hubs, city pages and top guides ============ -->
+  <section class="bg-surface-muted py-20 lg:py-24" id="answers">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] gap-12 lg:gap-16 items-start">
+      <div class="flex flex-col gap-10">
+        <div class="flex flex-col gap-4">
+          <h2 class={`text-[28px] lg:text-[36px] text-text ${h2}`} style={outfit}>Looking for "traffic school" in ND? This is it.</h2>
+          <p class="text-base lg:text-lg text-text-body leading-8 m-0">
+            North Dakota doesn't run a traffic school. What other states call traffic school, North Dakota calls an approved defensive driving course, under NDCC 39-06.1-13 and 39-06.1-10.1. The course doesn't dismiss the ticket or lower the fee. It takes 3 points off your record, or, if you elect it at court before you pay, keeps the points from a ticket worth 5 points or fewer off the record entirely.
+            <a href={`${route}/blog/online-traffic-school-north-dakota`} class="text-primary-deep font-semibold underline underline-offset-2">Online traffic school in North Dakota</a>, explained.
+          </p>
+        </div>
+        <div class="flex flex-col gap-4">
+          <h2 class={`text-[28px] lg:text-[36px] text-text ${h2}`} style={outfit}>How long it takes, what it costs, and whether there's a free option</h2>
+          <dl class="grid grid-cols-1 sm:grid-cols-3 gap-px bg-border border border-border rounded-[20px] overflow-hidden m-0">
+            <div class="bg-white px-5 py-4"><dt class="text-xs font-semibold uppercase tracking-wider text-text-muted">Time</dt><dd class="text-base font-semibold text-text leading-6 m-0 mt-1">4 hours, in as many sittings as you like</dd></div>
+            <div class="bg-white px-5 py-4"><dt class="text-xs font-semibold uppercase tracking-wider text-text-muted">Total cost</dt><dd class="text-base font-semibold text-text leading-6 m-0 mt-1">${price}, certificate and retakes included</dd></div>
+            <div class="bg-white px-5 py-4"><dt class="text-xs font-semibold uppercase tracking-wider text-text-muted">Free option</dt><dd class="text-base font-semibold text-text leading-6 m-0 mt-1">None on NDDOT's list</dd></div>
+          </dl>
+          <p class="text-base text-text-body leading-7 m-0">
+            NDDOT's approved list has no free course; prices run from about $5 to $80, and the 4-hour length is the state minimum. The course is a poor trade if your ticket carries no points (up to 10 over where the limit is 65 or less) or one point, since one point drops off by itself in three months.
+            <a href={`${route}/blog/how-long-is-north-dakota-defensive-driving-course`} class="text-primary-deep font-semibold underline underline-offset-2">How long the course takes</a> ·
+            <a href={`${route}/blog/free-defensive-driving-course-north-dakota`} class="text-primary-deep font-semibold underline underline-offset-2">Is there a free course?</a> ·
+            <a href={`${route}/blog/nddot-approved-defensive-driving-courses-compared`} class="text-primary-deep font-semibold underline underline-offset-2">Every NDDOT-approved course compared</a>
+          </p>
+        </div>
+      </div>
+      <nav class="bg-white border border-border rounded-[20px] p-6 flex flex-col gap-5" aria-label="North Dakota guides">
+        <div>
+          <h3 class="text-sm font-bold uppercase tracking-wider text-primary-deep m-0 mb-3" style={outfit}>Got a ticket?</h3>
+          <ul class="list-none p-0 m-0 flex flex-col gap-2 text-base">
+            <li><a href={`${route}/blog/north-dakota-speeding-ticket`} class="text-text font-semibold no-underline hover:text-primary">North Dakota speeding ticket: fine, points and options</a></li>
+            <li><a href={`${route}/blog/north-dakota-traffic-ticket`} class="text-text font-semibold no-underline hover:text-primary">North Dakota traffic ticket: what to do next</a></li>
+            <li><a href={`${route}/blog/north-dakota-points-suspension-three-point-reduction`} class="text-text font-semibold no-underline hover:text-primary">North Dakota driver's license points, explained</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-sm font-bold uppercase tracking-wider text-primary-deep m-0 mb-3" style={outfit}>Your city</h3>
+          <ul class="list-none p-0 m-0 flex flex-col gap-2 text-base">
+            <li><a href={`${route}/blog/defensive-driving-course-fargo-nd`} class="text-text no-underline hover:text-primary">Defensive driving course in Fargo</a></li>
+            <li><a href={`${route}/blog/defensive-driving-course-bismarck-nd`} class="text-text no-underline hover:text-primary">Defensive driving course in Bismarck</a></li>
+            <li><a href={`${route}/blog/defensive-driving-course-minot-nd`} class="text-text no-underline hover:text-primary">Defensive driving course in Minot</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-sm font-bold uppercase tracking-wider text-primary-deep m-0 mb-3" style={outfit}>Most read</h3>
+          <ul class="list-none p-0 m-0 flex flex-col gap-2 text-base">
+            <li><a href={`${route}/blog/in-lieu-of-points-north-dakota-court-election`} class="text-text no-underline hover:text-primary">How to elect the course at court, in lieu of points</a></li>
+            <li><a href={`${route}/blog/north-dakota-speeding-ticket-points`} class="text-text no-underline hover:text-primary">Points for speeding, by speed and zone</a></li>
+            <li><a href={`${route}/blog/north-dakota-speeding-ticket-cost`} class="text-text no-underline hover:text-primary">What a speeding ticket costs</a></li>
+            <li><a href={`${route}/blog/send-defensive-driving-certificate-to-nddot`} class="text-text no-underline hover:text-primary">Sending your certificate to NDDOT</a></li>
+            <li><a href={`${route}/blog/north-dakota-in-lieu-of-points-30-day-deadline`} class="text-text no-underline hover:text-primary">The 30-day deadline after an election</a></li>
+          </ul>
+          <a href={`${route}/blog`} class="inline-block mt-3 text-primary font-semibold underline underline-offset-2">All North Dakota guides</a>
+        </div>
+      </nav>
     </div>
   </section>
 

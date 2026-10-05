@@ -82,7 +82,7 @@ const articleSchema = JSON.stringify({
   author: { '@type': 'Organization', name: 'Road Ready Safety' },
   publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
   datePublished: '2026-09-02',
-  dateModified: '2026-09-06',
+  dateModified: '2026-10-05',
   mainEntityOfPage: `${siteUrl}/texas/ticket-dismissal`,
 });
 
@@ -119,7 +119,7 @@ const howToSchema = JSON.stringify({
       <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
 
         <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
-          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving course</a>
           <span class="mx-2 text-text-subtle">›</span>
           <span class="text-text">Ticket dismissal</span>
         </p>
@@ -189,6 +189,34 @@ const howToSchema = JSON.stringify({
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What is the deadline to dismiss a ticket in Texas?</h2>
         <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
           <p>There are two deadlines, and the first is the one people miss. <strong class="text-text">The request deadline is the appearance date on your citation</strong>, usually 10 to 30 days after the stop. Miss it and the court can refuse the course; you may still get deferred disposition or a plea, but you have lost the path you control. <strong class="text-text">The completion deadline is 90 days from the day the court grants the course</strong> (art. 45A.351), extendable for good cause. On top of the statute, each court sets its own paperwork deadline; in our verified data those run from <a href="/texas/dsc-deadlines-by-court" class="text-primary-deep font-medium hover:underline">10 days to 180 days</a>. One more detail: TDLR says a new certificate can take up to 5 days to appear in its validation system, so do not finish the course the night before the court's deadline.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Why do courts deny a driving safety course request?</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <p>A court denies the course for one of two kinds of reason: the statute bars it, or the paperwork failed. The statutory reasons are fixed; the paperwork reasons are the ones you can avoid. In the courts we track, these are the ones that come up:</p>
+        </div>
+        <div class="bg-surface-muted border border-border rounded-[14px] p-5 mb-4">
+          <p class="text-sm font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">Barred by statute (Tex. Code Crim. Proc. arts. 45A.351 to 45A.353)</p>
+          <ul class="list-disc pl-5 space-y-2 text-sm text-text-body leading-7" style="font-family: 'DM Sans', sans-serif;">
+            <li><strong class="text-text">You asked after the appearance date.</strong> The request has to be made on or before the date on the citation (art. 45A.351). A late request is the single most common denial, and the court does not have to make an exception.</li>
+            <li><strong class="text-text">You took a dismissal course within the 12 months before this offense</strong> (art. 45A.352). The clock runs from your last completion date to this offense date. <a href="/texas/12-month-rule" class="text-primary-deep font-medium hover:underline">How the 12-month rule counts</a>.</li>
+            <li><strong class="text-text">No valid Texas license or permit</strong>, unless you are active-duty military or a military spouse or dependent (art. 45A.352). <a href="/texas/out-of-state-driver" class="text-primary-deep font-medium hover:underline">Out-of-state drivers</a> go the deferred route.</li>
+            <li><strong class="text-text">No proof of financial responsibility</strong> (insurance) for the vehicle at the time of the offense (art. 45A.352).</li>
+            <li><strong class="text-text">The charge is excluded:</strong> 25 mph or more over the limit, 95 mph or faster, a work zone with workers present, passing a stopped school bus, leaving the scene, or a serious commercial-vehicle violation (art. 45A.353).</li>
+            <li><strong class="text-text">You hold, or held at the time, a commercial driver's license</strong> (art. 45A.351(c); 49 CFR 384.226).</li>
+            <li><strong class="text-text">The ticket is not a moving violation.</strong> Expired registration, no insurance and equipment tickets use compliance dismissals instead.</li>
+          </ul>
+        </div>
+        <div class="bg-surface-muted border border-border rounded-[14px] p-5 mb-10">
+          <p class="text-sm font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">Paperwork failures (court practice, avoidable)</p>
+          <ul class="list-disc pl-5 space-y-2 text-sm text-text-body leading-7" style="font-family: 'DM Sans', sans-serif;">
+            <li><strong class="text-text">You paid the fine first.</strong> Payment is a plea and a conviction; once entered, the court has nothing left to dismiss. <a href="/texas/already-paid-ticket" class="text-primary-deep font-medium hover:underline">If you already paid</a>.</li>
+            <li><strong class="text-text">You took the course before the court granted it.</strong> The certificate is dated before the approval, and many courts will not count it.</li>
+            <li><strong class="text-text">Wrong driving record.</strong> Courts want the certified Type 3A from DPS. The uncertified Type 3 and the three-year Type 2A get bounced. <a href="/texas/type-3a-driving-record" class="text-primary-deep font-medium hover:underline">Ordering the right one</a>.</li>
+            <li><strong class="text-text">The court copy is missing, or the affidavit is not notarized</strong> at a court that requires one. <a href="/texas/notarized-affidavit" class="text-primary-deep font-medium hover:underline">Which courts require the affidavit</a>.</li>
+            <li><strong class="text-text">You missed the 90-day completion window</strong>, or the court's shorter paperwork deadline, and did not ask for an extension before it ran out.</li>
+            <li><strong class="text-text">The certificate did not validate yet.</strong> TDLR says a new certificate can take up to 5 days to appear in its system; a clerk who checks on day one may see nothing. Submit with a cushion, and <a href="/texas/certificate-rejected" class="text-primary-deep font-medium hover:underline">here is what to do if a certificate is rejected</a>.</li>
+          </ul>
         </div>
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How much does ticket dismissal cost in Texas?</h2>
@@ -269,7 +297,7 @@ const howToSchema = JSON.stringify({
 
         <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
           <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
-          <p class="text-xs text-text-subtle">Last updated September 6, 2026. Eligibility, exclusions, the 90-day window and the record protection per Tex. Code Crim. Proc. arts. 45A.351 to 45A.359 (recodified from art. 45.0511 effective Jan. 1, 2025) and S.B. 296 (eff. Sept. 1, 2025); CDL exclusion per 49 CFR 384.226 and art. 45A.351(c); course minimum per Tex. Educ. Code §1001.352 as amended by HB 3012 (eff. Sept. 1, 2025); Type 3A record per Texas DPS; court fee and deadline ranges from our verified court dataset, last refreshed August 2026.</p>
+          <p class="text-xs text-text-subtle">Last updated October 5, 2026. Eligibility, exclusions, the 90-day window and the record protection per Tex. Code Crim. Proc. arts. 45A.351 to 45A.359 (recodified from art. 45.0511 effective Jan. 1, 2025) and S.B. 296 (eff. Sept. 1, 2025); CDL exclusion per 49 CFR 384.226 and art. 45A.351(c); course minimum per Tex. Educ. Code §1001.352 as amended by HB 3012 (eff. Sept. 1, 2025); Type 3A record per Texas DPS; court fee and deadline ranges from our verified court dataset, last refreshed August 2026.</p>
         </div>
 
       </div>

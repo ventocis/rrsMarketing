@@ -6316,7 +6316,7 @@ const courtOfficeSchema = JSON.stringify({
 {!isEnabled && <meta http-equiv="refresh" content="0;url=/" />}
 
 {isEnabled && (
-<TexasLayout
+<TexasLayout breadcrumbs={false}
   title={courtPageTitle}
   description={isEnhanced && courtSeoData[court.slug]
     ? courtSeoData[court.slug].description
@@ -6464,7 +6464,7 @@ const courtOfficeSchema = JSON.stringify({
         })()
       ]
     };
-    return <script type="application/ld+json" set:html={JSON.stringify(schema)} />;
+    return <script type="application/ld+json" set:html={JSON.stringify({ ...schema, '@graph': schema['@graph'].filter(Boolean) })} />;
   })()}
 
   <section class="pt-8 pb-[112px] px-4 sm:px-6 lg:px-8 bg-surface-muted">

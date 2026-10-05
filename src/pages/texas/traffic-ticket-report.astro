@@ -73,7 +73,7 @@ const spread = Math.round((S.fee.max / S.fee.min - 1) * 100);
 ---
 
 {isEnabled ? (
-  <TexasLayout
+  <TexasLayout breadcrumbs={false}
     title={`The Texas Traffic Ticket Report 2026: ${S.email.pctNo}% of Courts Still Won't Take Email`}
     description={`An original study of Texas's ${S.totalCourts} municipal and justice courts. A year after the law authorized emailed defensive driving requests, ${S.email.pctNo}% of courts still refuse them — and the fee for the same service ranges from $${S.fee.min} to $${S.fee.max}.`}
     keywords="texas traffic ticket statistics, texas court defensive driving fees, texas courts email requests, texas municipal court data, texas traffic ticket report"
@@ -88,7 +88,7 @@ const spread = Math.round((S.fee.max / S.fee.min - 1) * 100);
       <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
 
         <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
-          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving course</a>
           <span class="mx-2 text-text-subtle">›</span>
           <span class="text-text">Texas Traffic Ticket Report</span>
         </p>

@@ -1,6 +1,7 @@
 ---
 import Layout from './Layout.astro';
 import { termsUrl } from '../lib/portal';
+import { TEXAS_COURSE, TEXAS_PRICE_LABEL } from '../data/texas-course';
 
 interface Props {
   title: string;
@@ -11,6 +12,13 @@ interface Props {
   showPromo?: boolean;
   lang?: string;
   alternates?: { lang: string; href: string }[];
+  /** Emit the Course JSON-LD. Only the Texas hub (/texas) should set this; guides and court pages are not the course. */
+  courseSchema?: boolean;
+  /**
+   * BreadcrumbList JSON-LD. Default: Home › Texas Defensive Driving Course › <this page>.
+   * Pass an array to override, or `false` on templates that already emit their own BreadcrumbList.
+   */
+  breadcrumbs?: { name: string; href: string }[] | false;
 }
 
 const {
@@ -18,56 +26,59 @@ const {
   description = 'The easiest way to dismiss your Texas traffic ticket. TDLR-approved, all courts accepted.',
   keywords = 'Texas driver safety course, defensive driving, traffic school, online course, Texas approved',
   url = '/texas',
-  banner = '$28 Total, No Hidden Fees — No Surprises at Checkout',
+  banner = `${TEXAS_PRICE_LABEL} Total, No Hidden Fees — No Surprises at Checkout`,
   showPromo = true,
   lang = 'en',
   alternates = [],
+  courseSchema = false,
+  breadcrumbs,
 } = Astro.props;
 
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '#';
 const loginUrl = import.meta.env.VITE_LOGIN_URL || '#';
 const currentYear = new Date().getFullYear();
+const siteUrl = (import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com').replace(/\/$/, '');
+
+// Breadcrumb name = the page title up to the first separator, so "Speeding Ticket in Texas: How to…" → "Speeding Ticket in Texas".
+const pageName = title.split(/\s*[|:–—]\s*/)[0].trim() || title;
+const crumbs =
+  breadcrumbs === false
+    ? null
+    : breadcrumbs ??
+      (url === '/texas'
+        ? [{ name: 'Home', href: '/' }, { name: 'Texas Defensive Driving Course', href: '/texas' }]
+        : [{ name: 'Home', href: '/' }, { name: 'Texas Defensive Driving Course', href: '/texas' }, { name: pageName, href: url }]);
+const breadcrumbSchema = crumbs
+  ? JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: crumbs.map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.name, item: `${siteUrl}${c.href}` })),
+    })
+  : null;
+
+const courseSchemaJson = courseSchema
+  ? JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Course',
+      name: TEXAS_COURSE.name,
+      description: `TDLR-approved online Texas Driver Safety Course (provider ${TEXAS_COURSE.providerNumber}). Complete the ${TEXAS_COURSE.hours}-hour course to dismiss an eligible traffic ticket or qualify for an auto insurance discount. Certificate issued the moment you finish.`,
+      url: `${siteUrl}/texas`,
+      provider: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl, logo: `${siteUrl}/assets/icons/texas/logo-shield.svg` },
+      courseMode: 'online',
+      educationalCredentialAwarded: 'TDLR Uniform Certificate of Course Completion',
+      timeRequired: `PT${TEXAS_COURSE.hours}H`,
+      inLanguage: 'en-US',
+      isAccessibleForFree: false,
+      offers: { '@type': 'Offer', price: String(TEXAS_COURSE.price), priceCurrency: 'USD', availability: 'https://schema.org/InStock', url: `${siteUrl}/texas`, category: 'Paid' },
+      hasCourseInstance: { '@type': 'CourseInstance', courseMode: 'online', courseWorkload: `PT${TEXAS_COURSE.hours}H`, courseSchedule: { '@type': 'Schedule', repeatFrequency: 'P1D', repeatCount: -1 } },
+    })
+  : null;
 ---
 
 <Layout title={title} description={description} keywords={keywords} url={url} lang={lang} alternates={alternates}>
-  <!-- JSON-LD: Texas Defensive Driving Course -->
   <Fragment slot="head">
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Course",
-        "name": "Texas 6-Hour Defensive Driving Course",
-        "description": "TDLR-approved online Texas Driver Safety Course. Complete your 6-hour course to dismiss a traffic ticket or reduce auto insurance rates. Accepted by all Texas courts.",
-        "url": "https://roadreadysafety.com/texas",
-        "provider": {
-          "@type": "Organization",
-          "name": "Road Ready Safety",
-          "url": "https://roadreadysafety.com",
-          "logo": "https://roadreadysafety.com/assets/icons/texas/logo-shield.svg"
-        },
-        "courseMode": "online",
-        "educationalCredentialAwarded": "TDLR Certificate of Completion",
-        "timeRequired": "PT6H",
-        "inLanguage": "en-US",
-        "isAccessibleForFree": false,
-        "offers": {
-          "@type": "Offer",
-          "price": "28",
-          "priceCurrency": "USD",
-          "availability": "https://schema.org/InStock",
-          "url": "https://roadreadysafety.com/texas"
-        },
-        "hasCourseInstance": {
-          "@type": "CourseInstance",
-          "courseMode": "online",
-          "courseSchedule": {
-            "@type": "Schedule",
-            "repeatFrequency": "P1D",
-            "repeatCount": -1
-          }
-        }
-      }
-    </script>
+    {courseSchemaJson && <script type="application/ld+json" set:html={courseSchemaJson} />}
+    {breadcrumbSchema && <script type="application/ld+json" set:html={breadcrumbSchema} />}
   </Fragment>
 
   <!-- Announcement Banner -->

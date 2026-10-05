@@ -3,9 +3,25 @@ import faqData from '../copy/faq.json';
 const { heading, items } = faqData;
 const visibleItems = items.slice(0, 8);
 
+// FAQPage schema must mirror the visible questions exactly (the same 8 items, tags stripped).
+const stripTags = (html: string) => html.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: visibleItems.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: (Array.isArray(item.a) ? item.a : [item.a]).map(stripTags).filter(Boolean).join(' '),
+    },
+  })),
+});
+
 const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/support';
 ---
 
+<script type="application/ld+json" set:html={faqSchema} />
 <section class="bg-surface-muted py-16 lg:py-28 border-b border-border">
   <div class="max-w-[768px] mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex flex-col gap-6 items-center mb-12">

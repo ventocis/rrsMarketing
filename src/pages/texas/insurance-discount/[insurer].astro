@@ -88,7 +88,7 @@ const others = INSURERS.filter(i => i.slug !== insurer.slug);
 ---
 
 {isEnabled ? (
-  <TexasLayout
+  <TexasLayout breadcrumbs={false}
     title={`${insurer.name} Defensive Driving Discount in Texas: The Published Terms (2026)`}
     description={description}
     keywords={`${insurer.name.toLowerCase()} defensive driving discount, ${insurer.name.toLowerCase()} defensive driving course texas, ${insurer.name.toLowerCase()} insurance discount driving course, submit defensive driving certificate ${insurer.name.toLowerCase()}`}
@@ -102,7 +102,7 @@ const others = INSURERS.filter(i => i.slug !== insurer.slug);
       <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
 
         <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
-          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving course</a>
           <span class="mx-2 text-text-subtle">›</span>
           <a href="/texas/insurance-discount" class="text-primary-deep font-medium hover:underline">Insurance discount</a>
           <span class="mx-2 text-text-subtle">›</span>

@@ -114,7 +114,7 @@
     "description": "Missouri Safety Center-approved 8-hour Driver Improvement Program, online. Keep a ticket's points off your record when your court approves it. $24.99 total.",
     "keywords": "Missouri driver improvement program online, Missouri DIP course, Missouri 8 hour driver improvement, avoid points Missouri ticket, Missouri Safety Center approved DIP",
     "credential": "Missouri Driver Improvement Program Certificate of Completion",
-    "courseDescription": "Eight-hour online Driver Improvement Program for Missouri drivers authorized by a court to complete DIP so that points for a violation are not assessed, under RSMo 302.302. Self-paced with a 25-question final exam."
+    "courseDescription": "Eight-hour online Driver Improvement Program for Missouri drivers authorized by a court to complete DIP so that points for a violation are not assessed, under RSMo 302.302. Self-paced with a 25-question final quiz."
   },
   "banner": "$24.99 total — instant certificate included. Nothing added at checkout.",
   "nav": [
@@ -187,14 +187,14 @@
     "included": [
       "All eight hours Missouri requires",
       "Twelve modules, no quizzes",
-      "The 25-question final exam, with unlimited retakes",
+      "The 25-question final quiz, with unlimited retakes",
       "Your certificate of completion and the Department of Revenue completion form, ready to download the moment you pass",
       "Support by phone and email while you are enrolled"
     ],
     "notCharged": [
       "Certificate fees",
       "Processing fees",
-      "Exam retakes",
+      "Quiz retakes",
       "Faster delivery"
     ],
     "lineItems": [
@@ -214,7 +214,7 @@
         "good": true
       },
       {
-        "label": "Exam retakes",
+        "label": "Quiz retakes",
         "value": "$0.00",
         "good": true
       }
@@ -270,7 +270,7 @@
       },
       {
         "v": "Unlimited retakes",
-        "l": "No quizzes, one final exam"
+        "l": "One quiz, at the end"
       },
       {
         "v": "Instant certificate",
@@ -362,7 +362,7 @@
       "a": "Eight hours, self-paced. No quizzes. Most people finish across three or four sittings."
     },
     {
-      "q": "What is the final exam like?",
+      "q": "What is the final quiz like?",
       "a": "Twenty-five questions, twenty correct to pass. Unlimited retakes with different questions and no waiting period."
     },
     {
@@ -379,7 +379,7 @@
     },
     {
       "q": "Can I get a refund?",
-      "a": "Yes, in full, at any time before you complete the course. After you pass the exam and the certificate is issued, no refund is available."
+      "a": "Yes, in full, at any time before you complete the course. After you pass the quiz and the certificate is issued, no refund is available."
     },
     {
       "q": "Can I do this on my phone?",
@@ -434,10 +434,10 @@
       ]
     },
     {
-      "q": "How to take the final exam",
+      "q": "How to take the final quiz",
       "steps": [
         "Finish every module first",
-        "The exam is 25 questions; 20 correct passes",
+        "The quiz is 25 questions; 20 correct passes",
         "If you miss it, retake it immediately with different questions. There is no limit"
       ]
     },

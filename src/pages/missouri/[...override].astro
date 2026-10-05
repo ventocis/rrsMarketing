@@ -269,7 +269,7 @@ const check = 'M4.8 8.2l2.1 2.1 4.3-4.4';
                   <span class="flex flex-wrap items-center gap-x-3 gap-y-1 text-left">
                     <span class="text-sm font-bold tabular-nums text-text-subtle" style={outfit}>{stepNum(m.n)}</span>
                     <span class="text-lg font-bold text-text" style={outfit}>{m.title}</span>
-                    {m.isFinal && <span class="text-[10px] font-bold uppercase tracking-wider text-primary-deep bg-info px-2 py-0.5 rounded-full">Final exam</span>}
+                    {m.isFinal && <span class="text-[10px] font-bold uppercase tracking-wider text-primary-deep bg-info px-2 py-0.5 rounded-full">Final quiz</span>}
                   </span>
                   <svg class="flex-shrink-0 w-5 h-5 text-text-muted transition-transform group-open:rotate-180 motion-reduce:transition-none" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </summary>
@@ -279,10 +279,10 @@ const check = 'M4.8 8.2l2.1 2.1 4.3-4.4';
           </div>
         </div>
 
-        <!-- The final exam, from the exam facts in mo-dip.json. -->
+        <!-- The final quiz, from the quiz facts in mo-dip.json. -->
         <div class="rounded-[28px] bg-info p-8 lg:p-10">
           <div class="rounded-[20px] bg-white shadow-[0_24px_48px_-20px_rgba(2,25,84,0.35)] p-7 flex flex-col gap-5">
-            <span class="text-sm font-semibold text-text-muted uppercase tracking-wider">The final exam</span>
+            <span class="text-sm font-semibold text-text-muted uppercase tracking-wider">The final quiz</span>
             <p class="text-[56px] font-extrabold text-primary-navy leading-none m-0 tabular-nums" style={outfit}>{exam.questions}<span class="text-2xl font-bold text-text-body"> questions</span></p>
             <div class="grid grid-cols-2 gap-3">
               <div class="rounded-xl bg-surface-muted px-4 py-3"><p class="text-2xl font-bold text-text m-0 tabular-nums" style={outfit}>{exam.passCount}</p><p class="text-sm text-text-body m-0">correct to pass</p></div>

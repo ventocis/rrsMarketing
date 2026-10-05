@@ -20,16 +20,16 @@ const ex = course.exam;
 
 const stats = [
   { label: 'Instruction', value: `${course.course.hours} hours`, note: course.course.completionNote ?? (course.course.completionDays ? `${course.course.completionDays} days to finish once you start` : 'No completion deadline set by the state') },
-  { label: 'Final exam', value: `${ex.questions} questions`, note: `${ex.passPercent}% to pass (${ex.passCount} of ${ex.questions})` },
+  { label: 'Final quiz', value: `${ex.questions} questions`, note: `${ex.passPercent}% to pass (${ex.passCount} of ${ex.questions})` },
   { label: 'Attempts', value: ex.attempts === null ? 'Unlimited' : `${ex.attempts}`, note: ex.cooldownHours ? `${ex.cooldownHours} hours between attempts` : 'No waiting period' },
-  { label: 'Knowledge checks', value: course.course.knowledgeChecks ? `${course.course.knowledgeChecks.count}` : 'None', note: course.course.knowledgeChecks ? 'One per unit' : 'Final exam only' },
+  { label: 'Knowledge checks', value: course.course.knowledgeChecks ? `${course.course.knowledgeChecks.count}` : 'None', note: course.course.knowledgeChecks ? 'One per unit' : 'Final quiz only' },
 ];
 ---
 
 <CourseLayout
   course={course}
   title={`How the ${course.course.shortName} Works — Enrollment to Certificate | Road Ready Safety`}
-  description={`What the ${course.course.name} does under ${course.state.name} law, how the modules, timer and final exam work, and what happens after you pass.`}
+  description={`What the ${course.course.name} does under ${course.state.name} law, how the modules, timer and final quiz work, and what happens after you pass.`}
   url={`${route}/how-it-works`}
 >
   <section class="pt-16 lg:pt-24 pb-4 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-info to-white">

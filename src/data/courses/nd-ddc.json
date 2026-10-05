@@ -91,13 +91,13 @@
     "showAnswers": false,
     "failNote": "Unlimited retakes, no waiting period. Different questions each time."
   },
-  "identityChecks": "A few personal-history questions when you start and again before the final exam, to confirm the person finishing the course is the person who enrolled.",
+  "identityChecks": "A few personal-history questions when you start and again before the final quiz, to confirm the person finishing the course is the person who enrolled.",
   "seo": {
     "title": "North Dakota Defensive Driving Course Online — 3-Point Reduction, $24.99 | Road Ready Safety",
     "description": "North Dakota's 4-hour online defensive driving course for a 3-point reduction, or elected at court in lieu of points. $24.99 total with the certificate included, ready to download on completion.",
     "keywords": "North Dakota defensive driving course, North Dakota point reduction course online, ND 3 point reduction, in lieu of points North Dakota, NDDOT approved defensive driving",
     "credential": "North Dakota Defensive Driving Course Certificate of Completion",
-    "courseDescription": "Four-hour online defensive driving course for North Dakota drivers seeking a three-point reduction under NDCC 39-06.1-13 or electing a course in lieu of points under NDCC 39-06.1-10.1. Self-paced, with knowledge checks and a 25-question final exam."
+    "courseDescription": "Four-hour online defensive driving course for North Dakota drivers seeking a three-point reduction under NDCC 39-06.1-13 or electing a course in lieu of points under NDCC 39-06.1-10.1. Self-paced, with knowledge checks and a 25-question final quiz."
   },
   "banner": "$24.99 total — certificate included and ready to download the moment you pass. Nothing added at checkout.",
   "headerStyle": "minimal",
@@ -152,7 +152,7 @@
     {
       "icon": "/assets/icons/texas/super-easy-icon.svg",
       "title": "Unlimited Retakes",
-      "body": "Knowledge checks and the final exam can be retaken as many times as you need, at no charge."
+      "body": "Knowledge checks and the final quiz can be retaken as many times as you need, at no charge."
     },
     {
       "icon": "/assets/icons/texas/mobile-friendly-icon.svg",
@@ -171,14 +171,14 @@
     "included": [
       "All four hours of the course",
       "Eight modules and seven knowledge checks",
-      "The 25-question final exam, with unlimited retakes",
+      "The 25-question final quiz, with unlimited retakes",
       "Your certificate of completion, ready to download as a PDF the moment you pass",
       "Support by phone and email while you are enrolled"
     ],
     "notCharged": [
       "Certificate fees",
       "Processing fees",
-      "Exam retakes",
+      "Quiz retakes",
       "Faster delivery"
     ],
     "lineItems": [
@@ -198,7 +198,7 @@
         "good": true
       },
       {
-        "label": "Exam retakes",
+        "label": "Quiz retakes",
         "value": "$0.00",
         "good": true
       }
@@ -254,7 +254,7 @@
       },
       {
         "v": "Unlimited retakes",
-        "l": "On the final exam, at no charge"
+        "l": "On the final quiz, at no charge"
       },
       {
         "v": "Certificate",
@@ -342,7 +342,7 @@
       "a": "Four hours, self-paced. Most people finish in one or two evenings. There is no state deadline for the course itself; only the in-lieu election carries a 30-day submission deadline."
     },
     {
-      "q": "What is the final exam like?",
+      "q": "What is the final quiz like?",
       "a": "Twenty-five questions, eighteen correct to pass. Unlimited retakes with different questions and no waiting period."
     },
     {
@@ -355,7 +355,7 @@
     },
     {
       "q": "Can I get a refund?",
-      "a": "Yes, in full, at any time before you complete the course. After you pass the exam and the certificate is issued, no refund is available."
+      "a": "Yes, in full, at any time before you complete the course. After you pass the quiz and the certificate is issued, no refund is available."
     },
     {
       "q": "Does the course lower my insurance?",
@@ -408,10 +408,10 @@
       ]
     },
     {
-      "q": "How to take the final exam",
+      "q": "How to take the final quiz",
       "steps": [
         "Finish every module first",
-        "The exam is 25 questions; 18 correct passes",
+        "The quiz is 25 questions; 18 correct passes",
         "If you miss it, retake it immediately with different questions. There is no limit"
       ]
     },

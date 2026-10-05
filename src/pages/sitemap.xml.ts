@@ -100,6 +100,10 @@ const adeRoutes = adeEnabled
 
 // Per-state course sites (/ohio, ...). Listed only when the state is enabled AND approved
 // (src/lib/courseFlags.ts). While approval is pending the pages are noindex, so they stay out.
+// lastmod for state guides, from the post's updated/date; other routes have none.
+const lastmodByPath = new Map<string, string>();
+for (const c of sitemapCourses) for (const p of postsFor(c.state.code)) lastmodByPath.set(`${c.state.route}/blog/${p.slug}`, p.updated ?? p.date);
+
 const stateCourseRoutes = sitemapCourses.flatMap((c) => {
   const base = c.state.route;
   const subs = STATE_SUBROUTES.map((s) => `${base}${s}`);
@@ -145,7 +149,7 @@ const insurerRoutes = INSURERS.map(i => `/texas/insurance-discount/${i.slug}`);
 const allRoutes = [...staticRoutes, ...texasGuideRoutes, ...adeRoutes, ...i18nRoutes, ...insurerRoutes, ...stateCourseRoutes, ...courseRoutes, ...courseRequirementsRoutes, ...blogRoutes, ...findRoutes, ...texasCourtsRoutes, ...courtSlugRoutes];
 
 const toEntry = (path: string) =>
-  `  <url>\n    <loc>${siteUrl}${path}</loc>\n    <changefreq>weekly</changefreq>\n  </url>`;
+  `  <url>\n    <loc>${siteUrl}${path}</loc>${lastmodByPath.has(path) ? `\n    <lastmod>${lastmodByPath.get(path)}</lastmod>` : ''}\n    <changefreq>weekly</changefreq>\n  </url>`;
 
 export const GET: APIRoute = () => {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>

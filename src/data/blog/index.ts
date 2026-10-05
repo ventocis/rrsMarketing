@@ -25,6 +25,12 @@ export interface StatePost {
   keyFacts?: { label: string; value: string }[];
   /** Slugs of the guides to link at the end. */
   related?: string[];
+  /** Slug of the hub this guide belongs to (North Dakota): rendered as a breadcrumb and an 'up' link. */
+  hub?: string;
+  /** 'hub' pages list every guide that names them as hub. */
+  kind?: 'hub';
+  /** Who checked the facts on `updated`. */
+  reviewedBy?: string;
 }
 
 const byState: Record<string, StatePost[]> = {

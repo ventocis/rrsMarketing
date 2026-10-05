@@ -36,6 +36,13 @@ const html = marked(post.content) as string;
 const updated = post.updated ?? post.date;
 
 const all = postsFor('ND');
+// Hub structure: a guide names its hub; a hub lists every guide that names it.
+const hub = post.hub ? all.find((p) => p.slug === post.hub) : undefined;
+const children = post.kind === 'hub' ? all.filter((p) => p.hub === post.slug) : [];
+// One of several anchors for the up-link to the course, chosen per guide so the text varies site-wide.
+const courseAnchors = ['North Dakota defensive driving course', 'the 4-hour online course', 'our NDDOT-approved course', 'the course for the 3-point reduction', 'take the course in lieu of points'];
+const courseAnchor = courseAnchors[[...post.slug].reduce((n, c) => n + c.charCodeAt(0), 0) % courseAnchors.length];
+const reviewedBy = post.reviewedBy ?? 'Road Ready Safety';
 const picked = (post.related ?? []).map((s) => all.find((p) => p.slug === s)).filter(Boolean) as StatePost[];
 const related = (picked.length ? picked : all.filter((p) => p.slug !== post.slug)).slice(0, 4);
 
@@ -67,7 +74,7 @@ const faqSchema = post.faq && post.faq.length
 const outfit = "font-family:'Outfit',sans-serif;";
 ---
 
-<CourseLayout course={course} title={post.seoTitle ?? post.title} description={post.description} url={url}>
+<CourseLayout course={course} title={`${post.seoTitle ?? post.title} | Road Ready`} description={post.description} url={url}>
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
     {faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
@@ -80,13 +87,15 @@ const outfit = "font-family:'Outfit',sans-serif;";
           <li><a href={route} class="hover:text-primary no-underline">{course.course.name}</a></li>
           <li aria-hidden="true">›</li>
           <li><a href={`${route}/blog`} class="hover:text-primary no-underline">Guides</a></li>
+          {hub && <li aria-hidden="true">›</li>}
+          {hub && <li><a href={`${route}/blog/${hub.slug}`} class="hover:text-primary no-underline">{hub.seoTitle ?? hub.title}</a></li>}
         </ol>
       </nav>
 
       <header class="mb-8 flex flex-col gap-4">
         <h1 class="text-3xl md:text-[40px] font-bold text-text leading-[1.15] tracking-[-0.02em] m-0" style={outfit}>{post.title}</h1>
         <p class="text-sm text-text-muted m-0">
-          By Road Ready Safety &middot; Checked against North Dakota law on <time datetime={updated}>{formatDate(updated)}</time>
+          By Road Ready Safety &middot; Last reviewed <time datetime={updated}>{formatDate(updated)}</time> by {reviewedBy}, against the Century Code and NDDOT's pages
         </p>
       </header>
 
@@ -117,6 +126,27 @@ const outfit = "font-family:'Outfit',sans-serif;";
       </aside>
 
       <div class="nd-guide prose prose-base max-w-none" set:html={html} />
+
+      {children.length > 0 && (
+        <section class="mt-12">
+          <h2 class="text-2xl font-bold text-text m-0 mb-5" style={outfit}>The detailed guides</h2>
+          <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3 list-none p-0 m-0">
+            {children.map((c) => (
+              <li class="border border-border rounded-2xl p-5 flex flex-col gap-1">
+                <a href={`${route}/blog/${c.slug}`} class="font-semibold text-text no-underline hover:text-primary">{c.title}</a>
+                <span class="text-sm text-text-body leading-6">{c.description}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {hub && (
+        <p class="mt-10 text-base text-text-body leading-7 m-0">
+          This guide is part of <a href={`${route}/blog/${hub.slug}`} class="text-primary-deep font-semibold underline underline-offset-2">{hub.title}</a>.
+          If you need the points off, <a href={route} class="text-primary-deep font-semibold underline underline-offset-2">{courseAnchor}</a> is 4 hours online for ${price}.
+        </p>
+      )}
 
       {post.faq && post.faq.length > 0 && (
         <section class="mt-12">

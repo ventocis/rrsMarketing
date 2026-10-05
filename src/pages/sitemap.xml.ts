@@ -100,15 +100,24 @@ const adeRoutes = adeEnabled
 
 // Per-state course sites (/ohio, ...). Listed only when the state is enabled AND approved
 // (src/lib/courseFlags.ts). While approval is pending the pages are noindex, so they stay out.
+// lastmod for state guides, from the post's updated/date; other routes have none.
+const lastmodByPath = new Map<string, string>();
+for (const c of sitemapCourses) for (const p of postsFor(c.state.code)) lastmodByPath.set(`${c.state.route}/blog/${p.slug}`, p.updated ?? p.date);
+
 const stateCourseRoutes = sitemapCourses.flatMap((c) => {
   const base = c.state.route;
   const subs = STATE_SUBROUTES.map((s) => `${base}${s}`);
   const posts = postsFor(c.state.code).map((p) => `${base}/blog/${p.slug}`);
-  const extras = c.state.code === 'OH' ? [`${base}/12-point-suspension`]
-    : c.state.code === 'ND' ? [`${base}/speeding-ticket`, `${base}/traffic-ticket`]
-    : [];
+  const extras = c.state.code === 'OH' ? [`${base}/12-point-suspension`] : [];
   return [...subs, ...posts, ...extras];
 });
+
+// A state's other pages take the course file's optional `lastUpdated` (only North Dakota sets it).
+for (const c of sitemapCourses) {
+  const d = (c as { lastUpdated?: string }).lastUpdated;
+  if (!d) continue;
+  for (const r of stateCourseRoutes) if ((r === c.state.route || r.startsWith(`${c.state.route}/`)) && !lastmodByPath.has(r)) lastmodByPath.set(r, d);
+}
 
 const courseRoutes = (coursesData as Array<{ slug: string }>).map(c => `/courses/${c.slug}`);
 
@@ -146,21 +155,8 @@ const insurerRoutes = INSURERS.map(i => `/texas/insurance-discount/${i.slug}`);
 
 const allRoutes = [...staticRoutes, ...texasGuideRoutes, ...adeRoutes, ...i18nRoutes, ...insurerRoutes, ...stateCourseRoutes, ...courseRoutes, ...courseRequirementsRoutes, ...blogRoutes, ...findRoutes, ...texasCourtsRoutes, ...courtSlugRoutes];
 
-// lastmod for North Dakota URLs only (2026-10-05 search plan): guides use their `updated` date,
-// every other ND page uses nd-ddc.json `lastUpdated`. Other URLs are unchanged (no lastmod).
-const ndLastmod = new Map<string, string>();
-for (const c of sitemapCourses.filter((c) => c.state.code === 'ND')) {
-  for (const p of postsFor('ND')) ndLastmod.set(`${c.state.route}/blog/${p.slug}`, p.updated ?? p.date);
-  const pagesDate = (c as { lastUpdated?: string }).lastUpdated;
-  if (pagesDate) {
-    for (const r of stateCourseRoutes) if ((r === c.state.route || r.startsWith(`${c.state.route}/`)) && !ndLastmod.has(r)) ndLastmod.set(r, pagesDate);
-  }
-}
-
 const toEntry = (path: string) =>
-  ndLastmod.has(path)
-    ? `  <url>\n    <loc>${siteUrl}${path}</loc>\n    <lastmod>${ndLastmod.get(path)}</lastmod>\n    <changefreq>weekly</changefreq>\n  </url>`
-    : `  <url>\n    <loc>${siteUrl}${path}</loc>\n    <changefreq>weekly</changefreq>\n  </url>`;
+  `  <url>\n    <loc>${siteUrl}${path}</loc>${lastmodByPath.has(path) ? `\n    <lastmod>${lastmodByPath.get(path)}</lastmod>` : ''}\n    <changefreq>weekly</changefreq>\n  </url>`;
 
 export const GET: APIRoute = () => {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>

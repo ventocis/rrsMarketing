@@ -56,20 +56,13 @@ const progress = modules.slice(0, 5).map((m, i) => ({ title: m.title, done: i !=
 type Review = { initials: string; name: string; date: string; quote: string };
 const reviewList = reviews as Review[];
 
-const faqSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
-};
-
 // One node typed both Course and Product (2026-10-05): Google retired Course rich results, and the
 // price only counts in Product (merchant listing) markup, which needs an image and one Offer.
 // The layout's own Course block is switched off on this page so there is one description, not two.
-const productId = `${siteUrl}${route}#course`;
 const courseProductSchema = {
   '@context': 'https://schema.org',
   '@type': ['Product', 'Course'],
-  '@id': productId,
+  '@id': `${siteUrl}${route}#course`,
   name: course.course.name,
   description: course.seo.courseDescription,
   url: `${siteUrl}${route}`,
@@ -92,16 +85,11 @@ const courseProductSchema = {
   hasCourseInstance: { '@type': 'CourseInstance', courseMode: 'online', courseWorkload: `PT${course.course.hours}H` },
 };
 
-// Body links to the hubs and the guides people most often need next (search plan, 2026-10-05).
-const guideLinks = [
-  { href: `${route}/speeding-ticket`, text: 'North Dakota speeding tickets: fines, points and a calculator' },
-  { href: `${route}/traffic-ticket`, text: 'Paying, contesting or electing a course for any ND ticket' },
-  { href: `${route}/blog/in-lieu-of-points-north-dakota-court-election`, text: 'How to elect a course in lieu of points at court' },
-  { href: `${route}/blog/north-dakota-points-by-violation`, text: 'Fines and points for every North Dakota violation' },
-  { href: `${route}/blog/check-points-north-dakota-driving-record`, text: 'Get your North Dakota driving record for $3' },
-  { href: `${route}/blog/send-defensive-driving-certificate-to-nddot`, text: 'Sending your certificate to NDDOT' },
-  { href: `${route}/blog/online-traffic-school-north-dakota`, text: 'Is this the same as online traffic school?' },
-];
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
 
 const btnPrimary =
   'bg-primary hover:bg-primary-hover text-white h-[52px] px-8 rounded-full text-base font-semibold inline-flex items-center justify-center gap-2 no-underline transition-colors shadow-[0_8px_20px_-8px_rgba(36,84,230,0.55)]';
@@ -118,7 +106,7 @@ const outfit = "font-family:'Outfit',sans-serif;";
   keywords={course.seo.keywords}
   url={route}
   courseSchema={false}
-  breadcrumbs={[{ name: 'Home', url: '/' }, { name: course.state.name, url: route }]}
+  breadcrumbs={[{ name: 'Home', url: '/' }, { name: course.course.name, url: route }]}
 >
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify(courseProductSchema)} />
@@ -321,19 +309,61 @@ const outfit = "font-family:'Outfit',sans-serif;";
     </div>
   </section>
 
-  <!-- ============ 5. GUIDES — contextual links to the two hubs and the guides people need next ============ -->
-  <section class="bg-surface-muted py-16 lg:py-20" aria-labelledby="nd-guides-heading">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 id="nd-guides-heading" class={`text-[28px] lg:text-[36px] text-text ${h2} m-0`} style={outfit}>Got a ticket? Start here</h2>
-      <p class="text-lg text-text-body leading-8 mt-3 mb-8 max-w-3xl">
-        Not every ticket needs a course. A ticket with no points doesn't, and one worth more than 5 points can't be kept off your record. These guides tell you which case you're in.
-      </p>
-      <ul class="grid grid-cols-1 md:grid-cols-2 gap-3 list-none p-0 m-0">
-        {guideLinks.map((l) => (
-          <li><a href={l.href} class="flex h-full items-center rounded-2xl bg-white border border-border px-5 py-4 text-base font-semibold text-text no-underline hover:border-primary hover:text-primary">{l.text}</a></li>
-        ))}
-      </ul>
-      <a href={`${route}/blog`} class="inline-block mt-6 text-primary font-semibold underline underline-offset-2">All North Dakota ticket and points guides</a>
+  <!-- ============ 5. PLAIN ANSWERS — traffic school, time, cost, free options; links to the hubs, city pages and top guides ============ -->
+  <section class="bg-surface-muted py-20 lg:py-24" id="answers">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] gap-12 lg:gap-16 items-start">
+      <div class="flex flex-col gap-10">
+        <div class="flex flex-col gap-4">
+          <h2 class={`text-[28px] lg:text-[36px] text-text ${h2}`} style={outfit}>Looking for "traffic school" in ND? This is it.</h2>
+          <p class="text-base lg:text-lg text-text-body leading-8 m-0">
+            North Dakota doesn't run a traffic school. What other states call traffic school, North Dakota calls an approved defensive driving course, under NDCC 39-06.1-13 and 39-06.1-10.1. The course doesn't dismiss the ticket or lower the fee. It takes 3 points off your record, or, if you elect it at court before you pay, keeps the points from a ticket worth 5 points or fewer off the record entirely.
+            <a href={`${route}/blog/online-traffic-school-north-dakota`} class="text-primary-deep font-semibold underline underline-offset-2">Online traffic school in North Dakota</a>, explained.
+          </p>
+        </div>
+        <div class="flex flex-col gap-4">
+          <h2 class={`text-[28px] lg:text-[36px] text-text ${h2}`} style={outfit}>How long it takes, what it costs, and whether there's a free option</h2>
+          <dl class="grid grid-cols-1 sm:grid-cols-3 gap-px bg-border border border-border rounded-[20px] overflow-hidden m-0">
+            <div class="bg-white px-5 py-4"><dt class="text-xs font-semibold uppercase tracking-wider text-text-muted">Time</dt><dd class="text-base font-semibold text-text leading-6 m-0 mt-1">4 hours, in as many sittings as you like</dd></div>
+            <div class="bg-white px-5 py-4"><dt class="text-xs font-semibold uppercase tracking-wider text-text-muted">Total cost</dt><dd class="text-base font-semibold text-text leading-6 m-0 mt-1">${price}, certificate and retakes included</dd></div>
+            <div class="bg-white px-5 py-4"><dt class="text-xs font-semibold uppercase tracking-wider text-text-muted">Free option</dt><dd class="text-base font-semibold text-text leading-6 m-0 mt-1">None on NDDOT's list</dd></div>
+          </dl>
+          <p class="text-base text-text-body leading-7 m-0">
+            NDDOT's approved list has no free course; prices run from about $5 to $80, and the 4-hour length is the state minimum. The course is a poor trade if your ticket carries no points (up to 10 over where the limit is 65 or less) or one point, since one point drops off by itself in three months.
+            <a href={`${route}/blog/how-long-is-north-dakota-defensive-driving-course`} class="text-primary-deep font-semibold underline underline-offset-2">How long the course takes</a> ·
+            <a href={`${route}/blog/free-defensive-driving-course-north-dakota`} class="text-primary-deep font-semibold underline underline-offset-2">Is there a free course?</a> ·
+            <a href={`${route}/blog/nddot-approved-defensive-driving-courses-compared`} class="text-primary-deep font-semibold underline underline-offset-2">Every NDDOT-approved course compared</a>
+          </p>
+        </div>
+      </div>
+      <nav class="bg-white border border-border rounded-[20px] p-6 flex flex-col gap-5" aria-label="North Dakota guides">
+        <div>
+          <h3 class="text-sm font-bold uppercase tracking-wider text-primary-deep m-0 mb-3" style={outfit}>Got a ticket?</h3>
+          <ul class="list-none p-0 m-0 flex flex-col gap-2 text-base">
+            <li><a href={`${route}/blog/north-dakota-speeding-ticket`} class="text-text font-semibold no-underline hover:text-primary">North Dakota speeding ticket: fine, points and options</a></li>
+            <li><a href={`${route}/blog/north-dakota-traffic-ticket`} class="text-text font-semibold no-underline hover:text-primary">North Dakota traffic ticket: what to do next</a></li>
+            <li><a href={`${route}/blog/north-dakota-points-suspension-three-point-reduction`} class="text-text font-semibold no-underline hover:text-primary">North Dakota driver's license points, explained</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-sm font-bold uppercase tracking-wider text-primary-deep m-0 mb-3" style={outfit}>Your city</h3>
+          <ul class="list-none p-0 m-0 flex flex-col gap-2 text-base">
+            <li><a href={`${route}/blog/defensive-driving-course-fargo-nd`} class="text-text no-underline hover:text-primary">Defensive driving course in Fargo</a></li>
+            <li><a href={`${route}/blog/defensive-driving-course-bismarck-nd`} class="text-text no-underline hover:text-primary">Defensive driving course in Bismarck</a></li>
+            <li><a href={`${route}/blog/defensive-driving-course-minot-nd`} class="text-text no-underline hover:text-primary">Defensive driving course in Minot</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-sm font-bold uppercase tracking-wider text-primary-deep m-0 mb-3" style={outfit}>Most read</h3>
+          <ul class="list-none p-0 m-0 flex flex-col gap-2 text-base">
+            <li><a href={`${route}/blog/in-lieu-of-points-north-dakota-court-election`} class="text-text no-underline hover:text-primary">How to elect the course at court, in lieu of points</a></li>
+            <li><a href={`${route}/blog/north-dakota-speeding-ticket-points`} class="text-text no-underline hover:text-primary">Points for speeding, by speed and zone</a></li>
+            <li><a href={`${route}/blog/north-dakota-speeding-ticket-cost`} class="text-text no-underline hover:text-primary">What a speeding ticket costs</a></li>
+            <li><a href={`${route}/blog/send-defensive-driving-certificate-to-nddot`} class="text-text no-underline hover:text-primary">Sending your certificate to NDDOT</a></li>
+            <li><a href={`${route}/blog/north-dakota-in-lieu-of-points-30-day-deadline`} class="text-text no-underline hover:text-primary">The 30-day deadline after an election</a></li>
+          </ul>
+          <a href={`${route}/blog`} class="inline-block mt-3 text-primary font-semibold underline underline-offset-2">All North Dakota guides</a>
+        </div>
+      </nav>
     </div>
   </section>
 
@@ -382,7 +412,7 @@ const outfit = "font-family:'Outfit',sans-serif;";
       </div>
       <div class="border-t border-border">
         {faqs.map((f, i) => (
-          <details class="group border-b border-border" open>
+          <details class="group border-b border-border" open={i === 0}>
             <summary class="cursor-pointer list-none flex items-start justify-between gap-6 py-6">
               <h3 class="text-lg lg:text-xl font-bold text-text m-0" style={outfit}>{f.q}</h3>
               <svg class="mt-1 flex-shrink-0 w-5 h-5 text-text-muted transition-transform group-open:rotate-180 motion-reduce:transition-none" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>

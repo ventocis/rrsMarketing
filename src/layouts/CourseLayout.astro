@@ -23,9 +23,16 @@ interface Props {
   url: string;
   /** Extra JSON-LD or head tags from the page. */
   banner?: string;
+  /**
+   * false: leave out the Course JSON-LD below. North Dakota guides and hubs set it (they are
+   * not the course page), and the ND course page emits its own Course + Product block.
+   */
+  courseSchema?: boolean;
+  /** Replaces the default 3-step BreadcrumbList with this trail (absolute or root-relative URLs). */
+  breadcrumbs?: { name: string; url: string }[];
 }
 
-const { course, title, description = course.seo.description, keywords = course.seo.keywords, url, banner = course.banner } = Astro.props;
+const { course, title, description = course.seo.description, keywords = course.seo.keywords, url, banner = course.banner, courseSchema: showCourseSchema = true, breadcrumbs } = Astro.props;
 
 const route = course.state.route;
 const enrollUrl = buildEnrollUrl(course);
@@ -93,7 +100,11 @@ const courseSchema = {
   },
 };
 
-const breadcrumbSchema = {
+const breadcrumbSchema = breadcrumbs ? {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: breadcrumbs.map((b, i) => ({ '@type': 'ListItem', position: i + 1, name: b.name, item: b.url.startsWith('http') ? b.url : `${siteUrl}${b.url}` })),
+} : {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
@@ -102,12 +113,16 @@ const breadcrumbSchema = {
     ...(url !== route ? [{ '@type': 'ListItem', position: 3, name: title.split(' | ')[0].split(' — ')[0], item: `${siteUrl}${url}` }] : []),
   ],
 };
+// Written as one string so pages that keep the Course block get byte-identical markup to before
+// (an {expr && <script>} drops the whitespace between the two tags on every state's pages).
+const headJsonLd = [...(showCourseSchema ? [courseSchema] : []), breadcrumbSchema]
+  .map((o) => `<script type="application/ld+json">${JSON.stringify(o)}</script>`)
+  .join(' ');
 ---
 
 <Layout title={title} description={description} keywords={keywords} url={url} noindex={noindex}>
   <Fragment slot="head">
-    <script type="application/ld+json" set:html={JSON.stringify(courseSchema)} />
-    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+    <Fragment set:html={headJsonLd} />
     <slot name="head" />
   </Fragment>
 

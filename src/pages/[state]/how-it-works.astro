@@ -28,8 +28,8 @@ const stats = [
 
 <CourseLayout
   course={course}
-  title={`How the ${course.course.shortName} Works — Enrollment to Certificate | Road Ready Safety`}
-  description={`What the ${course.course.name} does under ${course.state.name} law, how the modules, timer and final quiz work, and what happens after you pass.`}
+  title={course.seo.pages?.howItWorks?.title ?? `How the ${course.course.shortName} Works — Enrollment to Certificate | Road Ready Safety`}
+  description={course.seo.pages?.howItWorks?.description ?? `What the ${course.course.name} does under ${course.state.name} law, how the modules, timer and final quiz work, and what happens after you pass.`}
   url={`${route}/how-it-works`}
 >
   <section class="pt-16 lg:pt-24 pb-4 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-info to-white">

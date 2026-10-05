@@ -101,6 +101,10 @@ const adeRoutes = adeEnabled
 
 // Per-state course sites (/ohio, ...). Listed only when the state is enabled AND approved
 // (src/lib/courseFlags.ts). While approval is pending the pages are noindex, so they stay out.
+// lastmod for state guides, from the post's updated/date; other routes get a git-derived date (lastmodFor, below).
+const lastmodByPath = new Map<string, string>();
+for (const c of sitemapCourses) for (const p of postsFor(c.state.code)) lastmodByPath.set(`${c.state.route}/blog/${p.slug}`, p.updated ?? p.date);
+
 const stateCourseRoutes = sitemapCourses.flatMap((c) => {
   const base = c.state.route;
   const subs = STATE_SUBROUTES.map((s) => `${base}${s}`);
@@ -108,6 +112,13 @@ const stateCourseRoutes = sitemapCourses.flatMap((c) => {
   const extras = c.state.code === 'OH' ? [`${base}/12-point-suspension`] : [];
   return [...subs, ...posts, ...extras];
 });
+
+// A state's other pages take the course file's optional `lastUpdated` (only North Dakota sets it).
+for (const c of sitemapCourses) {
+  const d = (c as { lastUpdated?: string }).lastUpdated;
+  if (!d) continue;
+  for (const r of stateCourseRoutes) if ((r === c.state.route || r.startsWith(`${c.state.route}/`)) && !lastmodByPath.has(r)) lastmodByPath.set(r, d);
+}
 
 const courseRoutes = (coursesData as Array<{ slug: string }>).map(c => `/courses/${c.slug}`);
 
@@ -199,7 +210,8 @@ const lastmodFor = (path: string): string => {
 };
 
 const toEntry = (path: string) =>
-  `  <url>\n    <loc>${siteUrl}${path}</loc>\n    <lastmod>${lastmodFor(path)}</lastmod>\n    <changefreq>weekly</changefreq>\n  </url>`;
+  // State-course routes carry the date from their data (lastmodByPath); everything else uses the git date.
+  `  <url>\n    <loc>${siteUrl}${path}</loc>\n    <lastmod>${lastmodByPath.get(path) ?? lastmodFor(path)}</lastmod>\n    <changefreq>weekly</changefreq>\n  </url>`;
 
 export const GET: APIRoute = () => {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>

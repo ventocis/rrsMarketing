@@ -1,6 +1,6 @@
 {
   "name": "rrs-marketing-astro",
-  "version": "2.130.0",
+  "version": "2.132.0",
   "type": "module",
   "scripts": {
     "dev": "astro dev",
@@ -15,7 +15,8 @@
     "indexnow:marketing": "node scripts/indexnow-submit.mjs marketing",
     "indexnow:blog": "node scripts/indexnow-submit.mjs blog",
     "indexnow:courses": "node scripts/indexnow-submit.mjs courses",
-    "check:claims": "node scripts/check-claims.mjs"
+    "check:claims": "node scripts/check-claims.mjs",
+    "test": "node --experimental-strip-types --no-warnings --test tests/*.test.ts"
   },
   "dependencies": {
     "@astrojs/react": "^3.6.0",

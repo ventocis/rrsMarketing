@@ -64,6 +64,11 @@ export default function HeroFinder({ variant = 'hero', heading = 'Find the right
       window.location.assign('/texas');
       return;
     }
+    // North Dakota: our own course page. Court only; the insurance (Highway Patrol) approval is still pending.
+    if (selectedState === 'ND' && selectedReason === 'court') {
+      window.location.assign('/north-dakota');
+      return;
+    }
 
     let typesToUse = courseTypes;
     if (selectedCourse) {

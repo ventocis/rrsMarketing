@@ -15,8 +15,8 @@ const route = course.state.route;
 
 <CourseLayout
   course={course}
-  title={`Refund and Withdrawal Policy — ${course.course.shortName} | Road Ready Safety`}
-  description={`Refund policy for the ${course.course.name}: a full refund at any time before you complete the course, no cancellation window, no pro-rata deductions.`}
+  title={course.seo.pages?.refund?.title ?? `Refund and Withdrawal Policy — ${course.course.shortName} | Road Ready Safety`}
+  description={course.seo.pages?.refund?.description ?? `Refund policy for the ${course.course.name}: a full refund at any time before you complete the course, no cancellation window, no pro-rata deductions.`}
   url={`${route}/refund`}
 >
   <section class="py-16 lg:py-24 px-4 sm:px-6 lg:px-8 bg-surface-muted">

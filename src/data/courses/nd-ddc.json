@@ -1,5 +1,6 @@
 {
   "_note": "Single source of truth for the North Dakota marketing site. Course facts trace to the portal sheet 'ND DDC Full Course Prod Import' and ~/Claude/North Dakota Point Reduction/ND Research & Submission Plan.md. Regulatory facts cite NDCC 39-06.1-10, -10.1 and -13. approvalNumber: NDDOT lists approved courses rather than numbering them, so this holds 'Approved 2026' (Jackson confirmed approval 2026-09-29) and the label shows no number. A non-empty value is what lets production build the pages, index them and list them in the sitemap. claims.banned is enforced by scripts/check-claims.mjs.",
+  "lastUpdated": "2026-10-05",
   "state": {
     "code": "ND",
     "name": "North Dakota",
@@ -72,7 +73,7 @@
       },
       {
         "n": 9,
-        "title": "Final Exam",
+        "title": "Final quiz",
         "blurb": "25 questions. 18 correct to pass. Unlimited retakes.",
         "isFinal": true
       }
@@ -93,11 +94,33 @@
   },
   "identityChecks": "A few personal-history questions when you start and again before the final quiz, to confirm the person finishing the course is the person who enrolled.",
   "seo": {
-    "title": "North Dakota Defensive Driving Course Online — 3-Point Reduction, $24.99 | Road Ready Safety",
-    "description": "North Dakota's 4-hour online defensive driving course for a 3-point reduction, or elected at court in lieu of points. $24.99 total with the certificate included, ready to download on completion.",
+    "title": "North Dakota Defensive Driving Course (ND) | Road Ready",
+    "description": "NDDOT-approved 4-hour online defensive driving course for North Dakota: 3 points off, or elected at court in lieu of points. $24.99, certificate included.",
     "keywords": "North Dakota defensive driving course, North Dakota point reduction course online, ND 3 point reduction, in lieu of points North Dakota, NDDOT approved defensive driving",
     "credential": "North Dakota Defensive Driving Course Certificate of Completion",
-    "courseDescription": "Four-hour online defensive driving course for North Dakota drivers seeking a three-point reduction under NDCC 39-06.1-13 or electing a course in lieu of points under NDCC 39-06.1-10.1. Self-paced, with knowledge checks and a 25-question final quiz."
+    "courseDescription": "Four-hour online defensive driving course for North Dakota drivers seeking a three-point reduction under NDCC 39-06.1-13 or electing a course in lieu of points under NDCC 39-06.1-10.1. Self-paced, with knowledge checks and a 25-question final quiz.",
+    "pages": {
+      "faq": {
+        "title": "North Dakota Defensive Driving Course FAQ | Road Ready",
+        "description": "Plain answers about North Dakota's 4-hour defensive driving course: the 3-point reduction, in lieu of points, the quiz, the certificate and the price."
+      },
+      "howItWorks": {
+        "title": "How the ND Defensive Driving Course Works | Road Ready",
+        "description": "What the North Dakota course does under NDCC 39-06.1, how the eight modules and final quiz work, and how your certificate gets to NDDOT after you pass."
+      },
+      "refund": {
+        "title": "ND Defensive Driving Course Refund Policy | Road Ready",
+        "description": "Refund policy for the North Dakota Defensive Driving Course: a full refund any time before you complete the course. No cancellation window, no deductions."
+      },
+      "helpcenter": {
+        "title": "ND Defensive Driving Course Help Center | Road Ready",
+        "description": "Step-by-step help with the North Dakota course: enrolling, logging in, the quizzes, downloading your certificate and sending it to NDDOT."
+      },
+      "accessibility": {
+        "title": "ND Defensive Driving Course Accessibility | Road Ready",
+        "description": "How the North Dakota Defensive Driving Course is built for accessibility, and how to ask for an accommodation by email or phone before or during the course."
+      }
+    }
   },
   "banner": "$24.99 total — certificate included and ready to download the moment you pass. Nothing added at checkout.",
   "headerStyle": "minimal",
@@ -125,7 +148,7 @@
   ],
   "hero": {
     "eyebrow": "North Dakota · 4 Hours Online",
-    "headline": "North Dakota Defensive Driving Course Online",
+    "headline": "North Dakota (ND) Defensive Driving Course Online",
     "subhead": "Three points off your record, or elect it at court so a small ticket's points never post. Four hours, self-paced, $24.99 total. Certificate ready to download the moment you pass.",
     "ctaLabel": "Start the Course",
     "secondaryCta": {
@@ -469,7 +492,7 @@
     ]
   },
   "blog": {
-    "title": "North Dakota driving record guides",
-    "intro": "Plain answers about North Dakota points, the three-point reduction, the in-lieu election at court and what to send NDDOT. Written from the Century Code, with sources."
+    "title": "North Dakota traffic ticket and points guides",
+    "intro": "Plain answers on North Dakota tickets, points, the 3-point reduction and electing a course at court in lieu of points. From the Century Code, with sources."
   }
 }

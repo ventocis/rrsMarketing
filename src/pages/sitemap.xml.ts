@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
-import { readdirSync } from 'node:fs';
+import { readdirSync, existsSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
 import { join, relative, sep } from 'node:path';
 import coursesData from '../data/courses.json';
 import blogData from '../data/blog.json';
@@ -144,8 +145,61 @@ const insurerRoutes = INSURERS.map(i => `/texas/insurance-discount/${i.slug}`);
 
 const allRoutes = [...staticRoutes, ...texasGuideRoutes, ...adeRoutes, ...i18nRoutes, ...insurerRoutes, ...stateCourseRoutes, ...courseRoutes, ...courseRequirementsRoutes, ...blogRoutes, ...findRoutes, ...texasCourtsRoutes, ...courtSlugRoutes];
 
+// <lastmod> = the last git commit that touched the route's source. Static pages map to their
+// .astro file; data-driven routes map to the data file that generates them. Falls back to the
+// build date when git history is unavailable (a shallow CI checkout gives every file HEAD's date,
+// which is still truthful: nothing is older than the deploy that published it).
+const buildDate = new Date().toISOString().slice(0, 10);
+const gitDateCache = new Map<string, string>();
+const gitDate = (file: string): string => {
+  if (gitDateCache.has(file)) return gitDateCache.get(file)!;
+  let d = buildDate;
+  try {
+    if (existsSync(join(process.cwd(), file))) {
+      const out = execFileSync('git', ['log', '-1', '--format=%cs', '--', file], { cwd: process.cwd(), stdio: ['ignore', 'pipe', 'ignore'] })
+        .toString()
+        .trim();
+      if (/^\d{4}-\d{2}-\d{2}$/.test(out)) d = out;
+    }
+  } catch {
+    /* no git: keep the build date */
+  }
+  gitDateCache.set(file, d);
+  return d;
+};
+const newest = (...files: string[]) => files.map(gitDate).sort().at(-1) ?? buildDate;
+const courtLastmod = newest('src/data/texas-courts.json', 'src/data/court-faq-data.json', 'src/pages/texas/courts/[slug].astro');
+const lastmodFor = (path: string): string => {
+  if (path === '/') return newest('src/pages/index.astro', 'src/components/HomeHeroFeatured.astro', 'src/copy/faq.json');
+  if (path === '/texas') return gitDate('src/pages/texas/index.astro');
+  if (path === '/texas/courts') return newest('src/pages/texas/courts/index.astro', 'src/data/texas-courts.json');
+  if (path.startsWith('/texas/courts/')) return courtLastmod;
+  if (path.startsWith('/texas/insurance-discount/')) return newest('src/pages/texas/insurance-discount/[insurer].astro', 'src/data/texas-insurers.ts');
+  if (path.startsWith('/texas/')) {
+    const slug = path.slice('/texas/'.length);
+    const file = `src/pages/texas/${slug}.astro`;
+    if (existsSync(join(process.cwd(), file))) return gitDate(file);
+    const m = slug.match(/^(.*)-(es|vi|cn|ar)$/); // translated page → its JSON
+    if (m) {
+      const lang = { es: 'es', vi: 'vi', cn: 'zh-Hans', ar: 'ar' }[m[2]];
+      return newest(`src/data/i18n/texas/${m[1]}.${lang}.json`, 'src/pages/texas/[i18n].astro');
+    }
+    return gitDate('src/pages/texas/[i18n].astro');
+  }
+  if (path.startsWith('/adult-drivers-ed/')) return gitDate(`src/pages${path}.astro`);
+  if (path.startsWith('/courses/')) return gitDate('src/data/courses.json');
+  if (path.startsWith('/blog/')) return gitDate('src/data/blog.json');
+  if (path.startsWith('/find/')) return gitDate('src/data/courses.json');
+  if (path.startsWith('/new-york/')) return gitDate(`src/pages${path}.astro`);
+  const direct = `src/pages${path}.astro`;
+  if (existsSync(join(process.cwd(), direct))) return gitDate(direct);
+  const index = `src/pages${path}/index.astro`;
+  if (existsSync(join(process.cwd(), index))) return gitDate(index);
+  return buildDate;
+};
+
 const toEntry = (path: string) =>
-  `  <url>\n    <loc>${siteUrl}${path}</loc>\n    <changefreq>weekly</changefreq>\n  </url>`;
+  `  <url>\n    <loc>${siteUrl}${path}</loc>\n    <lastmod>${lastmodFor(path)}</lastmod>\n    <changefreq>weekly</changefreq>\n  </url>`;
 
 export const GET: APIRoute = () => {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>

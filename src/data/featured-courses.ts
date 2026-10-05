@@ -1,3 +1,5 @@
+import { TEXAS_COURSE, TEXAS_PRICE_LABEL } from './texas-course';
+
 // Courses promoted on the root homepage, above the state finder.
 //
 // One entry today because Texas is the only course on sale. When another state
@@ -32,13 +34,13 @@ export const FEATURED_COURSES: FeaturedCourse[] = [
   {
     id: 'tx-bdi',
     badge: 'Most popular',
-    credential: 'TDLR-approved · CP#1234',
+    credential: `TDLR-approved · CP#${TEXAS_COURSE.providerNumber.slice(2)}`,
     name: 'Texas Defensive Driving Course',
-    facts: '6 hours online · $28 all-in · certificate included',
-    price: '28',
+    facts: `${TEXAS_COURSE.hours} hours online · ${TEXAS_PRICE_LABEL} all-in · certificate included`,
+    price: String(TEXAS_COURSE.price),
     enrollFallback: '/courses/tx-defensive',
     learnMoreHref: '/texas',
-    offerLine: '$28 all-in · certificate included',
+    offerLine: `${TEXAS_PRICE_LABEL} all-in · certificate included`,
     heroPoints: [
       'State-approved. Works on your phone.',
       'Get your certificate the moment you finish.',
@@ -47,7 +49,7 @@ export const FEATURED_COURSES: FeaturedCourse[] = [
       reviewExcerpt: 'Simple. No hidden fees. Seamless experience.',
       reviewerName: 'Ryan Johnson',
       checks: [
-        'TDLR-approved · CP#1234',
+        `TDLR-approved · CP#${TEXAS_COURSE.providerNumber.slice(2)}`,
         'Accepted by Texas courts for ticket dismissal',
         'Certificate the moment you finish, no extra fee',
       ],

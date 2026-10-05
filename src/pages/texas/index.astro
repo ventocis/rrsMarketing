@@ -1,6 +1,7 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
 import ReviewWall from '../../components/texas/ReviewWall.astro';
+import { TEXAS_COURSE, TEXAS_PRICE_LABEL } from '../../data/texas-course';
 
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 
@@ -11,7 +12,9 @@ const landingFaqs = [
   // Keep these identical to the visible FAQ markup below: the FAQPage schema must match what the page shows.
   { q: 'Is this accepted by all Texas courts?', a: 'Yes! We are a TDLR-approved provider, and our certificates are accepted by every court in Texas for ticket dismissal.' },
   { q: 'Are there extra fees after completing the course?', a: 'No hidden fees. $28 all-in is all you pay — that covers the course, the certificate, and court reporting. Some courts may also require a copy of your driving record (DPS Type 3A), which has a separate fee paid directly to the DPS.' },
-  { q: 'How do I get my certificate?', a: 'Your certificate is available immediately upon course completion. You can download it right away from your account dashboard to submit to your court.' },
+  { q: 'How long does the Texas defensive driving course take?', a: 'Six hours. Texas requires every approved driving safety course to run 6 hours, with at least 5 hours of instruction and the required breaks, so no approved course is shorter. You can finish in one sitting or spread it over several days; the course saves your place.' },
+  { q: 'How do I get my certificate?', a: 'Download it the moment you finish. The certificate of completion appears in your account dashboard as soon as the course is done, with no extra fee and no waiting for mail. You then submit it to your court along with your Type 3A driving record. TDLR notes a new certificate can take up to 5 days to appear in its online validation tool, so do not wait until your deadline day.' },
+  { q: 'Ticket dismissal or insurance discount: what is the difference?', a: 'Ticket dismissal is a court process and the course alone does not do it. You must ask the court for permission on or before the appearance date printed on your citation, pay the court fee, take the course, and return the certificate and your driving record within 90 days of the court granting the request (Tex. Code Crim. Proc. art. 45A.351). An insurance discount needs no court at all: finish the course and send the certificate to your insurer, which may lower your premium under its own filed rates. One completion can serve both purposes.' },
   { q: 'How long do I have to complete the course?', a: 'Texas gives you 90 days from the date the court grants the course — not from the day you enroll. Your court may set a shorter deadline, so follow the date on its approval letter.' },
   { q: 'Can I take the course on my phone?', a: 'Yes! The course is fully mobile-friendly. You can take it on any device — phone, tablet, or computer. Your progress automatically saves, so you can switch devices anytime.' },
   { q: 'Is there a final exam?', a: 'You get unlimited retakes on all unit quizzes. There is no final exam. The goal is learning, not tricking you. Take your time and review the material as needed.' },
@@ -31,11 +34,12 @@ const landingFaqSchema = JSON.stringify({
 
 {isEnabled && (
 <TexasLayout
-  title="Texas Defensive Driving Course Online: $28 All-In, TDLR-Approved"
-  description="TDLR-approved 6-hour Texas defensive driving course to dismiss a traffic ticket or earn an insurance discount. $28 all-in with the certificate included, accepted by every Texas court, finish it on your phone."
-  keywords="texas defensive driving course, texas defensive driving course online, driving safety course texas, tdlr approved defensive driving, texas defensive driving class, online defensive driving course texas"
+  title={`Texas Defensive Driving Course Online – ${TEXAS_PRICE_LABEL}, TDLR-Approved | Road Ready Safety`}
+  description={`TDLR-approved (${TEXAS_COURSE.providerNumber}) online Texas defensive driving course for ticket dismissal and insurance discounts. ${TEXAS_COURSE.hours} hours on your phone, certificate the moment you finish, ${TEXAS_PRICE_LABEL} all-in, accepted by every Texas court.`}
+  keywords="texas defensive driving course, texas online defensive driving class, defensive driving course texas, online defensive driving texas, texas driving safety course, tdlr approved defensive driving"
   url="/texas"
-  banner="Limited Time: Code SAVE3 Drops Your Total to $25. No Hidden Fees."
+  banner={`Limited Time: Code SAVE3 Drops Your Total to $${TEXAS_COURSE.legalMinimumPrice}. No Hidden Fees.`}
+  courseSchema={true}
 >
 
   <script type="application/ld+json" set:html={landingFaqSchema} />
@@ -55,13 +59,13 @@ const landingFaqSchema = JSON.stringify({
         <div class="w-full lg:w-[544px] flex flex-col gap-[24px] items-center lg:items-start">
           <p class="flex items-center gap-2 w-fit self-center lg:self-start m-0 rounded-full bg-white/70 border border-info-border pl-1.5 pr-4 py-1 text-sm font-semibold text-primary-deep leading-5">
             <img src="/assets/images/badges/texas-approved-tdlr.png" width="28" height="28" alt="Texas approved: TDLR-approved defensive driving course" class="w-7 h-7 shrink-0" decoding="async" />
-            TDLR-Approved CP#1234
+            TDLR-Approved Provider {TEXAS_COURSE.providerNumber}
           </p>
-          <h1 class="text-[36px] lg:text-[60px] font-bold text-primary-navy leading-[36px] lg:leading-[74px] tracking-[-2px] text-center lg:text-left w-full max-w-[343px] lg:max-w-none">
-            Dismiss Your Texas Traffic Ticket Online &mdash; Only $28 Total
+          <h1 class="text-[36px] lg:text-[56px] font-bold text-primary-navy leading-[40px] lg:leading-[66px] tracking-[-1.5px] text-center lg:text-left w-full max-w-[343px] lg:max-w-none">
+            Texas Defensive Driving Course Online &mdash; Dismiss Your Ticket for {TEXAS_PRICE_LABEL}
           </h1>
           <p class="text-[18px] lg:text-xl text-text-body leading-[28px] lg:leading-7 max-w-[576px] text-center lg:text-left">
-            TDLR-Approved &amp; Court-Accepted. Get your certificate instantly. No hidden fees, no final exam.
+            The Texas driving safety course, fully online and TDLR-approved ({TEXAS_COURSE.providerNumber}). Take it to dismiss an eligible traffic ticket or earn an insurance discount. {TEXAS_COURSE.hours} hours on your phone, certificate the moment you finish, no hidden fees.
           </p>
           <div class="flex flex-col gap-[12px] pt-[8px] w-full items-center lg:items-start">
             <div class="flex flex-col sm:flex-row gap-[16px] w-full items-center lg:items-start">
@@ -704,16 +708,38 @@ const landingFaqSchema = JSON.stringify({
 
         <details class="group bg-white border border-border rounded-2xl overflow-hidden">
           <summary class="w-full px-6 py-5 flex items-center justify-between cursor-pointer list-none">
+            <span class="text-base font-semibold text-text leading-6 tracking-[-0.4px] text-left">How long does the Texas defensive driving course take?</span>
+            <img src="/assets/icons/texas/chevron-faq.svg" alt="" class="w-4 h-4 transition-transform group-open:rotate-180 flex-shrink-0 ml-4" />
+          </summary>
+          <div class="px-6 pb-5">
+            <p class="text-base text-text-body leading-6">
+              Six hours. Texas requires every approved driving safety course to run 6 hours, with at least 5 hours of instruction and the required breaks, so no approved course is shorter. You can finish in one sitting or spread it over several days; the course saves your place.
+            </p>
+          </div>
+        </details>
+        <details class="group bg-white border border-border rounded-2xl overflow-hidden">
+          <summary class="w-full px-6 py-5 flex items-center justify-between cursor-pointer list-none">
             <span class="text-base font-semibold text-text leading-6 tracking-[-0.4px] text-left">How do I get my certificate?</span>
             <img src="/assets/icons/texas/chevron-faq.svg" alt="" class="w-4 h-4 transition-transform group-open:rotate-180 flex-shrink-0 ml-4" />
           </summary>
           <div class="px-6 pb-5">
             <p class="text-base text-text-body leading-6">
-              Your certificate is available immediately upon course completion. You can download it right away from your account dashboard to submit to your court.
+              Download it the moment you finish. The certificate of completion appears in your account dashboard as soon as the course is done, with no extra fee and no waiting for mail. You then submit it to your court along with your Type 3A driving record. TDLR notes a new certificate can take up to 5 days to appear in its online validation tool, so do not wait until your deadline day.
             </p>
           </div>
         </details>
 
+        <details class="group bg-white border border-border rounded-2xl overflow-hidden">
+          <summary class="w-full px-6 py-5 flex items-center justify-between cursor-pointer list-none">
+            <span class="text-base font-semibold text-text leading-6 tracking-[-0.4px] text-left">Ticket dismissal or insurance discount: what is the difference?</span>
+            <img src="/assets/icons/texas/chevron-faq.svg" alt="" class="w-4 h-4 transition-transform group-open:rotate-180 flex-shrink-0 ml-4" />
+          </summary>
+          <div class="px-6 pb-5">
+            <p class="text-base text-text-body leading-6">
+              Ticket dismissal is a court process and the course alone does not do it. You must ask the court for permission on or before the appearance date printed on your citation, pay the court fee, take the course, and return the certificate and your driving record within 90 days of the court granting the request (Tex. Code Crim. Proc. art. 45A.351). An insurance discount needs no court at all: finish the course and send the certificate to your insurer, which may lower your premium under its own filed rates. One completion can serve both purposes.
+            </p>
+          </div>
+        </details>
         <details class="group bg-white border border-border rounded-2xl overflow-hidden">
           <summary class="w-full px-6 py-5 flex items-center justify-between cursor-pointer list-none">
             <span class="text-base font-semibold text-text leading-6 tracking-[-0.4px] text-left">How long do I have to complete the course?</span>

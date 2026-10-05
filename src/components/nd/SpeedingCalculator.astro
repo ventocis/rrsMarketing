@@ -1,0 +1,135 @@
+---
+/**
+ * North Dakota speeding ticket calculator. Rules live in src/lib/nd-speeding.ts (NDCC 39-06.1-06
+ * and 39-06.1-10), tested in tests/nd-speeding.test.ts.
+ *
+ * Works without JavaScript: the full fee-and-points table below the form is plain server-rendered
+ * HTML, so search engines and no-JS readers get every answer. With JavaScript, the form fills the
+ * result box (aria-live) as the reader types.
+ */
+import { assess, speedingFee, speedingPoints } from '../../lib/nd-speeding';
+
+interface Props { id?: string }
+const { id = 'speeding-calculator' } = Astro.props;
+
+const overs = [5, 10, 11, 15, 16, 20, 21, 25, 26, 30, 31, 35, 36, 45, 46];
+const rows = overs.map((o) => ({
+  over: o,
+  low: { fee: speedingFee(55, o), points: speedingPoints(55, o) },
+  high: { fee: speedingFee(75, o), points: speedingPoints(75, o) },
+}));
+const example = assess(55, 70);
+
+// Every answer the form can give, precomputed from the tested rules (over 0 to 120 mph, both point
+// tables, all three zones), so the in-page script holds no rules of its own.
+const maxOver = 120;
+const messages: string[] = [];
+const tables: Record<string, { fee: number[]; points: number[]; next: number[] }> = {};
+for (const [cls, limit] of [['low', 55], ['high', 75]] as const) {
+  for (const zone of ['regular', 'school', 'work'] as const) {
+    const t = { fee: [] as number[], points: [] as number[], next: [] as number[] };
+    for (let o = 0; o <= maxOver; o++) {
+      const a = assess(limit, limit + o, zone);
+      if (!messages.includes(a.next)) messages.push(a.next);
+      t.fee.push(a.fee); t.points.push(a.points); t.next.push(messages.indexOf(a.next));
+    }
+    tables[`${cls}-${zone}`] = t;
+  }
+}
+const calc = { maxOver, messages, tables };
+const outfit = "font-family:'Outfit',sans-serif;";
+const field = 'w-full h-12 rounded-xl border border-border bg-white px-4 text-base text-text focus:outline-none focus:ring-2 focus:ring-primary';
+---
+
+<section id={id} class="nd-calc rounded-[24px] border border-border bg-surface-muted p-6 md:p-8 my-10 scroll-mt-28" aria-labelledby={`${id}-title`}>
+  <h2 id={`${id}-title`} class="text-2xl font-bold text-text m-0 mb-2" style={outfit}>North Dakota speeding ticket calculator</h2>
+  <p class="text-base text-text-body leading-7 m-0 mb-6">Enter the posted limit and your speed from the citation. It uses the state fee schedule and point tables. A city ordinance can set a different fee, so the amount on your citation wins.</p>
+
+  <form class="nd-calc-form grid grid-cols-1 sm:grid-cols-3 gap-4" action="#" novalidate>
+    <label class="flex flex-col gap-1.5 text-sm font-semibold text-text">
+      Posted limit (mph)
+      <input class={field} name="limit" type="number" inputmode="numeric" min="5" max="85" step="5" value="55" required />
+    </label>
+    <label class="flex flex-col gap-1.5 text-sm font-semibold text-text">
+      Your speed (mph)
+      <input class={field} name="speed" type="number" inputmode="numeric" min="1" max="150" value="70" required />
+    </label>
+    <label class="flex flex-col gap-1.5 text-sm font-semibold text-text">
+      Where
+      <select class={field} name="zone">
+        <option value="regular">Regular road or highway</option>
+        <option value="school">School zone</option>
+        <option value="work">Work zone, workers present</option>
+      </select>
+    </label>
+  </form>
+
+  <div class="nd-calc-result mt-6 rounded-2xl bg-white border border-border p-5" aria-live="polite">
+    <dl class="grid grid-cols-2 sm:grid-cols-4 gap-4 m-0">
+      <div><dt class="text-xs font-semibold uppercase tracking-wider text-text-muted">Over the limit</dt><dd class="text-xl font-bold text-text m-0 mt-1" data-out="over">{example.over} mph</dd></div>
+      <div><dt class="text-xs font-semibold uppercase tracking-wider text-text-muted">State fee</dt><dd class="text-xl font-bold text-text m-0 mt-1" data-out="fee">${example.fee}</dd></div>
+      <div><dt class="text-xs font-semibold uppercase tracking-wider text-text-muted">Points</dt><dd class="text-xl font-bold text-text m-0 mt-1" data-out="points">{example.points}</dd></div>
+      <div><dt class="text-xs font-semibold uppercase tracking-wider text-text-muted">Course in lieu of points</dt><dd class="text-xl font-bold text-text m-0 mt-1" data-out="inlieu">{example.inLieu ? 'Available' : 'Not available'}</dd></div>
+    </dl>
+    <p class="text-base text-text-body leading-7 m-0 mt-4" data-out="next">{example.next}</p>
+  </div>
+  <noscript><p class="text-sm text-text-muted mt-3 mb-0">The calculator needs JavaScript. The table below has the same answers.</p></noscript>
+
+  <h3 class="text-lg font-bold text-text mt-8 mb-3" style={outfit}>Fees and points at common speeds</h3>
+  <div class="overflow-x-auto">
+    <table class="w-full text-sm text-left border-collapse bg-white rounded-xl overflow-hidden">
+      <caption class="sr-only">North Dakota speeding fee and points by miles per hour over the limit, outside school and work zones</caption>
+      <thead>
+        <tr class="border-b border-border">
+          <th scope="col" class="py-2.5 px-3 font-semibold">Mph over</th>
+          <th scope="col" class="py-2.5 px-3 font-semibold">Fee, limit 65 or less</th>
+          <th scope="col" class="py-2.5 px-3 font-semibold">Points, limit 65 or less</th>
+          <th scope="col" class="py-2.5 px-3 font-semibold">Fee, limit above 65</th>
+          <th scope="col" class="py-2.5 px-3 font-semibold">Points, limit above 65</th>
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((r) => (
+          <tr class="border-b border-border last:border-b-0">
+            <th scope="row" class="py-2 px-3 font-semibold">{r.over}</th>
+            <td class="py-2 px-3 tabular-nums">${r.low.fee}</td>
+            <td class="py-2 px-3 tabular-nums">{r.low.points}</td>
+            <td class="py-2 px-3 tabular-nums">${r.high.fee}</td>
+            <td class="py-2 px-3 tabular-nums">{r.high.points}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <p class="text-sm text-text-muted leading-6 mt-3 mb-0">
+    From <a href="https://ndlegis.gov/cencode/t39c06-1.pdf" class="text-primary-deep underline" target="_blank" rel="noopener noreferrer">NDCC 39-06.1-06 and 39-06.1-10</a>.
+    School zone: $40 for 1 to 10 over, then $1 a mph. Work zone with workers present: $150 for 1 to 10 over, then $2 a mph. In both, the regular fee applies if it's higher.
+    A course in lieu of points is available for tickets worth 1 to 5 points.
+  </p>
+</section>
+
+<!-- is:inline on purpose: a bundled script here makes Astro re-chunk the course layout's menu script
+     on every state's pages. The rules stay in nd-speeding.ts; the page gets their precomputed answers. -->
+<script is:inline define:vars={{ calc }}>
+  (function () {
+    if (window.__rrsNdCalc) return;
+    window.__rrsNdCalc = true;
+    function update(form) {
+      var box = form.closest('.nd-calc');
+      if (!box) return;
+      var limit = Number(form.elements.limit.value), speed = Number(form.elements.speed.value), zone = form.elements.zone.value;
+      function set(k, v) { var el = box.querySelector('[data-out="' + k + '"]'); if (el) el.textContent = v; }
+      if (!limit || !speed) { set('next', 'Enter the posted limit and your speed.'); return; }
+      var over = Math.max(0, Math.min(calc.maxOver, Math.round(speed) - Math.round(limit)));
+      var t = calc.tables[(limit > 65 ? 'high' : 'low') + '-' + zone];
+      var points = t.points[over];
+      set('over', over + ' mph');
+      set('fee', '$' + t.fee[over]);
+      set('points', String(points));
+      set('inlieu', points >= 1 && points <= 5 ? 'Available' : 'Not available');
+      set('next', calc.messages[t.next[over]]);
+    }
+    document.addEventListener('input', function (e) { var f = e.target.closest && e.target.closest('.nd-calc-form'); if (f) update(f); });
+    document.addEventListener('submit', function (e) { var f = e.target.closest && e.target.closest('.nd-calc-form'); if (f) { e.preventDefault(); update(f); } });
+  })();
+</script>

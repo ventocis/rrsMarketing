@@ -15,8 +15,8 @@ const route = course.state.route;
 
 <CourseLayout
   course={course}
-  title={`ADA and Accessibility Policy — ${course.course.shortName} | Road Ready Safety`}
-  description={`How the ${course.course.name} is built for accessibility and how to request an accommodation.`}
+  title={course.seo.pages?.accessibility?.title ?? `ADA and Accessibility Policy — ${course.course.shortName} | Road Ready Safety`}
+  description={course.seo.pages?.accessibility?.description ?? `How the ${course.course.name} is built for accessibility and how to request an accommodation.`}
   url={`${route}/accessibility`}
 >
   <section class="py-16 lg:py-24 px-4 sm:px-6 lg:px-8 bg-surface-muted">

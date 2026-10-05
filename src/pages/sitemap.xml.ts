@@ -104,7 +104,9 @@ const stateCourseRoutes = sitemapCourses.flatMap((c) => {
   const base = c.state.route;
   const subs = STATE_SUBROUTES.map((s) => `${base}${s}`);
   const posts = postsFor(c.state.code).map((p) => `${base}/blog/${p.slug}`);
-  const extras = c.state.code === 'OH' ? [`${base}/12-point-suspension`] : [];
+  const extras = c.state.code === 'OH' ? [`${base}/12-point-suspension`]
+    : c.state.code === 'ND' ? [`${base}/speeding-ticket`, `${base}/traffic-ticket`]
+    : [];
   return [...subs, ...posts, ...extras];
 });
 
@@ -144,8 +146,21 @@ const insurerRoutes = INSURERS.map(i => `/texas/insurance-discount/${i.slug}`);
 
 const allRoutes = [...staticRoutes, ...texasGuideRoutes, ...adeRoutes, ...i18nRoutes, ...insurerRoutes, ...stateCourseRoutes, ...courseRoutes, ...courseRequirementsRoutes, ...blogRoutes, ...findRoutes, ...texasCourtsRoutes, ...courtSlugRoutes];
 
+// lastmod for North Dakota URLs only (2026-10-05 search plan): guides use their `updated` date,
+// every other ND page uses nd-ddc.json `lastUpdated`. Other URLs are unchanged (no lastmod).
+const ndLastmod = new Map<string, string>();
+for (const c of sitemapCourses.filter((c) => c.state.code === 'ND')) {
+  for (const p of postsFor('ND')) ndLastmod.set(`${c.state.route}/blog/${p.slug}`, p.updated ?? p.date);
+  const pagesDate = (c as { lastUpdated?: string }).lastUpdated;
+  if (pagesDate) {
+    for (const r of stateCourseRoutes) if ((r === c.state.route || r.startsWith(`${c.state.route}/`)) && !ndLastmod.has(r)) ndLastmod.set(r, pagesDate);
+  }
+}
+
 const toEntry = (path: string) =>
-  `  <url>\n    <loc>${siteUrl}${path}</loc>\n    <changefreq>weekly</changefreq>\n  </url>`;
+  ndLastmod.has(path)
+    ? `  <url>\n    <loc>${siteUrl}${path}</loc>\n    <lastmod>${ndLastmod.get(path)}</lastmod>\n    <changefreq>weekly</changefreq>\n  </url>`
+    : `  <url>\n    <loc>${siteUrl}${path}</loc>\n    <changefreq>weekly</changefreq>\n  </url>`;
 
 export const GET: APIRoute = () => {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>

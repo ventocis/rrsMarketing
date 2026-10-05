@@ -22,7 +22,7 @@ import SampleCertificate from '../../components/landing-v2/SampleCertificate.ast
 import nd from '../../data/courses/nd-ddc.json';
 import reviews from '../../data/reviews.json';
 import type { CourseData } from '../../data/courses/types';
-import { isEnabled, enrollUrl as buildEnrollUrl, contactUrl } from '../../lib/courseFlags';
+import { isEnabled, enrollUrl as buildEnrollUrl, contactUrl, siteUrl } from '../../lib/courseFlags';
 
 export function getStaticPaths() {
   return isEnabled(nd as CourseData) ? [{ params: { override: undefined } }] : [];
@@ -62,6 +62,47 @@ const faqSchema = {
   mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
 };
 
+// One node typed both Course and Product (2026-10-05): Google retired Course rich results, and the
+// price only counts in Product (merchant listing) markup, which needs an image and one Offer.
+// The layout's own Course block is switched off on this page so there is one description, not two.
+const productId = `${siteUrl}${route}#course`;
+const courseProductSchema = {
+  '@context': 'https://schema.org',
+  '@type': ['Product', 'Course'],
+  '@id': productId,
+  name: course.course.name,
+  description: course.seo.courseDescription,
+  url: `${siteUrl}${route}`,
+  image: `${siteUrl}/assets/images/badges/north-dakota-approved.png`,
+  brand: { '@type': 'Brand', name: course.provider.dba },
+  category: 'Online defensive driving course',
+  provider: { '@type': 'Organization', name: course.provider.dba, legalName: course.provider.legalName, url: siteUrl },
+  educationalCredentialAwarded: course.seo.credential,
+  timeRequired: `PT${course.course.hours}H`,
+  inLanguage: 'en-US',
+  offers: {
+    '@type': 'Offer',
+    price: course.course.priceUsd,
+    priceCurrency: 'USD',
+    availability: 'https://schema.org/InStock',
+    url: `${siteUrl}${route}`,
+    seller: { '@type': 'Organization', name: course.provider.dba },
+    areaServed: { '@type': 'State', name: course.state.name },
+  },
+  hasCourseInstance: { '@type': 'CourseInstance', courseMode: 'online', courseWorkload: `PT${course.course.hours}H` },
+};
+
+// Body links to the hubs and the guides people most often need next (search plan, 2026-10-05).
+const guideLinks = [
+  { href: `${route}/speeding-ticket`, text: 'North Dakota speeding tickets: fines, points and a calculator' },
+  { href: `${route}/traffic-ticket`, text: 'Paying, contesting or electing a course for any ND ticket' },
+  { href: `${route}/blog/in-lieu-of-points-north-dakota-court-election`, text: 'How to elect a course in lieu of points at court' },
+  { href: `${route}/blog/north-dakota-points-by-violation`, text: 'Fines and points for every North Dakota violation' },
+  { href: `${route}/blog/check-points-north-dakota-driving-record`, text: 'Get your North Dakota driving record for $3' },
+  { href: `${route}/blog/send-defensive-driving-certificate-to-nddot`, text: 'Sending your certificate to NDDOT' },
+  { href: `${route}/blog/online-traffic-school-north-dakota`, text: 'Is this the same as online traffic school?' },
+];
+
 const btnPrimary =
   'bg-primary hover:bg-primary-hover text-white h-[52px] px-8 rounded-full text-base font-semibold inline-flex items-center justify-center gap-2 no-underline transition-colors shadow-[0_8px_20px_-8px_rgba(36,84,230,0.55)]';
 const btnSecondary =
@@ -76,8 +117,11 @@ const outfit = "font-family:'Outfit',sans-serif;";
   description={course.seo.description}
   keywords={course.seo.keywords}
   url={route}
+  courseSchema={false}
+  breadcrumbs={[{ name: 'Home', url: '/' }, { name: course.state.name, url: route }]}
 >
   <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(courseProductSchema)} />
     <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   </Fragment>
 
@@ -93,7 +137,7 @@ const outfit = "font-family:'Outfit',sans-serif;";
           </p>
         )}
         <h1 class={`text-[34px] lg:text-[60px] text-primary-navy ${h2}`} style={outfit}>
-          North Dakota Defensive Driving Course Online
+          North Dakota (ND) Defensive Driving Course Online
         </h1>
 
         <p class="text-lg lg:text-xl text-text-body leading-8 max-w-[34rem]">
@@ -277,6 +321,22 @@ const outfit = "font-family:'Outfit',sans-serif;";
     </div>
   </section>
 
+  <!-- ============ 5. GUIDES — contextual links to the two hubs and the guides people need next ============ -->
+  <section class="bg-surface-muted py-16 lg:py-20" aria-labelledby="nd-guides-heading">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 id="nd-guides-heading" class={`text-[28px] lg:text-[36px] text-text ${h2} m-0`} style={outfit}>Got a ticket? Start here</h2>
+      <p class="text-lg text-text-body leading-8 mt-3 mb-8 max-w-3xl">
+        Not every ticket needs a course. A ticket with no points doesn't, and one worth more than 5 points can't be kept off your record. These guides tell you which case you're in.
+      </p>
+      <ul class="grid grid-cols-1 md:grid-cols-2 gap-3 list-none p-0 m-0">
+        {guideLinks.map((l) => (
+          <li><a href={l.href} class="flex h-full items-center rounded-2xl bg-white border border-border px-5 py-4 text-base font-semibold text-text no-underline hover:border-primary hover:text-primary">{l.text}</a></li>
+        ))}
+      </ul>
+      <a href={`${route}/blog`} class="inline-block mt-6 text-primary font-semibold underline underline-offset-2">All North Dakota ticket and points guides</a>
+    </div>
+  </section>
+
   <!-- ============ 6. REVIEWS — dark band, heading left, sliding quote cards right ============ -->
   <section class="bg-surface-dark text-white py-20 lg:py-28 overflow-hidden">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-[minmax(0,22rem)_1fr] gap-10 lg:gap-16 items-center">
@@ -322,7 +382,7 @@ const outfit = "font-family:'Outfit',sans-serif;";
       </div>
       <div class="border-t border-border">
         {faqs.map((f, i) => (
-          <details class="group border-b border-border" open={i === 0}>
+          <details class="group border-b border-border" open>
             <summary class="cursor-pointer list-none flex items-start justify-between gap-6 py-6">
               <h3 class="text-lg lg:text-xl font-bold text-text m-0" style={outfit}>{f.q}</h3>
               <svg class="mt-1 flex-shrink-0 w-5 h-5 text-text-muted transition-transform group-open:rotate-180 motion-reduce:transition-none" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>

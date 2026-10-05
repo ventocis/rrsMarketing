@@ -12,6 +12,12 @@
  *  - related guides chosen per post (post.related), so the guides link to each other
  *
  * Posts live in src/data/blog/nd.json. Every legal fact in them is sourced in post.sources.
+ *
+ * 2026-10-05 (search plan): the <title> is "{seoTitle} | Road Ready" (the short brand keeps it
+ * near 60 characters); breadcrumbs read Home > North Dakota > Guides > page, visibly and in
+ * JSON-LD; each guide links up to its topic hub (src/data/blog/nd-topics.ts); the layout's Course
+ * JSON-LD is left off, since a guide is not the course page; the speeding cost guide carries the
+ * calculator.
  */
 import { marked } from 'marked';
 import CourseLayout from '../../../layouts/CourseLayout.astro';
@@ -19,9 +25,12 @@ import nd from '../../../data/courses/nd-ddc.json';
 import { postsFor, type StatePost } from '../../../data/blog/index';
 import { isEnabled, enrollUrl as buildEnrollUrl, siteUrl } from '../../../lib/courseFlags';
 import type { CourseData } from '../../../data/courses/types';
+import { topicFor, checkNdTopics } from '../../../data/blog/nd-topics';
+import SpeedingCalculator from '../../../components/nd/SpeedingCalculator.astro';
 
 export function getStaticPaths() {
   if (!isEnabled(nd as CourseData)) return [];
+  checkNdTopics();
   return postsFor('ND').map((post) => ({ params: { slug: post.slug }, props: { post } }));
 }
 
@@ -34,6 +43,16 @@ const price = course.course.priceUsd;
 const hours = course.course.hours;
 const html = marked(post.content) as string;
 const updated = post.updated ?? post.date;
+const shortTitle = post.seoTitle ?? post.title;
+const topic = topicFor(post.slug);
+const hub = topic && topic.hub.href !== url ? topic.hub : null;
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: course.state.name, url: route },
+  { name: 'Guides', url: `${route}/blog` },
+  { name: shortTitle, url },
+];
+const withCalculator = post.slug === 'north-dakota-speeding-ticket-cost';
 
 const all = postsFor('ND');
 const picked = (post.related ?? []).map((s) => all.find((p) => p.slug === s)).filter(Boolean) as StatePost[];
@@ -67,7 +86,7 @@ const faqSchema = post.faq && post.faq.length
 const outfit = "font-family:'Outfit',sans-serif;";
 ---
 
-<CourseLayout course={course} title={post.seoTitle ?? post.title} description={post.description} url={url}>
+<CourseLayout course={course} title={`${shortTitle} | Road Ready`} description={post.description} url={url} courseSchema={false} breadcrumbs={crumbs}>
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
     {faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
@@ -77,9 +96,10 @@ const outfit = "font-family:'Outfit',sans-serif;";
     <div class="max-w-[768px] mx-auto px-4 sm:px-6 py-10 md:py-16">
       <nav class="mb-8 text-sm" aria-label="Breadcrumb">
         <ol class="flex flex-wrap items-center gap-2 list-none p-0 m-0 text-text-body">
-          <li><a href={route} class="hover:text-primary no-underline">{course.course.name}</a></li>
-          <li aria-hidden="true">›</li>
-          <li><a href={`${route}/blog`} class="hover:text-primary no-underline">Guides</a></li>
+          {crumbs.slice(0, -1).map((c) => (
+            <Fragment><li><a href={c.url} class="hover:text-primary no-underline">{c.name}</a></li><li aria-hidden="true">›</li></Fragment>
+          ))}
+          <li aria-current="page" class="text-text-muted">{shortTitle}</li>
         </ol>
       </nav>
 
@@ -88,6 +108,9 @@ const outfit = "font-family:'Outfit',sans-serif;";
         <p class="text-sm text-text-muted m-0">
           By Road Ready Safety &middot; Checked against North Dakota law on <time datetime={updated}>{formatDate(updated)}</time>
         </p>
+        {hub && (
+          <p class="text-sm text-text-body m-0">Part of our guide to <a href={hub.href} class="text-primary-deep font-semibold underline underline-offset-2">{hub.anchor}</a>.</p>
+        )}
       </header>
 
       {post.answer && (
@@ -117,6 +140,8 @@ const outfit = "font-family:'Outfit',sans-serif;";
       </aside>
 
       <div class="nd-guide prose prose-base max-w-none" set:html={html} />
+
+      {withCalculator && <SpeedingCalculator />}
 
       {post.faq && post.faq.length > 0 && (
         <section class="mt-12">

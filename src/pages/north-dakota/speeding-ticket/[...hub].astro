@@ -1,0 +1,177 @@
+---
+/**
+ * /north-dakota/speeding-ticket — hub for "north dakota speeding ticket". Short answers, each linking
+ * to the guide that has the detail, plus the calculator. Every fact here is already verified in the
+ * linked guide; sources are NDCC 39-06.1 (read 2026-10-05) and NDDOT's points page.
+ * Rest-param route: emits nothing while North Dakota is disabled.
+ */
+import CourseLayout from '../../../layouts/CourseLayout.astro';
+import SpeedingCalculator from '../../../components/nd/SpeedingCalculator.astro';
+import nd from '../../../data/courses/nd-ddc.json';
+import { postsFor } from '../../../data/blog/index';
+import { ndTopics } from '../../../data/blog/nd-topics';
+import { isEnabled, enrollUrl as buildEnrollUrl, siteUrl } from '../../../lib/courseFlags';
+import type { CourseData } from '../../../data/courses/types';
+
+export function getStaticPaths() {
+  return isEnabled(nd as CourseData) ? [{ params: { hub: undefined } }] : [];
+}
+
+const course = nd as CourseData;
+const route = course.state.route;
+const url = `${route}/speeding-ticket`;
+const enrollUrl = buildEnrollUrl(course);
+const price = course.course.priceUsd;
+const checked = '2026-10-05';
+const g = (slug: string) => `${route}/blog/${slug}`;
+const titles = new Map(postsFor('ND').map((p) => [p.slug, p.title]));
+const guideSlugs = [...(ndTopics.find((t) => t.id === 'speeding')?.slugs ?? []), 'which-tickets-qualify-in-lieu-of-points-north-dakota', 'should-i-pay-my-north-dakota-ticket', 'north-dakota-license-suspended-for-points'];
+
+const answers = [
+  {
+    q: 'How much is a speeding ticket in North Dakota?',
+    a: 'The state fee is $3 for each mph over the limit, or $5 where the limit is posted above 65. The minimum is $20, and $20 more is added at 16 mph over or faster. Ten over in a 55 zone is $30.',
+    link: { href: g('north-dakota-speeding-ticket-cost'), text: 'Speeding fines at every speed' },
+  },
+  {
+    q: 'How many points is a speeding ticket?',
+    a: 'Where the limit is 65 or less, nothing up to 10 over, then 1 point at 11 over, 3 at 16, 5 at 21, 9 at 26, 12 at 36 and 15 at 46. Where the limit is above 65, points start at 6 over. Twelve points suspends your license.',
+    link: { href: g('north-dakota-speeding-ticket-points'), text: 'The full speeding points schedule' },
+  },
+  {
+    q: 'Can I keep the points off my record?',
+    a: 'Yes, if the ticket is worth 5 points or fewer: up to 25 over where the limit is 65 or less, up to 20 over where it is higher. Tell the court you elect a driver training course when you post bond, then get the certificate to NDDOT within 30 days. You still pay the fee.',
+    link: { href: g('in-lieu-of-points-north-dakota-court-election'), text: 'How to elect the course at court' },
+  },
+  {
+    q: 'Should I elect the course or just pay?',
+    a: 'Just pay a 0-point ticket; the course does nothing for it. A 1-point ticket on a clean record drops off after three months without new points. Elect the course for a 3- or 5-point ticket, unless you already used an election in the last 12 months. Electing gives up the 3-point reduction for that 12-month period.',
+    link: { href: g('should-i-pay-my-north-dakota-ticket'), text: 'When paying is the right call' },
+  },
+  {
+    q: 'What does a school zone or work zone ticket cost?',
+    a: 'A school zone ticket is $40 for 1 to 10 over, then $1 more for each mph. A work zone ticket is $150 for 1 to 10 over, then $2 more for each mph, but only when workers are present and the sign says "Minimum Fee $150." Points are the same as anywhere else.',
+    link: { href: g('north-dakota-school-zone-work-zone-speeding'), text: 'School and work zone speeding' },
+  },
+  {
+    q: 'What is the speed limit on North Dakota highways?',
+    a: 'Up to 80 mph on the interstate where posted. The posted limit decides which points table applies to your ticket: above 65 or 65 and under.',
+    link: { href: g('north-dakota-speed-limits'), text: 'North Dakota speed limits' },
+  },
+];
+
+const steps = [
+  'Read the citation. It shows the fee, the court and the date you have to act by.',
+  'For a state-law ticket handled by mail, the bond is due within 14 days of the citation. A city ticket prints its own deadline on the citation.',
+  'Before you pay, work out the points. If it is 1 to 5, decide whether to elect a course in lieu of points. The election has to be made when you post bond.',
+  'If you elect the course, ask the clerk how they record the election, then finish the course and send NDDOT the certificate within 30 days.',
+  'If you pay without electing, the court reports the violation to NDDOT within 10 days and the points post.',
+];
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: course.state.name, url: route },
+  { name: 'Speeding tickets', url },
+];
+const pageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'North Dakota speeding tickets',
+  url: `${siteUrl}${url}`,
+  dateModified: checked,
+  inLanguage: 'en-US',
+  publisher: { '@type': 'Organization', name: course.provider.dba, url: siteUrl },
+  citation: [{ '@type': 'CreativeWork', name: 'NDCC chapter 39-06.1', url: 'https://ndlegis.gov/cencode/t39c06-1.pdf' }],
+};
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: answers.map((x) => ({ '@type': 'Question', name: x.q, acceptedAnswer: { '@type': 'Answer', text: x.a } })),
+};
+const outfit = "font-family:'Outfit',sans-serif;";
+const link = 'text-primary-deep font-semibold underline underline-offset-2';
+---
+
+<CourseLayout
+  course={course}
+  title="North Dakota Speeding Ticket: Fines and Points | Road Ready"
+  description="A North Dakota speeding ticket is $3 a mph over ($5 above 65), $20 minimum. Points start at 11 over. Work out yours and see if a course can keep them off."
+  url={url}
+  courseSchema={false}
+  breadcrumbs={crumbs}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(pageSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  </Fragment>
+
+  <article class="bg-white">
+    <div class="max-w-[768px] mx-auto px-4 sm:px-6 py-10 md:py-16">
+      <nav class="mb-8 text-sm" aria-label="Breadcrumb">
+        <ol class="flex flex-wrap items-center gap-2 list-none p-0 m-0 text-text-body">
+          <li><a href="/" class="hover:text-primary no-underline">Home</a></li><li aria-hidden="true">›</li>
+          <li><a href={route} class="hover:text-primary no-underline">{course.state.name}</a></li><li aria-hidden="true">›</li>
+          <li aria-current="page" class="text-text-muted">Speeding tickets</li>
+        </ol>
+      </nav>
+
+      <header class="mb-8 flex flex-col gap-4">
+        <h1 class="text-3xl md:text-[40px] font-bold text-text leading-[1.15] tracking-[-0.02em] m-0" style={outfit}>North Dakota speeding tickets</h1>
+        <p class="text-sm text-text-muted m-0">By Road Ready Safety &middot; Checked against North Dakota law on <time datetime={checked}>October 5, 2026</time></p>
+      </header>
+
+      <div class="rounded-[20px] bg-info border border-info-border p-6 md:p-7 mb-10">
+        <p class="text-lg text-text leading-8 m-0">
+          A North Dakota speeding ticket costs $3 for each mph over the limit, or $5 where the limit is posted above 65, with a $20 minimum and $20 more at 16 over or faster (<a href="https://ndlegis.gov/cencode/t39c06-1.pdf" class={link} target="_blank" rel="noopener noreferrer">NDCC 39-06.1-06</a>).
+          Points start at 11 over, or 6 over where the limit is above 65. If the ticket is worth 5 points or fewer, you can keep the points off by electing a driver training course when you post bond.
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-9">
+        {answers.map((x) => (
+          <section>
+            <h2 class="text-2xl font-bold text-text m-0 mb-2" style={outfit}>{x.q}</h2>
+            <p class="text-base text-text-body leading-7 m-0">{x.a}</p>
+            <a href={x.link.href} class={`${link} inline-block mt-2`}>{x.link.text}</a>
+          </section>
+        ))}
+      </div>
+
+      <SpeedingCalculator />
+
+      <section class="mt-4">
+        <h2 class="text-2xl font-bold text-text m-0 mb-3" style={outfit}>What should I do in the first few days?</h2>
+        <ol class="list-decimal pl-6 flex flex-col gap-2 text-base text-text-body leading-7 m-0">
+          {steps.map((s) => <li>{s}</li>)}
+        </ol>
+        <p class="text-base text-text-body leading-7 mt-4 mb-0">
+          Paying, contesting and the court that handles your ticket are covered in <a href={`${route}/traffic-ticket`} class={link}>handling a North Dakota traffic ticket</a>.
+        </p>
+      </section>
+
+      <section class="mt-10">
+        <h2 class="text-2xl font-bold text-text m-0 mb-3" style={outfit}>When the course doesn't help</h2>
+        <p class="text-base text-text-body leading-7 m-0">
+          A ticket with no points, which is 10 over or less where the limit is 65 or under, gains nothing from a course. Neither does a ticket of 26 over or more on a 65-or-under road, which is 9 points or more and too many to elect around. Pay that one, and a course can still take 3 points off your total afterward, once every 12 months.
+          Our <a href={route} class={link}>North Dakota defensive driving course</a> is {course.course.hours} hours online and ${price}.
+        </p>
+      </section>
+
+      <section class="mt-12 pt-8 border-t border-border">
+        <h2 class="text-lg font-bold text-text m-0 mb-4" style={outfit}>Speeding guides</h2>
+        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3 list-none p-0 m-0">
+          {guideSlugs.map((s) => (
+            <li class="border border-border rounded-2xl p-5"><a href={g(s)} class="font-semibold text-text no-underline hover:text-primary">{titles.get(s)}</a></li>
+          ))}
+        </ul>
+        <a href={`${route}/blog`} class="inline-block mt-4 text-primary font-semibold underline underline-offset-2">Every North Dakota ticket and points guide</a>
+      </section>
+
+      <aside class="mt-12 bg-primary-navy rounded-[24px] p-8 flex flex-col gap-4 text-white">
+        <h2 class="text-2xl font-bold leading-tight m-0" style={outfit}>{course.course.name}</h2>
+        <p class="text-white/85 leading-7 m-0">{course.course.hours} hours online, ${price} total. Use it in lieu of points on a 1-to-5-point ticket, or to take 3 points off your record.</p>
+        <a href={enrollUrl} class="bg-white text-primary-navy h-12 px-6 rounded-xl text-base font-semibold flex items-center justify-center no-underline hover:bg-info transition-colors w-full sm:w-fit">{course.hero.ctaLabel} &mdash; ${price}</a>
+      </aside>
+    </div>
+  </article>
+</CourseLayout>

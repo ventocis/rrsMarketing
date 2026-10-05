@@ -24,8 +24,8 @@ const faqSchema = {
 
 <CourseLayout
   course={course}
-  title={`${course.course.shortName} FAQ — Every Question We Get Asked | Road Ready Safety`}
-  description={`Answers about the ${course.course.name}: who it is for, what it does under ${course.state.name} law, the quiz, the deadline, the certificate and the price.`}
+  title={course.seo.pages?.faq?.title ?? `${course.course.shortName} FAQ — Every Question We Get Asked | Road Ready Safety`}
+  description={course.seo.pages?.faq?.description ?? `Answers about the ${course.course.name}: who it is for, what it does under ${course.state.name} law, the quiz, the deadline, the certificate and the price.`}
   url={`${route}/faq`}
 >
   <Fragment slot="head">

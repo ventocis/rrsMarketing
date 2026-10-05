@@ -22,7 +22,7 @@ import SampleCertificate from '../../components/landing-v2/SampleCertificate.ast
 import nd from '../../data/courses/nd-ddc.json';
 import reviews from '../../data/reviews.json';
 import type { CourseData } from '../../data/courses/types';
-import { isEnabled, enrollUrl as buildEnrollUrl, contactUrl } from '../../lib/courseFlags';
+import { isEnabled, enrollUrl as buildEnrollUrl, contactUrl, siteUrl } from '../../lib/courseFlags';
 
 export function getStaticPaths() {
   return isEnabled(nd as CourseData) ? [{ params: { override: undefined } }] : [];
@@ -56,6 +56,35 @@ const progress = modules.slice(0, 5).map((m, i) => ({ title: m.title, done: i !=
 type Review = { initials: string; name: string; date: string; quote: string };
 const reviewList = reviews as Review[];
 
+// One node typed both Course and Product (2026-10-05): Google retired Course rich results, and the
+// price only counts in Product (merchant listing) markup, which needs an image and one Offer.
+// The layout's own Course block is switched off on this page so there is one description, not two.
+const courseProductSchema = {
+  '@context': 'https://schema.org',
+  '@type': ['Product', 'Course'],
+  '@id': `${siteUrl}${route}#course`,
+  name: course.course.name,
+  description: course.seo.courseDescription,
+  url: `${siteUrl}${route}`,
+  image: `${siteUrl}/assets/images/badges/north-dakota-approved.png`,
+  brand: { '@type': 'Brand', name: course.provider.dba },
+  category: 'Online defensive driving course',
+  provider: { '@type': 'Organization', name: course.provider.dba, legalName: course.provider.legalName, url: siteUrl },
+  educationalCredentialAwarded: course.seo.credential,
+  timeRequired: `PT${course.course.hours}H`,
+  inLanguage: 'en-US',
+  offers: {
+    '@type': 'Offer',
+    price: course.course.priceUsd,
+    priceCurrency: 'USD',
+    availability: 'https://schema.org/InStock',
+    url: `${siteUrl}${route}`,
+    seller: { '@type': 'Organization', name: course.provider.dba },
+    areaServed: { '@type': 'State', name: course.state.name },
+  },
+  hasCourseInstance: { '@type': 'CourseInstance', courseMode: 'online', courseWorkload: `PT${course.course.hours}H` },
+};
+
 const faqSchema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
@@ -76,8 +105,11 @@ const outfit = "font-family:'Outfit',sans-serif;";
   description={course.seo.description}
   keywords={course.seo.keywords}
   url={route}
+  courseSchema={false}
+  breadcrumbs={[{ name: 'Home', url: '/' }, { name: course.course.name, url: route }]}
 >
   <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(courseProductSchema)} />
     <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   </Fragment>
 

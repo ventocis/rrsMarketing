@@ -70,6 +70,8 @@ export interface HelpItem {
 
 export interface CourseData {
   _note?: string;
+  /** Last real content change to the state's course pages; sitemap lastmod for non-guide URLs. */
+  lastUpdated?: string;
   state: {
     code: string;
     name: string;
@@ -121,6 +123,12 @@ export interface CourseData {
     keywords: string;
     credential: string;
     courseDescription: string;
+    /**
+     * Optional title and description for the shared subpages (faq, howItWorks, refund,
+     * helpcenter, accessibility). A title containing "Road Ready" is used as-is; Layout adds no
+     * suffix. Unset = the template's default, which every state except North Dakota uses.
+     */
+    pages?: Partial<Record<'faq' | 'howItWorks' | 'refund' | 'helpcenter' | 'accessibility', { title: string; description: string }>>;
   };
   banner: string;
   /**

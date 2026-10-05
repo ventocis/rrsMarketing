@@ -19,6 +19,7 @@ import nd from '../../../data/courses/nd-ddc.json';
 import { postsFor, type StatePost } from '../../../data/blog/index';
 import { isEnabled, enrollUrl as buildEnrollUrl, siteUrl } from '../../../lib/courseFlags';
 import type { CourseData } from '../../../data/courses/types';
+import SpeedingCalculator from '../../../components/nd/SpeedingCalculator.astro';
 
 export function getStaticPaths() {
   if (!isEnabled(nd as CourseData)) return [];
@@ -43,6 +44,17 @@ const children = post.kind === 'hub' ? all.filter((p) => p.hub === post.slug) : 
 const courseAnchors = ['North Dakota defensive driving course', 'the 4-hour online course', 'our NDDOT-approved course', 'the course for the 3-point reduction', 'take the course in lieu of points'];
 const courseAnchor = courseAnchors[[...post.slug].reduce((n, c) => n + c.charCodeAt(0), 0) % courseAnchors.length];
 const reviewedBy = post.reviewedBy ?? 'Road Ready Safety';
+// Breadcrumb trail, shown on the page and sent as BreadcrumbList JSON-LD (replacing the layout's
+// 3-step default): Home > North Dakota course > Guides > hub, if any > this guide.
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: course.course.name, url: route },
+  { name: 'Guides', url: `${route}/blog` },
+  ...(hub ? [{ name: hub.seoTitle ?? hub.title, url: `${route}/blog/${hub.slug}` }] : []),
+  { name: post.seoTitle ?? post.title, url },
+];
+// The fee-and-points calculator (src/lib/nd-speeding.ts) sits on the speeding hub and the cost guide.
+const withCalculator = post.slug === 'north-dakota-speeding-ticket' || post.slug === 'north-dakota-speeding-ticket-cost';
 const picked = (post.related ?? []).map((s) => all.find((p) => p.slug === s)).filter(Boolean) as StatePost[];
 const related = (picked.length ? picked : all.filter((p) => p.slug !== post.slug)).slice(0, 4);
 
@@ -74,7 +86,7 @@ const faqSchema = post.faq && post.faq.length
 const outfit = "font-family:'Outfit',sans-serif;";
 ---
 
-<CourseLayout course={course} title={`${post.seoTitle ?? post.title} | Road Ready`} description={post.description} url={url}>
+<CourseLayout course={course} title={`${post.seoTitle ?? post.title} | Road Ready`} description={post.description} url={url} courseSchema={false} breadcrumbs={crumbs}>
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
     {faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
@@ -84,6 +96,8 @@ const outfit = "font-family:'Outfit',sans-serif;";
     <div class="max-w-[768px] mx-auto px-4 sm:px-6 py-10 md:py-16">
       <nav class="mb-8 text-sm" aria-label="Breadcrumb">
         <ol class="flex flex-wrap items-center gap-2 list-none p-0 m-0 text-text-body">
+          <li><a href="/" class="hover:text-primary no-underline">Home</a></li>
+          <li aria-hidden="true">›</li>
           <li><a href={route} class="hover:text-primary no-underline">{course.course.name}</a></li>
           <li aria-hidden="true">›</li>
           <li><a href={`${route}/blog`} class="hover:text-primary no-underline">Guides</a></li>
@@ -126,6 +140,8 @@ const outfit = "font-family:'Outfit',sans-serif;";
       </aside>
 
       <div class="nd-guide prose prose-base max-w-none" set:html={html} />
+
+      {withCalculator && <SpeedingCalculator />}
 
       {children.length > 0 && (
         <section class="mt-12">

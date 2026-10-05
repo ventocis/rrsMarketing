@@ -112,6 +112,13 @@ const stateCourseRoutes = sitemapCourses.flatMap((c) => {
   return [...subs, ...posts, ...extras];
 });
 
+// A state's other pages take the course file's optional `lastUpdated` (only North Dakota sets it).
+for (const c of sitemapCourses) {
+  const d = (c as { lastUpdated?: string }).lastUpdated;
+  if (!d) continue;
+  for (const r of stateCourseRoutes) if ((r === c.state.route || r.startsWith(`${c.state.route}/`)) && !lastmodByPath.has(r)) lastmodByPath.set(r, d);
+}
+
 const courseRoutes = (coursesData as Array<{ slug: string }>).map(c => `/courses/${c.slug}`);
 
 const courseRequirementsRoutes = (coursesData as Array<{ slug: string }>).map(c => `/courses/${c.slug}/requirements`);

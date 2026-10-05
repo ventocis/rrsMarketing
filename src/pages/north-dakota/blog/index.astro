@@ -31,7 +31,7 @@ function formatDate(d: string) {
 }
 ---
 
-<CourseLayout course={course} title={`${course.blog.title} | Road Ready`} description={course.blog.intro} url={`${route}/blog`}>
+<CourseLayout course={course} title={`${course.blog.title} | Road Ready`} description={course.blog.intro} url={`${route}/blog`} courseSchema={false} breadcrumbs={[{ name: 'Home', url: '/' }, { name: course.course.name, url: route }, { name: 'Guides', url: `${route}/blog` }]}>
   <section class="py-16 lg:py-24 px-4 sm:px-6 lg:px-8 bg-surface-muted">
     <div class="max-w-4xl mx-auto">
       <PageIntro chip="Guides" title={course.blog.title} subtitle={course.blog.intro} />

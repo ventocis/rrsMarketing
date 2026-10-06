@@ -1,6 +1,7 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
 import VideoEmbed from '../../components/VideoEmbed.astro';
+import NextStepBlock from '../../components/texas/NextStepBlock.astro';
 import { courtStats as S } from '../../lib/court-stats';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
@@ -94,6 +95,8 @@ const faqSchema = JSON.stringify({
           <p>Each city and JP court publishes its own fine schedule within the statutory range — typically stepping up a few dollars per mph over the limit. The verified examples from our court research: small-town schedules commonly start around $97–$130 for low-speed offenses and climb toward the $200 cap above 20 over; Weslaco's published schedule starts speeding at $228 <em>total</em> (fine plus costs). On top of the fine, every Class C conviction carries the consolidated state court cost ($62), local consolidated costs ($14), and any city additions — the anatomy is in our <a href="/texas/court-costs" class="text-primary-deep font-medium hover:underline">court costs breakdown</a>.</p>
           <p>Multipliers to know: most cities <strong class="text-text">double fines in school zones</strong>, and the state doubles them in <strong class="text-text">construction zones with workers present</strong> (§542.404) — the same trigger that also locks you out of both dismissal tools, as we explain in the <a href="/texas/construction-zone-ticket" class="text-primary-deep font-medium hover:underline">work-zone guide</a>.</p>
         </div>
+
+        <NextStepBlock page="how-much-is-a-speeding-ticket" lead="precourt" />
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Layer three: the conviction is the expensive part</h2>
         <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">

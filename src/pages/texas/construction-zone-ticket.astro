@@ -1,6 +1,7 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
 import YouTubeCard from '../../components/YouTubeCard.astro';
+import NextStepBlock from '../../components/texas/NextStepBlock.astro';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 
@@ -91,6 +92,8 @@ const faqSchema = JSON.stringify({
           <p>Texas law doubles fines for offenses in a construction or maintenance work zone <strong class="text-text">when workers are present</strong> (§542.404), and the same trigger locks the exits: CCP arts. 45A.353(3) and 45A.301(1) shut both the defensive-driving and deferred-disposition doors on those offenses. No course, no probation-to-dismissal — paths that survive even a 95-mph ticket are closed by an orange-barrel ticket with workers on site.</p>
           <p>The trigger is specific, and it's an element the State has to prove: a marked construction or maintenance work zone <em>and</em> workers present at the time. A work zone at 2 a.m. with no crew, barrels with nobody behind them, or a citation that doesn't allege workers present is a different, lesser situation — an ordinary violation that keeps its ordinary dismissal options. Check the exact charge on your citation; "speeding" and "speeding in a construction zone with workers present" are different worlds.</p>
         </div>
+
+        <NextStepBlock page="construction-zone-ticket" lead="precourt" ineligibleNote="Were workers present when you were cited? Then the course is excluded by statute and deferred disposition is the route." ineligibleHref="/texas/deferred-disposition" ineligibleLabel="How deferred disposition works" />
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What's actually left when both tools are barred</h2>
         <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">

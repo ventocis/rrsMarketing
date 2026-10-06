@@ -1,6 +1,7 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
 import YouTubeCard from '../../components/YouTubeCard.astro';
+import NextStepBlock from '../../components/texas/NextStepBlock.astro';
 import { alternatesFor, translationsOf, langLabel } from '../../lib/i18n';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
@@ -101,6 +102,8 @@ const faqSchema = JSON.stringify({
           <p><strong class="text-text">2. Search online, then call.</strong> Most municipal courts and many JP courts run citation-search portals — searchable by name and date of birth, no citation number needed. No luck online? Call the clerk with your name, DOB, and driver's license number; they'll pull the case, give you the citation number and answer date, and tell you how to respond. Tickets can take a few days to appear in court systems after the stop, so if the stop was yesterday, try again Thursday.</p>
           <p><strong class="text-text">3. If you genuinely can't find it</strong> — wrong-city guesses, nothing on portals — call the law-enforcement agency's records division (they can read you the citation from their copy), and as a backstop, run the DPS eligibility check on yourself a few weeks later: an unresolved citation that's gone to FTA will surface as an <a href="/texas/missed-court-date" class="text-primary-deep font-medium hover:underline">OmniBase hold</a>. Better to find it before it finds you.</p>
         </div>
+
+        <NextStepBlock page="lost-ticket" lead="precourt" />
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Protecting the dismissal option while you search</h2>
         <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">

@@ -2,6 +2,7 @@
 import TexasLayout from '../../layouts/TexasLayout.astro';
 import { alternatesFor, translationsOf, langLabel } from '../../lib/i18n';
 import VideoEmbed from '../../components/VideoEmbed.astro';
+import NextStepBlock from '../../components/texas/NextStepBlock.astro';
 import courtsData from '../../data/texas-courts.json';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
@@ -151,6 +152,8 @@ const faqSchema = JSON.stringify({
           <p class="text-xs text-text-subtle mt-3">The DPS and OmniBase links are official government resources; the court directory is a Road Ready Safety resource. We don’t collect citation payments.</p>
         </div>
         </div>
+
+        <NextStepBlock page="look-up-your-ticket" lead="precourt" />
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Ticket lookup and payment portals for the 25 largest Texas cities</h2>
         <div class="space-y-4 text-text-body text-base leading-7 mb-4" style="font-family: 'DM Sans', sans-serif;">

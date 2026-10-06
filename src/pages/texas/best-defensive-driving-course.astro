@@ -1,40 +1,56 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
 import YouTubeCard from '../../components/YouTubeCard.astro';
+import NextStepBlock from '../../components/texas/NextStepBlock.astro';
+import { TEXAS_COURSE, TEXAS_PRICE_LABEL } from '../../data/texas-course';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 const contactUrl = import.meta.env.VITE_CONTACT_US_URL || 'https://roadreadysafety.com/support';
 const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+const floor = `$${TEXAS_COURSE.legalMinimumPrice}`;
+const price = TEXAS_PRICE_LABEL;
 
-// Verified all-in totals (subset focused on the value decision) — last verified June 2026.
-// Full 12-provider table lives at /texas/cost.
-const picks = [
-  { provider: 'Road Ready Safety', cp: 'CP1234', total: '$28.00', instantCert: 'Free, included', best: 'Best overall value — cheapest tier + free instant certificate', highlight: true },
-  { provider: 'DefensiveDriving.com', cp: 'CP284', total: '$28.00', instantCert: '$25.00 (mail free)', best: 'Established brand, but instant certificate costs extra' },
-  { provider: 'Comedy Driving', cp: 'CP319', total: '$25.00', instantCert: 'Included', best: 'Video/comedy format; advertised price as of Aug 2026' },
-  { provider: 'IMPROV', cp: 'CP342', total: '$28.95', instantCert: 'Electronic, included', best: 'Comedy format with an included electronic certificate' },
-  { provider: 'I Drive Safely', cp: 'CP022', total: '$29.00', instantCert: 'Free', best: 'Free certificate; slightly higher base price' },
-  { provider: 'GetDefensive.com', cp: 'CP021', total: '$30.00', instantCert: 'Free', best: 'Best bilingual (English / Spanish) pick' },
-  { provider: 'Aceable', cp: 'CP262', total: '$49.00', instantCert: 'Included', best: 'Polished app at a premium standard price' },
+// Rewritten 2026-10-05 (SEO playbook §3, Option A). This page used to rank providers by name and
+// price in a table. That format lost its rankings after the May 2026 core update (position 53 for
+// "best defensive driving course texas") and it broke the site rule against competitor names and
+// prices on content pages. It is now a buyer's guide: what differs between approved courses, how to
+// check them, and what we charge. No provider other than Road Ready Safety is named anywhere on it.
+
+const differences = [
+  { what: 'The all-in total', check: 'The number on the final checkout screen, not the advertised one.', why: `Every approved course must cost at least ${floor}. Certificate, "processing" and premium lines are added after the advertised price on many checkouts.` },
+  { what: 'When you get the certificate', check: 'Instant download, or mailed in a week, or instant for a fee?', why: 'The court needs the certificate inside a deadline. Paying for "instant" is paying for your own deadline.' },
+  { what: 'Phone, tablet or computer', check: 'Does it save your place when you switch devices?', why: 'Six hours rarely happen in one sitting. A course that loses your place costs you time, not money.' },
+  { what: 'Text, video or audio', check: 'Which one you will actually sit through.', why: 'Same curriculum, same certificate. This is preference, not pass or fail.' },
+  { what: 'Language', check: 'Is a Spanish version offered, and is its certificate accepted?', why: 'Texas allows approved courses in other languages; few providers offer one. The certificate dismisses the ticket the same way.' },
+  { what: 'Refunds and support', check: 'Can you get your money back before you finish? Is there a human to call?', why: 'You find this out only when something goes wrong. Read it before you pay.' },
+];
+
+const checklist = [
+  'Is the provider on TDLR’s license search, with a CP number you can see on the site?',
+  `What is the total on the last checkout screen, and does it include the certificate?`,
+  'Do you get the certificate the moment you finish, at no extra charge?',
+  'Does the course save your place across your phone and computer?',
+  'Can you get a refund if you stop before finishing?',
 ];
 
 const faqs = [
-  { q: 'What is the best Texas defensive driving course?', a: 'Every TDLR-approved Texas defensive driving course teaches the same state-mandated 6-hour curriculum, so for ticket dismissal the "best" course is really the one with the lowest all-in price and the fastest certificate. On verified June 2026 pricing, Road Ready Safety is the best overall value: $28.00 all-in (the cheapest tier) and the only sub-$30 option that includes a free instant certificate download. If you need a bilingual course, GetDefensive.com ($30, English/Spanish) is a strong pick.' },
-  { q: 'Are all Texas defensive driving courses the same?', a: 'The course content is essentially the same — TDLR (the Texas Department of Licensing and Regulation) approves every provider against the same required curriculum, and any TDLR-approved course your court accepts will dismiss an eligible ticket. The differences that actually matter are total price at checkout, whether the certificate is free and instant, the format (read vs. video), language options, and the quality of the app and support.' },
-  { q: 'What is the cheapest Texas defensive driving course in 2026?', a: 'Several providers share the $25–$28 all-in floor (Texas law sets a $25 minimum total under Education Code §1001.352). Road Ready Safety is $28.00 all-in and includes a free instant certificate — where other $28 options charge $8 to $50 extra for an instant certificate, so they end up costing more if you are on a court deadline. See the full verified comparison on our Texas defensive driving cost page.' },
-  { q: 'How do I choose the right defensive driving course?', a: 'Confirm the provider is TDLR-approved (look for a CP license number), then compare the all-in checkout total (base fee + any processing fee + any certificate fee), how fast you get the certificate, and whether it works well on your phone. For ticket dismissal on a deadline, a free instant certificate is the single most important feature — it lets you submit to your court the same day you finish.' },
-  { q: 'Is the cheapest defensive driving course any good?', a: 'Yes — because price has nothing to do with whether the course dismisses your ticket. The court only cares that the certificate comes from a TDLR-approved provider. Paying more does not get your ticket dismissed faster or more reliably; it usually just pays for branding or a paid certificate. The lowest-friction choice is an approved course at the cheapest price with a free instant certificate.' },
-  { q: 'Is Road Ready Safety a legitimate, court-accepted course?', a: 'Yes. Road Ready Safety is TDLR-approved (license CP1234) and its certificate is accepted by Texas courts statewide for dismissal of an eligible citation. The course is the full state-required 6 hours, completed online on any device, with a certificate you download the moment you finish.' },
+  { q: 'What is the best defensive driving course in Texas?', a: `There is no single best course, because every TDLR-approved course teaches the same six-hour state curriculum and produces the same certificate. The best one for you is the one that is approved, charges an all-in total you can see before you pay, gives you the certificate the moment you finish, and works on the device you will use. Ours is ${price} total, certificate included, provider ${TEXAS_COURSE.providerNumber}.` },
+  { q: 'What is the cheapest defensive driving course in Texas?', a: `By law no approved course can cost less than ${floor}, so "cheapest" means an approved course at or near the floor with the certificate included and nothing added at checkout. Compare the final checkout total, not the advertised price. Ours is ${price}: the course, the instant certificate with both the court copy and the insurance copy, and no delivery, rush or processing line.` },
+  { q: 'Are all Texas defensive driving courses the same?', a: 'For the court, yes. TDLR approves every provider against the same required curriculum, every approved course is six hours, and every one issues the uniform certificate of completion. What differs is the checkout total, how and when you get the certificate, the format, the language, the refund policy and the support.' },
+  { q: 'Is there a faster Texas defensive driving course?', a: 'No. Texas requires six hours with at least five hours of instruction, and every approved online course enforces that with timers. A course promising to finish in two or three hours is either not approved or describing something other than the state driving safety course. You can spread the six hours over several days.' },
+  { q: 'Is Road Ready Safety a legitimate, court-accepted course?', a: `Yes. Road Ready Safety is TDLR-approved (provider ${TEXAS_COURSE.providerNumber}) and its certificate is accepted by Texas courts statewide for dismissal of an eligible citation. You can confirm the license on TDLR's own search before you pay; the TDLR-approved page shows the steps.` },
 ];
 
 const articleSchema = JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'Article',
-  headline: 'Best Texas Defensive Driving Course (2026): Honest Comparison',
-  dateModified: '2026-08-04',
+  headline: 'How to Pick the Best Texas Defensive Driving Course (and What "Cheapest" Really Means)',
+  description: 'Every TDLR-approved Texas course is six hours and issues the same certificate. The six things that actually differ, how to check a course in thirty seconds, what a "$25" price usually means at checkout, and what Road Ready Safety charges and includes.',
+  dateModified: '2026-10-05',
   datePublished: '2026-06-15',
   author: { '@type': 'Organization', name: 'Road Ready Safety' },
   publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  mainEntityOfPage: `${siteUrl}/texas/best-defensive-driving-course`,
 });
 const faqSchema = JSON.stringify({
   '@context': 'https://schema.org',
@@ -45,8 +61,9 @@ const faqSchema = JSON.stringify({
 
 {isEnabled ? (
   <TexasLayout
-    title="Cheapest Texas Defensive Driving Course 2026: All-In Totals Compared"
-    description="Every TDLR-approved course teaches the same material — so the best one is the cheapest with the fastest certificate. We compare verified all-in prices (from $28) and name the cheapest pick for each need."
+    title="Best & Cheapest Texas Defensive Driving Course: How to Pick One (2026)"
+    description={`Every approved Texas course is six hours with the same certificate, so "best" is six checks you can make in two minutes: all-in total, certificate timing, device, format, language, refund. Ours is ${price} total.`}
+    keywords="best defensive driving course texas, cheapest defensive driving course texas, cheap defensive driving texas, easiest defensive driving course texas, how to choose a defensive driving course texas, texas defensive driving course comparison"
     url="/texas/best-defensive-driving-course"
   >
     <script type="application/ld+json" set:html={articleSchema} />
@@ -56,87 +73,91 @@ const faqSchema = JSON.stringify({
       <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
 
         <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
-          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving</a>
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving course</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">How to pick a course</span>
         </p>
 
         <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
-          The Best Texas Defensive Driving Course in 2026
+          How to Pick the Best Texas Defensive Driving Course (and What "Cheapest" Really Means)
         </h1>
 
-        <!-- Answer-first TL;DR -->
         <div class="bg-info border border-info-border rounded-2xl p-6 mb-10">
           <p class="text-sm font-semibold text-primary-deep mb-2" style="font-family: 'Outfit', sans-serif;">Short answer</p>
           <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;">
-            Every TDLR-approved Texas defensive driving course teaches the same state-required 6-hour material, so any of them will dismiss an eligible ticket. That makes the <strong class="text-text">best course the one with the lowest all-in price and the fastest certificate</strong>. On verified June 2026 pricing, <strong class="text-text">Road Ready Safety is the best overall value at $28.00 all-in</strong> — the cheapest tier, and the only sub-$30 option that includes a <strong class="text-text">free instant certificate download</strong> so you can submit to your court the same day. Need English/Spanish? <strong class="text-text">GetDefensive.com</strong> ($30) is the best bilingual pick.
+            Every TDLR-approved Texas defensive driving course teaches the same six-hour state curriculum and issues the same certificate, so any approved course dismisses an eligible ticket. "Best" comes down to six things you can check before you pay: <strong class="text-text">the total on the final checkout screen, when you get the certificate, whether it saves your place across devices, the format, the language, and the refund policy</strong>. Ours is {price} total with the certificate included, TDLR provider {TEXAS_COURSE.providerNumber}. The rest of this page is how to check any course, including ours.
           </p>
         </div>
 
         <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p>"What's the best defensive driving course in Texas?" is the most common question drivers ask after a ticket — but it's slightly the wrong question. Because Texas regulates the curriculum, the course material barely differs between providers. What changes is what you pay and how fast you get your certificate.</p>
-          <p>This guide explains the few things that actually separate one course from another, names the best pick for each situation, and shows verified all-in prices. It's written by the Road Ready Safety team — we run one of the courses below, so we've laid out the criteria honestly and linked our full, independent <a href="/texas/cost" class="text-primary-deep font-medium hover:underline">12-provider price comparison</a> so you can check our work.</p>
+          <p>"Which defensive driving course is best?" is the first thing most people search after a ticket, and it is a slightly wrong question. Texas writes the curriculum, sets the length and designs the certificate. The course material barely changes from one provider to the next. What changes is what you pay at the last checkout screen, how fast the certificate reaches you, and how painful the six hours are.</p>
+          <p>We run one of these courses, so read this as a seller explaining the market. Every rule below points at its source, and the checklist at the end works on us as well as on anyone else.</p>
         </div>
 
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How to choose: the 4 things that actually matter</h2>
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Why does every approved course dismiss the same ticket?</h2>
         <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <ul class="list-disc pl-6 space-y-3">
-            <li><strong class="text-text">TDLR approval.</strong> Only a course approved by the Texas Department of Licensing and Regulation will be accepted by your court. Every provider should show a CP license number. If it doesn't, walk away.</li>
-            <li><strong class="text-text">All-in price.</strong> The advertised price is rarely what you pay. Texas law sets a $25 minimum total, and many providers add a processing fee and a certificate fee at the last checkout screen. Compare the <em>final</em> total, not the headline price.</li>
-            <li><strong class="text-text">Certificate speed and cost.</strong> This is the one that trips people up. If you're on a court deadline, a free instant certificate download lets you submit the same day. Providers that only mail a certificate — or charge $8–$50 to get it instantly — add cost and risk.</li>
-            <li><strong class="text-text">Format, language, and device.</strong> Read-based vs. video, English vs. bilingual, and whether it works smoothly on your phone with your progress saved. These are preference, not pass/fail.</li>
-          </ul>
-          <p>Notice what's <em>not</em> on the list: price has no effect on whether your ticket gets dismissed. The court only cares that the certificate comes from a TDLR-approved provider.</p>
+          <p>Because the court is not grading the course. It is checking for a uniform certificate of completion from a provider licensed by the Texas Department of Licensing and Regulation. TDLR approves every driving safety course against the same required curriculum and the same six-hour length, with at least five hours of instruction (16 TAC chapter 84). The certificate a course issues when you finish is the same document whichever provider printed it. Under Code of Criminal Procedure chapter 45A, the court dismisses the charge when it receives that certificate and, where required, your driving record, inside the deadline it set.</p>
+          <p>So the course cannot be "more accepted" or "faster to dismiss." It can only be approved or not, and easier or harder to get through. Confirm approval first on the <a href="/texas/tdlr-approved" class="text-primary-deep font-medium hover:underline">TDLR-approved page</a>, which walks through the state's license search.</p>
         </div>
 
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Best Texas defensive driving courses, by need</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-6" style="font-family: 'DM Sans', sans-serif;">
-          <ul class="list-disc pl-6 space-y-3">
-            <li><strong class="text-text">Best overall value:</strong> Road Ready Safety — $28.00 all-in with a free instant certificate.</li>
-            <li><strong class="text-text">Best if you need a same-day certificate on a deadline:</strong> Road Ready Safety (free instant download, no add-on fee).</li>
-            <li><strong class="text-text">Best bilingual (English / Spanish):</strong> GetDefensive.com — $30.00 all-in.</li>
-            <li><strong class="text-text">Best known national brand:</strong> DefensiveDriving.com — $28.00, though its instant certificate costs an extra $25.</li>
-            <li><strong class="text-text">Best polished app experience:</strong> Aceable — well-reviewed, but roughly $21 more at its standard price (promos may narrow the gap).</li>
-          </ul>
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What actually differs between courses?</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-4" style="font-family: 'DM Sans', sans-serif;">
+          <p>Six things. Each one is checkable in a minute from the provider's own site, and together they decide whether the course costs you more than the advertised number or more than one evening.</p>
         </div>
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Verified all-in price comparison (June 2026)</h2>
         <div class="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 mb-4 rounded-xl border border-border">
-          <table class="w-full min-w-[760px] text-sm border-collapse">
+          <table class="w-full min-w-[640px] text-sm border-collapse" style="font-family: 'DM Sans', sans-serif;">
             <thead>
               <tr class="bg-surface-muted text-left border-b border-border">
-                {['Provider','CP#','All-in Total','Instant Certificate','Best for'].map(h => (
-                  <th class="py-3 px-3 font-semibold text-text" style="font-family: 'DM Sans', sans-serif;">{h}</th>
-                ))}
+                <th class="py-3 px-3 font-semibold text-text">What differs</th>
+                <th class="py-3 px-3 font-semibold text-text">What to check</th>
+                <th class="py-3 px-3 font-semibold text-text">Why it matters</th>
               </tr>
             </thead>
-            <tbody style="font-family: 'DM Sans', sans-serif;">
-              {picks.map(row => (
-                <tr class={row.highlight ? 'bg-info border-b border-info-border' : 'border-b border-border'}>
-                  <td class={row.highlight ? 'py-3 px-3 font-semibold text-text' : 'py-3 px-3 text-text'}>{row.provider}</td>
-                  <td class="py-3 px-3 text-text-body">{row.cp}</td>
-                  <td class={row.highlight ? 'py-3 px-3 font-bold text-primary-deep' : 'py-3 px-3 font-bold text-text'}>{row.total}</td>
-                  <td class="py-3 px-3 text-text-body">{row.instantCert}</td>
-                  <td class="py-3 px-3 text-text-body">{row.best}</td>
+            <tbody>
+              {differences.map((d, i) => (
+                <tr class={`border-b border-border align-top ${i % 2 === 0 ? '' : 'bg-surface-muted/40'}`}>
+                  <td class="py-3 px-3 font-semibold text-text">{d.what}</td>
+                  <td class="py-3 px-3 text-text-body">{d.check}</td>
+                  <td class="py-3 px-3 text-text-body">{d.why}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        <p class="text-sm text-text-body mb-2" style="font-family: 'DM Sans', sans-serif;">All-in totals include the base course fee plus any checkout fees. Last verified June 2026 against TDLR provider records and direct checkout confirmation. Aceable's total reflects standard pricing; promotional pricing may be lower. Course fees are set by each provider and may change — confirm at checkout.</p>
-        <p class="text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">Want the full breakdown — processing fees, certificate-delivery options, and all 12 providers? See our independent <a href="/texas/cost" class="text-primary-deep font-medium hover:underline">Texas defensive driving cost comparison</a>.</p>
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Why we recommend Road Ready Safety</h2>
         <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p>We'll be upfront: Road Ready Safety is our course. But the case for it is built entirely on the criteria above, and you can verify every claim on our <a href="/texas/cost" class="text-primary-deep font-medium hover:underline">cost page</a>:</p>
-          <ul class="list-disc pl-6 space-y-3">
-            <li><strong class="text-text">TDLR-approved (CP1234)</strong> and accepted by Texas courts statewide for dismissal of an eligible citation.</li>
-            <li><strong class="text-text">$28.00 all-in</strong> — the cheapest tier of verified providers, with no surprise checkout fees.</li>
-            <li><strong class="text-text">Free instant certificate.</strong> You download it the moment you finish and can submit to your court the same day — included, not a paid add-on.</li>
-            <li><strong class="text-text">The full state-required 6 hours, online on any device</strong>, with progress saved so you can stop and resume.</li>
-          </ul>
-          <p>If another approved course fits your needs better — say you need it in Spanish — use it. The goal is a dismissed ticket, and any TDLR-approved certificate gets you there.</p>
+          <p>Notice what is not on the list. Price has no effect on whether the ticket is dismissed, and neither does the brand. The court only sees the certificate.</p>
         </div>
 
-        <YouTubeCard id="Y6sT-z7uFWQ" title="What Texas Defensive Driving Course Actually Costs All In" blurb="The real all-in price of a Texas defensive driving course." />
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What does a "{floor}" price usually mean at checkout?</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>{floor} is the legal floor. Texas Education Code §1001.352, as amended by HB 3012 on September 1, 2025, requires every approved course to charge at least {floor}, so that is the number most courses advertise. It is often not the number you pay. Many checkouts add lines after the advertised price: a "processing" or legacy "state" fee, a charge to get the certificate today rather than by mail next week, a premium version of the same course, a driving-record order at a markup. The <a href="/texas/cost" class="text-primary-deep font-medium hover:underline">cost page</a> explains each fee line and what to check for it.</p>
+          <p>The honest comparison is the total on the final order summary with the certificate in your hands and nothing else owed to the provider. Ask one question of any checkout before you enter a card: when I finish, do I have the certificate at no extra cost?</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Is any course faster than six hours?</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>No. Six hours is the state rule, every approved online course enforces it with timers, and a course promising two or three hours is either not approved or describing something other than the Texas driving safety course. People online will tell you the best course is the one you can finish fastest. They are half right: nobody is faster, so what you are choosing is how the six hours feel and whether you can spread them over several evenings without losing your place. The <a href="/texas/fastest-defensive-driving-course" class="text-primary-deep font-medium hover:underline">fastest-course page</a> shows where the time actually goes.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How do you check a course is TDLR-approved in thirty seconds?</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Look for a course provider number in the format CP followed by digits on the provider's site, then search it on TDLR's license lookup. If the number is not shown, or the search does not find it, walk away. Our number is {TEXAS_COURSE.providerNumber}. The <a href="/texas/tdlr-approved" class="text-primary-deep font-medium hover:underline">TDLR-approved page</a> has the search steps, and the <a href="/texas/providers" class="text-primary-deep font-medium hover:underline">provider directory</a> lists every licensed provider from TDLR's own records so you can check a name there too.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What Road Ready Safety charges and includes</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">{price} total.</strong> That is the {TEXAS_COURSE.hours}-hour TDLR-approved course (provider {TEXAS_COURSE.providerNumber}), unlimited quiz retakes, no final exam, and the certificate of completion as an instant download the moment you finish, with the court copy and the insurance copy both included. There is no delivery fee, no rush fee, no premium tier and no driving-record upsell; the Type 3A record, if your court requires it, is $12 from Texas DPS directly. The course saves your place across phone, tablet and computer. If you stop before completing it, you get a full refund.</p>
+          <p>Two things we do not claim: we cannot make the course shorter than six hours, and we cannot promise what your court will decide. Eligibility is set by the court and by statute, and the <a href="/texas/ticket-dismissal" class="text-primary-deep font-medium hover:underline">ticket-dismissal guide</a> covers who qualifies. Taking it in Spanish is covered on the <a href="/texas/spanish" class="text-primary-deep font-medium hover:underline">Spanish page</a>. What the modules look like is on <a href="/texas/what-the-course-looks-like" class="text-primary-deep font-medium hover:underline">this walkthrough</a>.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Five questions to ask before you pay anyone</h2>
+        <ol class="list-decimal pl-6 space-y-3 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          {checklist.map(item => <li>{item}</li>)}
+        </ol>
+
+        <NextStepBlock page="best-defensive-driving-course" lead="eligible" />
+
+        <YouTubeCard id="jjZUVQVAXhE" title="How to Choose a Texas Driver Safety Course Without Getting Overcharged" blurb="How to pick a state-approved course and avoid paying for things the court does not need." />
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
         <div class="space-y-8 mb-12">
@@ -149,7 +170,7 @@ const faqSchema = JSON.stringify({
         </div>
 
         <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p>Before you enroll in any course, make sure you're eligible and you've requested the course from your court. Start with <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">how Texas ticket dismissal works</a>, or <a href="/texas/eligibility-tracker" class="text-primary-deep font-medium hover:underline">check your eligibility</a>. Still deciding? See <a href="/texas/road-ready-safety-reviews" class="text-primary-deep font-medium hover:underline">what our reviewers say</a>, <a href="/texas/will-my-court-accept-online-defensive-driving" class="text-primary-deep font-medium hover:underline">whether your court accepts an online course</a>, <a href="/texas/defensive-driving-on-your-phone" class="text-primary-deep font-medium hover:underline">how it works on a phone</a>, or try a <a href="/texas/defensive-driving-practice-test" class="text-primary-deep font-medium hover:underline">free practice test</a>. Found a price that looks off? <a href={contactUrl} class="text-primary-deep font-semibold hover:underline">Tell us</a> and we'll verify it.</p>
+          <p>Before you enroll anywhere, make sure the court has approved you for the course: <a href="/texas/request-defensive-driving" class="text-primary-deep font-medium hover:underline">how to request defensive driving from your court</a>, or <a href="/texas/eligibility-tracker" class="text-primary-deep font-medium hover:underline">check your eligibility</a> first. Still deciding? Read <a href="/texas/road-ready-safety-reviews" class="text-primary-deep font-medium hover:underline">what our reviewers say</a>. Seen a checkout that did not match its advertised price? <a href={contactUrl} class="text-primary-deep font-semibold hover:underline">Tell us</a>; it helps us keep the cost page honest.</p>
         </div>
 
         <div class="pt-4 border-t border-border">
@@ -158,8 +179,13 @@ const faqSchema = JSON.stringify({
             class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
             style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
           >
-            Take the $28 Course — Instant Certificate
+            Start the {price} course, certificate included
           </a>
+        </div>
+
+        <div class="pt-6 mt-10 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider ({TEXAS_COURSE.providerNumber}). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Last updated October 5, 2026. Course length and curriculum per 16 TAC chapter 84; price floor per Tex. Educ. Code §1001.352 as amended by HB 3012 (eff. Sept. 1, 2025); dismissal procedure per Tex. Code Crim. Proc. ch. 45A. No provider other than Road Ready Safety is named or priced on this page.</p>
         </div>
 
       </div>

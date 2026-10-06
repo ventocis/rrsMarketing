@@ -40,7 +40,8 @@ const staticRoutes = [
 
 // Texas guide pages are generated from the files in src/pages/texas so a new page can never be
 // left out of the sitemap by hand. Dynamic routes ([slug], [i18n], [insurer]) are listed by their
-// own data below; /texas/contactus and /texas/terms are noindex redirects.
+// own data below; /texas/contactus, /texas/terms and /texas/pricing are noindex redirects, and the
+// /texas/vs comparison pages were retired (noindex) on 2026-10-05 under the no-competitor-names rule.
 // (Read from disk rather than import.meta.glob: importing page modules from another page breaks
 // Astro's static build pipeline. The endpoint is bundled into dist/, so resolve from the project
 // root, where `astro build` runs, not from import.meta.url.)
@@ -51,7 +52,7 @@ const walk = (dir: string): string[] =>
   );
 const texasGuideRoutes = walk(texasDir)
   .map((f) => relative(texasDir, f).split(sep).join('/'))
-  .filter((f) => !f.includes('[') && f !== 'contactus.astro' && f !== 'terms.astro')
+  .filter((f) => !f.includes('[') && f !== 'contactus.astro' && f !== 'terms.astro' && f !== 'pricing.astro' && !f.startsWith('vs/'))
   .map((f) => '/texas/' + f.replace(/\/index\.astro$/, '').replace(/\.astro$/, ''))
   .filter((r) => r !== '/texas/index' && r !== '/texas/courts')
   .sort();

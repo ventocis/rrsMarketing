@@ -73,9 +73,9 @@ const faqSchema = JSON.stringify({
 
 {isEnabled ? (
   <TexasLayout
-    title={`Texas Defensive Driving Cost 2026: The ${floor} Legal Floor, Hidden Fees, ${price} All-In`}
+    title={`Texas Defensive Driving Cost & Price 2026: The ${floor} Legal Floor, Hidden Fees, ${price} All-In`}
     description={`A Texas defensive driving course costs at least ${floor} by law. What each checkout fee line means, why there is no free approved course, what the whole dismissal costs with court fees, and what ${price} all-in includes at Road Ready Safety.`}
-    keywords="defensive driving texas cost, cheapest defensive driving course texas, free defensive driving course texas, texas defensive driving course price, how much is defensive driving in texas, texas driving safety course cost"
+    keywords="defensive driving texas cost, texas defensive driving course price, cheapest defensive driving course texas, free defensive driving course texas, texas defensive driving course price, how much is defensive driving in texas, texas driving safety course cost"
     url="/texas/cost"
   >
     <script type="application/ld+json" set:html={articleSchema} />
@@ -97,6 +97,20 @@ const faqSchema = JSON.stringify({
         <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
           <p>A Texas defensive driving course costs <strong class="text-text">at least {floor}</strong>, because state law sets that as the minimum price for every TDLR-approved driving safety course (Tex. Educ. Code §1001.352). What you actually pay is that course fee plus whatever a provider adds at checkout: certificate delivery, a "processing" line, a premium version, a driving record. Those add-ons are where a {floor} course becomes a $40 or $50 one.</p>
           <p>This page is the price data, not a ranking. It covers what the law allows, what each fee line means, what the rest of the dismissal costs, and what we charge and include. Every approved course teaches the same state curriculum and produces the same certificate, so the only comparison that matters is the all-in total on the final checkout screen.</p>
+        </div>
+
+        <div class="rounded-2xl border border-border bg-surface-muted p-6 mb-6 flex flex-col sm:flex-row sm:items-center gap-6" style="font-family: 'DM Sans', sans-serif;">
+          <div class="flex-1">
+            <p class="text-xs font-semibold tracking-[0.12em] uppercase text-primary-deep mb-2">Our price</p>
+            <p class="text-4xl font-bold text-text" style="font-family: 'Outfit', sans-serif;">{price} <span class="text-base font-semibold text-text-body">total</span></p>
+            <p class="text-sm text-text-body leading-6 mt-2">The {TEXAS_COURSE.hours}-hour TDLR-approved course ({TEXAS_COURSE.providerNumber}), your certificate the moment you finish, unlimited quiz retakes. Nothing is added at checkout. Full refund if you cancel before completing the course.</p>
+          </div>
+          <a
+            href={enrollUrl}
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[52px] px-7 rounded-[14px] text-base font-semibold items-center justify-center no-underline shrink-0"
+          >
+            Start the {price} course →
+          </a>
         </div>
 
         <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
@@ -150,7 +164,7 @@ const faqSchema = JSON.stringify({
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What does Road Ready Safety charge, and what is included?</h2>
         <div class="space-y-4 text-text-body text-base leading-7 mb-6" style="font-family: 'DM Sans', sans-serif;">
           <p><strong class="text-text">{price}, all-in.</strong> That is the {floor} course fee plus $3, and it is the only number you see at checkout. It includes the {TEXAS_COURSE.hours}-hour TDLR-approved course, unlimited quiz retakes, and the certificate of completion as an instant download the moment you finish, with the court copy and the insurance copy both included. No delivery fee, no rush fee, no premium tier, no driving-record upsell. If you have not completed the course you can get a full refund.</p>
-          <p>We publish the whole policy, including what we do not charge for and why, on the <a href="/texas/transparency" class="text-primary-deep font-medium hover:underline">transparency page</a>, and the plain price breakdown on the <a href="/texas/pricing" class="text-primary-deep font-medium hover:underline">pricing page</a>. Our provider number is {TEXAS_COURSE.providerNumber}; check it on TDLR's search before you pay us or anyone else.</p>
+          <p>We publish the whole policy, including what we do not charge for and why, on the <a href="/texas/transparency" class="text-primary-deep font-medium hover:underline">transparency page</a>. Not sure which course to take? <a href="/texas/best-defensive-driving-course" class="text-primary-deep font-medium hover:underline">How to pick a Texas defensive driving course</a> covers the few things that differ between approved courses. Our provider number is {TEXAS_COURSE.providerNumber}; check it on TDLR's search before you pay us or anyone else.</p>
         </div>
 
         <YouTubeCard id="Y6sT-z7uFWQ" title="What Texas Defensive Driving Course Actually Costs All In" blurb="The real all-in price of a Texas defensive driving course." />

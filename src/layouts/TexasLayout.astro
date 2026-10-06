@@ -19,6 +19,8 @@ interface Props {
    * Pass an array to override, or `false` on templates that already emit their own BreadcrumbList.
    */
   breadcrumbs?: { name: string; href: string }[] | false;
+  /** Keep the page out of the index (meta robots). Used by the retired /texas/vs comparison pages. */
+  noindex?: boolean;
 }
 
 const {
@@ -32,6 +34,7 @@ const {
   alternates = [],
   courseSchema = false,
   breadcrumbs,
+  noindex = false,
 } = Astro.props;
 
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '#';
@@ -75,7 +78,7 @@ const courseSchemaJson = courseSchema
   : null;
 ---
 
-<Layout title={title} description={description} keywords={keywords} url={url} lang={lang} alternates={alternates}>
+<Layout title={title} description={description} keywords={keywords} url={url} lang={lang} alternates={alternates} noindex={noindex}>
   <Fragment slot="head">
     {courseSchemaJson && <script type="application/ld+json" set:html={courseSchemaJson} />}
     {breadcrumbSchema && <script type="application/ld+json" set:html={breadcrumbSchema} />}
@@ -204,7 +207,7 @@ const courseSchemaJson = courseSchema
 
         <!-- Desktop Nav -->
         <nav class="hidden lg:flex items-center gap-8">
-          <a href="/texas/pricing" class="text-sm font-medium text-text-body hover:text-text no-underline transition-colors">Pricing</a>
+          <a href="/texas/cost" class="text-sm font-medium text-text-body hover:text-text no-underline transition-colors">Pricing</a>
           <a href="/texas/faq" class="text-sm font-medium text-text-body hover:text-text no-underline transition-colors">FAQ</a>
           <a href="/texas/helpcenter" class="text-sm font-medium text-text-body hover:text-text no-underline transition-colors">Help Center</a>
           <a href="/texas/eligibility-tracker" class="text-sm font-medium text-text-body hover:text-text no-underline transition-colors">Eligibility Checker</a>
@@ -246,7 +249,7 @@ const courseSchemaJson = courseSchema
     <!-- Mobile Menu -->
     <div id="mobile-menu" class="hidden lg:hidden border-t border-border bg-white">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex flex-col gap-4">
-        <a href="/texas/pricing" class="text-sm font-medium text-text-body hover:text-text no-underline py-2">Pricing</a>
+        <a href="/texas/cost" class="text-sm font-medium text-text-body hover:text-text no-underline py-2">Pricing</a>
         <a href="/texas/faq" class="text-sm font-medium text-text-body hover:text-text no-underline py-2">FAQ</a>
         <a href="/texas/helpcenter" class="text-sm font-medium text-text-body hover:text-text no-underline py-2">Help Center</a>
         <a href="/texas/eligibility-tracker" class="text-sm font-medium text-text-body hover:text-text no-underline py-2">Eligibility Checker</a>
@@ -317,7 +320,7 @@ const courseSchemaJson = courseSchema
           <h3 class="text-sm font-semibold text-white uppercase tracking-wider">Course</h3>
           <nav class="flex flex-col gap-3">
             <a href="/texas" class="text-sm text-text-subtle hover:text-white no-underline transition-colors">Texas Defensive Driving</a>
-            <a href="/texas/pricing" class="text-sm text-text-subtle hover:text-white no-underline transition-colors">Pricing</a>
+            <a href="/texas/cost" class="text-sm text-text-subtle hover:text-white no-underline transition-colors">Pricing</a>
             <a href="/texas/faq" class="text-sm text-text-subtle hover:text-white no-underline transition-colors">FAQ</a>
             <a href={enrollUrl} class="text-sm text-text-subtle hover:text-white no-underline transition-colors">Start Course</a>
           </nav>

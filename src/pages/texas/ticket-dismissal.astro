@@ -82,7 +82,7 @@ const articleSchema = JSON.stringify({
   author: { '@type': 'Organization', name: 'Road Ready Safety' },
   publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
   datePublished: '2026-09-02',
-  dateModified: '2026-10-05',
+  dateModified: '2026-10-06',
   mainEntityOfPage: `${siteUrl}/texas/ticket-dismissal`,
 });
 
@@ -105,7 +105,7 @@ const howToSchema = JSON.stringify({
 
 {isEnabled ? (
   <TexasLayout
-    title="Texas Defensive Driving Course for Ticket Dismissal: Who Qualifies, the 5 Steps, Deadlines & Cost (2026)"
+    title="How to Dismiss a Traffic Ticket in Texas With Defensive Driving: Who Qualifies, 5 Steps, Deadlines & Cost (2026)"
     description={`How a TDLR-approved driving safety course dismisses a Texas traffic ticket: eligibility under CCP chapter 45A, the five steps in order, the 90-day deadline, court fees of $${S.fee.min} to $${S.fee.max}, which tickets are excluded, and how individual courts handle it.`}
     keywords="texas defensive driving course for ticket dismissal, ticket dismissal texas, how to get a ticket dismissed in texas, can defensive driving dismiss a ticket in texas, texas ticket dismissal requirements, dismiss ticket texas online, driving safety course ticket dismissal"
     url="/texas/ticket-dismissal"
@@ -141,6 +141,16 @@ const howToSchema = JSON.stringify({
 
         <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
           <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Eligibility is set by statute, but fees, forms and deadlines are set by each court and change; confirm with the court listed on your citation before you act. Road Ready Safety is a TDLR-licensed course provider (CP1234), not a court.</p>
+        </div>
+
+        <div class="rounded-2xl border border-info-border bg-info p-6 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm font-semibold text-primary-deep mb-3" style="font-family: 'Outfit', sans-serif;">Three ways a Texas ticket comes off your record. Pick yours first.</p>
+          <ol class="list-decimal pl-5 space-y-2 text-text-body text-base leading-7">
+            <li><strong class="text-text">The driving safety course</strong>, this page. A statutory right if you qualify: ask the court by the appearance date, take the six-hour course, submit the certificate, and the charge is dismissed. The outcome is fixed by law, not by the judge.</li>
+            <li><strong class="text-text">Deferred disposition</strong>. The judge's discretionary probation of up to 180 days; dismissal at the end if you stay clean. It can take tickets the course cannot (25+ over, for example). <a href="/texas/defensive-driving-vs-deferred-disposition" class="text-primary-deep font-medium hover:underline">Which should you choose?</a></li>
+            <li><strong class="text-text">Contest it</strong>, yourself or with a lawyer. Right for a ticket you did not earn or one neither program will take; slower and never certain. <a href="/texas/fight-or-dismiss" class="text-primary-deep font-medium hover:underline">Fight it or take the course?</a></li>
+          </ol>
+          <p class="text-sm text-text-body leading-6 mt-3">Paying the ticket is not a fourth route to dismissal: it is a guilty plea and a conviction. Every resolution path, including the compliance dismissals for registration and insurance tickets, is compared on <a href="/texas/ways-to-dismiss-ticket" class="text-primary-deep font-medium hover:underline">every way a Texas ticket gets resolved</a>.</p>
         </div>
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Who qualifies for ticket dismissal with a defensive driving course in Texas?</h2>

@@ -1,200 +1,241 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
-import VideoEmbed from '../../components/VideoEmbed.astro';
-import NextStepBlock from '../../components/texas/NextStepBlock.astro';
+import StickyCta from '../../components/texas/StickyCta.astro';
+import { courtStats as S } from '../../lib/court-stats';
+import { TEXAS_COURSE, TEXAS_PRICE_LABEL } from '../../data/texas-course';
+import reviews from '../../data/texas-reviews.json';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
-
 const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+const price = TEXAS_PRICE_LABEL;
+const review = reviews.find((r: any) => r.name === 'Ryan Johnson');
 
-const recordTypes = [
-  { type: 'Type 1', what: 'Status record — name, DOB, license status, latest address', certified: 'No', ddc: 'No', online: '$4.50', mail: '$4.00' },
-  { type: 'Type 2', what: '3-year history of crashes and moving violations', certified: 'No', ddc: 'No', online: '$6.50', mail: '$6.00' },
-  { type: 'Type 2A', what: 'Certified version of Type 2', certified: 'Yes', ddc: 'No — explicitly not acceptable', online: '$12.00', mail: '$10.00' },
-  { type: 'Type 3', what: 'All crashes and violations on record', certified: 'No', ddc: 'No', online: '$7.50', mail: '$7.00' },
-  { type: 'Type 3A', what: 'Certified version of Type 3 — the complete record', certified: 'Yes', ddc: 'YES — this is the one', online: '$12.00', mail: '$10.00' },
-  { type: 'Type AR', what: 'Certified abstract of complete driving record', certified: 'Yes', ddc: 'No', online: '$22.00', mail: '$20.00' },
+// Rebuilt 2026-10-06 from Jackson's design canvas "Type 3A Page Redesign" (Main.dc.html + Serp.dc.html), funnel
+// map gap 6: the page's biggest query ("do I need to print out the Type 3A", 2,117 impressions, 0 clicks) is now
+// the title and the first answer. Implemented as the spec: his copy, order, the "how my court takes paperwork"
+// picker, the record table, the order checklist, the timing strip, the four mistakes, course band, quick answers.
+// Data adaptation, flagged in the PR: the court counts print from court-stats.ts (same normalizing rule as the
+// rest of the site) instead of the design's typed numbers. Record types and fees match the DPS driver-records
+// page and form DR-1 as checked October 5, 2026 (unchanged from the previous version of this page). Sherman and
+// Deer Park facts are from our court research (grayson-municipal-sherman, harris-municipal-deer-park).
+// Design has no video, so the previous VideoEmbed is not carried over.
+
+const T = S.type3a;           // requiresType3A: yes / no / known
+const M = S.type3aSubmit;     // electronic vs paper-only among courts that require it and list a method
+const researched = T.known;
+const dpsOrderUrl = 'https://txapps.texas.gov/tolapp/txldrcdr/TXDPSLicenseeManager';
+
+const methods = [
+  { k: 'email', label: 'Email', send: true, action: 'Attach the original PDF.', detail: 'Send it with your course certificate. Don’t screenshot or convert it.' },
+  { k: 'portal', label: 'Online upload', send: true, action: 'Upload the original PDF.', detail: 'Upload it alongside your certificate in the court’s portal.' },
+  { k: 'mail', label: 'Mail', send: false, action: 'Print every page.', detail: 'Mail it with your certificate and any affidavit. Keep the PDF.' },
+  { k: 'person', label: 'In person', send: false, action: 'Print every page.', detail: 'Bring it with the rest of your paperwork, or use the drop box.' },
+  { k: 'fax', label: 'Fax', send: false, action: 'Print it to fax it.', detail: 'Keep the printout and the original PDF.' },
 ];
-
+const records = [
+  { name: 'Type 1', what: 'Status only', cert: 'No', ddc: 'No', price: '$4.50 / $4.00', hl: false },
+  { name: 'Type 2', what: '3-year history', cert: 'No', ddc: 'No', price: '$6.50 / $6.00', hl: false },
+  { name: 'Type 2A', what: '3-year history', cert: 'Yes', ddc: 'No', price: '$12.00 / $10.00', hl: false },
+  { name: 'Type 3', what: 'Complete record', cert: 'No', ddc: 'No', price: '$7.50 / $7.00', hl: false },
+  { name: 'Type 3A', what: 'Complete record', cert: 'Yes', ddc: '✓ Yes', price: '$12.00 / $10.00', hl: true },
+  { name: 'Type AR', what: 'Certified abstract', cert: 'Yes', ddc: 'No', price: '$22.00 / $20.00', hl: false },
+];
 const faqs = [
-  {
-    q: 'What is a Type 3A driving record in Texas?',
-    a: 'It\'s the certified copy of your complete Texas driving record — every crash and violation on file — issued by the Texas Department of Public Safety (DPS). Per DPS, the Type 3A is the record "acceptable for Defensive Driving Course (DDC)," which is why courts require it with your course certificate for ticket dismissal.',
-  },
-  {
-    q: 'How much does a Type 3A cost and how fast can I get it?',
-    a: 'Ordered online it\'s $12.00 ($10 record fee plus a $2 Texas.gov administration fee) and you can download and print the certified PDF immediately after payment. Ordered by mail with DPS form DR-1 it\'s $10.00, but DPS says to allow three weeks from the date it receives the request, which is too slow for most court deadlines.',
-  },
-  {
-    q: 'Is Type 3 the same as Type 3A?',
-    a: 'No, and mixing them up is a common reason courts bounce a submission. Type 3 has the same content but is uncertified — courts require the certified version, which is the 3A. Type 2A is certified but only covers three years, and DPS marks it as not acceptable for defensive driving. Order the 3A specifically.',
-  },
-  {
-    q: 'What do I need to order a Type 3A online?',
-    a: 'Four identifiers, all of which must match what DPS has on file: your Texas driver license or ID number, your date of birth, the last four digits of your Social Security number, and the audit number printed on your physical license. Plus a card for payment. If your SSN isn\'t on file with DPS, the online order won\'t authenticate and you\'ll need to order by mail.',
-  },
-  {
-    q: 'When should I order my Type 3A — before or after the course?',
-    a: 'It depends on your court, and this genuinely varies. Some courts (Sherman, for example) require a 3A dated after the date the court approved your request; others tell you to order it immediately; many just require it with your certificate before the deadline. Since the online version is instant, the safe play is to confirm your court\'s rule, then order online once you\'re sure — there\'s no need to risk a too-early date.',
-  },
-  {
-    q: 'Can my defensive driving course provider get the Type 3A for me?',
-    a: 'The record comes from DPS, not from TDLR and not from your course provider. Some providers sell record-ordering as an add-on at a markup. We deliberately don\'t — ordering directly from DPS online costs $12 and takes about two minutes, so paying a course provider more for the same document just wastes money.',
-  },
+  { q: 'Do I need to print my Type 3A for court?', a: `Only if your court takes paperwork on paper. If it accepts email or uploads, send the PDF. Of the ${M.known} Texas courts that require a Type 3A and say how they take paperwork, ${M.electronic} (${M.pctElectronic}%) take it electronically.` },
+  { q: 'Can I email my Type 3A to the court?', a: 'Yes, if it accepts email filings. Attach the original PDF from DPS with your certificate. Don’t screenshot it or re-save it as an image.' },
+  { q: 'Is a printout of the online Type 3A accepted?', a: 'Yes. The PDF is the certified record, and a printout of it is what paper-filing courts expect. Print every page and don’t write on it.' },
+  { q: 'How much is a Type 3A, and how fast?', a: '$12 online ($10 DPS fee plus $2 Texas.gov fee), as an instant PDF. By mail it’s $10 and takes about three weeks.' },
+  { q: 'Do all Texas courts require one?', a: `No. ${T.pctNo}% of the ${researched.toLocaleString("en-US")} courts we’ve researched don’t. Check your court’s page. If unsure, get it: it’s $12, and a missing record often delays dismissal.` },
+  { q: 'Can my course provider get it for me?', a: 'Some sell it as a marked-up add-on. We don’t. Ordering straight from DPS costs $12 and takes two minutes.' },
 ];
 
 const articleSchema = JSON.stringify({
-  '@context': 'https://schema.org',
-  '@type': 'Article',
-  headline: 'Your Texas Driving Record: Every Type DPS Sells, What It Costs, and the Type 3A Courts Want',
-  description: 'The Type 3A is the certified DPS driving record Texas courts require for defensive driving ticket dismissal. Exact costs, the record-type table, ordering steps, and the mistakes that get submissions rejected.',
+  '@context': 'https://schema.org', '@type': 'Article',
+  headline: 'Texas Type 3A driving record: do you need to print it?',
+  description: 'Only if your court takes paper. The $12 Type 3A from DPS is a PDF: email or upload it, or print every page. Which record to order, how, and when.',
   author: { '@type': 'Organization', name: 'Road Ready Safety' },
   publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
-  datePublished: '2026-06-11',
-  dateModified: '2026-10-05',
+  datePublished: '2026-06-11', dateModified: '2026-10-06',
   mainEntityOfPage: `${siteUrl}/texas/type-3a-driving-record`,
 });
+const faqSchema = JSON.stringify({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) });
 
-const faqSchema = JSON.stringify({
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
-});
+const nextSteps = [
+  ['/texas/defensive-driving-certificate', 'Ready to send everything?', 'How to submit to your court →'],
+  ['/texas/request-defensive-driving', 'Haven’t asked the court yet?', 'How to request the course →'],
+  ['/texas/courts', 'Need your court’s rules?', 'Search the court directory →'],
+  ['/texas/ticket-dismissal', 'Want the full process?', 'Texas ticket dismissal guide →'],
+];
+
+const inter = "font-family:'Inter',sans-serif;";
+const sans = "font-family:'DM Sans',sans-serif;";
+const h2c = 'text-[28px] lg:text-[34px] font-extrabold tracking-[-0.02em] leading-[1.15] text-text m-0 mb-3';
+const wrap = 'max-w-[1080px] mx-auto px-4 sm:px-6 lg:px-8';
+const card = 'rounded-[14px] border border-border bg-white p-[18px]';
+const pillOn = 'bg-primary text-white border-primary';
+const pillOff = 'bg-white text-text border-[#CBD3DF] hover:border-primary-deep';
+const link = 'text-primary hover:text-primary-deep font-medium';
 ---
 
 {isEnabled ? (
   <TexasLayout
-    title="Type 3A Driving Record for Texas Defensive Driving: $12 Online, How to Order and Print It (2026)"
-    description="Texas DPS sells six driver record types. Which one courts want for defensive driving (the certified Type 3A), what each costs, how to order online in minutes or by mail in three weeks, and the mix-ups that get submissions rejected."
-    keywords="texas driving record, texas dps driving record, request driving record texas, certified driving record texas, type 3a driving record, type 3a driving record texas, type 3a vs type 3, order driving record texas, DR-1 form texas"
+    title="Texas Type 3A Driving Record: Do You Need to Print It?"
+    description="Only if your court takes paper. The $12 Type 3A from DPS is a PDF: email or upload it, or print every page. How to order the right one."
+    keywords="type 3a driving record, type 3a driving record texas, do i need to print type 3a, texas driving record for defensive driving, certified driving record texas, type 3a vs type 3, order driving record texas, DR-1 form texas"
     url="/texas/type-3a-driving-record"
   >
     <script type="application/ld+json" set:html={articleSchema} />
     <script type="application/ld+json" set:html={faqSchema} />
 
-    <article class="bg-white pb-16 lg:pb-24">
-      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
-
-        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
-          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving course</a>
-          <span class="mx-2 text-text-subtle">›</span>
-          <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">Speeding ticket guide</a>
-          <span class="mx-2 text-text-subtle">›</span>
-          <span class="text-text">Type 3A driving record</span>
-        </p>
-
-        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
-          Your Texas Driving Record: Every Type DPS Sells, What It Costs, and the Type 3A Courts Want
-        </h1>
-
-        <VideoEmbed id="ltb0_xv0FPE" title="Texas Type 3A Driving Record: What It Is & How to Get One (2026)" description="What a Type 3A driving record is, why Texas courts require it for defensive driving, and how to order the certified copy." />
-
-        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
-          <p>The <strong class="text-text">Type 3A is the certified copy of your complete Texas driving record</strong>, issued by the Texas Department of Public Safety, and it's the document most Texas courts require alongside your course certificate to dismiss a ticket with defensive driving. DPS's own record-type chart marks the 3A as the record <em>"acceptable for Defensive Driving Course (DDC)"</em> — and the uncertified Type 3, the three-year Type 2A, and everything else on the menu are not.</p>
-          <p>Ordered online, it costs <strong class="text-text">$12.00 and downloads instantly as a certified PDF</strong>. Order the wrong type, or fail DPS's identity check, and you can burn days you may not have. Here's the whole thing, checked against DPS's record-type page and forms.</p>
+    <article class="bg-surface-muted pb-24 lg:pb-16 text-text" style={sans}>
+      <!-- ===== Lead + picker ===== -->
+      <div class={wrap}>
+        <p class="text-[15px] text-text-body pt-5 m-0"><a href="/texas" class="text-text-body hover:underline">Texas</a><span class="mx-1.5">›</span><a href="/texas/speeding-ticket" class="text-text-body hover:underline">Speeding ticket guide</a><span class="mx-1.5">›</span><span>Type 3A driving record</span></p>
+        <div class="max-w-[820px] pt-8 pb-7">
+          <h1 class="text-[34px] lg:text-[54px] font-extrabold tracking-[-0.02em] leading-[1.05] m-0 mb-5" style={inter}>Texas Type 3A driving record: do you need to print it?</h1>
+          <p class="text-lg lg:text-[21px] leading-8 m-0 mb-3.5">Only if your court takes paperwork on paper. The Type 3A you buy online from Texas DPS is a <strong>$12 PDF</strong>. If your court takes email or uploads, send the PDF. If it only takes mail or in-person filings, print every page.</p>
+          <p class="text-lg lg:text-[21px] leading-8 m-0">More than half of Texas courts take it electronically. Tap how your court takes paperwork:</p>
         </div>
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">When does a Texas court ask for your driving record?</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p>Three situations, and only the first is routine. <strong class="text-text">Defensive driving dismissal:</strong> the dismissal statute has the court check your record before it grants the course and again when you turn in the certificate, so almost every court asks for the certified Type 3A with your request or with your certificate (Tex. Code Crim. Proc. ch. 45A; which document, and when, is the court's call). <!-- TODO-VERIFY: cite the exact 45A article that requires presentation of the driving record with the certificate (former art. 45.0511(c)); source statutes.capitol.texas.gov CCP ch. 45A --> <strong class="text-text">Deferred disposition and occupational licenses:</strong> a judge may want the full history before granting probation, and an occupational (essential need) license petition needs a certified record. <strong class="text-text">Employers and insurers</strong> usually pull their own copy through DPS rather than asking you for one. Which record each court wants is on its page in our <a href="/texas/courts" class="text-primary-deep font-medium hover:underline">court directory</a>; the <a href="/texas/do-i-need-to-print-type-3a" class="text-primary-deep font-medium hover:underline">print-or-upload question</a> has its own answer.</p>
-        </div>
-
-        <NextStepBlock page="type-3a-driving-record" lead="eligible" />
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Every Texas driver record type — and why only one works</h2>
-        <div class="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 mb-4 rounded-xl border border-border">
-          <table class="w-full text-sm border-collapse">
-            <thead>
-              <tr class="bg-surface-muted text-left border-b border-border">
-                <th class="py-3 px-4 font-semibold text-text" style="font-family: 'DM Sans', sans-serif;">Record</th>
-                <th class="py-3 px-4 font-semibold text-text" style="font-family: 'DM Sans', sans-serif;">What it contains</th>
-                <th class="py-3 px-4 font-semibold text-text" style="font-family: 'DM Sans', sans-serif;">Certified?</th>
-                <th class="py-3 px-4 font-semibold text-text" style="font-family: 'DM Sans', sans-serif;">Works for defensive driving?</th>
-                <th class="py-3 px-4 font-semibold text-text" style="font-family: 'DM Sans', sans-serif;">Online / mail</th>
-              </tr>
-            </thead>
-            <tbody style="font-family: 'DM Sans', sans-serif;">
-              {recordTypes.map((r, i) => (
-                <tr class={`border-b border-border ${r.type === 'Type 3A' ? 'bg-info/40' : i % 2 === 0 ? '' : 'bg-surface-muted/40'}`}>
-                  <td class={`py-3 px-4 font-semibold ${r.type === 'Type 3A' ? 'text-primary' : 'text-text'}`}>{r.type}</td>
-                  <td class="py-3 px-4 text-text-body">{r.what}</td>
-                  <td class="py-3 px-4 text-text-body">{r.certified}</td>
-                  <td class={`py-3 px-4 ${r.type === 'Type 3A' ? 'text-primary font-semibold' : 'text-text-body'}`}>{r.ddc}</td>
-                  <td class="py-3 px-4 text-text-body whitespace-nowrap">{r.online} / {r.mail}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <p class="text-xs text-text-subtle mb-10" style="font-family: 'DM Sans', sans-serif;">Mail prices are the DPS base fees on its driver-records page (checked October 5, 2026); online prices add the Texas.gov administration fee shown at checkout. <!-- TODO-VERIFY: the $2.00 Texas.gov online fee and the $12.00 Type 3A online total against the live txapps.texas.gov checkout; DPS's own page lists only the $10.00 base fee --> Source: Texas DPS driver-records page and form DR-1.</p>
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How to order your Type 3A online (instant)</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p>Go to the official DPS driver record portal at <a href="https://txapps.texas.gov/tolapp/txldrcdr/TXDPSLicenseeManager" target="_blank" rel="noopener noreferrer" class="text-primary-deep font-medium hover:underline">texas.gov</a> and have four things ready — all of them must match what DPS has on file:</p>
-        </div>
-        <ul class="list-disc pl-6 space-y-2 text-text-body text-base leading-7 mb-6" style="font-family: 'DM Sans', sans-serif;">
-          <li>Your <strong class="text-text">Texas driver license or ID number</strong></li>
-          <li>Your <strong class="text-text">date of birth</strong></li>
-          <li>The <strong class="text-text">last four digits of your Social Security number</strong> (it must already be on file with DPS)</li>
-          <li>The <strong class="text-text">audit number</strong> printed on your physical license card</li>
-        </ul>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p>Select <strong class="text-text">Type 3A</strong>, pay the $12.00, and the certified record is delivered as a PDF you can download and print immediately. That PDF <em>is</em> the certified record — you don't wait for anything in the mail.</p>
-          <p>If the online check won't authenticate you (most commonly because your SSN isn't on file with DPS), the fallback is mail: DPS form <strong class="text-text">DR-1</strong> with a $10.00 fee — but DPS says to allow <strong class="text-text">three weeks from the date it receives your request</strong>, which can eat most of a court deadline. If you're stuck on the mail path, tell your court clerk early.</p>
-        </div>
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">When to order it — check your court first</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p>This is a court-by-court detail, not a DPS rule, and we've verified real differences across the Texas courts we track: some courts require a 3A <strong class="text-text">dated after the court approved</strong> your defensive driving request (Sherman, for example), some tell you to order it immediately, and several require the record and certificate to be <strong class="text-text">submitted together</strong> — Deer Park, for example, requires both by the assigned completion date. Since the online order is instant, the safe sequence is: get court approval, confirm your court's rule on our <a href="/texas/courts" class="text-primary-deep font-medium hover:underline">court directory</a> or with the clerk, take the course, then order the 3A — you lose nothing by ordering late, and you avoid a too-early date.</p>
-        </div>
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The mistakes that get record submissions bounced</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p><strong class="text-text">Ordering Type 3 instead of 3A.</strong> Same content, no certification — and the certification is the entire point. The $4.50 you save costs you a rejection.</p>
-          <p><strong class="text-text">Ordering Type 2A because it says "certified."</strong> It's certified but only covers three years; DPS explicitly marks it not acceptable for defensive driving.</p>
-          <p><strong class="text-text">Identity details that don't match.</strong> If the name or personal information on your record doesn't match your citation and course paperwork, the court can't connect the documents. This is court practice rather than a published DPS rule, but in our experience it's one of the most common avoidable problems — the same reason we make students contact support to correct sensitive details on a certificate instead of self-editing. Use your legal name, exactly as it appears on your license, on everything.</p>
-          <p><strong class="text-text">Waiting on the mail version with a deadline coming.</strong> Three weeks of processing against a 90-day window that's already half gone is how people end up paying tickets they'd already done the course for.</p>
-        </div>
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
-        <div class="space-y-8 mb-12">
-          {faqs.map(item => (
-            <div>
-              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
-              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;">{item.a}</p>
+        <div id="print" class="rounded-[20px] border border-border bg-white p-6 lg:p-[26px] flex flex-wrap gap-7 scroll-mt-28" style="box-shadow:0 10px 30px rgba(14,19,36,0.06);" data-picker>
+          <div class="flex-[1_1_380px] min-w-0 flex flex-col gap-3.5">
+            <p class="font-bold text-base m-0">My court takes paperwork by…</p>
+            <div class="flex flex-wrap gap-2">
+              {methods.map((m, i) => <button type="button" data-pick={m.k} aria-pressed={i === 0 ? 'true' : 'false'} class={`font-bold text-base min-h-[44px] px-[18px] rounded-full border-2 transition-colors ${i === 0 ? pillOn : pillOff}`}>{m.label}</button>)}
             </div>
-          ))}
+            {methods.map((m, i) => (
+              <div data-panel={m.k} hidden={i !== 0}>
+                <div class={`rounded-[14px] border px-5 py-[18px] flex flex-col gap-1.5 ${m.send ? 'bg-info border-info-border' : 'bg-amber-50 border-amber-200'}`}>
+                  <span class={`text-[13px] font-extrabold uppercase tracking-[0.06em] ${m.send ? 'text-primary-deep' : 'text-amber-800'}`}>{m.send ? 'No printing needed' : 'Print it'}</span>
+                  <span class="text-[24px] font-extrabold leading-[1.2]" style={inter}>{m.action}</span>
+                  <span class="text-base text-text-body">{m.detail}</span>
+                </div>
+              </div>
+            ))}
+            <p class="text-[15px] text-text-body m-0">Not sure? It's on <a href="/texas/courts" class={link}>your court's page</a>, or in the letter the court sent when it granted defensive driving.</p>
+          </div>
+          <div class="flex-[1_1_280px] min-w-0 flex flex-col gap-3">
+            <div class="rounded-[14px] bg-info p-[18px]"><p class="text-[36px] font-extrabold text-primary leading-none m-0" style={inter}>{M.pctElectronic}%</p><p class="text-[15px] text-text-body m-0 mt-1">of courts that require a Type 3A and list a method take it by email or online ({M.electronic} of {M.known}). Send the PDF.</p></div>
+            <div class="rounded-[14px] bg-[#F6F6F9] p-[18px]"><p class="text-[36px] font-extrabold text-text leading-none m-0" style={inter}>{M.pctPaper}%</p><p class="text-[15px] text-text-body m-0 mt-1">list only in-person, mail or fax ({M.paperOnly} of {M.known}). Print it.</p></div>
+            <p class="text-[13px] text-text-muted m-0">From our research of {researched.toLocaleString('en-US')} Texas municipal and justice courts; {T.yes} require a Type 3A. Payment-only portals not counted.</p>
+          </div>
         </div>
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The other half of the submission</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
-          <p>The 3A is one of the two documents your court needs — the other is the course certificate. We don't sell driving records or any other add-on: order the 3A from DPS for $12 and keep the difference. Our course is <strong class="text-text">$28 all-in</strong>, online, with a <strong class="text-text">free instant certificate</strong> (court copy and insurance copy included) the moment you finish.</p>
-        </div>
-
-        <div class="flex flex-col sm:flex-row gap-4 mb-10">
-          <a
-            href={enrollUrl}
-            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
-            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
-          >
-            Start the $28 Course →
-          </a>
-          <a
-            href="/texas/courts"
-            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
-            style="font-family: 'DM Sans', sans-serif;"
-          >
-            Check your court's rules
-          </a>
-        </div>
-
-        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
-          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; record requirements and timing rules are set by your court — confirm with the court on your citation.</p>
-          <p class="text-xs text-text-subtle">Last updated October 5, 2026. Record types, base fees, online requirements and the three-week mail time re-checked against the Texas DPS driver-records page on October 5, 2026; form DR-1 (Rev. 10/16). Prices and processing times are DPS's and may change.</p>
-        </div>
-
+        <p class="text-lg leading-8 m-0 max-w-[820px] pt-2 pb-12">Printing is the easy part. The mistake that actually gets submissions sent back is <strong>ordering the wrong record</strong>. Three of them look almost the same.</p>
       </div>
+
+      <!-- ===== Which record ===== -->
+      <section id="which" class="bg-white border-y border-border scroll-mt-28">
+        <div class={`${wrap} py-12 lg:py-14`}>
+          <h2 class={h2c} style={inter}>Which driving record does the court want?</h2>
+          <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">The Type 3A: the certified copy of your complete record. DPS marks it as the one "acceptable for Defensive Driving Course (DDC)." Nothing else on the menu works.</p>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5 mb-6">
+            <div class="rounded-2xl border-2 border-primary bg-info p-[22px]"><p class="text-[13px] font-extrabold uppercase tracking-[0.06em] text-primary-deep m-0">✓ Order this one</p><p class="text-[26px] font-extrabold m-0 my-1" style={inter}>Type 3A</p><p class="text-[15px] text-text-body m-0">Certified, complete record. $12 online.</p></div>
+            <div class="rounded-2xl border border-border bg-white p-[22px]"><p class="text-[13px] font-extrabold uppercase tracking-[0.06em] text-amber-800 m-0">✕ Common mix-up</p><p class="text-[26px] font-extrabold m-0 my-1" style={inter}>Type 3</p><p class="text-[15px] text-text-body m-0">Same content, not certified. Saves $4.50, costs you a rejection.</p></div>
+            <div class="rounded-2xl border border-border bg-white p-[22px]"><p class="text-[13px] font-extrabold uppercase tracking-[0.06em] text-amber-800 m-0">✕ Common mix-up</p><p class="text-[26px] font-extrabold m-0 my-1" style={inter}>Type 2A</p><p class="text-[15px] text-text-body m-0">Certified, but only 3 years. DPS says it's not acceptable.</p></div>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full min-w-[640px] border-collapse rounded-[14px] border border-border overflow-hidden text-[15px]" style="border-spacing:0;">
+              <thead><tr class="bg-[#F6F6F9] text-left"><th class="px-3.5 py-2.5 font-bold">Record</th><th class="px-3.5 py-2.5 font-bold">Contains</th><th class="px-3.5 py-2.5 font-bold">Certified?</th><th class="px-3.5 py-2.5 font-bold">For defensive driving?</th><th class="px-3.5 py-2.5 font-bold">Online / mail</th></tr></thead>
+              <tbody>{records.map((r) => <tr class={`border-t border-border ${r.hl ? 'bg-info' : 'bg-white'}`}><th scope="row" class="px-3.5 py-2.5 font-bold text-left">{r.name}</th><td class="px-3.5 py-2.5">{r.what}</td><td class="px-3.5 py-2.5">{r.cert}</td><td class={`px-3.5 py-2.5 font-bold ${r.hl ? 'text-primary-deep' : ''}`}>{r.ddc}</td><td class="px-3.5 py-2.5 whitespace-nowrap">{r.price}</td></tr>)}</tbody>
+            </table>
+          </div>
+          <p class="text-[13px] text-text-muted m-0 mt-2.5">Mail prices are DPS base fees; online adds the Texas.gov fee. Source: Texas DPS driver-records page and form DR-1, checked October 5, 2026.</p>
+        </div>
+      </section>
+
+      <!-- ===== How to order ===== -->
+      <section id="order" class={`${wrap} pt-16 pb-6 scroll-mt-28`}>
+        <h2 class={h2c} style={inter}>How do you order it?</h2>
+        <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">Online at <a href={dpsOrderUrl} class={link} rel="noopener" target="_blank">texas.gov</a> in about two minutes, for $12. You get the certified PDF right away. Have these four things ready, and they must match what DPS has on file:</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          {[['License or ID number', 'Your Texas DL or ID'], ['Date of birth', 'As DPS has it'], ['Last 4 of your SSN', 'Must already be on file'], ['Audit number', 'Printed on your license card']].map(([t, b]) => <div class={card}><strong>{t}</strong><br /><span class="text-[15px] text-text-body">{b}</span></div>)}
+        </div>
+        <div class="mt-4 rounded-xl border border-amber-200 bg-amber-50 p-4 max-w-[820px] leading-7"><strong>Won't verify you online?</strong> Usually your SSN isn't on file. The fallback is mail (form DR-1, $10), but DPS says to allow three weeks. Tell your court clerk early.</div>
+      </section>
+
+      <!-- ===== When ===== -->
+      <section class={`${wrap} pt-12 pb-6`}>
+        <h2 class={h2c} style={inter}>When should you order it?</h2>
+        <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">After the court approves you, and around when you finish the course. Some courts reject a record dated too early. Sherman, for example, wants one dated after approval. Deer Park wants it turned in together with your certificate.</p>
+        <ol class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-6 lg:gap-0 list-none p-0 m-0 max-w-[960px]">
+          <li class="border-t-[6px] border-info-border pt-3.5 pr-4"><p class="font-bold m-0">1. Court approves you</p><p class="text-[15px] text-text-body m-0"><a href="/texas/request-defensive-driving" class={link}>How to ask</a></p></li>
+          <li class="border-t-[6px] border-[#46A2F2] pt-3.5 pr-4"><p class="font-bold m-0">2. Take the course</p><p class="text-[15px] text-text-body m-0">{TEXAS_COURSE.hours} hours online</p></li>
+          <li class="border-t-[6px] border-primary pt-3.5 pr-4"><p class="font-bold m-0">3. Order the Type 3A</p><p class="text-[15px] text-text-body m-0">Same day you finish</p></li>
+          <li class="border-t-[6px] border-primary-deep pt-3.5 pr-4"><p class="font-bold m-0">4. Send both together</p><p class="text-[15px] text-text-body m-0"><a href="/texas/defensive-driving-certificate" class={link}>How to submit</a></p></li>
+        </ol>
+      </section>
+
+      <!-- ===== Mistakes ===== -->
+      <section class={`${wrap} pt-12 pb-6`}>
+        <h2 class={h2c} style={inter}>What gets a submission sent back?</h2>
+        <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">Four avoidable mistakes.</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          {[['The wrong type', 'Type 3 or 2A instead of 3A.'], ['A screenshot', 'Email the original PDF. Don’t convert it to an image.'], ['Names that don’t match', 'Use your legal name, exactly as on your license, everywhere.'], ['Waiting on the mail', 'Three weeks can eat half your 90-day window.']].map(([t, b]) => <div class={card}><strong>{t}</strong><br /><span class="text-[15px] text-text-body">{b}</span></div>)}
+        </div>
+        <p class="text-[15px] text-text-body m-0 mt-4">Already had one sent back? <a href="/texas/certificate-rejected" class={link}>Why courts reject submissions, and how to fix it</a></p>
+      </section>
+
+      <!-- ===== Course band ===== -->
+      <section id="course" class={`${wrap} py-14 scroll-mt-28`}>
+        <div class="rounded-3xl bg-primary-deep text-white px-6 py-12 lg:px-8 lg:py-14 flex flex-col items-center text-center gap-7">
+          <div class="flex flex-col gap-2.5 max-w-[680px]">
+            <span class="text-sm font-bold uppercase tracking-[0.08em] text-info-border">The other half of your submission</span>
+            <h2 class="text-[30px] lg:text-[40px] font-extrabold leading-[1.1] m-0" style={inter}>The record is $12 from DPS. The course is {price} from us.</h2>
+            <p class="m-0 text-info">We don't resell driving records. Order yours from DPS and keep the difference.</p>
+          </div>
+          {review && (
+            <div class="rounded-[18px] bg-white text-text px-7 py-7 max-w-[640px] w-full flex flex-col gap-3">
+              <span class="text-accent text-[22px] tracking-[3px]" aria-label={`${review.rating} out of 5 stars`}>{'★'.repeat(review.rating)}</span>
+              <blockquote class="m-0 text-[19px] lg:text-[21px] font-bold leading-[1.45]" style={inter}>"{review.quote}"</blockquote>
+              <div class="flex items-center gap-3 text-left">
+                <span class="w-10 h-10 rounded-full bg-primary text-white font-bold text-[15px] flex items-center justify-center" aria-hidden="true">{review.initials}</span>
+                <span class="flex flex-col text-[15px] leading-[1.35]"><strong>{review.name}</strong><span class="text-text-muted">{review.verified ? 'Verified via Trustpilot' : 'Trustpilot'} · {review.date}</span></span>
+              </div>
+            </div>
+          )}
+          <ul class="flex flex-wrap justify-center gap-2.5 list-none p-0 m-0 max-w-[820px]">
+            {[`${price} all-in, nothing added`, `TDLR-approved · ${TEXAS_COURSE.providerNumber}`, 'Certificate PDF the moment you finish', 'Send both PDFs together'].map((t) => <li class="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-2 text-[15px]"><span class="text-info-border font-extrabold" aria-hidden="true">✓</span>{t}</li>)}
+          </ul>
+          <div class="flex flex-col items-center gap-3">
+            <a href={enrollUrl} class="no-underline bg-white hover:bg-info text-primary-deep font-extrabold text-lg px-8 py-4 rounded-full" style={inter}>Start the {price} course →</a>
+            <a href="/texas/request-defensive-driving" class="no-underline text-white hover:underline">Court hasn't approved you yet? Ask first</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== Quick answers ===== -->
+      <section class={`${wrap} pt-2 pb-6`}>
+        <h2 class={h2c} style={inter}>Quick answers</h2>
+        <div class="flex flex-col gap-3 max-w-[820px] mt-5">
+          {faqs.map((f) => <div class="rounded-xl border border-border bg-white p-5"><h3 class="font-bold text-base m-0 mb-1" style={sans}>{f.q}</h3><p class="m-0 text-text-body leading-7">{f.a}</p></div>)}
+        </div>
+      </section>
+
+      <!-- ===== Next step + legal ===== -->
+      <section class={`${wrap} pt-6 pb-10`}>
+        <p class="font-bold m-0 mb-2.5">Your next step</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-7">
+          {nextSteps.map(([href, t, s]) => <a href={href} class="no-underline text-text rounded-[14px] border border-border bg-white p-4 hover:border-primary-deep"><strong>{t}</strong><br /><span class="text-[15px] text-text-body">{s}</span></a>)}
+        </div>
+        <p class="text-[15px] text-text-muted m-0 max-w-[820px] leading-6">General information, not legal advice. Record requirements and timing are set by your court. Road Ready Safety is a TDLR-licensed course provider ({TEXAS_COURSE.providerNumber}), not a court. Sources: Texas DPS driver-records page and form DR-1 (checked October 5, 2026); Tex. Code Crim. Proc. ch. 45A; Road Ready Safety research of {researched.toLocaleString('en-US')} Texas municipal and justice courts. Last updated October 6, 2026.</p>
+      </section>
+
+      <StickyCta afterId="which" hideAtId="course" />
     </article>
+
+    <script is:inline>
+      (function () {
+        document.querySelectorAll('[data-picker]:not([data-armed])').forEach(function (root) {
+          root.setAttribute('data-armed', '1');
+          var on = ['bg-primary', 'text-white', 'border-primary'], off = ['bg-white', 'text-text', 'border-[#CBD3DF]', 'hover:border-primary-deep'];
+          var btns = root.querySelectorAll('[data-pick]'), panels = root.querySelectorAll('[data-panel]');
+          btns.forEach(function (b) { b.addEventListener('click', function () {
+            var k = b.getAttribute('data-pick');
+            btns.forEach(function (x) { var sel = x === b; x.setAttribute('aria-pressed', sel ? 'true' : 'false'); on.forEach(function (c) { x.classList.toggle(c, sel); }); off.forEach(function (c) { x.classList.toggle(c, !sel); }); });
+            panels.forEach(function (p) { p.hidden = p.getAttribute('data-panel') !== k; });
+          }); });
+        });
+      })();
+    </script>
   </TexasLayout>
 ) : (
   <meta http-equiv="refresh" content="0; url=/" />

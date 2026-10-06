@@ -1,17 +1,19 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
 import YouTubeCard from '../../components/YouTubeCard.astro';
+import StickyCta from '../../components/texas/StickyCta.astro';
 import { courtStats as S } from '../../lib/court-stats';
 import { TEXAS_COURSE, TEXAS_PRICE_LABEL } from '../../data/texas-course';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
-
 const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
 const floor = `$${TEXAS_COURSE.legalMinimumPrice}`;
 const price = TEXAS_PRICE_LABEL;
 
-// Editorial rule for this page: no competitor names and no competitor prices. The page explains
-// what a Texas driving safety course can legally cost, what the fee lines mean, and what we charge.
+// Redesigned 2026-10-07 on Jackson's Dallas-mockup pattern (see ~/Claude/SEO/DESIGN-STANDARD.md):
+// lead → router → the numbers as bars → the post-checkout certificate charge → fee lines as cards →
+// what $28 includes / never charges → course band → quick answers. Every fact below was on the page
+// before; nothing added. Editorial rule unchanged: no competitor names, no competitor prices.
 // Sources: Tex. Educ. Code §1001.352 (HB 3012, eff. Sept. 1, 2025) for the floor; court fees from
 // src/lib/court-stats.ts (our verified court dataset); Type 3A fee per Texas DPS.
 
@@ -26,30 +28,12 @@ const feeLines = [
 ];
 
 const faqs = [
-  {
-    q: 'How much does a defensive driving course cost in Texas?',
-    a: `At least ${floor}, by law. Texas Education Code §1001.352 sets a ${floor} minimum for every TDLR-approved driving safety course, so no approved course can cost less. What you actually pay is the course fee plus any certificate-delivery, processing or add-on charges a provider adds at checkout. Road Ready Safety is ${price} all-in with the instant certificate included.`,
-  },
-  {
-    q: 'Is there a free defensive driving course in Texas?',
-    a: `No. A free course cannot be TDLR-approved because the law requires a minimum price of ${floor}, and only an approved course produces the certificate a court or insurer accepts. "Free" in course advertising usually means free quiz retakes, free certificate delivery, or a free trial of the first module. Some employers and insurers reimburse the fee, which is the closest thing to free that exists.`,
-  },
-  {
-    q: 'What is the cheapest defensive driving course in Texas?',
-    a: `Any course at the ${floor} legal minimum with the certificate included and no add-on at checkout. Because every approved course teaches the same state curriculum and produces the same certificate, the only comparison that holds up is the all-in checkout total, not the advertised price. Ours is ${price}: ${floor} for the course plus $3, with the instant certificate, both copies, and no delivery fee.`,
-  },
-  {
-    q: 'Why do some courses advertise $25 and charge more at checkout?',
-    a: `Until September 1, 2025 Texas required a $25 course fee plus a separate $3 fee, so many checkouts still show $25 and add $3. HB 3012 folded that into a single ${floor} minimum. Beyond that, certificate delivery, "processing" and premium-version fees are added after the advertised price. Read the final order summary before you enter a card.`,
-  },
-  {
-    q: 'How much does it cost to dismiss a ticket in Texas, all in?',
-    a: `Roughly $150 to $210: the court's fee ($${S.fee.min} to $${S.fee.max} across the courts we have verified, most commonly $144), the course (at least ${floor}; ${price} with us), and the $12 Type 3A driving record from DPS if the court makes you order it yourself. Paying the ticket instead usually costs a similar amount in fines and puts a conviction on your record.`,
-  },
-  {
-    q: 'Does Road Ready Safety charge anything after the course?',
-    a: `No. ${price} covers the course, the instant certificate download with both the court copy and the insurance copy, and unlimited quiz retakes. The two costs we cannot include are the court's own fee and the DPS driving record, because the court and DPS collect those. If you cancel before completing the course you can get a full refund.`,
-  },
+  { q: 'How much does a defensive driving course cost in Texas?', a: `At least ${floor}, by law. Texas Education Code §1001.352 sets a ${floor} minimum for every TDLR-approved driving safety course, so no approved course can cost less. What you actually pay is the course fee plus any certificate-delivery, processing or add-on charges a provider adds at checkout. Road Ready Safety is ${price} all-in with the instant certificate included.` },
+  { q: 'Is there a free defensive driving course in Texas?', a: `No. A free course cannot be TDLR-approved because the law requires a minimum price of ${floor}, and only an approved course produces the certificate a court or insurer accepts. "Free" in course advertising usually means free quiz retakes, free certificate delivery, or a free trial of the first module. Some employers and insurers reimburse the fee, which is the closest thing to free that exists.` },
+  { q: 'What is the cheapest defensive driving course in Texas?', a: `Any course at the ${floor} legal minimum with the certificate included and no add-on at checkout. Because every approved course teaches the same state curriculum and produces the same certificate, the only comparison that holds up is the all-in checkout total, not the advertised price. Ours is ${price}: ${floor} for the course plus $3, with the instant certificate, both copies, and no delivery fee.` },
+  { q: 'Why do some courses advertise $25 and charge more at checkout?', a: `Until September 1, 2025 Texas required a $25 course fee plus a separate $3 fee, so many checkouts still show $25 and add $3. HB 3012 folded that into a single ${floor} minimum. Beyond that, certificate delivery, "processing" and premium-version fees are added after the advertised price. Read the final order summary before you enter a card.` },
+  { q: 'How much does it cost to dismiss a ticket in Texas, all in?', a: `Roughly $150 to $210: the court's fee ($${S.fee.min} to $${S.fee.max} across the courts we have verified, most commonly $144), the course (at least ${floor}; ${price} with us), and the $12 Type 3A driving record from DPS if the court makes you order it yourself. Paying the ticket instead usually costs a similar amount in fines and puts a conviction on your record.` },
+  { q: 'Does Road Ready Safety charge anything after the course?', a: `No. ${price} covers the course, the instant certificate download with both the court copy and the insurance copy, and unlimited quiz retakes. The two costs we cannot include are the court's own fee and the DPS driving record, because the court and DPS collect those. If you cancel before completing the course you can get a full refund.` },
 ];
 
 const articleSchema = JSON.stringify({
@@ -57,157 +41,195 @@ const articleSchema = JSON.stringify({
   '@type': 'Article',
   headline: `How Much Does a Texas Defensive Driving Course Cost? The ${floor} Floor, Every Fee Line, ${price} All-In`,
   description: `What a Texas driving safety course can legally cost, what each checkout fee line means, what the whole dismissal costs beyond the course, and what Road Ready Safety charges and includes.`,
-  dateModified: '2026-10-05',
+  dateModified: '2026-10-07',
   datePublished: '2026-03-03',
   author: { '@type': 'Organization', name: 'Road Ready Safety' },
   publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
   mainEntityOfPage: `${siteUrl}/texas/cost`,
 });
-
 const faqSchema = JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
   mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
 });
+
+const outfit = "font-family:'Outfit',sans-serif;";
+const sans = "font-family:'DM Sans',sans-serif;";
+const h2c = 'text-[28px] lg:text-[36px] font-extrabold tracking-[-0.02em] leading-[1.12] text-primary-navy m-0 mb-3';
+const card = 'rounded-2xl border border-border bg-white p-5 flex flex-col gap-2 no-underline text-text hover:border-primary-deep transition-colors';
+const wrap = 'max-w-[1080px] mx-auto px-4 sm:px-6 lg:px-8';
 ---
 
 {isEnabled ? (
   <TexasLayout
     title={`Texas Defensive Driving Cost & Price 2026: The ${floor} Legal Floor, Hidden Fees, ${price} All-In`}
     description={`A Texas defensive driving course costs at least ${floor} by law. What each checkout fee line means, why there is no free approved course, what the whole dismissal costs with court fees, and what ${price} all-in includes at Road Ready Safety.`}
-    keywords="defensive driving texas cost, texas defensive driving course price, cheapest defensive driving course texas, free defensive driving course texas, texas defensive driving course price, how much is defensive driving in texas, texas driving safety course cost"
+    keywords="defensive driving texas cost, texas defensive driving course price, cheapest defensive driving course texas, free defensive driving course texas, how much is defensive driving in texas, texas driving safety course cost"
     url="/texas/cost"
   >
     <script type="application/ld+json" set:html={articleSchema} />
     <script type="application/ld+json" set:html={faqSchema} />
 
-    <article class="bg-white pb-16 lg:pb-24">
-      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
-
-        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+    <article class="bg-white pb-24 lg:pb-16" style={sans}>
+      <!-- ===== Lead ===== -->
+      <div class={`${wrap} pt-8 lg:pt-12`}>
+        <p class="text-sm text-text-body mb-6">
           <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving course</a>
           <span class="mx-2 text-text-subtle">›</span>
           <span class="text-text">Cost</span>
         </p>
-
-        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
-          How Much Does a Texas Defensive Driving Course Cost?
-        </h1>
-
-        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
-          <p>A Texas defensive driving course costs <strong class="text-text">at least {floor}</strong>, because state law sets that as the minimum price for every TDLR-approved driving safety course (Tex. Educ. Code §1001.352). What you actually pay is that course fee plus whatever a provider adds at checkout: certificate delivery, a "processing" line, a premium version, a driving record. Those add-ons are where a {floor} course becomes a $40 or $50 one.</p>
-          <p>This page is the price data, not a ranking. It covers what the law allows, what each fee line means, what the rest of the dismissal costs, and what we charge and include. Every approved course teaches the same state curriculum and produces the same certificate, so the only comparison that matters is the all-in total on the final checkout screen.</p>
+        <div class="max-w-[760px]">
+          <h1 class="text-[36px] lg:text-[56px] font-extrabold tracking-[-0.02em] leading-[1.05] text-primary-navy m-0 mb-5" style={outfit}>How much does a Texas defensive driving course cost?</h1>
+          <p class="text-lg lg:text-[21px] text-text-body leading-8 m-0 mb-3">At least <strong class="text-text">{floor}</strong>, because state law sets that as the minimum for every TDLR-approved driving safety course. What you actually pay is that fee plus whatever a checkout adds afterward: certificate delivery, a "processing" line, a premium version, a driving record. That is how a {floor} course becomes a $40 or $50 one.</p>
+          <p class="text-lg lg:text-[21px] text-text-body leading-8 m-0 mb-5">Every approved course teaches the same curriculum and issues the same certificate, so <strong class="text-text">the only number worth comparing is the total on the final checkout screen.</strong></p>
+          <p class="text-sm text-text-subtle m-0">By Road Ready Safety, TDLR-licensed provider {TEXAS_COURSE.providerNumber} · Prices and fee lines checked October 7, 2026</p>
         </div>
 
-        <div class="rounded-2xl border-2 border-amber-300 bg-amber-50 p-6 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p class="text-sm font-semibold text-amber-900 mb-2" style="font-family: 'Outfit', sans-serif;">The cost you find out about after you have paid</p>
-          <p class="text-base text-text leading-7 m-0">The most common pattern in this market works like this. The course is advertised at the ${floor} legal minimum and you pay it. Then, when you finish, you learn the certificate is free only <strong>by mail, in roughly two to four weeks</strong>, and getting it <strong>as a download today costs another $15 to $25</strong>. Your court gave you a deadline, so most people pay. The "${floor} course" ends up at $40 to $50, and the extra charge arrives after the point where you could compare. We see this on several of the largest "free certificate" courses in Texas; the fee amounts change, the timing does not.</p>
-          <p class="text-base text-text leading-7 mt-3 mb-0">The question that protects you, asked before you enter a card: <strong>"When I finish, is the certificate in my hands today at no extra cost?"</strong> With us the answer is yes: {price} is the total, and the certificate downloads the moment you finish, court copy and insurance copy included.</p>
-        </div>
-
-        <div class="rounded-2xl border border-border bg-surface-muted p-6 mb-6 flex flex-col sm:flex-row sm:items-center gap-6" style="font-family: 'DM Sans', sans-serif;">
-          <div class="flex-1">
-            <p class="text-xs font-semibold tracking-[0.12em] uppercase text-primary-deep mb-2">Our price</p>
-            <p class="text-4xl font-bold text-text" style="font-family: 'Outfit', sans-serif;">{price} <span class="text-base font-semibold text-text-body">total</span></p>
-            <p class="text-sm text-text-body leading-6 mt-2">The {TEXAS_COURSE.hours}-hour TDLR-approved course ({TEXAS_COURSE.providerNumber}), your certificate the moment you finish, unlimited quiz retakes. Nothing is added at checkout. Full refund if you cancel before completing the course.</p>
-          </div>
-          <a
-            href={enrollUrl}
-            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[52px] px-7 rounded-[14px] text-base font-semibold items-center justify-center no-underline shrink-0"
-          >
-            Start the {price} course →
+        <!-- ===== Router ===== -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8 mb-14">
+          <a href="#total" class={card}>
+            <span class="text-xs font-bold uppercase tracking-[0.06em] text-amber-800">I want the real total</span>
+            <span class="text-[22px] font-bold leading-tight" style={outfit}>What a dismissal costs, all in</span>
+            <span class="text-primary-deep font-semibold">See the three payments ↓</span>
+          </a>
+          <a href={enrollUrl} class="rounded-2xl border border-primary bg-primary p-5 flex flex-col gap-2 no-underline text-white hover:bg-primary-hover transition-colors">
+            <span class="text-xs font-bold uppercase tracking-[0.06em] text-info-border">The court approved me</span>
+            <span class="text-[22px] font-bold leading-tight" style={outfit}>Take the course: {price} total</span>
+            <span class="font-semibold">Start now →</span>
+          </a>
+          <a href="#fees" class={card}>
+            <span class="text-xs font-bold uppercase tracking-[0.06em] text-text-subtle">I'm comparing courses</span>
+            <span class="text-[22px] font-bold leading-tight" style={outfit}>What to check at any checkout</span>
+            <span class="text-primary-deep font-semibold">The seven fee lines ↓</span>
           </a>
         </div>
+      </div>
 
-        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
-          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">We sell one of these courses (Road Ready Safety, {TEXAS_COURSE.providerNumber}, {price} all-in), so read this as a seller explaining the market, with every rule pointed at its source so you can check it.</p>
+      <!-- ===== The three payments ===== -->
+      <section id="total" class="bg-surface-muted border-y border-border scroll-mt-28">
+        <div class={`${wrap} py-12 lg:py-14`}>
+          <h2 class={h2c} style={outfit}>What does the whole ticket dismissal cost?</h2>
+          <p class="text-base text-text-body leading-7 m-0 mb-6 max-w-[760px]">Three payments to three different people. The court's fee is the big number and you pay it whichever course you choose. The course is the only part you shop for.</p>
+          <div class="rounded-2xl border border-border bg-white p-6 max-w-[760px] flex flex-col gap-4">
+            {[
+              { l: `The court's fee (set locally when it grants the course)`, v: `$${S.fee.min} to $${S.fee.max}; most commonly $144, $169 in a school zone`, w: '100%', c: 'bg-text-subtle', href: '/texas/dsc-fees-by-court' },
+              { l: 'Certified Type 3A driving record, if your court requires it', v: '$12 online from Texas DPS', w: '9%', c: 'bg-border', href: '/texas/type-3a-driving-record' },
+              { l: 'The course (ours, certificate included)', v: `${price} total`, w: '19%', c: 'bg-primary', href: null },
+            ].map((r) => (
+              <div class="flex flex-col gap-1.5">
+                <div class="flex justify-between gap-4 text-[17px]"><span>{r.href ? <a href={r.href} class="text-text hover:underline">{r.l}</a> : r.l}</span><strong class={r.c === 'bg-primary' ? 'text-primary-deep whitespace-nowrap' : 'text-right'}>{r.v}</strong></div>
+                <div class={`h-3.5 rounded-full ${r.c}`} style={`width:${r.w}`}></div>
+              </div>
+            ))}
+          </div>
+          <p class="text-base text-text-body leading-7 m-0 mt-5 max-w-[760px]">Add them up and a dismissal runs about $150 to $210, against a fine that is often $150 to $300 plus three years of a conviction on your insurance. The full process is on the <a href="/texas/ticket-dismissal" class="text-primary-deep font-medium hover:underline">ticket dismissal guide</a>; the fine side is on the <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">speeding ticket page</a>.</p>
         </div>
+      </section>
 
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What is the cheapest a Texas defensive driving course can legally be?</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p><strong class="text-text">{floor}.</strong> Texas Education Code §1001.352, as amended by HB 3012 effective September 1, 2025, requires a driving safety course to cost at least {floor}. Before that date the rule was $25 plus a separate $3 fee, which is why many checkouts still show two lines that add to $28. There is no longer a separate state fee; there is one {floor} floor, and anything above it is the provider's margin or an add-on.</p>
-          <p>The floor exists so that approval cannot be won on price alone, and it has a practical consequence for you: a course advertised below {floor} is either not TDLR-approved or not showing you the real price. Check the provider's CP number on <a href="/texas/tdlr-approved" class="text-primary-deep font-medium hover:underline">TDLR's license search</a> before you pay anything.</p>
+      <!-- ===== The post-checkout charge ===== -->
+      <section class={`${wrap} pt-12 pb-2`}>
+        <div class="rounded-2xl border-2 border-amber-300 bg-amber-50 p-6 max-w-[760px]">
+          <p class="text-sm font-semibold text-amber-900 mb-2" style={outfit}>The cost you find out about after you have paid</p>
+          <p class="text-base text-text leading-7 m-0">The most common pattern in this market works like this. The course is advertised at the {floor} legal minimum and you pay it. Then, when you finish, you learn the certificate is free only <strong>by mail, in roughly two to four weeks</strong>, and getting it <strong>as a download today costs another $15 to $25</strong>. Your court gave you a deadline, so most people pay. The "{floor} course" ends up at $40 to $50, and the extra charge arrives after the point where you could compare. We see this on several of the largest "free certificate" courses in Texas; the fee amounts change, the timing does not.</p>
+          <p class="text-base text-text leading-7 mt-3 mb-0">The question that protects you, asked before you enter a card: <strong>"When I finish, is the certificate in my hands today at no extra cost?"</strong> With us the answer is yes: {price} is the total, and the certificate downloads the moment you finish, court copy and insurance copy included.</p>
         </div>
+      </section>
 
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Is there a free defensive driving course in Texas?</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p><strong class="text-text">No.</strong> A free course cannot be TDLR-approved, because approval requires charging the {floor} minimum, and only an approved course produces the certificate a court or insurer will accept. When you see "free" in this market it means free quiz retakes, free certificate delivery, or a free preview of the first module, not a free course. The closest real thing is reimbursement: some employers pay for the course, and an insurance discount can return the fee over a policy term. The <a href="/texas/insurance-discount" class="text-primary-deep font-medium hover:underline">insurance discount page</a> explains what insurers actually give.</p>
-        </div>
+      <!-- ===== Fee lines ===== -->
+      <section id="fees" class={`${wrap} pt-12 pb-4 scroll-mt-28`}>
+        <h2 class={h2c} style={outfit}>What should you check at any checkout?</h2>
+        <p class="text-base text-text-body leading-7 m-0 mb-6 max-w-[760px]">Seven lines turn an advertised price into a different one. An all-in price is the number on the final order summary: course, certificate in your hands, nothing else owed to the provider.</p>
+        <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5 list-none p-0 m-0">
+          {feeLines.map((f, i) => (
+            <li class={`rounded-2xl border p-5 flex flex-col gap-2 ${i === 2 ? 'border-amber-300 bg-amber-50' : 'border-border bg-white'}`}>
+              <span class="font-bold text-[18px] text-text" style={outfit}>{f.fee}</span>
+              <span class="text-sm text-text-body leading-6">{f.what}</span>
+              <span class="text-sm text-text leading-6"><strong>Check:</strong> {f.watch}</span>
+            </li>
+          ))}
+        </ul>
+        <p class="text-base text-text-body leading-7 m-0 mt-5 max-w-[760px]">The certificate line is the one to read twice. The court needs the certificate, usually inside a deadline, so a course that mails it free in a week and charges for an instant copy is charging you for the deadline.</p>
+      </section>
 
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What does an all-in price include, and which fees appear after the advertised price?</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-4" style="font-family: 'DM Sans', sans-serif;">
-          <p>An all-in price is the number on the final order summary: course, certificate in your hands, nothing else owed to the provider. These are the fee lines that turn an advertised price into a different one, and what to check for each.</p>
+      <!-- ===== Floor + free ===== -->
+      <section class={`${wrap} pt-12 pb-4`}>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="rounded-2xl border border-border bg-white p-6">
+            <h2 class="text-[22px] font-bold text-text m-0 mb-3" style={outfit}>What is the cheapest a course can legally be?</h2>
+            <p class="text-base text-text-body leading-7 m-0 mb-3"><strong class="text-text">{floor}.</strong> Texas Education Code §1001.352, as amended by HB 3012 effective September 1, 2025, requires a driving safety course to cost at least {floor}. Before that date the rule was $25 plus a separate $3 fee, which is why many checkouts still show two lines that add to $28. There is no longer a separate state fee; there is one {floor} floor, and anything above it is the provider's margin or an add-on.</p>
+            <p class="text-base text-text-body leading-7 m-0">A course advertised below {floor} is either not TDLR-approved or not showing you the real price. Check the provider's CP number on <a href="/texas/tdlr-approved" class="text-primary-deep font-medium hover:underline">TDLR's license search</a> before you pay anything.</p>
+          </div>
+          <div class="rounded-2xl border border-border bg-white p-6">
+            <h2 class="text-[22px] font-bold text-text m-0 mb-3" style={outfit}>Is there a free defensive driving course in Texas?</h2>
+            <p class="text-base text-text-body leading-7 m-0"><strong class="text-text">No.</strong> A free course cannot be TDLR-approved, because approval requires charging the {floor} minimum, and only an approved course produces the certificate a court or insurer will accept. "Free" in this market means free quiz retakes, free certificate delivery, or a free preview of the first module. The closest real thing is reimbursement: some employers pay for the course, and an insurance discount can return the fee over a policy term. The <a href="/texas/insurance-discount" class="text-primary-deep font-medium hover:underline">insurance discount page</a> explains what insurers actually give.</p>
+          </div>
         </div>
-        <div class="overflow-x-auto mb-4">
-          <table class="w-full text-sm border-collapse" style="font-family: 'DM Sans', sans-serif;">
-            <thead>
-              <tr class="bg-surface-muted text-left">
-                <th class="py-3 px-3 font-semibold text-text">Fee line</th>
-                <th class="py-3 px-3 font-semibold text-text">What it is</th>
-                <th class="py-3 px-3 font-semibold text-text">What to check</th>
-              </tr>
-            </thead>
-            <tbody>
-              {feeLines.map((f, i) => (
-                <tr class={`border-b border-border align-top ${i % 2 === 0 ? '' : 'bg-surface-muted/40'}`}>
-                  <td class="py-3 px-3 font-semibold text-text">{f.fee}</td>
-                  <td class="py-3 px-3 text-text-body">{f.what}</td>
-                  <td class="py-3 px-3 text-text-body">{f.watch}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p>The certificate line is the one to read twice. The court needs the certificate, usually inside a deadline, so a course that mails it free in a week and charges for an instant copy is charging you for the deadline. Ask one question of any checkout: when I finish, do I have the certificate in my hands at no extra cost?</p>
-        </div>
+      </section>
 
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What does the whole ticket dismissal cost beyond the course?</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p>The course is the smallest of three costs. <strong class="text-text">The court's fee</strong> is set locally when it grants the course: <a href="/texas/dsc-fees-by-court" class="text-primary-deep font-medium hover:underline">${S.fee.min} to ${S.fee.max}</a> across the courts we have verified, most commonly $144, with $169 common for school-zone tickets. <strong class="text-text">The Type 3A driving record</strong> is $12 online from Texas DPS if the court makes you order it (<a href="/texas/type-3a-driving-record" class="text-primary-deep font-medium hover:underline">how to order it</a>). <strong class="text-text">The course</strong> is at least {floor}. Add them up and dismissal runs about $150 to $210, against a fine that is often $150 to $300 plus three years of a conviction on your insurance. The full process is on the <a href="/texas/ticket-dismissal" class="text-primary-deep font-medium hover:underline">ticket dismissal guide</a>; the fine side is on the <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">speeding ticket page</a>.</p>
+      <!-- ===== What $28 includes ===== -->
+      <section id="ours" class={`${wrap} pt-12 pb-4 scroll-mt-28`}>
+        <h2 class={h2c} style={outfit}>What does Road Ready Safety charge, and what is included?</h2>
+        <p class="text-base text-text-body leading-7 m-0 mb-6 max-w-[760px]"><strong class="text-text">{price}, all-in.</strong> That is the {floor} course fee plus $3. Nothing added at checkout. We publish the whole policy, including what we do not charge for and why, on the <a href="/texas/transparency" class="text-primary-deep font-medium hover:underline">transparency page</a>. Our provider number is {TEXAS_COURSE.providerNumber}; check it on TDLR's search before you pay us or anyone else.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="rounded-2xl border border-border bg-white p-6">
+            <p class="font-bold text-[18px] m-0 mb-3">Included in {price}</p>
+            <ul class="flex flex-col gap-2.5 list-none p-0 m-0 text-[17px]">
+              {[`The ${TEXAS_COURSE.hours}-hour TDLR-approved course`, 'Unlimited quiz retakes', 'Certificate as an instant download the moment you finish', 'Court copy and insurance copy, both included', 'Full refund if you have not completed the course'].map((t) => <li class="flex gap-3"><span class="text-green-600 font-bold" aria-hidden="true">✓</span><span>{t}</span></li>)}
+            </ul>
+          </div>
+          <div class="rounded-2xl border border-border bg-white p-6">
+            <p class="font-bold text-[18px] m-0 mb-3">What we never charge for</p>
+            <ul class="flex flex-col gap-2.5 list-none p-0 m-0 text-[17px]">
+              {['Certificate delivery or a "rush" copy', 'A "processing" or "state" fee', 'A premium tier to get the same certificate', 'A driving-record upsell (DPS sells the Type 3A for $12)'].map((t) => <li class="flex gap-3"><span class="text-text-subtle font-bold" aria-hidden="true">✕</span><span>{t}</span></li>)}
+            </ul>
+            <p class="text-sm text-text-body leading-6 m-0 mt-4">The two costs we cannot include are the court's own fee and the DPS record, because the court and DPS collect those. Optional and your choice: an <a href="/texas/audio-course" class="text-primary-deep font-medium hover:underline">audio version</a> that reads every lesson aloud, $4.99.</p>
+          </div>
         </div>
+      </section>
 
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What does Road Ready Safety charge, and what is included?</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-6" style="font-family: 'DM Sans', sans-serif;">
-          <p><strong class="text-text">{price}, all-in.</strong> That is the {floor} course fee plus $3, and it is the only number you see at checkout. It includes the {TEXAS_COURSE.hours}-hour TDLR-approved course, unlimited quiz retakes, and the certificate of completion as an instant download the moment you finish, with the court copy and the insurance copy both included. No delivery fee, no rush fee, no premium tier, no driving-record upsell. If you have not completed the course you can get a full refund.</p>
-          <p>We publish the whole policy, including what we do not charge for and why, on the <a href="/texas/transparency" class="text-primary-deep font-medium hover:underline">transparency page</a>. Not sure which course to take? <a href="/texas/best-defensive-driving-course" class="text-primary-deep font-medium hover:underline">How to pick a Texas defensive driving course</a> covers the few things that differ between approved courses. Our provider number is {TEXAS_COURSE.providerNumber}; check it on TDLR's search before you pay us or anyone else.</p>
+      <!-- ===== Course band ===== -->
+      <section id="course" class={`${wrap} py-12 scroll-mt-28`}>
+        <div class="rounded-[20px] bg-surface-dark text-white p-8 lg:p-10 flex flex-wrap gap-8 items-center justify-between">
+          <div class="flex-[999_1_420px] min-w-0">
+            <p class="text-xs font-bold uppercase tracking-[0.06em] text-amber-300 m-0 mb-2">Approved by your court? This is the last step.</p>
+            <h2 class="text-[28px] lg:text-[34px] font-extrabold tracking-[-0.02em] leading-[1.15] m-0 mb-3" style={outfit}>The 6-hour Texas course. {price} all-in.</h2>
+            <p class="m-0 text-info-border leading-7">TDLR-approved ({TEXAS_COURSE.providerNumber}) · Fully online · Accepted by every Texas court · Certificate downloads the moment you finish · Nothing added at checkout</p>
+          </div>
+          <a href={enrollUrl} class="flex-[1_1_220px] text-center no-underline bg-amber-400 hover:bg-amber-300 text-surface-dark font-extrabold text-lg px-7 py-4 rounded-xl" style={outfit}>Start the {price} course →</a>
         </div>
-
         <YouTubeCard id="Y6sT-z7uFWQ" title="What Texas Defensive Driving Course Actually Costs All In" blurb="The real all-in price of a Texas defensive driving course." />
+      </section>
 
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
-        <div class="space-y-8 mb-12">
-          {faqs.map(item => (
-            <div>
-              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
-              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;">{item.a}</p>
+      <!-- ===== Quick answers ===== -->
+      <section class={`${wrap} pt-2 pb-6`}>
+        <h2 class={h2c} style={outfit}>Quick answers</h2>
+        <div class="flex flex-col gap-3 max-w-[760px] mt-5">
+          {faqs.map((f) => (
+            <div class="rounded-xl border border-border bg-white p-5">
+              <h3 class="font-bold text-base m-0 mb-1 text-text" style={outfit}>{f.q}</h3>
+              <p class="m-0 text-text-body leading-7">{f.a}</p>
             </div>
           ))}
         </div>
+      </section>
 
-        <div class="flex flex-col sm:flex-row gap-4 mb-10">
-          <a
-            href={enrollUrl}
-            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
-            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
-          >
-            Start the {price} Course →
-          </a>
-          <a
-            href="/texas/faq"
-            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
-            style="font-family: 'DM Sans', sans-serif;"
-          >
-            Course questions answered
-          </a>
+      <!-- ===== Keep reading + legal ===== -->
+      <section class={`${wrap} pt-4 pb-10`}>
+        <p class="font-bold m-0 mb-2.5">Keep reading</p>
+        <div class="flex flex-wrap gap-2.5 mb-7">
+          {[
+            ['/texas/best-defensive-driving-course', 'How to pick a Texas course'],
+            ['/texas/dsc-fees-by-court', 'Court fees, court by court'],
+            ['/texas/type-3a-driving-record', 'How to order a Type 3A record'],
+            ['/texas/ticket-dismissal', 'How ticket dismissal works'],
+            ['/texas/what-is-a-driving-safety-course', 'What a driving safety course is'],
+            ['/texas/faq', 'Course questions answered'],
+          ].map(([href, t]) => <a href={href} class="no-underline bg-white border border-border rounded-full px-4 py-2 text-base text-text hover:border-primary-deep">{t}</a>)}
         </div>
+        <p class="text-sm text-text-subtle m-0 max-w-[760px] leading-6">Road Ready Safety is a TDLR-licensed Texas driving safety provider ({TEXAS_COURSE.providerNumber}). This page is informational and not legal advice; confirm requirements with the court on your citation. Last updated October 7, 2026. Price floor per Tex. Educ. Code §1001.352 as amended by HB 3012 (eff. Sept. 1, 2025); court fee range from our verified court dataset; Type 3A fee per Texas DPS. Fee-line categories are drawn from checkout flows we reviewed in 2026; no provider is named and no provider's price is quoted on this page.</p>
+      </section>
 
-        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
-          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider ({TEXAS_COURSE.providerNumber}). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
-          <p class="text-xs text-text-subtle">Last updated October 5, 2026. Price floor per Tex. Educ. Code §1001.352 as amended by HB 3012 (eff. Sept. 1, 2025); court fee range from our verified court dataset; Type 3A fee per Texas DPS. Fee-line categories are drawn from checkout flows we reviewed in 2026; no provider is named and no provider's price is quoted on this page.</p>
-        </div>
-
-      </div>
+      <StickyCta afterId="total" hideAtId="course" />
     </article>
   </TexasLayout>
 ) : (

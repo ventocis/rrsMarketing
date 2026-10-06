@@ -73,9 +73,9 @@ const elements = [
   { n: 4, t: 'For speeding: a speed sign', b: 'The zone must be marked with a sign showing the speed limit (§542.404(c)).' },
 ];
 
-const outfit = "font-family:'Outfit',sans-serif;";
+const outfit = "font-family:'Inter',sans-serif;"; // headings: Inter, per Jackson's design brief (2026-10-06)
 const sans = "font-family:'DM Sans',sans-serif;";
-const h2c = 'text-[28px] lg:text-[36px] font-extrabold tracking-[-0.02em] leading-[1.12] text-primary-navy m-0 mb-3';
+const h2c = 'text-[28px] lg:text-[36px] font-extrabold tracking-[-0.02em] leading-[1.12] text-text m-0 mb-3';
 const wrap = 'max-w-[1080px] mx-auto px-4 sm:px-6 lg:px-8';
 const pillOn = 'bg-primary text-white border-primary';
 const pillOff = 'bg-white text-text border-border hover:border-primary-deep';
@@ -102,7 +102,7 @@ const pillOff = 'bg-white text-text border-border hover:border-primary-deep';
           <span class="text-text">Construction zone tickets</span>
         </p>
         <div class="max-w-[760px] pb-12">
-          <h1 class="text-[36px] lg:text-[56px] font-extrabold tracking-[-0.02em] leading-[1.05] text-primary-navy m-0 mb-5" style={outfit}>Construction zone ticket in Texas? Check one line on it first.</h1>
+          <h1 class="text-[36px] lg:text-[56px] font-extrabold tracking-[-0.02em] leading-[1.05] text-text m-0 mb-5" style={outfit}>Construction zone ticket in Texas? Check one line on it first.</h1>
           <p class="text-lg lg:text-[21px] text-text-body leading-8 m-0 mb-3">If your ticket says <strong class="text-text">workers were present</strong>, Texas doubles the fine and rules out both defensive driving and deferred disposition. If it doesn't say that, it's treated like an ordinary ticket, and defensive driving may still be on the table.</p>
           <p class="text-lg lg:text-[21px] text-text-body leading-8 m-0 mb-5">Texas law requires that line to be printed on the ticket itself. So the answer is already in your hands. Here's how to read it, and what to do either way.</p>
           <p class="text-sm text-text-subtle m-0">By Road Ready Safety, TDLR-licensed provider {TEXAS_COURSE.providerNumber} · Checked against Tex. Transp. Code §§542.404 &amp; 472.022 and Tex. Code Crim. Proc. arts. 45A.301 &amp; 45A.353 · Updated October 6, 2026</p>
@@ -202,12 +202,12 @@ const pillOff = 'bg-white text-text border-border hover:border-primary-deep';
       <section id="course" class={`${wrap} py-12 scroll-mt-28`}>
         <div class="rounded-[20px] bg-surface-dark text-white p-8 lg:p-10 flex flex-wrap gap-8 items-center justify-between">
           <div class="flex-[999_1_420px] min-w-0">
-            <p class="text-xs font-bold uppercase tracking-[0.06em] text-amber-300 m-0 mb-2">Ticket doesn't say workers present?</p>
+            <p class="text-xs font-bold uppercase tracking-[0.06em] text-accent m-0 mb-2">Ticket doesn't say workers present?</p>
             <h2 class="text-[28px] lg:text-[34px] font-extrabold tracking-[-0.02em] leading-[1.15] m-0 mb-3" style={outfit}>Then it can likely be dismissed the normal way.</h2>
             <p class="m-0 text-info-border leading-7">Ask your court for defensive driving by your appearance date, then finish a {TEXAS_COURSE.hours}-hour course. Ours is {price} all-in, TDLR-approved ({TEXAS_COURSE.providerNumber}), with the certificate the moment you finish. Nothing added at checkout.</p>
           </div>
           <div class="flex-[1_1_240px] flex flex-col gap-3">
-            <a href="/texas/request-defensive-driving" class="text-center no-underline bg-amber-400 hover:bg-amber-300 text-surface-dark font-extrabold text-lg px-7 py-4 rounded-xl" style={outfit}>How to ask the court →</a>
+            <a href="/texas/request-defensive-driving" class="text-center no-underline bg-accent hover:brightness-110 text-surface-dark font-extrabold text-lg px-7 py-4 rounded-xl" style={outfit}>How to ask the court →</a>
             <a href={enrollUrl} class="text-center no-underline text-white font-semibold hover:underline">Already approved? Start the {price} course</a>
           </div>
         </div>

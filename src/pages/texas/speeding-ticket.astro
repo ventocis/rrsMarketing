@@ -86,9 +86,9 @@ const metros = [
   ['waco', 'Waco'], ['lubbock', 'Lubbock'], ['amarillo', 'Amarillo'], ['wichita-falls', 'Wichita Falls'], ['tyler', 'Tyler'],
 ];
 
-const outfit = "font-family:'Outfit',sans-serif;";
+const outfit = "font-family:'Inter',sans-serif;"; // headings: Inter, per Jackson's design brief (2026-10-06)
 const sans = "font-family:'DM Sans',sans-serif;";
-const h2c = 'text-[28px] lg:text-[36px] font-extrabold tracking-[-0.02em] leading-[1.12] text-primary-navy m-0 mb-3';
+const h2c = 'text-[28px] lg:text-[36px] font-extrabold tracking-[-0.02em] leading-[1.12] text-text m-0 mb-3';
 const wrap = 'max-w-[1080px] mx-auto px-4 sm:px-6 lg:px-8';
 const pillOff = 'bg-white text-text border-border hover:border-primary-deep';
 ---
@@ -113,7 +113,7 @@ const pillOff = 'bg-white text-text border-border hover:border-primary-deep';
           <span class="text-text">Speeding ticket guide</span>
         </p>
         <div class="max-w-[760px] pb-12">
-          <h1 class="text-[36px] lg:text-[56px] font-extrabold tracking-[-0.02em] leading-[1.05] text-primary-navy m-0 mb-5" style={outfit}>Got a speeding ticket in Texas? Don't pay it yet.</h1>
+          <h1 class="text-[36px] lg:text-[56px] font-extrabold tracking-[-0.02em] leading-[1.05] text-text m-0 mb-5" style={outfit}>Got a speeding ticket in Texas? Don't pay it yet.</h1>
           <p class="text-lg lg:text-[21px] text-text-body leading-8 m-0 mb-3">Paying is a guilty plea, and the conviction goes on your record. Most everyday Texas speeding tickets can instead be <strong class="text-text">dismissed with a 6-hour course</strong>, and by law a dismissed ticket can't be part of your driving record or used for any purpose (Code Crim. Proc. art. 45A.357).</p>
           <p class="text-lg lg:text-[21px] text-text-body leading-8 m-0 mb-6">The question is whether <em>your</em> ticket qualifies. Four questions will tell you.</p>
           <div class="flex flex-wrap gap-3 items-center">
@@ -279,7 +279,7 @@ const pillOff = 'bg-white text-text border-border hover:border-primary-deep';
           <div class="flex-[999_1_440px] min-w-0">
             {review && (
               <>
-                <p class="text-xs font-bold uppercase tracking-[0.06em] text-amber-300 m-0 mb-2">{review.title}</p>
+                <p class="text-xs font-bold uppercase tracking-[0.06em] text-accent m-0 mb-2">{review.title}</p>
                 <blockquote class="m-0 mb-4 text-[20px] lg:text-[22px] font-bold leading-snug" style={outfit}>"{review.quote}"</blockquote>
                 <div class="flex items-center gap-3 mb-4">
                   <span class="w-10 h-10 rounded-full bg-primary text-white font-bold text-[15px] flex items-center justify-center" aria-hidden="true">{review.initials}</span>
@@ -290,7 +290,7 @@ const pillOff = 'bg-white text-text border-border hover:border-primary-deep';
             <p class="m-0 text-info-border leading-7">{TEXAS_COURSE.hours} hours, fully online · {price} all-in · TDLR-approved ({TEXAS_COURSE.providerNumber}) · Certificate the moment you finish · Nothing added at checkout</p>
           </div>
           <div class="flex-[1_1_240px] flex flex-col gap-3">
-            <a href={enrollUrl} class="text-center no-underline bg-amber-400 hover:bg-amber-300 text-surface-dark font-extrabold text-lg px-7 py-4 rounded-xl" style={outfit}>Start the {price} course →</a>
+            <a href={enrollUrl} class="text-center no-underline bg-accent hover:brightness-110 text-surface-dark font-extrabold text-lg px-7 py-4 rounded-xl" style={outfit}>Start the {price} course →</a>
             <a href="#check" class="text-center no-underline text-white font-semibold hover:underline">Not sure yet? Answer the four questions</a>
           </div>
         </div>

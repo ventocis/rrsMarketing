@@ -1,171 +1,307 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
-import YouTubeCard from '../../components/YouTubeCard.astro';
-import NextStepBlock from '../../components/texas/NextStepBlock.astro';
-import { courtStats as S } from '../../lib/court-stats';
+import StickyCta from '../../components/texas/StickyCta.astro';
 import { TEXAS_COURSE, TEXAS_PRICE_LABEL } from '../../data/texas-course';
+import reviews from '../../data/texas-reviews.json';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
 const floor = `$${TEXAS_COURSE.legalMinimumPrice}`;
 const price = TEXAS_PRICE_LABEL;
+const review = reviews.find((r: any) => r.name === 'Ryan Johnson');
 
-// Cluster G entrance (SEO playbook §2b, decided 2026-10-06): the top-of-funnel explainer for people who
-// have just been told to "take defensive driving" and do not yet know what that is. Texas-specific on
-// purpose; it links down to the decision pages (cluster B) and the course page (/texas). No competitor
-// names or prices. Sources: 16 TAC ch. 84 (course length and curriculum), Tex. Code Crim. Proc. ch. 45A
-// (dismissal), Tex. Educ. Code §1001.352 (price floor), Tex. Transp. Code ch. 708 repeal (no points since 2019).
+// Rebuilt 2026-10-06 from Jackson's design canvas "Course Explainer Redesign" (Main.dc.html + Serp.dc.html),
+// implemented as the spec: his copy, section order, the ticket/insurance picker, CTAs. Deviations flagged in
+// the PR: "Check my ticket in 4 questions" is worded "Does my ticket qualify?" (house rule), and the design
+// has no video so the previous YouTube card is not carried over.
 
 const faqs = [
-  { q: 'Is a driving safety course the same as defensive driving?', a: 'Yes. Texas law calls it a driving safety course; courts, insurers and most people call it defensive driving, and providers also say DSC or driver safety course. Same six-hour course, same certificate.' },
-  { q: 'How long is the Texas driving safety course?', a: 'Six hours, by rule: at least five hours of instruction plus the required breaks. Every TDLR-approved course, online or in a classroom, is the same length, and online courses enforce it with timers. You can spread it over several days.' },
-  { q: 'Does the course remove points from my Texas license?', a: 'Texas has had no driver license points since the surcharge program was repealed in 2019, so there are no points to remove. What the course protects is the conviction line on your driving record, which is what insurers read.' },
-  { q: 'Can I take the course first and then ask the court?', a: 'No. The court has to grant the course before you take it, and the request has to reach the court on or before the appearance date printed on your citation. A certificate from a course the court never authorized will not count.' },
-  { q: `What does the course cost in Texas?`, a: `By law at least ${floor} for the course itself. Ours is ${price} total with the certificate included. Separately, the court charges its own fee when it grants the course (set locally; $${S.fee.min} to $${S.fee.max} across the courts we have verified, most commonly $144), and the Type 3A driving record is $12 from Texas DPS if your court requires it.` },
+  { q: 'Is a driving safety course the same as defensive driving?', a: 'Yes. Same six-hour course, same certificate. Texas law says “driving safety course”; most people say defensive driving.' },
+  { q: 'How long is it?', a: 'Six hours: at least five of instruction plus breaks (16 TAC ch. 84). You can spread it over several days.' },
+  { q: 'Can I take the course first and ask the court later?', a: 'No. The court has to approve it first, and you have to ask by the appearance date. A certificate the court never authorized won’t count. <a href="/texas/request-defensive-driving" class="text-primary-deep font-medium hover:underline">How to ask</a>' },
+  { q: 'Does it remove points?', a: 'Texas has no license points since 2019. Dismissal keeps the conviction off your record, which is what insurers read.' },
+  { q: 'Can one course do both, the ticket and the discount?', a: 'Yes. Send the court copy to the court and the insurance copy to your insurer.' },
 ];
+const plain = (s: string) => s.replace(/<[^>]+>/g, '');
 
 const articleSchema = JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'Article',
-  headline: 'What a Texas Driving Safety Course Is, What It Does for a Ticket, and Who Can Take It',
-  description: 'The Texas driving safety course (defensive driving, DSC) explained for someone who has just been told to take one: what it does and does not do, who qualifies, how the six online hours work, what it costs all in, and what happens to the certificate.',
+  headline: 'What is a Texas driving safety course?',
+  description: 'The 6-hour, state-approved course that dismisses an eligible ticket or earns an insurance discount. Who can take it, how it works, and what it costs.',
   datePublished: '2026-10-06',
   dateModified: '2026-10-06',
   author: { '@type': 'Organization', name: 'Road Ready Safety' },
   publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
   mainEntityOfPage: `${siteUrl}/texas/what-is-a-driving-safety-course`,
 });
-const faqSchema = JSON.stringify({
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
-});
+const faqSchema = JSON.stringify({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: plain(f.a) } })) });
+
+const picks = [
+  { k: 'ticket', label: 'I got a ticket', headline: 'Get an eligible ticket dismissed, and kept off your record',
+    steps: ['Ask the court for the course by the appearance date on your ticket. Don’t pay the ticket.', `Once the court says yes, take the ${TEXAS_COURSE.hours}-hour course within its deadline, usually 90 days.`, 'Send the court your certificate and, if asked, your $12 Type 3A record. The court dismisses the charge.'],
+    cta: ['/texas/request-defensive-driving', 'How to ask the court →'], cta2: ['/texas/ticket-dismissal', 'See the full dismissal process'] },
+  { k: 'insurance', label: 'I want an insurance discount', headline: 'Lower your insurance. No ticket, no court.',
+    steps: ['Check that your insurer offers a course discount. Each company sets its own.', `Take the ${TEXAS_COURSE.hours}-hour course whenever it suits you.`, 'Send the insurance copy of your certificate to your insurer.'],
+    cta: [enrollUrl, `Start the ${price} course →`], cta2: ['/texas/insurance-discount', 'What insurers actually give'] },
+];
+const cants = [
+  { t: '✕  Remove points', b: 'Texas hasn’t had license points since 2019. What it protects is the conviction on your record.' },
+  { t: '✕  Undo a paid ticket', b: 'Paying is a conviction. Once it’s entered, there’s nothing left to dismiss. <a href="/texas/already-paid-ticket" class="text-primary hover:text-primary-deep font-medium">Already paid?</a>' },
+  { t: '✕  Dismiss it on its own', b: 'The court does that, after it approves the course and gets your paperwork.' },
+];
+const how = [
+  ['Phone, tablet or computer', 'It saves your place when you switch.'],
+  ['Short quizzes', 'Unlimited retakes with us, and no final exam.'],
+  ['Listen instead of read', 'An optional <a href="/texas/audio-course" class="text-primary hover:text-primary-deep font-medium">audio version</a> reads each lesson aloud.'],
+  ['No shortcuts', 'A “2-hour course” isn’t this course. <a href="/texas/what-the-course-looks-like" class="text-primary hover:text-primary-deep font-medium">Where the time goes</a>'],
+];
+const table = [
+  ['Texas driving safety course', 'Licensed drivers', '✓ Yes, if eligible', true],
+  ['Driver education', 'Getting a license', '✕ No', false],
+  ['New York “5-hour course”', 'New York drivers', '✕ No', false],
+];
+const nextSteps = [
+  ['/texas/request-defensive-driving', 'Have a ticket, haven’t asked yet?', 'How to request the course →'],
+  ['/texas/defensive-driving-vs-deferred-disposition', 'Weighing your options?', 'Course vs. deferred disposition →'],
+  ['/texas/ticket-dismissal', 'Want the full process?', 'Texas ticket dismissal guide →'],
+  ['/texas/insurance-discount', 'No ticket, just the discount?', 'What insurers actually give →'],
+];
+
+const inter = "font-family:'Inter',sans-serif;";
+const sans = "font-family:'DM Sans',sans-serif;";
+const h2c = 'text-[28px] lg:text-[34px] font-extrabold tracking-[-0.02em] leading-[1.15] text-text m-0 mb-3';
+const wrap = 'max-w-[1080px] mx-auto px-4 sm:px-6 lg:px-8';
+const card = 'rounded-[14px] border border-border bg-white p-5 lg:p-[22px]';
+const pillOn = 'bg-primary text-white border-primary';
+const pillOff = 'bg-white text-text border-[#CBD3DF] hover:border-primary-deep';
 ---
 
 {isEnabled ? (
   <TexasLayout
-    title="What Is a Texas Driving Safety Course? What It Does, Who Can Take It, and What It Costs (2026)"
-    description={`The Texas driving safety course, also called defensive driving or DSC, explained plainly: a six-hour TDLR-approved course that dismisses an eligible ticket or earns an insurance discount. Who qualifies, how the online hours work, the all-in cost, and what to do with the certificate.`}
+    title="What Is a Texas Driving Safety Course? (Defensive Driving)"
+    description="The 6-hour, state-approved course that dismisses an eligible ticket or earns an insurance discount. Who can take it, how it works, and what it costs."
     keywords="what is a driving safety course texas, what is defensive driving course texas, texas driving safety course, defensive driving course explained, is the driving safety course the same as defensive driving, how long is the defensive driving course texas"
     url="/texas/what-is-a-driving-safety-course"
   >
     <script type="application/ld+json" set:html={articleSchema} />
     <script type="application/ld+json" set:html={faqSchema} />
 
-    <article class="bg-white pb-16 lg:pb-24">
-      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
-
-        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
-          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving course</a>
-          <span class="mx-2 text-text-subtle">›</span>
-          <span class="text-text">What the course is</span>
-        </p>
-
-        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
-          What a Texas Driving Safety Course Is, What It Does for a Ticket, and Who Can Take It
-        </h1>
-
-        <div class="bg-info border border-info-border rounded-2xl p-6 mb-10">
-          <p class="text-sm font-semibold text-primary-deep mb-2" style="font-family: 'Outfit', sans-serif;">Short answer</p>
-          <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;">
-            A Texas driving safety course is a six-hour course, approved by the Texas Department of Licensing and Regulation, that a licensed driver takes for one of two reasons: <strong class="text-text">to get an eligible traffic ticket dismissed</strong>, or <strong class="text-text">to earn a discount from an insurer</strong>. Most people call it defensive driving. You take it online, at your own pace, and you get a certificate the moment you finish. For a ticket, the court has to say yes before you start.
-          </p>
+    <article class="bg-surface-muted pb-24 lg:pb-16 text-text" style={sans}>
+      <!-- ===== Lead ===== -->
+      <div class={wrap}>
+        <p class="text-[15px] text-text-body pt-5 m-0"><a href="/texas" class="text-text-body hover:underline">Texas</a><span class="mx-1.5">›</span><span>What the course is</span></p>
+        <div class="max-w-[820px] pt-8 pb-8">
+          <h1 class="text-[36px] lg:text-[56px] font-extrabold tracking-[-0.02em] leading-[1.05] m-0 mb-5" style={inter}>What is a Texas driving safety course?</h1>
+          <p class="text-lg lg:text-[21px] leading-8 m-0 mb-4">It's a {TEXAS_COURSE.hours}-hour, state-approved course you take online to <strong>get an eligible ticket dismissed</strong> or to <strong>earn an insurance discount</strong>. Most people call it defensive driving. You get your certificate the moment you finish.</p>
+          <p class="text-lg lg:text-[21px] leading-8 m-0 mb-6">If you're here because of a ticket, there's one rule that matters more than the course itself: the court has to say yes <em>before</em> you start.</p>
+          <p class="text-[15px] text-text-muted m-0">By Road Ready Safety, TDLR provider {TEXAS_COURSE.providerNumber}. We run one of these courses, so every rule here points at its source. · Published October 6, 2026</p>
         </div>
-
-        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p>Most people meet this course on the back of a citation: the officer, a friend or the court's website says "you can take defensive driving for that." This page is for that moment. It explains what the course is, what it does and does not do, who is allowed to take it, how the six hours work online, what the whole thing costs, and what happens to the certificate. We run one of the approved courses (Road Ready Safety, {TEXAS_COURSE.providerNumber}), so read it as a seller explaining the rules, with every rule pointed at its source.</p>
+        <div class="flex flex-wrap items-center gap-3 pb-12">
+          <span class="bg-white border border-border rounded-full px-[18px] py-2.5 font-bold">Driving safety course</span>
+          <span class="font-extrabold text-primary" style={inter}>=</span>
+          <span class="bg-white border border-border rounded-full px-[18px] py-2.5 font-bold">Defensive driving</span>
+          <span class="font-extrabold text-primary" style={inter}>=</span>
+          <span class="bg-white border border-border rounded-full px-[18px] py-2.5 font-bold">DSC</span>
+          <span class="text-base text-text-body">Same course. The law, courts and providers just use different names.</span>
         </div>
+      </div>
 
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Why does the same course have three names?</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p>The statute says <strong class="text-text">driving safety course</strong>. Courts and insurers say <strong class="text-text">defensive driving</strong>. Providers shorten it to <strong class="text-text">DSC</strong> or write "driver safety course." They are the same thing: a course on a curriculum TDLR writes and approves (16 Texas Administrative Code chapter 84), six hours long, ending in a uniform certificate of completion. If a website offers a "driving safety course" and the court letter says "defensive driving," you are in the right place.</p>
-        </div>
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What does the course actually do for you?</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p><strong class="text-text">Ticket dismissal.</strong> For an eligible moving violation, Texas law gives you the right to ask the court for the course. You ask by the appearance date on the citation, pay the court's fee, finish the course within the deadline the court sets (90 days is standard), and send back the certificate and, if the court asks, your driving record. The court then dismisses the charge, and a dismissed charge cannot appear on your driving record as a conviction (Code of Criminal Procedure chapter 45A). The whole route, step by step, is on the <a href="/texas/ticket-dismissal" class="text-primary-deep font-medium hover:underline">ticket-dismissal guide</a>.</p>
-          <p><strong class="text-text">An insurance discount.</strong> No ticket needed. You finish the same course, send the insurance copy of the certificate to your insurer, and the insurer applies whatever discount its filed rates allow. It is the insurer's choice, not a state rule, and it varies by company; the <a href="/texas/insurance-discount" class="text-primary-deep font-medium hover:underline">insurance discount page</a> lists what eight Texas insurers publish. One completion can serve both purposes.</p>
-          <p><strong class="text-text">What it does not do.</strong> It does not remove points, because Texas has had no license points since the surcharge program ended in 2019. It does not erase a conviction once the court has entered one, so paying the ticket first closes the door. And it does not dismiss anything by itself: the court does, after it has approved the course and received your paperwork.</p>
-        </div>
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Who can take it, and who can't?</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-4" style="font-family: 'DM Sans', sans-serif;">
-          <p>For an insurance discount, any licensed driver can take it. For a ticket, the statute sets the conditions (articles 45A.351 to 45A.353):</p>
-          <ul class="list-disc pl-6 space-y-2">
-            <li>You hold a valid Texas driver license or permit (active-duty military and their dependents qualify with any state's license).</li>
-            <li>You have proof of insurance and you ask the court on or before the appearance date.</li>
-            <li>You have not used a driving safety course to dismiss a ticket in the 12 months before this offense. The <a href="/texas/12-month-rule" class="text-primary-deep font-medium hover:underline">12-month rule</a> explains how the clock runs.</li>
-            <li>The ticket is a moving violation the law allows. Excluded: speeding 25 mph or more over the limit or 95 mph and up, an offense in a work zone with workers present, passing a stopped school bus, leaving the scene, and any ticket held by a commercial driver license holder, even in a personal car.</li>
-          </ul>
-          <p>Two common tickets are not course situations at all: <a href="/texas/expired-registration-ticket" class="text-primary-deep font-medium hover:underline">expired registration</a> and <a href="/texas/no-insurance-ticket" class="text-primary-deep font-medium hover:underline">no insurance</a> are dismissed by fixing the problem and showing proof, usually for a small fee. If the course is closed to you, <a href="/texas/deferred-disposition" class="text-primary-deep font-medium hover:underline">deferred disposition</a> usually is not; <a href="/texas/defensive-driving-vs-deferred-disposition" class="text-primary-deep font-medium hover:underline">which to choose</a> is its own page. The <a href="/texas/eligibility-tracker" class="text-primary-deep font-medium hover:underline">eligibility checker</a> asks four questions and takes a minute.</p>
-        </div>
-
-        <NextStepBlock page="what-is-a-driving-safety-course" lead="precourt" />
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How do the six online hours actually work?</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p>Six hours is the rule, not a sales pitch: at least five hours of instruction plus the required breaks, and every approved online course enforces it with timers on each section. A course that promises to finish in two or three hours is either not approved or is describing something other than this course. You do not have to do it in one sitting. You log in on a phone, tablet or computer, the course saves your place, and you come back when you can. Short quizzes follow each unit; ours has unlimited retakes and no final exam, and an optional <a href="/texas/audio-course" class="text-primary-deep font-medium hover:underline">audio version</a> that reads each lesson aloud. <a href="/texas/what-the-course-looks-like" class="text-primary-deep font-medium hover:underline">What the course looks like</a> walks through every module, and the <a href="/texas/fastest-defensive-driving-course" class="text-primary-deep font-medium hover:underline">fastest-course page</a> shows where the time goes.</p>
-        </div>
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How long do you have?</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p>Two dates matter. The <strong class="text-text">appearance date on the citation</strong> is the deadline to ask the court for the course; miss it and the option is usually gone. Once the court grants the course, you have <strong class="text-text">the deadline it sets</strong>, 90 days by statute unless the court says otherwise, to finish and return the certificate. The <a href="/texas/deadline-calculator" class="text-primary-deep font-medium hover:underline">deadline calculator</a> works both out from your citation date; the <a href="/texas/dismissal-timeline" class="text-primary-deep font-medium hover:underline">dismissal timeline</a> shows where the days disappear.</p>
-        </div>
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What does it cost, all in?</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p>Three separate payments to three different people. <strong class="text-text">The course:</strong> by law at least {floor} (Texas Education Code §1001.352). Ours is {price} total, with the certificate included and nothing added at checkout; many courses advertise the course fee and add certificate or processing charges later, which the <a href="/texas/cost" class="text-primary-deep font-medium hover:underline">cost page</a> explains line by line. <strong class="text-text">The court:</strong> its own fee when it grants the course, set locally, <a href="/texas/dsc-fees-by-court" class="text-primary-deep font-medium hover:underline">${S.fee.min} to ${S.fee.max}</a> across the courts we have verified and most commonly $144. <strong class="text-text">Texas DPS:</strong> $12 for the <a href="/texas/type-3a-driving-record" class="text-primary-deep font-medium hover:underline">Type 3A driving record</a> if your court makes you order it. For an insurance discount you pay only the course.</p>
-        </div>
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What do you get at the end, and where does it go?</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p>A uniform certificate of completion, the same document whichever approved provider issued it, with a court copy and an insurance copy. With us it downloads the moment you finish. The court copy goes back to the court that approved you, with the driving record if required, before the court's deadline; the <a href="/texas/defensive-driving-certificate" class="text-primary-deep font-medium hover:underline">certificate page</a> covers what each court accepts (upload, email, mail or in person varies). TDLR notes a new certificate can take up to five days to appear in its validation tool, so do not finish on deadline day. The insurance copy goes to your insurer whenever you like.</p>
-        </div>
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Is it the same as driver's ed?</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p>No. Driver education is for getting a license; the driving safety course is for people who already have one. New York's "5-hour course" is a different state's program and does nothing for a Texas ticket. Texas also used to have a separate four-hour course for child-seat tickets; that rule was repealed, and the <a href="/texas/child-seat-ticket" class="text-primary-deep font-medium hover:underline">child seat page</a> explains what applies now. If you need a Texas license, that is a different course and a different page.</p>
-        </div>
-
-        <YouTubeCard id="WVJ0ORmWv1Q" blurb="The six hours, the breaks, the quizzes, and how the certificate arrives." />
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
-        <div class="space-y-8 mb-12">
-          {faqs.map(item => (
-            <div>
-              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
-              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;">{item.a}</p>
+      <!-- ===== Why do you need it (picker) ===== -->
+      <section id="why" class="bg-white border-y border-border scroll-mt-28">
+        <div class={`${wrap} py-12 lg:py-14`} data-picker>
+          <h2 class={h2c} style={inter}>Why do you need it?</h2>
+          <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">Pick yours. The course is identical, but what you do before and after is different.</p>
+          <div class="flex flex-wrap gap-2.5 mb-6">
+            {picks.map((p, i) => <button type="button" data-pick={p.k} aria-pressed={i === 0 ? 'true' : 'false'} class={`font-bold text-[17px] min-h-[48px] px-5 rounded-full border-2 transition-colors ${i === 0 ? pillOn : pillOff}`}>{p.label}</button>)}
+          </div>
+          {picks.map((p, i) => (
+            <div data-panel={p.k} hidden={i !== 0}>
+              <div class="rounded-2xl border border-info-border bg-info p-6 lg:p-7 max-w-[860px] flex flex-col gap-4">
+                <p class="text-[24px] lg:text-[26px] font-extrabold leading-[1.2] m-0" style={inter}>{p.headline}</p>
+                <ol class="flex flex-col gap-2 list-none p-0 m-0">
+                  {p.steps.map((s, j) => <li class="flex gap-3 items-start text-[17px]"><span class="flex-none w-7 h-7 rounded-full bg-primary text-white font-bold text-sm flex items-center justify-center">{j + 1}</span><span>{s}</span></li>)}
+                </ol>
+                <div class="flex flex-wrap gap-3 items-center">
+                  <a href={p.cta[0]} class="no-underline bg-primary hover:bg-primary-hover text-white font-bold px-[22px] py-3 rounded-full">{p.cta[1]}</a>
+                  <a href={p.cta2[0]} class="font-semibold text-primary hover:text-primary-deep">{p.cta2[1]}</a>
+                </div>
+              </div>
             </div>
           ))}
         </div>
+      </section>
 
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Where to go from here</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <ul class="list-disc pl-6 space-y-2">
-            <li>You have a ticket and have not asked the court yet: <a href="/texas/request-defensive-driving" class="text-primary-deep font-medium hover:underline">how to request defensive driving from your court</a>.</li>
-            <li>You are weighing the course against deferred disposition or fighting it: <a href="/texas/defensive-driving-vs-deferred-disposition" class="text-primary-deep font-medium hover:underline">which should you choose</a>.</li>
-            <li>The court already approved you: <a href="/texas" class="text-primary-deep font-medium hover:underline">the course, {price} total, certificate included</a>.</li>
-            <li>No ticket, just the discount: <a href="/texas/insurance-discount" class="text-primary-deep font-medium hover:underline">what insurers actually give</a>.</li>
+      <!-- ===== What it can't do ===== -->
+      <section class={`${wrap} pt-16 pb-6`}>
+        <h2 class={h2c} style={inter}>What can't the course do?</h2>
+        <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">Three things people expect from it that it doesn't deliver.</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+          {cants.map((c) => <div class={card}><p class="font-bold text-[19px] m-0 mb-1.5">{c.t}</p><p class="text-base text-text-body leading-6 m-0" set:html={c.b} /></div>)}
+        </div>
+      </section>
+
+      <!-- ===== Who can take it ===== -->
+      <section id="eligible" class={`${wrap} pt-12 pb-6 scroll-mt-28`}>
+        <h2 class={h2c} style={inter}>Who can take it for a ticket?</h2>
+        <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">Any licensed driver can take it for insurance. For a ticket, the law sets four conditions and a short list of exclusions.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="rounded-2xl border border-info-border bg-info p-6">
+            <p class="font-bold text-[19px] m-0 mb-3">You need</p>
+            <ul class="flex flex-col gap-2.5 list-none p-0 m-0 text-base text-text-body">
+              <li>✓&nbsp; A valid Texas license or permit (military families can use any state's)</li>
+              <li>✓&nbsp; Proof of insurance</li>
+              <li>✓&nbsp; To ask the court by your appearance date</li>
+              <li>✓&nbsp; No dismissal course in the 12 months before this ticket <a href="/texas/12-month-rule" class="text-primary hover:text-primary-deep font-medium">How it counts</a></li>
+            </ul>
+          </div>
+          <div class="rounded-2xl border border-border bg-white p-6">
+            <p class="font-bold text-[19px] m-0 mb-3">It's ruled out for</p>
+            <ul class="flex flex-col gap-2.5 list-none p-0 m-0 text-base text-text-body">
+              <li>✕&nbsp; 25+ mph over, or 95 mph and up</li>
+              <li>✕&nbsp; A work zone with workers present</li>
+              <li>✕&nbsp; Passing a stopped school bus or leaving the scene</li>
+              <li>✕&nbsp; Anyone with a CDL, even in a personal car</li>
+            </ul>
+            <p class="text-[15px] text-text-body m-0 mt-3.5">Course ruled out? <a href="/texas/deferred-disposition" class="text-primary hover:text-primary-deep font-medium">Deferred disposition</a> usually isn't.</p>
+          </div>
+        </div>
+        <div class="flex flex-wrap gap-3.5 items-center mt-[18px]">
+          <a href="/texas/eligibility-tracker" class="no-underline bg-primary hover:bg-primary-hover text-white font-bold px-[22px] py-3 rounded-full">Does my ticket qualify? 4 questions →</a>
+          <span class="text-[15px] text-text-body">Expired registration or no insurance? Those use a different fix: <a href="/texas/expired-registration-ticket" class="text-primary hover:text-primary-deep font-medium">registration</a> · <a href="/texas/no-insurance-ticket" class="text-primary hover:text-primary-deep font-medium">insurance</a></span>
+        </div>
+      </section>
+
+      <!-- ===== Six hours ===== -->
+      <section class={`${wrap} pt-12 pb-6`}>
+        <h2 class={h2c} style={inter}>How do the six hours actually work?</h2>
+        <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">Six hours is the state rule: at least five hours of lessons plus required breaks, enforced by timers. You don't have to do it in one sitting.</p>
+        <div class="max-w-[860px] mb-5">
+          <div class="flex h-10 rounded-[10px] overflow-hidden">
+            <div class="bg-primary w-[84%] text-white font-bold text-[15px] flex items-center px-3">5+ hours of lessons and quizzes</div>
+            <div class="bg-info-border w-[16%] text-primary-deep font-bold text-[15px] flex items-center justify-center">Breaks</div>
+          </div>
+          <div class="flex justify-between text-sm text-text-muted mt-1.5"><span>Start</span><span>6 hours</span></div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          {how.map(([t, b]) => <div class="rounded-[14px] border border-border bg-white p-[18px]"><strong>{t}</strong><br /><span class="text-[15px] text-text-body" set:html={b} /></div>)}
+        </div>
+        <a href="/texas/what-the-course-looks-like" class="inline-block mt-4 font-bold text-primary hover:text-primary-deep">See every module →</a>
+      </section>
+
+      <!-- ===== Deadlines and cost ===== -->
+      <section class={`${wrap} pt-12 pb-6`}>
+        <h2 class={h2c} style={inter}>How long do you have, and what does it cost?</h2>
+        <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">For a ticket: two deadlines and three payments, to three different places. For insurance: just the course.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="rounded-2xl border border-border bg-white p-6 flex flex-col gap-3">
+            <span class="text-sm font-bold uppercase tracking-[0.06em] text-primary-deep">Deadlines</span>
+            <p class="m-0"><strong>Ask the court</strong> by the appearance date on your ticket. Miss it and the option is usually gone.</p>
+            <p class="m-0"><strong>Finish and send the certificate</strong> within the court's deadline, 90 days unless it says otherwise.</p>
+            <a href="/texas/deadline-calculator" class="font-bold text-primary hover:text-primary-deep">Work out your dates →</a>
+          </div>
+          <div class="rounded-2xl border border-border bg-white p-6 flex flex-col gap-3">
+            <span class="text-sm font-bold uppercase tracking-[0.06em] text-primary-deep">Costs</span>
+            <div class="flex justify-between gap-3"><span>The course (ours, all-in)</span><strong class="text-primary">{price}</strong></div>
+            <div class="flex justify-between gap-3"><span>Court fee, if it's a ticket</span><strong>~$144</strong></div>
+            <div class="flex justify-between gap-3"><span>Type 3A record, if the court asks</span><strong>$12</strong></div>
+            <p class="text-[15px] text-text-body m-0">{floor} is the legal minimum for any course. Watch for certificate fees added at checkout. <a href="/texas/cost" class="text-primary hover:text-primary-deep font-medium">Every fee explained</a></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== Certificate ===== -->
+      <section class={`${wrap} pt-12 pb-6`}>
+        <h2 class={h2c} style={inter}>What do you get at the end?</h2>
+        <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">One certificate, two copies. It's the same document whichever approved course you take.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-[860px]">
+          <div class="rounded-2xl border-2 border-primary bg-white p-6">
+            <span class="text-sm font-bold uppercase tracking-[0.06em] text-primary-deep">Court copy</span>
+            <p class="font-bold text-[19px] m-0 my-1.5">Goes back to the court that approved you</p>
+            <p class="text-base text-text-body leading-6 m-0">With your driving record if required, before the court's deadline. <a href="/texas/defensive-driving-certificate" class="text-primary hover:text-primary-deep font-medium">How courts accept it</a></p>
+          </div>
+          <div class="rounded-2xl border border-border bg-white p-6">
+            <span class="text-sm font-bold uppercase tracking-[0.06em] text-text-muted">Insurance copy</span>
+            <p class="font-bold text-[19px] m-0 my-1.5">Goes to your insurer, any time</p>
+            <p class="text-base text-text-body leading-6 m-0">Each insurer sets its own discount. <a href="/texas/insurance-discount" class="text-primary hover:text-primary-deep font-medium">What insurers give</a></p>
+          </div>
+        </div>
+        <div class="mt-4 rounded-xl border border-info-border bg-info p-4 max-w-[860px] leading-7"><strong>Don't finish on deadline day.</strong> TDLR says a new certificate can take up to 5 days to appear in its validation system.</div>
+      </section>
+
+      <!-- ===== Driver's ed ===== -->
+      <section class={`${wrap} pt-12 pb-6`}>
+        <h2 class={h2c} style={inter}>Is it the same as driver's ed?</h2>
+        <p class="text-base leading-7 m-0 mb-5 max-w-[780px]">No. Driver's ed gets you a license. This course is for people who already have one.</p>
+        <div class="overflow-x-auto max-w-[860px]">
+          <table class="w-full min-w-[540px] border-collapse rounded-[14px] border border-border overflow-hidden bg-white" style="border-spacing:0;">
+            <thead><tr class="bg-[#F6F6F9] text-left font-bold"><th class="px-4 py-3 font-bold">Course</th><th class="px-4 py-3 font-bold">Who it's for</th><th class="px-4 py-3 font-bold">Helps a Texas ticket?</th></tr></thead>
+            <tbody>{table.map((r) => <tr class="border-t border-border"><th scope="row" class="px-4 py-3 font-semibold text-left">{r[0]}</th><td class="px-4 py-3">{r[1]}</td><td class={`px-4 py-3 ${r[3] ? 'text-primary-deep font-bold' : ''}`}>{r[2]}</td></tr>)}</tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ===== Course band ===== -->
+      <section id="course" class={`${wrap} py-14 scroll-mt-28`}>
+        <div class="rounded-3xl bg-primary-deep text-white px-6 py-12 lg:px-8 lg:py-14 flex flex-col items-center text-center gap-7">
+          <div class="flex flex-col gap-2.5 max-w-[680px]">
+            <span class="text-sm font-bold uppercase tracking-[0.08em] text-info-border">Ready? The course is the easy part</span>
+            <h2 class="text-[30px] lg:text-[40px] font-extrabold leading-[1.1] m-0" style={inter}>One course for your ticket or your insurance discount. {price} total.</h2>
+          </div>
+          {review && (
+            <div class="rounded-[18px] bg-white text-text px-7 py-7 max-w-[640px] w-full flex flex-col gap-3">
+              <span class="text-accent text-[22px] tracking-[3px]" aria-label={`${review.rating} out of 5 stars`}>{'★'.repeat(review.rating)}</span>
+              <blockquote class="m-0 text-[19px] lg:text-[21px] font-bold leading-[1.45]" style={inter}>"{review.quote}"</blockquote>
+              <div class="flex items-center gap-3 text-left">
+                <span class="w-10 h-10 rounded-full bg-primary text-white font-bold text-[15px] flex items-center justify-center" aria-hidden="true">{review.initials}</span>
+                <span class="flex flex-col text-[15px] leading-[1.35]"><strong>{review.name}</strong><span class="text-text-muted">{review.verified ? 'Verified via Trustpilot' : 'Trustpilot'} · {review.date}</span></span>
+              </div>
+            </div>
+          )}
+          <ul class="flex flex-wrap justify-center gap-2.5 list-none p-0 m-0 max-w-[820px]">
+            {[`${price} all-in, nothing added`, `TDLR-approved · ${TEXAS_COURSE.providerNumber}`, 'Court and insurance copies', 'Unlimited quiz retakes'].map((t) => <li class="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-2 text-[15px]"><span class="text-info-border font-extrabold" aria-hidden="true">✓</span>{t}</li>)}
           </ul>
+          <div class="flex flex-col items-center gap-3">
+            <a href={enrollUrl} class="no-underline bg-white hover:bg-info text-primary-deep font-extrabold text-lg px-8 py-4 rounded-full" style={inter}>Start the {price} course →</a>
+            <a href="/texas/request-defensive-driving" class="no-underline text-white hover:underline">For a ticket? Ask your court first</a>
+          </div>
         </div>
+      </section>
 
-        <div class="pt-4 border-t border-border">
-          <a
-            href={enrollUrl}
-            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
-            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
-          >
-            Start the {price} course, certificate included
-          </a>
+      <!-- ===== Quick answers ===== -->
+      <section class={`${wrap} pt-2 pb-6`}>
+        <h2 class={h2c} style={inter}>Quick answers</h2>
+        <div class="flex flex-col gap-3 max-w-[820px] mt-5">
+          {faqs.map((f) => <div class="rounded-xl border border-border bg-white p-5"><h3 class="font-bold text-base m-0 mb-1" style={sans}>{f.q}</h3><p class="m-0 text-text-body leading-7" set:html={f.a} /></div>)}
         </div>
+      </section>
 
-        <div class="pt-6 mt-10 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
-          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider ({TEXAS_COURSE.providerNumber}). This page is informational and not legal advice; eligibility is set by statute, but fees, forms and deadlines are set by each court. Confirm with the court on your citation.</p>
-          <p class="text-xs text-text-subtle">Published October 6, 2026. Course length and curriculum per 16 TAC chapter 84; dismissal procedure and eligibility per Tex. Code Crim. Proc. ch. 45A; price floor per Tex. Educ. Code §1001.352 (HB 3012, eff. Sept. 1, 2025); court fee range from our verified court dataset; Type 3A fee per Texas DPS.</p>
+      <!-- ===== Where to go + legal ===== -->
+      <section class={`${wrap} pt-6 pb-10`}>
+        <p class="font-bold m-0 mb-2.5">Where to go from here</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-7">
+          {nextSteps.map(([href, t, s]) => <a href={href} class="no-underline text-text rounded-[14px] border border-border bg-white p-4 hover:border-primary-deep"><strong>{t}</strong><br /><span class="text-[15px] text-text-body">{s}</span></a>)}
         </div>
+        <p class="text-[15px] text-text-muted m-0 max-w-[820px] leading-6">Road Ready Safety is a TDLR-licensed Texas driving safety provider ({TEXAS_COURSE.providerNumber}). General information, not legal advice. Eligibility is set by statute; fees, forms and deadlines are set by each court. Confirm with the court on your citation. Last updated October 6, 2026. Sources: 16 TAC ch. 84 (course length and curriculum); Tex. Code Crim. Proc. ch. 45A (dismissal and eligibility); Tex. Educ. Code §1001.352 (price floor); our verified court dataset (court fees); Texas DPS (Type 3A fee).</p>
+      </section>
 
-      </div>
+      <StickyCta afterId="why" hideAtId="course" />
     </article>
+
+    <script is:inline>
+      (function () {
+        document.querySelectorAll('[data-picker]:not([data-armed])').forEach(function (root) {
+          root.setAttribute('data-armed', '1');
+          var on = ['bg-primary', 'text-white', 'border-primary'], off = ['bg-white', 'text-text', 'border-[#CBD3DF]', 'hover:border-primary-deep'];
+          var btns = root.querySelectorAll('[data-pick]'), panels = root.querySelectorAll('[data-panel]');
+          btns.forEach(function (b) { b.addEventListener('click', function () {
+            var k = b.getAttribute('data-pick');
+            btns.forEach(function (x) { var sel = x === b; x.setAttribute('aria-pressed', sel ? 'true' : 'false'); on.forEach(function (c) { x.classList.toggle(c, sel); }); off.forEach(function (c) { x.classList.toggle(c, !sel); }); });
+            panels.forEach(function (p) { p.hidden = p.getAttribute('data-panel') !== k; });
+          }); });
+        });
+      })();
+    </script>
   </TexasLayout>
 ) : (
   <meta http-equiv="refresh" content="0; url=/" />

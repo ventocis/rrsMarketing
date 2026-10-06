@@ -1,152 +1,298 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
-import YouTubeCard from '../../components/YouTubeCard.astro';
-import NextStepBlock from '../../components/texas/NextStepBlock.astro';
+import VideoEmbed from '../../components/VideoEmbed.astro';
+import StickyCta from '../../components/texas/StickyCta.astro';
+import { TEXAS_COURSE, TEXAS_PRICE_LABEL } from '../../data/texas-course';
+import reviews from '../../data/texas-reviews.json';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
-
 const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+const price = TEXAS_PRICE_LABEL;
+const review = reviews.find((r: any) => r.name === 'Ryan Johnson');
+
+// Rebuilt 2026-10-06 from Jackson's design canvas "How to request defensive driving" (Main.dc.html +
+// Serp.dc.html), implemented as the spec: his copy, section order, CTAs and the packet checklist.
+// Checked on October 6, 2026 against Tex. Code Crim. Proc. art. 45A.352(a)(4) (in person or by counsel;
+// certified mail postmarked by the answer date; court-designated e-mail or portal) and 45A.352(c)
+// (the court may grant a request before final disposition). One deviation, flagged to Jackson: the
+// design's "Full refund if you stop before finishing" does not match our refund policy (full refund
+// only within the three-day cancellation window), so that checkmark reads accordingly.
 
 const faqs = [
-  {
-    "q": "How do I ask a Texas court for defensive driving?",
-    "a": "On or before the answer date on your citation, send the court a plea of guilty or no contest, a request to take a driving safety course, a copy of your valid Texas driver's license, proof of insurance, and the court's fee — in person, by certified mail, or by the court's email or online portal where offered. Use the court's own request form if it has one."
-  },
-  {
-    "q": "Can I request defensive driving online in Texas?",
-    "a": "At many courts, yes — the statute now expressly allows court-authorized email and online-portal requests (since September 2025), and a growing number of courts run portals or web forms. It's court-by-court: check your court's listed method in our directory or call the clerk."
-  },
-  {
-    "q": "What happens after I send the request?",
-    "a": "The court reviews it and sends back an order granting (or denying) the course, with your 90-day completion deadline. Don't start the course until that order arrives — certificates dated before approval are routinely rejected. No response in two weeks? Call the clerk."
-  },
-  {
-    "q": "How much does it cost to request defensive driving?",
-    "a": "The court's fee — commonly $144, or $169 for school-zone violations, set locally — is due with the request at most courts. The course itself (ours is $28 all-in) and the Type 3A driving record ($12 from DPS) come later. Some courts collect the fee only after granting the request; your court's page or clerk will say."
-  },
-  {
-    "q": "Do I need a notarized affidavit to request the course?",
-    "a": "Depends on the court. Some require a notarized affidavit with mailed requests (Boerne, Buda, and Prosper, for example) but waive notarization if you appear in person; others bundle a sworn statement into their form with no notary needed. Check your court's instructions before mailing."
-  },
-  {
-    "q": "What if my answer date is tomorrow?",
-    "a": "Call the clerk first thing and ask how to make a same-day request — many courts accept in-person requests through the appearance date, and courts with portals can take them up to the deadline. If the date has already passed, ask anyway: a judge has discretion to accept a late request any time before final disposition, and clerks will tell you whether yours will."
-  }
+  { q: 'Can I request defensive driving online in Texas?', a: 'At many courts, yes. Since September 2025 the law allows requests by a court’s designated email or online portal. It’s court by court, so check your court’s listed method.' },
+  { q: 'How much does it cost to request?', a: 'The court’s fee, commonly $144 or $169 in a school zone, usually goes with the request. The course and the $12 Type 3A record come later. <a href="/texas/cost" class="text-primary-deep font-medium hover:underline">Full cost breakdown</a>' },
+  { q: 'Do I need a notarized affidavit?', a: 'Depends on the court. Some require one for mailed requests but not in person. Others build a sworn statement into their form.' },
+  { q: 'My answer date is tomorrow. What do I do?', a: 'Call the clerk first thing and ask how to request today. Many courts take in-person requests through the answer date, and portals work until the deadline.' },
+  { q: 'My answer date already passed. Is it too late?', a: 'Not always. A judge can still allow a late request before the case is finally resolved (art. 45A.352(c)). Call the clerk and ask. <a href="/texas/missed-court-date" class="text-primary-deep font-medium hover:underline">Missed your court date?</a>' },
 ];
+const plain = (s: string) => s.replace(/<[^>]+>/g, '');
 
 const articleSchema = JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'Article',
-  headline: "How to Request Defensive Driving from a Texas Court, Step by Step",
-  description: "The exact steps to request court permission for defensive driving in Texas — what to send, when, by which method, and what the court sends back. Includes what to write and the mistakes that get requests denied.",
+  headline: 'How to ask a Texas court for defensive driving',
+  description: 'What to send your court, how to send it, and the 3 mistakes that get requests denied. A checklist and a fill-in letter if there’s no form.',
   author: { '@type': 'Organization', name: 'Road Ready Safety' },
   publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
   datePublished: '2026-06-11',
-  dateModified: '2026-08-04',
+  dateModified: '2026-10-06',
   mainEntityOfPage: `${siteUrl}/texas/request-defensive-driving`,
 });
-
 const faqSchema = JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
-  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: plain(f.a) } })),
 });
+
+const denials = [
+  { t: '✕ Sending it late', b: 'It must reach the court, or be postmarked, by the answer date on your citation.' },
+  { t: '✕ Leaving something out', b: 'Prosper’s form puts it plainly: incomplete requests will be denied.' },
+  { t: '✕ Taking the course first', b: 'Certificates dated before the court approves you are routinely refused.' },
+];
+const methods = [
+  { eyebrow: 'Fastest, where offered', t: 'Email or online portal', b: 'Only if the court has designated one. Allowed by statute since September 2025.' },
+  { eyebrow: 'Works everywhere', t: 'Certified mail', b: 'Return receipt requested, postmarked on or before your answer date.' },
+  { eyebrow: 'Short on time', t: 'In person or by attorney', b: 'Some courts waive the notary requirement when you show up in person.' },
+];
+const items = [
+  { id: 'plea', t: 'Your plea: guilty or no contest', n: 'No contest is the common choice. It’s on most court forms.' },
+  { id: 'req', t: 'A request for a driving safety course', n: 'On the court’s form, or one sentence in your letter.' },
+  { id: 'dl', t: 'A copy of your Texas driver license', n: 'Valid on the date you send it.' },
+  { id: 'ins', t: 'Proof of insurance listing you', n: 'Your current insurance card works.' },
+  { id: 'fee', t: 'The court’s fee', n: 'Commonly $144, or $169 in a school zone. Some courts bill after approving you.' },
+];
+const steps = [
+  { n: 1, t: 'Send the request', b: '', when: 'By your answer date', us: false },
+  { n: 2, t: 'Wait for the order', b: 'Don’t start the course yet. No reply in two weeks? Call.', when: '', us: false },
+  { n: 3, t: 'Take the course', b: `Any TDLR-approved provider. ${TEXAS_COURSE.hours} hours online.`, when: 'Within 90 days', us: true },
+  { n: 4, t: 'Order your Type 3A', b: '$12 online from DPS. Check if your court wants it dated after approval.', when: '', us: false },
+  { n: 5, t: 'Submit both', b: 'Leave a few days: TDLR says certificates can take up to 5 days to validate.', when: 'Before day 90', us: false },
+];
+const checks = [
+  `${price} all-in, nothing added at checkout`,
+  'Certificate the moment you finish',
+  'Court and insurance copies included',
+  `TDLR-approved, provider ${TEXAS_COURSE.providerNumber}`,
+  'Saves your place on phone or laptop',
+  'Full refund if you cancel within three days',
+];
+const nextSteps = [
+  ['/texas/eligibility-tracker', 'Not sure you qualify?', 'Check eligibility in 4 questions →'],
+  ['/texas/courts', 'Need your court’s form?', 'Search the court directory →'],
+  ['/texas/type-3a-driving-record', 'Ordering your record?', 'Type 3A, step by step →'],
+  ['/texas/ticket-dismissal', 'Want the full picture?', 'Texas ticket dismissal guide →'],
+];
+
+const inter = "font-family:'Inter',sans-serif;";
+const sans = "font-family:'DM Sans',sans-serif;";
+const h2c = 'text-[28px] lg:text-[34px] font-extrabold tracking-[-0.02em] leading-[1.15] text-text m-0 mb-3';
+const wrap = 'max-w-[1080px] mx-auto px-4 sm:px-6 lg:px-8';
+const card = 'rounded-[14px] border border-border bg-white p-5 lg:p-[22px] flex flex-col gap-1.5';
 ---
 
 {isEnabled ? (
   <TexasLayout
-    title="How to Request Defensive Driving from a Texas Court: Exactly What to Say"
-    description="The exact steps to request court permission for defensive driving in Texas — what to send, when, by which method, and what the court sends back. Includes what to write and the mistakes that get requests denied."
+    title="How to Request Defensive Driving in Texas (+ Letter Template)"
+    description="What to send your court, how to send it, and the 3 mistakes that get requests denied. Free checklist and a fill-in letter if there's no form."
     keywords="how to request defensive driving texas, ask court for defensive driving, driving safety course request texas, dsc request letter texas, court permission defensive driving"
     url="/texas/request-defensive-driving"
   >
     <script type="application/ld+json" set:html={articleSchema} />
     <script type="application/ld+json" set:html={faqSchema} />
 
-    <article class="bg-white pb-16 lg:pb-24">
-      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
-
-        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
-          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving course</a>
-          <span class="mx-2 text-text-subtle">›</span>
-          <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">Speeding ticket guide</a>
-          <span class="mx-2 text-text-subtle">›</span>
-          <span class="text-text">How to request</span>
+    <article class="bg-surface-muted pb-24 lg:pb-16 text-text" style={sans}>
+      <!-- ===== Lead ===== -->
+      <div class={wrap}>
+        <p class="text-[15px] text-text-body pt-5 m-0">
+          <a href="/texas" class="text-text-body hover:underline">Texas</a>
+          <span class="mx-1.5">›</span>
+          <a href="/texas/speeding-ticket" class="text-text-body hover:underline">Speeding ticket guide</a>
+          <span class="mx-1.5">›</span>
+          <span>How to request</span>
         </p>
-
-        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
-          How to Request Defensive Driving from a Texas Court, Step by Step
-        </h1>
-
-        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
-          <p>Requesting the course is the step everything else depends on — and the step people get wrong most. The rule: <strong class="text-text">ask the court on or before the answer date printed on your citation, before you take any course.</strong> Since September 2025 the statute expressly allows requests in person, by your attorney, by certified mail, or — where the court offers it — by email or online portal (art. 45A.352(a)(4)).</p>
-          <p>Here's the whole sequence, what to actually say, and what comes back from the court. (Not sure your ticket qualifies in the first place? Eligibility, exclusions, fees and deadlines are all in the <a href="/texas/ticket-dismissal" class="text-primary-deep font-medium hover:underline">Texas ticket dismissal guide</a>.)</p>
+        <div class="max-w-[800px] pt-8 pb-10">
+          <h1 class="text-[36px] lg:text-[56px] font-extrabold tracking-[-0.02em] leading-[1.05] text-text m-0 mb-5" style={inter}>How to ask a Texas court for defensive driving</h1>
+          <p class="text-lg lg:text-[21px] leading-8 m-0 mb-4">Send the court on your citation a short request <strong>on or before your answer date</strong>: your plea, a request for the course, your license, proof of insurance and the court's fee. You can do it in person, by certified mail, or by email or online portal if your court offers one.</p>
+          <p class="text-lg lg:text-[21px] leading-8 m-0 mb-6">Most requests that fail don't fail on what's inside. They fail on <strong>timing</strong>. Here are the three mistakes courts reject, then exactly what to send.</p>
+          <div class="flex flex-wrap gap-3 items-center">
+            <a href="#packet" class="no-underline bg-primary hover:bg-primary-hover text-white font-bold text-[17px] px-6 py-3.5 rounded-full">Build my request ↓</a>
+            <a href="#video" class="font-semibold text-primary hover:text-primary-deep">▶ Watch the step-by-step (4:04)</a>
+          </div>
+          <p class="text-[15px] text-text-muted m-0 mt-6">By Road Ready Safety, TDLR provider {TEXAS_COURSE.providerNumber} · Checked against Tex. Code Crim. Proc. art. 45A.352 and individual courts' published instructions · Updated October 6, 2026</p>
         </div>
+      </div>
 
-        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
-          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Procedures vary by court and judge — confirm with the court listed on your citation.</p>
+      <!-- ===== What gets a request denied ===== -->
+      <section id="denied" class="bg-white border-y border-border scroll-mt-28">
+        <div class={`${wrap} py-12 lg:py-14`}>
+          <h2 class={h2c} style={inter}>What gets a request denied?</h2>
+          <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">Three things, according to the courts' own instructions. Avoid these and the rest is paperwork.</p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+            {denials.map((d) => (
+              <div class="rounded-[14px] border border-amber-200 bg-amber-50 p-5 lg:p-[22px] flex flex-col gap-1.5">
+                <span class="text-[20px] font-extrabold text-amber-800" style={inter}>{d.t}</span>
+                <span class="text-base text-text-body leading-6">{d.b}</span>
+              </div>
+            ))}
+          </div>
         </div>
+      </section>
 
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The five steps</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p><strong class="text-text">1. Find your court and its method.</strong> The citation names the exact court. Methods vary more than anything else court to court — some take a web form, some require certified mail, a few require appearing in person. Our <a href="/texas/courts" class="text-primary-deep font-medium hover:underline">court directory</a> lists the verified request method, fees, and forms for over a hundred Texas courts.</p>
-          <p><strong class="text-text">2. Send the request by your answer date.</strong> A complete request includes: a plea of guilty or no contest, the request for a driving safety course, a copy of your valid Texas driver's license, proof of insurance listing you as a driver, and the court's fee (commonly $144, or $169 in a school zone). Many courts have their own one-page form that bundles the plea, request, and affidavit — use the court's form when one exists. Mailing it? Certified mail, return receipt, postmarked by the answer date.</p>
-          <p><strong class="text-text">3. Wait for the order — do not start the course.</strong> The court reviews eligibility and sends back an order granting the course with your deadline (90 days). Courts are blunt about sequence: certificates dated before approval are routinely refused. If you haven't heard back within two weeks, call.</p>
-          <p><strong class="text-text">4. Take the course and order your record.</strong> Any TDLR-approved provider works — <a href="/texas/providers" class="text-primary-deep font-medium hover:underline">verify the CP number</a> — and order your <a href="/texas/type-3a-driving-record" class="text-primary-deep font-medium hover:underline">Type 3A driving record</a> from DPS ($12 online, instant), checking first whether your court wants it dated after approval.</p>
-          <p><strong class="text-text">5. Submit certificate + record before day 90.</strong> Court copy of the certificate (signed if your court requires it) plus the Type 3A, by the method your court accepts. Leave a cushion — TDLR notes new certificates can take up to 5 days to appear in its validation system.</p>
-        </div>
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What to write if there's no form</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p>Keep it to five sentences on one page: your full name exactly as on your license, citation number, the charge and date; a sentence entering a plea of no contest; a sentence requesting permission to take a driving safety course for dismissal under Code of Criminal Procedure chapter 45A; a sentence affirming you hold a valid Texas license, have insurance (copies enclosed), and have not completed a course for dismissal in the 12 months before the offense date; your mailing address, email, and phone. Enclose the fee. That's the entire genre — courts process thousands of these; clarity beats formality.</p>
-          <p>The three request-killers, per the courts' own instructions: sending it <strong class="text-text">after the answer date</strong>, sending an <strong class="text-text">incomplete packet</strong> (Prosper's form says it plainly: incomplete requests will be denied), and <strong class="text-text">taking the course before the order arrives</strong>.</p>
-        </div>
-
-        <NextStepBlock page="request-defensive-driving" lead="eligible" />
-
-        <YouTubeCard id="lKhv6FiHoIk" title="How to Request Permission for a Texas Driver Safety Course (Step-by-Step Guide)" blurb="Step-by-step: getting court approval to take the course." />
-
-        <p class="text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;"><a href="/texas/deadline-calculator" class="text-primary-deep font-medium hover:underline">Check your answer date and 90-day window</a> →</p>
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
-        <div class="space-y-8 mb-12">
-          {faqs.map(item => (
-            <div>
-              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
-              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+      <!-- ===== How to send ===== -->
+      <section class={`${wrap} pt-16 pb-6`}>
+        <h2 class={h2c} style={inter}>How can you send the request?</h2>
+        <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">Texas law allows all three. Your court decides which it accepts, so check its listed method before you send.</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+          {methods.map((m) => (
+            <div class={card}>
+              <span class="text-sm font-bold uppercase tracking-[0.06em] text-primary-deep">{m.eyebrow}</span>
+              <span class="font-bold text-[20px]">{m.t}</span>
+              <span class="text-base text-text-body leading-6">{m.b}</span>
             </div>
           ))}
         </div>
+        <a href="/texas/courts" class="inline-block mt-[18px] no-underline bg-primary hover:bg-primary-hover text-white font-bold px-5 py-3 rounded-full">Find your court's method →</a>
+      </section>
 
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Approved? The rest takes one evening</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
-          <p>Once the court's order arrives, the remaining work is the 6-hour course and two documents. Ours is <strong class="text-text">$28 all-in with the certificate downloadable the moment you finish</strong> — court copy and insurance copy included.</p>
+      <!-- ===== Packet checklist ===== -->
+      <section id="packet" class={`${wrap} pt-12 pb-6 scroll-mt-28`} data-packet>
+        <h2 class={h2c} style={inter}>What goes in the request?</h2>
+        <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">Five things. Use your court's own form if it has one, since it usually bundles the first two. Tick them off as you gather them.</p>
+        <div class="flex flex-wrap gap-7">
+          <div class="flex-[1_1_460px] min-w-0 flex flex-col gap-2.5">
+            {items.map((it) => (
+              <button type="button" data-item={it.id} aria-pressed="false" class="text-left flex gap-3.5 items-start rounded-[14px] border-2 border-border bg-white p-4 transition-colors">
+                <span data-tick class="flex-none w-[26px] h-[26px] rounded-lg border-2 border-[#CBD3DF] bg-white text-white font-extrabold text-sm flex items-center justify-center" aria-hidden="true"></span>
+                <span class="flex flex-col gap-0.5">
+                  <span class="font-bold text-[17px] text-text">{it.t}</span>
+                  <span class="text-[15px] text-text-body">{it.n}</span>
+                </span>
+              </button>
+            ))}
+          </div>
+          <div class="flex-[1_1_300px] min-w-0 self-start rounded-2xl border border-border bg-white p-6 flex flex-col gap-3">
+            <span class="text-sm font-bold uppercase tracking-[0.06em] text-primary-deep">Your packet</span>
+            <span class="text-[40px] font-extrabold leading-none" style={inter}><span data-done>0</span> of 5</span>
+            <div class="h-2.5 rounded-full bg-[#F6F6F9] overflow-hidden"><div data-bar class="h-2.5 bg-primary transition-all" style="width:0%"></div></div>
+            <span data-status class="text-base text-text-body">Tick each item as you gather it.</span>
+            <span class="text-sm text-text-muted">Mailing it? Some courts, like Boerne, Buda and Prosper, also want a notarized affidavit.</span>
+          </div>
         </div>
+      </section>
 
-        <div class="flex flex-col sm:flex-row gap-4 mb-10">
-          <a
-            href={enrollUrl}
-            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
-            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
-          >
-            Start the $28 Course →
-          </a>
-          <a
-            href="/texas/courts"
-            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
-            style="font-family: 'DM Sans', sans-serif;"
-          >
-            Find your court's method
-          </a>
+      <!-- ===== Letter ===== -->
+      <section class={`${wrap} pt-12 pb-6`}>
+        <h2 class={h2c} style={inter}>What should you write if there's no form?</h2>
+        <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">One page, five short parts. Courts process thousands of these, so clear beats formal. Fill in the brackets:</p>
+        <div class="rounded-2xl border border-border bg-white p-6 lg:p-8 max-w-[800px] text-[17px] leading-7 flex flex-col gap-4">
+          <p class="m-0">To the [Court name] Clerk,</p>
+          <p class="m-0">Re: Citation [number], [charge], issued [date] to [your full name as on your license].</p>
+          <p class="m-0">I enter a plea of no contest to this charge, and I request permission to take a driving safety course for dismissal under Code of Criminal Procedure chapter 45A.</p>
+          <p class="m-0">I hold a valid Texas driver license and current insurance (copies enclosed), and I have not completed a driving safety course for dismissal in the 12 months before the offense date. The court fee of $[amount] is enclosed.</p>
+          <p class="m-0">[Mailing address] · [Email] · [Phone]<br />[Signature] [Date]</p>
         </div>
+      </section>
 
-        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
-          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
-          <p class="text-xs text-text-subtle">Last updated August 4, 2026 — verified by the Road Ready Safety editorial team against Tex. Code Crim. Proc. arts. 45A.351–.359 (incl. the S.B. 296 request-method amendments) and the published instructions of the individual Texas courts referenced.</p>
+      <!-- ===== After you send ===== -->
+      <section class={`${wrap} pt-12 pb-6`}>
+        <h2 class={h2c} style={inter}>What happens after you send it?</h2>
+        <p class="text-base leading-7 m-0 mb-7 max-w-[780px]">The court sends back an order with your deadline. Wait for it, then the rest takes one evening.</p>
+        <ol class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 list-none p-0 m-0">
+          {steps.map((s) => (
+            <li class={`rounded-[14px] p-5 flex flex-col gap-1.5 ${s.us ? 'bg-primary text-white' : 'bg-white border border-border'}`}>
+              <span class={`text-[28px] font-extrabold leading-none ${s.us ? 'text-info-border' : 'text-primary'}`} style={inter}>{s.n}</span>
+              <span class="font-bold">{s.t}</span>
+              {s.b && <span class={`text-[15px] leading-6 ${s.us ? 'text-info' : 'text-text-body'}`}>{s.b}</span>}
+              {s.when && <span class={`text-sm font-bold mt-auto ${s.us ? '' : 'text-amber-800'}`}>{s.when}</span>}
+            </li>
+          ))}
+        </ol>
+        <a href="/texas/deadline-calculator" class="inline-block mt-4 font-bold text-primary hover:text-primary-deep">Work out your answer date and 90-day window →</a>
+        <div id="video" class="mt-8 max-w-[800px] scroll-mt-28">
+          <VideoEmbed id="lKhv6FiHoIk" />
         </div>
+      </section>
 
-      </div>
+      <!-- ===== Approved band ===== -->
+      <section id="approved" class={`${wrap} py-14 scroll-mt-28`}>
+        <div class="rounded-[20px] bg-primary-deep text-white p-7 lg:p-10 flex flex-wrap gap-8 items-center justify-between">
+          <div class="flex-[999_1_460px] min-w-0 flex flex-col gap-[18px]">
+            <p class="text-sm font-bold uppercase tracking-[0.06em] text-info-border m-0">Approved? The course is the easy part</p>
+            {review && (
+              <div class="rounded-2xl bg-white text-text p-6 flex flex-col gap-3">
+                <div class="flex justify-between items-center gap-3 flex-wrap">
+                  <span class="text-accent text-[20px] tracking-[2px]" aria-label={`${review.rating} out of 5 stars`}>{'★'.repeat(review.rating)}</span>
+                  <span class="font-bold text-[15px] text-primary-deep">{review.title}</span>
+                </div>
+                <blockquote class="m-0 text-[20px] font-bold leading-[1.45]" style={inter}>"{review.quote}"</blockquote>
+                <div class="flex items-center gap-3">
+                  <span class="w-10 h-10 rounded-full bg-primary text-white font-bold text-[15px] flex items-center justify-center" aria-hidden="true">{review.initials}</span>
+                  <span class="flex flex-col text-[15px] leading-[1.35]"><strong>{review.name}</strong><span class="text-text-muted">{review.verified ? 'Verified via Trustpilot' : 'Trustpilot'} · {review.date}</span></span>
+                </div>
+              </div>
+            )}
+            <ul class="grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-2.5 list-none p-0 m-0 text-base">
+              {checks.map((c) => <li class="flex gap-2"><span class="text-info-border font-extrabold" aria-hidden="true">✓</span><span>{c}</span></li>)}
+            </ul>
+          </div>
+          <div class="flex-[1_1_240px] flex flex-col gap-3">
+            <a href={enrollUrl} class="text-center no-underline bg-white hover:bg-info text-primary-deep font-extrabold text-lg px-7 py-4 rounded-full" style={inter}>Start the {price} course →</a>
+            <a href="/texas/courts" class="text-center no-underline text-white font-semibold hover:underline">Not approved yet? Find your court's method</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== Quick answers ===== -->
+      <section class={`${wrap} pt-2 pb-6`}>
+        <h2 class={h2c} style={inter}>Quick answers</h2>
+        <div class="flex flex-col gap-3 max-w-[800px] mt-5">
+          {faqs.map((f) => (
+            <div class="rounded-xl border border-border bg-white p-5">
+              <h3 class="font-bold text-base m-0 mb-1" style={sans}>{f.q}</h3>
+              <p class="m-0 text-text-body leading-7" set:html={f.a} />
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- ===== Your next step + legal ===== -->
+      <section class={`${wrap} pt-6 pb-10`}>
+        <p class="font-bold m-0 mb-2.5">Your next step</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-7">
+          {nextSteps.map(([href, t, s]) => (
+            <a href={href} class="no-underline text-text rounded-[14px] border border-border bg-white p-4 hover:border-primary-deep"><strong>{t}</strong><br /><span class="text-[15px] text-text-body">{s}</span></a>
+          ))}
+        </div>
+        <p class="text-[15px] text-text-muted m-0 max-w-[800px] leading-6">Road Ready Safety is a TDLR-licensed Texas driving safety provider ({TEXAS_COURSE.providerNumber}). General information, not legal advice. Procedures vary by court and judge, so confirm with the court on your citation. Last updated October 6, 2026. Sources: Tex. Code Crim. Proc. arts. 45A.351–.359, including the 2025 request-method amendments; published instructions of the individual Texas courts named on this page; TDLR certificate validation guidance.</p>
+      </section>
+
+      <StickyCta afterId="denied" hideAtId="approved" label={`Already approved? Start the ${price} course`} />
     </article>
+
+    <script is:inline>
+      (function () {
+        document.querySelectorAll('[data-packet]:not([data-armed])').forEach(function (root) {
+          root.setAttribute('data-armed', '1');
+          var btns = root.querySelectorAll('[data-item]'), total = btns.length;
+          var done = root.querySelector('[data-done]'), bar = root.querySelector('[data-bar]'), status = root.querySelector('[data-status]');
+          function render() {
+            var n = root.querySelectorAll('[data-item][aria-pressed="true"]').length;
+            done.textContent = n; bar.style.width = (n / total * 100) + '%';
+            status.textContent = n === total ? 'Ready to send. Get it to the court by your answer date.' : n === 0 ? 'Tick each item as you gather it.' : (total - n) + ' to go. Incomplete requests can be denied.';
+          }
+          btns.forEach(function (b) {
+            b.addEventListener('click', function () {
+              var on = b.getAttribute('aria-pressed') !== 'true';
+              b.setAttribute('aria-pressed', on ? 'true' : 'false');
+              b.classList.toggle('bg-info', on); b.classList.toggle('border-info-border', on); b.classList.toggle('bg-white', !on); b.classList.toggle('border-border', !on);
+              var t = b.querySelector('[data-tick]'); t.textContent = on ? '✓' : '';
+              t.classList.toggle('bg-primary', on); t.classList.toggle('border-primary', on); t.classList.toggle('bg-white', !on); t.classList.toggle('border-[#CBD3DF]', !on);
+              render();
+            });
+          });
+        });
+      })();
+    </script>
   </TexasLayout>
 ) : (
   <meta http-equiv="refresh" content="0; url=/" />

@@ -1,198 +1,291 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
-import YouTubeCard from '../../components/YouTubeCard.astro';
-import SavingsEstimator from '../../components/texas/SavingsEstimator.astro';
+import StickyCta from '../../components/texas/StickyCta.astro';
+import { TEXAS_COURSE, TEXAS_PRICE_LABEL } from '../../data/texas-course';
 import { INSURERS } from '../../data/texas-insurers';
+import reviews from '../../data/texas-reviews.json';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
-
 const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+const price = TEXAS_PRICE_LABEL;
+const coursePrice = TEXAS_COURSE.price;
+const review = reviews.find((r: any) => r.name === 'Ryan Johnson');
+
+// Rebuilt 2026-10-06 from Jackson's design canvas "Insurance Discount Redesign" (Main.dc.html + Serp.dc.html),
+// implemented as the spec: his copy, section order, the insurer picker and the two-mode calculator. The insurer
+// rows come from src/data/texas-insurers.ts (quotes read from each insurer's site on 2026-09-04), and each
+// "Read X's own page" link goes to our per-insurer page, which carries the source link. Design has no video, so
+// the previous card is not carried over.
+
+const verifiedOn = new Date(INSURERS[0].verified + 'T12:00:00Z').toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+const generic = 'Confirms a course-based discount exists in some form, but leaves terms to an agent. Ask yours for the number.';
+const notes: Record<string, string> = {
+  geico: 'GEICO requires the course be completed “on a voluntary basis (not as a result of an order of a court or other governmental entity).” A course you took to dismiss a ticket won’t count here.',
+  farmers: 'Farmers publishes “over age 55.” If you’re younger, the discount may not apply to your policy.',
+  nationwide: 'Nationwide notes “you may have to be 55 or over.” Check with your agent before you enroll.',
+};
+const insurers = INSURERS.map((i) => ({
+  slug: i.slug, name: i.name,
+  age: i.ageGate || 'None published',
+  amount: i.amount || 'Not published',
+  court: i.courtOrdered === 'excluded' ? 'Excluded' : 'Not stated',
+  note: notes[i.slug] || generic,
+}));
 
 const faqs = [
-  {
-    q: 'Does defensive driving lower your car insurance in Texas?',
-    a: 'Often, but it\'s the insurer\'s choice, not a state mandate. The Texas Department of Insurance says it plainly: "Companies often offer discounts for completing a defensive driving or driver education course. Each company sets its own discount terms." Industry-typical discounts run a few percent and commonly last around three years — but the only number that matters is the one your insurer quotes you.',
-  },
-  {
-    q: 'Isn\'t Texas insurance required to give a 10% defensive driving discount?',
-    a: 'Not anymore — and most sites that say so are citing dead law. The mandatory 10% discount belonged to Texas\'s old benchmark-rate system, which ended when the state moved to "file and use" rating in 2003–2004. Under current law each insurer files its own rates and sets its own discounts. If a page promises you a guaranteed 10%, it hasn\'t been updated in twenty years.',
-  },
-  {
-    q: 'Can I take the course just for the insurance discount, without a ticket?',
-    a: 'Yes. TDLR explicitly recognizes the 6-hour driving safety course for "ticket dismissal or insurance discounts" — same course, no citation required, no court involvement. You enroll, complete it, and send the certificate to your insurer.',
-  },
-  {
-    q: 'How do I actually claim the discount?',
-    a: 'Ask your agent before enrolling — confirm the insurer offers a defensive-driving discount, how much, how long it lasts, and what documentation they want. Then complete the course and submit your certificate\'s insurance copy. There\'s no state-prescribed process; the insurer decides the paperwork.',
-  },
-  {
-    q: 'Does a course taken to dismiss a ticket also earn the discount?',
-    a: 'Sometimes — but not always, and one major insurer says no in print. GEICO requires the course to be completed "on a voluntary basis (not as a result of an order of a court or other governmental entity)," which excludes a course you took because a court granted your dismissal request. Other insurers do not publish a position either way. Your certificate does carry both a court copy and an insurance copy, so it costs nothing to ask — just do not assume both benefits before you have.',
-  },
-  {
-    q: 'Is there an age requirement for the defensive driving discount in Texas?',
-    a: 'At several major insurers, yes, and it is the condition drivers get caught by most. Farmers publishes "over age 55"; Nationwide notes "you may have to be 55 or over"; GEICO requires you to be at least 50. Others publish no age condition, which is not the same as having none. Ask your own insurer before you spend six hours.',
-  },
-  {
-    q: 'Which Texas insurers actually publish their defensive driving discount terms?',
-    a: 'Very few publish a number. GEICO publishes "up to 10% on applicable coverages" plus its age and voluntary-basis conditions. Farmers and Nationwide publish age conditions but no percentage. State Farm, Allstate, Progressive, Liberty Mutual and USAA confirm a course-based discount exists in some form but leave the terms to an agent. We quote each one word-for-word on its own page rather than filling the gaps with averages.',
-  },
-  {
-    q: 'Can a CDL holder or someone with an ineligible ticket still get the discount?',
-    a: 'Yes — the discount path has nothing to do with court eligibility. CDL holders, drivers cited 25+ mph over, and drivers inside the 12-month rule can all take the course voluntarily; it just can\'t dismiss their ticket. Whether the discount applies is still the insurer\'s call.',
-  },
+  { q: 'Does defensive driving lower car insurance in Texas?', a: 'Often, but it’s up to the insurer. Typical discounts are a few percent for about three years. Only your insurer’s quote counts.' },
+  { q: 'Is there an age requirement?', a: 'At several big insurers, yes. Farmers publishes “over age 55,” Nationwide “you may have to be 55 or over,” and GEICO requires at least 50.' },
+  { q: 'Can I take the course just for the discount?', a: 'Yes. TDLR recognizes the same 6-hour course for “ticket dismissal or insurance discounts.” No ticket or court needed.' },
+  { q: 'Does a course taken for a ticket also count?', a: 'Sometimes. GEICO requires the course be taken “on a voluntary basis,” which excludes court-ordered ones. Others don’t say, so ask.' },
+  { q: 'Isn’t a 10% discount required by law?', a: 'Not since Texas moved to file-and-use rating in 2003–2004. Each insurer now sets its own discounts.' },
 ];
 
 const articleSchema = JSON.stringify({
-  '@context': 'https://schema.org',
-  '@type': 'Article',
-  headline: 'Texas Defensive Driving Insurance Discount: What Your Insurer Actually Gives',
-  description: 'Texas no longer mandates a defensive-driving insurance discount. What eight major Texas insurers actually publish — including the age conditions at GEICO, Farmers and Nationwide that almost nobody mentions.',
+  '@context': 'https://schema.org', '@type': 'Article',
+  headline: 'Will defensive driving lower your insurance in Texas?',
+  description: 'There’s no required 10% in Texas. What GEICO, State Farm, Farmers and five more insurers actually publish, including the age limits most people miss, and what the course is worth on your own numbers.',
   author: { '@type': 'Organization', name: 'Road Ready Safety' },
   publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
-  datePublished: '2026-06-11',
-  dateModified: '2026-10-05',
+  datePublished: '2026-06-11', dateModified: '2026-10-06',
   mainEntityOfPage: `${siteUrl}/texas/insurance-discount`,
 });
+const faqSchema = JSON.stringify({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) });
 
-const faqSchema = JSON.stringify({
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
-});
+const claim = [
+  ['“Do you offer it, and how much?”', 'Get the number, and which coverages it applies to.'],
+  ['“How long does it last?”', 'Three years is common. Confirm yours, and when to renew.'],
+  ['“What do you need from me?”', 'Usually the insurance copy of your certificate.'],
+  ['“Does it need to be TDLR-approved?”', 'Most expect the standard 6-hour approved course. <a href="/texas/tdlr-approved" class="text-primary hover:text-primary-deep font-medium">Check any provider</a>'],
+];
+const nextSteps = [
+  ['/texas/ticket-dismissal', 'Have a ticket?', 'Get it dismissed first →'],
+  ['/texas/what-is-a-driving-safety-course', 'New to the course?', 'What it is and how it works →'],
+  ['/texas/ticket-insurance-impact', 'What a ticket really costs', 'Fines plus 3 years of premium →'],
+  ['/texas/best-defensive-driving-course', 'Comparing courses?', 'How to pick one →'],
+];
+
+const inter = "font-family:'Inter',sans-serif;";
+const sans = "font-family:'DM Sans',sans-serif;";
+const h2c = 'text-[28px] lg:text-[34px] font-extrabold tracking-[-0.02em] leading-[1.15] text-text m-0 mb-3';
+const wrap = 'max-w-[1080px] mx-auto px-4 sm:px-6 lg:px-8';
+const card = 'rounded-[14px] border border-border bg-white p-5 lg:p-[22px]';
+const pillOn = 'bg-primary text-white border-primary';
+const pillOff = 'bg-white text-text border-[#CBD3DF] hover:border-primary-deep';
+const eyebrow = 'text-sm font-bold uppercase tracking-[0.06em] text-primary-deep';
+const input = 'text-lg px-3.5 py-3 rounded-[10px] border-2 border-[#CBD3DF] bg-white text-text focus:border-primary-deep focus:outline-none';
 ---
 
 {isEnabled ? (
   <TexasLayout
-    title="Texas Defensive Driving Insurance Discount: What Insurers Actually Give (2026)"
-    description="Texas no longer mandates a defensive driving insurance discount. What eight major Texas insurers publish, quoted and sourced, including the age conditions at GEICO, Farmers and Nationwide, and how to claim the discount with the course certificate."
+    title="Texas Defensive Driving Insurance Discount: Insurer by Insurer"
+    description="No, there's no required 10%. See what GEICO, State Farm, Farmers and 5 more actually publish, including the age limits most people miss."
     keywords="defensive driving insurance discount texas, defensive driving course for insurance discount, does defensive driving lower insurance texas, which insurers give defensive driving discount texas, texas auto insurance discount course, defensive driving 10 percent discount, voluntary defensive driving texas"
     url="/texas/insurance-discount"
   >
     <script type="application/ld+json" set:html={articleSchema} />
     <script type="application/ld+json" set:html={faqSchema} />
 
-    <article class="bg-white pb-16 lg:pb-24">
-      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
-
-        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
-          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving course</a>
-          <span class="mx-2 text-text-subtle">›</span>
-          <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">Speeding ticket guide</a>
-          <span class="mx-2 text-text-subtle">›</span>
-          <span class="text-text">Insurance discount</span>
-        </p>
-
-        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
-          Texas Defensive Driving Insurance Discount: What Your Insurer Actually Gives
-        </h1>
-
-        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
-          <p><strong class="text-text">A Texas defensive driving course often earns an insurance discount, but the discount is your insurer's choice, and anyone promising a guaranteed 10% is quoting a law that died twenty years ago.</strong> The Texas Department of Insurance puts it this way: "Companies often offer discounts for completing a defensive driving or driver education course. Each company sets its own discount terms." That one sentence is the real rule, and everything below is the practical detail around it.</p>
+    <article class="bg-surface-muted pb-24 lg:pb-16 text-text" style={sans}>
+      <!-- ===== Lead ===== -->
+      <div class={wrap}>
+        <p class="text-[15px] text-text-body pt-5 m-0"><a href="/texas" class="text-text-body hover:underline">Texas</a><span class="mx-1.5">›</span><a href="/texas/speeding-ticket" class="text-text-body hover:underline">Speeding ticket guide</a><span class="mx-1.5">›</span><span>Insurance discount</span></p>
+        <div class="max-w-[820px] pt-8 pb-12">
+          <h1 class="text-[36px] lg:text-[56px] font-extrabold tracking-[-0.02em] leading-[1.05] m-0 mb-5" style={inter}>Will defensive driving lower your insurance in Texas?</h1>
+          <p class="text-lg lg:text-[21px] leading-8 m-0 mb-4">Often, but it's your insurer's call. Texas doesn't require a discount, and each company sets its own terms. Anyone promising a guaranteed 10% is quoting a law that ended in 2004.</p>
+          <p class="text-lg lg:text-[21px] leading-8 m-0 mb-6">The catch most people find out too late isn't the course. It's <strong>your age</strong>. Here's what each major insurer actually publishes.</p>
+          <div class="flex flex-wrap gap-3 items-center">
+            <a href="#insurers" class="no-underline bg-primary hover:bg-primary-hover text-white font-bold text-[17px] px-6 py-3.5 rounded-full">Check my insurer ↓</a>
+            <a href="#math" class="font-semibold text-primary hover:text-primary-deep">Or run the numbers</a>
+          </div>
+          <p class="text-[15px] text-text-muted m-0 mt-6">By Road Ready Safety, TDLR provider {TEXAS_COURSE.providerNumber}. Not affiliated with any insurer. Insurer terms read from each company's website on {verifiedOn} · Updated October 6, 2026</p>
         </div>
+      </div>
 
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The "mandatory 10%" myth — where it came from, why it's dead</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p>You'll find pages all over the internet — some on course-provider sites — saying Texas insurers <em>must</em> give a 10% defensive-driving discount for three years. That was once true: under Texas's old benchmark rating system, the Consumer Bill of Rights required it. But the Legislature moved auto insurance to a <strong class="text-text">"file and use" system in 2003 (S.B. 14)</strong>, the benchmark era ended in 2004, and with it went the mandate. Today every insurer files its own rates and decides its own discounts — including whether to offer this one at all.</p>
-          <p>Why we lead with this: a page still promising the mandatory 10% is telling you its information predates 2004. (It's the same tell as a site promising to "remove points" — <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">Texas hasn't had points since 2019</a>.) The discount is real at many insurers; the guarantee is not.</p>
+      <!-- ===== The 10% myth ===== -->
+      <section id="myth" class="bg-white border-y border-border scroll-mt-28">
+        <div class={`${wrap} py-12 lg:py-14`}>
+          <h2 class={h2c} style={inter}>Do Texas insurers have to give a 10% discount?</h2>
+          <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">No. That rule died when Texas moved auto insurance to "file and use" rating.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="rounded-2xl border border-border bg-[#F6F6F9] p-6">
+              <span class="text-sm font-bold uppercase tracking-[0.06em] text-text-muted">The myth</span>
+              <p class="text-[24px] font-extrabold leading-tight m-0 my-1.5 line-through" style={inter}>"A guaranteed 10% for 3 years"</p>
+              <p class="text-base text-text-body leading-6 m-0">True under the old benchmark system. S.B. 14 (2003) ended it, and the benchmark era closed in 2004.</p>
+            </div>
+            <div class="rounded-2xl border border-info-border bg-info p-6">
+              <span class={eyebrow}>The real rule today</span>
+              <p class="text-[20px] font-bold leading-[1.4] m-0 my-1.5" style={inter}>"Each company sets its own discount terms."</p>
+              <p class="text-base text-text-body leading-6 m-0">Texas Department of Insurance. Some insurers offer it, some don't, and the amount is theirs to set.</p>
+            </div>
+          </div>
+          <p class="text-base text-text-body leading-7 m-0 mt-5 max-w-[780px]">A page still promising the mandatory 10% hasn't been updated since 2004. Same tell as a site promising to "remove points": Texas hasn't had points since 2019.</p>
         </div>
+      </section>
 
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The condition nobody mentions: your age</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-6" style="font-family: 'DM Sans', sans-serif;">
-          <p>Read enough pages about defensive-driving discounts and you'll come away thinking the only question is whether you take the course. It isn't. <strong class="text-text">Several of the largest insurers in Texas gate this discount on age</strong> — Farmers publishes "over age 55," Nationwide notes "you may have to be 55 or over," and GEICO requires you to be at least 50. If you're 30 with a clean record, the discount a course-provider ad promised you may not exist on your policy at all.</p>
-          <p>So we went and read what each insurer actually publishes, quoted it word for word, and linked the source. Where an insurer publishes nothing, this table says so rather than inventing a number.</p>
+      <!-- ===== Insurer picker ===== -->
+      <section id="insurers" class={`${wrap} pt-16 pb-6 scroll-mt-28`} data-insurers>
+        <h2 class={h2c} style={inter}>What does your insurer actually offer?</h2>
+        <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">Several big insurers only give it above a certain age. Pick yours to see what it publishes, word for word. Where it publishes nothing, we say so.</p>
+        <div class="flex flex-wrap gap-2.5 mb-5">
+          {insurers.map((i, idx) => <button type="button" data-pick={i.slug} aria-pressed={idx === 0 ? 'true' : 'false'} class={`font-bold text-base min-h-[44px] px-[18px] rounded-full border-2 transition-colors ${idx === 0 ? pillOn : pillOff}`}>{i.name}</button>)}
         </div>
-
-        <div class="overflow-x-auto mb-4 -mx-4 sm:mx-0 px-4 sm:px-0">
-          <table class="w-full min-w-[620px] text-sm border border-border rounded-xl overflow-hidden" style="font-family: 'DM Sans', sans-serif;">
-            <thead>
-              <tr class="bg-surface-muted text-left">
-                <th class="px-4 py-3 font-semibold text-text border-b border-border">Insurer</th>
-                <th class="px-4 py-3 font-semibold text-text border-b border-border">Age condition</th>
-                <th class="px-4 py-3 font-semibold text-text border-b border-border">Published amount</th>
-                <th class="px-4 py-3 font-semibold text-text border-b border-border">Court-ordered course</th>
-              </tr>
-            </thead>
-            <tbody>
-              {INSURERS.map(i => (
-                <tr class="border-b border-border last:border-0">
-                  <td class="px-4 py-3 align-top">
-                    <a href={`/texas/insurance-discount/${i.slug}`} class="text-primary-deep font-semibold hover:underline">{i.name}</a>
-                  </td>
-                  <td class="px-4 py-3 align-top text-text-body">{i.ageGate || <span class="text-text-subtle">None published</span>}</td>
-                  <td class="px-4 py-3 align-top text-text-body">{i.amount || <span class="text-text-subtle">Not published</span>}</td>
-                  <td class="px-4 py-3 align-top text-text-body">{i.courtOrdered === 'excluded' ? <strong class="text-text">Excluded</strong> : <span class="text-text-subtle">Not stated</span>}</td>
-                </tr>
-              ))}
-            </tbody>
+        {insurers.map((i, idx) => (
+          <div data-panel={i.slug} hidden={idx !== 0}>
+            <div class="rounded-2xl border-2 border-primary bg-white p-6 lg:p-7 max-w-[860px] flex flex-col gap-4">
+              <p class="text-[26px] lg:text-[28px] font-extrabold m-0" style={inter}>{i.name}</p>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+                <div><p class={`${eyebrow} m-0`}>Age condition</p><p class="text-lg font-bold m-0">{i.age}</p></div>
+                <div><p class={`${eyebrow} m-0`}>Published amount</p><p class="text-lg font-bold m-0">{i.amount}</p></div>
+                <div><p class={`${eyebrow} m-0`}>Court-ordered course</p><p class="text-lg font-bold m-0">{i.court}</p></div>
+              </div>
+              <p class="text-base text-text-body bg-surface-muted rounded-[10px] px-4 py-3.5 m-0">{i.note}</p>
+              <a href={`/texas/insurance-discount/${i.slug}`} class="font-bold text-primary hover:text-primary-deep">Read {i.name}'s own page →</a>
+            </div>
+          </div>
+        ))}
+        <div class="overflow-x-auto max-w-[860px] mt-6">
+          <table class="w-full min-w-[600px] border-collapse rounded-[14px] border border-border overflow-hidden bg-white" style="border-spacing:0;">
+            <thead><tr class="bg-[#F6F6F9] text-left"><th class="px-4 py-3 font-bold">Insurer</th><th class="px-4 py-3 font-bold">Age condition</th><th class="px-4 py-3 font-bold">Published amount</th><th class="px-4 py-3 font-bold">Court-ordered course</th></tr></thead>
+            <tbody>{insurers.map((i) => <tr class="border-t border-border"><th scope="row" class="px-4 py-3 font-bold text-left"><a href={`/texas/insurance-discount/${i.slug}`} class="text-text hover:text-primary-deep no-underline">{i.name}</a></th><td class="px-4 py-3">{i.age}</td><td class="px-4 py-3">{i.amount}</td><td class="px-4 py-3">{i.court}</td></tr>)}</tbody>
           </table>
         </div>
-        <p class="text-xs text-text-subtle mb-10" style="font-family: 'DM Sans', sans-serif;">Read from each insurer's own website on September 4, 2026. Road Ready Safety is not affiliated with or endorsed by any insurer listed. Terms are set by the insurer and change without notice — each page links the source so you can check it yourself.</p>
+        <p class="text-sm text-text-muted m-0 mt-3 max-w-[860px]">Read from each insurer's own website on {verifiedOn}. Road Ready Safety is not affiliated with or endorsed by any insurer listed. Terms change without notice, so confirm with your agent.</p>
+      </section>
 
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What it's worth, on your own numbers</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-2" style="font-family: 'DM Sans', sans-serif;">
-          <p>Most "savings calculators" in this category exist to produce a big number. This one asks you for the assumptions and does the arithmetic in front of you, because the honest answer depends entirely on figures only you and your insurer have.</p>
+      <!-- ===== Calculator ===== -->
+      <section id="math" class={`${wrap} pt-12 pb-6 scroll-mt-28`} data-calc data-course={coursePrice}>
+        <h2 class={h2c} style={inter}>What is it worth to you?</h2>
+        <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">Your numbers, your assumptions. We don't guess your discount, because nobody honestly can.</p>
+        <div class="flex flex-wrap gap-2.5 mb-6">
+          <button type="button" data-mode="ticket" aria-pressed="true" class={`font-bold text-[17px] min-h-[48px] px-5 rounded-full border-2 transition-colors ${pillOn}`}>I have a ticket</button>
+          <button type="button" data-mode="discount" aria-pressed="false" class={`font-bold text-[17px] min-h-[48px] px-5 rounded-full border-2 transition-colors ${pillOff}`}>No ticket, just the discount</button>
         </div>
-
-        <SavingsEstimator />
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How to claim it — four questions, then the course</h2>
-        <ol class="list-decimal pl-6 space-y-3 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <li><strong class="text-text">"Do you offer a defensive driving discount, and how much?"</strong> Get the number, and which coverages it applies to.</li>
-          <li><strong class="text-text">"How long does it last, and when do I have to renew the course?"</strong> Three years is common; confirm yours.</li>
-          <li><strong class="text-text">"What documentation do you need?"</strong> Usually the certificate's insurance copy — there's no state-prescribed process, so the insurer decides.</li>
-          <li><strong class="text-text">"Does the course need to be TDLR-approved?"</strong> Most Texas insurers expect the standard 6-hour TDLR-approved course — the same one used for ticket dismissal. (Verify any provider's approval in our <a href="/texas/providers" class="text-primary-deep font-medium hover:underline">TDLR provider directory</a>.)</li>
-        </ol>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p>Then enroll, complete the 6 hours, and send your insurer the <strong class="text-text">insurance copy</strong> of your certificate. With our course the certificate — court copy and insurance copy — downloads instantly when you finish.</p>
-        </div>
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">No ticket required — and ticket-takers get both benefits</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p>TDLR recognizes the same 6-hour course for "<strong class="text-text">ticket dismissal or insurance discounts</strong>" — you don't need a citation or a court's permission to take it voluntarily. If you <em>are</em> dismissing a ticket, the same completion can sometimes do double duty: court copy to the court, insurance copy to your agent. Sometimes, not always — <a href="/texas/insurance-discount/geico" class="text-primary-deep font-medium hover:underline">GEICO excludes court-ordered courses in writing</a>, and most other insurers don't publish a position. Ask rather than assume; and remember the dismissal is the larger prize either way, since a conviction rates your premium for about three years. That's also the consolation path for drivers who can't use the course on their ticket — <a href="/texas/cdl-defensive-driving" class="text-primary-deep font-medium hover:underline">CDL holders</a>, <a href="/texas/speeding-25-over" class="text-primary-deep font-medium hover:underline">25-over citations</a>, or a <a href="/texas/12-month-rule" class="text-primary-deep font-medium hover:underline">second ticket inside 12 months</a>: the dismissal door may be closed, but the discount door isn't.</p>
-        </div>
-
-        <YouTubeCard id="NaURcc6kmu8" blurb="What a conviction costs in premium over three years." />
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
-        <div class="space-y-8 mb-12">
-          {faqs.map(item => (
-            <div>
-              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
-              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;">{item.a}</p>
+        <div class="flex flex-wrap gap-7">
+          <div class="flex-[1_1_380px] min-w-0 rounded-2xl border border-border bg-white p-6 flex flex-col gap-5">
+            <label class="flex flex-col gap-1.5 font-bold text-base">Your yearly car insurance premium ($) <input type="number" data-premium value="2000" min="0" class={input} /><span class="font-normal text-sm text-text-muted">On your declarations page. Paying monthly? Multiply by 12.</span></label>
+            <div data-only="ticket" class="flex flex-col gap-5">
+              <label class="flex flex-col gap-1.5 font-bold text-base">If convicted, how much would your premium rise? <span class="text-primary"><span data-rise-out>25</span>%</span><input type="range" data-rise min="5" max="50" step="1" value="25" class="accent-primary" /><span class="font-normal text-sm text-text-muted">Typical increases run roughly 15–40% for about three years. Insurers don't publish these.</span></label>
+              <label class="flex flex-col gap-1.5 font-bold text-base">Your court's defensive driving fee ($) <input type="number" data-fee value="144" min="0" class={input} /><span class="font-normal text-sm text-text-muted">$144 is common, $169 in a school zone. <a href="/texas/dsc-fees-by-court" class="text-primary hover:text-primary-deep font-medium">Find your court's fee</a></span></label>
             </div>
-          ))}
+            <div data-only="discount" hidden>
+              <label class="flex flex-col gap-1.5 font-bold text-base">The discount your insurer quoted you <span class="text-primary"><span data-disc-out>5</span>%</span><input type="range" data-disc min="1" max="15" step="1" value="5" class="accent-primary" /><span class="font-normal text-sm text-text-muted">Ask your agent for the real figure. Discounts commonly last about three years.</span></label>
+            </div>
+          </div>
+          <div class="flex-[1_1_340px] min-w-0 rounded-2xl border border-info-border bg-info p-6 flex flex-col gap-3.5">
+            <span class={eyebrow}>Over three years</span>
+            <div class="flex justify-between gap-3 text-[17px]"><span data-line-a>Extra premium if convicted</span><strong>$<span data-val-a>1,500</span></strong></div>
+            <div class="flex justify-between gap-3 text-[17px]"><span data-line-b>Court fee + our course ({price})</span><strong>$<span data-val-b>172</span></strong></div>
+            <p data-verdict class="border-t border-info-border pt-3.5 text-[20px] font-extrabold leading-snug m-0" style={inter}>Dismissing costs $1,328 less than a conviction.</p>
+            <p class="text-sm text-text-body m-0">Arithmetic on your numbers, not a quote. Your insurer sets its own terms.</p>
+          </div>
         </div>
+      </section>
 
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Six hours, two possible payoffs</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
-          <p>Confirm the discount with your agent first — we'd rather you spend five minutes on the phone than six hours on a maybe. When it checks out, our TDLR-approved course (CP1234) is <strong class="text-text">$28 all-in, online, with the insurance copy of your certificate included in the free instant download</strong>.</p>
+      <!-- ===== Claim it ===== -->
+      <section class={`${wrap} pt-12 pb-6`}>
+        <h2 class={h2c} style={inter}>How do you claim the discount?</h2>
+        <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">Five minutes on the phone first. It beats six hours on a maybe. Ask your agent:</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          {claim.map(([t, b], i) => <div class="rounded-[14px] border border-border bg-white p-5 flex flex-col gap-1.5"><span class="text-[28px] font-extrabold text-primary leading-none" style={inter}>{i + 1}</span><span class="font-bold">{t}</span><span class="text-[15px] text-text-body leading-6" set:html={b} /></div>)}
         </div>
+        <p class="text-base leading-7 m-0 mt-[18px] max-w-[780px]">Then take the course and send the insurance copy. With us, both copies download the moment you finish.</p>
+      </section>
 
-        <div class="flex flex-col sm:flex-row gap-4 mb-10">
-          <a
-            href={enrollUrl}
-            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
-            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
-          >
-            Start the $28 Course →
-          </a>
-          <a
-            href="/texas/transparency"
-            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
-            style="font-family: 'DM Sans', sans-serif;"
-          >
-            See exactly what we charge
-          </a>
+      <!-- ===== Ticket + discount ===== -->
+      <section class={`${wrap} pt-12 pb-6`}>
+        <h2 class={h2c} style={inter}>Got a ticket? Can one course do both?</h2>
+        <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">Sometimes. And even when your ticket can't be dismissed, the discount door can still be open.</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="rounded-2xl border border-border bg-white p-6"><p class="font-bold text-[19px] m-0 mb-1.5">The dismissal is the bigger prize</p><p class="text-base text-text-body leading-6 m-0">A conviction can raise your premium for about three years. Dismissing it keeps it off your record. <a href="/texas/ticket-dismissal" class="text-primary hover:text-primary-deep font-medium">How dismissal works</a></p></div>
+          <div class="rounded-2xl border border-border bg-white p-6"><p class="font-bold text-[19px] m-0 mb-1.5">The discount may stack, or not</p><p class="text-base text-text-body leading-6 m-0">GEICO excludes court-ordered courses in writing. Most others don't say. Ask before you assume both.</p></div>
+          <div class="rounded-2xl border border-info-border bg-info p-6"><p class="font-bold text-[19px] m-0 mb-1.5">Can't dismiss your ticket?</p><p class="text-base text-text-body leading-6 m-0">CDL holders, 25+ over, or a second ticket within 12 months can still take the course for the discount.</p></div>
         </div>
+      </section>
 
-        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
-          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational, not insurance advice — discount availability, size, and terms are determined solely by your insurer.</p>
-          <p class="text-xs text-text-subtle">Last updated October 5, 2026 (title and summary; insurer terms as read September 4, 2026). Verified by the Road Ready Safety editorial team against current Texas Department of Insurance consumer guidance, the S.B. 14 (2003) file-and-use transition, and TDLR course-use guidance. Typical discount ranges are industry practice, not state requirements.</p>
+      <!-- ===== Course band ===== -->
+      <section id="course" class={`${wrap} py-14 scroll-mt-28`}>
+        <div class="rounded-3xl bg-primary-deep text-white px-6 py-12 lg:px-8 lg:py-14 flex flex-col items-center text-center gap-7">
+          <div class="flex flex-col gap-2.5 max-w-[680px]">
+            <span class="text-sm font-bold uppercase tracking-[0.08em] text-info-border">Confirmed with your agent?</span>
+            <h2 class="text-[30px] lg:text-[40px] font-extrabold leading-[1.1] m-0" style={inter}>Six hours online. Insurance copy the moment you finish.</h2>
+          </div>
+          {review && (
+            <div class="rounded-[18px] bg-white text-text px-7 py-7 max-w-[640px] w-full flex flex-col gap-3">
+              <span class="text-accent text-[22px] tracking-[3px]" aria-label={`${review.rating} out of 5 stars`}>{'★'.repeat(review.rating)}</span>
+              <blockquote class="m-0 text-[19px] lg:text-[21px] font-bold leading-[1.45]" style={inter}>"{review.quote}"</blockquote>
+              <div class="flex items-center gap-3 text-left">
+                <span class="w-10 h-10 rounded-full bg-primary text-white font-bold text-[15px] flex items-center justify-center" aria-hidden="true">{review.initials}</span>
+                <span class="flex flex-col text-[15px] leading-[1.35]"><strong>{review.name}</strong><span class="text-text-muted">{review.verified ? 'Verified via Trustpilot' : 'Trustpilot'} · {review.date}</span></span>
+              </div>
+            </div>
+          )}
+          <ul class="flex flex-wrap justify-center gap-2.5 list-none p-0 m-0 max-w-[820px]">
+            {[`${price} all-in, nothing added`, `TDLR-approved · ${TEXAS_COURSE.providerNumber}`, 'Insurance and court copies', 'No ticket or court needed'].map((t) => <li class="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-2 text-[15px]"><span class="text-info-border font-extrabold" aria-hidden="true">✓</span>{t}</li>)}
+          </ul>
+          <div class="flex flex-col items-center gap-3">
+            <a href={enrollUrl} class="no-underline bg-white hover:bg-info text-primary-deep font-extrabold text-lg px-8 py-4 rounded-full" style={inter}>Start the {price} course →</a>
+            <a href="/texas/cost" class="no-underline text-white hover:underline">See exactly what we charge</a>
+          </div>
         </div>
+      </section>
 
-      </div>
+      <!-- ===== Quick answers ===== -->
+      <section class={`${wrap} pt-2 pb-6`}>
+        <h2 class={h2c} style={inter}>Quick answers</h2>
+        <div class="flex flex-col gap-3 max-w-[820px] mt-5">
+          {faqs.map((f) => <div class="rounded-xl border border-border bg-white p-5"><h3 class="font-bold text-base m-0 mb-1" style={sans}>{f.q}</h3><p class="m-0 text-text-body leading-7">{f.a}</p></div>)}
+        </div>
+      </section>
+
+      <!-- ===== Where to go + legal ===== -->
+      <section class={`${wrap} pt-6 pb-10`}>
+        <p class="font-bold m-0 mb-2.5">Where to go from here</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-7">
+          {nextSteps.map(([href, t, s]) => <a href={href} class="no-underline text-text rounded-[14px] border border-border bg-white p-4 hover:border-primary-deep"><strong>{t}</strong><br /><span class="text-[15px] text-text-body">{s}</span></a>)}
+        </div>
+        <p class="text-[15px] text-text-muted m-0 max-w-[820px] leading-6">Road Ready Safety is a TDLR-licensed Texas driving safety provider ({TEXAS_COURSE.providerNumber}). Informational, not insurance advice. Discount availability, size and terms are set solely by your insurer. Last updated October 6, 2026. Sources: Texas Department of Insurance consumer guidance; S.B. 14 (2003); TDLR course-use guidance; each insurer's own website, read {verifiedOn}. Typical ranges are industry practice, not state requirements.</p>
+      </section>
+
+      <StickyCta afterId="myth" hideAtId="course" label={`Start the ${price} course, insurance copy included`} />
     </article>
+
+    <script is:inline>
+      (function () {
+        var on = ['bg-primary', 'text-white', 'border-primary'], off = ['bg-white', 'text-text', 'border-[#CBD3DF]', 'hover:border-primary-deep'];
+        function pick(group, sel) { group.forEach(function (x) { var s = x === sel; x.setAttribute('aria-pressed', s ? 'true' : 'false'); on.forEach(function (c) { x.classList.toggle(c, s); }); off.forEach(function (c) { x.classList.toggle(c, !s); }); }); }
+        document.querySelectorAll('[data-insurers]:not([data-armed])').forEach(function (root) {
+          root.setAttribute('data-armed', '1');
+          var btns = root.querySelectorAll('[data-pick]'), panels = root.querySelectorAll('[data-panel]');
+          btns.forEach(function (b) { b.addEventListener('click', function () { var k = b.getAttribute('data-pick'); pick(btns, b); panels.forEach(function (p) { p.hidden = p.getAttribute('data-panel') !== k; }); }); });
+        });
+        document.querySelectorAll('[data-calc]:not([data-armed])').forEach(function (root) {
+          root.setAttribute('data-armed', '1');
+          var course = +root.getAttribute('data-course'), mode = 'ticket';
+          var q = function (s) { return root.querySelector(s); };
+          var fmt = function (n) { return Math.round(n).toLocaleString('en-US'); }, num = function (v) { var n = parseFloat(v); return isNaN(n) ? 0 : n; };
+          function render() {
+            var premium = num(q('[data-premium]').value), rise = num(q('[data-rise]').value), fee = num(q('[data-fee]').value), disc = num(q('[data-disc]').value);
+            q('[data-rise-out]').textContent = rise; q('[data-disc-out]').textContent = disc;
+            root.querySelectorAll('[data-only]').forEach(function (el) { el.hidden = el.getAttribute('data-only') !== mode; });
+            if (mode === 'ticket') {
+              var extra = premium * rise / 100 * 3, cost = fee + course;
+              q('[data-line-a]').textContent = 'Extra premium if convicted'; q('[data-val-a]').textContent = fmt(extra);
+              q('[data-line-b]').textContent = 'Court fee + our course ($' + course + ')'; q('[data-val-b]').textContent = fmt(cost);
+              q('[data-verdict]').textContent = extra > cost ? 'Dismissing costs $' + fmt(extra - cost) + ' less than a conviction.' : 'On these numbers, dismissal costs about the same. It still keeps your record clean.';
+            } else {
+              var saved = premium * disc / 100 * 3;
+              q('[data-line-a]').textContent = 'Discount over 3 years'; q('[data-val-a]').textContent = fmt(saved);
+              q('[data-line-b]').textContent = 'Our course'; q('[data-val-b]').textContent = course;
+              q('[data-verdict]').textContent = saved > course ? 'You’d come out about $' + fmt(saved - course) + ' ahead.' : 'On these numbers, the course costs more than it saves.';
+            }
+          }
+          var modes = root.querySelectorAll('[data-mode]');
+          modes.forEach(function (b) { b.addEventListener('click', function () { mode = b.getAttribute('data-mode'); pick(modes, b); render(); }); });
+          root.querySelectorAll('input').forEach(function (i) { i.addEventListener('input', render); });
+          render();
+        });
+      })();
+    </script>
   </TexasLayout>
 ) : (
   <meta http-equiv="refresh" content="0; url=/" />

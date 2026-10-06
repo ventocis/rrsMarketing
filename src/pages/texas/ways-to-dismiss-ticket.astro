@@ -1,171 +1,252 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
-import YouTubeCard from '../../components/YouTubeCard.astro';
-import NextStepBlock from '../../components/texas/NextStepBlock.astro';
+import VideoEmbed from '../../components/VideoEmbed.astro';
+import StickyCta from '../../components/texas/StickyCta.astro';
+import { TEXAS_COURSE, TEXAS_PRICE_LABEL } from '../../data/texas-course';
+import reviews from '../../data/texas-reviews.json';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
-
 const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+const price = TEXAS_PRICE_LABEL;
+const review = reviews.find((r: any) => r.name === 'Ryan Johnson');
+
+// Rebuilt 2026-10-06 from Jackson's design canvas "Every Way to Dismiss Redesign" (artboard + search preview),
+// implemented as the spec: his copy, order, the "which path fits your ticket" picker, the FY2024 outcome bars
+// (real HTML), the four paths, course vs deferred, course band, quick answers. Data: Texas Office of Court
+// Administration FY2024 justice and municipal court activity (3,947,968 disposed traffic cases), the same
+// figures already published on /texas/defensive-driving-statistics. Video link in the lead points to our
+// existing 5:25 video, canonical on this page.
 
 const faqs = [
-  {
-    "q": "What are all the ways to get a Texas ticket dismissed?",
-    "a": "The main paths are a driving safety course, deferred disposition, proof-of-insurance or other compliance dismissals, and dismissal by the prosecution. The course and deferred disposition are the two you actively initiate."
-  },
-  {
-    "q": "What's the most common way Texas tickets get dismissed?",
-    "a": "By volume, dismissal by the prosecution (717,106 in FY2024) is largest, followed by deferred disposition (495,109) and the driving safety course (294,534). But the course and deferred are the paths a driver controls."
-  },
-  {
-    "q": "What is a compliance dismissal?",
-    "a": "A dismissal you earn by doing something — taking a course, completing deferred disposition, or proving you fixed the issue (like showing valid insurance). Compliance dismissals were about 27.7% of disposed traffic cases in FY2024."
-  },
-  {
-    "q": "Can a no-insurance ticket be dismissed?",
-    "a": "Often, yes — if you actually had valid coverage at the time, showing proof can get it dismissed. Texas courts recorded 41,605 proof-of-insurance dismissals in FY2024."
-  }
+  { q: 'What are all the ways to get a Texas ticket dismissed?', a: 'A driving safety course, deferred disposition, a compliance dismissal (proof of insurance or a fixed registration or license), and dismissal by the prosecution. You start the first three yourself.' },
+  { q: 'What’s the most common way Texas tickets get dismissed?', a: 'By the prosecution (717,106 in FY2024), then deferred disposition (495,109) and the driving safety course (294,534). Of those, only deferred and the course are yours to request.' },
+  { q: 'What is a compliance dismissal?', a: 'One you earn by doing something: finishing the course or deferred, or proving you fixed the problem. They were about 27.6% of closed traffic cases in FY2024.' },
+  { q: 'Can a no-insurance ticket be dismissed?', a: 'Often, if you had valid coverage on the day you were cited. Show the court proof. Texas courts recorded 41,605 of these dismissals in FY2024. <a href="/texas/no-insurance-ticket" class="text-primary-deep font-medium hover:underline">How it works</a>' },
+  { q: 'I was going 25+ over, or I have a CDL. What now?', a: 'The course is off the table. At 25+ over, ask about deferred disposition. With a CDL, or a work-zone ticket with workers present, deferred is out too, so talk to the court or a lawyer. <a href="/texas/speeding-25-over" class="text-primary-deep font-medium hover:underline">Your options</a>' },
 ];
+const plain = (s: string) => s.replace(/<[^>]+>/g, '');
 
 const articleSchema = JSON.stringify({
-  '@context': 'https://schema.org',
-  '@type': 'Article',
-  headline: "Every Way to Get a Texas Traffic Ticket Dismissed",
-  description: "The driving safety course, deferred disposition, proof of insurance, and prosecution dismissals — here's every way Texas tickets actually get dismissed, ranked by real FY2024 court volumes.",
+  '@context': 'https://schema.org', '@type': 'Article',
+  headline: 'Every way to get a Texas ticket dismissed, and the one you can count on',
+  description: 'Four ways to dismiss a Texas ticket and which fits yours, from 3.9 million FY2024 court cases: the course, deferred disposition, proof of insurance, or the prosecutor.',
   author: { '@type': 'Organization', name: 'Road Ready Safety' },
   publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
-  datePublished: '2026-06-13',
-  dateModified: '2026-08-04',
+  datePublished: '2026-06-13', dateModified: '2026-10-06',
   mainEntityOfPage: `${siteUrl}/texas/ways-to-dismiss-ticket`,
 });
+const faqSchema = JSON.stringify({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: plain(f.a) } })) });
 
-const faqSchema = JSON.stringify({
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
-});
+const picks = [
+  { k: 'moving', label: 'Speeding, stop sign, red light', good: true, eyebrow: 'Path 1: the course', title: 'The driving safety course is your best bet.', body: 'Most moving violations qualify. Ask your court by your answer date, take the 6-hour course, and the ticket is dismissed and kept off your record.', cta: ['/texas/eligibility-tracker', 'Check if you qualify →'], cta2: [enrollUrl, `Already approved? Start the ${price} course`] },
+  { k: 'fast', label: '25+ over, or a course in the last 12 months', good: true, eyebrow: 'Path 2: deferred', title: 'Ask about deferred disposition.', body: 'The course is out, but deferred usually isn’t. You’ll serve a probation period of up to 180 days; stay clean and the charge is dismissed.', cta: ['/texas/defensive-driving-vs-deferred-disposition', 'Deferred vs the course →'], cta2: ['/texas/12-month-rule', 'The 12-month rule'] },
+  { k: 'ins', label: 'No insurance', good: true, eyebrow: 'Path 3: compliance', title: 'Had coverage that day? Show proof.', body: 'If your policy was valid when you were cited, proof of it can get the charge dismissed. No coverage then? Ask the court about your other options.', cta: ['/texas/no-insurance-ticket', 'No-insurance tickets →'], cta2: ['/texas/courts', 'Find your court'] },
+  { k: 'paper', label: 'Expired registration or license', good: true, eyebrow: 'Path 3: compliance', title: 'Fix it, then show the court.', body: 'Many of these are dismissed once you renew and bring proof, sometimes with a small fee. Move fast: courts set short windows.', cta: ['/texas/expired-registration-ticket', 'Expired registration →'], cta2: ['/texas/just-got-a-ticket', 'Every option for your ticket'] },
+  { k: 'cdl', label: 'CDL, or work zone with workers present', good: false, eyebrow: 'Different rules', title: 'The course and deferred are both off the table.', body: 'Texas law excludes these from both driver-started paths. Call the court about what’s left, and consider a traffic lawyer before you plead.', cta: ['/texas/cdl-defensive-driving', 'What to do instead →'], cta2: ['/texas/courts', 'Find your court'] },
+];
+
+// FY2024 outcomes. Bars are scaled to the largest share so the chart reads to scale.
+const total = 3947968;
+const rows = [
+  { label: 'Paid or pleaded (conviction)', count: 1574031, kind: 'red' },
+  { label: 'Dismissed by prosecution', count: 717106, kind: 'grey' },
+  { label: 'Deferred disposition dismissal', count: 495109, kind: 'blue' },
+  { label: 'Convicted by the court', count: 359152, kind: 'red' },
+  { label: 'Driving safety course dismissal', count: 294534, kind: 'blue' },
+  { label: 'Other compliance dismissal', count: 257856, kind: 'blue' },
+  { label: 'Proof-of-insurance dismissal', count: 41605, kind: 'blue' },
+].map(r => ({ ...r, share: (r.count / total * 100).toFixed(1) + '%', width: (r.count / 1574031 * 100).toFixed(1) + '%' }));
+const fill: Record<string, string> = { blue: 'bg-primary', grey: 'bg-[#8FA0B8]', red: 'bg-amber-800' };
+
+const paths = [
+  { n: '1 · You control it', t: 'Driving safety course', b: 'One 6-hour course online, then the charge is dismissed and kept off your record. 294,534 in FY2024.', tag: 'Done in a day · once every 12 months', us: true },
+  { n: '2 · You control it', t: 'Deferred disposition', b: 'Probation of up to 180 days. Stay clean and it’s dismissed. 495,109 in FY2024, the largest driver-started path.', tag: 'One new ticket can undo it', us: false },
+  { n: '3 · You control it', t: 'Compliance fix', b: 'Prove you had insurance, or fix the expired registration or license. 41,605 insurance and 257,856 other dismissals.', tag: 'Only for paperwork tickets', us: false },
+  { n: '4 · Out of your hands', t: 'Prosecution drops it', b: '717,106 in FY2024. Comes from a won challenge, a plea deal, or the state letting it go. You can’t apply for it.', tag: 'Least predictable', us: false, dim: true },
+];
+const nextSteps = [
+  ['/texas/eligibility-tracker', 'Check if you qualify', 'Eligibility in 4 questions →'],
+  ['/texas/request-defensive-driving', 'Ask the court for the course', 'With a letter template →'],
+  ['/texas/ticket-dismissal', 'The full dismissal guide', 'Five steps, fees, deadlines →'],
+  ['/texas/what-is-a-driving-safety-course', 'New to the course?', 'What a Texas DSC is →'],
+];
+
+const inter = "font-family:'Inter',sans-serif;";
+const sans = "font-family:'DM Sans',sans-serif;";
+const h2c = 'text-[28px] lg:text-[34px] font-extrabold tracking-[-0.02em] leading-[1.15] text-text m-0 mb-3';
+const wrap = 'max-w-[1080px] mx-auto px-4 sm:px-6 lg:px-8';
+const pillOn = 'bg-primary text-white border-primary';
+const pillOff = 'bg-white text-text border-[#CBD3DF] hover:border-primary-deep';
 ---
 
 {isEnabled ? (
   <TexasLayout
-    title="How to Get a Traffic Ticket Dismissed in Texas: Every Way That Works"
-    description="The driving safety course, deferred disposition, proof of insurance, and prosecution dismissals — here's every way Texas tickets actually get dismissed, ranked by real FY2024 court volumes."
-    keywords="how to get a ticket dismissed Texas, ways to dismiss traffic ticket Texas, Texas ticket dismissal options, compliance dismissal Texas, proof of insurance dismissal Texas"
+    title="Every Way to Get a Texas Ticket Dismissed (2024 Court Data)"
+    description="4 ways to dismiss a Texas ticket and which fits yours, from 3.9 million court cases. Course, deferred, proof of insurance, or the prosecutor."
+    keywords="how to get a ticket dismissed Texas, ways to dismiss traffic ticket Texas, Texas ticket dismissal options, compliance dismissal Texas, proof of insurance dismissal Texas, dismissed by prosecution texas"
     url="/texas/ways-to-dismiss-ticket"
   >
     <script type="application/ld+json" set:html={articleSchema} />
     <script type="application/ld+json" set:html={faqSchema} />
 
-    <article class="bg-white pb-16 lg:pb-24">
-      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
-
-        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
-          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving course</a>
-          <span class="mx-2 text-text-subtle">›</span>
-          <a href="/texas/defensive-driving-statistics" class="text-primary-deep font-medium hover:underline">Texas DSC statistics</a>
-          <span class="mx-2 text-text-subtle">›</span>
-          <span class="text-text">Every way to dismiss a ticket</span>
-        </p>
-
-        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
-          Every Way to Get a Texas Traffic Ticket Dismissed
-        </h1>
-
-        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
-          <p>There's more than one way to make a Texas traffic ticket disappear — and the court data shows exactly how often each one actually happens. In FY2024, about <strong>27.7% of all disposed traffic cases ended in a "compliance" dismissal</strong>, where the driver did something to earn it.</p>
-          <p>Here's every path, what it requires, and how common it is — so you can see which one fits your situation.</p>
+    <article class="bg-surface-muted pb-24 lg:pb-16 text-text" style={sans}>
+      <!-- ===== Lead ===== -->
+      <div class={wrap}>
+        <p class="text-[15px] text-text-body pt-5 m-0"><a href="/texas" class="text-text-body hover:underline">Texas defensive driving course</a><span class="mx-1.5">›</span><a href="/texas/defensive-driving-statistics" class="text-text-body hover:underline">Texas DSC statistics</a><span class="mx-1.5">›</span><span>Every way to dismiss a ticket</span></p>
+        <div class="max-w-[840px] pt-8 pb-11">
+          <h1 class="text-[36px] lg:text-[56px] font-extrabold tracking-[-0.02em] leading-[1.05] m-0 mb-5" style={inter}>Every way to get a Texas ticket dismissed, and the one you can count on</h1>
+          <p class="text-lg lg:text-[21px] leading-8 m-0 mb-4">There are four: a driving safety course, deferred disposition, a compliance fix (like proving you had insurance), or the prosecutor dropping it. Only the first three are yours to start.</p>
+          <p class="text-lg lg:text-[21px] leading-8 m-0 mb-6">Yet 4 in 10 Texas drivers skip all of them and just pay, which puts the ticket on their record. Here's which path fits your ticket, and what 3.9 million court cases say about each.</p>
+          <div class="flex flex-wrap gap-3 items-center">
+            <a href="#match" class="no-underline bg-primary hover:bg-primary-hover text-white font-bold text-[17px] px-6 py-3.5 rounded-full">Find my path ↓</a>
+            <a href="#video" class="font-semibold text-primary hover:text-primary-deep">▶ Watch: the dismissal option most drivers never hear about (5:25)</a>
+          </div>
+          <p class="text-[15px] text-text-muted m-0 mt-6">By Road Ready Safety, TDLR provider {TEXAS_COURSE.providerNumber} · Original analysis of Texas Office of Court Administration FY2024 court activity data · Updated October 6, 2026</p>
         </div>
+      </div>
 
-        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
-          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">Eligibility for each path depends on your offense, your record, and your court. This is general information, not legal advice — confirm what's available with the court listed on your citation.</p>
+      <!-- ===== Picker ===== -->
+      <section id="match" class="bg-white border-y border-border scroll-mt-28">
+        <div class={`${wrap} py-12 lg:py-14`} data-picker>
+          <h2 class={h2c} style={inter}>Which dismissal path fits your ticket?</h2>
+          <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">Pick what you were cited for. Each path has its own door, and using the wrong one costs you the right one.</p>
+          <div class="flex flex-wrap gap-2.5 mb-5">
+            {picks.map((p, i) => <button type="button" data-pick={p.k} aria-pressed={i === 0 ? 'true' : 'false'} class={`font-bold text-base min-h-[48px] px-[18px] rounded-full border-2 transition-colors ${i === 0 ? pillOn : pillOff}`}>{p.label}</button>)}
+          </div>
+          {picks.map((p, i) => (
+            <div data-panel={p.k} hidden={i !== 0}>
+              <div class={`rounded-2xl border p-6 lg:p-7 max-w-[880px] flex flex-col gap-3 ${p.good ? 'bg-info border-info-border' : 'bg-amber-50 border-amber-200'}`}>
+                <p class={`text-sm font-bold uppercase tracking-[0.06em] m-0 ${p.good ? 'text-primary-deep' : 'text-amber-800'}`}>{p.eyebrow}</p>
+                <p class="text-[24px] lg:text-[26px] font-extrabold leading-[1.2] m-0" style={inter}>{p.title}</p>
+                <p class="text-[17px] text-text-body leading-7 m-0">{p.body}</p>
+                <div class="flex flex-wrap gap-3 items-center">
+                  <a href={p.cta[0]} class="no-underline bg-primary hover:bg-primary-hover text-white font-bold px-[22px] py-3 rounded-full">{p.cta[1]}</a>
+                  <a href={p.cta2[0]} class="font-semibold text-primary hover:text-primary-deep">{p.cta2[1]}</a>
+                </div>
+              </div>
+            </div>
+          ))}
+          <div class="mt-5 rounded-xl border border-amber-200 bg-amber-50 px-[18px] py-3.5 max-w-[880px] leading-7"><strong>Whatever your path: don't pay online first.</strong> Paying is a guilty plea, and it closes every door on this page.</div>
         </div>
+      </section>
 
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How Texas tickets actually get resolved</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p>First, the big picture. Most cases aren't dismissed at all — about 40% are uncontested (the driver pays or pleads, which is a conviction), and roughly 9% are convicted in court. Dismissals are the minority, and they split across several distinct paths.</p>
-        <div class="overflow-x-auto my-2">
-          <table class="w-full text-sm border-collapse" style="font-family: 'DM Sans', sans-serif;">
-            <thead><tr class="border-b-2 border-border text-left"><th class="py-2 pr-4 font-semibold text-text">Outcome (FY2024)</th><th class="py-2 pr-4 font-semibold text-text">Cases</th><th class="py-2 font-semibold text-text">Share</th></tr></thead>
-            <tbody>
-              <tr class="border-b border-border"><td class="py-2 pr-4">Uncontested (paid / plea)</td><td class="py-2 pr-4">1,574,031</td><td class="py-2">39.9%</td></tr>
-              <tr class="border-b border-border"><td class="py-2 pr-4">Dismissed by prosecution</td><td class="py-2 pr-4">717,106</td><td class="py-2">18.2%</td></tr>
-              <tr class="border-b border-border"><td class="py-2 pr-4">Deferred disposition dismissal</td><td class="py-2 pr-4">495,109</td><td class="py-2">12.5%</td></tr>
-              <tr class="border-b border-border"><td class="py-2 pr-4">Convicted by court</td><td class="py-2 pr-4">359,152</td><td class="py-2">9.1%</td></tr>
-              <tr class="border-b border-border"><td class="py-2 pr-4 font-semibold">Driving safety course dismissal</td><td class="py-2 pr-4 font-semibold">294,534</td><td class="py-2 font-semibold">7.5%</td></tr>
-              <tr class="border-b border-border"><td class="py-2 pr-4">Other Transportation Code dismissal</td><td class="py-2 pr-4">257,856</td><td class="py-2">6.5%</td></tr>
-              <tr><td class="py-2 pr-4">Proof-of-insurance dismissal</td><td class="py-2 pr-4">41,605</td><td class="py-2">1.1%</td></tr>
-            </tbody>
-          </table>
-          <p class="text-xs text-text-subtle mt-2">Source: Texas Office of Court Administration, justice &amp; municipal court activity, FY2024 (of 3,947,968 disposed traffic cases).</p>
+      <!-- ===== Outcomes chart ===== -->
+      <section id="data" class={`${wrap} pt-16 pb-6 scroll-mt-28`}>
+        <h2 class={h2c} style={inter}>How do Texas traffic tickets actually end?</h2>
+        <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">Of {total.toLocaleString('en-US')} traffic cases Texas courts closed in FY2024, the biggest single outcome was a driver who paid. The paths you control (blue) added up to about 27.6%.</p>
+        <div class="rounded-2xl border border-border bg-white p-6 flex flex-col gap-4">
+          {rows.map((r) => (
+            <div class="flex flex-col gap-1">
+              <div class="flex justify-between gap-3 text-base"><span class="font-bold">{r.label}</span><span class="text-text-body whitespace-nowrap">{r.count.toLocaleString('en-US')} · <strong>{r.share}</strong></span></div>
+              <div class="bg-[#EEF2F7] rounded-full h-3.5"><div class={`h-3.5 rounded-full ${fill[r.kind]}`} style={`width:${r.width}`}></div></div>
+            </div>
+          ))}
+          <div class="flex flex-wrap gap-[18px] text-sm text-text-body"><span><span class="inline-block w-3 h-3 rounded-[3px] bg-primary align-middle"></span>&nbsp; You start it</span><span><span class="inline-block w-3 h-3 rounded-[3px] bg-[#8FA0B8] align-middle"></span>&nbsp; Out of your hands</span><span><span class="inline-block w-3 h-3 rounded-[3px] bg-amber-800 align-middle"></span>&nbsp; Conviction</span></div>
         </div>
-        </div>
+        <p class="text-base leading-7 m-0 mt-5 max-w-[780px]">Notice the biggest dismissal bar is the prosecutor's. Tempting to wait for that. Here's why you shouldn't.</p>
+        <div id="video" class="mt-8 max-w-[800px] scroll-mt-28"><VideoEmbed id="LfEKvzl7_W8" /></div>
+      </section>
 
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">1. Driving safety course (the path you control)</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p>Complete an approved 6-hour course and meet the requirements, and the charge is dismissed and kept off your driving record under Texas law. Along with deferred disposition, it's one of the two largest dismissal paths you control, accounting for 294,534 dismissals in FY2024. New to the course itself? <a href="/texas/what-is-a-driving-safety-course" class="text-primary-deep font-medium hover:underline">What a Texas driving safety course is</a> explains it from scratch.</p>
-          <p>You're generally eligible if you have a valid license, proof of insurance, haven't used the course in the past 12 months, and weren't cited for an excluded offense (like speeding 25+ over). Start with <a href="/texas/ticket-dismissal" class="text-primary-deep font-medium hover:underline">the ticket dismissal guide</a> (eligibility, the five steps, fees and deadlines) or check our <a href="/texas/eligibility-tracker" class="text-primary-deep font-medium hover:underline">eligibility checker</a>.</p>
-        </div>
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">2. Deferred disposition (probation, then dismissal)</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p>The judge defers a finding of guilt for a set period; stay ticket-free and the charge is dismissed. It's actually the largest driver-initiated path by volume — 495,109 dismissals in FY2024 — and it's the main option when the course isn't available to you.</p>
-          <p>See how it stacks up against the course in <a href="/texas/defensive-driving-vs-deferred-disposition" class="text-primary-deep font-medium hover:underline">defensive driving vs deferred disposition</a>.</p>
-        </div>
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">3. Proof-of-insurance and other compliance dismissals</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p>Some charges are dismissed when you fix the underlying problem. A "no insurance" ticket can often be dismissed by showing you actually had valid coverage at the time (41,605 such dismissals in FY2024), and other Transportation Code violations — like an expired registration or license — can be dismissed once you provide proof you've corrected them (257,856 dismissals).</p>
-          <p>If your ticket is one of these, see <a href="/texas/no-insurance-ticket" class="text-primary-deep font-medium hover:underline">no-insurance tickets</a> for how the compliance dismissal works.</p>
-        </div>
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">4. Dismissed by the prosecution</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p>The largest single dismissal category — 717,106 cases, or 18.2% — is dismissal by the prosecution, either before or at trial. This isn't something you simply apply for; it can result from a successful challenge, a plea arrangement, or the state choosing not to pursue the case.</p>
-          <p>It's the least predictable path for a driver to rely on, which is why the course and deferred disposition — the options you control — matter most for everyday tickets.</p>
-        </div>
-
-        <NextStepBlock page="ways-to-dismiss-ticket" lead="precourt" />
-
-        <YouTubeCard id="LfEKvzl7_W8" title="The Texas Ticket Secret No One Tells You About" blurb="The dismissal option most Texas drivers never hear about." />
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
-        <div class="space-y-8 mb-12">
-          {faqs.map(item => (
-            <div>
-              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
-              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+      <!-- ===== Four paths ===== -->
+      <section class={`${wrap} pt-12 pb-6`}>
+        <h2 class={`${h2c} mb-6`} style={inter}>The four paths, side by side</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {paths.map((p) => (
+            <div class={`rounded-2xl p-6 flex flex-col gap-2 ${p.us ? 'bg-primary text-white' : 'bg-white border border-border'}`}>
+              <span class={`text-sm font-bold uppercase tracking-[0.06em] ${p.us ? 'text-info-border' : p.dim ? 'text-text-muted' : 'text-primary-deep'}`}>{p.n}</span>
+              <span class="text-[23px] font-extrabold leading-tight" style={inter}>{p.t}</span>
+              <span class={`text-base leading-6 ${p.us ? 'text-info' : 'text-text-body'}`}>{p.b}</span>
+              <span class="text-[15px] font-bold mt-auto">{p.tag}</span>
             </div>
           ))}
         </div>
+        <p class="text-base leading-7 m-0 mt-5 max-w-[780px]">So for an everyday moving violation it comes down to two: the course or deferred. One question decides it.</p>
+      </section>
 
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Pick the path you control</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
-          <p>If you're eligible, the driving safety course is the most predictable way to dismiss your ticket and keep it off your record — done in one 6-hour sitting for $28.</p>
+      <!-- ===== Course vs deferred ===== -->
+      <section class={`${wrap} pt-12 pb-6`}>
+        <h2 class={h2c} style={inter}>Course or deferred disposition: which should you pick?</h2>
+        <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">If you qualify for the course, take it. Deferred is the backup for when you don't.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-[880px]">
+          <div class="rounded-2xl border-2 border-primary bg-info p-6 flex flex-col gap-2">
+            <span class="text-[22px] font-extrabold" style={inter}>The course</span>
+            <span>✓&nbsp; Finished on your schedule, in one sitting</span>
+            <span>✓&nbsp; A new ticket next month can't undo it</span>
+            <span>✓&nbsp; {price} plus the court's fee</span>
+            <span>✓&nbsp; Kept off your record by law</span>
+          </div>
+          <div class="rounded-2xl border border-border bg-white p-6 flex flex-col gap-2">
+            <span class="text-[22px] font-extrabold" style={inter}>Deferred disposition</span>
+            <span>•&nbsp; Up to 180 days of waiting</span>
+            <span>•&nbsp; A new violation in that window can bring the conviction back</span>
+            <span>•&nbsp; A special expense that can be as much as the fine</span>
+            <span>•&nbsp; Works when the course doesn't (like 25+ over)</span>
+          </div>
         </div>
+        <a href="/texas/defensive-driving-vs-deferred-disposition" class="inline-block mt-4 font-bold text-primary hover:text-primary-deep">Full comparison: defensive driving vs deferred disposition →</a>
+      </section>
 
-        <div class="flex flex-col sm:flex-row gap-4 mb-10">
-          <a
-            href={enrollUrl}
-            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
-            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
-          >
-            Start the $28 Course →
-          </a>
-          <a
-            href="/texas/eligibility-tracker"
-            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
-            style="font-family: 'DM Sans', sans-serif;"
-          >
-            Check your eligibility
-          </a>
+      <!-- ===== Course band ===== -->
+      <section id="course" class={`${wrap} py-14 scroll-mt-28`}>
+        <div class="rounded-3xl bg-primary-deep text-white px-6 py-12 lg:px-8 lg:py-14 flex flex-col items-center text-center gap-7">
+          <div class="flex flex-col gap-2.5 max-w-[680px]">
+            <span class="text-sm font-bold uppercase tracking-[0.08em] text-info-border">Pick the path you control</span>
+            <h2 class="text-[30px] lg:text-[40px] font-extrabold leading-[1.1] m-0" style={inter}>Dismiss it in one sitting, and keep it off your record.</h2>
+          </div>
+          {review && (
+            <div class="rounded-[18px] bg-white text-text px-7 py-7 max-w-[640px] w-full flex flex-col gap-3">
+              <span class="text-accent text-[22px] tracking-[3px]" aria-label={`${review.rating} out of 5 stars`}>{'★'.repeat(review.rating)}</span>
+              <blockquote class="m-0 text-[19px] lg:text-[21px] font-bold leading-[1.45]" style={inter}>"{review.quote}"</blockquote>
+              <div class="flex items-center gap-3 text-left">
+                <span class="w-10 h-10 rounded-full bg-primary text-white font-bold text-[15px] flex items-center justify-center" aria-hidden="true">{review.initials}</span>
+                <span class="flex flex-col text-[15px] leading-[1.35]"><strong>{review.name}</strong><span class="text-text-muted">{review.verified ? 'Verified via Trustpilot' : 'Trustpilot'} · {review.date}</span></span>
+              </div>
+            </div>
+          )}
+          <ul class="flex flex-wrap justify-center gap-2.5 list-none p-0 m-0 max-w-[820px]">
+            {[`${price} total, nothing added at checkout`, `TDLR-approved · ${TEXAS_COURSE.providerNumber}`, 'Certificate the instant you finish', 'Pause and resume anytime'].map((t) => <li class="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-2 text-[15px]"><span class="text-info-border font-extrabold" aria-hidden="true">✓</span>{t}</li>)}
+          </ul>
+          <div class="flex flex-col items-center gap-3">
+            <a href={enrollUrl} class="no-underline bg-white hover:bg-info text-primary-deep font-extrabold text-lg px-8 py-4 rounded-full" style={inter}>Start the {price} course →</a>
+            <a href="/texas/request-defensive-driving" class="no-underline text-white hover:underline">Court hasn't approved you yet? Ask first</a>
+          </div>
         </div>
+      </section>
 
-        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
-          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
-          <p class="text-xs text-text-subtle">Last updated August 4, 2026 — original analysis by the Road Ready Safety editorial team using the Texas Office of Court Administration court activity reports.</p>
+      <!-- ===== Quick answers ===== -->
+      <section class={`${wrap} pt-2 pb-6`}>
+        <h2 class={h2c} style={inter}>Quick answers</h2>
+        <div class="flex flex-col gap-3 max-w-[820px] mt-5">
+          {faqs.map((f) => <div class="rounded-xl border border-border bg-white p-5"><h3 class="font-bold text-base m-0 mb-1" style={sans}>{f.q}</h3><p class="m-0 text-text-body leading-7" set:html={f.a} /></div>)}
         </div>
+      </section>
 
-      </div>
+      <!-- ===== Next step + legal ===== -->
+      <section class={`${wrap} pt-6 pb-10`}>
+        <p class="font-bold m-0 mb-2.5">Your next step</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-7">
+          {nextSteps.map(([href, t, s]) => <a href={href} class="no-underline text-text rounded-[14px] border border-border bg-white p-4 hover:border-primary-deep"><strong>{t}</strong><br /><span class="text-[15px] text-text-body">{s}</span></a>)}
+        </div>
+        <p class="text-[15px] text-text-muted m-0 max-w-[820px] leading-6">General information, not legal advice. Eligibility depends on your offense, record and court; confirm with the court on your citation. Road Ready Safety is a TDLR-licensed course provider ({TEXAS_COURSE.providerNumber}), not a court. Data: Texas Office of Court Administration, justice and municipal court activity, FY2024 ({total.toLocaleString('en-US')} disposed traffic cases; shares rounded). Law: Tex. Code Crim. Proc. arts. 45A.301–.302 (deferred), 45A.351–.357 (driving safety course); Tex. Transp. Code §601.193 (proof of insurance). Original analysis by the Road Ready Safety editorial team. Updated October 6, 2026.</p>
+      </section>
+
+      <StickyCta afterId="match" hideAtId="course" />
     </article>
+
+    <script is:inline>
+      (function () {
+        document.querySelectorAll('[data-picker]:not([data-armed])').forEach(function (root) {
+          root.setAttribute('data-armed', '1');
+          var on = ['bg-primary', 'text-white', 'border-primary'], off = ['bg-white', 'text-text', 'border-[#CBD3DF]', 'hover:border-primary-deep'];
+          var btns = root.querySelectorAll('[data-pick]'), panels = root.querySelectorAll('[data-panel]');
+          btns.forEach(function (b) { b.addEventListener('click', function () {
+            var k = b.getAttribute('data-pick');
+            btns.forEach(function (x) { var sel = x === b; x.setAttribute('aria-pressed', sel ? 'true' : 'false'); on.forEach(function (c) { x.classList.toggle(c, sel); }); off.forEach(function (c) { x.classList.toggle(c, !sel); }); });
+            panels.forEach(function (p) { p.hidden = p.getAttribute('data-panel') !== k; });
+          }); });
+        });
+      })();
+    </script>
   </TexasLayout>
 ) : (
   <meta http-equiv="refresh" content="0; url=/" />

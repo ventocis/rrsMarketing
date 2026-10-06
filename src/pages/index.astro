@@ -1,82 +1,397 @@
 ---
+/**
+ * Homepage, landing-v2 design (2026-10-06, SEO playbook: homepage redesign brief in
+ * ~/Claude/SEO/ledgers/briefs/homepage-redesign.md). Built on the Missouri/North Dakota
+ * landing pattern (src/pages/missouri/[...override].astro) with the shared landing-v2
+ * components.
+ *
+ * Job of the page: a brand and routing page. Its top query is our own name; it converted 11%
+ * of organic visitors until the Sep 2026 three-state hub rebuild halved that. So: say what we
+ * are in one sentence, put the Texas course first with the facts assistants and courts quote
+ * (CP1234 · $28 total, certificate included · 6 hours · no final exam · any device), route the
+ * three kinds of reader, show real reviews as text, answer the questions people ask us by name.
+ *
+ * Rules: prices from texas-course.ts and the state course JSON; state cards render only when
+ * courseFlags says the state is live (prod = approval number on file); no compare-at prices;
+ * no competitor names; no Review/AggregateRating schema on this page (Google's self-serving
+ * rule makes an Organization page ineligible for stars) — the reviews are for people.
+ */
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import HeroFinder from '../components/HeroFinder';
-import HomeHeroFeatured from '../components/HomeHeroFeatured.astro';
-import UspSection from '../components/UspSection.astro';
-import HowSection from '../components/HowSection.astro';
-import TrustSection from '../components/TrustSection.astro';
-import FaqSection from '../components/FaqSection.astro';
+import Rating from '../components/landing-v2/Rating.astro';
+import RoadPhoto from '../components/landing-v2/RoadPhoto.astro';
+import FinalBand from '../components/landing-v2/FinalBand.astro';
+import SampleCertificate from '../components/landing-v2/SampleCertificate.astro';
+import { TEXAS_COURSE, TEXAS_PRICE_LABEL } from '../data/texas-course';
+import texasReviews from '../data/texas-reviews.json';
+import nd from '../data/courses/nd-ddc.json';
+import mo from '../data/courses/mo-dip.json';
+import type { CourseData } from '../data/courses/types';
+import { isEnabled, enrollUrl as buildEnrollUrl } from '../lib/courseFlags';
 
 const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+const texasEnrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/support';
+const price = TEXAS_PRICE_LABEL;
+
+type Review = { name: string; initials: string; date: string; rating: number | string; verified: boolean | string; quote: string };
+const reviews = (texasReviews as Review[]).filter((r) => String(r.verified) === 'true' || r.verified === true).slice(0, 8);
+
+const ndCourse = nd as CourseData;
+const moCourse = mo as CourseData;
+
+// The course cards. Texas always; the other states only when courseFlags says the state is live.
+const cards = [
+  {
+    key: 'tx',
+    eyebrow: `Texas · TDLR-approved · ${TEXAS_COURSE.providerNumber}`,
+    name: 'Texas Defensive Driving Course',
+    price: price,
+    priceNote: 'total, certificate included',
+    facts: [`${TEXAS_COURSE.hours} hours, at your own pace`, 'No final exam, unlimited quiz retakes', 'Phone, tablet or computer', 'Certificate the moment you finish'],
+    does: 'Dismisses an eligible Texas ticket once your court approves the course, or earns an insurance discount with no ticket at all.',
+    href: '/texas',
+    enroll: texasEnrollUrl,
+    ctaLabel: `Start the Texas course — ${price}`,
+    learnLabel: 'How the Texas course works',
+    live: true,
+  },
+  {
+    key: 'nd',
+    eyebrow: 'North Dakota · NDDOT-approved',
+    name: ndCourse.course.name,
+    price: `$${ndCourse.course.priceUsd}`,
+    priceNote: 'total',
+    facts: [`${ndCourse.course.hours} hours online`, 'Takes 3 points off your record', 'Short final quiz, retakes included', 'Certificate the moment you pass'],
+    does: 'Reduces the points on your North Dakota record, or keeps the points off a new ticket when the court allows it.',
+    href: ndCourse.state.route,
+    enroll: buildEnrollUrl(ndCourse),
+    ctaLabel: `Start the North Dakota course — $${ndCourse.course.priceUsd}`,
+    learnLabel: 'How the North Dakota course works',
+    live: isEnabled(ndCourse),
+  },
+  {
+    key: 'mo',
+    eyebrow: `Missouri · Missouri Safety Center-approved · ${moCourse.provider.approvalNumber}`,
+    name: moCourse.course.name,
+    price: `$${moCourse.course.priceUsd}`,
+    priceNote: 'total, Form 4444 included',
+    facts: [`${moCourse.course.hours} hours online`, 'Keeps the points off the ticket your court approved', 'Short final quiz, retakes included', 'Form 4444 ready to print when you finish'],
+    does: 'When a Missouri court orders the program in place of points, the points for that ticket are not assessed.',
+    href: moCourse.state.route,
+    enroll: buildEnrollUrl(moCourse),
+    ctaLabel: `Start the Missouri course — $${moCourse.course.priceUsd}`,
+    learnLabel: 'How the Missouri course works',
+    live: isEnabled(moCourse),
+  },
+].filter((c) => c.live);
+
+const audiences = [
+  {
+    title: 'You got a ticket',
+    body: 'In Texas, an eligible moving violation is dismissed after the court approves the course and you send the certificate back. In North Dakota and Missouri the course keeps the points off.',
+    href: '/texas/ticket-dismissal',
+    label: 'How ticket dismissal works in Texas',
+  },
+  {
+    title: 'You want the insurance discount',
+    body: 'No ticket needed. Finish the course, send the insurance copy of the certificate to your insurer, and the insurer applies whatever discount its rates allow. It varies by company.',
+    href: '/texas/insurance-discount',
+    label: 'What Texas insurers actually give',
+  },
+  {
+    title: 'A court, employer or insurer sent you',
+    body: 'They may have called it defensive driving, a driving safety course, a driver improvement program or DSC. Same course under different names; pick the state the ticket or license is in.',
+    href: '/texas/what-is-a-driving-safety-course',
+    label: 'What the course is, from scratch',
+  },
+];
+
+const notFor = [
+  { text: 'You already paid the ticket. Paying is a guilty plea; the dismissal option closes with it.', href: '/texas/already-paid-ticket', label: 'What paying did, and the five-day window' },
+  { text: 'You hold a commercial driver license. Federal rules keep the course from dismissing your ticket.', href: '/texas/cdl-defensive-driving', label: 'What works instead' },
+  { text: 'You need a Texas driver license. That is driver education, a different course.', href: '/adult-drivers-ed/texas', label: 'Texas adult driver education' },
+];
+
+const steps = [
+  { n: 1, where: 'At your court', title: 'Ask the court first', body: 'Request the driving safety course on or before the appearance date on your citation. The court sets its fee and your deadline, usually 90 days.' },
+  { n: 2, where: 'With us', title: 'Take the six hours', body: 'Online, on any device, at your own pace. The course saves your place. Unit quizzes with unlimited retakes; no final exam.' },
+  { n: 3, where: 'With us', title: 'Download the certificate', body: 'It is ready the moment you finish: a court copy and an insurance copy, both included.' },
+  { n: 4, where: 'At your court', title: 'Send it back', body: 'Return the court copy, and the Type 3A driving record if your court asks for it, before the deadline. The court dismisses the charge.' },
+];
+
+const faqs = [
+  { q: 'Is Road Ready Safety a legitimate, approved provider?', a: `Yes. In Texas we are a TDLR-licensed driving safety provider, ${TEXAS_COURSE.providerNumber}; you can check the number on TDLR's license search before you pay. The North Dakota course is NDDOT-approved and the Missouri Driver Improvement Program is approved by the Missouri Safety Center (${moCourse.provider.approvalNumber}). Our legal name is Road Ready Driver Instruction LLC.` },
+  { q: 'Will my court accept your certificate?', a: 'In Texas, every TDLR-approved course issues the same uniform certificate of completion, and courts accept it when they approved the course first, so ask your court before you start. North Dakota and Missouri have their own rules, explained on each course page.' },
+  { q: 'How fast do I get the certificate?', a: 'The moment you finish. It appears in your account as a download, with the court copy and the insurance copy both included and no delivery fee. TDLR notes a new Texas certificate can take up to five days to show in its validation tool, so do not finish on deadline day.' },
+  { q: 'Is there a final exam?', a: 'The Texas course has none: short quizzes after each unit, with unlimited retakes. The North Dakota and Missouri courses end with a short final quiz you can retake.' },
+  { q: 'What does it cost, really?', a: `The Texas course is ${price} total with the certificate included; nothing is added at checkout. The North Dakota and Missouri courses are $${ndCourse.course.priceUsd} total. Two costs are outside any course: the court's own fee when it grants the course (set locally in Texas, often up to about $144) and, if your Texas court requires it, the $12 Type 3A driving record from DPS.` },
+  { q: 'Which course do I need?', a: 'The one for the state that issued the ticket, or the state of your license if you are taking it for an insurance discount. A Texas course does nothing for a North Dakota ticket, and the other way round.' },
+  { q: 'Can I get a refund?', a: 'Yes. If you have not completed the course or received your certificate, you can request a full refund.' },
+];
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+const websiteSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Road Ready Safety',
+  url: siteUrl,
+});
+
+const stepNum = (n: number) => String(n).padStart(2, '0');
+const btnPrimary =
+  'bg-primary hover:bg-primary-hover text-white h-[52px] px-8 rounded-full text-base font-semibold inline-flex items-center justify-center gap-2 no-underline transition-colors shadow-[0_8px_20px_-8px_rgba(36,84,230,0.55)]';
+const btnSecondary =
+  'bg-info hover:brightness-95 text-info-text h-[52px] px-8 rounded-full text-base font-semibold inline-flex items-center justify-center no-underline transition-colors';
+const h2 = 'font-extrabold tracking-[-0.02em] leading-[1.1]';
+const outfit = "font-family:'Outfit',sans-serif;";
+const check = 'M4.8 8.2l2.1 2.1 4.3-4.4';
 ---
 
 <Layout
-  title="Online Defensive Driving Course | Road Ready Safety"
-  description="State-approved defensive driving courses accepted by courts nationwide. Affordable, convenient, and built for busy people."
-  keywords="traffic school, defensive driving, online course, traffic ticket, driver improvement, state approved"
+  title={`Road Ready Safety: State-Approved Online Driving Courses — Texas Defensive Driving ${price} Total, North Dakota, Missouri`}
+  description={`Online driving courses approved by the state and accepted by courts and insurers. Texas defensive driving: TDLR ${TEXAS_COURSE.providerNumber}, ${price} total with the certificate included, ${TEXAS_COURSE.hours} hours, no final exam. North Dakota point reduction and the Missouri Driver Improvement Program.`}
+  keywords="road ready safety, defensive driving course online, driving safety course, texas defensive driving, north dakota defensive driving, missouri driver improvement program"
   image="/assets/rrs (1200 x 630 px).png"
   url="/"
 >
-  <!-- JSON-LD: Website -->
-  <script type="application/ld+json" slot="head">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "Road Ready Safety",
-      "url": "https://roadreadysafety.com",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://roadreadysafety.com/courses?q={search_term_string}",
-        "query-input": "required name=search_term_string"
-      }
-    }
-  </script>
+  <script type="application/ld+json" slot="head" set:html={websiteSchema} />
+  <script type="application/ld+json" slot="head" set:html={faqSchema} />
 
   <Header />
 
   <main>
-    <!-- Hero: headline, two reassurance lines, then the course cards (HomeHeroFeatured.astro + HomeCourseRow.astro) -->
-    <HomeHeroFeatured />
-
-    <UspSection />
-    <HowSection />
-    <TrustSection />
-    <FaqSection />
-
-    <!-- CTA section -->
-    <section class="bg-white py-16 lg:py-24 border-b border-border">
-      <div class="max-w-[1152px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="relative bg-primary-deep rounded-[24px] p-8 lg:p-16 overflow-hidden">
-          <!-- Background blur effects -->
-          <div class="absolute inset-0 opacity-10 pointer-events-none select-none z-0" aria-hidden="true">
-            <div class="absolute bg-[#46a2f2] blur-[32px] right-[-192px] rounded-full w-[384px] h-[384px] top-[-192px]"></div>
-            <div class="absolute bg-[#46a2f2] blur-[32px] bottom-[-128px] left-[-128px] rounded-full w-[256px] h-[256px]"></div>
+    <!-- ============ 1. HERO ============ -->
+    <section class="bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-10 lg:pt-20 lg:pb-16 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div class="flex flex-col gap-6 items-start">
+          <p class="flex items-center gap-2 w-fit m-0 rounded-full bg-white/70 border border-info-border pl-1.5 pr-4 py-1 text-sm font-semibold text-primary-deep leading-5">
+            <img src="/assets/images/badges/texas-approved-tdlr.png" width="28" height="28" alt="State-approved online driving courses" class="w-7 h-7 shrink-0" decoding="async" />
+            State-approved online driving courses
+          </p>
+          <h1 class={`text-[34px] lg:text-[56px] text-primary-navy ${h2}`} style={outfit}>
+            Dismiss your ticket or lower your insurance. Online, approved, done in an evening.
+          </h1>
+          <p class="text-lg lg:text-xl text-text-body leading-8 max-w-[36rem] m-0">
+            The state-approved course courts and insurers accept. Texas: TDLR {TEXAS_COURSE.providerNumber}, {price} total, {TEXAS_COURSE.hours} hours. North Dakota and Missouri too.
+          </p>
+          <ul class="flex flex-wrap gap-3 list-none p-0 m-0" aria-label="What every course includes">
+            {['Certificate the moment you finish', 'Works on your phone', 'Nothing added at checkout', 'Full refund before you complete it'].map((t) => (
+              <li class="inline-flex items-center gap-2 rounded-full border border-border bg-white px-4 py-2 text-sm font-medium text-text">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="8" fill="#16A34A" opacity="0.14"/><path d={check} stroke="#16A34A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                {t}
+              </li>
+            ))}
+          </ul>
+          <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto mt-2">
+            <a href={texasEnrollUrl} class={`${btnPrimary} w-full sm:w-auto`}>Start the Texas course &mdash; {price}</a>
+            <a href="#courses" class={`${btnSecondary} w-full sm:w-auto`}>Pick your state</a>
           </div>
+        </div>
 
-          <div class="relative z-10 flex flex-col gap-6 items-center max-w-[768px] mx-auto">
-            <h2 class="text-[28px] lg:text-[36px] font-bold text-center text-white tracking-[-0.02em] lg:tracking-[-0.9px] leading-[150%] lg:leading-[40px]">
-              Ready to Dismiss Your Ticket?
-            </h2>
-            <p class="text-base text-center text-[#b9e2fe] leading-6 max-w-[672px]">
-              Join thousands of drivers who have successfully completed their defensive driving course with Road Ready Safety. Start today and get your certificate instantly.
-            </p>
-            <div class="w-full max-w-xl mt-4">
-              <HeroFinder variant="cta" client:visible />
-            </div>
-            <!-- Plain links to the course sites, so they are reachable without the finder's JavaScript -->
-            <p class="text-sm text-center text-[#b9e2fe] leading-6 m-0">
-              Or go straight to the
-              <a href="/texas" class="text-white font-semibold underline underline-offset-2">Texas defensive driving course</a>,
-              the <a href="/north-dakota" class="text-white font-semibold underline underline-offset-2">North Dakota defensive driving course</a>
-              or the <a href="/missouri" class="text-white font-semibold underline underline-offset-2">Missouri Driver Improvement Program</a>.
-            </p>
+        <div class="relative hidden lg:block pb-16">
+          <RoadPhoto class="w-full aspect-[4/3] rounded-[28px]" position="50% 60%" eager desktopOnly photo="texas-dallas" />
+          <div class="absolute right-6 top-6 rounded-2xl bg-white shadow-[0_20px_25px_-5px_rgba(17,23,34,0.15)] px-4 py-3" aria-hidden="true">
+            <p class="text-[22px] font-bold text-primary-navy leading-6 m-0" style={outfit}>{price}</p>
+            <p class="text-xs text-text-body leading-4 m-0">Texas, total</p>
           </div>
+          <SampleCertificate courseName={TEXAS_COURSE.name} hours={TEXAS_COURSE.hours} sampleNumber="TX-000128" class="absolute -left-8 bottom-0" />
         </div>
       </div>
     </section>
+
+    <!-- ============ 2. COURSE CARDS ============ -->
+    <section id="courses" class="bg-white pb-20 lg:pb-24 scroll-mt-28">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-8">
+        <div class="flex flex-col gap-3 items-start">
+          <h2 class={`text-[32px] lg:text-[44px] text-text ${h2}`} style={outfit}>Pick the state your ticket or license is in</h2>
+          <p class="text-lg text-text-body leading-8 max-w-2xl m-0">Each course is approved by that state's regulator and does one job: keep this ticket off your record, or earn a discount. One payment, nothing added later.</p>
+        </div>
+        <ul class={`grid grid-cols-1 ${cards.length > 1 ? 'lg:grid-cols-3' : 'lg:grid-cols-1 max-w-xl'} gap-6 list-none p-0 m-0`}>
+          {cards.map((c, i) => (
+            <li class={`rounded-[24px] border p-7 lg:p-8 flex flex-col gap-5 ${i === 0 ? 'border-primary-deep bg-info/60 ring-1 ring-primary-deep' : 'border-border bg-white'}`}>
+              <p class="text-xs font-bold uppercase tracking-wider text-primary-deep m-0">{c.eyebrow}</p>
+              <h3 class="text-2xl font-bold text-text m-0 leading-tight" style={outfit}>{c.name}</h3>
+              <p class="m-0 flex items-baseline gap-2">
+                <span class="text-[40px] font-extrabold text-primary-navy leading-none tabular-nums" style={outfit}>{c.price}</span>
+                <span class="text-sm font-semibold text-text-body">{c.priceNote}</span>
+              </p>
+              <p class="text-base text-text-body leading-7 m-0">{c.does}</p>
+              <ul class="flex flex-col gap-2 list-none p-0 m-0">
+                {c.facts.map((f) => (
+                  <li class="flex items-start gap-3 text-sm text-text leading-6">
+                    <svg width="18" height="18" viewBox="0 0 16 16" fill="none" class="mt-1 flex-shrink-0" aria-hidden="true"><circle cx="8" cy="8" r="8" fill="#16A34A" opacity="0.14"/><path d={check} stroke="#16A34A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span>{f}</span>
+                  </li>
+                ))}
+              </ul>
+              <div class="flex flex-col gap-3 mt-auto pt-2">
+                <a href={c.enroll} class={`${btnPrimary} w-full`}>{c.ctaLabel}</a>
+                <a href={c.href} class="text-primary font-semibold underline underline-offset-2 text-center text-sm">{c.learnLabel}</a>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ 3. WHO IT'S FOR ============ -->
+    <section id="who-needs-it" class="relative overflow-hidden bg-primary-navy text-white scroll-mt-28">
+      <div class="absolute inset-0 opacity-40 pointer-events-none" aria-hidden="true"
+        style="background: radial-gradient(60% 80% at 80% 0%, rgba(36,84,230,.55), transparent 70%), radial-gradient(50% 70% at 0% 100%, rgba(124,195,249,.25), transparent 70%);"></div>
+      <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 flex flex-col items-center gap-10 text-center">
+        <h2 class={`text-[32px] lg:text-[44px] ${h2}`} style={outfit}>Three reasons people take this course. Which is yours?</h2>
+        <ul class="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6 w-full list-none p-0 m-0">
+          {audiences.map((a) => (
+            <li class="flex flex-col gap-4 rounded-[20px] px-6 py-7 lg:px-8 lg:py-8 text-left bg-white text-primary-navy">
+              <h3 class="text-[22px] lg:text-2xl font-bold leading-tight m-0" style={outfit}>{a.title}</h3>
+              <p class="text-base leading-7 text-text-body m-0">{a.body}</p>
+              <a href={a.href} class="mt-auto text-primary font-semibold underline underline-offset-2">{a.label}</a>
+            </li>
+          ))}
+        </ul>
+        <div class="w-full max-w-5xl rounded-[20px] border border-white/25 bg-white/5 px-6 py-6 lg:px-8 text-left">
+          <p class="text-sm font-bold uppercase tracking-wider text-info-border m-0 mb-3">Not the right course if</p>
+          <ul class="grid grid-cols-1 md:grid-cols-3 gap-4 list-none p-0 m-0 text-base leading-7 text-info-border">
+            {notFor.map((n) => (
+              <li class="flex flex-col gap-1">
+                <span class="flex items-start gap-3">
+                  <svg width="20" height="20" viewBox="0 0 16 16" fill="none" class="mt-1 flex-shrink-0" aria-hidden="true"><circle cx="8" cy="8" r="8" fill="#FFFFFF" opacity="0.14"/><path d="M5.5 5.5l5 5M10.5 5.5l-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                  <span>{n.text}</span>
+                </span>
+                <a href={n.href} class="underline text-white ps-8">{n.label}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 4. FOUR STEPS (Texas ticket) ============ -->
+    <section class="bg-white py-20 lg:py-28">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="rounded-[28px] border border-info-border overflow-hidden">
+          <div class="bg-info px-6 py-10 lg:px-14 lg:py-14 grid grid-cols-1 lg:grid-cols-2 gap-8 items-end">
+            <div class="flex flex-col gap-5 items-start">
+              <h2 class={`text-[40px] lg:text-[64px] text-primary-navy ${h2}`} style={outfit}>
+                A Texas ticket, in
+                <span class="relative inline-block">
+                  four steps
+                  <svg class="absolute left-0 -bottom-4 w-full h-4" viewBox="0 0 200 16" preserveAspectRatio="none" aria-hidden="true"><path d="M3 12 C 60 2, 140 2, 197 9" fill="none" stroke="#2454E6" stroke-width="3.5" stroke-linecap="round"/></svg>
+                </span>
+              </h2>
+              <p class="text-base lg:text-lg text-text-body leading-7 m-0 max-w-xl">Two of the steps happen at your court and two with us. The order matters: the course only counts if the court approved it first.</p>
+            </div>
+            <div class="flex flex-col gap-3 items-start lg:items-end">
+              <a href="/texas/ticket-dismissal" class={btnSecondary}>The full guide, with deadlines and fees</a>
+              <a href="/texas/what-is-a-driving-safety-course" class="text-primary font-semibold underline underline-offset-2 text-sm">New to this? What the course is, from scratch</a>
+            </div>
+          </div>
+          <ol class="grid grid-cols-1 lg:grid-cols-4 gap-px bg-info-border list-none p-0 m-0 border-t border-info-border">
+            {steps.map((s) => (
+              <li class="bg-white px-6 py-10 lg:px-8 flex flex-col gap-3">
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="text-[44px] font-extrabold leading-none text-primary tabular-nums mr-2" style={outfit}>{stepNum(s.n)}</span>
+                  <span class={`text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full ${s.where === 'With us' ? 'bg-primary-deep text-white' : 'bg-surface-muted text-text-muted border border-border'}`}>{s.where}</span>
+                </div>
+                <h3 class="text-2xl font-bold text-text m-0" style={outfit}>{s.title}</h3>
+                <p class="text-base text-text-body leading-7 m-0">{s.body}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 5. REVIEWS ============ -->
+    <section class="bg-surface-dark text-white py-20 lg:py-28 overflow-hidden">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-[minmax(0,24rem)_1fr] gap-10 lg:gap-16 items-center">
+        <div class="flex flex-col gap-6">
+          <Rating tone="dark" />
+          <h2 class={`text-[34px] lg:text-[46px] ${h2}`} style={outfit}>What drivers say after they finish</h2>
+          <p class="text-base text-info-border leading-7 m-0">Recent reviews from Texas students, verified through Trustpilot. Names as the reviewers gave them.</p>
+          <div class="flex gap-3">
+            <button type="button" class="rrs-rev-prev w-14 h-14 rounded-2xl bg-white/10 hover:bg-white/15 flex items-center justify-center" aria-label="Previous review">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+            </button>
+            <button type="button" class="rrs-rev-next w-14 h-14 rounded-2xl bg-primary hover:bg-primary-hover flex items-center justify-center" aria-label="Next review">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </button>
+          </div>
+        </div>
+        <ul class="rrs-rev-track flex gap-6 overflow-x-auto snap-x snap-mandatory list-none p-0 m-0 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {reviews.map((r) => (
+            <li class="snap-start flex-shrink-0 w-[85%] sm:w-[440px] rounded-[24px] bg-primary-deep flex flex-col">
+              <div class="p-8 flex flex-col gap-5 flex-1">
+                <span class="self-start rounded-full bg-white text-surface-dark text-xs font-bold px-3 py-1.5">Verified via Trustpilot</span>
+                <span class="flex gap-1" aria-label={`${r.rating} out of 5 stars`}>
+                  {Array.from({ length: Number(r.rating) || 5 }).map(() => <img src="/assets/icons/texas/star-testimonial.svg" alt="" class="w-6 h-6" />)}
+                </span>
+                <blockquote class="text-xl lg:text-2xl leading-snug m-0">&ldquo;{r.quote}&rdquo;</blockquote>
+              </div>
+              <div class="border-t border-white/15 px-8 py-5 text-sm font-semibold text-info-border">{r.name} &middot; Texas Defensive Driving Course &middot; {r.date}</div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ 6. FAQ ============ -->
+    <section id="faq" class="bg-white py-20 lg:py-28 scroll-mt-28">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-[minmax(0,26rem)_1fr] gap-10 lg:gap-20 items-start">
+        <div class="flex flex-col gap-5 lg:sticky lg:top-32">
+          <h2 class={`text-[36px] lg:text-[52px] text-text ${h2}`} style={outfit}>Questions people ask us by name</h2>
+          <p class="text-lg text-text-body leading-8 m-0">Still have one? Ask before you pay. Real people answer by phone and email.</p>
+          <div class="flex flex-wrap gap-3">
+            <a href={contactUrl} class={btnSecondary}>Contact us</a>
+          </div>
+          <a href="/texas/faq" class="text-primary font-semibold underline underline-offset-2">Every Texas question, answered</a>
+        </div>
+        <div class="border-t border-border">
+          {faqs.map((f, i) => (
+            <details class="group border-b border-border" open={i === 0}>
+              <summary class="cursor-pointer list-none flex items-start justify-between gap-6 py-6">
+                <h3 class="text-lg lg:text-xl font-bold text-text m-0" style={outfit}>{f.q}</h3>
+                <svg class="mt-1 flex-shrink-0 w-5 h-5 text-text-muted transition-transform group-open:rotate-180 motion-reduce:transition-none" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </summary>
+              <p class="text-base text-text-body leading-7 pb-6 pr-10 m-0">{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 7. FINAL CALL TO ACTION ============ -->
+    <FinalBand
+      heading="Approved by your court? The course is the easy part."
+      copy={`Six hours on your phone, the certificate the moment you finish, ${price} total. Texas today; North Dakota and Missouri from their own pages.`}
+      ctaLabel={`Start the Texas course — ${price}`}
+      ctaHref={texasEnrollUrl}
+      photo="texas-dallas"
+    />
   </main>
 
   <Footer />
+
+  <script is:inline>
+    (function () {
+      if (window.__rrsHomeV2) return;
+      window.__rrsHomeV2 = true;
+      // Review carousel arrows: one delegated listener, no dependency on the ViewTransitions router.
+      document.addEventListener('click', function (e) {
+        var btn = e.target.closest('.rrs-rev-prev, .rrs-rev-next');
+        if (!btn) return;
+        var track = document.querySelector('.rrs-rev-track');
+        if (!track) return;
+        var card = track.querySelector('li');
+        var step = card ? card.getBoundingClientRect().width + 24 : 400;
+        track.scrollBy({ left: btn.classList.contains('rrs-rev-next') ? step : -step, behavior: 'smooth' });
+      });
+    })();
+  </script>
 </Layout>

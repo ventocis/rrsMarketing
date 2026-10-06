@@ -1,0 +1,133 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+import NextStepBlock from '../../components/texas/NextStepBlock.astro';
+import { TEXAS_COURSE, TEXAS_PRICE_LABEL } from '../../data/texas-course';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+const price = TEXAS_PRICE_LABEL;
+
+// Audio version of the Texas course (SEO playbook, cluster A; facts from Jackson 2026-10-07):
+// live today, TDLR signed off on the audio version, optional add-on at checkout for AUDIO_PRICE.
+// The $28 course is complete without it. Lessons are read aloud; quiz questions are text.
+// Competitors sell audio as a $10–$15 tier and advertise it; we say what it is and what it costs.
+const AUDIO_PRICE = '$4.99';
+
+const faqs = [
+  { q: 'Does the audio version make the course shorter?', a: 'No. Texas requires six hours with at least five hours of instruction, and the course keeps the same section timers whether you read or listen. Audio changes how you take it in, not how long it takes.' },
+  { q: 'Can I listen while I drive?', a: 'No. The course needs you present: sections have timers, quizzes follow each unit, and the point of a driving safety course is attention. Treat it like a podcast you have to answer questions about, at home or on a break, not behind the wheel.' },
+  { q: 'Is the certificate the same?', a: 'Yes. The audio version is the same TDLR-approved course, so you receive the same uniform certificate of completion the moment you finish, court copy and insurance copy included.' },
+  { q: `What does audio cost, and is it required?`, a: `${AUDIO_PRICE}, optional, chosen at checkout. The ${price} course is complete without it; nothing in it is locked behind the audio. Add it if you would rather listen than read.` },
+  { q: 'Is the audio approved by TDLR?', a: 'Yes. TDLR signed off on the audio version of the course, the same way it approves the written version, so your court sees no difference.' },
+  { q: 'Are the quiz questions read aloud too?', a: 'The lessons are read aloud. The quiz questions after each unit are on screen as text, with unlimited retakes.' },
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Texas Defensive Driving Course With Audio: Every Lesson Read Aloud',
+  description: `The audio version of Road Ready Safety's TDLR-approved Texas driving safety course: what it is, who it helps, what it costs (${AUDIO_PRICE}, optional) and what it does not change (six hours, same certificate).`,
+  datePublished: '2026-10-07',
+  dateModified: '2026-10-07',
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  mainEntityOfPage: `${siteUrl}/texas/audio-course`,
+});
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title={`Texas Defensive Driving Course With Audio: Every Lesson Read Aloud, ${AUDIO_PRICE} Optional (2026)`}
+    description={`Listen instead of read. The audio version of our TDLR-approved Texas driving safety course reads every lesson aloud on your phone or computer. Optional ${AUDIO_PRICE} add-on; the ${price} course is complete without it. Same six hours, same certificate.`}
+    keywords="texas defensive driving audio course, defensive driving course audio texas, listen to defensive driving course, read aloud driving safety course texas, texas defensive driving course with narration"
+    url="/texas/audio-course"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving course</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Audio version</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
+          Texas Defensive Driving Course With Audio: Every Lesson Read Aloud
+        </h1>
+
+        <div class="bg-info border border-info-border rounded-2xl p-6 mb-8">
+          <p class="text-sm font-semibold text-primary-deep mb-2" style="font-family: 'Outfit', sans-serif;">Short answer</p>
+          <p class="text-text-body text-base leading-7 m-0" style="font-family: 'DM Sans', sans-serif;">
+            Our TDLR-approved Texas course comes with an <strong class="text-text">audio version that reads every lesson aloud</strong>, on your phone or computer. It is an <strong class="text-text">optional {AUDIO_PRICE} add-on</strong> you choose at checkout; the {price} course is complete without it. Six hours either way, same certificate the moment you finish.
+          </p>
+        </div>
+
+        <div class="mb-10">
+          <a href={enrollUrl} class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline" style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);">
+            Start the {price} course, add audio for {AUDIO_PRICE} if you want it
+          </a>
+        </div>
+
+        <ul class="flex flex-wrap gap-2.5 list-none p-0 mb-10" aria-label="Audio version facts" style="font-family: 'DM Sans', sans-serif;">
+          {[`Every lesson read aloud`, `Optional, ${AUDIO_PRICE} at checkout`, 'TDLR signed off on the audio version', 'Same six hours, same certificate', 'Quiz questions stay on screen as text'].map((t) => (
+            <li class="inline-flex items-center gap-2 rounded-full border border-info-border bg-white px-3.5 py-1.5 text-sm font-medium text-text">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="8" fill="#16A34A" opacity="0.14"/><path d="M4.8 8.2l2.1 2.1 4.3-4.4" stroke="#16A34A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              {t}
+            </li>
+          ))}
+        </ul>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Who the audio version is for</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Six hours of reading on a phone is a lot. The audio version is for people who take in a spoken lesson better than a page of text: anyone who reads slowly or tires of screens, drivers for whom English is a second language and hearing the words helps, people with dyslexia or low vision, and anyone who would rather sit back and listen for a stretch and read when they want to. You can switch between listening and reading at any point; the course saves your place either way.</p>
+          <p>It is not a way to take the course while doing something else. Sections still have timers, a quiz follows each unit, and the certificate certifies that you paid attention for six hours. Listen at the kitchen table, on a break, or on the couch, not in the car.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What it costs, and what it does not change</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p><strong class="text-text">{AUDIO_PRICE}, optional.</strong> You see it as a choice at checkout and you can leave it off. The {price} course is the whole TDLR-approved course with the certificate included; the audio adds a way to take it in, not content you would otherwise miss. Many courses sell audio or video as a higher tier at a much larger step up; we would rather the course be complete at {price} and the audio be a small, honest choice. The <a href="/texas/cost" class="text-primary-deep font-medium hover:underline">cost page</a> walks through every fee line in this market.</p>
+          <p>Unchanged with audio: the six hours, the section timers, the quizzes and their unlimited retakes, the certificate (court copy and insurance copy, downloadable the moment you finish), and what your court sees. TDLR signed off on the audio version of the course, so there is nothing to explain to the clerk.</p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How it works inside the course</h2>
+        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
+          <p>Each lesson has a play button. Press it and the lesson is read aloud while the text stays on screen, so you can follow along or look away. Pause, skip back, or switch devices; the course picks up where you left off. The quiz after each unit is on screen as text with unlimited retakes. <a href="/texas/what-the-course-looks-like" class="text-primary-deep font-medium hover:underline">What the course looks like</a> walks through every module, and the <a href="/texas/fastest-defensive-driving-course" class="text-primary-deep font-medium hover:underline">fastest-course page</a> explains why six hours is six hours in any format.</p>
+        </div>
+
+        <NextStepBlock page="audio-course" lead="eligible" />
+
+        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map(item => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;">{item.a}</p>
+            </div>
+          ))}
+        </div>
+
+        <div class="pt-4 border-t border-border">
+          <a href={enrollUrl} class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline" style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);">
+            Start the {price} course, certificate included
+          </a>
+        </div>
+
+        <div class="pt-6 mt-10 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider ({TEXAS_COURSE.providerNumber}). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
+          <p class="text-xs text-text-subtle">Published October 7, 2026. Course length per 16 TAC chapter 84; audio version approved by TDLR; add-on price as charged at checkout on that date.</p>
+        </div>
+
+      </div>
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

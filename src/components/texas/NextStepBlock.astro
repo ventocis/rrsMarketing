@@ -1,20 +1,19 @@
 ---
 /**
- * NextStepBlock — the intent-matched "Your next step" module for Texas content pages.
+ * NextStepBlock — the compact "buy now, with one honest caveat" module for Texas content pages.
  *
- * Three readers land on every Texas page: someone the court has already approved
- * (sell the course), someone who has not asked the court yet (give the two steps and
- * link to how), and someone whose ticket is not eligible (be honest and route
- * them). This block answers all three in one place instead of one generic buy button.
+ * Redesigned 2026-10-07 (Jackson): one sales bubble instead of two cards. The sale leads
+ * ("Start the Texas course, $28 total, certificate the instant you finish"); a single small line
+ * under it carries the caveat that protects the reader and us — the course only counts if the court
+ * approved it first ("Court hasn't approved you yet? Ask first, here's how"). Pages whose reader is
+ * already approved (lead="eligible") swap that line for a short reassurance. Pages where the course
+ * cannot help still get the ineligible off-ramp line.
  *
- * The pre-court card used to carry an "email me the steps" form. It was removed on
- * 2026-09-24: it subscribed people to Klaviyo list UHAu4n, which triggers no flow, so
- * nobody who signed up ever got an email. Don't add it back without a flow behind it.
- * The reminderLabel/placeholder/send/sent/error strings are kept only so translated
- * pages that still pass them keep type-checking.
- *
- * Translated pages pass `strings` (all visible text) plus `lang`/`dir`. The course is
- * delivered in English; translated strings must say so rather than imply otherwise.
+ * The NextStepStrings interface is kept whole so translated pages (src/data/i18n/texas/*.json) keep
+ * type-checking; the compact design uses approvedBtn (CTA), notYetTitle + step2Link (caveat),
+ * approvedTitle + approvedText (reassurance on eligible pages) and the ineligible fields.
+ * The reminderLabel/placeholder/send/sent/error strings are unused (the email form was removed on
+ * 2026-09-24 because no Klaviyo flow sat behind it) and stay only for type compatibility.
  */
 export interface NextStepStrings {
   heading: string; approvedTitle: string; approvedText: string; approvedBtn: string;
@@ -25,11 +24,10 @@ export interface NextStepStrings {
 interface Props {
   /** Short page label; used for the block id and the data-page attribute. */
   page: string;
-  /** Which reader is most likely on this page; controls which card leads. */
+  /** 'eligible' = the reader already has court approval (reassure); 'precourt' = probably has not asked yet (caveat); 'ineligible' = same as precourt. */
   lead?: 'eligible' | 'precourt' | 'ineligible';
   /** Optional one-line note for readers whose ticket is likely not eligible. */
   ineligibleNote?: string;
-  /** Where to send the ineligible reader. */
   ineligibleHref?: string;
   ineligibleLabel?: string;
   lang?: string;
@@ -50,13 +48,13 @@ const {
 
 const t: NextStepStrings = {
   heading: 'Your next step',
-  approvedTitle: 'The court already approved you for defensive driving?',
-  approvedText: 'Then the only thing left is the 6-hour course. Ours is $28 all-in, TDLR-approved (CP1234), and the certificate downloads the moment you finish.',
-  approvedBtn: 'Start the $28 course →',
-  notYetTitle: "Haven't asked the court yet?",
+  approvedTitle: 'Court already approved you?',
+  approvedText: 'The six-hour course is the only thing left. TDLR-approved (CP1234); the certificate downloads the moment you finish.',
+  approvedBtn: 'Start the Texas course — $28 total, certificate the instant you finish',
+  notYetTitle: "Court hasn't approved you yet? Ask first, before you take any course.",
   step1: "Don't pay the ticket online. Paying is a guilty plea and ends the dismissal option.",
   step2: 'Request the driving safety course from your court on or before the appearance date printed on the citation.',
-  step2Link: "Here's exactly how",
+  step2Link: "Here's how",
   reminderLabel: 'Email me the steps and a deadline reminder',
   placeholder: 'you@email.com',
   send: 'Send',
@@ -70,38 +68,46 @@ const t: NextStepStrings = {
 
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 const blockId = `rrs-next-${page.replace(/[^a-z0-9]+/gi, '-').toLowerCase()}`;
-const order = lead === 'eligible' ? ['eligible', 'precourt'] : ['precourt', 'eligible'];
+const showIneligible = lead !== 'eligible' && Boolean(t.ineligibleNote);
 ---
 
 <aside
   id={blockId}
-  class="rrs-next-step my-10 rounded-2xl border border-border bg-surface-muted p-5 sm:p-6"
+  class="rrs-next-step my-10 rounded-2xl border border-primary-deep/30 bg-info p-5 sm:p-6 flex flex-col gap-3"
   data-page={page}
+  data-lead={lead}
   dir={dir}
   lang={lang}
   aria-labelledby={`${blockId}-title`}
 >
-  <p id={`${blockId}-title`} class="text-xs font-semibold tracking-[0.12em] uppercase text-primary-deep mb-4" style="font-family: 'DM Sans', sans-serif;">{t.heading}</p>
+  <p id={`${blockId}-title`} class="sr-only">{t.heading}</p>
 
-  <div class="grid gap-4 sm:grid-cols-2">
-    {order.map((kind) => kind === 'eligible' ? (
-      <div class="rounded-xl bg-white border border-border p-4 flex flex-col gap-3">
-        <p class="text-base font-semibold text-text" style="font-family: 'Outfit', sans-serif;">{t.approvedTitle}</p>
-        <p class="text-sm text-text-body leading-6" style="font-family: 'DM Sans', sans-serif;">{t.approvedText}</p>
-        <a href={enrollUrl} class="mt-auto inline-flex h-11 items-center justify-center rounded-xl bg-primary px-5 text-sm font-semibold text-white no-underline hover:bg-primary-hover text-center" style="font-family: 'DM Sans', sans-serif;">{t.approvedBtn}</a>
-      </div>
-    ) : (
-      <div class="rounded-xl bg-white border border-border p-4 flex flex-col gap-3">
-        <p class="text-base font-semibold text-text" style="font-family: 'Outfit', sans-serif;">{t.notYetTitle}</p>
-        <ol class="text-sm text-text-body leading-6 list-decimal ps-5 space-y-1" style="font-family: 'DM Sans', sans-serif;">
-          <li>{t.step1}</li>
-          <li>{t.step2} <a href="/texas/request-defensive-driving" class="text-primary-deep font-medium hover:underline">{t.step2Link}</a>.</li>
-        </ol>
-      </div>
-    ))}
+  <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5">
+    <a
+      href={enrollUrl}
+      data-rrs-cta="next-step"
+      class="inline-flex flex-1 min-h-[56px] items-center justify-center rounded-2xl bg-primary px-6 py-3 text-center text-base sm:text-lg font-semibold text-white no-underline hover:bg-primary-hover shadow-[0_10px_15px_-3px_rgba(17,23,34,0.10),0_4px_6px_-4px_rgba(17,23,34,0.05)]"
+      style="font-family: 'DM Sans', sans-serif;"
+    >{t.approvedBtn}</a>
+    <ul class="flex flex-wrap gap-x-4 gap-y-1 list-none p-0 m-0 text-xs sm:text-sm text-text-body sm:max-w-[16rem]" style="font-family: 'DM Sans', sans-serif;" aria-label="Included">
+      <li class="inline-flex items-center gap-1.5"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 8.5l3 3 6-6.5" stroke="#16A34A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>TDLR-approved · CP1234</li>
+      <li class="inline-flex items-center gap-1.5"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 8.5l3 3 6-6.5" stroke="#16A34A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Nothing added at checkout</li>
+    </ul>
   </div>
 
-  <p class="mt-4 text-xs text-text-body leading-5" style="font-family: 'DM Sans', sans-serif;">
-    {t.ineligibleNote} <a href={t.ineligibleHref} class="text-primary-deep font-medium hover:underline">{t.ineligibleLabel}</a>
-  </p>
+  {lead === 'eligible' ? (
+    <p class="m-0 text-sm text-text-body leading-6" style="font-family: 'DM Sans', sans-serif;">
+      <strong class="text-text">{t.approvedTitle}</strong> {t.approvedText}
+    </p>
+  ) : (
+    <p class="m-0 text-sm text-text-body leading-6" style="font-family: 'DM Sans', sans-serif;">
+      <strong class="text-text">{t.notYetTitle}</strong> <a href="/texas/request-defensive-driving" class="text-primary-deep font-medium hover:underline">{t.step2Link}</a>. {t.step1}
+    </p>
+  )}
+
+  {showIneligible && (
+    <p class="m-0 text-xs text-text-body leading-5" style="font-family: 'DM Sans', sans-serif;">
+      {t.ineligibleNote} <a href={t.ineligibleHref} class="text-primary-deep font-medium hover:underline">{t.ineligibleLabel}</a>
+    </p>
+  )}
 </aside>

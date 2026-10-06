@@ -56,17 +56,33 @@ const landingFaqSchema = JSON.stringify({
       <!-- Hero - Two Column -->
       <div class="flex flex-col lg:flex-row gap-8 lg:gap-12 xl:gap-16 items-center justify-center">
         <!-- Left Column -->
-        <div class="w-full lg:w-[544px] flex flex-col gap-[24px] items-center lg:items-start">
+        <div class="w-full lg:w-[600px] flex flex-col gap-[20px] items-center lg:items-start">
           <p class="flex items-center gap-2 w-fit self-center lg:self-start m-0 rounded-full bg-white/70 border border-info-border pl-1.5 pr-4 py-1 text-sm font-semibold text-primary-deep leading-5">
             <img src="/assets/images/badges/texas-approved-tdlr.png" width="28" height="28" alt="Texas approved: TDLR-approved defensive driving course" class="w-7 h-7 shrink-0" decoding="async" />
             TDLR-Approved Provider {TEXAS_COURSE.providerNumber}
           </p>
-          <h1 class="text-[36px] lg:text-[56px] font-bold text-primary-navy leading-[40px] lg:leading-[66px] tracking-[-1.5px] text-center lg:text-left w-full max-w-[343px] lg:max-w-none">
-            Texas {TEXAS_COURSE.hours}-Hour Defensive Driving Course Online: {TEXAS_PRICE_LABEL} Total, Certificate Included
+          <h1 class="text-[34px] lg:text-[52px] font-bold text-primary-navy leading-[38px] lg:leading-[58px] tracking-[-1.2px] text-center lg:text-left w-full">
+            Texas Defensive Driving Course Online
           </h1>
-          <p class="text-[18px] lg:text-xl text-text-body leading-[28px] lg:leading-7 max-w-[576px] text-center lg:text-left">
-            The Texas driving safety course, fully online and TDLR-approved ({TEXAS_COURSE.providerNumber}), accepted by every Texas court. Take it to dismiss an eligible ticket or earn an insurance discount. {TEXAS_PRICE_LABEL} is the number you pay: the {TEXAS_COURSE.hours}-hour course, your certificate the moment you finish, and nothing added at checkout. Many courses advertise the course fee and add certificate or processing charges later; we don't.
+          <p class="m-0 text-[20px] lg:text-[26px] font-bold text-primary-deep leading-tight text-center lg:text-left" style="font-family: 'Outfit', sans-serif;">
+            {TEXAS_COURSE.hours} hours &middot; {TEXAS_PRICE_LABEL} total &middot; certificate included
           </p>
+          <p class="text-[17px] lg:text-lg text-text-body leading-7 max-w-[560px] text-center lg:text-left m-0">
+            The state's driving safety course, online. Take it to dismiss an eligible ticket or earn an insurance discount.
+          </p>
+          <ul class="flex flex-wrap justify-center lg:justify-start gap-2.5 list-none p-0 m-0" aria-label="What you get">
+            {[
+              `TDLR-approved (${TEXAS_COURSE.providerNumber}), accepted by every Texas court`,
+              'Certificate the moment you finish',
+              'Nothing added at checkout',
+              'Phone, tablet or computer',
+            ].map((t) => (
+              <li class="inline-flex items-center gap-2 rounded-full border border-info-border bg-white/80 px-3.5 py-1.5 text-sm font-medium text-text">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="8" fill="#16A34A" opacity="0.14"/><path d="M4.8 8.2l2.1 2.1 4.3-4.4" stroke="#16A34A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                {t}
+              </li>
+            ))}
+          </ul>
           <div class="flex flex-col gap-[12px] pt-[8px] w-full items-center lg:items-start">
             <div class="flex flex-col sm:flex-row gap-[16px] w-full items-center lg:items-start">
               <a
@@ -86,7 +102,7 @@ const landingFaqSchema = JSON.stringify({
             </div>
             <div class="flex items-center gap-1.5 text-sm text-text-body">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M7 1.5l.93 2.8H11l-2.4 1.74.92 2.8L7 7.1 4.48 8.84l.92-2.8L3 4.3h3.07L7 1.5z" fill="#10b981"/></svg>
-              <span class="font-medium text-text">Accepted by All Texas Courts</span>
+              <span class="font-medium text-text">Accepted by all Texas courts. Many courses advertise the course fee and add certificate or processing charges later; we don't.</span>
             </div>
           </div>
         </div>
@@ -292,6 +308,7 @@ const landingFaqSchema = JSON.stringify({
             <a href="/texas/tdlr-approved" class="text-primary-deep font-medium hover:underline">how to check any course is TDLR-approved</a> ·
             <a href="/texas/what-the-course-looks-like" class="text-primary-deep font-medium hover:underline">what the course looks like</a> ·
             <a href="/texas/spanish" class="text-primary-deep font-medium hover:underline">taking it in Spanish</a> ·
+            <a href="/texas/audio-course" class="text-primary-deep font-medium hover:underline">the audio version</a> ·
             <a href="/texas/ticket-dismissal" class="text-primary-deep font-medium hover:underline">the ticket-dismissal steps</a>.
           </p>
         </div>

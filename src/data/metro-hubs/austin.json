@@ -1,0 +1,242 @@
+{
+  "slug": "austin",
+  "city": "Austin",
+  "county": "Travis",
+  "h1_old": "How to Dismiss a Traffic Ticket in Austin with Defensive Driving",
+  "dateModified": "2026-08-04",
+  "faqs": [
+    {
+      "q": "How much does it cost to dismiss a ticket in Austin?",
+      "a": "The court cost is typically up to about $144 ($169 in a school zone), set by each court — some Austin-area courts charge less. The TDLR-approved course is separate; ours is $28. Check your court's page for the exact amount."
+    },
+    {
+      "q": "Can I take the Austin defensive driving course online?",
+      "a": "Yes. Once the court approves your request, a TDLR-approved 6-hour course can be completed fully online. Every Austin-area court accepts a state-approved online course."
+    },
+    {
+      "q": "My ticket is from Round Rock / Cedar Park / San Marcos, not Austin. Does that change things?",
+      "a": "The legal steps are the same, but you deal with that city's court — and it's often in Williamson or Hays County, with its own fee, request method, and deadlines. Open its page in the table above."
+    },
+    {
+      "q": "How long do I have to finish?",
+      "a": "Generally 90 days after the court approves the request. Request the course by your appearance date first, and don't pay the ticket — paying is a guilty plea and a conviction."
+    },
+    {
+      "q": "Does a dismissal keep it off my insurance?",
+      "a": "Yes. A driving safety course dismissal keeps the charge off your driving record under Texas law, so it can't raise your insurance — unlike paying, which is a conviction."
+    }
+  ],
+  "courts": [
+    {
+      "slug": "/texas/courts/travis-municipal-austin",
+      "name": "Austin Municipal Court",
+      "note": "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready.",
+      "deadlineDays": null,
+      "fee": null
+    },
+    {
+      "slug": "/texas/courts/travis-municipal-bee-cave-city-of",
+      "name": "Bee Cave City Of Municipal Court",
+      "note": "Bee Cave (Travis County, SH-71/Galleria) charges $144 ($169 school zone) by your appearance date — late fees apply after; 90 days to finish.",
+      "deadlineDays": null,
+      "fee": "$144 ($169 school zone)"
+    },
+    {
+      "slug": "/texas/courts/travis-municipal-briarcliff",
+      "name": "Briarcliff Municipal Court",
+      "note": "Briarcliff (Travis County, Lake Travis) hasn't posted its DSC fee and meets monthly — call (512) 264-2274 by your appearance date to request it.",
+      "deadlineDays": null,
+      "fee": null
+    },
+    {
+      "slug": "/texas/courts/hays-municipal-buda",
+      "name": "Buda Municipal Court",
+      "note": "Buda's mailed DSC request must be notarized, and certificates dated before court approval are rejected. $144 fee.",
+      "deadlineDays": null,
+      "fee": "$144"
+    },
+    {
+      "slug": "/texas/courts/williamson-municipal-cedar-park",
+      "name": "Cedar Park Municipal Court",
+      "note": "Cedar Park requires a signed DSC affidavit before you can enroll — most drivers miss this until it is too late.",
+      "deadlineDays": null,
+      "fee": null
+    },
+    {
+      "slug": "/texas/courts/hays-municipal-dripping-springs",
+      "name": "Dripping Springs Municipal Court",
+      "note": "Dripping Springs (US-290) takes DSC requests in person, by mail, or phone by your appearance date — call (512) 858-4725 for the fee.",
+      "deadlineDays": null,
+      "fee": null
+    },
+    {
+      "slug": "/texas/courts/williamson-municipal-florence",
+      "name": "Florence Municipal Court",
+      "note": "Florence (Williamson County, US-183) charges $144 ($169 school zone) with a notarized affidavit — request within 30 days of the citation; no extensions.",
+      "deadlineDays": 30,
+      "fee": "$144 ($169 school zone)"
+    },
+    {
+      "slug": "/texas/courts/williamson-municipal-georgetown",
+      "name": "Georgetown Municipal Court",
+      "note": "Georgetown requires a signed DSC affidavit before you enroll — most drivers miss this step. Court fee: $144.",
+      "deadlineDays": null,
+      "fee": "$144"
+    },
+    {
+      "slug": "/texas/courts/williamson-municipal-granger",
+      "name": "Granger Municipal Court",
+      "note": "Granger (SH-95) holds court once a month and doesn't publish a DSC fee — call the clerk before your appearance date.",
+      "deadlineDays": null,
+      "fee": null
+    },
+    {
+      "slug": "/texas/courts/williamson-municipal-hutto",
+      "name": "Hutto Municipal Court",
+      "note": "Hutto takes no cash or personal checks, and paying your ticket online forfeits the DSC option. $144 total fee.",
+      "deadlineDays": null,
+      "fee": "$144"
+    },
+    {
+      "slug": "/texas/courts/williamson-municipal-jarrell",
+      "name": "Jarrell Municipal Court",
+      "note": "Jarrell's I-35 court is one of Williamson County's busiest for speed enforcement — request DSC before paying.",
+      "deadlineDays": null,
+      "fee": null
+    },
+    {
+      "slug": "/texas/courts/travis-municipal-jonestown",
+      "name": "Jonestown Municipal Court",
+      "note": "Jonestown (Travis County, FM-1431) charges $144 and takes your certificate by email, mail, or in person by the due date.",
+      "deadlineDays": null,
+      "fee": "$144"
+    },
+    {
+      "slug": "/texas/courts/hays-municipal-kyle",
+      "name": "Kyle Municipal Court",
+      "note": "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready.",
+      "deadlineDays": null,
+      "fee": null
+    },
+    {
+      "slug": "/texas/courts/travis-municipal-lago-vista",
+      "name": "Lago Vista Municipal Court",
+      "note": "Lago Vista (Travis County, FM-1431) charges $144 ($169 school zone) — request before your first appearance, then 90 days and a Type 3A record.",
+      "deadlineDays": null,
+      "fee": "$144 ($169 school zone)"
+    },
+    {
+      "slug": "/texas/courts/travis-municipal-lakeway",
+      "name": "Lakeway Municipal Court",
+      "note": "Lakeway (RR-620) charges $144 ($169 school zone) — request online before your appearance date, then submit docs by email or in person.",
+      "deadlineDays": null,
+      "fee": "$144 ($169 school zone)"
+    },
+    {
+      "slug": "/texas/courts/williamson-municipal-leander",
+      "name": "Leander Municipal Court",
+      "note": "Leander's court fee is $144 for most violations. Take a $28 TDLR-approved defensive driving course online. Certificate downloads the same day.",
+      "deadlineDays": null,
+      "fee": "$144"
+    },
+    {
+      "slug": "/texas/courts/williamson-municipal-liberty-hill",
+      "name": "Liberty Hill Municipal Court",
+      "note": "Liberty Hill doesn't post its DSC fee — and not all offenses qualify, so contact the court first.",
+      "deadlineDays": null,
+      "fee": null
+    },
+    {
+      "slug": "/texas/courts/travis-municipal-manor",
+      "name": "Manor Municipal Court",
+      "note": "Manor (US-290) charges $144 ($169 school zone) — get court approval first; request by your second appearance date.",
+      "deadlineDays": null,
+      "fee": "$144 ($169 school zone)"
+    },
+    {
+      "slug": "/texas/courts/travis-municipal-mustang-ridge",
+      "name": "Mustang Ridge Municipal Court",
+      "note": "Mustang Ridge (Travis County, US-183/SH-130) hasn't posted its DSC fee — call (512) 243-1775 by your appearance date for the amount and process.",
+      "deadlineDays": null,
+      "fee": null
+    },
+    {
+      "slug": "/texas/courts/travis-municipal-pflugerville",
+      "name": "Pflugerville Municipal Court",
+      "note": "You'll need a certified Type 3A driving record from Texas DPS — most drivers do not have this ready.",
+      "deadlineDays": null,
+      "fee": null
+    },
+    {
+      "slug": "/texas/courts/travis-municipal-point-venture-village-of",
+      "name": "Point Venture Village Of Municipal Court",
+      "note": "Point Venture (Travis County, Lake Travis) hasn't posted its DSC fee — call (512) 267-5511 by your appearance date for the amount and request process.",
+      "deadlineDays": null,
+      "fee": null
+    },
+    {
+      "slug": "/texas/courts/travis-municipal-rollingwood",
+      "name": "Rollingwood Municipal Court",
+      "note": "Rollingwood (Travis County, Bee Cave Rd) charges $144 — mailed requests due within 20 days of the violation; 90 days, no extensions.",
+      "deadlineDays": 20,
+      "fee": "$144"
+    },
+    {
+      "slug": "/texas/courts/williamson-municipal-round-rock",
+      "name": "Round Rock Municipal Court",
+      "note": "Round Rock requires a signed DSC affidavit before you enroll — most drivers miss this step. Court fee: $144.",
+      "deadlineDays": null,
+      "fee": "$144"
+    },
+    {
+      "slug": "/texas/courts/hays-municipal-san-marcos",
+      "name": "San Marcos Municipal Court",
+      "note": "San Marcos requires a signed DSC affidavit before you enroll — most drivers miss this step. Court fee: $144.",
+      "deadlineDays": null,
+      "fee": "$144"
+    },
+    {
+      "slug": "/texas/courts/travis-municipal-sunset-valley",
+      "name": "Sunset Valley Municipal Court",
+      "note": "Sunset Valley (Travis County, Brodie Ln) charges $144 ($169 school zone) with a notarized affidavit by email or in person; 90 days.",
+      "deadlineDays": null,
+      "fee": "$144 ($169 school zone)"
+    },
+    {
+      "slug": "/texas/courts/williamson-municipal-taylor",
+      "name": "Taylor Municipal Court",
+      "note": "Taylor lets you request DSC online — upload your license and insurance with the citation search. $144 fee.",
+      "deadlineDays": null,
+      "fee": "$144"
+    },
+    {
+      "slug": "/texas/courts/williamson-municipal-thrall",
+      "name": "Thrall Municipal Court",
+      "note": "Thrall (Williamson County, US-79 near Taylor) takes the DSC request by email before your appearance date — email for the fee; 90 days.",
+      "deadlineDays": null,
+      "fee": null
+    },
+    {
+      "slug": "/texas/courts/travis-municipal-volente",
+      "name": "Volente Municipal Court",
+      "note": "Volente (Travis County, Lake Travis) hasn't posted its DSC fee — email municipalcourt@volentetexas.gov or call (512) 250-2075 by your appearance date.",
+      "deadlineDays": null,
+      "fee": null
+    },
+    {
+      "slug": "/texas/courts/travis-municipal-west-lake-hills",
+      "name": "West Lake Hills Municipal Court",
+      "note": "West Lake Hills (Travis County, Bee Cave Rd) charges $144 ($169 school zone) — request within 20 business days of the offense, then 90 days.",
+      "deadlineDays": null,
+      "fee": "$144 ($169 school zone)"
+    },
+    {
+      "slug": "/texas/courts/hays-municipal-wimberley",
+      "name": "Wimberley Municipal Court",
+      "note": "Wimberley (Hays County, RR-12) hasn't posted its DSC fee — call (512) 847-0025 by your appearance date; the city court is separate from the Hays County JP.",
+      "deadlineDays": null,
+      "fee": null
+    }
+  ],
+  "jpNote": null
+}

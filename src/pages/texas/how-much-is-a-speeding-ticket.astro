@@ -1,155 +1,243 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
 import VideoEmbed from '../../components/VideoEmbed.astro';
-import NextStepBlock from '../../components/texas/NextStepBlock.astro';
+import StickyCta from '../../components/texas/StickyCta.astro';
 import { courtStats as S } from '../../lib/court-stats';
+import { TEXAS_COURSE, TEXAS_PRICE_LABEL } from '../../data/texas-course';
+import reviews from '../../data/texas-reviews.json';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
-
 const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+const price = TEXAS_PRICE_LABEL;
+const coursePrice = TEXAS_COURSE.price;
+const review = reviews.find((r: any) => r.name === 'Ryan Johnson');
+
+// Rebuilt 2026-10-06 from Jackson's design canvas "Ticket Cost Page Redesign" (artboard + search preview), funnel
+// map gap 8. Implemented as the spec: the three layers, the per-mph schedule rows, the insurance calculator
+// (premium × increase × 3 years vs ≈$184 dismissal), when paying makes sense, course band, quick answers. The
+// canvas's search preview shows the URL /texas/speeding-ticket/cost; that route does not exist, so the page keeps
+// its existing URL (/texas/how-much-is-a-speeding-ticket, 6,781 impressions), flagged in the PR. Every figure was
+// already on this page and verified by the editorial team: §542.401 ($1–$200), §542.4031 ($50 state traffic fine),
+// Local Gov't Code §§133.102/134.103 ($62 + $14), §542.404 (work zones doubled), §521.292 (4 in 12 / 7 in 24),
+// Weslaco's published schedule ($228), small-town schedules ($97–$130), the $100–$184 dismissal range across the
+// courts in our directory (court-stats). Video kKQrQe0GUCs (1:05) is canonical here.
+
+const dismissal = 144 + 12 + coursePrice;
 
 const faqs = [
-  {
-    "q": "How much is a speeding ticket in Texas?",
-    "a": "The fine itself is $1–$200 by statute (Transp. Code §542.401), set by each court's schedule based on your speed over the limit. With state and local court costs added, typical pay-in-full totals run $200–$300. Active construction zones with workers present carry statutorily doubled fines; many courts also set higher school-zone amounts on their local schedules."
-  },
-  {
-    "q": "How much is a speeding ticket per mph over in Texas?",
-    "a": "There's no statewide per-mph rate — each city and JP court publishes its own schedule within the $200 statutory cap, typically stepping up a few dollars per mph. The exact number for your ticket is on your court's fine schedule or one call to the clerk away."
-  },
-  {
-    "q": "Is it cheaper to take defensive driving than pay the ticket in Texas?",
-    "a": "Usually, dramatically. Dismissal costs about $184 all-in (≈$144 court costs + $28 course + $12 driving record) and leaves no conviction. Paying costs $200–$300 now plus typically several hundred dollars of insurance increases over three years. Dismissal wins for almost every eligible ticket."
-  },
-  {
-    "q": "How much does a speeding ticket raise insurance in Texas?",
-    "a": "It varies by insurer and your profile, but a first speeding conviction commonly adds 10–15% to premiums for about three years — several hundred to over a thousand dollars for typical Texas premiums. A dismissed ticket never reaches your record, so the answer becomes zero."
-  },
-  {
-    "q": "Do speeding ticket prices vary by city in Texas?",
-    "a": `Yes — the fine schedule is local (within the statutory cap), and court costs vary slightly by city additions. Our court directory documents verified defensive-driving dismissal totals across ${S.fee.known} Texas courts, and they vary too (from $${S.fee.min} to $${S.fee.max}).`
-  },
-  {
-    "q": "What happens if I just don't pay my speeding ticket?",
-    "a": "It escalates: a failure-to-appear charge, a possible arrest warrant with a $50 fee, and an OmniBase hold that blocks your license renewal — typically doubling or tripling the original cost. If you can't pay, contact the court about payment plans or community service instead of going silent."
-  }
+  { q: 'How much is a speeding ticket in Texas?', a: 'The fine is $1–$200 (Transp. Code §542.401), set by your court’s schedule. With court costs, most paid tickets total $200–$300. Work zones with workers present double by law; many cities set higher school-zone amounts.' },
+  { q: 'Is it cheaper to take defensive driving than pay the ticket?', a: `Usually by hundreds. Dismissal runs about $${dismissal} at most (≈$144 court costs + ${price} course + $12 record) and leaves no conviction. Paying is $200–$300 plus higher insurance for about three years.` },
+  { q: 'Do speeding ticket prices vary by city in Texas?', a: `Yes. Fine schedules are local, and city add-ons vary. Across the ${S.fee.known} courts in our directory, dismissal totals run $${S.fee.min}–$${S.fee.max}. <a href="/texas/courts" class="text-primary-deep font-medium hover:underline">Find your court</a>` },
+  { q: 'What happens if I don’t pay my speeding ticket?', a: 'It grows: a failure-to-appear charge, a possible warrant with a $50 fee, and an OmniBase hold that blocks your license renewal. Can’t afford it? Ask the court about a payment plan or community service.' },
 ];
+const plain = (s: string) => s.replace(/<[^>]+>/g, '');
 
 const articleSchema = JSON.stringify({
-  '@context': 'https://schema.org',
-  '@type': 'Article',
-  headline: "How Much Is a Speeding Ticket in Texas? The Real Math, Verified",
-  description: "Texas speeding fines are capped at $200 by statute, but court costs push real totals to $200–$300 — and the insurance impact dwarfs both. The verified breakdown, what changes the number, and the cheaper alternative.",
+  '@context': 'https://schema.org', '@type': 'Article',
+  headline: 'How much is a speeding ticket in Texas? $200–$300 to pay. The real bill comes later.',
+  description: '$1–$200 fine plus court costs: most paid Texas speeding tickets run $200–$300. Then insurance rises for about three years. The full math and the cheaper way out.',
   author: { '@type': 'Organization', name: 'Road Ready Safety' },
   publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
-  datePublished: '2026-06-11',
-  dateModified: '2026-09-06',
+  datePublished: '2026-06-11', dateModified: '2026-10-06',
   mainEntityOfPage: `${siteUrl}/texas/how-much-is-a-speeding-ticket`,
 });
+const faqSchema = JSON.stringify({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: plain(f.a) } })) });
 
-const faqSchema = JSON.stringify({
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
-});
+const layers = [
+  { eyebrow: 'Layer 1 · The fine', n: '$1–$200', b: 'Set by statute (§542.401). Your court’s schedule steps it up as your speed over the limit goes up.', hot: false },
+  { eyebrow: 'Layer 2 · Court costs', n: '~$126+', b: '$62 state court cost + $14 local cost + the $50 state traffic fine on a conviction, plus any city add-ons.', hot: false },
+  { eyebrow: 'Layer 3 · Not on the citation', n: '3 years', b: 'Of higher insurance. Paying is a guilty plea, and your insurer prices the conviction.', hot: true },
+];
+const schedule = [
+  ['Small-town schedules, low speeds', 'often start around $97–$130', false],
+  ['20+ over', 'climbs toward the $200 fine cap', false],
+  ['Weslaco (published schedule)', 'speeding starts at $228 total', false],
+  ['School zone / work zone with workers', 'many cities double school zones; the state doubles work zones (§542.404)', true],
+];
+const prems = [1500, 2000, 2500, 3000];
+const rates = [10, 15];
+const defaultPrem = 2000, defaultRate = 10;
+const fmt = (n: number) => '$' + Math.round(n).toLocaleString('en-US');
+const defIns = defaultPrem * defaultRate / 100 * 3;
+const closed = [
+  ['/texas/speeding-25-over', '25+ mph over', 'No course, but deferred disposition is usually still open.', 'Your options →'],
+  ['/texas/12-month-rule', 'Took a course in the last 12 months', 'Ask about deferred disposition instead.', 'The 12-month rule →'],
+  ['/texas/cdl-defensive-driving', 'CDL holder', 'The course and deferred are both out. Talk to the court or a lawyer before you plead.', 'CDL options →'],
+];
+const nextSteps = [
+  ['/texas/request-defensive-driving', 'Ask the court for the course', 'With a letter template →'],
+  ['/texas/ticket-cost-calculator', 'Your court’s exact numbers', 'Ticket cost calculator →'],
+  ['/texas/court-costs', 'Where the fees go', 'Court costs breakdown →'],
+  ['/texas/speeding-ticket', 'The whole process', 'Speeding ticket guide →'],
+];
+
+const inter = "font-family:'Inter',sans-serif;";
+const sans = "font-family:'DM Sans',sans-serif;";
+const h2c = 'text-[28px] lg:text-[34px] font-extrabold tracking-[-0.02em] leading-[1.15] text-text m-0 mb-3';
+const wrap = 'max-w-[1080px] mx-auto px-4 sm:px-6 lg:px-8';
+const pillOn = 'bg-primary text-white border-primary';
+const pillOff = 'bg-white text-text border-[#CBD3DF] hover:border-primary-deep';
+const link = 'text-primary hover:text-primary-deep font-medium';
 ---
 
 {isEnabled ? (
   <TexasLayout
-    title="How Much Is a Speeding Ticket in Texas? $200 Fine Cap, $200-$300 All-In"
-    description="Texas caps ordinary speeding fines at $200 by statute, but court costs push real totals to $200-$300, and a conviction costs far more than that in insurance. The real numbers, and what dismissal costs instead."
-    keywords="how much is a speeding ticket in texas, texas speeding ticket cost, speeding fine texas, texas ticket price, average speeding ticket texas"
+    title="How Much Is a Speeding Ticket in Texas? The Real Cost (2026)"
+    description="$1–$200 fine plus court costs: most paid tickets run $200–$300. Then insurance rises for about 3 years. See the full math and the cheaper way out."
+    keywords="how much is a speeding ticket in texas, texas speeding ticket cost, speeding ticket fine texas, how much does a speeding ticket raise insurance texas, texas speeding ticket per mph over, speeding ticket court costs texas"
     url="/texas/how-much-is-a-speeding-ticket"
   >
     <script type="application/ld+json" set:html={articleSchema} />
     <script type="application/ld+json" set:html={faqSchema} />
 
-    <article class="bg-white pb-16 lg:pb-24">
-      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
-
-        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
-          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving course</a>
-          <span class="mx-2 text-text-subtle">›</span>
-          <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">Speeding ticket guide</a>
-          <span class="mx-2 text-text-subtle">›</span>
-          <span class="text-text">Ticket cost</span>
-        </p>
-
-        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
-          How Much Is a Speeding Ticket in Texas? The Real Math, Verified
-        </h1>
-
-        <VideoEmbed id="kKQrQe0GUCs" title="How Much Is a Texas Speeding Ticket, Really? (2026)" description="A Texas speeding ticket is the fine plus court costs — and the hidden cost is the insurance increase a conviction brings for about three years." />
-
-        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
-          <p>The honest answer has three layers. The <strong class="text-text">fine</strong> for ordinary speeding is set by statute at <strong class="text-text">$1 to $200</strong> (Tex. Transp. Code §542.401), scaled by each court with how far over the limit you were. <strong class="text-text">Court costs</strong> — about $126 in state-mandated charges on a conviction, including the $50 state traffic fine (§542.4031), plus local additions — ride on top, pushing typical pay-the-ticket totals to <strong class="text-text">$200–$300</strong>. And the third layer is the one nobody prints on the citation: a conviction typically raises your <strong class="text-text">insurance for about three years</strong>, which usually costs more than the ticket itself.</p>
-          <p>Here's each layer, what moves the number up, and why most eligible drivers shouldn't pay the ticket at all.</p>
+    <article class="bg-surface-muted pb-24 lg:pb-16 text-text" style={sans}>
+      <!-- ===== Lead ===== -->
+      <div class={wrap}>
+        <p class="text-[15px] text-text-body pt-5 m-0"><a href="/texas" class="text-text-body hover:underline">Texas defensive driving course</a><span class="mx-1.5">›</span><a href="/texas/speeding-ticket" class="text-text-body hover:underline">Speeding ticket guide</a><span class="mx-1.5">›</span><span>Ticket cost</span></p>
+        <div class="max-w-[840px] pt-8 pb-11">
+          <h1 class="text-[36px] lg:text-[56px] font-extrabold tracking-[-0.02em] leading-[1.05] m-0 mb-5" style={inter}>How much is a speeding ticket in Texas? $200–$300 to pay. The real bill comes later.</h1>
+          <p class="text-lg lg:text-[21px] leading-8 m-0 mb-4">The fine is $1 to $200 by law, set by your court based on how fast you were going. Court costs push most paid tickets to $200–$300.</p>
+          <p class="text-lg lg:text-[21px] leading-8 m-0 mb-6">But that's only what's printed on the citation. The biggest cost shows up on your insurance bill, for about three years. Here's each layer, and the cheaper way out.</p>
+          <div class="flex flex-wrap gap-3 items-center">
+            <a href="#math" class="no-underline bg-primary hover:bg-primary-hover text-white font-bold text-[17px] px-6 py-3.5 rounded-full">Run my numbers ↓</a>
+            <a href="#video" class="font-semibold text-primary hover:text-primary-deep">▶ Watch: How much is a Texas speeding ticket, really? (1:05)</a>
+          </div>
+          <p class="text-[15px] text-text-muted m-0 mt-6">By Road Ready Safety, TDLR provider {TEXAS_COURSE.providerNumber} · Checked against Tex. Transp. Code §§521.292, 542.401, 542.4031, 542.404 and Tex. Local Gov't Code §§133.102, 134.103 · Updated October 6, 2026</p>
         </div>
-
-        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
-          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Procedures vary by court and judge — confirm with the court listed on your citation.</p>
-        </div>
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Layer one and two: the fine and the costs</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p>Each city and JP court publishes its own fine schedule within the statutory range — typically stepping up a few dollars per mph over the limit. The verified examples from our court research: small-town schedules commonly start around $97–$130 for low-speed offenses and climb toward the $200 cap above 20 over; Weslaco's published schedule starts speeding at $228 <em>total</em> (fine plus costs). On top of the fine, every Class C conviction carries the consolidated state court cost ($62), local consolidated costs ($14), and any city additions — the anatomy is in our <a href="/texas/court-costs" class="text-primary-deep font-medium hover:underline">court costs breakdown</a>.</p>
-          <p>Multipliers to know: most cities <strong class="text-text">double fines in school zones</strong>, and the state doubles them in <strong class="text-text">construction zones with workers present</strong> (§542.404) — the same trigger that also locks you out of both dismissal tools, as we explain in the <a href="/texas/construction-zone-ticket" class="text-primary-deep font-medium hover:underline">work-zone guide</a>.</p>
-        </div>
-
-        <NextStepBlock page="how-much-is-a-speeding-ticket" lead="precourt" />
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Layer three: the conviction is the expensive part</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p>Paying the ticket is a guilty plea, and the conviction goes on your driving record where your insurer prices it for about three years. For a typical Texas driver paying $1,800–$2,400 a year, even a 10–15% surcharge means <strong class="text-text">$540–$1,080 over three years</strong> — two to four times the ticket itself. Young drivers and drivers with prior convictions get hit harder. The conviction also counts toward the habitual-violator suspension math (four moving violations in 12 months, Transp. Code §521.292).</p>
-          <p>That's the real price comparison: <strong class="text-text">paying ≈ $250 now + several hundred in premiums later</strong>, versus <strong class="text-text">dismissing ≈ $184 total</strong> (about $144 court costs + $28 course + $12 driving record) with nothing on your record and nothing for your insurer to find. For every eligible everyday ticket, dismissal wins the math — usually by hundreds of dollars.</p>
-        </div>
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">When the numbers say something different</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p>Paying can be rational when the dismissal door is closed — you're <a href="/texas/speeding-25-over" class="text-primary-deep font-medium hover:underline">25+ over</a>, inside the <a href="/texas/12-month-rule" class="text-primary-deep font-medium hover:underline">12-month rule</a>, or a <a href="/texas/cdl-defensive-driving" class="text-primary-deep font-medium hover:underline">CDL holder</a> — though even then, deferred disposition or negotiation usually beats straight payment. And never pay by reflex on the portal: payment is final, and it ends every dismissal option in one click, as our <a href="/texas/already-paid-ticket" class="text-primary-deep font-medium hover:underline">already-paid guide</a> explains in painful detail.</p>
-        </div>
-
-        <p class="text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;"><a href="/texas/ticket-cost-calculator" class="text-primary-deep font-medium hover:underline">Run your own numbers in the ticket cost calculator</a> →</p>
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
-        <div class="space-y-8 mb-12">
-          {faqs.map(item => (
-            <div>
-              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
-              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
-            </div>
-          ))}
-        </div>
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The $184 path beats the $800 path</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
-          <p>If your ticket qualifies, dismissal is the cheapest exit by hundreds of dollars: <strong class="text-text">$28 course, free instant certificate</strong>, court costs to the court, and nothing on your record.</p>
-        </div>
-
-        <div class="flex flex-col sm:flex-row gap-4 mb-10">
-          <a
-            href={enrollUrl}
-            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
-            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
-          >
-            Start the $28 Course →
-          </a>
-          <a
-            href="/texas/court-costs"
-            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
-            style="font-family: 'DM Sans', sans-serif;"
-          >
-            See where the fees go
-          </a>
-        </div>
-
-        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
-          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
-          <p class="text-xs text-text-subtle">Last updated September 6, 2026 — verified by the Road Ready Safety editorial team against Tex. Transp. Code §§521.292, 542.401 &amp; 542.404, Tex. Local Gov't Code §§133.102 &amp; 134.103, and the published fine schedules of the Texas courts referenced.</p>
-        </div>
-
       </div>
+
+      <!-- ===== Three layers ===== -->
+      <section id="layers" class="bg-white border-y border-border scroll-mt-28">
+        <div class={`${wrap} py-12 lg:py-14`}>
+          <h2 class={h2c} style={inter}>What's actually in a Texas speeding ticket?</h2>
+          <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">Three layers. You see the first two. The third is the one that costs the most.</p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {layers.map((l) => (
+              <div class={`rounded-2xl border p-6 flex flex-col gap-1.5 ${l.hot ? 'bg-amber-50 border-amber-200' : 'bg-white border-border'}`}>
+                <span class={`text-sm font-bold uppercase tracking-[0.06em] ${l.hot ? 'text-amber-800' : 'text-primary-deep'}`}>{l.eyebrow}</span>
+                <span class={`text-[32px] font-extrabold leading-none my-1 ${l.hot ? 'text-amber-800' : ''}`} style={inter}>{l.n}</span>
+                <span class="text-base text-text-body leading-6">{l.b}</span>
+              </div>
+            ))}
+          </div>
+          <a href="/texas/court-costs" class="inline-block mt-4 font-bold text-primary hover:text-primary-deep">Where every court cost dollar goes →</a>
+        </div>
+      </section>
+
+      <!-- ===== Per mph ===== -->
+      <section class={`${wrap} pt-16 pb-6`}>
+        <h2 class={h2c} style={inter}>How much is a speeding ticket per mph over?</h2>
+        <p class="text-base leading-7 m-0 mb-5 max-w-[780px]">There's no statewide rate. Every city and JP court sets its own schedule under the $200 cap, usually a few dollars more per mph. Your exact number is on your court's fine schedule, or one call to the clerk.</p>
+        <div class="flex flex-col gap-2.5 max-w-[880px]">
+          {schedule.map(([t, v, hot]) => <div class={`flex flex-wrap gap-3 justify-between rounded-xl border px-5 py-3.5 ${hot ? 'bg-amber-50 border-amber-200' : 'bg-white border-border'}`}><span class={`font-bold ${hot ? 'text-amber-800' : ''}`}>{t}</span><span class={hot ? 'text-amber-800' : 'text-text-body'}>{v}</span></div>)}
+        </div>
+        <p class="text-base leading-7 m-0 mt-5 max-w-[780px]">A work-zone ticket with workers present also shuts both dismissal options. <a href="/texas/construction-zone-ticket" class={link}>Work-zone guide</a>. For everyone else, the fine is the small part. Here's the part that isn't.</p>
+        <div id="video" class="mt-8 max-w-[800px] scroll-mt-28"><VideoEmbed id="kKQrQe0GUCs" /></div>
+      </section>
+
+      <!-- ===== Insurance calculator ===== -->
+      <section id="math" class={`${wrap} pt-12 pb-6 scroll-mt-28`} data-calc data-dismissal={dismissal}>
+        <h2 class={h2c} style={inter}>How much does a speeding ticket raise insurance in Texas?</h2>
+        <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">It depends on your insurer and your profile. A first speeding conviction commonly adds 10–15% for about three years. Pick yours and see the full price of paying.</p>
+        <div class="rounded-2xl border border-border bg-white p-6 max-w-[880px] flex flex-col gap-5">
+          <div class="flex flex-col gap-2.5">
+            <span class="font-bold text-base">What you pay for car insurance per year</span>
+            <div class="flex flex-wrap gap-2.5">{prems.map((p) => <button type="button" data-prem={p} aria-pressed={p === defaultPrem ? 'true' : 'false'} class={`font-bold text-base min-h-[48px] px-[18px] rounded-full border-2 transition-colors ${p === defaultPrem ? pillOn : pillOff}`}>{fmt(p)}</button>)}</div>
+          </div>
+          <div class="flex flex-col gap-2.5">
+            <span class="font-bold text-base">Increase after a conviction</span>
+            <div class="flex flex-wrap gap-2.5">{rates.map((r) => <button type="button" data-rate={r} aria-pressed={r === defaultRate ? 'true' : 'false'} class={`font-bold text-base min-h-[48px] px-[18px] rounded-full border-2 transition-colors ${r === defaultRate ? pillOn : pillOff}`}>{r}%</button>)}</div>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            <div class="rounded-[14px] border border-amber-200 bg-amber-50 p-5 flex flex-col gap-1.5">
+              <span class="text-sm font-bold uppercase tracking-[0.06em] text-amber-800">Pay the ticket</span>
+              <span class="text-[40px] font-extrabold leading-none text-amber-800" style={inter}>≈ <span data-pay>{fmt(250 + defIns)}</span></span>
+              <span class="text-[15px] text-text-body">≈ $250 ticket + <span data-ins>{fmt(defIns)}</span> in insurance over 3 years. Conviction on your record.</span>
+            </div>
+            <div class="rounded-[14px] border-2 border-primary bg-info p-5 flex flex-col gap-1.5">
+              <span class="text-sm font-bold uppercase tracking-[0.06em] text-primary-deep">Dismiss it</span>
+              <span class="text-[40px] font-extrabold leading-none text-primary-deep" style={inter}>≈ ${dismissal}</span>
+              <span class="text-[15px] text-text-body">≈ $144 court costs + {price} course + $12 driving record. Nothing for your insurer to find.</span>
+            </div>
+          </div>
+          <p class="text-[22px] font-extrabold m-0" style={inter}>Dismissing saves you about <span data-saved>{fmt(250 + defIns - dismissal)}</span>.</p>
+          <p class="text-sm text-text-muted m-0">Estimate. Your court's dismissal costs may be lower; the courts in our directory run ${S.fee.min}–${S.fee.max} all-in. Younger drivers and drivers with prior tickets usually see bigger increases.</p>
+        </div>
+        <p class="text-base leading-7 m-0 mt-5 max-w-[780px]">The conviction also counts toward a license suspension: four moving violations in 12 months, or seven in 24 (§521.292). So can you dismiss yours?</p>
+      </section>
+
+      <!-- ===== When paying makes sense ===== -->
+      <section class={`${wrap} pt-12 pb-6`}>
+        <h2 class={h2c} style={inter}>When does paying actually make sense?</h2>
+        <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">Only when the dismissal door is closed, and even then paying usually isn't your best move.</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+          {closed.map(([href, t, b, c]) => <a href={href} class="no-underline text-text rounded-[14px] border border-border bg-white p-5 flex flex-col gap-1.5 hover:border-primary-deep"><strong>{t}</strong><span class="text-[15px] text-text-body">{b}</span><span class="text-[15px] font-bold text-primary mt-auto">{c}</span></a>)}
+        </div>
+        <div class="mt-5 rounded-xl border border-amber-200 bg-amber-50 px-[18px] py-3.5 leading-7"><strong>Not on that list? Don't pay online.</strong> Payment is final, and it ends every dismissal option in one click. <a href="/texas/already-paid-ticket" class="text-amber-800 font-bold hover:underline">Already paid?</a></div>
+      </section>
+
+      <!-- ===== Course band ===== -->
+      <section id="course" class={`${wrap} py-14 scroll-mt-28`}>
+        <div class="rounded-3xl bg-primary-deep text-white px-6 py-12 lg:px-8 lg:py-14 flex flex-col items-center text-center gap-7">
+          <div class="flex flex-col gap-2.5 max-w-[680px]">
+            <span class="text-sm font-bold uppercase tracking-[0.08em] text-info-border">The cheaper path</span>
+            <h2 class="text-[30px] lg:text-[40px] font-extrabold leading-[1.1] m-0" style={inter}>Skip the insurance bill. Dismiss it for {price}.</h2>
+          </div>
+          {review && (
+            <div class="rounded-[18px] bg-white text-text px-7 py-7 max-w-[640px] w-full flex flex-col gap-3">
+              <span class="text-accent text-[22px] tracking-[3px]" aria-label={`${review.rating} out of 5 stars`}>{'★'.repeat(review.rating)}</span>
+              <blockquote class="m-0 text-[19px] lg:text-[21px] font-bold leading-[1.45]" style={inter}>"{review.quote}"</blockquote>
+              <div class="flex items-center gap-3 text-left">
+                <span class="w-10 h-10 rounded-full bg-primary text-white font-bold text-[15px] flex items-center justify-center" aria-hidden="true">{review.initials}</span>
+                <span class="flex flex-col text-[15px] leading-[1.35]"><strong>{review.name}</strong><span class="text-text-muted">{review.verified ? 'Verified via Trustpilot' : 'Trustpilot'} · {review.date}</span></span>
+              </div>
+            </div>
+          )}
+          <ul class="flex flex-wrap justify-center gap-2.5 list-none p-0 m-0 max-w-[820px]">
+            {[`${price} total, nothing added at checkout`, `TDLR-approved · ${TEXAS_COURSE.providerNumber}`, 'Free certificate, the instant you finish', 'Nothing on your record'].map((t) => <li class="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-2 text-[15px]"><span class="text-info-border font-extrabold" aria-hidden="true">✓</span>{t}</li>)}
+          </ul>
+          <div class="flex flex-col items-center gap-3">
+            <a href={enrollUrl} class="no-underline bg-white hover:bg-info text-primary-deep font-extrabold text-lg px-8 py-4 rounded-full" style={inter}>Start the {price} course →</a>
+            <a href="/texas/request-defensive-driving" class="no-underline text-white hover:underline">Court hasn't approved you yet? Ask first</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== Quick answers ===== -->
+      <section class={`${wrap} pt-2 pb-6`}>
+        <h2 class={h2c} style={inter}>Quick answers</h2>
+        <div class="flex flex-col gap-3 max-w-[820px] mt-5">
+          {faqs.map((f) => <div class="rounded-xl border border-border bg-white p-5"><h3 class="font-bold text-base m-0 mb-1" style={sans}>{f.q}</h3><p class="m-0 text-text-body leading-7" set:html={f.a} /></div>)}
+        </div>
+      </section>
+
+      <!-- ===== Next step + legal ===== -->
+      <section class={`${wrap} pt-6 pb-10`}>
+        <p class="font-bold m-0 mb-2.5">Your next step</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-7">
+          {nextSteps.map(([href, t, s]) => <a href={href} class="no-underline text-text rounded-[14px] border border-border bg-white p-4 hover:border-primary-deep"><strong>{t}</strong><br /><span class="text-[15px] text-text-body">{s}</span></a>)}
+        </div>
+        <p class="text-[15px] text-text-muted m-0 max-w-[820px] leading-6">General information, not legal advice. Procedures vary by court and judge; confirm with the court on your citation. Road Ready Safety is a TDLR-licensed course provider ({TEXAS_COURSE.providerNumber}), not a court. Sources: Tex. Transp. Code §§521.292, 542.401, 542.4031, 542.404; Tex. Local Gov't Code §§133.102, 134.103; published fine schedules of the Texas courts referenced; our verified court dataset ({S.fee.known} courts). Updated October 6, 2026.</p>
+      </section>
+
+      <StickyCta afterId="layers" hideAtId="course" />
     </article>
+
+    <script is:inline>
+      (function () {
+        document.querySelectorAll('[data-calc]:not([data-armed])').forEach(function (root) {
+          root.setAttribute('data-armed', '1');
+          var dismissal = +root.getAttribute('data-dismissal'), prem = 2000, rate = 10;
+          var on = ['bg-primary', 'text-white', 'border-primary'], off = ['bg-white', 'text-text', 'border-[#CBD3DF]', 'hover:border-primary-deep'];
+          var fmt = function (n) { return '$' + Math.round(n).toLocaleString('en-US'); };
+          function pick(group, sel) { group.forEach(function (x) { var s = x === sel; x.setAttribute('aria-pressed', s ? 'true' : 'false'); on.forEach(function (c) { x.classList.toggle(c, s); }); off.forEach(function (c) { x.classList.toggle(c, !s); }); }); }
+          function render() { var ins = prem * rate / 100 * 3, pay = 250 + ins; root.querySelector('[data-ins]').textContent = fmt(ins); root.querySelector('[data-pay]').textContent = fmt(pay); root.querySelector('[data-saved]').textContent = fmt(pay - dismissal); }
+          var pb = root.querySelectorAll('[data-prem]'), rb = root.querySelectorAll('[data-rate]');
+          pb.forEach(function (b) { b.addEventListener('click', function () { prem = +b.getAttribute('data-prem'); pick(pb, b); render(); }); });
+          rb.forEach(function (b) { b.addEventListener('click', function () { rate = +b.getAttribute('data-rate'); pick(rb, b); render(); }); });
+        });
+      })();
+    </script>
   </TexasLayout>
 ) : (
   <meta http-equiv="refresh" content="0; url=/" />

@@ -1,0 +1,269 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+import StickyCta from '../../components/texas/StickyCta.astro';
+import { TEXAS_COURSE, TEXAS_PRICE_LABEL } from '../../data/texas-course';
+import reviews from '../../data/texas-reviews.json';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+const price = TEXAS_PRICE_LABEL;
+const review = reviews.find((r: any) => r.name === 'Ryan Johnson');
+
+// New page, 2026-10-06 (funnel map gap 5): the top-of-funnel entrance for "I just got a Texas ticket, what
+// now", above all the ticket-type pages. Built in the design-canvas voice and structure (lead answers then
+// opens the loop, question H2s answered in their first sentence, a picker that routes by ticket type, steps as
+// a graphic, cost cards, course band with the verified review). Facts: Tex. Transp. Code §543.006 (court in the
+// city or county of the offense; at least 10 days to appear); Tex. Code Crim. Proc. ch. 45A (dismissal and
+// deferred disposition); art. 45A.352(a)(4) (how to ask); the court-fee range from our verified court dataset.
+
+const faqs = [
+  { q: 'What should I do first after getting a ticket in Texas?', a: 'Read it. Find the court’s name and the appearance (answer) date. Then decide how to respond by that date: ask for a driving safety course, ask about deferred disposition, plead not guilty, or pay. Don’t pay by reflex, because paying is a conviction.' },
+  { q: 'How long do I have to respond to a Texas ticket?', a: 'Until the appearance date printed on it. The law requires at least 10 days from the stop (Transp. Code §543.006); most courts give 10 to 21. Respond in any way by then and nothing escalates.' },
+  { q: 'Is it bad to just pay the ticket?', a: 'Paying is a plea of guilty or no contest and a conviction on your driving record, which insurers typically price for about three years. If your ticket qualifies for a driving safety course, that route costs about the same and leaves no conviction.' },
+  { q: 'Do I have to go to court?', a: 'Usually not. Most Texas tickets are handled by mail, email, a portal or a quick visit to the clerk. Some courts want you in person to request the course; your court’s page or the clerk will say. <a href="/texas/court-appearance" class="text-primary-deep font-medium hover:underline">When you do have to appear</a>' },
+  { q: 'What if I ignore it?', a: 'The case moves on without you: a failure-to-appear charge, often a warrant, and a hold on renewing your driver license. All of it is avoidable by responding by the appearance date. <a href="/texas/missed-court-date" class="text-primary-deep font-medium hover:underline">Already missed it?</a>' },
+];
+const plain = (s: string) => s.replace(/<[^>]+>/g, '');
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org', '@type': 'Article',
+  headline: 'Just got a Texas ticket? Don’t pay it yet.',
+  description: 'The first 48 hours after a Texas traffic ticket: what to read on it, why not to pay, and which route keeps it off your record, by ticket type.',
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-10-06', dateModified: '2026-10-06',
+  mainEntityOfPage: `${siteUrl}/texas/just-got-a-ticket`,
+});
+const faqSchema = JSON.stringify({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: plain(f.a) } })) });
+
+// The picker: what kind of ticket is it? Each answer names the route and the page for it.
+const picks = [
+  { k: 'speeding', label: 'Speeding', eyebrow: 'Most common, and usually dismissible', panel: 'bg-info border-info-border', eye: 'text-primary-deep',
+    headline: 'Under 25 over and under 95 mph? You can likely dismiss it with a course.',
+    body: 'Ask your court for a driving safety course by the appearance date, finish the 6-hour course, send the certificate. At 25+ over or 95+, the course is out but deferred disposition usually isn’t.',
+    cta: ['/texas/speeding-ticket', 'The speeding ticket guide →'], cta2: ['/texas/speeding-25-over', '25+ over? Start here'] },
+  { k: 'moving', label: 'Stop sign, red light, phone, lane, yield', eyebrow: 'Moving violations qualify too', panel: 'bg-info border-info-border', eye: 'text-primary-deep',
+    headline: 'Almost every rules-of-the-road ticket can be dismissed with the same course.',
+    body: 'Stop signs, red lights (officer-issued), texting, following too closely, failure to yield, unsafe lane change. The exceptions are a work zone with workers present, passing a school bus and leaving a crash.',
+    cta: ['/texas/other-moving-violations', 'Find your violation and its fine →'], cta2: ['/texas/stop-sign-ticket', 'Stop sign ticket'] },
+  { k: 'paper', label: 'Registration, license or insurance', eyebrow: 'A different fix', panel: 'bg-surface-muted border-border', eye: 'text-text-body',
+    headline: 'These are dismissed by fixing the problem and showing proof, not by a course.',
+    body: 'Renew the registration or license, or show you were insured that day, within the court’s window, and most courts dismiss for a small fee. A moving violation from the same stop may still qualify for the course.',
+    cta: ['/texas/expired-registration-ticket', 'Expired registration →'], cta2: ['/texas/no-insurance-ticket', 'No insurance ticket'] },
+  { k: 'lost', label: 'I lost the ticket', eyebrow: 'The date matters, not the paper', panel: 'bg-amber-50 border-amber-200', eye: 'text-amber-800',
+    headline: 'Everything on it is recoverable with your name and date of birth.',
+    body: 'Search the court’s website for the city or county where you were stopped, or call the clerk. Ask for the citation number, the charge and your appearance date, and request the course while you’re on the phone.',
+    cta: ['/texas/lost-ticket', 'How to find it →'], cta2: ['/texas/look-up-your-ticket', 'Court lookup portals'] },
+];
+
+const first48 = [
+  { n: 1, t: 'Read the ticket', b: 'Find the court’s name and the appearance date. That date is your only hard deadline, and the law gives you at least 10 days.', when: 'Today' },
+  { n: 2, t: 'Don’t pay it', b: 'Paying online is a plea and a conviction. Once it’s entered there is nothing left to dismiss.', when: 'Until you’ve chosen a route' },
+  { n: 3, t: 'Pick a route and tell the court', b: 'Driving safety course, deferred disposition, or not guilty. In person, by certified mail, or by the court’s email or portal.', when: 'By the appearance date' },
+];
+
+const options = [
+  { eyebrow: 'Best for most tickets', t: 'Dismiss it with a course', b: `Ask the court, take the ${TEXAS_COURSE.hours}-hour course within 90 days, send the certificate. The charge is dismissed and can’t be on your record.`, tag: 'Off your record', us: true, href: ['/texas/ticket-dismissal', 'How dismissal works →'] },
+  { eyebrow: 'When the course isn’t allowed', t: 'Deferred disposition', b: 'Court probation of up to 180 days. Stay clean and it’s dismissed. Works for 25+ over and for a second ticket within 12 months.', tag: 'Off your record', us: false, href: ['/texas/deferred-disposition', 'How it works →'] },
+  { eyebrow: 'If you didn’t do it', t: 'Plead not guilty', b: 'Yourself or with a lawyer. Slower, and the result isn’t certain. Usually the right call only when the facts are on your side.', tag: 'Depends on the verdict', us: false, href: ['/texas/fight-or-dismiss', 'Fight it or take the course? →'] },
+];
+
+const inter = "font-family:'Inter',sans-serif;";
+const sans = "font-family:'DM Sans',sans-serif;";
+const h2c = 'text-[28px] lg:text-[34px] font-extrabold tracking-[-0.02em] leading-[1.15] text-text m-0 mb-3';
+const wrap = 'max-w-[1080px] mx-auto px-4 sm:px-6 lg:px-8';
+const card = 'rounded-[14px] border border-border bg-white p-5 lg:p-[22px]';
+const pillOn = 'bg-primary text-white border-primary';
+const pillOff = 'bg-white text-text border-[#CBD3DF] hover:border-primary-deep';
+const link = 'text-primary hover:text-primary-deep font-medium';
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Got a Texas Traffic Ticket? What to Do in the First 48 Hours"
+    description="Don't pay it yet. Read the court and date off the ticket, then pick the route that keeps it off your record, by ticket type. Start here."
+    keywords="just got a ticket in texas, what to do after a traffic ticket texas, got a speeding ticket texas what now, texas traffic ticket options, how long to respond to a ticket texas, should i pay my ticket texas"
+    url="/texas/just-got-a-ticket"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-surface-muted pb-24 lg:pb-16 text-text" style={sans}>
+      <!-- ===== Lead ===== -->
+      <div class={wrap}>
+        <p class="text-[15px] text-text-body pt-5 m-0"><a href="/texas" class="text-text-body hover:underline">Texas</a><span class="mx-1.5">›</span><span>Just got a ticket</span></p>
+        <div class="max-w-[820px] pt-8 pb-10">
+          <h1 class="text-[36px] lg:text-[56px] font-extrabold tracking-[-0.02em] leading-[1.05] m-0 mb-5" style={inter}>Just got a Texas ticket? Don't pay it yet.</h1>
+          <p class="text-lg lg:text-[21px] leading-8 m-0 mb-4">Paying is a guilty plea, and the conviction sits on your driving record for your insurer to price for about three years. Most Texas tickets can instead be <strong>dismissed and kept off your record</strong>, and the law gives you at least 10 days to choose.</p>
+          <p class="text-lg lg:text-[21px] leading-8 m-0 mb-6">Which route is open depends on one thing: <strong>what kind of ticket it is</strong>. Here's what to do in the first 48 hours, then pick yours.</p>
+          <div class="flex flex-wrap gap-3 items-center">
+            <a href="#type" class="no-underline bg-primary hover:bg-primary-hover text-white font-bold text-[17px] px-6 py-3.5 rounded-full">What kind of ticket is it? ↓</a>
+            <a href="#options" class="font-semibold text-primary hover:text-primary-deep">Or see all three routes</a>
+          </div>
+          <p class="text-[15px] text-text-muted m-0 mt-6">By Road Ready Safety, TDLR provider {TEXAS_COURSE.providerNumber}. We run one of the approved courses and track how roughly 1,700 Texas courts handle tickets. · Checked against Tex. Transp. Code §543.006 and Tex. Code Crim. Proc. ch. 45A · Published October 6, 2026</p>
+        </div>
+      </div>
+
+      <!-- ===== First 48 hours ===== -->
+      <section id="first" class="bg-white border-y border-border scroll-mt-28">
+        <div class={`${wrap} py-12 lg:py-14`}>
+          <h2 class={h2c} style={inter}>What should you do in the first 48 hours?</h2>
+          <p class="text-base leading-7 m-0 mb-7 max-w-[780px]">Three things, and only the third one takes any effort. Nothing on this list involves paying.</p>
+          <ol class="grid grid-cols-1 md:grid-cols-3 gap-3.5 list-none p-0 m-0">
+            {first48.map((s) => (
+              <li class={`${card} flex flex-col gap-1.5`}>
+                <span class="text-[28px] font-extrabold leading-none text-primary" style={inter}>{s.n}</span>
+                <span class="font-bold text-[18px]">{s.t}</span>
+                <span class="text-base text-text-body leading-6">{s.b}</span>
+                <span class="text-sm font-bold text-amber-800 mt-auto">{s.when}</span>
+              </li>
+            ))}
+          </ol>
+          <div class="mt-5 rounded-xl border border-amber-300 bg-amber-50 p-4 max-w-[780px] leading-7"><strong>Can't find the court or the date?</strong> It's the court in the city or county where you were stopped (Transp. Code §543.006). <a href="/texas/where-is-the-citation-number" class={link}>Where things are on the ticket</a> · <a href="/texas/lost-ticket" class={link}>Lost it entirely?</a></div>
+        </div>
+      </section>
+
+      <!-- ===== Picker ===== -->
+      <section id="type" class={`${wrap} pt-16 pb-6 scroll-mt-28`} data-picker>
+        <h2 class={h2c} style={inter}>What kind of ticket is it?</h2>
+        <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">The violation on the citation decides which route is open. Pick yours.</p>
+        <div class="flex flex-wrap gap-2.5 mb-6">
+          {picks.map((p, i) => <button type="button" data-pick={p.k} aria-pressed={i === 0 ? 'true' : 'false'} class={`font-bold text-[17px] min-h-[48px] px-5 rounded-full border-2 transition-colors ${i === 0 ? pillOn : pillOff}`}>{p.label}</button>)}
+        </div>
+        {picks.map((p, i) => (
+          <div data-panel={p.k} hidden={i !== 0}>
+            <div class={`rounded-2xl border p-6 lg:p-7 max-w-[860px] flex flex-col gap-3 ${p.panel}`}>
+              <p class={`text-sm font-bold uppercase tracking-[0.06em] m-0 ${p.eye}`}>{p.eyebrow}</p>
+              <p class="text-[24px] lg:text-[26px] font-extrabold leading-[1.2] m-0" style={inter}>{p.headline}</p>
+              <p class="text-[17px] text-text-body leading-7 m-0">{p.body}</p>
+              <div class="flex flex-wrap gap-3 items-center mt-1">
+                <a href={p.cta[0]} class="no-underline bg-primary hover:bg-primary-hover text-white font-bold px-5 py-3 rounded-full">{p.cta[1]}</a>
+                <a href={p.cta2[0]} class="font-semibold text-primary hover:text-primary-deep">{p.cta2[1]}</a>
+              </div>
+            </div>
+          </div>
+        ))}
+        <p class="text-[15px] text-text-body m-0 mt-4 max-w-[780px]">On a CDL, even in your own car? The course can't dismiss it. <a href="/texas/cdl-defensive-driving" class={link}>What works for CDL drivers</a></p>
+      </section>
+
+      <!-- ===== Three routes ===== -->
+      <section id="options" class={`${wrap} pt-12 pb-6 scroll-mt-28`}>
+        <h2 class={h2c} style={inter}>What are your options?</h2>
+        <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">Three real ones. Paying isn't on the list because it's the one that puts the conviction on your record.</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {options.map((o) => (
+            <div class={`rounded-2xl p-6 flex flex-col gap-2 ${o.us ? 'bg-primary text-white' : 'bg-white border border-border'}`}>
+              <span class={`text-xs font-bold uppercase tracking-[0.06em] ${o.us ? 'text-info-border' : 'text-text-muted'}`}>{o.eyebrow}</span>
+              <span class="text-[24px] font-extrabold leading-tight" style={inter}>{o.t}</span>
+              <span class={`text-base leading-6 ${o.us ? 'text-info' : 'text-text-body'}`}>{o.b}</span>
+              <span class={`font-bold mt-auto ${o.us ? '' : 'text-primary-deep'}`}>{o.tag}</span>
+              <a href={o.href[0]} class={`font-semibold ${o.us ? 'text-white hover:underline' : 'text-primary hover:text-primary-deep'}`}>{o.href[1]}</a>
+            </div>
+          ))}
+        </div>
+        <p class="text-base text-text-body leading-7 m-0 mt-4 max-w-[780px]">Not sure which you qualify for? The dismissal guide asks four questions and tells you. <a href="/texas/ticket-dismissal#check" class={link}>Does my ticket qualify? →</a></p>
+      </section>
+
+      <!-- ===== Cost ===== -->
+      <section class={`${wrap} pt-12 pb-6`}>
+        <h2 class={h2c} style={inter}>What will it cost either way?</h2>
+        <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">About the same up front. The difference is what's on your record afterwards.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-[860px]">
+          <div class="rounded-2xl border border-border bg-white p-6">
+            <span class="text-xs font-bold uppercase tracking-[0.06em] text-text-muted">Pay the ticket</span>
+            <p class="text-[32px] font-extrabold leading-none m-0 my-2" style={inter}>$150–$300</p>
+            <p class="text-base text-text-body leading-6 m-0">Fine plus court costs for a typical moving violation. Then a conviction on your record, and insurers typically react for about three years. <a href="/texas/how-much-is-a-speeding-ticket" class={link}>Fines by violation</a></p>
+          </div>
+          <div class="rounded-2xl border-2 border-primary bg-white p-6">
+            <span class="text-xs font-bold uppercase tracking-[0.06em] text-primary-deep">Dismiss it with a course</span>
+            <p class="text-[32px] font-extrabold leading-none m-0 my-2" style={inter}>About ${144 + 12 + TEXAS_COURSE.price}</p>
+            <p class="text-base text-text-body leading-6 m-0">The court's fee (commonly $144), a $12 Type 3A record if your court asks, and the course ({price} with us, certificate included). Nothing on your record. <a href="/texas/cost" class={link}>Work out your exact total</a></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== Ignore it ===== -->
+      <section class={`${wrap} pt-12 pb-6`}>
+        <h2 class={h2c} style={inter}>What happens if you do nothing?</h2>
+        <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">The case moves on without you, and every step is more expensive than the one before.</p>
+        <ol class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-6 lg:gap-0 list-none p-0 m-0 max-w-[960px]">
+          {[
+            ['border-primary', 'Appearance date passes', 'Failure to appear can be added as a separate charge.'],
+            ['border-info-border', 'A warrant can issue', 'Many courts run warrant round-ups; a traffic stop can turn into an arrest.'],
+            ['border-amber-400', 'A hold on your license', 'An OmniBase hold blocks renewing your driver license until the case is cleared.'],
+            ['border-amber-700', 'Still fixable', 'Call the court. A judge can still allow the course before the case is finally resolved.'],
+          ].map(([c, t, b]) => <li class={`border-t-[6px] ${c} pt-4 pr-4`}><p class="font-bold m-0">{t}</p><p class="text-base text-text-body leading-6 m-0">{b}</p></li>)}
+        </ol>
+        <div class="flex flex-wrap gap-5 mt-5">
+          <a href="/texas/missed-court-date" class="font-bold text-primary hover:text-primary-deep">Missed the date already? →</a>
+          <a href="/texas/ticket-warrant" class="font-bold text-primary hover:text-primary-deep">Check for a warrant →</a>
+        </div>
+      </section>
+
+      <!-- ===== Course band ===== -->
+      <section id="course" class={`${wrap} py-14 scroll-mt-28`}>
+        <div class="rounded-3xl bg-primary-deep text-white px-6 py-12 lg:px-8 lg:py-14 flex flex-col items-center text-center gap-7">
+          <div class="flex flex-col gap-2.5 max-w-[680px]">
+            <span class="text-sm font-bold uppercase tracking-[0.08em] text-info-border">Court said yes? The course is the easy part</span>
+            <h2 class="text-[30px] lg:text-[40px] font-extrabold leading-[1.1] m-0" style={inter}>{TEXAS_COURSE.hours} hours online. {price} total. Certificate the moment you finish.</h2>
+          </div>
+          {review && (
+            <div class="rounded-[18px] bg-white text-text px-7 py-7 max-w-[640px] w-full flex flex-col gap-3">
+              <span class="text-accent text-[22px] tracking-[3px]" aria-label={`${review.rating} out of 5 stars`}>{'★'.repeat(review.rating)}</span>
+              <blockquote class="m-0 text-[19px] lg:text-[21px] font-bold leading-[1.45]" style={inter}>"{review.quote}"</blockquote>
+              <div class="flex items-center gap-3 text-left">
+                <span class="w-10 h-10 rounded-full bg-primary text-white font-bold text-[15px] flex items-center justify-center" aria-hidden="true">{review.initials}</span>
+                <span class="flex flex-col text-[15px] leading-[1.35]"><strong>{review.name}</strong><span class="text-text-muted">{review.verified ? 'Verified via Trustpilot' : 'Trustpilot'} · {review.date}</span></span>
+              </div>
+            </div>
+          )}
+          <ul class="flex flex-wrap justify-center gap-2.5 list-none p-0 m-0 max-w-[820px]">
+            {[`${price} all-in, nothing added`, `TDLR-approved · ${TEXAS_COURSE.providerNumber}`, 'Court copy the moment you finish', 'Full refund within three days of enrolling'].map((t) => <li class="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-2 text-[15px]"><span class="text-info-border font-extrabold" aria-hidden="true">✓</span>{t}</li>)}
+          </ul>
+          <div class="flex flex-col items-center gap-3">
+            <a href={enrollUrl} class="no-underline bg-white hover:bg-info text-primary-deep font-extrabold text-lg px-8 py-4 rounded-full" style={inter}>Start the {price} course →</a>
+            <a href="/texas/request-defensive-driving" class="no-underline text-white hover:underline">Haven't asked your court yet? Do that first</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== Quick answers ===== -->
+      <section class={`${wrap} pt-2 pb-6`}>
+        <h2 class={h2c} style={inter}>Quick answers</h2>
+        <div class="flex flex-col gap-3 max-w-[820px] mt-5">
+          {faqs.map((f) => <div class="rounded-xl border border-border bg-white p-5"><h3 class="font-bold text-base m-0 mb-1" style={sans}>{f.q}</h3><p class="m-0 text-text-body leading-7" set:html={f.a} /></div>)}
+        </div>
+      </section>
+
+      <!-- ===== Chips + legal ===== -->
+      <section class={`${wrap} pt-6 pb-10`}>
+        <p class="font-bold m-0 mb-2.5">Find your situation</p>
+        <div class="flex flex-wrap gap-2 mb-7">
+          {[
+            ['/texas/speeding-ticket', 'Speeding'], ['/texas/other-moving-violations', 'Other moving violations'], ['/texas/stop-sign-ticket', 'Stop sign'], ['/texas/red-light-ticket', 'Red light'], ['/texas/cell-phone-ticket', 'Cell phone'], ['/texas/school-zone-ticket', 'School zone'], ['/texas/construction-zone-ticket', 'Construction zone'], ['/texas/expired-registration-ticket', 'Expired registration'], ['/texas/no-insurance-ticket', 'No insurance'], ['/texas/lost-ticket', 'Lost the ticket'], ['/texas/look-up-your-ticket', 'Look up your ticket'], ['/texas/courts', 'Find your court'], ['/texas/under-25-ticket', 'Under 25'], ['/texas/out-of-state-driver', 'Out-of-state driver'], ['/texas/ticket-dismissal', 'The full dismissal guide'],
+          ].map(([href, t]) => <a href={href} class="no-underline bg-white border border-border rounded-full px-3.5 py-1.5 text-[15px] text-text hover:border-primary-deep">{t}</a>)}
+        </div>
+        <p class="text-[15px] text-text-muted m-0 max-w-[820px] leading-6">General information, not legal advice. Fees, forms and deadlines are set by each court; confirm with the court on your citation. Road Ready Safety is a TDLR-licensed course provider ({TEXAS_COURSE.providerNumber}), not a court. Sources: Tex. Transp. Code §543.006; Tex. Code Crim. Proc. ch. 45A (arts. 45A.301–.307, 45A.351–.359); our verified court dataset. Published October 6, 2026.</p>
+      </section>
+
+      <StickyCta afterId="first" hideAtId="course" />
+    </article>
+
+    <script is:inline>
+      (function () {
+        document.querySelectorAll('[data-picker]:not([data-armed])').forEach(function (root) {
+          root.setAttribute('data-armed', '1');
+          var on = ['bg-primary', 'text-white', 'border-primary'], off = ['bg-white', 'text-text', 'border-[#CBD3DF]', 'hover:border-primary-deep'];
+          var btns = root.querySelectorAll('[data-pick]'), panels = root.querySelectorAll('[data-panel]');
+          btns.forEach(function (b) { b.addEventListener('click', function () {
+            var k = b.getAttribute('data-pick');
+            btns.forEach(function (x) { var sel = x === b; x.setAttribute('aria-pressed', sel ? 'true' : 'false'); on.forEach(function (c) { x.classList.toggle(c, sel); }); off.forEach(function (c) { x.classList.toggle(c, !sel); }); });
+            panels.forEach(function (p) { p.hidden = p.getAttribute('data-panel') !== k; });
+          }); });
+        });
+      })();
+    </script>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

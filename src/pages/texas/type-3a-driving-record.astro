@@ -1,6 +1,7 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
 import VideoEmbed from '../../components/VideoEmbed.astro';
+import NextStepBlock from '../../components/texas/NextStepBlock.astro';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 
@@ -97,6 +98,8 @@ const faqSchema = JSON.stringify({
         <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
           <p>Three situations, and only the first is routine. <strong class="text-text">Defensive driving dismissal:</strong> the dismissal statute has the court check your record before it grants the course and again when you turn in the certificate, so almost every court asks for the certified Type 3A with your request or with your certificate (Tex. Code Crim. Proc. ch. 45A; which document, and when, is the court's call). <!-- TODO-VERIFY: cite the exact 45A article that requires presentation of the driving record with the certificate (former art. 45.0511(c)); source statutes.capitol.texas.gov CCP ch. 45A --> <strong class="text-text">Deferred disposition and occupational licenses:</strong> a judge may want the full history before granting probation, and an occupational (essential need) license petition needs a certified record. <strong class="text-text">Employers and insurers</strong> usually pull their own copy through DPS rather than asking you for one. Which record each court wants is on its page in our <a href="/texas/courts" class="text-primary-deep font-medium hover:underline">court directory</a>; the <a href="/texas/do-i-need-to-print-type-3a" class="text-primary-deep font-medium hover:underline">print-or-upload question</a> has its own answer.</p>
         </div>
+
+        <NextStepBlock page="type-3a-driving-record" lead="eligible" />
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Every Texas driver record type — and why only one works</h2>
         <div class="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 mb-4 rounded-xl border border-border">

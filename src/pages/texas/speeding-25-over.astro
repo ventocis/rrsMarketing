@@ -1,6 +1,7 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
 import VideoEmbed from '../../components/VideoEmbed.astro';
+import NextStepBlock from '../../components/texas/NextStepBlock.astro';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 
@@ -97,6 +98,8 @@ const faqSchema = JSON.stringify({
           <p>Because the dismissal statute excludes it. Texas's driving-safety-course law (Tex. Code Crim. Proc. art. 45A.352) requires the judge to grant the course for eligible tickets — but it expressly does not apply to speeding <strong class="text-text">25 mph or more over the posted limit</strong> or to driving <strong class="text-text">95 mph or more</strong> at any limit. There's no exception for the judge to grant: the right just doesn't exist at those speeds. (At 24 over, you still qualify — check the cutoff on your citation carefully. The full eligibility rules are in our <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">Texas speeding ticket guide</a>.)</p>
           <p>That matters because a paid ticket is a conviction, and a conviction at a high speed is exactly the kind insurers reprice hardest. So the goal doesn't change — keep it off your record — only the tool does.</p>
         </div>
+
+        <NextStepBlock page="speeding-25-over" lead="precourt" ineligibleNote="Cited at 25 mph or more over the limit? The course is closed to you by statute, but deferred disposition usually is not." ineligibleHref="/texas/deferred-disposition" ineligibleLabel="How deferred disposition works" />
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Option 1: Deferred disposition — the path most 25-over drivers should ask about first</h2>
         <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">

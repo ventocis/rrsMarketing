@@ -69,11 +69,11 @@ const reasons = [
 const timeline = [
   { t: 'Day 0', b: 'You’re stopped and the ticket goes missing.', c: 'border-primary' },
   { t: 'A few days later', b: 'The ticket shows up in the court’s system.', c: 'border-info-border' },
-  { t: 'Day 10 to ~21: answer date', b: 'Request defensive driving, plead or appear by this date.', c: 'border-amber-400' },
+  { t: 'Day 10 to ~21: answer date', b: 'Request defensive driving, plead or appear by this date.', c: 'border-accent' },
   { t: 'After that', b: 'Failure to appear, a possible warrant and a hold on renewing your license.', c: 'border-amber-700', href: ['/texas/missed-court-date', 'Missed it already?'] },
 ];
 
-const outfit = "font-family:'Outfit',sans-serif;";
+const outfit = "font-family:'Inter',sans-serif;"; // headings: Inter, per Jackson's design brief (2026-10-06)
 const sans = "font-family:'DM Sans',sans-serif;";
 const h2c = 'text-[28px] lg:text-[36px] font-extrabold tracking-[-0.02em] leading-[1.12] text-primary-navy m-0 mb-3';
 const wrap = 'max-w-[1080px] mx-auto px-4 sm:px-6 lg:px-8';
@@ -153,9 +153,9 @@ const pillOff = 'bg-white text-text border-border hover:border-primary-deep';
       <section class={`${wrap} pt-14 pb-4`}>
         <h2 class={h2c} style={outfit}>What do you say when you call the clerk?</h2>
         <p class="text-base text-text-body leading-7 m-0 mb-6 max-w-[780px]">Clerks handle lost tickets all the time. Have your driver license in hand and say this:</p>
-        <div class="rounded-2xl bg-surface-dark text-white p-7 lg:px-8 max-w-[780px] flex flex-col gap-3">
+        <div class="rounded-2xl bg-primary-deep text-white p-7 lg:px-8 max-w-[780px] flex flex-col gap-3">
           <p class="text-[19px] lg:text-[21px] font-bold leading-[1.45] m-0" style={outfit}>"Hi, I lost my citation from [date] in [city]. My name is [name], date of birth [DOB]. Can you tell me my citation number, the charge and my answer date? And I'd like to request a driving safety course. How do I do that?"</p>
-          <p class="text-base text-text-subtle leading-6 m-0">That last question matters. Asking for the course before your answer date is what keeps the dismissal option open.</p>
+          <p class="text-base text-info leading-6 m-0">That last question matters. Asking for the course before your answer date is what keeps the dismissal option open.</p>
         </div>
       </section>
 
@@ -193,12 +193,15 @@ const pillOff = 'bg-white text-text border-border hover:border-primary-deep';
         <h2 class={h2c} style={outfit}>Found it. Now what?</h2>
         <p class="text-base text-text-body leading-7 m-0 mb-6 max-w-[780px]">You have the same three choices as anyone with a ticket. Losing the paper didn't take any of them away.</p>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div class="rounded-2xl bg-primary text-white p-6 lg:p-[26px] flex flex-col gap-2.5">
+          <div class="rounded-2xl bg-primary text-white p-6 lg:p-[26px] flex flex-col gap-3">
             <span class="text-xs font-bold uppercase tracking-[0.06em] text-info-border">Most drivers choose this</span>
-            <span class="text-[24px] font-extrabold leading-tight" style={outfit}>Take defensive driving</span>
-            <span class="text-base text-info leading-7">Ask the court for the course, finish it online, and the ticket is dismissed and kept off your record.</span>
-            <a href="/texas/request-defensive-driving" class="mt-auto text-center no-underline bg-amber-400 hover:bg-amber-300 text-surface-dark font-extrabold px-5 py-3 rounded-xl" style={outfit}>How to request it →</a>
-            <a href={enrollUrl} class="text-center no-underline text-white text-[15px] font-semibold hover:underline">Already approved? Start the {price} course</a>
+            <span class="text-[24px] font-extrabold leading-tight" style={outfit}>Start your defensive driving course now</span>
+            <span class="text-[40px] font-extrabold leading-none" style={outfit}>{price} <span class="text-base font-semibold text-info">all-in</span></span>
+            <ul class="flex flex-col gap-1.5 list-none p-0 m-0 text-[15px] text-info">
+              {['Dismisses the ticket and keeps it off your record', `${TEXAS_COURSE.hours} hours, fully online, TDLR-approved (${TEXAS_COURSE.providerNumber})`, 'Certificate the moment you finish'].map((t) => <li class="flex gap-2"><span class="text-info-border font-extrabold" aria-hidden="true">✓</span><span>{t}</span></li>)}
+            </ul>
+            <a href={enrollUrl} class="mt-auto text-center no-underline bg-white hover:bg-info text-primary-deep font-extrabold px-5 py-3 rounded-xl" style={outfit}>Buy the course now →</a>
+            <a href="/texas/request-defensive-driving" class="text-center no-underline text-white text-[15px] font-semibold hover:underline">Haven't asked your court yet? Do that first</a>
           </div>
           <div class="rounded-2xl border border-border bg-white p-6 lg:p-[26px] flex flex-col gap-2.5">
             <span class="text-xs font-bold uppercase tracking-[0.06em] text-text-subtle">Ends it fastest</span>

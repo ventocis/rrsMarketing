@@ -1,69 +1,230 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
 import EligibilityChecker from '../../components/EligibilityChecker';
+import StickyCta from '../../components/texas/StickyCta.astro';
 import courtsData from '../../data/texas-courts.json';
-
+import { TEXAS_COURSE, TEXAS_PRICE_LABEL } from '../../data/texas-course';
+import reviews from '../../data/texas-reviews.json';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+const price = TEXAS_PRICE_LABEL;
+const review = reviews.find((r: any) => r.name === 'Ryan Johnson');
 
-const pageSchema = JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "Texas Defensive Driving Eligibility Checker",
-  "description": "Free interactive tool to check if you qualify to dismiss your Texas traffic ticket through a TDLR-approved defensive driving course.",
-  "url": "https://roadreadysafety.com/texas/eligibility-tracker",
-  "applicationCategory": "UtilityApplication",
-  "operatingSystem": "Any",
-  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-  "provider": {
-    "@type": "Organization",
-    "name": "Road Ready Safety",
-    "url": "https://roadreadysafety.com"
-  }
-});
+// Rebuilt 2026-10-06 (funnel map gap 3): the eligibility page was a 98-word tool, so it could not rank for
+// "who can take defensive driving in Texas". Now it answers first in the design-canvas voice (lead answers,
+// then opens the loop), lays out the four conditions and the exclusions, handles the three edge cases, keeps
+// the interactive checker (same React island, 293 inbound links to this URL) and ends with the court step and
+// the course. Statutes: Code Crim. Proc. art. 45A.351 (applicability: rules-of-the-road offenses; under 25 any
+// moving violation; never a CDL holder), art. 45A.352 (the four conditions, the 25-over / 95+ exclusion, late
+// requests before final disposition), art. 45A.353 (named exclusions).
 
-const breadcrumbSchema = JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://roadreadysafety.com" },
-    { "@type": "ListItem", "position": 2, "name": "Texas Defensive Driving", "item": "https://roadreadysafety.com/texas" },
-    { "@type": "ListItem", "position": 3, "name": "Eligibility Checker", "item": "https://roadreadysafety.com/texas/eligibility-tracker" }
-  ]
+const faqs = [
+  { q: 'Who can take defensive driving to dismiss a ticket in Texas?', a: 'Anyone with a valid Texas driver license or permit (active-duty military and their families can use any state’s), proof of insurance, no dismissal course in the 12 months before the offense, and an eligible moving violation, who asks the court by the appearance date on the ticket.' },
+  { q: 'Which tickets are excluded?', a: 'Speeding 25 mph or more over the limit or 95 mph and up, a work zone with workers present, passing a stopped school bus, leaving the scene of a crash, serious traffic violations as defined for commercial vehicles, and any ticket held by a CDL holder.' },
+  { q: 'I took a course last year. Can I take it again?', a: 'Only if the course you finished was more than 12 months before the date of this new offense. The clock runs from completion date to offense date, not from ticket to ticket. A judge can still allow a course inside the 12 months before the case is finally resolved, so ask. <a href="/texas/12-month-rule" class="text-primary-deep font-medium hover:underline">How the 12-month rule counts</a>' },
+  { q: 'Does eligible mean I’m approved?', a: 'No. Eligible means the law lets the court grant the course. The court still has to say yes, and you have to ask by the appearance date. Take the course before approval and the certificate usually won’t count. <a href="/texas/request-defensive-driving" class="text-primary-deep font-medium hover:underline">How to ask</a>' },
+  { q: 'What if I don’t qualify?', a: 'Deferred disposition is usually open: up to 180 days of court probation, then dismissal. It has no speed cutoff and no Texas-license rule. The exceptions are CDL holders and work-zone tickets with workers present. <a href="/texas/deferred-disposition" class="text-primary-deep font-medium hover:underline">How deferred disposition works</a>' },
+];
+const plain = (s: string) => s.replace(/<[^>]+>/g, '');
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org', '@type': 'Article',
+  headline: 'Can you take defensive driving for your Texas ticket? Most drivers can.',
+  description: 'The four conditions Texas law sets for dismissing a ticket with a driving safety course, the tickets it excludes, the three edge cases, and a four-question checker.',
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-06-11', dateModified: '2026-10-06',
+  mainEntityOfPage: `${siteUrl}/texas/eligibility-tracker`,
 });
+const appSchema = JSON.stringify({
+  '@context': 'https://schema.org', '@type': 'WebApplication',
+  name: 'Texas Defensive Driving Eligibility Checker',
+  description: 'Free interactive tool to check whether you qualify to dismiss your Texas traffic ticket through a TDLR-approved driving safety course.',
+  url: `${siteUrl}/texas/eligibility-tracker`, applicationCategory: 'UtilityApplication', operatingSystem: 'Any',
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  provider: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+});
+const faqSchema = JSON.stringify({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: plain(f.a) } })) });
+
+const need = [
+  ['A valid Texas driver license or permit', 'Active-duty military and their spouses and dependent children can use any state’s license.'],
+  ['Proof of insurance', 'Your current card listing you as a driver.'],
+  ['No dismissal course in the 12 months before this ticket', 'Counted from the day you finished that course to the day of this offense.'],
+  ['A request to the court by your appearance date', 'In person, by certified mail, or by the court’s email or portal. The course comes after the court says yes.'],
+];
+const excluded = [
+  ['Speeding 25+ over, or 95 mph and up', '/texas/speeding-25-over', 'Options at 25+ over'],
+  ['A work zone with workers present', '/texas/construction-zone-ticket', 'Construction zone guide'],
+  ['Passing a stopped school bus, or leaving the scene', '/texas/deferred-disposition', 'Deferred disposition instead'],
+  ['Holding a CDL, now or when you got the ticket', '/texas/cdl-defensive-driving', 'What works for CDL drivers'],
+];
+const edge = [
+  { eyebrow: 'Under 25', t: 'Any moving violation qualifies, and the course is usually required anyway', b: 'For drivers under 25 the law widens from rules-of-the-road offenses to every moving violation, and most courts require the course as part of any deal.', href: ['/texas/under-25-ticket', 'Under-25 guide →'] },
+  { eyebrow: 'Out-of-state license', t: 'The course needs a Texas license. Deferred disposition doesn’t.', b: 'Unless you’re active-duty military or family, an out-of-state license closes the course route. Deferred disposition has no license-state rule.', href: ['/texas/out-of-state-driver', 'Out-of-state drivers →'] },
+  { eyebrow: 'Commercial license', t: 'No course, no deferred, even in your own car', b: 'Federal anti-masking rules keep every moving violation on a CDL record. You can still take the course for an insurance discount.', href: ['/texas/cdl-defensive-driving', 'CDL guide →'] },
+];
+const steps = [
+  { n: 1, t: 'Ask the court', b: 'By the appearance date on your citation. Plea of no contest plus a request for a driving safety course.', when: 'Before anything else' },
+  { n: 2, t: 'Wait for the order', b: 'The court checks the four conditions and sends back approval with your deadline, usually 90 days.', when: 'Don’t start the course yet' },
+  { n: 3, t: 'Take the course', b: `${TEXAS_COURSE.hours} hours, online. ${price} with us, certificate the moment you finish.`, when: 'Within 90 days', us: true },
+  { n: 4, t: 'Submit and it’s dismissed', b: 'Certificate plus a $12 Type 3A record if the court asks. By law the charge can’t be on your record.', when: 'Before day 90' },
+];
+
+const inter = "font-family:'Inter',sans-serif;";
+const sans = "font-family:'DM Sans',sans-serif;";
+const h2c = 'text-[28px] lg:text-[34px] font-extrabold tracking-[-0.02em] leading-[1.15] text-text m-0 mb-3';
+const wrap = 'max-w-[1080px] mx-auto px-4 sm:px-6 lg:px-8';
+const card = 'rounded-[14px] border border-border bg-white p-5 lg:p-[22px]';
+const link = 'text-primary hover:text-primary-deep font-medium';
 ---
 
-{!isEnabled && <meta http-equiv="refresh" content="0;url=/" />}
+{isEnabled ? (
+  <TexasLayout
+    title="Who Can Take Defensive Driving in Texas? Qualify in 4 Questions"
+    description="Most Texas drivers can dismiss a ticket with the 6-hour course. The four conditions, the tickets the law excludes, and a four-question checker."
+    keywords="who can take defensive driving in texas, texas defensive driving eligibility, am i eligible for defensive driving texas, ticket dismissal eligibility texas, defensive driving requirements texas, can i take defensive driving twice in texas"
+    url="/texas/eligibility-tracker"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={appSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
 
-{isEnabled && (
-<TexasLayout breadcrumbs={false}
-  title="Texas Defensive Driving Eligibility Checker | Road Ready Safety"
-  description="Not sure if you qualify to dismiss your Texas traffic ticket? Answer a few quick questions and find out instantly — free, no sign-up required."
-  keywords="Texas defensive driving eligibility, ticket dismissal eligibility, TDLR course eligibility, Texas traffic ticket dismissal, defensive driving qualification"
-  url="/texas/eligibility-tracker"
->
-  <script type="application/ld+json" set:html={pageSchema} />
-  <script type="application/ld+json" set:html={breadcrumbSchema} />
+    <article class="bg-surface-muted pb-24 lg:pb-16 text-text" style={sans}>
+      <!-- ===== Lead ===== -->
+      <div class={wrap}>
+        <p class="text-[15px] text-text-body pt-5 m-0"><a href="/texas" class="text-text-body hover:underline">Texas</a><span class="mx-1.5">›</span><a href="/texas/ticket-dismissal" class="text-text-body hover:underline">Ticket dismissal</a><span class="mx-1.5">›</span><span>Who qualifies</span></p>
+        <div class="max-w-[820px] pt-8 pb-10">
+          <h1 class="text-[36px] lg:text-[56px] font-extrabold tracking-[-0.02em] leading-[1.05] m-0 mb-5" style={inter}>Can you take defensive driving for your Texas ticket? Most drivers can.</h1>
+          <p class="text-lg lg:text-[21px] leading-8 m-0 mb-4">If you hold a Texas license, have insurance, haven't used a dismissal course in the last 12 months, and your ticket is an ordinary moving violation, the court <strong>has to let you take the course</strong>. That's the law, not the judge's mood.</p>
+          <p class="text-lg lg:text-[21px] leading-8 m-0 mb-6">The people who get denied usually trip on one detail: the speed on the ticket, a CDL, a course from last year, or asking too late. <strong>Four questions tell you which, if any, applies to you.</strong></p>
+          <div class="flex flex-wrap gap-3 items-center">
+            <a href="#checker" class="no-underline bg-primary hover:bg-primary-hover text-white font-bold text-[17px] px-6 py-3.5 rounded-full">Does my ticket qualify? ↓</a>
+            <a href="#rules" class="font-semibold text-primary hover:text-primary-deep">Or read the rules first</a>
+          </div>
+          <p class="text-[15px] text-text-muted m-0 mt-6">By Road Ready Safety, TDLR provider {TEXAS_COURSE.providerNumber} · Checked against Tex. Code Crim. Proc. arts. 45A.351–.353 · Updated October 6, 2026</p>
+        </div>
+      </div>
 
-  <section class="py-12 lg:py-16 px-4 sm:px-6 lg:px-8 bg-surface-muted min-h-screen">
-    <div class="max-w-2xl mx-auto">
+      <!-- ===== The rules ===== -->
+      <section id="rules" class="bg-white border-y border-border scroll-mt-28">
+        <div class={`${wrap} py-12 lg:py-14`}>
+          <h2 class={h2c} style={inter}>Who qualifies, and who doesn't?</h2>
+          <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">Four conditions you have to meet (Code Crim. Proc. art. 45A.352), and a short list of tickets the law excludes outright (art. 45A.353).</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="rounded-2xl border border-info-border bg-info p-6">
+              <p class="font-bold text-[19px] m-0 mb-3">You need all four</p>
+              <ul class="flex flex-col gap-3 list-none p-0 m-0">
+                {need.map(([t, b]) => <li class="flex gap-3"><span class="text-primary-deep font-extrabold" aria-hidden="true">✓</span><span><strong>{t}.</strong> <span class="text-text-body">{b}</span></span></li>)}
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-border bg-white p-6">
+              <p class="font-bold text-[19px] m-0 mb-3">The course is ruled out for</p>
+              <ul class="flex flex-col gap-3 list-none p-0 m-0">
+                {excluded.map(([t, href, label]) => <li class="flex gap-3"><span class="text-text-muted font-extrabold" aria-hidden="true">✕</span><span><strong>{t}.</strong> <a href={href} class={link}>{label}</a></span></li>)}
+              </ul>
+              <p class="text-[15px] text-text-body m-0 mt-4">Also excluded: serious traffic violations as defined for commercial vehicles. Course ruled out? <a href="/texas/deferred-disposition" class={link}>Deferred disposition</a> usually isn't.</p>
+            </div>
+          </div>
+          <div class="mt-5 rounded-xl border border-amber-300 bg-amber-50 p-4 max-w-[780px] leading-7"><strong>Registration, license or insurance ticket?</strong> Those aren't moving violations, so the course doesn't apply. They're dismissed by fixing the problem and showing proof. <a href="/texas/expired-registration-ticket" class={link}>Registration</a> · <a href="/texas/expired-license-ticket" class={link}>License</a> · <a href="/texas/no-insurance-ticket" class={link}>Insurance</a></div>
+        </div>
+      </section>
 
-      <!-- Breadcrumb -->
-      <nav class="flex items-center gap-2 text-sm text-text-body mb-8 flex-wrap">
-        <a href="/texas" class="hover:text-text transition-colors no-underline">Texas</a>
-        <span>›</span>
-        <span class="text-text font-medium">Eligibility Checker</span>
-      </nav>
+      <!-- ===== Edge cases ===== -->
+      <section class={`${wrap} pt-16 pb-6`}>
+        <h2 class={h2c} style={inter}>What if you're under 25, from out of state, or on a CDL?</h2>
+        <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">The three situations where the general rules bend, one way or the other.</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+          {edge.map((e) => (
+            <div class={`${card} flex flex-col gap-1.5`}>
+              <span class="text-xs font-bold uppercase tracking-[0.06em] text-primary-deep">{e.eyebrow}</span>
+              <span class="font-bold text-[18px] leading-snug">{e.t}</span>
+              <span class="text-base text-text-body leading-6">{e.b}</span>
+              <a href={e.href[0]} class={`${link} mt-auto font-bold`}>{e.href[1]}</a>
+            </div>
+          ))}
+        </div>
+      </section>
 
-      <!-- React Island (owns the dynamic heading above the card) -->
-      <EligibilityChecker courts={(courtsData as any).courts} client:load />
+      <!-- ===== Checker ===== -->
+      <section id="checker" class={`${wrap} pt-12 pb-6 scroll-mt-28`}>
+        <h2 class={h2c} style={inter}>Does your ticket qualify? Four questions.</h2>
+        <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">Answer them and you'll get your route: the course, deferred disposition, or something else. If you're eligible, we'll also show your court's own instructions for asking.</p>
+        <div class="max-w-2xl">
+          <EligibilityChecker courts={(courtsData as any).courts} client:load />
+          <p class="mt-4 text-xs text-text-muted leading-relaxed">A general estimate based on the statute's conditions, for information only. Your court applies them to your citation; confirm with the clerk before you enroll.</p>
+        </div>
+      </section>
 
-      <!-- Disclaimer -->
-      <p class="mt-6 text-xs text-text-subtle text-center leading-relaxed px-2" style="font-family: 'DM Sans', sans-serif;">
-        This tool provides a general estimate based on common eligibility rules and is for informational purposes only. Always confirm with your court before enrolling — individual outcomes depend on your specific citation, court, judge, and other case factors that may not be reflected here.
-      </p>
+      <!-- ===== Eligible is not approved ===== -->
+      <section class={`${wrap} pt-12 pb-6`}>
+        <h2 class={h2c} style={inter}>Eligible isn't the same as approved. What's the difference?</h2>
+        <p class="text-base leading-7 m-0 mb-7 max-w-[780px]">Eligible means the law lets the court grant the course. Approved means the court said yes to you, in writing, with a deadline. The order below is the whole game.</p>
+        <ol class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 list-none p-0 m-0">
+          {steps.map((s) => (
+            <li class={`rounded-[14px] p-5 flex flex-col gap-1.5 ${s.us ? 'bg-primary text-white' : 'bg-white border border-border'}`}>
+              <span class={`text-[28px] font-extrabold leading-none ${s.us ? 'text-info-border' : 'text-primary'}`} style={inter}>{s.n}</span>
+              <span class="font-bold">{s.t}</span>
+              <span class={`text-[15px] leading-6 ${s.us ? 'text-info' : 'text-text-body'}`}>{s.b}</span>
+              <span class={`text-sm font-bold mt-auto ${s.us ? '' : 'text-amber-800'}`}>{s.when}</span>
+            </li>
+          ))}
+        </ol>
+        <div class="flex flex-wrap gap-5 mt-[18px]">
+          <a href="/texas/request-defensive-driving" class="font-bold text-primary hover:text-primary-deep">What to send the court, with a letter template →</a>
+          <a href="/texas/ticket-dismissal" class="font-bold text-primary hover:text-primary-deep">The full dismissal guide →</a>
+        </div>
+      </section>
 
-    </div>
-  </section>
+      <!-- ===== Course band ===== -->
+      <section id="course" class={`${wrap} py-14 scroll-mt-28`}>
+        <div class="rounded-3xl bg-primary-deep text-white px-6 py-12 lg:px-8 lg:py-14 flex flex-col items-center text-center gap-7">
+          <div class="flex flex-col gap-2.5 max-w-[680px]">
+            <span class="text-sm font-bold uppercase tracking-[0.08em] text-info-border">Court said yes? The course is the easy part</span>
+            <h2 class="text-[30px] lg:text-[40px] font-extrabold leading-[1.1] m-0" style={inter}>{TEXAS_COURSE.hours} hours online. {price} total. Certificate the moment you finish.</h2>
+          </div>
+          {review && (
+            <div class="rounded-[18px] bg-white text-text px-7 py-7 max-w-[640px] w-full flex flex-col gap-3">
+              <span class="text-accent text-[22px] tracking-[3px]" aria-label={`${review.rating} out of 5 stars`}>{'★'.repeat(review.rating)}</span>
+              <blockquote class="m-0 text-[19px] lg:text-[21px] font-bold leading-[1.45]" style={inter}>"{review.quote}"</blockquote>
+              <div class="flex items-center gap-3 text-left">
+                <span class="w-10 h-10 rounded-full bg-primary text-white font-bold text-[15px] flex items-center justify-center" aria-hidden="true">{review.initials}</span>
+                <span class="flex flex-col text-[15px] leading-[1.35]"><strong>{review.name}</strong><span class="text-text-muted">{review.verified ? 'Verified via Trustpilot' : 'Trustpilot'} · {review.date}</span></span>
+              </div>
+            </div>
+          )}
+          <ul class="flex flex-wrap justify-center gap-2.5 list-none p-0 m-0 max-w-[820px]">
+            {[`${price} all-in, nothing added`, `TDLR-approved · ${TEXAS_COURSE.providerNumber}`, 'Court copy the moment you finish', 'Full refund within three days of enrolling'].map((t) => <li class="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-2 text-[15px]"><span class="text-info-border font-extrabold" aria-hidden="true">✓</span>{t}</li>)}
+          </ul>
+          <div class="flex flex-col items-center gap-3">
+            <a href={enrollUrl} class="no-underline bg-white hover:bg-info text-primary-deep font-extrabold text-lg px-8 py-4 rounded-full" style={inter}>Start the {price} course →</a>
+            <a href="/texas/request-defensive-driving" class="no-underline text-white hover:underline">Haven't asked your court yet? Do that first</a>
+          </div>
+        </div>
+      </section>
 
-</TexasLayout>
+      <!-- ===== Quick answers ===== -->
+      <section class={`${wrap} pt-2 pb-6`}>
+        <h2 class={h2c} style={inter}>Quick answers</h2>
+        <div class="flex flex-col gap-3 max-w-[820px] mt-5">
+          {faqs.map((f) => <div class="rounded-xl border border-border bg-white p-5"><h3 class="font-bold text-base m-0 mb-1" style={sans}>{f.q}</h3><p class="m-0 text-text-body leading-7" set:html={f.a} /></div>)}
+        </div>
+      </section>
+
+      <!-- ===== Chips + legal ===== -->
+      <section class={`${wrap} pt-6 pb-10`}>
+        <p class="font-bold m-0 mb-2.5">Where to go from here</p>
+        <div class="flex flex-wrap gap-2 mb-7">
+          {[
+            ['/texas/request-defensive-driving', 'How to ask the court'], ['/texas/12-month-rule', 'The 12-month rule'], ['/texas/deferred-disposition', 'Deferred disposition'], ['/texas/speeding-25-over', '25+ over'], ['/texas/cdl-defensive-driving', 'CDL drivers'], ['/texas/out-of-state-driver', 'Out-of-state license'], ['/texas/under-25-ticket', 'Under 25'], ['/texas/other-moving-violations', 'Which violations qualify'], ['/texas/just-got-a-ticket', 'Just got a ticket?'], ['/texas/cost', 'What it all costs'],
+          ].map(([href, t]) => <a href={href} class="no-underline bg-white border border-border rounded-full px-3.5 py-1.5 text-[15px] text-text hover:border-primary-deep">{t}</a>)}
+        </div>
+        <p class="text-[15px] text-text-muted m-0 max-w-[820px] leading-6">General information, not legal advice. Eligibility is set by statute; whether and how to grant the course is applied by the court on your citation, so confirm with the clerk. Road Ready Safety is a TDLR-licensed course provider ({TEXAS_COURSE.providerNumber}), not a court. Sources: Tex. Code Crim. Proc. arts. 45A.351, 45A.352, 45A.353; 49 CFR 384.226. Last updated October 6, 2026.</p>
+      </section>
+
+      <StickyCta afterId="rules" hideAtId="course" />
+    </article>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
 )}

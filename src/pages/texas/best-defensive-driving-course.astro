@@ -1,6 +1,5 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
-import YouTubeCard from '../../components/YouTubeCard.astro';
 import StickyCta from '../../components/texas/StickyCta.astro';
 import { TEXAS_COURSE, TEXAS_PRICE_LABEL } from '../../data/texas-course';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
@@ -10,43 +9,26 @@ const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
 const floor = `$${TEXAS_COURSE.legalMinimumPrice}`;
 const price = TEXAS_PRICE_LABEL;
 
-// Rewritten 2026-10-05 as a buyer's guide (no competitor names or prices), redesigned 2026-10-07 on
-// Jackson's Dallas-mockup pattern (~/Claude/SEO/DESIGN-STANDARD.md): lead → router → the post-checkout
-// certificate charge → what differs as cards → the two-minute check as steps → same-everywhere vs
-// what-differs columns → course band → quick answers. Every fact was on the page before; nothing added.
-
-const differences = [
-  { what: 'The all-in total', check: 'The number on the final checkout screen, not the advertised one.', why: `Every approved course must cost at least ${floor}. Certificate, "processing" and premium lines are added after the advertised price on many checkouts.` },
-  { what: 'When you get the certificate', check: 'Instant download, or mailed in a week, or instant for a fee?', why: 'The court needs the certificate inside a deadline. Paying for "instant" is paying for your own deadline.' },
-  { what: 'Phone, tablet or computer', check: 'Does it save your place when you switch devices?', why: 'Six hours rarely happen in one sitting. A course that loses your place costs you time, not money.' },
-  { what: 'Text, video or audio', check: 'Which one you will actually sit through, and what the audio costs.', why: 'Same curriculum, same certificate. Some courses sell audio as a higher tier; ours is an optional $4.99 add-on. Preference, not pass or fail.' },
-  { what: 'Language', check: 'Is a Spanish version offered, and is its certificate accepted?', why: 'Texas allows approved courses in other languages; few providers offer one. The certificate dismisses the ticket the same way.' },
-  { what: 'Refunds and support', check: 'Can you get your money back before you finish? Is there a human to call?', why: 'You find this out only when something goes wrong. Read it before you pay.' },
-];
-
-const checklist = [
-  { t: 'Is it approved?', b: 'The provider is on TDLR’s license search, with a CP number you can see on the site.', href: '/texas/tdlr-approved', label: 'How to check in 30 seconds' },
-  { t: 'What is the real total?', b: 'The number on the last checkout screen, and whether it includes the certificate.', href: '/texas/cost', label: 'Every fee line explained' },
-  { t: 'When is the certificate yours?', b: 'The moment you finish, at no extra charge, or by mail in a week or more?', href: null, label: null },
-  { t: 'Does it save your place?', b: 'Across your phone and computer, so six hours can happen over several evenings.', href: '/texas/what-the-course-looks-like', label: 'What the course looks like' },
-  { t: 'Can you get a refund?', b: 'If you stop before finishing. Read the policy before you pay, not after a quiz.', href: null, label: null },
-];
+// Rebuilt 2026-10-06 from Jackson's design canvas (Dallas Page Redesign2.html, artboard 02 "How to pick a
+// course" + its search preview), implemented as the spec: his copy, section order, CTAs. Two flagged
+// deviations: the refund checkmark matches our policy (full refund within the three-day cancellation
+// window, /texas/refund), and the design has no video so the previous YouTube card is not carried over.
 
 const faqs = [
-  { q: 'What is the best defensive driving course in Texas?', a: `There is no single best course, because every TDLR-approved course teaches the same six-hour state curriculum and produces the same certificate. The best one for you is the one that is approved, charges an all-in total you can see before you pay, gives you the certificate the moment you finish, and works on the device you will use. Ours is ${price} total, certificate included, provider ${TEXAS_COURSE.providerNumber}.` },
-  { q: 'What is the cheapest defensive driving course in Texas?', a: `By law no approved course can cost less than ${floor}, so "cheapest" means an approved course at or near the floor with the certificate included and nothing added at checkout. Compare the final checkout total, not the advertised price. Ours is ${price}: the course, the instant certificate with both the court copy and the insurance copy, and no delivery, rush or processing line.` },
-  { q: 'Are all Texas defensive driving courses the same?', a: 'For the court, yes. TDLR approves every provider against the same required curriculum, every approved course is six hours, and every one issues the uniform certificate of completion. What differs is the checkout total, how and when you get the certificate, the format, the language, the refund policy and the support.' },
-  { q: 'Is there a faster Texas defensive driving course?', a: 'No. Texas requires six hours with at least five hours of instruction, and every approved online course enforces that with timers. A course promising to finish in two or three hours is either not approved or describing something other than the state driving safety course. You can spread the six hours over several days.' },
-  { q: 'Is Road Ready Safety a legitimate, court-accepted course?', a: `Yes. Road Ready Safety is TDLR-approved (provider ${TEXAS_COURSE.providerNumber}) and its certificate is accepted by Texas courts statewide for dismissal of an eligible citation. You can confirm the license on TDLR's own search before you pay; the TDLR-approved page shows the steps.` },
+  { q: 'What is the best defensive driving course in Texas?', a: 'There isn’t one best course. Every TDLR-approved course teaches the same six hours and issues the same certificate. Pick one that’s approved, shows its full price before you pay, and gives you the certificate the moment you finish.' },
+  { q: 'What is the cheapest defensive driving course in Texas?', a: `By law, no approved course can cost less than ${floor} (Tex. Educ. Code §1001.352). The cheapest real option is one near that floor with the certificate included and nothing added at checkout.` },
+  { q: 'Is there a faster course than six hours?', a: 'No. Six hours is the state rule and every approved online course enforces it with timers. A course promising two or three hours isn’t the Texas driving safety course. You can spread it over several evenings. <a href="/texas/what-the-course-looks-like" class="text-primary-deep font-medium hover:underline">Where the time goes</a>' },
+  { q: 'Is Road Ready Safety a legitimate, court-accepted course?', a: `Yes. It’s TDLR-approved (provider ${TEXAS_COURSE.providerNumber}) and accepted by Texas courts statewide for an eligible ticket. You can confirm it on TDLR’s own license search.` },
 ];
+const plain = (s: string) => s.replace(/<[^>]+>/g, '');
 
 const articleSchema = JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'Article',
-  headline: 'How to Pick the Best Texas Defensive Driving Course (and What "Cheapest" Really Means)',
-  description: 'Every TDLR-approved Texas course is six hours and issues the same certificate. The six things that actually differ, how to check a course in two minutes, what a "$25" price usually means at checkout, and what Road Ready Safety charges and includes.',
-  dateModified: '2026-10-07',
+  headline: 'Every Texas defensive driving course is the same. The price isn’t.',
+  description: 'Every TDLR-approved course dismisses the same ticket. The difference is the checkout total. How a “$25” course becomes $45, and how to spot it.',
   datePublished: '2026-06-15',
+  dateModified: '2026-10-06',
   author: { '@type': 'Organization', name: 'Road Ready Safety' },
   publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
   mainEntityOfPage: `${siteUrl}/texas/best-defensive-driving-course`,
@@ -54,174 +36,179 @@ const articleSchema = JSON.stringify({
 const faqSchema = JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
-  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: plain(f.a) } })),
 });
 
-const outfit = "font-family:'Outfit',sans-serif;";
+const same = [
+  { t: 'Same curriculum', b: 'Written by the state (16 TAC ch. 84)' },
+  { t: 'Same 6 hours', b: 'At least 5 of instruction, enforced by timers' },
+  { t: 'Same certificate', b: 'The court only sees this (Code Crim. Proc. ch. 45A)' },
+];
+const compare = [
+  { t: '1. The final total', b: 'Look at the last checkout screen, not the ad. Certificate, “processing” and premium lines get added after the advertised price.' },
+  { t: '2. When you get the certificate', b: 'Instant download, by mail next week, or instant for a fee? Your court has a deadline.' },
+  { t: '3. Whether it saves your place', b: 'Six hours rarely happen in one sitting. Switching from phone to laptop shouldn’t cost you progress.' },
+  { t: '4. Format and language', b: 'Text, video or audio, and whether there’s a Spanish version. Pick what you’ll actually sit through.' },
+  { t: '5. Refunds and a human', b: 'Can you get your money back if you stop? Is there someone to call? Read it before you pay.' },
+];
+
+const inter = "font-family:'Inter',sans-serif;";
 const sans = "font-family:'DM Sans',sans-serif;";
-const h2c = 'text-[28px] lg:text-[36px] font-extrabold tracking-[-0.02em] leading-[1.12] text-primary-navy m-0 mb-3';
-const card = 'rounded-2xl border border-border bg-white p-5 flex flex-col gap-2 no-underline text-text hover:border-primary-deep transition-colors';
+const h2c = 'text-[28px] lg:text-[34px] font-extrabold tracking-[-0.02em] leading-[1.15] text-text m-0 mb-3';
 const wrap = 'max-w-[1080px] mx-auto px-4 sm:px-6 lg:px-8';
+const card = 'rounded-[14px] border border-border bg-white p-5 lg:p-[22px]';
 ---
 
 {isEnabled ? (
   <TexasLayout
-    title="Best & Cheapest Texas Defensive Driving Course: How to Pick One (2026)"
-    description={`Every approved Texas course is six hours with the same certificate, so "best" is six checks you can make in two minutes: all-in total, certificate timing, device, format, language, refund. Ours is ${price} total.`}
-    keywords="best defensive driving course texas, cheapest defensive driving course texas, cheap defensive driving texas, easiest defensive driving course texas, how to choose a defensive driving course texas, texas defensive driving course comparison"
+    title="Best Texas Defensive Driving Course? Check the Final Price"
+    description="Every TDLR-approved course dismisses the same ticket. The difference is the checkout total. Here's how a “$25” course becomes $45, and how to spot it."
+    keywords="best defensive driving course texas, cheapest defensive driving course texas, texas defensive driving course comparison, tdlr approved defensive driving course, how to choose defensive driving course texas"
     url="/texas/best-defensive-driving-course"
   >
     <script type="application/ld+json" set:html={articleSchema} />
     <script type="application/ld+json" set:html={faqSchema} />
 
-    <article class="bg-white pb-24 lg:pb-16" style={sans}>
+    <article class="bg-surface-muted pb-24 lg:pb-16 text-text" style={sans}>
       <!-- ===== Lead ===== -->
-      <div class={`${wrap} pt-8 lg:pt-12`}>
-        <p class="text-sm text-text-body mb-6">
-          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving course</a>
-          <span class="mx-2 text-text-subtle">›</span>
-          <span class="text-text">How to pick a course</span>
-        </p>
-        <div class="max-w-[760px]">
-          <h1 class="text-[36px] lg:text-[56px] font-extrabold tracking-[-0.02em] leading-[1.05] text-primary-navy m-0 mb-5" style={outfit}>How to pick a Texas defensive driving course</h1>
-          <p class="text-lg lg:text-[21px] text-text-body leading-8 m-0 mb-3">Every TDLR-approved course teaches the same six-hour state curriculum and issues the same certificate, so any approved course dismisses an eligible ticket. <strong class="text-text">"Best" comes down to six things you can check before you pay</strong>, and "cheapest" means the total on the final checkout screen, not the number in the ad.</p>
-          <p class="text-lg lg:text-[21px] text-text-body leading-8 m-0 mb-5">We run one of these courses ({price} total, certificate included, provider {TEXAS_COURSE.providerNumber}), so read this as a seller explaining the market. The checks below work on us as well as on anyone else.</p>
-          <p class="text-sm text-text-subtle m-0">By Road Ready Safety, TDLR-licensed provider {TEXAS_COURSE.providerNumber} · Checked October 7, 2026</p>
-        </div>
-
-        <!-- ===== Router ===== -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8 mb-14">
-          <a href="#checks" class={card}>
-            <span class="text-xs font-bold uppercase tracking-[0.06em] text-amber-800">I'm comparing courses</span>
-            <span class="text-[22px] font-bold leading-tight" style={outfit}>Show me what actually differs</span>
-            <span class="text-primary-deep font-semibold">The six checks ↓</span>
-          </a>
-          <a href={enrollUrl} class="rounded-2xl border border-primary bg-primary p-5 flex flex-col gap-2 no-underline text-white hover:bg-primary-hover transition-colors">
-            <span class="text-xs font-bold uppercase tracking-[0.06em] text-info-border">The court approved me</span>
-            <span class="text-[22px] font-bold leading-tight" style={outfit}>Take the course: {price} total</span>
-            <span class="font-semibold">Start now →</span>
-          </a>
-          <a href="/texas/tdlr-approved" class={card}>
-            <span class="text-xs font-bold uppercase tracking-[0.06em] text-text-subtle">Is a course approved?</span>
-            <span class="text-[22px] font-bold leading-tight" style={outfit}>Check any provider on TDLR's search</span>
-            <span class="text-primary-deep font-semibold">30-second check →</span>
-          </a>
+      <div class={wrap}>
+        <p class="text-[15px] text-text-body pt-5 m-0"><a href="/texas" class="text-text-body hover:underline">Texas</a><span class="mx-1.5">›</span><span>How to pick a course</span></p>
+        <div class="max-w-[780px] pt-8 pb-10">
+          <h1 class="text-[36px] lg:text-[56px] font-extrabold tracking-[-0.02em] leading-[1.05] m-0 mb-5" style={inter}>Every Texas defensive driving course is the same. The price isn't.</h1>
+          <p class="text-lg lg:text-[21px] leading-8 m-0 mb-4">Any TDLR-approved course dismisses an eligible ticket. They all teach the same six hours and issue the same certificate. So the "best" course is the one that doesn't surprise you at the end.</p>
+          <p class="text-lg lg:text-[21px] leading-8 m-0 mb-6">And the most common surprise is a <strong>{floor} course that ends up costing $40 to $50</strong>. Here's how that happens, and the one question that stops it.</p>
+          <p class="text-[15px] text-text-muted m-0">By Road Ready Safety, TDLR provider {TEXAS_COURSE.providerNumber}. We sell one of these courses, so read this as a seller explaining the market. The checklist works on us too. · Updated October 6, 2026</p>
         </div>
       </div>
 
-      <!-- ===== The post-checkout charge ===== -->
-      <section class="bg-surface-muted border-y border-border">
+      <!-- ===== Why $25 becomes $40 ===== -->
+      <section id="price" class="bg-white border-y border-border scroll-mt-28">
         <div class={`${wrap} py-12 lg:py-14`}>
-          <h2 class={h2c} style={outfit}>What does a "{floor}" price usually mean at checkout?</h2>
-          <p class="text-base text-text-body leading-7 m-0 mb-6 max-w-[760px]">{floor} is the legal floor (Texas Education Code §1001.352, as amended by HB 3012 on September 1, 2025), so it is the number most courses advertise. It is often not the number you pay.</p>
-          <div class="rounded-2xl border-2 border-amber-300 bg-amber-50 p-6 max-w-[760px]">
-            <p class="text-sm font-semibold text-amber-900 mb-2" style={outfit}>The cost you find out about after you have paid</p>
-            <p class="text-base text-text leading-7 m-0">The most common pattern in this market works like this. The course is advertised at the {floor} legal minimum and you pay it. Then, when you finish, you learn the certificate is free only <strong>by mail, in roughly two to four weeks</strong>, and getting it <strong>as a download today costs another $15 to $25</strong>. Your court gave you a deadline, so most people pay. The "{floor} course" ends up at $40 to $50, and the extra charge arrives after the point where you could compare. We see this on several of the largest "free certificate" courses in Texas; the fee amounts change, the timing does not.</p>
-            <p class="text-base text-text leading-7 mt-3 mb-0">The question that protects you, asked before you enter a card: <strong>"When I finish, is the certificate in my hands today at no extra cost?"</strong> With us the answer is yes: {price} is the total, and the certificate downloads the moment you finish, court copy and insurance copy included.</p>
+          <h2 class={h2c} style={inter}>Why does a {floor} course end up costing $40 or more?</h2>
+          <p class="text-base leading-7 m-0 mb-7 max-w-[780px]">Because the certificate is often only free by mail, in two to four weeks. You find that out after you finish. Your court has a deadline, so you pay another $15 to $25 to download it today.</p>
+          <div class="flex flex-col gap-[22px] max-w-[820px]">
+            <div class="flex flex-col gap-2">
+              <div class="flex justify-between gap-3 text-[17px]"><span>What's advertised</span><strong>{floor}</strong></div>
+              <div class="h-[22px] rounded-md bg-[#8B95A5] w-1/2"></div>
+            </div>
+            <div class="flex flex-col gap-2">
+              <div class="flex justify-between gap-3 text-[17px]"><span>What many people pay once they need the certificate today</span><strong class="text-amber-800">$40–$50</strong></div>
+              <div class="flex h-[22px] w-full"><div class="bg-[#8B95A5] w-1/2 rounded-l-md"></div><div class="bg-accent w-1/2 rounded-r-md"></div></div>
+              <div class="text-[15px] text-amber-800 font-semibold">+ $15 to $25 certificate fee, charged after you finish</div>
+            </div>
+            <div class="flex flex-col gap-2">
+              <div class="flex justify-between gap-3 text-[17px]"><span>Road Ready Safety, certificate included</span><strong class="text-primary">{price} total</strong></div>
+              <div class="h-[22px] rounded-md bg-primary w-[56%]"></div>
+            </div>
           </div>
-          <p class="text-base text-text-body leading-7 m-0 mt-5 max-w-[760px]">Other lines that appear after the advertised price: a "processing" or legacy "state" fee, a premium version of the same course, a driving-record order at a markup. The <a href="/texas/cost" class="text-primary-deep font-medium hover:underline">cost page</a> explains each one and what to check for it.</p>
+          <div class="mt-8 rounded-[14px] bg-primary-deep text-white px-7 py-6 max-w-[820px] flex flex-col gap-1.5">
+            <span class="text-sm font-bold uppercase tracking-[0.06em] text-info-border">Ask this before you enter a card</span>
+            <p class="text-[22px] lg:text-[24px] font-bold leading-[1.3] m-0" style={inter}>"When I finish, is the certificate in my hands today at no extra cost?"</p>
+          </div>
         </div>
       </section>
 
-      <!-- ===== What differs ===== -->
-      <section id="checks" class={`${wrap} pt-12 pb-4 scroll-mt-28`}>
-        <h2 class={h2c} style={outfit}>What actually differs between approved courses?</h2>
-        <p class="text-base text-text-body leading-7 m-0 mb-6 max-w-[760px]">Six things. Each one is checkable in a minute from the provider's own site, and together they decide whether the course costs you more than the advertised number or more than one evening. Price has no effect on whether the ticket is dismissed, and neither does the brand. The court only sees the certificate.</p>
-        <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5 list-none p-0 m-0">
-          {differences.map((d, i) => (
-            <li class={`rounded-2xl border p-5 flex flex-col gap-2 ${i < 2 ? 'border-amber-300 bg-amber-50' : 'border-border bg-white'}`}>
-              <span class="font-bold text-[18px] text-text" style={outfit}>{d.what}</span>
-              <span class="text-sm text-text leading-6"><strong>Check:</strong> {d.check}</span>
-              <span class="text-sm text-text-body leading-6">{d.why}</span>
-            </li>
+      <!-- ===== All the same ===== -->
+      <section class={`${wrap} pt-16 pb-6`}>
+        <h2 class={h2c} style={inter}>Are all Texas defensive driving courses the same?</h2>
+        <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">To the court, yes. The court doesn't grade the course. It checks for a completion certificate from a TDLR-licensed provider, then dismisses the charge. No course is "more accepted" or "faster to dismiss."</p>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+          {same.map((s) => (
+            <div class={card}>
+              <p class="text-[26px] lg:text-[28px] font-extrabold text-primary leading-tight m-0 mb-1" style={inter}>{s.t}</p>
+              <p class="text-base text-text-body leading-6 m-0">{s.b}</p>
+            </div>
           ))}
-        </ul>
-      </section>
-
-      <!-- ===== Same everywhere vs differs ===== -->
-      <section class={`${wrap} pt-12 pb-4`}>
-        <h2 class={h2c} style={outfit}>Why does every approved course dismiss the same ticket?</h2>
-        <p class="text-base text-text-body leading-7 m-0 mb-6 max-w-[760px]">Because the court is not grading the course. It is checking for a uniform certificate of completion from a provider licensed by the Texas Department of Licensing and Regulation (16 Texas Administrative Code chapter 84). Under Code of Criminal Procedure chapter 45A, the court dismisses the charge when it receives that certificate and, where required, your driving record, inside the deadline it set.</p>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div class="rounded-2xl border border-border bg-white p-6">
-            <p class="font-bold text-[18px] m-0 mb-3">The same at every approved course</p>
-            <ul class="flex flex-col gap-2.5 list-none p-0 m-0 text-[17px]">
-              {['Six hours, at least five of instruction, enforced by timers', 'The TDLR-approved curriculum', 'The uniform certificate of completion', 'Acceptance by the court that approved the course'].map((t) => <li class="flex gap-3"><span class="text-green-600 font-bold" aria-hidden="true">✓</span><span>{t}</span></li>)}
-            </ul>
-          </div>
-          <div class="rounded-2xl border border-border bg-white p-6">
-            <p class="font-bold text-[18px] m-0 mb-3">What is not true of any course</p>
-            <ul class="flex flex-col gap-2.5 list-none p-0 m-0 text-[17px]">
-              {['Faster than six hours (a two- or three-hour "course" is not this course)', '"More accepted" by courts than another approved course', 'Able to approve you; only the court on your citation can'].map((t) => <li class="flex gap-3"><span class="text-text-subtle font-bold" aria-hidden="true">✕</span><span>{t}</span></li>)}
-            </ul>
-            <a href="/texas/fastest-defensive-driving-course" class="inline-block mt-4 font-bold text-primary-deep hover:underline">Where the six hours actually go →</a>
-          </div>
         </div>
-        <p class="text-base text-text-body leading-7 m-0 mt-5 max-w-[760px]">People online will tell you the best course is the one you can finish fastest. They are half right: nobody is faster, so what you are choosing is how the six hours feel and whether you can spread them over several evenings without losing your place.</p>
       </section>
 
-      <!-- ===== Five checks as steps ===== -->
-      <section id="steps" class={`${wrap} pt-12 pb-4 scroll-mt-28`}>
-        <h2 class={h2c} style={outfit}>How do you check a course in two minutes?</h2>
-        <p class="text-base text-text-body leading-7 m-0 mb-6 max-w-[760px]">Five questions, in this order, before you enter a card. The first one is the only pass-or-fail.</p>
-        <ol class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5 list-none p-0 m-0">
-          {checklist.map((s, i) => (
-            <li class={`rounded-2xl p-5 flex flex-col gap-1.5 ${i === 0 ? 'bg-primary text-white' : 'bg-white border border-border'}`}>
-              <span class={`text-[32px] font-extrabold leading-none ${i === 0 ? 'text-info-border' : 'text-primary-deep'}`} style={outfit}>{i + 1}</span>
-              <span class="font-bold text-[18px]">{s.t}</span>
-              <span class={`text-sm leading-6 ${i === 0 ? 'text-info' : 'text-text-body'}`}>{s.b}</span>
-              {s.href && <a href={s.href} class={`text-sm font-semibold mt-auto ${i === 0 ? 'text-white underline' : 'text-primary-deep hover:underline'}`}>{s.label} →</a>}
-            </li>
+      <!-- ===== What to compare ===== -->
+      <section id="checks" class={`${wrap} pt-12 pb-6 scroll-mt-28`}>
+        <h2 class={h2c} style={inter}>What should you compare instead?</h2>
+        <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">Five things, each checkable in a minute on the provider's own site.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
+          {compare.map((c) => (
+            <div class={`${card} flex flex-col gap-1.5`}>
+              <span class="font-bold text-[19px]">{c.t}</span>
+              <span class="text-base text-text-body leading-6">{c.b}</span>
+            </div>
           ))}
-        </ol>
-        <p class="text-base text-text-body leading-7 m-0 mt-5 max-w-[760px]">Look for a course provider number in the format CP followed by digits on the provider's site, then search it on TDLR's license lookup. If the number is not shown, or the search does not find it, walk away. Our number is {TEXAS_COURSE.providerNumber}. The <a href="/texas/providers" class="text-primary-deep font-medium hover:underline">provider directory</a> lists every licensed provider from TDLR's own records so you can check a name there too.</p>
+          <div class="rounded-[14px] border border-info-border bg-info p-5 lg:p-[22px] flex flex-col gap-1.5">
+            <span class="font-bold text-[19px]">Not on the list: brand or price tier</span>
+            <span class="text-base text-text-body leading-6">Neither changes whether your ticket is dismissed. The court only sees the certificate.</span>
+          </div>
+        </div>
       </section>
 
-      <!-- ===== Course band ===== -->
-      <section id="course" class={`${wrap} py-12 scroll-mt-28`}>
-        <div class="rounded-[20px] bg-surface-dark text-white p-8 lg:p-10 flex flex-wrap gap-8 items-center justify-between">
-          <div class="flex-[999_1_420px] min-w-0">
-            <p class="text-xs font-bold uppercase tracking-[0.06em] text-amber-300 m-0 mb-2">What Road Ready Safety charges and includes</p>
-            <h2 class="text-[28px] lg:text-[34px] font-extrabold tracking-[-0.02em] leading-[1.15] m-0 mb-3" style={outfit}>{price} total. Certificate the moment you finish.</h2>
-            <p class="m-0 text-info-border leading-7">The {TEXAS_COURSE.hours}-hour TDLR-approved course ({TEXAS_COURSE.providerNumber}) · unlimited quiz retakes, no final exam · instant download with the court copy and the insurance copy · saves your place across phone, tablet and computer · full refund if you stop before completing · no delivery, rush or premium fee; the Type 3A record is $12 from DPS directly. Optional audio version, $4.99, your choice.</p>
+      <!-- ===== TDLR check ===== -->
+      <section class={`${wrap} pt-12 pb-6`}>
+        <h2 class={h2c} style={inter}>How do you check a course is TDLR-approved?</h2>
+        <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">Find its provider number, then look it up on TDLR's own site. It takes 30 seconds.</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 max-w-[820px]">
+          <div class={card}>
+            <p class="text-[28px] font-extrabold text-primary leading-none m-0 mb-2" style={inter}>1</p>
+            <p class="font-bold m-0">Find the CP number on the course's site</p>
+            <p class="text-base text-text-body leading-6 m-0">"CP" followed by digits. Ours is {TEXAS_COURSE.providerNumber}.</p>
           </div>
-          <a href={enrollUrl} class="flex-[1_1_220px] text-center no-underline bg-amber-400 hover:bg-amber-300 text-surface-dark font-extrabold text-lg px-7 py-4 rounded-xl" style={outfit}>Start the {price} course →</a>
+          <div class={card}>
+            <p class="text-[28px] font-extrabold text-primary leading-none m-0 mb-2" style={inter}>2</p>
+            <p class="font-bold m-0">Search it on TDLR's license lookup</p>
+            <p class="text-base text-text-body leading-6 m-0">Not shown, or not found? Walk away. <a href="/texas/tdlr-approved" class="text-primary hover:text-primary-deep font-medium">Step-by-step search</a></p>
+          </div>
         </div>
-        <p class="text-sm text-text-body leading-6 m-0 mt-4 max-w-[760px]">Two things we do not claim: we cannot make the course shorter than six hours, and we cannot promise what your court will decide. Eligibility is set by the court and by statute; the <a href="/texas/ticket-dismissal" class="text-primary-deep font-medium hover:underline">ticket-dismissal guide</a> covers who qualifies. Taking it in Spanish is covered on the <a href="/texas/spanish" class="text-primary-deep font-medium hover:underline">Spanish page</a>, and the <a href="/texas/audio-course" class="text-primary-deep font-medium hover:underline">audio page</a> explains the add-on.</p>
-        <YouTubeCard id="jjZUVQVAXhE" title="How to Choose a Texas Driver Safety Course Without Getting Overcharged" blurb="How to pick a state-approved course and avoid paying for things the court does not need." />
+      </section>
+
+      <!-- ===== Our checklist ===== -->
+      <section id="course" class={`${wrap} pt-12 pb-12 scroll-mt-28`}>
+        <h2 class={h2c} style={inter}>How does Road Ready Safety do on the same checklist?</h2>
+        <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">{price} is the whole price. Here's what that covers, and what we won't claim.</p>
+        <div class="rounded-[20px] bg-primary-deep text-white p-7 lg:p-9 flex flex-wrap gap-8 items-center justify-between">
+          <ul class="flex-[999_1_420px] min-w-0 flex flex-col gap-3 list-none p-0 m-0 text-[17px]">
+            <li>✓&nbsp; <strong>Final total: {price}.</strong> No delivery, rush, processing or premium lines.</li>
+            <li>✓&nbsp; <strong>Certificate:</strong> instant download when you finish, court and insurance copies included.</li>
+            <li>✓&nbsp; <strong>Saves your place</strong> across phone, tablet and computer.</li>
+            <li>✓&nbsp; <strong>Unlimited quiz retakes</strong>, no final exam.</li>
+            <li>✓&nbsp; <strong>Full refund</strong> if you cancel within three days of enrolling.</li>
+            <li>✓&nbsp; <strong>TDLR provider {TEXAS_COURSE.providerNumber}.</strong> <a href="/texas/spanish" class="text-info-border hover:underline">Prefer Spanish?</a></li>
+            <li class="text-info text-base mt-1.5">What we don't claim: we can't make it shorter than six hours, and we can't promise what your court decides. Need a Type 3A record? It's $12 directly from Texas DPS, and we don't resell it.</li>
+          </ul>
+          <div class="flex-[1_1_240px] flex flex-col gap-3 justify-center">
+            <a href={enrollUrl} class="text-center no-underline bg-white hover:bg-info text-primary-deep font-extrabold text-lg px-7 py-4 rounded-full" style={inter}>Start the {price} course →</a>
+            <a href="/texas/request-defensive-driving" class="text-center no-underline text-info hover:text-white font-medium">Haven't asked your court yet? Do that first.</a>
+          </div>
+        </div>
       </section>
 
       <!-- ===== Quick answers ===== -->
       <section class={`${wrap} pt-2 pb-6`}>
-        <h2 class={h2c} style={outfit}>Quick answers</h2>
-        <div class="flex flex-col gap-3 max-w-[760px] mt-5">
+        <h2 class={h2c} style={inter}>Quick answers</h2>
+        <div class="flex flex-col gap-3 max-w-[780px] mt-5">
           {faqs.map((f) => (
             <div class="rounded-xl border border-border bg-white p-5">
-              <h3 class="font-bold text-base m-0 mb-1 text-text" style={outfit}>{f.q}</h3>
-              <p class="m-0 text-text-body leading-7">{f.a}</p>
+              <h3 class="font-bold text-base m-0 mb-1" style={sans}>{f.q}</h3>
+              <p class="m-0 text-text-body leading-7" set:html={f.a} />
             </div>
           ))}
         </div>
       </section>
 
       <!-- ===== Keep reading + legal ===== -->
-      <section class={`${wrap} pt-4 pb-10`}>
+      <section class={`${wrap} pt-6 pb-10`}>
         <p class="font-bold m-0 mb-2.5">Keep reading</p>
         <div class="flex flex-wrap gap-2.5 mb-7">
           {[
-            ['/texas/request-defensive-driving', 'How to request defensive driving from your court'],
-            ['/texas/eligibility-tracker', 'Check your eligibility'],
-            ['/texas/cost', 'What the whole dismissal costs'],
-            ['/texas/tdlr-approved', 'How to check a course is TDLR-approved'],
-            ['/texas/what-the-course-looks-like', 'What the course looks like'],
+            ['/texas/cost', 'Every fee line, explained'],
+            ['/texas/tdlr-approved', 'How to check TDLR approval'],
+            ['/texas/request-defensive-driving', 'How to request the course from your court'],
+            ['/texas/eligibility-tracker', 'Am I eligible?'],
+            ['/texas/what-the-course-looks-like', 'See inside the course'],
             ['/texas/road-ready-safety-reviews', 'What our reviewers say'],
           ].map(([href, t]) => <a href={href} class="no-underline bg-white border border-border rounded-full px-4 py-2 text-base text-text hover:border-primary-deep">{t}</a>)}
         </div>
-        <p class="text-sm text-text-subtle m-0 mb-2 max-w-[760px] leading-6">Seen a checkout that did not match its advertised price? <a href={contactUrl} class="text-primary-deep font-semibold hover:underline">Tell us</a>; it helps us keep the cost page honest.</p>
-        <p class="text-sm text-text-subtle m-0 max-w-[760px] leading-6">Road Ready Safety is a TDLR-licensed Texas driving safety provider ({TEXAS_COURSE.providerNumber}). This page is informational and not legal advice; confirm requirements with the court on your citation. Last updated October 7, 2026. Course length and curriculum per 16 TAC chapter 84; price floor per Tex. Educ. Code §1001.352 as amended by HB 3012 (eff. Sept. 1, 2025); dismissal procedure per Tex. Code Crim. Proc. ch. 45A. No provider other than Road Ready Safety is named or priced on this page.</p>
+        <p class="text-[15px] text-text-muted m-0 max-w-[780px] leading-6">Seen a checkout that didn't match its advertised price? <a href={contactUrl} class="text-text-muted underline">Tell us</a>. It keeps our cost page honest. General information, not legal advice. Sources: 16 TAC ch. 84 (curriculum and length); Tex. Educ. Code §1001.352 as amended by HB 3012, eff. Sept. 1, 2025 (price floor); Tex. Code Crim. Proc. ch. 45A (dismissal). No provider other than Road Ready Safety is named or priced on this page. Road Ready Safety is a TDLR-licensed provider ({TEXAS_COURSE.providerNumber}). Last updated October 6, 2026.</p>
       </section>
 
-      <StickyCta afterId="checks" hideAtId="course" />
+      <StickyCta afterId="price" hideAtId="course" />
     </article>
   </TexasLayout>
 ) : (

@@ -40,7 +40,7 @@ const STEP_HEADERS: Record<Exclude<Step, 'result'>, { heading: string; subtitle:
   },
   step1b: {
     heading: 'How far were you going over the speed limit?',
-    subtitle: 'Speeds 25+ mph over the limit — or 95 mph or more at any limit — lose the automatic statutory right to a course.',
+    subtitle: 'At 25 mph or more over the limit, or 95 mph or more at any limit, the law rules the course out (art. 45A.352). Deferred disposition usually stays open.',
   },
   step2: {
     heading: "Do you hold a Commercial Driver's License (CDL)?",
@@ -68,10 +68,10 @@ const RESULT_DATA: Record<
     isEligible: false,
   },
   'ineligible-speed': {
-    badge: 'Likely Not Eligible',
+    badge: 'Course Not Available',
     badgeClass: 'inline-flex items-center gap-2 bg-error-bg text-error text-sm font-semibold px-3 py-1.5 rounded-full',
-    heading: 'Speeds 25+ mph over the limit are rarely approved',
-    body: 'Texas courts have discretion to deny DSC for high-speed violations. You may still ask your court, but approval is uncommon at this speed.',
+    heading: "At 25+ over or 95+, the course is out. Deferred disposition isn't.",
+    body: 'Texas law excludes those speeds from course dismissal (Code Crim. Proc. art. 45A.352(a)(5)). Deferred disposition has no speed cutoff, so ask your court about it before your appearance date.',
     isEligible: false,
   },
   'ineligible-cdl': {
@@ -128,7 +128,7 @@ const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '#';
 const TRUST_ITEMS = [
   'Secure checkout',
   'TDLR-approved provider',
-  '100% money-back guarantee',
+  'Full refund within three days of enrolling',
   'Instant Certificate Download',
   'Compatible with any device',
 ];

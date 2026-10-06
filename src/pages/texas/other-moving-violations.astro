@@ -1,0 +1,254 @@
+---
+import TexasLayout from '../../layouts/TexasLayout.astro';
+import StickyCta from '../../components/texas/StickyCta.astro';
+import { TEXAS_COURSE, TEXAS_PRICE_LABEL } from '../../data/texas-course';
+import reviews from '../../data/texas-reviews.json';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+const price = TEXAS_PRICE_LABEL;
+const review = reviews.find((r: any) => r.name === 'Ryan Johnson');
+
+// New page, 2026-10-06 (funnel map gap 9): one page for the moving violations that had no page (following
+// too closely, failure to yield, failure to signal, unsafe lane change, unsafe speed, disregarding a traffic
+// control device, no license on you), built in the design-canvas voice: lead answers then opens the loop,
+// a violation picker, question H2s answered first, a real HTML table, cost cards, course band. Statutes read on
+// statutes.capitol.texas.gov on October 6, 2026: Code Crim. Proc. art. 45A.351 (the course applies to offenses
+// under Subtitle C, Title 7, Transp. Code, plus §472.022 and §729.001(a)(3); under 25, any moving violation;
+// never a CDL holder), art. 45A.353 (exclusions: §545.066, §§550.022–.023, serious traffic violations,
+// §542.404 work zones), Transp. Code §542.401 ($1–$200 for rules-of-the-road offenses), §542.4045
+// (failure-to-yield fines when it caused a collision), §521.025 (license on your person: up to $200, and a
+// defense if you produce a valid license in court).
+
+const violations = [
+  { k: 'following', label: 'Following too closely', law: 'Transp. Code §545.062', fine: '$1–$200', course: true, note: 'A rules-of-the-road offense, so the course applies if you’re otherwise eligible. Courts usually set the fine near the top of the range.' },
+  { k: 'yield', label: 'Failure to yield right-of-way', law: 'Transp. Code §§545.151–.156, 542.4045', fine: '$1–$200; $500–$2,000 if it caused a crash with injury, $1,000–$4,000 with serious injury', course: true, note: 'Still a rules-of-the-road offense, so the course can dismiss it. If the ticket says the failure to yield caused a collision, the fine range jumps (§542.4045), which makes dismissal worth more, not less.' },
+  { k: 'signal', label: 'Failure to signal, improper turn', law: 'Transp. Code §§545.101–.104', fine: '$1–$200', course: true, note: 'Signal at least 100 feet before turning or changing lanes. Course applies.' },
+  { k: 'lane', label: 'Unsafe lane change, not staying in one lane', law: 'Transp. Code §545.060', fine: '$1–$200', course: true, note: 'Course applies. Officers write this one often after a near-miss; the facts are also the easiest to contest if you didn’t do it.' },
+  { k: 'speedcond', label: 'Unsafe speed for conditions', law: 'Transp. Code §545.351', fine: '$1–$200', course: true, note: 'Not the same as speeding over a posted limit, so the 25-over cutoff doesn’t apply. Course applies.' },
+  { k: 'device', label: 'Disregarding a traffic control device or sign', law: 'Transp. Code §544.004', fine: '$1–$200', course: true, note: 'Covers signs and signals other than a stop sign or red light. Course applies.' },
+  { k: 'stop', label: 'Stop sign or red light', law: 'Transp. Code §§544.010, 544.007', fine: '$1–$200', course: true, note: 'Officer-issued tickets qualify. Camera tickets are civil and work differently.', href: ['/texas/stop-sign-ticket', 'Stop sign guide'], href2: ['/texas/red-light-ticket', 'Red light guide'] },
+  { k: 'phone', label: 'Texting or phone use', law: 'Transp. Code §545.4251', fine: '$25–$99 first offense; $100–$200 repeat', course: true, note: 'Course applies. The statute sets its own, lower fine range.', href: ['/texas/cell-phone-ticket', 'Cell phone ticket guide'] },
+  { k: 'license', label: 'No driver license on you', law: 'Transp. Code §521.025', fine: 'Up to $200 (more for repeats within a year)', course: false, note: 'Not a rules-of-the-road offense, so the course can’t dismiss it. It has its own out: produce a license that was valid at the time in court and it’s a defense to the charge (§521.025(d)). Many courts dismiss it at the counter for a small fee.' },
+];
+const pick0 = violations[0];
+
+const faqs = [
+  { q: 'Can defensive driving dismiss a failure to yield ticket in Texas?', a: 'Yes, if you’re otherwise eligible. Failure to yield is a rules-of-the-road offense (Transp. Code ch. 545), and the course covers that whole chapter. Ask the court by the appearance date on your ticket.' },
+  { q: 'Can I take defensive driving for following too closely or an unsafe lane change?', a: 'Yes. Both are Subtitle C offenses, which is the part of the Transportation Code the driving safety course law covers (Code Crim. Proc. art. 45A.351).' },
+  { q: 'Which moving violations can’t be dismissed with the course?', a: 'Speeding 25+ over or 95+ mph, passing a stopped school bus, leaving the scene of a crash, a work zone offense with workers present, and serious traffic violations as defined for commercial vehicles. CDL holders can’t use it for any ticket.' },
+  { q: 'Does the course cover a ticket for not having my license on me?', a: 'No. That offense is in the driver-license part of the code, not the rules of the road. Bring a license that was valid on the day to court; the law makes that a defense, and most courts dismiss it on the spot.' },
+  { q: 'How much is the fine for these tickets?', a: 'Most rules-of-the-road offenses carry a $1 to $200 fine (Transp. Code §542.401), plus court costs, so paying usually runs $150 to $300 all in. Texting has its own lower range, and failure to yield that caused a crash has a much higher one.' },
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org', '@type': 'Article',
+  headline: 'Got a Texas ticket that isn’t speeding? Most can still be dismissed.',
+  description: 'Following too closely, failure to yield, failure to signal, unsafe lane change, unsafe speed, phone use, no license on you: the fine for each, and whether the 6-hour course can dismiss it.',
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  datePublished: '2026-10-06', dateModified: '2026-10-06',
+  mainEntityOfPage: `${siteUrl}/texas/other-moving-violations`,
+});
+const faqSchema = JSON.stringify({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) });
+
+const excluded = [
+  { t: 'Speeding 25+ over, or 95+ mph', b: 'The course is out. Deferred disposition isn’t.', href: ['/texas/speeding-25-over', 'Your options at 25+ over'] },
+  { t: 'Work zone, workers present', b: 'Barred from the course and from deferred disposition. Only contesting or a reduced charge.', href: ['/texas/construction-zone-ticket', 'Construction zone guide'] },
+  { t: 'Passing a stopped school bus', b: 'Excluded by name (§545.066). Ask the court about deferred disposition.', href: ['/texas/deferred-disposition', 'How deferred works'] },
+  { t: 'Leaving the scene of a crash', b: 'Excluded by name (§§550.022–.023). These are often more than a Class C ticket; talk to a lawyer.', href: ['/texas/fight-or-dismiss', 'Fight it or not?'] },
+];
+const steps = [
+  { n: 1, t: 'Ask the court', b: 'For a driving safety course, in person, by certified mail, or by the court’s email or portal.', when: 'By the appearance date' },
+  { n: 2, t: 'Pay the court fee', b: 'Commonly $144. Plus proof of license and insurance.', when: 'When approved' },
+  { n: 3, t: 'Take the course', b: `${TEXAS_COURSE.hours} hours, online. ${price} with us, certificate included.`, when: 'Within 90 days', us: true },
+  { n: 4, t: 'Submit and it’s dismissed', b: 'Certificate plus a $12 Type 3A record if your court asks.', when: 'Before day 90' },
+];
+
+const inter = "font-family:'Inter',sans-serif;";
+const sans = "font-family:'DM Sans',sans-serif;";
+const h2c = 'text-[28px] lg:text-[34px] font-extrabold tracking-[-0.02em] leading-[1.15] text-text m-0 mb-3';
+const wrap = 'max-w-[1080px] mx-auto px-4 sm:px-6 lg:px-8';
+const card = 'rounded-[14px] border border-border bg-white p-5 lg:p-[22px]';
+const pillOn = 'bg-primary text-white border-primary';
+const pillOff = 'bg-white text-text border-[#CBD3DF] hover:border-primary-deep';
+const link = 'text-primary hover:text-primary-deep font-medium';
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title="Other Texas Moving Violations: Fines & Can You Dismiss Them?"
+    description="Following too closely, failure to yield, lane change, no signal, phone use, no license on you: the fine for each, and whether the 6-hour course dismisses it."
+    keywords="following too closely ticket texas, failure to yield ticket texas, unsafe lane change ticket texas, failure to signal ticket texas, moving violation texas fine, can defensive driving dismiss failure to yield texas, no drivers license on person ticket texas"
+    url="/texas/other-moving-violations"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-surface-muted pb-24 lg:pb-16 text-text" style={sans}>
+      <!-- ===== Lead ===== -->
+      <div class={wrap}>
+        <p class="text-[15px] text-text-body pt-5 m-0"><a href="/texas" class="text-text-body hover:underline">Texas</a><span class="mx-1.5">›</span><a href="/texas/ticket-dismissal" class="text-text-body hover:underline">Ticket dismissal</a><span class="mx-1.5">›</span><span>Other moving violations</span></p>
+        <div class="max-w-[820px] pt-8 pb-10">
+          <h1 class="text-[36px] lg:text-[56px] font-extrabold tracking-[-0.02em] leading-[1.05] m-0 mb-5" style={inter}>Got a Texas ticket that isn't speeding? Most can still be dismissed.</h1>
+          <p class="text-lg lg:text-[21px] leading-8 m-0 mb-4">Following too closely, failure to yield, a lane change, no signal, going too fast for the rain: the same <strong>6-hour course</strong> that dismisses a speeding ticket dismisses these too. The law doesn't list violations one by one. It covers a whole chapter of them.</p>
+          <p class="text-lg lg:text-[21px] leading-8 m-0 mb-6">So the question is which chapter your ticket is in. One common ticket isn't in it at all, and it has a cheaper way out. <strong>Pick your violation.</strong></p>
+          <div class="flex flex-wrap gap-3 items-center">
+            <a href="#which" class="no-underline bg-primary hover:bg-primary-hover text-white font-bold text-[17px] px-6 py-3.5 rounded-full">Find my violation ↓</a>
+            <a href="#table" class="font-semibold text-primary hover:text-primary-deep">Or see the whole table</a>
+          </div>
+          <p class="text-[15px] text-text-muted m-0 mt-6">By Road Ready Safety, TDLR provider {TEXAS_COURSE.providerNumber} · Checked against Tex. Code Crim. Proc. arts. 45A.351 and 45A.353 and Tex. Transp. Code §§542.401, 542.4045, 521.025 · Published October 6, 2026</p>
+        </div>
+      </div>
+
+      <!-- ===== Picker ===== -->
+      <section id="which" class="bg-white border-y border-border scroll-mt-28">
+        <div class={`${wrap} py-12 lg:py-14`} data-picker>
+          <h2 class={h2c} style={inter}>Which violation is on your ticket?</h2>
+          <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">Read the charge line on the citation. The fine range and whether the course applies depend on the section of law written there.</p>
+          <div class="flex flex-wrap gap-2.5 mb-6">
+            {violations.map((v, i) => <button type="button" data-pick={v.k} aria-pressed={i === 0 ? 'true' : 'false'} class={`font-bold text-base min-h-[44px] px-[18px] rounded-full border-2 transition-colors ${i === 0 ? pillOn : pillOff}`}>{v.label}</button>)}
+          </div>
+          {violations.map((v, i) => (
+            <div data-panel={v.k} hidden={i !== 0}>
+              <div class={`rounded-2xl border p-6 lg:p-7 max-w-[860px] flex flex-col gap-4 ${v.course ? 'bg-info border-info-border' : 'bg-amber-50 border-amber-200'}`}>
+                <p class="text-[24px] lg:text-[28px] font-extrabold leading-[1.2] m-0" style={inter}>{v.label}</p>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+                  <div><p class="text-sm font-bold uppercase tracking-[0.06em] text-primary-deep m-0">Fine range</p><p class="text-lg font-bold m-0">{v.fine}</p></div>
+                  <div><p class="text-sm font-bold uppercase tracking-[0.06em] text-primary-deep m-0">Defensive driving</p><p class={`text-lg font-bold m-0 ${v.course ? 'text-primary-deep' : 'text-amber-800'}`}>{v.course ? '✓ Can dismiss it' : '✕ Does not apply'}</p></div>
+                  <div><p class="text-sm font-bold uppercase tracking-[0.06em] text-primary-deep m-0">The law</p><p class="text-lg font-bold m-0">{v.law}</p></div>
+                </div>
+                <p class="text-[17px] text-text-body leading-7 m-0">{v.note}</p>
+                <div class="flex flex-wrap gap-3 items-center">
+                  {v.course
+                    ? <a href="/texas/request-defensive-driving" class="no-underline bg-primary hover:bg-primary-hover text-white font-bold px-5 py-3 rounded-full">How to ask the court →</a>
+                    : <a href="/texas/courts" class="no-underline bg-primary hover:bg-primary-hover text-white font-bold px-5 py-3 rounded-full">Find your court's number →</a>}
+                  {v.href && <a href={v.href[0]} class="font-semibold text-primary hover:text-primary-deep">{v.href[1]}</a>}
+                  {v.href2 && <a href={v.href2[0]} class="font-semibold text-primary hover:text-primary-deep">{v.href2[1]}</a>}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- ===== Why the course covers so many ===== -->
+      <section class={`${wrap} pt-16 pb-6`}>
+        <h2 class={h2c} style={inter}>Why does one course cover so many different tickets?</h2>
+        <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">Because the law names a part of the code, not a list of offenses. Code of Criminal Procedure art. 45A.351 makes the course available for any offense under the rules of the road (Transportation Code Subtitle C), with three additions and one hard exclusion.</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+          <div class={card}><p class="text-[26px] font-extrabold text-primary leading-tight m-0 mb-1" style={inter}>The rules of the road</p><p class="text-base text-text-body leading-6 m-0">Chapters 541 to 600: speed, signs, signals, lanes, turns, yielding, following distance, phones. Any of them.</p></div>
+          <div class={card}><p class="text-[26px] font-extrabold text-primary leading-tight m-0 mb-1" style={inter}>Under 25? Any moving violation</p><p class="text-base text-text-body leading-6 m-0">For drivers under 25 the law widens to every moving violation, and a course is usually required anyway. <a href="/texas/under-25-ticket" class={link}>Under-25 guide</a></p></div>
+          <div class={card}><p class="text-[26px] font-extrabold text-primary leading-tight m-0 mb-1" style={inter}>Never a CDL holder</p><p class="text-base text-text-body leading-6 m-0">If you hold a commercial license, or held one when you got the ticket, the course is out for every violation. <a href="/texas/cdl-defensive-driving" class={link}>What works instead</a></p></div>
+        </div>
+      </section>
+
+      <!-- ===== Table ===== -->
+      <section id="table" class={`${wrap} pt-12 pb-6 scroll-mt-28`}>
+        <h2 class={h2c} style={inter}>What's the fine, and does the course apply?</h2>
+        <p class="text-base leading-7 m-0 mb-5 max-w-[780px]">Fines are a statutory range; each court sets its amount inside it and adds court costs. "Yes" assumes you're otherwise eligible: a Texas license, no CDL, no course in the last 12 months.</p>
+        <div class="overflow-x-auto">
+          <table class="w-full min-w-[720px] border-collapse rounded-[14px] border border-border overflow-hidden bg-white" style="border-spacing:0;">
+            <thead><tr class="bg-[#F6F6F9] text-left"><th class="px-4 py-3 font-bold">Violation</th><th class="px-4 py-3 font-bold">Fine range</th><th class="px-4 py-3 font-bold">Course can dismiss it?</th><th class="px-4 py-3 font-bold">Law</th></tr></thead>
+            <tbody>{violations.map((v) => <tr class="border-t border-border"><th scope="row" class="px-4 py-3 font-semibold text-left">{v.label}</th><td class="px-4 py-3 text-text-body">{v.fine}</td><td class={`px-4 py-3 font-bold ${v.course ? 'text-primary-deep' : 'text-amber-800'}`}>{v.course ? '✓ Yes' : '✕ No, show your license instead'}</td><td class="px-4 py-3 text-text-body whitespace-nowrap">{v.law}</td></tr>)}</tbody>
+          </table>
+        </div>
+        <p class="text-sm text-text-muted m-0 mt-3 max-w-[780px]">The $1–$200 range is Transp. Code §542.401, the general penalty for rules-of-the-road offenses. Paying the fine plus court costs usually runs $150 to $300 all in. <a href="/texas/traffic-ticket-fines" class={link}>Every fine by violation</a></p>
+      </section>
+
+      <!-- ===== Excluded ===== -->
+      <section class={`${wrap} pt-12 pb-6`}>
+        <h2 class={h2c} style={inter}>Which moving violations can't use the course?</h2>
+        <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">Four, plus anything on a CDL. The law excludes them by name (art. 45A.353), and for three of the four deferred disposition is still open.</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+          {excluded.map((e) => <div class={`${card} flex flex-col gap-1.5`}><span class="font-bold text-[18px]">✕&nbsp; {e.t}</span><span class="text-base text-text-body leading-6">{e.b}</span><a href={e.href[0]} class={`${link} mt-auto`}>{e.href[1]} →</a></div>)}
+        </div>
+      </section>
+
+      <!-- ===== Steps ===== -->
+      <section id="steps" class={`${wrap} pt-12 pb-6 scroll-mt-28`}>
+        <h2 class={h2c} style={inter}>How do you dismiss one of these?</h2>
+        <p class="text-base leading-7 m-0 mb-7 max-w-[780px]">The same four steps as a speeding ticket. The only one with real risk is the first: ask before the appearance date on your citation.</p>
+        <ol class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 list-none p-0 m-0">
+          {steps.map((s) => (
+            <li class={`rounded-[14px] p-5 flex flex-col gap-1.5 ${s.us ? 'bg-primary text-white' : 'bg-white border border-border'}`}>
+              <span class={`text-[28px] font-extrabold leading-none ${s.us ? 'text-info-border' : 'text-primary'}`} style={inter}>{s.n}</span>
+              <span class="font-bold">{s.t}</span>
+              <span class={`text-[15px] leading-6 ${s.us ? 'text-info' : 'text-text-body'}`}>{s.b}</span>
+              <span class={`text-sm font-bold mt-auto ${s.us ? '' : 'text-amber-800'}`}>{s.when}</span>
+            </li>
+          ))}
+        </ol>
+        <div class="flex flex-wrap gap-5 mt-[18px]">
+          <a href="/texas/ticket-dismissal" class="font-bold text-primary hover:text-primary-deep">The full dismissal guide →</a>
+          <a href="/texas/cost" class="font-bold text-primary hover:text-primary-deep">What the whole thing costs →</a>
+        </div>
+      </section>
+
+      <!-- ===== Course band ===== -->
+      <section id="course" class={`${wrap} py-14 scroll-mt-28`}>
+        <div class="rounded-3xl bg-primary-deep text-white px-6 py-12 lg:px-8 lg:py-14 flex flex-col items-center text-center gap-7">
+          <div class="flex flex-col gap-2.5 max-w-[680px]">
+            <span class="text-sm font-bold uppercase tracking-[0.08em] text-info-border">Approved? The course is the easy part</span>
+            <h2 class="text-[30px] lg:text-[40px] font-extrabold leading-[1.1] m-0" style={inter}>One course for any eligible ticket. {price} total.</h2>
+          </div>
+          {review && (
+            <div class="rounded-[18px] bg-white text-text px-7 py-7 max-w-[640px] w-full flex flex-col gap-3">
+              <span class="text-accent text-[22px] tracking-[3px]" aria-label={`${review.rating} out of 5 stars`}>{'★'.repeat(review.rating)}</span>
+              <blockquote class="m-0 text-[19px] lg:text-[21px] font-bold leading-[1.45]" style={inter}>"{review.quote}"</blockquote>
+              <div class="flex items-center gap-3 text-left">
+                <span class="w-10 h-10 rounded-full bg-primary text-white font-bold text-[15px] flex items-center justify-center" aria-hidden="true">{review.initials}</span>
+                <span class="flex flex-col text-[15px] leading-[1.35]"><strong>{review.name}</strong><span class="text-text-muted">{review.verified ? 'Verified via Trustpilot' : 'Trustpilot'} · {review.date}</span></span>
+              </div>
+            </div>
+          )}
+          <ul class="flex flex-wrap justify-center gap-2.5 list-none p-0 m-0 max-w-[820px]">
+            {[`${price} all-in, nothing added`, `TDLR-approved · ${TEXAS_COURSE.providerNumber}`, 'Court copy the moment you finish', 'Full refund within three days of enrolling'].map((t) => <li class="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-2 text-[15px]"><span class="text-info-border font-extrabold" aria-hidden="true">✓</span>{t}</li>)}
+          </ul>
+          <div class="flex flex-col items-center gap-3">
+            <a href={enrollUrl} class="no-underline bg-white hover:bg-info text-primary-deep font-extrabold text-lg px-8 py-4 rounded-full" style={inter}>Start the {price} course →</a>
+            <a href="/texas/request-defensive-driving" class="no-underline text-white hover:underline">Haven't asked your court yet? Do that first</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== Quick answers ===== -->
+      <section class={`${wrap} pt-2 pb-6`}>
+        <h2 class={h2c} style={inter}>Quick answers</h2>
+        <div class="flex flex-col gap-3 max-w-[820px] mt-5">
+          {faqs.map((f) => <div class="rounded-xl border border-border bg-white p-5"><h3 class="font-bold text-base m-0 mb-1" style={sans}>{f.q}</h3><p class="m-0 text-text-body leading-7">{f.a}</p></div>)}
+        </div>
+      </section>
+
+      <!-- ===== Chips + legal ===== -->
+      <section class={`${wrap} pt-6 pb-10`}>
+        <p class="font-bold m-0 mb-2.5">Other ticket types</p>
+        <div class="flex flex-wrap gap-2 mb-7">
+          {[
+            ['/texas/speeding-ticket', 'Speeding'], ['/texas/speeding-25-over', '25+ over'], ['/texas/stop-sign-ticket', 'Stop sign'], ['/texas/red-light-ticket', 'Red light'], ['/texas/cell-phone-ticket', 'Cell phone'], ['/texas/school-zone-ticket', 'School zone'], ['/texas/construction-zone-ticket', 'Construction zone'], ['/texas/seat-belt-ticket', 'Seat belt'], ['/texas/child-seat-ticket', 'Child seat'], ['/texas/expired-license-ticket', 'Expired license'], ['/texas/expired-registration-ticket', 'Expired registration'], ['/texas/no-insurance-ticket', 'No insurance'], ['/texas/moving-vs-non-moving-violations', 'Moving vs non-moving'], ['/texas/eligibility-tracker', 'Am I eligible?'],
+          ].map(([href, t]) => <a href={href} class="no-underline bg-white border border-border rounded-full px-3.5 py-1.5 text-[15px] text-text hover:border-primary-deep">{t}</a>)}
+        </div>
+        <p class="text-[15px] text-text-muted m-0 max-w-[820px] leading-6">General information, not legal advice. Fines are set by each court inside the statutory range; confirm with the court on your citation. Road Ready Safety is a TDLR-licensed course provider ({TEXAS_COURSE.providerNumber}), not a court. Sources: Tex. Code Crim. Proc. arts. 45A.351, 45A.353; Tex. Transp. Code §§521.025, 542.401, 542.4045, 544.004, 545.060, 545.062, 545.101–.104, 545.151–.156, 545.351, 545.4251. Published October 6, 2026.</p>
+      </section>
+
+      <StickyCta afterId="which" hideAtId="course" />
+    </article>
+
+    <script is:inline>
+      (function () {
+        document.querySelectorAll('[data-picker]:not([data-armed])').forEach(function (root) {
+          root.setAttribute('data-armed', '1');
+          var on = ['bg-primary', 'text-white', 'border-primary'], off = ['bg-white', 'text-text', 'border-[#CBD3DF]', 'hover:border-primary-deep'];
+          var btns = root.querySelectorAll('[data-pick]'), panels = root.querySelectorAll('[data-panel]');
+          btns.forEach(function (b) { b.addEventListener('click', function () {
+            var k = b.getAttribute('data-pick');
+            btns.forEach(function (x) { var sel = x === b; x.setAttribute('aria-pressed', sel ? 'true' : 'false'); on.forEach(function (c) { x.classList.toggle(c, sel); }); off.forEach(function (c) { x.classList.toggle(c, !sel); }); });
+            panels.forEach(function (p) { p.hidden = p.getAttribute('data-panel') !== k; });
+          }); });
+        });
+      })();
+    </script>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

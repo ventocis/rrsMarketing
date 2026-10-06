@@ -1,6 +1,5 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
-import YouTubeCard from '../../components/YouTubeCard.astro';
 import StickyCta from '../../components/texas/StickyCta.astro';
 import { TEXAS_COURSE, TEXAS_PRICE_LABEL } from '../../data/texas-course';
 import { alternatesFor, translationsOf, langLabel } from '../../lib/i18n';
@@ -11,56 +10,81 @@ const alternates = alternatesFor('/texas/lost-ticket');
 const translations = translationsOf('/texas/lost-ticket');
 const price = TEXAS_PRICE_LABEL;
 
-// Redesigned 2026-10-07 on Jackson's Dallas-mockup pattern (~/Claude/SEO/DESIGN-STANDARD.md): lead →
-// router → "who stopped you" decides the court → the recovery steps as a graphic → what the clerk can
-// tell you / what you don't need → protect the deadline → course band → quick answers. Every fact,
-// FAQ and source from the previous version is kept; nothing added. Our #1 page by Google clicks
-// (358 in 3 months); the reader has a deadline and no paper.
+// Rebuilt 2026-10-06 to follow Jackson's design file exactly ("Dallas Page Redesign.html", artboard 06
+// + search preview 07): the lead opens the loop and closes it in the first paragraph (which court, how to
+// search, you don't need the number; the date is what matters), then "who stopped you" picker → the
+// three recovery moves → the clerk script → why you can't find it online → the timeline → the three
+// choices → quick answers. Copy is the design's, verbatim, except one Austin sentence the court's site
+// does not confirm ("check back weekly") which is softened. Checked on October 6, 2026: Tex. Transp. Code
+// §543.006 (10-day minimum; court in the municipality or county of the offense) and Austin Municipal
+// Court's public portal (search by name + DOB, driver license number, or plate).
 
 const faqs = [
-  { q: 'How do I find my traffic ticket if I lost it in Texas?', a: "Work out the jurisdiction (city officer → that city's municipal court; deputy or DPS trooper → the county JP court), then search the court's online citation portal by name and date of birth, or call the clerk with your name, DOB, and license number. The clerk can give you the citation number, charge, and answer date." },
-  { q: 'Is there a statewide ticket lookup for Texas?', a: 'No — Texas has roughly 1,700 independent municipal and JP courts and no unified citation database. Recovery is jurisdiction-first: identify the likely court from where the stop happened and who made it, then use that court\'s portal or clerk. Our court directory covers the contact details.' },
-  { q: "What if I don't remember my citation number?", a: "You don't need it — courts can find your case by name and date of birth (a driver's license number helps). The citation number speeds things up but is never the only key. The clerk will read you everything that was on the paper." },
-  { q: 'How long do I have before the lost ticket becomes a problem?', a: "The answer date on the citation — typically 10 to 21 days after the stop. Respond by then (a course request, a plea, or any appearance) and nothing is harmed by the lost paper. Miss it and the case escalates exactly as if you'd ignored it: FTA charge, possible warrant, renewal hold." },
-  { q: "The stop was yesterday and the court can't find me — why?", a: 'Citations take a few business days to be filed and entered into court systems. Wait two or three days and search again, or call then. Use the gap productively: figure out the right court and how it takes course requests, so you can act the day the case appears.' },
-  { q: 'Can I still do defensive driving with a lost ticket?', a: 'Absolutely — the option attaches to the case, not the paper. Recover the case details from the clerk, make your request by the answer date, and the path is identical: approval, course, certificate plus Type 3A record, dismissal. The paper was always just a reminder.' },
+  { q: 'Is there a statewide ticket lookup in Texas?', a: 'No. Each of Texas’s roughly 1,700 city and JP courts keeps its own records. Start with the court where you were stopped.' },
+  { q: 'Do I need my citation number?', a: 'No. Courts can find your case by name and date of birth, or by driver license number.' },
+  { q: 'Can I still take defensive driving if I lost my ticket?', a: 'Yes. The option belongs to the case, not the paper. Request it by your answer date and everything works the same.' },
+  { q: 'What if my answer date already passed?', a: 'Call the court today. A missed date can lead to a failure-to-appear charge and a license-renewal hold. <a href="/texas/missed-court-date" class="text-primary-deep font-medium hover:underline">What to do next</a>' },
 ];
+const plain = (s: string) => s.replace(/<[^>]+>/g, '');
 
 const articleSchema = JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'Article',
-  headline: "Lost the Ticket? The Deadline Didn't Get Lost With It — Here's How to Find Everything",
-  description: "Lost the citation? The deadline didn't get lost with it. How to identify which Texas court has your ticket, recover the citation number, and protect the dismissal option before the answer date passes.",
+  headline: 'Lost your Texas ticket? You can get every detail back in one call.',
+  description: 'Find your court, citation number and answer date with just your name and date of birth. What to say to the clerk, and how long you have.',
   author: { '@type': 'Organization', name: 'Road Ready Safety' },
   publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
   datePublished: '2026-06-11',
-  dateModified: '2026-10-07',
+  dateModified: '2026-10-06',
   mainEntityOfPage: `${siteUrl}/texas/lost-ticket`,
 });
 const faqSchema = JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
-  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: plain(f.a) } })),
 });
 
-const steps = [
-  { n: 1, t: 'Work out which court', b: 'Who stopped you decides it: a city officer means that city’s municipal court; a sheriff’s deputy or DPS trooper on a highway usually means the county justice of the peace court.', when: 'Today', us: false },
-  { n: 2, t: 'Search the court’s portal', b: 'Most municipal courts and many JP courts have a citation search. Search by name and date of birth; no citation number needed.', when: 'Today, if the stop was 3+ business days ago', us: false },
-  { n: 3, t: 'Call the clerk', b: 'Give your name, date of birth and driver license number. The clerk pulls the case, reads you the citation number and answer date, and tells you how to respond.', when: 'If the portal shows nothing', us: false },
-  { n: 4, t: 'Still nothing? Two backstops', b: 'Call the law-enforcement agency’s records division; they can read the citation from their copy. Weeks later, an unresolved case surfaces as an OmniBase hold on your DPS record.', when: 'Before it finds you', us: false },
+// "Who stopped you?" picker. Four answers, four result cards; the script below swaps them.
+const picks = [
+  { k: 'city', label: 'City police officer', court: 'That city’s municipal court', how: 'Search the city court’s website with your last name and date of birth. Austin, for example, lets you search by name and DOB or by license number.', href: '/texas/look-up-your-ticket' },
+  { k: 'deputy', label: 'Sheriff’s deputy or constable', court: 'A justice of the peace court in that county', how: 'Counties have several JP precincts. The one covering the area where you were stopped has your case. Call it if there’s no online search.', href: '/texas/courts' },
+  { k: 'trooper', label: 'DPS state trooper', court: 'Usually the JP court in the county where you were stopped', how: 'Trooper tickets on highways normally go to the county JP court for that stretch of road, not a city court.', href: '/texas/courts' },
+  { k: 'unsure', label: 'Not sure', court: 'Start with the city where you were stopped', how: 'Search that city’s court first. If nothing turns up, try the county’s justice of the peace courts, or call the police or sheriff’s records office.', href: '/texas/courts' },
+];
+
+const moves = [
+  { n: 1, t: 'Search online', b: 'Most city courts have a case search. Use your last name and date of birth, or your driver license number.' },
+  { n: 2, t: 'Not there? Call the clerk', b: 'They can read you the citation number, the charge and your answer date.' },
+  { n: 3, t: 'Still nothing? Call the agency', b: 'The police or sheriff’s records office has its own copy of the ticket.' },
+];
+
+const reasons = [
+  { t: 'It hasn’t been filed yet', b: 'Tickets can take days to reach the court’s system. Courts tell people to check back in a few days, or call.', tag: 'Try again in a few days', hi: false },
+  { t: 'You’re searching the wrong court', b: 'A city portal only covers that city. Tickets from a deputy or trooper usually go to a county JP court instead.', tag: 'Check who stopped you ↑', hi: false, href: '#find' },
+  { t: 'The court has no online search', b: 'Many smaller courts don’t. Texas has no statewide ticket lookup, so the phone is your search.', tag: 'Call the clerk', hi: false },
+  { t: 'Your info was entered differently', b: 'A misspelled name or swapped birth date hides the case. Search by driver license number instead.', tag: 'Try your license number', hi: false },
+  { t: 'It was a warning, not a ticket', b: 'A written warning doesn’t create a court case. Only the clerk can confirm that, so call before you assume it.', tag: 'Confirm with the clerk', hi: true },
+];
+
+const timeline = [
+  { t: 'Day 0', b: 'You’re stopped and the ticket goes missing.', c: 'border-primary' },
+  { t: 'A few days later', b: 'The ticket shows up in the court’s system.', c: 'border-info-border' },
+  { t: 'Day 10 to ~21: answer date', b: 'Request defensive driving, plead or appear by this date.', c: 'border-amber-400' },
+  { t: 'After that', b: 'Failure to appear, a possible warrant and a hold on renewing your license.', c: 'border-amber-700', href: ['/texas/missed-court-date', 'Missed it already?'] },
 ];
 
 const outfit = "font-family:'Outfit',sans-serif;";
 const sans = "font-family:'DM Sans',sans-serif;";
 const h2c = 'text-[28px] lg:text-[36px] font-extrabold tracking-[-0.02em] leading-[1.12] text-primary-navy m-0 mb-3';
-const card = 'rounded-2xl border border-border bg-white p-5 flex flex-col gap-2 no-underline text-text hover:border-primary-deep transition-colors';
 const wrap = 'max-w-[1080px] mx-auto px-4 sm:px-6 lg:px-8';
+const pillOn = 'bg-primary text-white border-primary';
+const pillOff = 'bg-white text-text border-border hover:border-primary-deep';
 ---
 
 {isEnabled ? (
   <TexasLayout
-    title="Lost Your Texas Traffic Ticket? How to Find Your Court & Citation Number"
-    description="Lost the citation? Every fact on it is recoverable in a day or two. Identify the court from who stopped you, search that court's portal by name and date of birth or call the clerk, and protect your dismissal deadline while you look."
+    title="Lost Your Texas Ticket? How to Find It Without the Number"
+    description="Find your court, citation number and answer date with just your name and date of birth. What to say to the clerk, and how long you have."
     keywords="lost traffic ticket texas, find my ticket texas, lost citation number texas, what court is my ticket texas, look up traffic ticket texas"
     url="/texas/lost-ticket"
     alternates={alternates}
@@ -84,117 +108,118 @@ const wrap = 'max-w-[1080px] mx-auto px-4 sm:px-6 lg:px-8';
             {translations.map(t => <a href={`/texas/${t.slug}`} hreflang={t.lang} lang={t.lang} class="px-2 py-0.5 rounded-full border border-border text-text-body hover:border-primary-deep no-underline">{langLabel(t.lang)}</a>)}
           </p>
         )}
-        <div class="max-w-[760px]">
-          <h1 class="text-[36px] lg:text-[56px] font-extrabold tracking-[-0.02em] leading-[1.05] text-primary-navy m-0 mb-5" style={outfit}>Lost your Texas ticket? The deadline didn't get lost with it.</h1>
-          <p class="text-lg lg:text-[21px] text-text-body leading-8 m-0 mb-3">The paper is gone, but three facts on it still run your life: <strong class="text-text">which court</strong>, <strong class="text-text">the citation number</strong>, and <strong class="text-text">the answer date</strong>, usually 10 to 21 days after the stop. Every one of them is recoverable in a day or two.</p>
-          <p class="text-lg lg:text-[21px] text-text-body leading-8 m-0 mb-5">Miss that date because the ticket went through the wash and the consequences are the same as ignoring it on purpose: a failure-to-appear charge, a possible warrant, a license-renewal hold. So the lost paper costs you a phone call. <strong class="text-text">Only the lost deadline costs you the option.</strong></p>
-          <p class="text-sm text-text-subtle m-0">By Road Ready Safety, TDLR-licensed provider {TEXAS_COURSE.providerNumber} · Procedures checked October 7, 2026</p>
-        </div>
-
-        <!-- ===== Router ===== -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8 mb-14">
-          <a href="#find" class={card}>
-            <span class="text-xs font-bold uppercase tracking-[0.06em] text-amber-800">I can't find my ticket</span>
-            <span class="text-[22px] font-bold leading-tight" style={outfit}>Find my court and my deadline</span>
-            <span class="text-primary-deep font-semibold">Start with who stopped you ↓</span>
-          </a>
-          <a href={enrollUrl} class="rounded-2xl border border-primary bg-primary p-5 flex flex-col gap-2 no-underline text-white hover:bg-primary-hover transition-colors">
-            <span class="text-xs font-bold uppercase tracking-[0.06em] text-info-border">Found it, and the court approved me</span>
-            <span class="text-[22px] font-bold leading-tight" style={outfit}>Take the course: {price} total</span>
-            <span class="font-semibold">Start now →</span>
-          </a>
-          <a href="/texas/missed-court-date" class={card}>
-            <span class="text-xs font-bold uppercase tracking-[0.06em] text-text-subtle">The date may have passed</span>
-            <span class="text-[22px] font-bold leading-tight" style={outfit}>What happens after a missed date</span>
-            <span class="text-primary-deep font-semibold">Fix it, fastest first →</span>
-          </a>
+        <div class="max-w-[780px] pb-12">
+          <h1 class="text-[36px] lg:text-[56px] font-extrabold tracking-[-0.02em] leading-[1.05] text-primary-navy m-0 mb-5" style={outfit}>Lost your Texas ticket? You can get every detail back in one call.</h1>
+          <p class="text-lg lg:text-[21px] text-text-body leading-8 m-0 mb-3">Your case is at the court in the city or county where you were stopped. Search that court's website with your <strong class="text-text">name and date of birth</strong>, or call the clerk. You don't need the citation number.</p>
+          <p class="text-lg lg:text-[21px] text-text-body leading-8 m-0 mb-5">The paper doesn't matter. The <strong class="text-text">date</strong> on it does. Courts give you at least 10 days to respond, and that clock started the day you were stopped.</p>
+          <p class="text-sm text-text-subtle m-0">By Road Ready Safety, TDLR-licensed provider {TEXAS_COURSE.providerNumber} · Checked against Tex. Transp. Code §543.006 and court lookup procedures · Updated October 6, 2026</p>
         </div>
       </div>
 
-      <!-- ===== Who stopped you ===== -->
+      <!-- ===== Which court ===== -->
       <section id="find" class="bg-surface-muted border-y border-border scroll-mt-28">
-        <div class={`${wrap} py-12 lg:py-14`}>
+        <div class={`${wrap} py-12 lg:py-14`} data-picker>
           <h2 class={h2c} style={outfit}>Which court has your ticket?</h2>
-          <p class="text-base text-text-body leading-7 m-0 mb-6 max-w-[760px]">Texas has roughly 1,700 independent municipal and JP courts and no statewide citation database, so the search is jurisdiction-first. Who stopped you narrows it to one or two courts immediately.</p>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="rounded-2xl border border-border bg-white p-6 flex flex-col gap-3">
-              <p class="text-xs font-bold uppercase tracking-[0.06em] text-primary-deep m-0">A city police officer stopped you</p>
-              <p class="text-[22px] font-bold text-text m-0 leading-tight" style={outfit}>That city's municipal court</p>
-              <p class="text-base text-text-body leading-7 m-0">Search the city's citation portal by name and date of birth, or call the clerk. The 25 largest cities' portals are on one page.</p>
-              <a href="/texas/look-up-your-ticket" class="text-primary-deep font-semibold hover:underline mt-auto">Portals for the 25 largest Texas cities →</a>
-            </div>
-            <div class="rounded-2xl border border-border bg-white p-6 flex flex-col gap-3">
-              <p class="text-xs font-bold uppercase tracking-[0.06em] text-primary-deep m-0">A sheriff's deputy or DPS trooper stopped you</p>
-              <p class="text-[22px] font-bold text-text m-0 leading-tight" style={outfit}>The county justice of the peace court</p>
-              <p class="text-base text-text-body leading-7 m-0">Highway stops outside city limits go to a JP precinct. The county plus the stretch of road usually points to one precinct; the clerk can confirm.</p>
-              <a href="/texas/courts" class="text-primary-deep font-semibold hover:underline mt-auto">Our directory of 1,700+ Texas courts, with phone numbers →</a>
-            </div>
+          <p class="text-base text-text-body leading-7 m-0 mb-6 max-w-[780px]">The one where you were stopped. Texas law requires your ticket to go to a court in the city or county where the offense happened. Who stopped you narrows it down.</p>
+          <p class="font-bold text-base m-0 mb-2.5">Who stopped you?</p>
+          <div class="flex flex-wrap gap-2.5 mb-6">
+            {picks.map((p, i) => (
+              <button type="button" data-pick={p.k} aria-pressed={i === 0 ? 'true' : 'false'} class={`font-bold text-[17px] min-h-[48px] px-[18px] rounded-full border-2 transition-colors ${i === 0 ? pillOn : pillOff}`}>{p.label}</button>
+            ))}
           </div>
-          <p class="text-sm text-text-subtle leading-6 m-0 mt-5 max-w-[760px]">Not sure which city or county? Think about the road, the agency on the officer's uniform or car, and the nearest town; then try the municipal court first and the county JP second. Clerks handle lost tickets constantly.</p>
+          {picks.map((p, i) => (
+            <div data-panel={p.k} hidden={i !== 0}>
+              <div class="rounded-2xl border border-border bg-white p-6 lg:p-7 max-w-[780px] flex flex-col gap-2.5">
+                <p class="text-sm font-bold uppercase tracking-[0.06em] text-primary-deep m-0">Your ticket is most likely at</p>
+                <p class="text-[24px] lg:text-[28px] font-extrabold leading-[1.2] text-text m-0" style={outfit}>{p.court}</p>
+                <p class="text-[17px] text-text-body leading-7 m-0">{p.how}</p>
+                <div class="mt-1"><a href={p.href} class="inline-block no-underline bg-primary hover:bg-primary-hover text-white font-bold px-5 py-3 rounded-xl">Find that court's phone and lookup →</a></div>
+              </div>
+            </div>
+          ))}
+          <ol class="grid grid-cols-1 md:grid-cols-3 gap-3.5 list-none p-0 m-0 mt-8">
+            {moves.map((m) => (
+              <li class="flex flex-col gap-1">
+                <span class="text-[28px] font-extrabold leading-none text-primary" style={outfit}>{m.n}</span>
+                <span class="font-bold text-base">{m.t}</span>
+                <span class="text-base leading-6 text-text-body">{m.b}</span>
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
 
-      <!-- ===== Steps ===== -->
-      <section id="steps" class={`${wrap} pt-14 pb-4 scroll-mt-28`}>
-        <h2 class={h2c} style={outfit}>How do you find a ticket without the ticket?</h2>
-        <p class="text-base text-text-body leading-7 m-0 mb-6 max-w-[760px]">Four moves, fastest first. Most people are done at step two.</p>
-        <ol class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 list-none p-0 m-0">
-          {steps.map((s) => (
-            <li class="rounded-2xl p-5 flex flex-col gap-1.5 bg-white border border-border">
-              <span class="text-[32px] font-extrabold leading-none text-primary-deep" style={outfit}>{s.n}</span>
-              <span class="font-bold text-[18px]">{s.t}</span>
-              <span class="text-sm leading-6 text-text-body">{s.b}</span>
-              <span class="text-sm font-bold text-amber-800 mt-auto">{s.when}</span>
+      <!-- ===== Clerk script ===== -->
+      <section class={`${wrap} pt-14 pb-4`}>
+        <h2 class={h2c} style={outfit}>What do you say when you call the clerk?</h2>
+        <p class="text-base text-text-body leading-7 m-0 mb-6 max-w-[780px]">Clerks handle lost tickets all the time. Have your driver license in hand and say this:</p>
+        <div class="rounded-2xl bg-surface-dark text-white p-7 lg:px-8 max-w-[780px] flex flex-col gap-3">
+          <p class="text-[19px] lg:text-[21px] font-bold leading-[1.45] m-0" style={outfit}>"Hi, I lost my citation from [date] in [city]. My name is [name], date of birth [DOB]. Can you tell me my citation number, the charge and my answer date? And I'd like to request a driving safety course. How do I do that?"</p>
+          <p class="text-base text-text-subtle leading-6 m-0">That last question matters. Asking for the course before your answer date is what keeps the dismissal option open.</p>
+        </div>
+      </section>
+
+      <!-- ===== Why you can't find it ===== -->
+      <section class={`${wrap} pt-12 pb-4`}>
+        <h2 class={h2c} style={outfit}>Why can't you find your ticket online?</h2>
+        <p class="text-base text-text-body leading-7 m-0 mb-6 max-w-[780px]">Usually one of five reasons, and only one of them means you're off the hook.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
+          {reasons.map((r) => (
+            <div class={`rounded-2xl border p-5 flex flex-col gap-1.5 ${r.hi ? 'bg-info border-info-border' : 'bg-white border-border'}`}>
+              <span class="font-bold text-[19px] text-text">{r.t}</span>
+              <span class="text-base leading-6 text-text-body">{r.b}</span>
+              {r.href ? <a href={r.href} class="text-[15px] font-bold text-primary-deep mt-auto no-underline hover:underline">{r.tag}</a> : <span class="text-[15px] font-bold text-primary-deep mt-auto">{r.tag}</span>}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- ===== Timeline ===== -->
+      <section class={`${wrap} pt-12 pb-4`}>
+        <h2 class={h2c} style={outfit}>How long do you have?</h2>
+        <p class="text-base text-text-body leading-7 m-0 mb-7 max-w-[780px]">At least 10 days from the stop, often up to about 21. Miss it and the case moves on without you, exactly as if you'd ignored the ticket.</p>
+        <ol class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-6 lg:gap-0 list-none p-0 m-0 max-w-[960px]">
+          {timeline.map((s) => (
+            <li class={`border-t-[6px] ${s.c} pt-4 pr-4`}>
+              <p class="font-bold text-text m-0">{s.t}</p>
+              <p class="text-base text-text-body leading-6 m-0">{s.b}{s.href && <> <a href={s.href[0]} class="text-primary-deep font-medium hover:underline">{s.href[1]}</a></>}</p>
             </li>
           ))}
         </ol>
-        <div class="mt-5 rounded-xl border border-amber-300 bg-amber-50 p-4 max-w-[760px] text-text leading-7"><strong>Stopped yesterday and the court can't find you?</strong> Citations take a few business days to be filed and entered. Try again in two or three days, and use the gap to learn how that court takes course requests, so you can act the day the case appears.</div>
       </section>
 
-      <!-- ===== What the clerk can tell you / what you don't need ===== -->
-      <section class={`${wrap} pt-12 pb-4`}>
-        <h2 class={h2c} style={outfit}>What do you need to recover, and what don't you?</h2>
-        <p class="text-base text-text-body leading-7 m-0 mb-6 max-w-[760px]">The citation number speeds things up but is never the only key. Courts find a case by name and date of birth.</p>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div class="rounded-2xl border border-border bg-white p-6">
-            <p class="font-bold text-[18px] m-0 mb-3">The clerk can tell you</p>
-            <ul class="flex flex-col gap-2.5 list-none p-0 m-0 text-[17px]">
-              {['Your citation number and the charge', 'Your answer date, the deadline that matters', 'How this court takes a driving safety course request', 'Whether you can make that request on the spot'].map((t) => <li class="flex gap-3"><span class="text-green-600 font-bold" aria-hidden="true">✓</span><span>{t}</span></li>)}
-            </ul>
+      <!-- ===== Found it. Now what? ===== -->
+      <section id="next" class={`${wrap} pt-14 pb-6 scroll-mt-28`}>
+        <h2 class={h2c} style={outfit}>Found it. Now what?</h2>
+        <p class="text-base text-text-body leading-7 m-0 mb-6 max-w-[780px]">You have the same three choices as anyone with a ticket. Losing the paper didn't take any of them away.</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="rounded-2xl bg-primary text-white p-6 lg:p-[26px] flex flex-col gap-2.5">
+            <span class="text-xs font-bold uppercase tracking-[0.06em] text-info-border">Most drivers choose this</span>
+            <span class="text-[24px] font-extrabold leading-tight" style={outfit}>Take defensive driving</span>
+            <span class="text-base text-info leading-7">Ask the court for the course, finish it online, and the ticket is dismissed and kept off your record.</span>
+            <a href="/texas/request-defensive-driving" class="mt-auto text-center no-underline bg-amber-400 hover:bg-amber-300 text-surface-dark font-extrabold px-5 py-3 rounded-xl" style={outfit}>How to request it →</a>
+            <a href={enrollUrl} class="text-center no-underline text-white text-[15px] font-semibold hover:underline">Already approved? Start the {price} course</a>
           </div>
-          <div class="rounded-2xl border border-border bg-white p-6">
-            <p class="font-bold text-[18px] m-0 mb-3">You don't need</p>
-            <ul class="flex flex-col gap-2.5 list-none p-0 m-0 text-[17px]">
-              {['The paper citation', 'The citation number, to start the search', 'Perfect information before you call', 'A new ticket: the option attaches to the case, not the paper'].map((t) => <li class="flex gap-3"><span class="text-text-subtle font-bold" aria-hidden="true">✕</span><span>{t}</span></li>)}
-            </ul>
+          <div class="rounded-2xl border border-border bg-white p-6 lg:p-[26px] flex flex-col gap-2.5">
+            <span class="text-xs font-bold uppercase tracking-[0.06em] text-text-subtle">Ends it fastest</span>
+            <span class="text-[24px] font-extrabold text-text leading-tight" style={outfit}>Pay the ticket</span>
+            <span class="text-base text-text-body leading-7">Paying is a guilty plea. The conviction goes on your record and can raise your insurance.</span>
+            <a href="/texas/should-i-pay-my-ticket-online" class="mt-auto font-bold text-primary-deep hover:underline">Compare the real cost →</a>
+          </div>
+          <div class="rounded-2xl border border-border bg-white p-6 lg:p-[26px] flex flex-col gap-2.5">
+            <span class="text-xs font-bold uppercase tracking-[0.06em] text-text-subtle">If you think it's wrong</span>
+            <span class="text-[24px] font-extrabold text-text leading-tight" style={outfit}>Contest it</span>
+            <span class="text-base text-text-body leading-7">Plead not guilty and go to trial. Takes longer, and the outcome isn't guaranteed.</span>
+            <a href="/texas/fight-or-dismiss" class="mt-auto font-bold text-primary-deep hover:underline">Your options compared →</a>
           </div>
         </div>
-      </section>
-
-      <!-- ===== Protect the deadline ===== -->
-      <section class={`${wrap} pt-12 pb-4`}>
-        <h2 class={h2c} style={outfit}>How do you protect the dismissal option while you search?</h2>
-        <p class="text-base text-text-body leading-7 m-0 mb-4 max-w-[760px]">The defensive driving request is due <strong class="text-text">on or before the answer date</strong>. If that window is closing while you hunt for the court, don't wait for perfect information. When you reach the right clerk, say you lost the citation and ask for two things: confirm the answer date, and take your course request on the spot or send the court's form that day. The request is what stops the clock.</p>
-        <p class="text-base text-text-body leading-7 m-0 max-w-[760px]">Once you have the case in hand, everything proceeds normally: <a href="/texas/request-defensive-driving" class="text-primary-deep font-medium hover:underline">request</a>, approval, course, <a href="/texas/type-3a-driving-record" class="text-primary-deep font-medium hover:underline">Type 3A record</a>, dismissal. The whole route is on the <a href="/texas/ticket-dismissal" class="text-primary-deep font-medium hover:underline">ticket-dismissal guide</a>.</p>
-      </section>
-
-      <!-- ===== Course band ===== -->
-      <section id="course" class={`${wrap} py-12 scroll-mt-28`}>
-        <div class="rounded-[20px] bg-surface-dark text-white p-8 lg:p-10 flex flex-wrap gap-8 items-center justify-between">
-          <div class="flex-[999_1_420px] min-w-0">
-            <p class="text-xs font-bold uppercase tracking-[0.06em] text-amber-300 m-0 mb-2">Found the case and the court said yes? Lock it in today.</p>
-            <h2 class="text-[28px] lg:text-[34px] font-extrabold tracking-[-0.02em] leading-[1.15] m-0 mb-3" style={outfit}>The 6-hour Texas course. {price} all-in.</h2>
-            <p class="m-0 text-info-border leading-7">TDLR-approved ({TEXAS_COURSE.providerNumber}) · Fully online · Accepted by every Texas court · Certificate downloads the moment you finish · Nothing added at checkout</p>
-          </div>
-          <a href={enrollUrl} class="flex-[1_1_220px] text-center no-underline bg-amber-400 hover:bg-amber-300 text-surface-dark font-extrabold text-lg px-7 py-4 rounded-xl" style={outfit}>Start the {price} course →</a>
-        </div>
-        <YouTubeCard id="FYfE_HmhKac" blurb="Finding your citation online when the paper is gone." />
+        <p class="text-base text-text-body leading-7 m-0 mt-4">Going 25+ mph over, on a CDL, or in a work zone with workers present? Defensive driving is off the table. <a href="/texas/speeding-25-over" class="text-primary-deep font-medium hover:underline">See what to do instead</a></p>
       </section>
 
       <!-- ===== Quick answers ===== -->
-      <section class={`${wrap} pt-2 pb-6`}>
+      <section class={`${wrap} pt-4 pb-6`}>
         <h2 class={h2c} style={outfit}>Quick answers</h2>
-        <div class="flex flex-col gap-3 max-w-[760px] mt-5">
+        <div class="flex flex-col gap-3 max-w-[780px] mt-5">
           {faqs.map((f) => (
             <div class="rounded-xl border border-border bg-white p-5">
               <h3 class="font-bold text-base m-0 mb-1 text-text" style={outfit}>{f.q}</h3>
@@ -209,19 +234,40 @@ const wrap = 'max-w-[1080px] mx-auto px-4 sm:px-6 lg:px-8';
         <p class="font-bold m-0 mb-2.5">Keep reading</p>
         <div class="flex flex-wrap gap-2.5 mb-7">
           {[
-            ['/texas/look-up-your-ticket', 'Ticket lookup portals, city by city'],
-            ['/texas/courts', 'Every Texas court, with contacts'],
-            ['/texas/missed-court-date', 'Missed the date? What happens next'],
-            ['/texas/request-defensive-driving', 'How to request the course'],
-            ['/texas/ticket-dismissal', 'How ticket dismissal works'],
-            ['/texas/what-is-a-driving-safety-course', 'What a driving safety course is'],
+            ['/texas/courts', 'All 1,700+ Texas courts'],
+            ['/texas/look-up-your-ticket', 'Look up your ticket online'],
+            ['/texas/request-defensive-driving', 'Request defensive driving'],
+            ['/texas/missed-court-date', 'Missed your court date'],
+            ['/texas/type-3a-driving-record', 'Order a Type 3A record'],
           ].map(([href, t]) => <a href={href} class="no-underline bg-white border border-border rounded-full px-4 py-2 text-base text-text hover:border-primary-deep">{t}</a>)}
         </div>
-        <p class="text-sm text-text-subtle m-0 max-w-[760px] leading-6">Road Ready Safety is a TDLR-licensed Texas driving safety provider ({TEXAS_COURSE.providerNumber}). This page is informational and not legal advice; procedures vary by court and judge, so confirm with the court on your citation. Last updated October 7, 2026. Verified against Tex. Code Crim. Proc. ch. 45A, Tex. Transp. Code §543.009 and ch. 706, and the published citation-search procedures of Texas municipal and JP courts.</p>
+        <p class="text-sm text-text-subtle m-0 max-w-[780px] leading-6">Road Ready Safety is a TDLR-licensed Texas driving safety provider ({TEXAS_COURSE.providerNumber}). General information, not legal advice; confirm with the court on your citation. Last updated October 6, 2026. Sources: Tex. Transp. Code §543.006 (court location and 10-day minimum); Tex. Code Crim. Proc. ch. 45A; published lookup procedures of Texas municipal and JP courts, including Austin Municipal Court.</p>
       </section>
 
-      <StickyCta afterId="find" hideAtId="course" />
+      <StickyCta afterId="find" hideAtId="next" />
     </article>
+
+    <script is:inline>
+      (function () {
+        document.querySelectorAll('[data-picker]:not([data-armed])').forEach(function (root) {
+          root.setAttribute('data-armed', '1');
+          var on = ['bg-primary', 'text-white', 'border-primary'], off = ['bg-white', 'text-text', 'border-border', 'hover:border-primary-deep'];
+          var btns = root.querySelectorAll('[data-pick]'), panels = root.querySelectorAll('[data-panel]');
+          btns.forEach(function (b) {
+            b.addEventListener('click', function () {
+              var k = b.getAttribute('data-pick');
+              btns.forEach(function (x) {
+                var sel = x === b;
+                x.setAttribute('aria-pressed', sel ? 'true' : 'false');
+                on.forEach(function (c) { x.classList.toggle(c, sel); });
+                off.forEach(function (c) { x.classList.toggle(c, !sel); });
+              });
+              panels.forEach(function (p) { p.hidden = p.getAttribute('data-panel') !== k; });
+            });
+          });
+        });
+      })();
+    </script>
   </TexasLayout>
 ) : (
   <meta http-equiv="refresh" content="0; url=/" />

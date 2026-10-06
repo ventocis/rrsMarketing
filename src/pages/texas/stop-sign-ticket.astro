@@ -1,147 +1,242 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
-import YouTubeCard from '../../components/YouTubeCard.astro';
-import NextStepBlock from '../../components/texas/NextStepBlock.astro';
+import VideoEmbed from '../../components/VideoEmbed.astro';
+import StickyCta from '../../components/texas/StickyCta.astro';
+import { TEXAS_COURSE, TEXAS_PRICE_LABEL } from '../../data/texas-course';
+import reviews from '../../data/texas-reviews.json';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
-
 const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+const price = TEXAS_PRICE_LABEL;
+const review = reviews.find((r: any) => r.name === 'Ryan Johnson');
+
+// Rebuilt 2026-10-06 from Jackson's design canvas "Stop Sign Page Redesign" (artboard + search preview),
+// implemented as the spec: his copy, order, the complete-stop cards, the "just the stop sign / plus a crash"
+// picker, the three options, four steps, course band, quick answers. Facts unchanged from the previous version
+// (Transp. Code §544.010 stop location, §542.401 $1–$200 fine range, §521.292 four-in-12-months suspension;
+// Code Crim. Proc. arts. 45A.351–.353). "Check my ticket" is worded "Does my ticket qualify?" (house rule).
+// The lead's video link points to our 0:57 four-steps video (canonical on the speeding page).
 
 const faqs = [
-  {
-    "q": "Can I take defensive driving for a stop sign ticket in Texas?",
-    "a": "Yes — failure to stop at a stop sign (§544.010) is a standard rules-of-the-road moving violation with no special exclusions, eligible under the normal conditions: valid Texas license, request by your answer date, insurance, and no dismissal course used in the 12 months before the offense."
-  },
-  {
-    "q": "What counts as a complete stop in Texas?",
-    "a": "Wheels fully stationary — at the marked line if there is one, otherwise before the crosswalk, otherwise before entering the intersection (§544.010). Slowing to walking speed is the classic rolling stop, and it's citable. The law has no 'basically stopped' category."
-  },
-  {
-    "q": "How much is a stop sign ticket in Texas?",
-    "a": "The fine is set locally within the $1–$200 statutory range for rules-of-the-road offenses, plus court costs — typically landing around $200–$275 all-in if you pay it. The conviction's three years of insurance impact usually costs more than the ticket itself."
-  },
-  {
-    "q": "Does a stop sign ticket affect insurance?",
-    "a": "A conviction does — insurers rate failure-to-stop violations as crash-predictive, similar to red-light convictions, with typical impact around three years. A dismissal through the course never reaches your record, which is the entire argument for spending the six hours."
-  },
-  {
-    "q": "Should I fight a rolling stop ticket or just take the course?",
-    "a": "Fight it if you have real evidence — dashcam footage of a complete stop changes everything. Without evidence, it's your recollection against the officer's testimony for a coin-flip, while the course path is a near-certainty you control. Most drivers without footage are better served by the guaranteed dismissal."
-  },
-  {
-    "q": "I rolled a stop sign and got in a wreck — same analysis?",
-    "a": "No — collision changes it. Accident-related charges that often ride along (failure to stop and give information, failure to render aid) are statutorily excluded from course dismissal, and judges scrutinize crash cases harder. With a crash in the picture, talk to the clerk about what's available, and consider counsel."
-  }
+  { q: 'Can I take defensive driving for a stop sign ticket in Texas?', a: 'Yes. Failure to stop (§544.010) has no special exclusions. The normal rules apply: Texas license, insurance, ask by your answer date, no course in the last 12 months.' },
+  { q: 'How much is a stop sign ticket in Texas?', a: 'The fine is set locally within the $1–$200 range for these offenses, plus court costs. Paid, it typically lands around $200–$275.' },
+  { q: 'Does a stop sign ticket raise insurance?', a: 'A conviction usually does, for about three years. A dismissed ticket never reaches your record. <a href="/texas/ticket-insurance-impact" class="text-primary-deep font-medium hover:underline">Insurance details</a>' },
+  { q: 'Should I fight a rolling stop or take the course?', a: 'Fight it if you have dashcam footage of a full stop. Without evidence, the course is the near-certain way out.' },
+  { q: 'I rolled a stop sign and got in a crash. Same answer?', a: 'No. Charges like failing to stop and give information or render aid are excluded from the course. Call the clerk, and consider a lawyer.' },
 ];
+const plain = (s: string) => s.replace(/<[^>]+>/g, '');
 
 const articleSchema = JSON.stringify({
-  '@context': 'https://schema.org',
-  '@type': 'Article',
-  headline: "The Rolling-Stop Ticket: Texas's Most Arguable Violation Is Also One of Its Easiest to Erase",
-  description: "The rolling-stop ticket (Transp. Code §544.010) is a standard moving violation — and one of the easiest to dismiss with defensive driving. The rules, what a conviction costs, and the complete-stop law people argue about.",
+  '@context': 'https://schema.org', '@type': 'Article',
+  headline: 'Got a stop sign ticket in Texas? It’s one of the easiest to get dismissed.',
+  description: 'A rolling stop qualifies for defensive driving, which keeps it off your record. What counts as a complete stop, what it costs, when to fight it, and the four steps.',
   author: { '@type': 'Organization', name: 'Road Ready Safety' },
   publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
-  datePublished: '2026-06-11',
-  dateModified: '2026-08-04',
+  datePublished: '2026-06-11', dateModified: '2026-10-06',
   mainEntityOfPage: `${siteUrl}/texas/stop-sign-ticket`,
 });
+const faqSchema = JSON.stringify({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: plain(f.a) } })) });
 
-const faqSchema = JSON.stringify({
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
-});
+const picks = [
+  { k: 'bare', label: 'Just the stop sign', good: true, eyebrow: 'Textbook dismissal', title: 'You can likely get it dismissed.', body: 'No speed bars, no special exclusions. Ask your court for the course by your answer date, then take it once the court says yes.', cta: ['/texas/request-defensive-driving', 'How to ask the court →'], cta2: [enrollUrl, `Already approved? ${price} course`] },
+  { k: 'crash', label: 'Stop sign + a crash', good: false, eyebrow: 'Different situation', title: 'A crash changes the answer.', body: 'Charges that often come with it, like failing to stop and give information or render aid, are excluded from the course. Judges look harder at crash cases. Call the clerk about your options, and consider a lawyer.', cta: ['/texas/fight-or-dismiss', 'See your other options →'], cta2: ['/texas/courts', 'Find your court'] },
+];
+const steps = [
+  { n: 1, t: 'Ask the court', b: 'Don’t pay first. <a href="/texas/request-defensive-driving" class="text-primary hover:text-primary-deep font-medium">How to ask</a>', when: 'By your answer date' },
+  { n: 2, t: 'Get approved', b: 'Pay the court’s fee when it says yes.', when: '' },
+  { n: 3, t: 'Take the course', b: `${TEXAS_COURSE.hours} hours online. ${price} with us.`, when: 'Within 90 days', us: true },
+  { n: 4, t: 'Send it in', b: 'Certificate plus <a href="/texas/type-3a-driving-record" class="text-primary hover:text-primary-deep font-medium">Type 3A record</a>. Dismissed.', when: '' },
+];
+const nextSteps = [
+  ['/texas/request-defensive-driving', 'Ask the court for the course', 'With a letter template →'],
+  ['/texas/eligibility-tracker', 'Check every condition', 'Eligibility in 4 questions →'],
+  ['/texas/red-light-ticket', 'Got a red light ticket too?', 'Same idea, different rules →'],
+  ['/texas/ticket-dismissal', 'The whole process', 'Texas ticket dismissal guide →'],
+];
+
+const inter = "font-family:'Inter',sans-serif;";
+const sans = "font-family:'DM Sans',sans-serif;";
+const h2c = 'text-[28px] lg:text-[34px] font-extrabold tracking-[-0.02em] leading-[1.15] text-text m-0 mb-3';
+const wrap = 'max-w-[1080px] mx-auto px-4 sm:px-6 lg:px-8';
+const pillOn = 'bg-primary text-white border-primary';
+const pillOff = 'bg-white text-text border-[#CBD3DF] hover:border-primary-deep';
+const link = 'text-primary hover:text-primary-deep font-medium';
 ---
 
 {isEnabled ? (
   <TexasLayout
-    title="Stop Sign Ticket in Texas: What It Costs and How to Get It Dismissed"
-    description="The rolling-stop ticket (Transp. Code §544.010) is a standard moving violation — and one of the easiest to dismiss with defensive driving. The rules, what a conviction costs, and the complete-stop law people argue about."
-    keywords="stop sign ticket texas, rolling stop ticket texas, dismiss stop sign ticket, 544.010 texas, failure to stop at stop sign texas"
+    title="Texas Stop Sign Ticket: Can You Get It Dismissed?"
+    description="Usually yes. A rolling stop qualifies for defensive driving, which keeps it off your record. What it costs, when to fight it, and the 4 steps."
+    keywords="stop sign ticket texas, rolling stop ticket texas, dismiss stop sign ticket, 544.010 texas, failure to stop at stop sign texas, how much is a stop sign ticket in texas"
     url="/texas/stop-sign-ticket"
   >
     <script type="application/ld+json" set:html={articleSchema} />
     <script type="application/ld+json" set:html={faqSchema} />
 
-    <article class="bg-white pb-16 lg:pb-24">
-      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
-
-        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
-          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving course</a>
-          <span class="mx-2 text-text-subtle">›</span>
-          <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">Speeding ticket guide</a>
-          <span class="mx-2 text-text-subtle">›</span>
-          <span class="text-text">Stop sign tickets</span>
-        </p>
-
-        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
-          The Rolling-Stop Ticket: Texas's Most Arguable Violation Is Also One of Its Easiest to Erase
-        </h1>
-
-        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
-          <p>Nobody believes their California roll deserved a ticket — and no violation generates more roadside debate about what "stopped" means. Legally it's simple: Texas requires a complete stop at the line, before the crosswalk, or before entering the intersection (Transp. Code §544.010), and "almost stopped" is a citation. The better news: a stop-sign ticket is a <strong class="text-text">standard rules-of-the-road moving violation, fully eligible for defensive-driving dismissal</strong> — no speed bars to worry about, no special exclusions.</p>
-          <p>Here's the play, and what paying it instead would actually cost.</p>
+    <article class="bg-surface-muted pb-24 lg:pb-16 text-text" style={sans}>
+      <!-- ===== Lead ===== -->
+      <div class={wrap}>
+        <p class="text-[15px] text-text-body pt-5 m-0"><a href="/texas" class="text-text-body hover:underline">Texas</a><span class="mx-1.5">›</span><a href="/texas/speeding-ticket" class="text-text-body hover:underline">Speeding ticket guide</a><span class="mx-1.5">›</span><span>Stop sign tickets</span></p>
+        <div class="max-w-[820px] pt-8 pb-11">
+          <h1 class="text-[36px] lg:text-[56px] font-extrabold tracking-[-0.02em] leading-[1.05] m-0 mb-5" style={inter}>Got a stop sign ticket in Texas? It's one of the easiest to get dismissed.</h1>
+          <p class="text-lg lg:text-[21px] leading-8 m-0 mb-4">A rolling stop is a standard moving violation with none of the speed limits that trip up speeding tickets. If you qualify, a {TEXAS_COURSE.hours}-hour course gets it dismissed, and by law it never touches your record.</p>
+          <p class="text-lg lg:text-[21px] leading-8 m-0 mb-6">So should you fight it instead? Probably not, unless you have one specific thing. First, the question everyone asks the officer.</p>
+          <div class="flex flex-wrap gap-3 items-center">
+            <a href="#check" class="no-underline bg-primary hover:bg-primary-hover text-white font-bold text-[17px] px-6 py-3.5 rounded-full">Does my ticket qualify? ↓</a>
+            <a href="#video" class="font-semibold text-primary hover:text-primary-deep">▶ Watch: dismiss it in 4 steps (0:57)</a>
+          </div>
+          <p class="text-[15px] text-text-muted m-0 mt-6">By Road Ready Safety, TDLR provider {TEXAS_COURSE.providerNumber} · Checked against Tex. Transp. Code §§542.401, 544.010 and Tex. Code Crim. Proc. arts. 45A.351–.353 · Updated October 6, 2026</p>
         </div>
-
-        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
-          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Procedures vary by court and judge — confirm with the court listed on your citation.</p>
-        </div>
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Dismissing it: the cleanest case there is</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p>Stop-sign tickets are almost the ideal defensive-driving candidate: the speed-based disqualifiers that complicate speeding tickets don't exist here, so eligibility reduces to the standard checklist — valid Texas license, <a href="/texas/request-defensive-driving" class="text-primary-deep font-medium hover:underline">request by the answer date</a>, insurance, and no dismissal course in the <a href="/texas/12-month-rule" class="text-primary-deep font-medium hover:underline">12 months before the offense</a>. Court approval, 6-hour course, certificate plus <a href="/texas/type-3a-driving-record" class="text-primary-deep font-medium hover:underline">Type 3A</a> inside 90 days — dismissed, and by law never part of your record.</p>
-          <p>Paying it instead buys a moving-violation conviction: fine and costs up front, roughly three years of insurer attention (failure-to-stop convictions rate as crash-predictive, like red-light running), and a tick toward the four-in-twelve-months suspension math. For a ticket this cheap to erase, the conviction is the expensive souvenir.</p>
-        </div>
-
-        <NextStepBlock page="stop-sign-ticket" lead="precourt" />
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Thinking of fighting it instead?</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p>It's tempting — the whole charge turns on an officer's judgment of motion. Know what you're weighing: trial means the State proving you failed to stop, your word and any dashcam against the officer's testimony, and a coin-flip outcome where losing forfeits the sure thing. The dismissal path is a certainty you control. The honest rule of thumb: fight it when you have actual evidence of a complete stop (dashcam) or a real procedural defect; otherwise take the guaranteed erase.</p>
-          <p>One adjacent note: a stop-sign ticket written after a collision often arrives with accident-related charges, and those change the analysis — failing to stop and give information or render aid are statutorily excluded from the course. A bare rolling stop, no crash, no companions on the citation: textbook dismissal.</p>
-        </div>
-
-        <YouTubeCard id="GDdhttCVEkY" blurb="The four steps that get a moving violation dismissed." />
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
-        <div class="space-y-8 mb-12">
-          {faqs.map(item => (
-            <div>
-              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
-              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
-            </div>
-          ))}
-        </div>
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Six hours beats three years of 'failure to stop' on your record</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
-          <p>If your rolling stop is the textbook eligible kind, erase it the certain way: <strong class="text-text">$28 all-in, online, free instant certificate</strong> — request first, course after approval.</p>
-        </div>
-
-        <div class="flex flex-col sm:flex-row gap-4 mb-10">
-          <a
-            href={enrollUrl}
-            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
-            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
-          >
-            Start the $28 Course →
-          </a>
-          <a
-            href="/texas/eligibility-tracker"
-            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
-            style="font-family: 'DM Sans', sans-serif;"
-          >
-            Confirm your eligibility
-          </a>
-        </div>
-
-        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
-          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
-          <p class="text-xs text-text-subtle">Last updated August 4, 2026 — verified by the Road Ready Safety editorial team against Tex. Transp. Code §§542.401 &amp; 544.010 and Tex. Code Crim. Proc. arts. 45A.351–.353.</p>
-        </div>
-
       </div>
+
+      <!-- ===== Complete stop ===== -->
+      <section class="bg-white border-y border-border">
+        <div class={`${wrap} py-12 lg:py-14`}>
+          <h2 class={h2c} style={inter}>What counts as a complete stop in Texas?</h2>
+          <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">Wheels fully stopped, at the first of these that exists (Transp. Code §544.010). There's no "basically stopped" in the law. Rolling at walking speed is citable.</p>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+            {[['1st', 'At the stop line', 'If there’s a painted line, stop there.', true], ['2nd', 'Before the crosswalk', 'No line? Stop before the crosswalk.', false], ['3rd', 'Before the intersection', 'Neither one? Stop before you enter it.', false]].map(([n, t, b, hl]) => (
+              <div class={`rounded-2xl p-[22px] ${hl ? 'bg-info border-2 border-primary' : 'bg-white border border-border'}`}>
+                <p class="text-[28px] font-extrabold text-primary leading-none m-0 mb-1.5" style={inter}>{n}</p>
+                <p class="font-bold text-[19px] m-0">{t}</p>
+                <p class="text-[15px] text-text-body m-0">{b}</p>
+              </div>
+            ))}
+          </div>
+          <p class="text-base leading-7 m-0 mt-5 max-w-[780px]">Arguing "I almost stopped" won't win. The good news is you don't need to win. You need to know if your ticket qualifies.</p>
+        </div>
+      </section>
+
+      <!-- ===== Picker ===== -->
+      <section id="check" class={`${wrap} pt-16 pb-6 scroll-mt-28`} data-picker>
+        <h2 class={h2c} style={inter}>Can your stop sign ticket be dismissed?</h2>
+        <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">Usually yes. The one thing that changes it is a crash. What's on your citation?</p>
+        <div class="flex flex-wrap gap-2.5 mb-5">
+          {picks.map((p, i) => <button type="button" data-pick={p.k} aria-pressed={i === 0 ? 'true' : 'false'} class={`font-bold text-[17px] min-h-[48px] px-5 rounded-full border-2 transition-colors ${i === 0 ? pillOn : pillOff}`}>{p.label}</button>)}
+        </div>
+        {picks.map((p, i) => (
+          <div data-panel={p.k} hidden={i !== 0}>
+            <div class={`rounded-2xl border p-6 lg:p-7 max-w-[860px] flex flex-col gap-3 ${p.good ? 'bg-info border-info-border' : 'bg-amber-50 border-amber-200'}`}>
+              <p class={`text-sm font-bold uppercase tracking-[0.06em] m-0 ${p.good ? 'text-primary-deep' : 'text-amber-800'}`}>{p.eyebrow}</p>
+              <p class="text-[24px] lg:text-[26px] font-extrabold leading-[1.2] m-0" style={inter}>{p.title}</p>
+              <p class="text-[17px] text-text-body leading-7 m-0">{p.body}</p>
+              <div class="flex flex-wrap gap-3 items-center">
+                <a href={p.cta[0]} class="no-underline bg-primary hover:bg-primary-hover text-white font-bold px-[22px] py-3 rounded-full">{p.cta[1]}</a>
+                <a href={p.cta2[0]} class="font-semibold text-primary hover:text-primary-deep">{p.cta2[1]}</a>
+              </div>
+            </div>
+          </div>
+        ))}
+        <div class="flex flex-wrap gap-x-[22px] gap-y-2.5 mt-[18px] text-base text-text-body">
+          <span>You'll also need:</span><span>✓&nbsp; A valid Texas license</span><span>✓&nbsp; Proof of insurance</span><span>✓&nbsp; To ask by your answer date</span><span>✓&nbsp; No course in the <a href="/texas/12-month-rule" class={link}>last 12 months</a></span>
+        </div>
+      </section>
+
+      <!-- ===== Three options ===== -->
+      <section class={`${wrap} pt-12 pb-6`}>
+        <h2 class={h2c} style={inter}>Dismiss it, pay it, or fight it?</h2>
+        <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">Paying looks cheapest today. It's the most expensive over three years.</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="rounded-2xl bg-primary text-white p-6 flex flex-col gap-2">
+            <span class="text-sm font-bold uppercase tracking-[0.06em] text-info-border">The sure thing</span>
+            <span class="text-[24px] font-extrabold leading-tight" style={inter}>Dismiss it</span>
+            <span class="text-base text-info leading-6">Court fee (often ~$144) + {price} course + $12 record. Then it's gone from your record.</span>
+            <span class="font-bold mt-auto">Off your record · you control it</span>
+          </div>
+          <div class="rounded-2xl border border-border bg-white p-6 flex flex-col gap-2">
+            <span class="text-sm font-bold uppercase tracking-[0.06em] text-text-muted">The expensive souvenir</span>
+            <span class="text-[24px] font-extrabold leading-tight" style={inter}>Pay it</span>
+            <span class="text-base text-text-body leading-6">Typically $200–$275 with court costs. Plus a conviction your insurer sees for about three years, and one step toward a suspension (4 in 12 months).</span>
+            <span class="font-bold text-amber-800 mt-auto">On your record</span>
+          </div>
+          <div class="rounded-2xl border border-border bg-white p-6 flex flex-col gap-2">
+            <span class="text-sm font-bold uppercase tracking-[0.06em] text-text-muted">Only with proof</span>
+            <span class="text-[24px] font-extrabold leading-tight" style={inter}>Fight it</span>
+            <span class="text-base text-text-body leading-6">Your word against the officer's. Worth it with dashcam footage of a full stop or a real procedural defect. Lose, and the sure thing is gone.</span>
+            <span class="font-bold mt-auto">A coin flip</span>
+          </div>
+        </div>
+        <a href="/texas/fight-or-dismiss" class="inline-block mt-4 font-bold text-primary hover:text-primary-deep">Fight it or take the course? The full comparison →</a>
+      </section>
+
+      <!-- ===== Steps ===== -->
+      <section id="steps" class={`${wrap} pt-12 pb-6 scroll-mt-28`}>
+        <h2 class={h2c} style={inter}>How do you get it dismissed?</h2>
+        <p class="text-base leading-7 m-0 mb-7 max-w-[780px]">Four steps. The order matters: ask the court before you take the course.</p>
+        <ol class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 list-none p-0 m-0">
+          {steps.map((s) => (
+            <li class={`rounded-[14px] p-5 flex flex-col gap-1.5 ${s.us ? 'bg-primary text-white' : 'bg-white border border-border'}`}>
+              <span class={`text-[28px] font-extrabold leading-none ${s.us ? 'text-info-border' : 'text-primary'}`} style={inter}>{s.n}</span>
+              <span class="font-bold">{s.t}</span>
+              <span class={`text-[15px] leading-6 ${s.us ? 'text-info' : 'text-text-body'}`} set:html={s.b} />
+              {s.when && <span class={`text-sm font-bold mt-auto ${s.us ? '' : 'text-primary-deep'}`}>{s.when}</span>}
+            </li>
+          ))}
+        </ol>
+        <div id="video" class="mt-8 max-w-[800px] scroll-mt-28"><VideoEmbed id="GDdhttCVEkY" /></div>
+      </section>
+
+      <!-- ===== Course band ===== -->
+      <section id="course" class={`${wrap} py-14 scroll-mt-28`}>
+        <div class="rounded-3xl bg-primary-deep text-white px-6 py-12 lg:px-8 lg:py-14 flex flex-col items-center text-center gap-7">
+          <div class="flex flex-col gap-2.5 max-w-[680px]">
+            <span class="text-sm font-bold uppercase tracking-[0.08em] text-info-border">Six hours beats three years</span>
+            <h2 class="text-[30px] lg:text-[40px] font-extrabold leading-[1.1] m-0" style={inter}>Erase the rolling stop the certain way.</h2>
+          </div>
+          {review && (
+            <div class="rounded-[18px] bg-white text-text px-7 py-7 max-w-[640px] w-full flex flex-col gap-3">
+              <span class="text-accent text-[22px] tracking-[3px]" aria-label={`${review.rating} out of 5 stars`}>{'★'.repeat(review.rating)}</span>
+              <blockquote class="m-0 text-[19px] lg:text-[21px] font-bold leading-[1.45]" style={inter}>"{review.quote}"</blockquote>
+              <div class="flex items-center gap-3 text-left">
+                <span class="w-10 h-10 rounded-full bg-primary text-white font-bold text-[15px] flex items-center justify-center" aria-hidden="true">{review.initials}</span>
+                <span class="flex flex-col text-[15px] leading-[1.35]"><strong>{review.name}</strong><span class="text-text-muted">{review.verified ? 'Verified via Trustpilot' : 'Trustpilot'} · {review.date}</span></span>
+              </div>
+            </div>
+          )}
+          <ul class="flex flex-wrap justify-center gap-2.5 list-none p-0 m-0 max-w-[820px]">
+            {[`${price} all-in, nothing added`, `TDLR-approved · ${TEXAS_COURSE.providerNumber}`, 'Certificate the moment you finish', 'Works on your phone'].map((t) => <li class="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-2 text-[15px]"><span class="text-info-border font-extrabold" aria-hidden="true">✓</span>{t}</li>)}
+          </ul>
+          <div class="flex flex-col items-center gap-3">
+            <a href={enrollUrl} class="no-underline bg-white hover:bg-info text-primary-deep font-extrabold text-lg px-8 py-4 rounded-full" style={inter}>Start the {price} course →</a>
+            <a href="/texas/request-defensive-driving" class="no-underline text-white hover:underline">Court hasn't approved you yet? Ask first</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== Quick answers ===== -->
+      <section class={`${wrap} pt-2 pb-6`}>
+        <h2 class={h2c} style={inter}>Quick answers</h2>
+        <div class="flex flex-col gap-3 max-w-[820px] mt-5">
+          {faqs.map((f) => <div class="rounded-xl border border-border bg-white p-5"><h3 class="font-bold text-base m-0 mb-1" style={sans}>{f.q}</h3><p class="m-0 text-text-body leading-7" set:html={f.a} /></div>)}
+        </div>
+      </section>
+
+      <!-- ===== Next step + legal ===== -->
+      <section class={`${wrap} pt-6 pb-10`}>
+        <p class="font-bold m-0 mb-2.5">Your next step</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-7">
+          {nextSteps.map(([href, t, s]) => <a href={href} class="no-underline text-text rounded-[14px] border border-border bg-white p-4 hover:border-primary-deep"><strong>{t}</strong><br /><span class="text-[15px] text-text-body">{s}</span></a>)}
+        </div>
+        <p class="text-[15px] text-text-muted m-0 max-w-[820px] leading-6">General information, not legal advice. Procedures vary by court and judge; confirm with the court on your citation. Road Ready Safety is a TDLR-licensed course provider ({TEXAS_COURSE.providerNumber}), not a court. Sources: Tex. Transp. Code §544.010 (stop location), §542.401 (fine range), §521.292 (habitual violator); Tex. Code Crim. Proc. arts. 45A.351–.353 (eligibility and exclusions). Last updated October 6, 2026.</p>
+      </section>
+
+      <StickyCta afterId="check" hideAtId="course" />
     </article>
+
+    <script is:inline>
+      (function () {
+        document.querySelectorAll('[data-picker]:not([data-armed])').forEach(function (root) {
+          root.setAttribute('data-armed', '1');
+          var on = ['bg-primary', 'text-white', 'border-primary'], off = ['bg-white', 'text-text', 'border-[#CBD3DF]', 'hover:border-primary-deep'];
+          var btns = root.querySelectorAll('[data-pick]'), panels = root.querySelectorAll('[data-panel]');
+          btns.forEach(function (b) { b.addEventListener('click', function () {
+            var k = b.getAttribute('data-pick');
+            btns.forEach(function (x) { var sel = x === b; x.setAttribute('aria-pressed', sel ? 'true' : 'false'); on.forEach(function (c) { x.classList.toggle(c, sel); }); off.forEach(function (c) { x.classList.toggle(c, !sel); }); });
+            panels.forEach(function (p) { p.hidden = p.getAttribute('data-panel') !== k; });
+          }); });
+        });
+      })();
+    </script>
   </TexasLayout>
 ) : (
   <meta http-equiv="refresh" content="0; url=/" />

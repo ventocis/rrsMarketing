@@ -34,8 +34,8 @@ const landingFaqSchema = JSON.stringify({
 
 {isEnabled && (
 <TexasLayout
-  title={`Texas Defensive Driving Course Online – ${TEXAS_PRICE_LABEL}, TDLR-Approved | Road Ready Safety`}
-  description={`TDLR-approved (${TEXAS_COURSE.providerNumber}) online Texas defensive driving course for ticket dismissal and insurance discounts. ${TEXAS_COURSE.hours} hours on your phone, certificate the moment you finish, ${TEXAS_PRICE_LABEL} all-in, accepted by every Texas court.`}
+  title={`Texas Defensive Driving Course Online: 6-Hour, ${TEXAS_PRICE_LABEL} Total, TDLR-Approved (${TEXAS_COURSE.providerNumber}) | Road Ready Safety`}
+  description={`${TEXAS_COURSE.hours}-hour Texas driving safety course, online, TDLR-approved (${TEXAS_COURSE.providerNumber}). ${TEXAS_PRICE_LABEL} total: course plus your certificate the moment you finish, nothing added at checkout. Accepted by every Texas court.`}
   keywords="texas defensive driving course, texas online defensive driving class, defensive driving course texas, online defensive driving texas, texas driving safety course, tdlr approved defensive driving"
   url="/texas"
   banner={`Limited Time: Code SAVE3 Drops Your Total to $${TEXAS_COURSE.legalMinimumPrice}. No Hidden Fees.`}
@@ -62,10 +62,10 @@ const landingFaqSchema = JSON.stringify({
             TDLR-Approved Provider {TEXAS_COURSE.providerNumber}
           </p>
           <h1 class="text-[36px] lg:text-[56px] font-bold text-primary-navy leading-[40px] lg:leading-[66px] tracking-[-1.5px] text-center lg:text-left w-full max-w-[343px] lg:max-w-none">
-            Texas Defensive Driving Course Online &mdash; Dismiss Your Ticket for {TEXAS_PRICE_LABEL}
+            Texas {TEXAS_COURSE.hours}-Hour Defensive Driving Course Online: {TEXAS_PRICE_LABEL} Total, Certificate Included
           </h1>
           <p class="text-[18px] lg:text-xl text-text-body leading-[28px] lg:leading-7 max-w-[576px] text-center lg:text-left">
-            The Texas driving safety course, fully online and TDLR-approved ({TEXAS_COURSE.providerNumber}). Take it to dismiss an eligible traffic ticket or earn an insurance discount. {TEXAS_COURSE.hours} hours on your phone, certificate the moment you finish, no hidden fees.
+            The Texas driving safety course, fully online and TDLR-approved ({TEXAS_COURSE.providerNumber}), accepted by every Texas court. Take it to dismiss an eligible ticket or earn an insurance discount. {TEXAS_PRICE_LABEL} is the number you pay: the {TEXAS_COURSE.hours}-hour course, your certificate the moment you finish, and nothing added at checkout. Many courses advertise the course fee and add certificate or processing charges later; we don't.
           </p>
           <div class="flex flex-col gap-[12px] pt-[8px] w-full items-center lg:items-start">
             <div class="flex flex-col sm:flex-row gap-[16px] w-full items-center lg:items-start">
@@ -74,7 +74,7 @@ const landingFaqSchema = JSON.stringify({
                 class="bg-primary hover:bg-primary-hover text-white h-[56px] px-[40px] rounded-[16px] shadow-[0px_20px_25px_-5px_rgba(17,23,34,0.10),0px_8px_10px_-6px_rgba(17,23,34,0.05)] text-[18px] font-semibold flex items-center justify-center leading-[28px] no-underline text-center w-full sm:w-auto"
                 style="font-family: 'DM Sans', sans-serif;"
               >
-                Dismiss My Ticket &mdash; $28
+                Dismiss My Ticket &mdash; {TEXAS_PRICE_LABEL}
               </a>
               <a
                 href="#pricing"
@@ -285,6 +285,14 @@ const landingFaqSchema = JSON.stringify({
               </div>
             ))}
           </div>
+          <p class="text-sm text-text-body leading-6 pt-4 border-t border-border w-full">
+            Before you enroll: <a href="/texas/best-defensive-driving-course" class="text-primary-deep font-medium hover:underline">how to pick a Texas course</a> ·
+            <a href="/texas/cost" class="text-primary-deep font-medium hover:underline">what it costs, all in</a> ·
+            <a href="/texas/tdlr-approved" class="text-primary-deep font-medium hover:underline">how to check any course is TDLR-approved</a> ·
+            <a href="/texas/what-the-course-looks-like" class="text-primary-deep font-medium hover:underline">what the course looks like</a> ·
+            <a href="/texas/spanish" class="text-primary-deep font-medium hover:underline">taking it in Spanish</a> ·
+            <a href="/texas/ticket-dismissal" class="text-primary-deep font-medium hover:underline">the ticket-dismissal steps</a>.
+          </p>
         </div>
 
         <!-- Right Column - Pricing Card -->

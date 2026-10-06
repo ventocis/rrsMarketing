@@ -108,6 +108,18 @@ export const courtStats = {
 
   email: boolRate('emailAccepted'),
   type3a: boolRate('requiresType3A'),
+  /** Among courts that require a Type 3A and list a submission method: how many take it electronically. */
+  type3aSubmit: (() => {
+    let electronic = 0, paperOnly = 0;
+    for (const v of Object.values(research)) {
+      if (v?.requiresType3A !== true) continue;
+      const set = new Set(((v?.submissionMethods as unknown[]) ?? []).map(normalizeMethod).filter(Boolean) as string[]);
+      if (!set.size) continue;
+      if (set.has('Email') || set.has('Online')) electronic++; else paperOnly++;
+    }
+    const known = electronic + paperOnly;
+    return { known, electronic, paperOnly, pctElectronic: pct(electronic, known), pctPaper: pct(paperOnly, known) };
+  })(),
   notary: boolRate('requiresNotarizedAffidavit'),
 
   methods: {

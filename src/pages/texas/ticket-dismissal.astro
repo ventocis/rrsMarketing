@@ -1,319 +1,341 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import VideoEmbed from '../../components/VideoEmbed.astro';
+import StickyCta from '../../components/texas/StickyCta.astro';
 import { courtStats as S } from '../../lib/court-stats';
-import YouTubeCard from '../../components/YouTubeCard.astro';
-import NextStepBlock from '../../components/texas/NextStepBlock.astro';
+import { TEXAS_COURSE, TEXAS_PRICE_LABEL } from '../../data/texas-course';
+import reviews from '../../data/texas-reviews.json';
 import { alternatesFor, translationsOf, langLabel } from '../../lib/i18n';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
 const alternates = alternatesFor('/texas/ticket-dismissal');
 const translations = translationsOf('/texas/ticket-dismissal');
+const price = TEXAS_PRICE_LABEL;
+const floor = `$${TEXAS_COURSE.legalMinimumPrice}`;
+const review = reviews.find((r: any) => r.name === 'Ryan Johnson');
 
-// Legal basis: Tex. Code Crim. Proc. ch. 45A (arts. 45A.351–.359, the 2025
-// recodification of former art. 45.0511), S.B. 296 (eff. Sept. 1, 2025),
-// Tex. Educ. Code §1001.352 (HB 3012, eff. Sept. 1, 2025). Court fee and
-// deadline figures come from our verified court dataset (see /texas/dsc-fees-by-court
-// and /texas/dsc-deadlines-by-court).
-
-const steps = [
-  {
-    name: 'Do not pay the ticket',
-    text: 'Paying online or by mail is a plea of guilty or no contest. Once the conviction is entered, the dismissal option is gone. Read the citation for your appearance date instead.',
-  },
-  {
-    name: 'Request the driving safety course from your court by the appearance date',
-    text: 'On or before the date printed on the citation, tell the court you want to take a driving safety course to dismiss the charge. Since S.B. 296 (September 1, 2025) you may request by certified mail, email, or the court\'s online portal where offered, as well as in person. You must request before you take the course.',
-  },
-  {
-    name: 'Give the court what it requires and pay its fee',
-    text: `Typically proof of a valid Texas driver's license, proof of insurance, and your Type 3A certified driving record from Texas DPS ($12 online). The court charges its own fee when it grants the course, $${S.fee.min} to $${S.fee.max} in our verified data, most commonly $144.`,
-  },
-  {
-    name: 'Complete a TDLR-approved 6-hour course within 90 days',
-    text: 'The course is online and self-paced. Texas law sets the minimum at 6 hours and the minimum price at $25. Download your certificate the moment you finish; ours is included at $28 with no add-on.',
-  },
-  {
-    name: 'Submit the certificate to the court before the deadline',
-    text: 'Deliver the court copy of the certificate, the Type 3A record if you have not already, and any affidavit the court requires. Some courts require e-filing; some require a notarized affidavit. Then the court dismisses the charge, and by law it may not be part of your driving record.',
-  },
-];
+// Rebuilt 2026-10-06 from Jackson's design canvas "Ticket Dismissal Redesign" (Main.dc.html + Serp.dc.html),
+// implemented as the spec: his copy, section order, the four-question check, CTAs. Flagged deviations: "Check
+// my ticket" is worded "Does my ticket qualify?" (house rule); the refund chip matches our policy (full refund
+// within the three-day cancellation window); the court fee range prints from court-stats.ts. The 294,534
+// figure (tickets dismissed with a course, FY2024) is the Office of Court Administration number already used
+// on /texas/defensive-driving-statistics and the translated versions of this page.
 
 const faqs = [
-  {
-    q: 'Can a defensive driving course dismiss a traffic ticket in Texas?',
-    a: 'Yes. Under Texas Code of Criminal Procedure chapter 45A (arts. 45A.351 to 45A.359), a court must dismiss an eligible moving-violation charge when the driver requests the course by the appearance date, meets the eligibility conditions, completes a TDLR-approved 6-hour driving safety course, and presents the certificate and driving record within 90 days. A dismissed charge may not be part of your driving record.',
-  },
-  {
-    q: 'How do I get a ticket dismissed in Texas online?',
-    a: 'Request the driving safety course from your court by the appearance date on the citation (many courts accept email or an online portal since September 2025), pay the court\'s fee, take the 6-hour course online, and upload or e-file the certificate and your Type 3A record. Courts such as Harris County JP and Dallas County JP 1-1 handle the whole process through their portals; others still want paper.',
-  },
-  {
-    q: 'What are the requirements for ticket dismissal in Texas?',
-    a: 'A valid Texas driver\'s license or permit (active-duty military and dependents may use any state\'s license), proof of insurance, a request made on or before the appearance date, no driving safety course used for dismissal in the 12 months before this offense, the court\'s fee, a TDLR-approved course completed within 90 days, and the certificate plus Type 3A driving record submitted to the court.',
-  },
-  {
-    q: 'Which tickets cannot be dismissed with defensive driving in Texas?',
-    a: 'Speeding 25 mph or more over the limit, speeding 95 mph or faster, any offense in a construction or maintenance zone while workers are present, passing a stopped school bus, leaving the scene of a crash, serious commercial-vehicle violations, and any ticket held by a commercial driver\'s license holder, even in a personal car. Non-moving violations such as expired registration are not dismissed by a course at all; they use compliance dismissals instead.',
-  },
-  {
-    q: 'How much does it cost to get a ticket dismissed in Texas?',
-    a: `Three costs: the court's fee ($${S.fee.min} to $${S.fee.max} in our verified court data, commonly $144; $169 for school-zone violations at many courts), the course (at least $25 by law; $28 with the certificate included at Road Ready Safety), and the $12 Type 3A driving record if the court makes you order it yourself. Roughly $150 to $210 total, against a fine that is usually higher plus the insurance impact of a conviction.`,
-  },
-  {
-    q: 'How long do you have to complete defensive driving in Texas?',
-    a: '90 days from the date the court grants the course, under art. 45A.351. Courts may extend the deadline for good cause on request. Individual courts also set their own paperwork deadlines, which range from 10 to 180 days in our data.',
-  },
-  {
-    q: 'Can I dismiss more than one ticket with one course?',
-    a: 'Only once every 12 months for separate stops, but since S.B. 296 took effect on September 1, 2025, one course can dismiss multiple eligible charges from the same stop. Ask the court how it applies the new rule; courts are still updating their forms.',
-  },
-  {
-    q: 'What is the difference between ticket dismissal and deferred disposition?',
-    a: 'Dismissal through a driving safety course removes the charge after you complete the course. Deferred disposition is probation: you pay a special expense fee, stay ticket-free for up to 180 days, and the charge is then dismissed. Deferred has no 25-mph speed exclusion, but it is at the judge\'s discretion, and some courts require the course as a condition anyway.',
-  },
+  { q: 'Can a defensive driving course dismiss a ticket in Texas?', a: 'Yes. If you qualify and ask by the appearance date, the court must dismiss an eligible moving violation once you finish a TDLR-approved course and submit the certificate and record (Code Crim. Proc. ch. 45A).' },
+  { q: 'Can I do the whole thing online?', a: 'Often. Many courts take requests by email or portal since September 2025, the course is online, and courts like Harris County JP handle filing through portals. Others still want paper.' },
+  { q: 'Can one course dismiss more than one ticket?', a: 'Only for charges from the same stop. Since September 1, 2025, one course can dismiss several eligible charges from one stop. Separate stops are limited to once every 12 months. <a href="/texas/multiple-tickets" class="text-primary-deep font-medium hover:underline">Multiple tickets</a>' },
+  { q: 'What happens after it’s dismissed?', a: 'It’s gone from your driving record and can’t be used for any purpose. Keep the court’s notice and your certificate for a year in case your insurer asks.' },
+  { q: 'Does Texas still use points?', a: 'No, not since 2019. What dismissal protects is the conviction on your record, which is what insurers price on.' },
+  { q: 'Did the law change in 2025?', a: 'Yes. The rules moved from art. 45.0511 to chapter 45A on January 1, 2025, and from September 1, 2025 courts can take requests by mail, email or portal. A site still citing 45.0511 is out of date.' },
+];
+const plain = (s: string) => s.replace(/<[^>]+>/g, '');
+
+const steps = [
+  { n: 1, t: 'Don’t pay the ticket', b: 'Paying is a plea. Once it’s a conviction, there’s nothing to dismiss.', when: '', us: false },
+  { n: 2, t: 'Ask the court', b: 'In person, certified mail, or the court’s email or portal.', when: 'By the appearance date', us: false },
+  { n: 3, t: 'Send what it needs', b: 'License, insurance, court fee, and a $12 Type 3A record.', when: '', us: false },
+  { n: 4, t: 'Take the course', b: `${TEXAS_COURSE.hours} hours, online. ${price} with us, certificate included.`, when: 'Within 90 days', us: true },
+  { n: 5, t: 'Submit, then it’s dismissed', b: 'Certificate, record and any affidavit your court requires.', when: '', us: false },
 ];
 
 const articleSchema = JSON.stringify({
-  '@context': 'https://schema.org',
-  '@type': 'Article',
-  headline: 'Texas Defensive Driving Course for Ticket Dismissal: Who Qualifies, the 5 Steps, Deadlines, and What It Costs (2026)',
-  description: 'How a TDLR-approved driving safety course dismisses a Texas traffic ticket: eligibility under CCP chapter 45A, the five steps in order, the 90-day deadline, court fees, which tickets are excluded, and how individual courts handle it.',
+  '@context': 'https://schema.org', '@type': 'Article',
+  headline: 'How to get a Texas ticket dismissed with a 6-hour course',
+  description: 'Get a Texas ticket dismissed and kept off your record with a 6-hour course. Whether yours qualifies, the five steps in order, the two deadlines, and what it costs.',
   author: { '@type': 'Organization', name: 'Road Ready Safety' },
   publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
-  datePublished: '2026-09-02',
-  dateModified: '2026-10-06',
+  datePublished: '2026-06-11', dateModified: '2026-10-06',
   mainEntityOfPage: `${siteUrl}/texas/ticket-dismissal`,
 });
+const howToSchema = JSON.stringify({ '@context': 'https://schema.org', '@type': 'HowTo', name: 'How to get a Texas ticket dismissed with a driving safety course', step: steps.map(s => ({ '@type': 'HowToStep', name: s.t, text: s.when ? `${s.b} (${s.when}.)` : s.b })) });
+const faqSchema = JSON.stringify({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: plain(f.a) } })) });
 
-const faqSchema = JSON.stringify({
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
-});
+const questions = [
+  { k: 'license', text: 'Do you have a valid Texas driver license? (Active-duty military and their families can use any state’s.)' },
+  { k: 'excluded', text: 'Was it 25+ over, 95+ mph, in a work zone with workers, passing a school bus, or leaving a crash?' },
+  { k: 'cdl', text: 'Do you hold a CDL, or did you when you got the ticket?' },
+  { k: 'recent', text: 'Have you used a dismissal course in the 12 months before this ticket?' },
+];
+const warn = { panel: 'bg-[#F6F6F9] border-[#CBD3DF]', eye: 'text-text-body' };
+const results = [
+  { k: 'default', panel: 'bg-white border-border', eye: 'text-text-muted', eyebrow: 'Your result', title: 'Answer all four to see your route.', body: 'Most everyday moving violations qualify.', cta: ['/texas/eligibility-tracker', 'Or use the full eligibility checker →'] },
+  { k: 'cdl', ...warn, eyebrow: 'Course not available', title: 'CDL holders can’t dismiss with a course.', body: 'Federal rules keep moving violations on a CDL record, even in a personal car.', cta: ['/texas/cdl-defensive-driving', 'What works for CDL drivers →'] },
+  { k: 'excluded', ...warn, eyebrow: 'Course not available', title: 'This ticket is excluded by law.', body: 'For 25+ over or 95+, ask about deferred disposition. Work-zone tickets with workers present are barred from both.', cta: ['/texas/speeding-25-over', 'See what still works →'] },
+  { k: 'recent', ...warn, eyebrow: 'Too soon for another course', title: 'You’ve used it in the last 12 months.', body: 'Deferred disposition is usually the route for a second ticket. Ask your court before the appearance date.', cta: ['/texas/deferred-disposition', 'How deferred disposition works →'] },
+  { k: 'license', ...warn, eyebrow: 'Check with your court', title: 'The course needs a Texas license.', body: 'Unless you’re active-duty military or family, out-of-state drivers usually go the deferred route.', cta: ['/texas/out-of-state-driver', 'Out-of-state drivers →'] },
+  { k: 'ok', panel: 'bg-info border-info-border', eye: 'text-primary-deep', eyebrow: 'Good news', title: 'Your ticket likely qualifies.', body: 'Ask your court for the course by the appearance date on your ticket. Once it says yes, the course is the easy part.', cta: ['/texas/request-defensive-driving', 'How to ask the court →'] },
+];
 
-const howToSchema = JSON.stringify({
-  '@context': 'https://schema.org',
-  '@type': 'HowTo',
-  name: 'How to dismiss a Texas traffic ticket with a defensive driving course',
-  description: 'The five steps to dismiss an eligible Texas moving violation with a TDLR-approved driving safety course.',
-  totalTime: 'P90D',
-  estimatedCost: { '@type': 'MonetaryAmount', currency: 'USD', value: '150-210' },
-  step: steps.map((s, i) => ({ '@type': 'HowToStep', position: i + 1, name: s.name, text: s.text })),
-});
+const types = [
+  ['/texas/speeding-ticket', 'Speeding'], ['/texas/speeding-25-over', '25+ over'], ['/texas/red-light-ticket', 'Red light'], ['/texas/stop-sign-ticket', 'Stop sign'], ['/texas/cell-phone-ticket', 'Cell phone'], ['/texas/seat-belt-ticket', 'Seat belt'], ['/texas/child-seat-ticket', 'Child seat'], ['/texas/school-zone-ticket', 'School zone'], ['/texas/construction-zone-ticket', 'Construction zone'], ['/texas/no-insurance-ticket', 'No insurance'], ['/texas/expired-registration-ticket', 'Expired registration'], ['/texas/expired-license-ticket', 'Expired license'], ['/texas/equipment-violation-ticket', 'Equipment'], ['/texas/motorcycle-ticket', 'Motorcycle'], ['/texas/cdl-defensive-driving', 'CDL'], ['/texas/under-25-ticket', 'Under 25'], ['/texas/minor-traffic-ticket', 'Minors'], ['/texas/out-of-state-driver', 'Out-of-state drivers'], ['/texas/multiple-tickets', 'Several tickets, one stop'], ['/texas/court-appearance', 'Do I have to appear in court?'], ['/texas/traffic-ticket-report', 'Texas Traffic Ticket Report'],
+];
+const metros = [['houston', 'Houston'], ['dallas', 'Dallas'], ['fort-worth', 'Fort Worth'], ['san-antonio', 'San Antonio'], ['austin', 'Austin'], ['tyler', 'Tyler']];
+
+const inter = "font-family:'Inter',sans-serif;";
+const sans = "font-family:'DM Sans',sans-serif;";
+const h2c = 'text-[28px] lg:text-[34px] font-extrabold tracking-[-0.02em] leading-[1.15] text-text m-0 mb-3';
+const wrap = 'max-w-[1080px] mx-auto px-4 sm:px-6 lg:px-8';
+const card = 'rounded-[14px] border border-border bg-white p-5 lg:p-[22px]';
+const pillOff = 'bg-white text-text border-[#CBD3DF] hover:border-primary-deep';
+const link = 'text-primary hover:text-primary-deep font-medium';
 ---
 
 {isEnabled ? (
   <TexasLayout
-    title="How to Dismiss a Traffic Ticket in Texas With Defensive Driving: Who Qualifies, 5 Steps, Deadlines & Cost (2026)"
-    description={`How a TDLR-approved driving safety course dismisses a Texas traffic ticket: eligibility under CCP chapter 45A, the five steps in order, the 90-day deadline, court fees of $${S.fee.min} to $${S.fee.max}, which tickets are excluded, and how individual courts handle it.`}
-    keywords="texas defensive driving course for ticket dismissal, ticket dismissal texas, how to get a ticket dismissed in texas, can defensive driving dismiss a ticket in texas, texas ticket dismissal requirements, dismiss ticket texas online, driving safety course ticket dismissal"
+    title="Texas Ticket Dismissal: 5 Steps, Deadlines & Who Qualifies"
+    description="Get a Texas ticket dismissed and kept off your record with a 6-hour course. Check if yours qualifies, the steps in order, and the deadline people miss."
+    keywords="texas ticket dismissal, dismiss traffic ticket texas, defensive driving ticket dismissal texas, driving safety course dismissal, how to get a ticket dismissed in texas, texas ticket dismissal requirements"
     url="/texas/ticket-dismissal"
     alternates={alternates}
   >
     <script type="application/ld+json" set:html={articleSchema} />
-    <script type="application/ld+json" set:html={faqSchema} />
     <script type="application/ld+json" set:html={howToSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
 
-    <article class="bg-white pb-16 lg:pb-24">
-      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
-
-        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
-          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving course</a>
-          <span class="mx-2 text-text-subtle">›</span>
-          <span class="text-text">Ticket dismissal</span>
-        </p>
-        {translations.length > 0 && (
-          <p class="text-xs text-text-body mb-6 flex flex-wrap items-center gap-1.5" style="font-family: 'DM Sans', sans-serif;">
-            <span class="text-text-subtle me-1">Also in:</span>
-            {translations.map(t => <a href={`/texas/${t.slug}`} hreflang={t.lang} lang={t.lang} class="px-2 py-0.5 rounded-full border border-border text-text-body hover:border-primary-deep no-underline">{langLabel(t.lang)}</a>)}
-          </p>
-        )}
-
-        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
-          Texas Defensive Driving Course for Ticket Dismissal: Who Qualifies, the 5 Steps, Deadlines, and What It Costs
-        </h1>
-
-        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
-          <p>A TDLR-approved 6-hour defensive driving course (Texas calls it a <em>driving safety course</em>; <a href="/texas/what-is-a-driving-safety-course" class="text-primary-deep font-medium hover:underline">what the course is</a>, if this is new to you) dismisses an eligible moving violation: <strong class="text-text">you ask the court for it by the appearance date on your citation, pay the court's fee, finish the course within 90 days, and submit the certificate. The court then dismisses the charge, and by law it may not appear on your driving record.</strong> That is Texas Code of Criminal Procedure chapter 45A, and it is the only dismissal path a driver controls end to end. Texas courts dismissed <strong class="text-text">294,534 tickets this way in fiscal 2024</strong>, according to the Office of Court Administration's court activity data; only prosecutors' own dismissals and deferred disposition account for more.</p>
-          <p>We run one of the approved courses (Road Ready Safety, CP1234) and we have mapped how roughly 1,700 Texas courts handle this process, so this guide goes past the statute into what actually trips people up: the deadline everyone misses, the fee ranges, the courts that only take e-filings, and the tickets that cannot be dismissed this way no matter what a website promises.</p>
+    <article class="bg-surface-muted pb-24 lg:pb-16 text-text" style={sans}>
+      <!-- ===== Lead ===== -->
+      <div class={wrap}>
+        <div class="flex flex-wrap justify-between gap-2 text-[15px] text-text-body pt-5">
+          <span><a href="/texas" class="text-text-body hover:underline">Texas</a><span class="mx-1.5">›</span>Ticket dismissal</span>
+          {translations.length > 0 && <span>Also in: {translations.map((t, i) => <><a href={`/texas/${t.slug}`} hreflang={t.lang} lang={t.lang} class="text-text-body hover:underline">{langLabel(t.lang)}</a>{i < translations.length - 1 && ' · '}</>)}</span>}
         </div>
-
-        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
-          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Eligibility is set by statute, but fees, forms and deadlines are set by each court and change; confirm with the court listed on your citation before you act. Road Ready Safety is a TDLR-licensed course provider (CP1234), not a court.</p>
+        <div class="max-w-[820px] pt-8 pb-10">
+          <h1 class="text-[36px] lg:text-[56px] font-extrabold tracking-[-0.02em] leading-[1.05] m-0 mb-5" style={inter}>How to get a Texas ticket dismissed with a 6-hour course</h1>
+          <p class="text-lg lg:text-[21px] leading-8 m-0 mb-4">Ask your court for a driving safety course by the appearance date on your ticket, pay the court's fee, finish the course within 90 days, and send in the certificate. The court dismisses the charge, and by law it can't appear on your driving record.</p>
+          <p class="text-lg lg:text-[21px] leading-8 m-0 mb-6">Simple, but only in the right order. The mistake we see most is taking the course <strong>before</strong> the court says yes. First, make sure your ticket qualifies.</p>
+          <div class="flex flex-wrap gap-3 items-center">
+            <a href="#check" class="no-underline bg-primary hover:bg-primary-hover text-white font-bold text-[17px] px-6 py-3.5 rounded-full">Does my ticket qualify? ↓</a>
+            <a href="#video" class="font-semibold text-primary hover:text-primary-deep">▶ Watch: dismiss it in 4 steps (0:57)</a>
+          </div>
+          <p class="text-[15px] text-text-muted m-0 mt-6">By Road Ready Safety, TDLR provider {TEXAS_COURSE.providerNumber}. We run one of the approved courses and track how roughly 1,700 Texas courts handle dismissal. · Checked against Tex. Code Crim. Proc. ch. 45A · Updated October 6, 2026</p>
         </div>
-
-        <div class="rounded-2xl border border-info-border bg-info p-6 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p class="text-sm font-semibold text-primary-deep mb-3" style="font-family: 'Outfit', sans-serif;">Three ways a Texas ticket comes off your record. Pick yours first.</p>
-          <ol class="list-decimal pl-5 space-y-2 text-text-body text-base leading-7">
-            <li><strong class="text-text">The driving safety course</strong>, this page. A statutory right if you qualify: ask the court by the appearance date, take the six-hour course, submit the certificate, and the charge is dismissed. The outcome is fixed by law, not by the judge.</li>
-            <li><strong class="text-text">Deferred disposition</strong>. The judge's discretionary probation of up to 180 days; dismissal at the end if you stay clean. It can take tickets the course cannot (25+ over, for example). <a href="/texas/defensive-driving-vs-deferred-disposition" class="text-primary-deep font-medium hover:underline">Which should you choose?</a></li>
-            <li><strong class="text-text">Contest it</strong>, yourself or with a lawyer. Right for a ticket you did not earn or one neither program will take; slower and never certain. <a href="/texas/fight-or-dismiss" class="text-primary-deep font-medium hover:underline">Fight it or take the course?</a></li>
-          </ol>
-          <p class="text-sm text-text-body leading-6 mt-3">Paying the ticket is not a fourth route to dismissal: it is a guilty plea and a conviction. Every resolution path, including the compliance dismissals for registration and insurance tickets, is compared on <a href="/texas/ways-to-dismiss-ticket" class="text-primary-deep font-medium hover:underline">every way a Texas ticket gets resolved</a>.</p>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pb-12">
+          {[['294,534', 'Texas tickets dismissed with a course in fiscal 2024 (Office of Court Administration)'], ['90 days', 'to finish the course once the court approves you'], ['0', 'convictions on your record when it’s dismissed']].map(([n, t]) => (
+            <div class="rounded-[14px] border border-border bg-white p-5"><p class="text-[30px] font-extrabold text-primary leading-none m-0 mb-1.5" style={inter}>{n}</p><p class="text-[15px] text-text-body m-0">{t}</p></div>
+          ))}
         </div>
+      </div>
 
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Who qualifies for ticket dismissal with a defensive driving course in Texas?</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-6" style="font-family: 'DM Sans', sans-serif;">
-          <p>You qualify if all of the following are true (Tex. Code Crim. Proc. arts. 45A.351 to 45A.352):</p>
-          <ul class="list-disc pl-6 space-y-2">
-            <li>You hold a <strong class="text-text">valid Texas driver's license or permit</strong>. Active-duty military members and their spouses and dependent children qualify with any state's license.</li>
-            <li>You <strong class="text-text">request the course on or before the appearance date</strong> on the citation. The request has to come before you take the course.</li>
-            <li>You have <strong class="text-text">not used a driving safety course for dismissal in the 12 months</strong> before the date of this offense. How the clock runs is in our <a href="/texas/12-month-rule" class="text-primary-deep font-medium hover:underline">12-month rule explainer</a>.</li>
-            <li>You provide <strong class="text-text">proof of insurance</strong> (financial responsibility) and a <strong class="text-text">Type 3A certified driving record</strong> from Texas DPS, or pay the court to pull it.</li>
-            <li>The offense is a <strong class="text-text">moving violation</strong> the statute allows. The exclusions are next.</li>
-          </ul>
-          <p>Not sure? The <a href="/texas/eligibility-tracker" class="text-primary-deep font-medium hover:underline">free eligibility checker</a> asks four questions and takes a minute.</p>
+      <!-- ===== Three ways ===== -->
+      <section class="bg-white border-y border-border">
+        <div class={`${wrap} py-12 lg:py-14`}>
+          <h2 class={h2c} style={inter}>Which way off your record fits your ticket?</h2>
+          <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">There are three. Paying isn't one of them: it's a guilty plea and a conviction.</p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="rounded-2xl bg-primary text-white p-6 flex flex-col gap-2">
+              <span class="text-sm font-bold uppercase tracking-[0.06em] text-info-border">This page · you control it</span>
+              <span class="text-[24px] font-extrabold leading-tight" style={inter}>Driving safety course</span>
+              <span class="text-base text-info leading-6">If you qualify, it's your right by law. Finish the course and the court must dismiss it.</span>
+            </div>
+            <div class="rounded-2xl border border-border bg-white p-6 flex flex-col gap-2">
+              <span class="text-sm font-bold uppercase tracking-[0.06em] text-text-muted">The judge decides</span>
+              <span class="text-[24px] font-extrabold leading-tight" style={inter}>Deferred disposition</span>
+              <span class="text-base text-text-body leading-6">Up to 180 days of probation, then dismissal. Takes tickets the course can't, like 25+ over. <a href="/texas/defensive-driving-vs-deferred-disposition" class={link}>Which should I choose?</a></span>
+            </div>
+            <div class="rounded-2xl border border-border bg-white p-6 flex flex-col gap-2">
+              <span class="text-sm font-bold uppercase tracking-[0.06em] text-text-muted">If you didn't earn it</span>
+              <span class="text-[24px] font-extrabold leading-tight" style={inter}>Contest it</span>
+              <span class="text-base text-text-body leading-6">Yourself or with a lawyer. Slower, and the result is never certain. <a href="/texas/fight-or-dismiss" class={link}>Fight it or take the course?</a></span>
+            </div>
+          </div>
         </div>
+      </section>
 
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Which tickets cannot be dismissed with a driving safety course?</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-6" style="font-family: 'DM Sans', sans-serif;">
-          <p>A court cannot grant the course for these, even with a clean record (art. 45A.353 and related code):</p>
-          <ul class="list-disc pl-6 space-y-2">
-            <li><strong class="text-text">Speeding 25 mph or more over the limit</strong>, or 95 mph or faster. Our <a href="/texas/speeding-25-over" class="text-primary-deep font-medium hover:underline">25-over guide</a> covers what still works.</li>
-            <li>Any offense in a <strong class="text-text">construction or maintenance zone while workers are present</strong>. See the <a href="/texas/construction-zone-ticket" class="text-primary-deep font-medium hover:underline">work-zone ticket page</a>.</li>
-            <li>Passing a stopped school bus, leaving the scene of a crash, and serious commercial-vehicle violations.</li>
-            <li>Any ticket held by a <strong class="text-text">commercial driver's license holder</strong>, including tickets in a personal car (federal anti-masking rules, 49 CFR 384.226; art. 45A.351(c)). Details on the <a href="/texas/cdl-defensive-driving" class="text-primary-deep font-medium hover:underline">CDL page</a>.</li>
-          </ul>
-          <p>Two common tickets are not "dismissed by a course" at all, because they are not moving violations: <a href="/texas/expired-registration-ticket" class="text-primary-deep font-medium hover:underline">expired registration</a> and <a href="/texas/no-insurance-ticket" class="text-primary-deep font-medium hover:underline">no insurance</a> use compliance dismissals (fix the problem, show proof, pay a small fee). Do not buy a course for those.</p>
+      <!-- ===== Four-question check ===== -->
+      <section id="check" class={`${wrap} pt-16 pb-6 scroll-mt-28`} data-checker>
+        <h2 class={h2c} style={inter}>Does your ticket qualify?</h2>
+        <p class="text-base leading-7 m-0 mb-7 max-w-[780px]">Four questions. If all four line up, the court has to let you take the course.</p>
+        <div class="flex flex-wrap gap-8">
+          <div class="flex-[1_1_460px] min-w-0 flex flex-col gap-[22px]">
+            {questions.map((q) => (
+              <div class="flex flex-col gap-2.5">
+                <p class="font-bold text-[17px] m-0">{q.text}</p>
+                <div class="flex gap-2.5">
+                  <button type="button" data-q={q.k} data-v="1" aria-pressed="false" class={`font-bold text-base min-h-[44px] min-w-[88px] px-[18px] rounded-full border-2 transition-colors ${pillOff}`}>Yes</button>
+                  <button type="button" data-q={q.k} data-v="0" aria-pressed="false" class={`font-bold text-base min-h-[44px] min-w-[88px] px-[18px] rounded-full border-2 transition-colors ${pillOff}`}>No</button>
+                </div>
+              </div>
+            ))}
+            <p class="text-[15px] text-text-body bg-white border border-border rounded-xl p-4 m-0">Expired registration or no insurance? Those aren't dismissed with a course. Fix the problem and show proof instead. <a href="/texas/expired-registration-ticket" class={link}>Registration</a> · <a href="/texas/no-insurance-ticket" class={link}>Insurance</a></p>
+          </div>
+          <div class="flex-[1_1_380px] min-w-0">
+            {results.map((r) => (
+              <div data-result={r.k} hidden={r.k !== 'default'}>
+                <div class={`rounded-2xl border p-6 lg:p-7 flex flex-col gap-3 ${r.panel}`}>
+                  <p class={`text-sm font-bold uppercase tracking-[0.06em] m-0 ${r.eye}`}>{r.eyebrow}</p>
+                  <p class="text-[24px] lg:text-[26px] font-extrabold leading-[1.2] m-0" style={inter}>{r.title}</p>
+                  <p class="text-[17px] text-text-body leading-7 m-0">{r.body}</p>
+                  <a href={r.cta[0]} class="mt-1.5 text-center no-underline bg-primary hover:bg-primary-hover text-white font-bold px-5 py-3 rounded-full">{r.cta[1]}</a>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
+      </section>
 
-        <NextStepBlock page="ticket-dismissal" lead="precourt" />
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How do you get a ticket dismissed in Texas? The five steps, in order</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-6" style="font-family: 'DM Sans', sans-serif;">
-          <p>The order matters more than any single step. The mistake we see most is drivers doing step 4 before step 2: they buy and finish a course, then learn the court will not count a certificate it never authorized.</p>
-        </div>
-        <ol class="space-y-4 mb-8">
-          {steps.map((s, i) => (
-            <li class="bg-surface-muted border border-border rounded-[14px] p-5">
-              <p class="text-sm font-semibold text-text mb-1" style="font-family: 'Outfit', sans-serif;">{i + 1}. {s.name}</p>
-              <p class="text-sm text-text-body leading-7" style="font-family: 'DM Sans', sans-serif;">{s.text}</p>
+      <!-- ===== Five steps ===== -->
+      <section id="steps" class={`${wrap} pt-12 pb-6 scroll-mt-28`}>
+        <h2 class={h2c} style={inter}>What are the five steps, in order?</h2>
+        <p class="text-base leading-7 m-0 mb-7 max-w-[780px]">The order matters more than any single step. Course first, permission second, and the court won't count your certificate.</p>
+        <ol class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 list-none p-0 m-0">
+          {steps.map((s) => (
+            <li class={`rounded-[14px] p-5 flex flex-col gap-1.5 ${s.us ? 'bg-primary text-white' : 'bg-white border border-border'}`}>
+              <span class={`text-[28px] font-extrabold leading-none ${s.us ? 'text-info-border' : 'text-primary'}`} style={inter}>{s.n}</span>
+              <span class="font-bold">{s.t}</span>
+              <span class={`text-[15px] leading-6 ${s.us ? 'text-info' : 'text-text-body'}`}>{s.b}</span>
+              {s.when && <span class={`text-sm font-bold mt-auto ${s.us ? '' : 'text-primary-deep'}`}>{s.when}</span>}
             </li>
           ))}
         </ol>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p>What to say to the court, including a request letter you can copy when there is no form, is on the <a href="/texas/request-defensive-driving" class="text-primary-deep font-medium hover:underline">how-to-request page</a>. The realistic calendar from citation to dismissal is on the <a href="/texas/dismissal-timeline" class="text-primary-deep font-medium hover:underline">timeline page</a>.</p>
+        <div class="flex flex-wrap gap-5 mt-[18px]">
+          <a href="/texas/request-defensive-driving" class="font-bold text-primary hover:text-primary-deep">What to say to the court, with a letter template →</a>
+          <a href="/texas/dismissal-timeline" class="font-bold text-primary hover:text-primary-deep">The calendar from ticket to dismissal →</a>
         </div>
+        <div id="video" class="mt-8 max-w-[800px] scroll-mt-28"><VideoEmbed id="GDdhttCVEkY" /></div>
+      </section>
 
-        <YouTubeCard id="GDdhttCVEkY" blurb="The four steps to dismiss a Texas speeding ticket with the course, in under a minute." />
+      <!-- ===== Deadlines ===== -->
+      <section class={`${wrap} pt-12 pb-6`}>
+        <h2 class={h2c} style={inter}>What are the deadlines?</h2>
+        <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">Two, and the first is the one people miss.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="rounded-2xl border-2 border-primary bg-white p-6">
+            <span class="text-sm font-bold uppercase tracking-[0.06em] text-primary-deep">Deadline 1 · the one people miss</span>
+            <p class="text-[24px] font-extrabold leading-tight m-0 my-1.5" style={inter}>Ask by your appearance date</p>
+            <p class="text-base text-text-body leading-6 m-0">It's printed on your ticket. Miss it and the court can refuse the course. Some courts set their own paperwork deadlines from 10 to 180 days. <a href="/texas/dsc-deadlines-by-court" class={link}>Deadlines by court</a></p>
+          </div>
+          <div class="rounded-2xl border border-border bg-white p-6">
+            <span class="text-sm font-bold uppercase tracking-[0.06em] text-text-muted">Deadline 2</span>
+            <p class="text-[24px] font-extrabold leading-tight m-0 my-1.5" style={inter}>Finish within 90 days</p>
+            <p class="text-base text-text-body leading-6 m-0">Counted from the day the court grants the course. Leave a cushion: TDLR says a new certificate can take up to 5 days to show in its system.</p>
+          </div>
+        </div>
+      </section>
 
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What is the deadline to dismiss a ticket in Texas?</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p>There are two deadlines, and the first is the one people miss. <strong class="text-text">The request deadline is the appearance date on your citation</strong>, usually 10 to 30 days after the stop. Miss it and the court can refuse the course; you may still get deferred disposition or a plea, but you have lost the path you control. <strong class="text-text">The completion deadline is 90 days from the day the court grants the course</strong> (art. 45A.351), extendable for good cause. On top of the statute, each court sets its own paperwork deadline; in our verified data those run from <a href="/texas/dsc-deadlines-by-court" class="text-primary-deep font-medium hover:underline">10 days to 180 days</a>. One more detail: TDLR says a new certificate can take up to 5 days to appear in its validation system, so do not finish the course the night before the court's deadline.</p>
+      <!-- ===== Why denied ===== -->
+      <section class={`${wrap} pt-12 pb-6`}>
+        <h2 class={h2c} style={inter}>Why do courts deny the course?</h2>
+        <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">Either the law rules it out, or the paperwork went wrong. You can't change the first list. You can avoid everything on the second.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="rounded-2xl border border-border bg-white p-6">
+            <p class="font-bold text-[19px] m-0 mb-3">Ruled out by law</p>
+            <ul class="flex flex-col gap-2.5 list-none p-0 m-0 text-base text-text-body">
+              <li>✕&nbsp; Asked after the appearance date</li>
+              <li>✕&nbsp; Used a course in the 12 months before this offense <a href="/texas/12-month-rule" class={link}>How it counts</a></li>
+              <li>✕&nbsp; No valid Texas license (military excepted) <a href="/texas/out-of-state-driver" class={link}>Out of state?</a></li>
+              <li>✕&nbsp; No insurance at the time of the offense</li>
+              <li>✕&nbsp; 25+ over, 95+ mph, work zone with workers, school bus, leaving the scene</li>
+              <li>✕&nbsp; Holds or held a CDL <a href="/texas/cdl-defensive-driving" class={link}>CDL guide</a></li>
+            </ul>
+          </div>
+          <div class="rounded-2xl border border-info-border bg-info p-6">
+            <p class="font-bold text-[19px] m-0 mb-3">Avoidable paperwork mistakes</p>
+            <ul class="flex flex-col gap-2.5 list-none p-0 m-0 text-base text-text-body">
+              <li>✓&nbsp; Don't pay the fine first <a href="/texas/already-paid-ticket" class={link}>Already paid?</a></li>
+              <li>✓&nbsp; Don't take the course before approval</li>
+              <li>✓&nbsp; Send the certified Type 3A, not Type 3 or 2A <a href="/texas/type-3a-driving-record" class={link}>Order it</a></li>
+              <li>✓&nbsp; Include the court copy and any notarized affidavit <a href="/texas/notarized-affidavit" class={link}>Which courts</a></li>
+              <li>✓&nbsp; Ask for an extension before the deadline runs out</li>
+              <li>✓&nbsp; Leave 5 days for the certificate to validate <a href="/texas/certificate-rejected" class={link}>Rejected?</a></li>
+            </ul>
+          </div>
         </div>
+      </section>
 
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Why do courts deny a driving safety course request?</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-6" style="font-family: 'DM Sans', sans-serif;">
-          <p>A court denies the course for one of two kinds of reason: the statute bars it, or the paperwork failed. The statutory reasons are fixed; the paperwork reasons are the ones you can avoid. In the courts we track, these are the ones that come up:</p>
+      <!-- ===== Cost ===== -->
+      <section class={`${wrap} pt-12 pb-6`}>
+        <h2 class={h2c} style={inter}>How much does dismissal cost?</h2>
+        <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">About ${144 + 12 + TEXAS_COURSE.price} at the most common court fee. Paying the ticket usually costs about the same up front, plus a conviction your insurer can see for three years.</p>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5 max-w-[860px]">
+          <div class={card}><p class="text-[15px] text-text-muted m-0">Court fee</p><p class="text-[32px] font-extrabold leading-none m-0 my-1.5" style={inter}>~$144</p><p class="text-[15px] text-text-body m-0">${S.fee.min}–${S.fee.max} across courts we've verified. $169 is typical in school zones.</p></div>
+          <div class={card}><p class="text-[15px] text-text-muted m-0">Type 3A record</p><p class="text-[32px] font-extrabold leading-none m-0 my-1.5" style={inter}>$12</p><p class="text-[15px] text-text-body m-0">Online from DPS, if the court asks you to order it.</p></div>
+          <div class="rounded-[14px] border border-info-border bg-info p-5 lg:p-[22px]"><p class="text-[15px] text-primary-deep m-0">The course</p><p class="text-[32px] font-extrabold text-primary leading-none m-0 my-1.5" style={inter}>{price}</p><p class="text-[15px] text-text-body m-0">All-in with us. {floor} is the legal minimum. Check for certificate fees elsewhere.</p></div>
         </div>
-        <div class="bg-surface-muted border border-border rounded-[14px] p-5 mb-4">
-          <p class="text-sm font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">Barred by statute (Tex. Code Crim. Proc. arts. 45A.351 to 45A.353)</p>
-          <ul class="list-disc pl-5 space-y-2 text-sm text-text-body leading-7" style="font-family: 'DM Sans', sans-serif;">
-            <li><strong class="text-text">You asked after the appearance date.</strong> The request has to be made on or before the date on the citation (art. 45A.351). A late request is the single most common denial, and the court does not have to make an exception.</li>
-            <li><strong class="text-text">You took a dismissal course within the 12 months before this offense</strong> (art. 45A.352). The clock runs from your last completion date to this offense date. <a href="/texas/12-month-rule" class="text-primary-deep font-medium hover:underline">How the 12-month rule counts</a>.</li>
-            <li><strong class="text-text">No valid Texas license or permit</strong>, unless you are active-duty military or a military spouse or dependent (art. 45A.352). <a href="/texas/out-of-state-driver" class="text-primary-deep font-medium hover:underline">Out-of-state drivers</a> go the deferred route.</li>
-            <li><strong class="text-text">No proof of financial responsibility</strong> (insurance) for the vehicle at the time of the offense (art. 45A.352).</li>
-            <li><strong class="text-text">The charge is excluded:</strong> 25 mph or more over the limit, 95 mph or faster, a work zone with workers present, passing a stopped school bus, leaving the scene, or a serious commercial-vehicle violation (art. 45A.353).</li>
-            <li><strong class="text-text">You hold, or held at the time, a commercial driver's license</strong> (art. 45A.351(c); 49 CFR 384.226).</li>
-            <li><strong class="text-text">The ticket is not a moving violation.</strong> Expired registration, no insurance and equipment tickets use compliance dismissals instead.</li>
-          </ul>
-        </div>
-        <div class="bg-surface-muted border border-border rounded-[14px] p-5 mb-10">
-          <p class="text-sm font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">Paperwork failures (court practice, avoidable)</p>
-          <ul class="list-disc pl-5 space-y-2 text-sm text-text-body leading-7" style="font-family: 'DM Sans', sans-serif;">
-            <li><strong class="text-text">You paid the fine first.</strong> Payment is a plea and a conviction; once entered, the court has nothing left to dismiss. <a href="/texas/already-paid-ticket" class="text-primary-deep font-medium hover:underline">If you already paid</a>.</li>
-            <li><strong class="text-text">You took the course before the court granted it.</strong> The certificate is dated before the approval, and many courts will not count it.</li>
-            <li><strong class="text-text">Wrong driving record.</strong> Courts want the certified Type 3A from DPS. The uncertified Type 3 and the three-year Type 2A get bounced. <a href="/texas/type-3a-driving-record" class="text-primary-deep font-medium hover:underline">Ordering the right one</a>.</li>
-            <li><strong class="text-text">The court copy is missing, or the affidavit is not notarized</strong> at a court that requires one. <a href="/texas/notarized-affidavit" class="text-primary-deep font-medium hover:underline">Which courts require the affidavit</a>.</li>
-            <li><strong class="text-text">You missed the 90-day completion window</strong>, or the court's shorter paperwork deadline, and did not ask for an extension before it ran out.</li>
-            <li><strong class="text-text">The certificate did not validate yet.</strong> TDLR says a new certificate can take up to 5 days to appear in its system; a clerk who checks on day one may see nothing. Submit with a cushion, and <a href="/texas/certificate-rejected" class="text-primary-deep font-medium hover:underline">here is what to do if a certificate is rejected</a>.</li>
-          </ul>
-        </div>
+        <a href="/texas/cost" class="inline-block mt-4 font-bold text-primary hover:text-primary-deep">Work out your exact total →</a>
+      </section>
 
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How much does ticket dismissal cost in Texas?</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-6" style="font-family: 'DM Sans', sans-serif;">
-          <p>Roughly <strong class="text-text">$150 to $210</strong>, in three parts:</p>
-          <ul class="list-disc pl-6 space-y-2">
-            <li><strong class="text-text">The court's fee.</strong> Set locally when the course is granted. Across the courts we have verified, <a href="/texas/dsc-fees-by-court" class="text-primary-deep font-medium hover:underline">${S.fee.min} to ${S.fee.max}</a>, most commonly $144, with $169 typical for school-zone violations. <a href="/texas/court-costs" class="text-primary-deep font-medium hover:underline">Where that money goes</a>.</li>
-            <li><strong class="text-text">The course.</strong> At least $25 by law (Tex. Educ. Code §1001.352, as amended by HB 3012 effective September 1, 2025). Road Ready Safety is $28 with the instant certificate included; before paying for any course, check whether certificate delivery is a separate charge.</li>
-            <li><strong class="text-text">The Type 3A driving record</strong>, $12 online from DPS, if the court makes you order it yourself. <a href="/texas/type-3a-driving-record" class="text-primary-deep font-medium hover:underline">How to order it without the mix-ups</a>.</li>
-          </ul>
-          <p>Compare that with paying the ticket: the fine itself is often $150 to $300, and a conviction can raise insurance premiums for three years. Dismissal usually costs about the same up front and nothing after.</p>
+      <!-- ===== Your court ===== -->
+      <section class={`${wrap} pt-12 pb-6`}>
+        <h2 class={h2c} style={inter}>How does your court handle it?</h2>
+        <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">The law is statewide. The paperwork isn't. Three things to know before you send anything:</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+          <div class={card}><p class="font-bold text-[18px] m-0 mb-1.5">Some courts are e-file only</p><p class="text-base text-text-body leading-6 m-0">Harris County's justice courts and Dallas County JP 1-1 don't take paper. A mailed letter wastes your deadline.</p></div>
+          <div class={card}><p class="font-bold text-[18px] m-0 mb-1.5">Some want a notarized affidavit</p><p class="text-base text-text-body leading-6 m-0">A minority of courts require a sworn statement with the certificate. <a href="/texas/notarized-affidavit" class={link}>See the list</a></p></div>
+          <div class={card}><p class="font-bold text-[18px] m-0 mb-1.5">City court or JP court?</p><p class="text-base text-text-body leading-6 m-0">City police tickets go to municipal court. Sheriff and trooper tickets usually go to a JP court. <a href="/texas/municipal-vs-jp-court" class={link}>Which is yours?</a></p></div>
         </div>
-        <div class="flex flex-col sm:flex-row sm:items-center gap-3 rounded-2xl border border-border bg-surface-muted p-4 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p class="text-sm text-text-body leading-6 flex-1 m-0">Court already said yes? The $28 course is the only cost you control, and the certificate is included.</p>
-          <a href={enrollUrl} class="inline-flex h-11 shrink-0 items-center justify-center rounded-xl bg-primary px-5 text-sm font-semibold text-white no-underline hover:bg-primary-hover">Start the $28 course →</a>
+        <div class="flex flex-wrap gap-2.5 mt-5">
+          <a href="/texas/courts" class="no-underline bg-primary hover:bg-primary-hover text-white rounded-full px-[18px] py-2 font-semibold">Search all Texas courts</a>
+          {metros.map(([slug, name]) => <a href={`/texas/${slug}`} class="no-underline bg-white border border-border rounded-full px-4 py-2 text-text hover:border-primary-deep">{name}</a>)}
         </div>
+      </section>
 
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How does ticket dismissal work at my court?</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p>The statute is statewide; the paperwork is not. In our court-by-court work we have found three patterns you should know before you start:</p>
-          <ul class="list-disc pl-6 space-y-2">
-            <li><strong class="text-text">E-file only courts.</strong> Harris County's justice courts run everything through jp.hctx.net, and Dallas County JP 1-1 does not accept paper requests. Mailing a letter to these courts wastes your deadline.</li>
-            <li><strong class="text-text">Notarized affidavit courts.</strong> A minority of courts require a sworn statement with the certificate. Our <a href="/texas/notarized-affidavit" class="text-primary-deep font-medium hover:underline">verified list</a> tells you whether yours is one before you show up without it.</li>
-            <li><strong class="text-text">Municipal versus JP.</strong> A city police ticket goes to municipal court; a sheriff or DPS ticket usually goes to a justice of the peace court. They use different forms and fees. <a href="/texas/municipal-vs-jp-court" class="text-primary-deep font-medium hover:underline">How to tell which one has your case</a>.</li>
-          </ul>
-          <p>Find your court's fee, deadline, forms and request method in the <a href="/texas/courts" class="text-primary-deep font-medium hover:underline">court directory</a>, or start from the metro guides for <a href="/texas/houston" class="text-primary-deep font-medium hover:underline">Houston</a>, <a href="/texas/dallas" class="text-primary-deep font-medium hover:underline">Dallas</a>, <a href="/texas/fort-worth" class="text-primary-deep font-medium hover:underline">Fort Worth</a>, <a href="/texas/san-antonio" class="text-primary-deep font-medium hover:underline">San Antonio</a>, <a href="/texas/austin" class="text-primary-deep font-medium hover:underline">Austin</a> and <a href="/texas/tyler" class="text-primary-deep font-medium hover:underline">Tyler</a>.</p>
-          <p>Guides by ticket type: <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">speeding</a>, <a href="/texas/speeding-25-over" class="text-primary-deep font-medium hover:underline">25+ mph over</a>, <a href="/texas/red-light-ticket" class="text-primary-deep font-medium hover:underline">red light</a>, <a href="/texas/stop-sign-ticket" class="text-primary-deep font-medium hover:underline">stop sign</a>, <a href="/texas/cell-phone-ticket" class="text-primary-deep font-medium hover:underline">cell phone</a>, <a href="/texas/seat-belt-ticket" class="text-primary-deep font-medium hover:underline">seat belt</a>, <a href="/texas/child-seat-ticket" class="text-primary-deep font-medium hover:underline">child seat</a>, <a href="/texas/school-zone-ticket" class="text-primary-deep font-medium hover:underline">school zone</a>, <a href="/texas/construction-zone-ticket" class="text-primary-deep font-medium hover:underline">construction zone</a>, <a href="/texas/no-insurance-ticket" class="text-primary-deep font-medium hover:underline">no insurance</a>, <a href="/texas/expired-registration-ticket" class="text-primary-deep font-medium hover:underline">expired registration</a>, <a href="/texas/expired-license-ticket" class="text-primary-deep font-medium hover:underline">expired license</a>, <a href="/texas/equipment-violation-ticket" class="text-primary-deep font-medium hover:underline">equipment</a>, <a href="/texas/motorcycle-ticket" class="text-primary-deep font-medium hover:underline">motorcycle</a>, <a href="/texas/cdl-defensive-driving" class="text-primary-deep font-medium hover:underline">CDL</a>, <a href="/texas/under-25-ticket" class="text-primary-deep font-medium hover:underline">under 25</a>, <a href="/texas/minor-traffic-ticket" class="text-primary-deep font-medium hover:underline">minors</a>, <a href="/texas/out-of-state-driver" class="text-primary-deep font-medium hover:underline">out-of-state drivers</a>, and <a href="/texas/multiple-tickets" class="text-primary-deep font-medium hover:underline">more than one ticket from the same stop</a>. Not sure whether you have to show up in person? See <a href="/texas/court-appearance" class="text-primary-deep font-medium hover:underline">whether a court appearance is required</a>. For the statewide numbers behind all of this, read the <a href="/texas/traffic-ticket-report" class="text-primary-deep font-medium hover:underline">Texas Traffic Ticket Report</a>.</p>
-        </div>
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Ticket dismissal vs deferred disposition vs paying: which should you pick?</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p><strong class="text-text">If you are eligible for the course, take the course.</strong> It is the only option where the outcome is fixed by statute rather than left to the judge: complete it, submit it, and the charge is dismissed. <strong class="text-text">Deferred disposition</strong> is probation for up to 180 days with a special expense fee; it has no 25-mph exclusion and can rescue a ticket the course cannot, but it is discretionary and a second ticket during the period revives the first. <strong class="text-text">Paying</strong> is a conviction, on your record and visible to your insurer. The full decision table, including when courts stack the course onto a deferral, is on <a href="/texas/defensive-driving-vs-deferred-disposition" class="text-primary-deep font-medium hover:underline">defensive driving vs deferred disposition</a>; every other resolution path is on <a href="/texas/ways-to-dismiss-ticket" class="text-primary-deep font-medium hover:underline">every way a Texas ticket gets resolved</a>.</p>
-        </div>
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What happens after the ticket is dismissed?</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p>The charge is dismissed, not deferred and not reduced. Under chapter 45A a dismissed charge may not be part of your driving record or used for any purpose, so it never becomes a conviction and your insurer has nothing to find. Texas has had no points system since 2019, so there are no points to worry about either way; what dismissal protects is the conviction line on your record. Keep the court's dismissal notice and your certificate for a year in case an insurer asks. And note the 12-month rule starts from the offense date: a second eligible ticket within a year of this one will have to go the deferred route.</p>
-        </div>
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Did Texas change its ticket dismissal law in 2025?</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p>Yes, twice. The rules moved from art. 45.0511 into <strong class="text-text">Code of Criminal Procedure chapter 45A</strong> on January 1, 2025 (same substance, new numbering; a site still citing 45.0511 is running pre-2025 copy). Then <strong class="text-text">S.B. 296, effective September 1, 2025</strong>, allowed requests by certified mail, email or a court portal where offered, and let one course dismiss multiple eligible charges from the same stop. The same session's HB 3012 set the course price floor at a flat $25. Courts are still updating forms, so ask yours how it handles requests today.</p>
-        </div>
-
-        <YouTubeCard id="LfEKvzl7_W8" blurb="Every legal way to keep a Texas ticket off your record." />
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
-        <div class="space-y-8 mb-12">
-          {faqs.map(item => (
-            <div>
-              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
-              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;">{item.a}</p>
+      <!-- ===== Course band ===== -->
+      <section id="course" class={`${wrap} py-14 scroll-mt-28`}>
+        <div class="rounded-3xl bg-primary-deep text-white px-6 py-12 lg:px-8 lg:py-14 flex flex-col items-center text-center gap-7">
+          <div class="flex flex-col gap-2.5 max-w-[680px]">
+            <span class="text-sm font-bold uppercase tracking-[0.08em] text-info-border">Approved? The course is the easy part</span>
+            <h2 class="text-[30px] lg:text-[40px] font-extrabold leading-[1.1] m-0" style={inter}>{TEXAS_COURSE.hours} hours online. {price} total. Certificate the moment you finish.</h2>
+          </div>
+          {review && (
+            <div class="rounded-[18px] bg-white text-text px-7 py-7 max-w-[640px] w-full flex flex-col gap-3">
+              <span class="text-accent text-[22px] tracking-[3px]" aria-label={`${review.rating} out of 5 stars`}>{'★'.repeat(review.rating)}</span>
+              <blockquote class="m-0 text-[19px] lg:text-[21px] font-bold leading-[1.45]" style={inter}>"{review.quote}"</blockquote>
+              <div class="flex items-center gap-3 text-left">
+                <span class="w-10 h-10 rounded-full bg-primary text-white font-bold text-[15px] flex items-center justify-center" aria-hidden="true">{review.initials}</span>
+                <span class="flex flex-col text-[15px] leading-[1.35]"><strong>{review.name}</strong><span class="text-text-muted">{review.verified ? 'Verified via Trustpilot' : 'Trustpilot'} · {review.date}</span></span>
+              </div>
             </div>
-          ))}
+          )}
+          <ul class="flex flex-wrap justify-center gap-2.5 list-none p-0 m-0 max-w-[820px]">
+            {[`${price} all-in, nothing added`, `TDLR-approved · ${TEXAS_COURSE.providerNumber}`, 'Court copy the moment you finish', 'Full refund within three days of enrolling'].map((t) => <li class="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-2 text-[15px]"><span class="text-info-border font-extrabold" aria-hidden="true">✓</span>{t}</li>)}
+          </ul>
+          <div class="flex flex-col items-center gap-3">
+            <a href={enrollUrl} class="no-underline bg-white hover:bg-info text-primary-deep font-extrabold text-lg px-8 py-4 rounded-full" style={inter}>Start the {price} course →</a>
+            <a href="#check" class="no-underline text-white hover:underline">Not approved yet? See if your ticket qualifies first</a>
+          </div>
         </div>
+      </section>
 
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Approved by your court? The course is the easy part</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
-          <p>Road Ready Safety is TDLR-approved under CP1234. The 6-hour course is <strong class="text-text">$28 all-in</strong>, works on your phone, saves your progress, and the <strong class="text-text">court copy of your certificate downloads the moment you finish</strong>. No delivery fee, no upsell screen. If it is not a fit, you can refund it any time before you complete it.</p>
+      <!-- ===== Quick answers ===== -->
+      <section class={`${wrap} pt-2 pb-6`}>
+        <h2 class={h2c} style={inter}>Quick answers</h2>
+        <div class="flex flex-col gap-3 max-w-[820px] mt-5">
+          {faqs.map((f) => <div class="rounded-xl border border-border bg-white p-5"><h3 class="font-bold text-base m-0 mb-1" style={sans}>{f.q}</h3><p class="m-0 text-text-body leading-7" set:html={f.a} /></div>)}
         </div>
+      </section>
 
-        <div class="flex flex-col sm:flex-row gap-4 mb-10">
-          <a
-            href={enrollUrl}
-            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
-            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
-          >
-            Start the $28 Course →
-          </a>
-          <a
-            href="/texas/eligibility-tracker"
-            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
-            style="font-family: 'DM Sans', sans-serif;"
-          >
-            Check if my ticket qualifies
-          </a>
+      <!-- ===== Ticket types + legal ===== -->
+      <section class={`${wrap} pt-6 pb-10`}>
+        <p class="font-bold m-0 mb-2.5">Find your ticket type</p>
+        <div class="flex flex-wrap gap-2 mb-7">
+          {types.map(([href, t]) => <a href={href} class="no-underline bg-white border border-border rounded-full px-3.5 py-1.5 text-[15px] text-text hover:border-primary-deep">{t}</a>)}
         </div>
+        <p class="text-[15px] text-text-muted m-0 max-w-[820px] leading-6">General information, not legal advice. Fees, forms and deadlines are set by each court; confirm with the court on your citation. Road Ready Safety is a TDLR-licensed course provider ({TEXAS_COURSE.providerNumber}), not a court. Sources: Tex. Code Crim. Proc. arts. 45A.351–.359; 49 CFR 384.226; Tex. Educ. Code §1001.352; Texas DPS; Office of Court Administration court activity data; our verified court dataset, refreshed August 2026. Last updated October 6, 2026.</p>
+      </section>
 
-        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
-          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
-          <p class="text-xs text-text-subtle">Last updated October 5, 2026. Eligibility, exclusions, the 90-day window and the record protection per Tex. Code Crim. Proc. arts. 45A.351 to 45A.359 (recodified from art. 45.0511 effective Jan. 1, 2025) and S.B. 296 (eff. Sept. 1, 2025); CDL exclusion per 49 CFR 384.226 and art. 45A.351(c); course minimum per Tex. Educ. Code §1001.352 as amended by HB 3012 (eff. Sept. 1, 2025); Type 3A record per Texas DPS; court fee and deadline ranges from our verified court dataset, last refreshed August 2026.</p>
-        </div>
-
-      </div>
+      <StickyCta afterId="check" hideAtId="course" />
     </article>
+
+    <script is:inline>
+      (function () {
+        document.querySelectorAll('[data-checker]:not([data-armed])').forEach(function (root) {
+          root.setAttribute('data-armed', '1');
+          var on = ['bg-primary', 'text-white', 'border-primary'], off = ['bg-white', 'text-text', 'border-[#CBD3DF]', 'hover:border-primary-deep'];
+          var s = {}, btns = root.querySelectorAll('[data-q]'), panels = root.querySelectorAll('[data-result]');
+          function key() {
+            if (s.cdl === true) return 'cdl'; if (s.excluded === true) return 'excluded'; if (s.recent === true) return 'recent'; if (s.license === false) return 'license';
+            if (s.license === true && s.excluded === false && s.cdl === false && s.recent === false) return 'ok'; return 'default';
+          }
+          btns.forEach(function (b) { b.addEventListener('click', function () {
+            var q = b.getAttribute('data-q'); s[q] = b.getAttribute('data-v') === '1';
+            btns.forEach(function (x) { if (x.getAttribute('data-q') !== q) return; var sel = x === b; x.setAttribute('aria-pressed', sel ? 'true' : 'false'); on.forEach(function (c) { x.classList.toggle(c, sel); }); off.forEach(function (c) { x.classList.toggle(c, !sel); }); });
+            var k = key(); panels.forEach(function (p) { p.hidden = p.getAttribute('data-result') !== k; });
+          }); });
+        });
+      })();
+    </script>
   </TexasLayout>
 ) : (
   <meta http-equiv="refresh" content="0; url=/" />

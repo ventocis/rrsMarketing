@@ -1,0 +1,27 @@
+---
+/**
+ * StickyCta — phone-only buy bar that slides up once the reader has scrolled past `afterId`
+ * and hides while `hideAtId` (the page's own course band) is on screen. Same behaviour as the
+ * metro hubs (MetroHub.astro); extracted so the buying pages share it.
+ */
+import { TEXAS_PRICE_LABEL } from '../../data/texas-course';
+interface Props { afterId: string; hideAtId: string; label?: string }
+const { afterId, hideAtId, label = `Start the ${TEXAS_PRICE_LABEL} course, certificate included` } = Astro.props;
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+---
+<div data-sticky-cta data-after={afterId} data-hide-at={hideAtId} class="fixed inset-x-0 bottom-0 z-40 lg:hidden translate-y-full transition-transform duration-300 bg-white/95 backdrop-blur border-t border-border px-4 py-3" style="font-family:'DM Sans',sans-serif;">
+  <a href={enrollUrl} class="flex items-center justify-center h-12 rounded-xl bg-primary text-white font-semibold no-underline">{label}</a>
+</div>
+<script is:inline>
+  (function () {
+    document.querySelectorAll('[data-sticky-cta]:not([data-armed])').forEach(function (bar) {
+      bar.setAttribute('data-armed', '1');
+      var after = document.getElementById(bar.getAttribute('data-after')); var hideAt = document.getElementById(bar.getAttribute('data-hide-at'));
+      if (!after || !hideAt || !('IntersectionObserver' in window)) return;
+      var past = false, near = false;
+      function render() { bar.style.transform = past && !near ? 'translateY(0)' : ''; }
+      new IntersectionObserver(function (es) { es.forEach(function (en) { past = en.boundingClientRect.top < 0 && !en.isIntersecting ? true : (en.isIntersecting ? false : past); render(); }); }, { threshold: 0 }).observe(after);
+      new IntersectionObserver(function (es) { es.forEach(function (en) { near = en.isIntersecting; render(); }); }, { threshold: 0.1 }).observe(hideAt);
+    });
+  })();
+</script>

@@ -1,148 +1,270 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
 import YouTubeCard from '../../components/YouTubeCard.astro';
-import NextStepBlock from '../../components/texas/NextStepBlock.astro';
+import { TEXAS_COURSE, TEXAS_PRICE_LABEL } from '../../data/texas-course';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
-
 const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+const price = TEXAS_PRICE_LABEL;
+
+// Redesigned 2026-10-06 from Jackson's "Dallas Page Redesign" file (artboard 08) on the pattern in
+// ~/Claude/SEO/DESIGN-STANDARD.md: lead → "does your ticket say workers present?" picker → the
+// two-column comparison → what makes a work zone count → the three paths when workers were present →
+// course band for the ordinary-ticket reader → quick answers. Every statute cited was re-read on
+// statutes.capitol.texas.gov on October 6, 2026: §542.404(a) requires the notice to appear to state on its
+// face that workers were present; §542.404(c) is the speed-sign rule; §472.022(e)(2) is the sign
+// definition ("Fines double when workers present."); §472.022(f) and arts. 45A.301(1)/45A.353(3) are the
+// two exclusions. No sticky buy bar on this page: most readers here cannot use the course.
 
 const faqs = [
-  {
-    "q": "Can you take defensive driving for a construction zone ticket in Texas?",
-    "a": "Not if workers were present — CCP art. 45A.353(3) excludes work-zone offenses with workers present from the defensive-driving dismissal subchapter entirely. If the zone was inactive (no workers present, or not alleged on the citation), the offense is ordinary and the course is available under normal rules."
-  },
-  {
-    "q": "Can I get deferred disposition for a work zone ticket?",
-    "a": "Also no, when workers were present — the deferred-disposition statute carries the same exclusion (CCP art. 45A.301(1), via §542.404). The work-zone-with-workers ticket is the rare offense barred from both tools at once."
-  },
-  {
-    "q": "What does 'workers present' actually mean?",
-    "a": "It's the fact element that triggers both the doubled fine and the exclusions: a construction or maintenance work zone with workers on site at the time of the offense. An empty zone at night, or a citation that doesn't allege workers present, is an ordinary violation — which is why checking the exact charge on your citation is step one."
-  },
-  {
-    "q": "Are fines really doubled in Texas work zones?",
-    "a": "Yes — Transp. Code §542.404 sets a doubled minimum and maximum fine for offenses committed in a construction or maintenance work zone when workers are present. Combined with the dismissal exclusions, it's the most expensive flavor of routine ticket in Texas."
-  },
-  {
-    "q": "So what should I actually do with a workers-present ticket?",
-    "a": "Don't just pay it by reflex. Plead not guilty, and seriously consider a local traffic attorney: the workers-present element must be proven, and negotiated reductions to ordinary violations happen. If it resolves as an ordinary violation, your dismissal options come back."
-  },
-  {
-    "q": "My citation says construction zone but no workers were there — am I stuck?",
-    "a": "Maybe not. If the citation doesn't allege workers present, or the State can't prove they were, the double-fine statute and the exclusions don't apply — it's an ordinary violation with ordinary options, including defensive driving. Raise it with the court or your attorney immediately."
-  }
+  { q: 'Can I take defensive driving for a construction zone ticket in Texas?', a: 'Not if workers were present (Code Crim. Proc. art. 45A.353(3)). If the ticket doesn’t say workers were present, normal eligibility rules apply and the course is available.' },
+  { q: 'Can I get deferred disposition instead?', a: 'Not if workers were present. Deferred disposition carries the same exclusion (art. 45A.301(1), via Transp. Code §542.404). It is the rare offense barred from both tools at once.' },
+  { q: 'What does “workers present” actually mean?', a: 'It is the fact element that triggers both the doubled fine and the exclusions: a marked construction or maintenance work zone with workers on site at the time of the offense. An empty zone at night, or a citation that doesn’t allege workers present, is an ordinary violation, which is why reading the exact charge on your citation is step one.' },
+  { q: 'Are work zone fines really doubled?', a: 'Yes, both the minimum and maximum, when workers are present and the citation says so (Transp. Code §542.404). For speeding, the zone must also have a posted speed-limit sign.' },
+  { q: 'So what should I actually do with a workers-present ticket?', a: 'Don’t pay it by reflex. Plead not guilty, and seriously consider a local traffic attorney: the workers-present element must be proven, and negotiated reductions to ordinary violations happen. If it resolves as an ordinary violation, your dismissal options come back.' },
+  { q: 'The ticket says construction zone, but nobody was working. Am I stuck?', a: 'Maybe not. If the citation doesn’t state workers were present, the doubled fine and the exclusions don’t apply. If it does and you disagree, raise it with the court or an attorney before you plead.' },
 ];
 
 const articleSchema = JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'Article',
-  headline: "The Texas Construction-Zone Ticket: The One Ticket Both Dismissal Tools Can't Touch",
-  description: "A Texas work-zone ticket with workers present is excluded from BOTH defensive driving and deferred disposition — a double bar almost no one explains. What the law says, what 'workers present' means, and your remaining options.",
+  headline: 'Construction zone ticket in Texas? Check one line on it first.',
+  description: 'If your Texas ticket says workers were present, the fine is doubled and both defensive driving and deferred disposition are excluded. If it doesn’t, normal rules likely apply. How to read your citation and what to do either way.',
   author: { '@type': 'Organization', name: 'Road Ready Safety' },
   publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
   datePublished: '2026-06-11',
-  dateModified: '2026-08-04',
+  dateModified: '2026-10-06',
   mainEntityOfPage: `${siteUrl}/texas/construction-zone-ticket`,
 });
-
 const faqSchema = JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
   mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
 });
+
+// The picker. Three answers, three panels; the script below swaps them. Default is "yes" because
+// the doubled-fine line is what brings most readers to this page.
+const picks = [
+  { k: 'yes', label: 'Yes, it says workers present', eyebrow: 'Both dismissal options are off the table', panel: 'bg-amber-50 border-amber-200', eye: 'text-amber-800',
+    headline: 'Don’t pay it yet. Your options are contesting it or a reduced charge.',
+    body: 'Texas bars defensive driving and deferred disposition for this ticket, and the fine is doubled. The work-zone facts still have to be proven, and a reduction to an ordinary violation brings your options back.',
+    cta: ['#options', 'See your options ↓'], cta2: ['/texas/courts', 'Find your court'] },
+  { k: 'no', label: 'No, or just “construction zone”', eyebrow: 'Good news: normal rules likely apply', panel: 'bg-info border-info-border', eye: 'text-primary-deep',
+    headline: 'You can likely get it dismissed with defensive driving.',
+    body: 'Without “workers present” on the ticket, the doubled fine and the exclusions don’t apply. Ask your court for the course by your appearance date, as long as you weren’t 25+ over, on a CDL, or otherwise excluded.',
+    cta: ['/texas/request-defensive-driving', 'How to ask the court →'], cta2: [enrollUrl, `Already approved? ${price} course`] },
+  { k: 'unsure', label: 'I can’t tell', eyebrow: 'Find out before you do anything', panel: 'bg-surface-muted border-border', eye: 'text-text-body',
+    headline: 'Call the court clerk and ask for the exact charge.',
+    body: 'Ask whether the citation alleges workers were present. Don’t pay first. Paying is a guilty plea, and it ends every option on this page.',
+    cta: ['/texas/courts', 'Find your court’s number →'], cta2: ['/texas/lost-ticket', 'Lost the ticket?'] },
+];
+
+const rows = [
+  ['Fine', 'Normal', 'Doubled, minimum and maximum'],
+  ['Defensive driving', '✓ Usually available', '✕ Not allowed'],
+  ['Deferred disposition', '✓ Usually available', '✕ Not allowed'],
+  ['Keep it off your record', '✓ Yes, with either option', 'Only by contesting or a reduced charge'],
+];
+
+const elements = [
+  { n: 1, t: 'The zone was marked', b: 'Signs at the start and end, including “Fines double when workers present.” (Transp. Code §472.022)' },
+  { n: 2, t: 'Workers were there', b: 'At the time of the offense. An empty zone at 2 a.m. is different.' },
+  { n: 3, t: 'The ticket says so', b: 'The citation must state on its face that workers were present (§542.404(a)).' },
+  { n: 4, t: 'For speeding: a speed sign', b: 'The zone must be marked with a sign showing the speed limit (§542.404(c)).' },
+];
+
+const outfit = "font-family:'Outfit',sans-serif;";
+const sans = "font-family:'DM Sans',sans-serif;";
+const h2c = 'text-[28px] lg:text-[36px] font-extrabold tracking-[-0.02em] leading-[1.12] text-primary-navy m-0 mb-3';
+const wrap = 'max-w-[1080px] mx-auto px-4 sm:px-6 lg:px-8';
+const pillOn = 'bg-primary text-white border-primary';
+const pillOff = 'bg-white text-text border-border hover:border-primary-deep';
 ---
 
 {isEnabled ? (
   <TexasLayout
-    title="Texas Construction Zone Ticket: Why Fines Double When Workers Are Present"
-    description="A Texas work-zone ticket with workers present is excluded from BOTH defensive driving and deferred disposition — a double bar almost no one explains. What the law says, what 'workers present' means, and your remaining options."
+    title="Texas Construction Zone Ticket: Can You Take Defensive Driving?"
+    description="Not if your ticket says workers were present. If it doesn't, normal rules likely apply. How to read your citation and what to do either way."
     keywords="construction zone ticket texas, work zone speeding ticket texas, construction zone defensive driving texas, workers present ticket texas, work zone fine doubled texas"
     url="/texas/construction-zone-ticket"
   >
     <script type="application/ld+json" set:html={articleSchema} />
     <script type="application/ld+json" set:html={faqSchema} />
 
-    <article class="bg-white pb-16 lg:pb-24">
-      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
-
-        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
+    <article class="bg-white pb-16" style={sans}>
+      <!-- ===== Lead ===== -->
+      <div class={`${wrap} pt-8 lg:pt-12`}>
+        <p class="text-sm text-text-body mb-4">
           <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving course</a>
           <span class="mx-2 text-text-subtle">›</span>
           <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">Speeding ticket guide</a>
           <span class="mx-2 text-text-subtle">›</span>
           <span class="text-text">Construction zone tickets</span>
         </p>
-
-        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
-          The Texas Construction-Zone Ticket: The One Ticket Both Dismissal Tools Can't Touch
-        </h1>
-
-        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
-          <p>Here's what almost no website tells you about a Texas work-zone ticket: if workers were present, you're excluded from <strong class="text-text">defensive driving AND deferred disposition</strong> — both of the standard keep-it-off-your-record tools, by statute (CCP arts. 45A.353(3) and 45A.301(1)). It's the only common ticket with that double bar.</p>
-          <p>That makes the "workers present" element the whole case. Here's what the law actually says, why those words matter, and what's realistically left.</p>
+        <div class="max-w-[760px] pb-12">
+          <h1 class="text-[36px] lg:text-[56px] font-extrabold tracking-[-0.02em] leading-[1.05] text-primary-navy m-0 mb-5" style={outfit}>Construction zone ticket in Texas? Check one line on it first.</h1>
+          <p class="text-lg lg:text-[21px] text-text-body leading-8 m-0 mb-3">If your ticket says <strong class="text-text">workers were present</strong>, Texas doubles the fine and rules out both defensive driving and deferred disposition. If it doesn't say that, it's treated like an ordinary ticket, and defensive driving may still be on the table.</p>
+          <p class="text-lg lg:text-[21px] text-text-body leading-8 m-0 mb-5">Texas law requires that line to be printed on the ticket itself. So the answer is already in your hands. Here's how to read it, and what to do either way.</p>
+          <p class="text-sm text-text-subtle m-0">By Road Ready Safety, TDLR-licensed provider {TEXAS_COURSE.providerNumber} · Checked against Tex. Transp. Code §§542.404 &amp; 472.022 and Tex. Code Crim. Proc. arts. 45A.301 &amp; 45A.353 · Updated October 6, 2026</p>
         </div>
+      </div>
 
-        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
-          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Procedures vary by court and judge — confirm with the court listed on your citation.</p>
-        </div>
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The double exclusion, and the words that trigger it</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p>Texas law doubles fines for offenses in a construction or maintenance work zone <strong class="text-text">when workers are present</strong> (§542.404), and the same trigger locks the exits: CCP arts. 45A.353(3) and 45A.301(1) shut both the defensive-driving and deferred-disposition doors on those offenses. No course, no probation-to-dismissal — paths that survive even a 95-mph ticket are closed by an orange-barrel ticket with workers on site.</p>
-          <p>The trigger is specific, and it's an element the State has to prove: a marked construction or maintenance work zone <em>and</em> workers present at the time. A work zone at 2 a.m. with no crew, barrels with nobody behind them, or a citation that doesn't allege workers present is a different, lesser situation — an ordinary violation that keeps its ordinary dismissal options. Check the exact charge on your citation; "speeding" and "speeding in a construction zone with workers present" are different worlds.</p>
-        </div>
-
-        <NextStepBlock page="construction-zone-ticket" lead="precourt" ineligibleNote="Were workers present when you were cited? Then the course is excluded by statute and deferred disposition is the route." ineligibleHref="/texas/deferred-disposition" ineligibleLabel="How deferred disposition works" />
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">What's actually left when both tools are barred</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p><strong class="text-text">Make the State prove it.</strong> Plead not guilty. Workers-present is a fact element — crew schedules, the officer's observation, time of day all matter. Some work-zone charges become ordinary speeding charges at the negotiation table precisely because the element is shaky, and an ordinary charge gets its dismissal options back.</p>
-          <p><strong class="text-text">Hire local counsel.</strong> With doubled fines, a conviction headed for your record, and no statutory off-ramp, a flat-fee traffic attorney who knows the court's prosecutor is worth more here than on any routine ticket. A negotiated reduction to a non-work-zone violation is the realistic best outcome.</p>
-          <p><strong class="text-text">If you pay, pay knowing.</strong> Doubled fine, conviction on the record, roughly three years of insurance impact, and a tick toward the <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">habitual-violator thresholds</a>. And if you hold a CDL, all of the above plus the 30-day employer notification — see the <a href="/texas/cdl-defensive-driving" class="text-primary-deep font-medium hover:underline">CDL guide</a>.</p>
-        </div>
-
-        <YouTubeCard id="GDdhttCVEkY" blurb="The four steps that get a moving violation dismissed." />
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
-        <div class="space-y-8 mb-12">
-          {faqs.map(item => (
-            <div>
-              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
-              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+      <!-- ===== Picker ===== -->
+      <section id="check" class="bg-surface-muted border-y border-border scroll-mt-28">
+        <div class={`${wrap} py-12 lg:py-14`} data-picker>
+          <h2 class={h2c} style={outfit}>Does your ticket say "workers present"?</h2>
+          <p class="text-base text-text-body leading-7 m-0 mb-6 max-w-[760px]">Look at the violation on your citation. A doubled work-zone fine only applies if the ticket states on its face that workers were present.</p>
+          <div class="flex flex-wrap gap-2.5 mb-6">
+            {picks.map((p, i) => (
+              <button type="button" data-pick={p.k} aria-pressed={i === 0 ? 'true' : 'false'} class={`font-bold text-[17px] min-h-[48px] px-5 rounded-full border-2 transition-colors ${i === 0 ? pillOn : pillOff}`}>{p.label}</button>
+            ))}
+          </div>
+          {picks.map((p, i) => (
+            <div data-panel={p.k} hidden={i !== 0}>
+            <div class={`rounded-2xl border p-6 lg:p-7 max-w-[860px] flex flex-col gap-3 ${p.panel}`}>
+              <p class={`text-sm font-bold uppercase tracking-[0.06em] m-0 ${p.eye}`}>{p.eyebrow}</p>
+              <p class="text-[24px] lg:text-[28px] font-extrabold leading-[1.15] text-text m-0" style={outfit}>{p.headline}</p>
+              <p class="text-[17px] text-text-body leading-7 m-0">{p.body}</p>
+              <div class="flex flex-wrap gap-3 items-center mt-1">
+                <a href={p.cta[0]} class="no-underline bg-primary hover:bg-primary-hover text-white font-bold px-5 py-3 rounded-xl">{p.cta[1]}</a>
+                <a href={p.cta2[0]} class="font-semibold text-primary-deep hover:underline">{p.cta2[1]}</a>
+              </div>
+            </div>
             </div>
           ))}
         </div>
+      </section>
 
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">If your ticket turns out ordinary, the course is waiting</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
-          <p>Plenty of "construction zone" tickets resolve as ordinary violations once the workers-present element gets scrutiny — and an ordinary eligible ticket dismisses the normal way: <strong class="text-text">$28 course, court approval first, free instant certificate</strong>.</p>
+      <!-- ===== Why two words matter ===== -->
+      <section class={`${wrap} pt-14 pb-4`}>
+        <h2 class={h2c} style={outfit}>Why do two words change everything?</h2>
+        <p class="text-base text-text-body leading-7 m-0 mb-6 max-w-[760px]">"Workers present" is the trigger for both the doubled fine and the two exclusions. It's the only common ticket that loses both ways to keep it off your record.</p>
+        <div class="overflow-x-auto max-w-[860px]">
+          <table class="w-full min-w-[560px] border-collapse rounded-2xl border border-border overflow-hidden text-[17px]" style="border-spacing:0;">
+            <thead>
+              <tr class="bg-surface-muted text-left">
+                <th scope="col" class="p-4 font-semibold text-text-subtle text-sm"><span class="sr-only">Outcome</span></th>
+                <th scope="col" class="p-4 font-bold text-text">Ordinary ticket</th>
+                <th scope="col" class="p-4 font-bold text-amber-800">Work zone, workers present</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((r) => (
+                <tr class="border-t border-border">
+                  <th scope="row" class="p-4 font-semibold text-text text-left">{r[0]}</th>
+                  <td class="p-4 text-text-body">{r[1]}</td>
+                  <td class="p-4 text-text-body">{r[2]}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
+        <p class="text-base text-text-body leading-7 m-0 mt-4 max-w-[760px]">For comparison: a <a href="/texas/speeding-25-over" class="text-primary-deep font-medium hover:underline">95 mph ticket</a> can't use defensive driving either, but it can still get deferred disposition. A workers-present ticket can't use either.</p>
+      </section>
 
-        <div class="flex flex-col sm:flex-row gap-4 mb-10">
-          <a
-            href={enrollUrl}
-            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
-            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
-          >
-            Start the $28 Course →
-          </a>
-          <a
-            href="/texas/speeding-25-over"
-            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
-            style="font-family: 'DM Sans', sans-serif;"
-          >
-            Other tickets the course can't fix
-          </a>
+      <!-- ===== What makes a work zone count ===== -->
+      <section class={`${wrap} pt-12 pb-4`}>
+        <h2 class={h2c} style={outfit}>What makes a work zone count?</h2>
+        <p class="text-base text-text-body leading-7 m-0 mb-6 max-w-[760px]">Orange barrels alone aren't enough. For the doubled fine and the exclusions to apply, these all have to be true:</p>
+        <ol class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 list-none p-0 m-0">
+          {elements.map((e) => (
+            <li class="rounded-2xl p-5 flex flex-col gap-1.5 bg-white border border-border">
+              <span class="text-[32px] font-extrabold leading-none text-primary-deep" style={outfit}>{e.n}</span>
+              <span class="font-bold text-[18px]">{e.t}</span>
+              <span class="text-base leading-6 text-text-body">{e.b}</span>
+            </li>
+          ))}
+        </ol>
+        <div class="mt-5 rounded-xl border border-amber-300 bg-amber-50 p-4 max-w-[760px] text-text leading-7"><strong>Think one of these was missing?</strong> Raise it with the court or a traffic attorney before you plead. If it's handled as an ordinary violation, your normal options come back.</div>
+      </section>
+
+      <!-- ===== Options when workers were present ===== -->
+      <section id="options" class={`${wrap} pt-12 pb-4 scroll-mt-28`}>
+        <h2 class={h2c} style={outfit}>What can you do if workers were present?</h2>
+        <p class="text-base text-text-body leading-7 m-0 mb-6 max-w-[760px]">Three realistic paths. Don't pay it by reflex: paying is a guilty plea and a conviction.</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="rounded-2xl border border-border bg-white p-6 flex flex-col gap-2">
+            <p class="text-[22px] font-extrabold text-text m-0 leading-tight" style={outfit}>Plead not guilty</p>
+            <p class="text-base text-text-body leading-7 m-0">The State has to prove the work-zone facts: the signs, the workers, the time. Shaky facts matter here.</p>
+          </div>
+          <div class="rounded-2xl border border-border bg-white p-6 flex flex-col gap-2">
+            <p class="text-[22px] font-extrabold text-text m-0 leading-tight" style={outfit}>Ask about a reduced charge</p>
+            <p class="text-base text-text-body leading-7 m-0">A traffic attorney who knows the court may negotiate it down to an ordinary violation. If that happens, defensive driving can become available again.</p>
+          </div>
+          <div class="rounded-2xl border border-border bg-white p-6 flex flex-col gap-2">
+            <p class="text-[22px] font-extrabold text-text m-0 leading-tight" style={outfit}>Pay, knowing the cost</p>
+            <p class="text-base text-text-body leading-7 m-0">A doubled fine and a conviction on your record, which can raise your insurance for about three years and counts toward the <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">habitual-violator thresholds</a>. CDL holders face more, including the 30-day employer notice. <a href="/texas/cdl-defensive-driving" class="text-primary-deep font-medium hover:underline">CDL guide</a></p>
+          </div>
         </div>
+      </section>
 
-        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
-          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
-          <p class="text-xs text-text-subtle">Last updated August 4, 2026 — verified by the Road Ready Safety editorial team against Tex. Transp. Code §§472.022 &amp; 542.404 and Tex. Code Crim. Proc. arts. 45A.301 &amp; 45A.351–.353.</p>
+      <!-- ===== Course band (for the ordinary-ticket reader) ===== -->
+      <section id="course" class={`${wrap} py-12 scroll-mt-28`}>
+        <div class="rounded-[20px] bg-surface-dark text-white p-8 lg:p-10 flex flex-wrap gap-8 items-center justify-between">
+          <div class="flex-[999_1_420px] min-w-0">
+            <p class="text-xs font-bold uppercase tracking-[0.06em] text-amber-300 m-0 mb-2">Ticket doesn't say workers present?</p>
+            <h2 class="text-[28px] lg:text-[34px] font-extrabold tracking-[-0.02em] leading-[1.15] m-0 mb-3" style={outfit}>Then it can likely be dismissed the normal way.</h2>
+            <p class="m-0 text-info-border leading-7">Ask your court for defensive driving by your appearance date, then finish a {TEXAS_COURSE.hours}-hour course. Ours is {price} all-in, TDLR-approved ({TEXAS_COURSE.providerNumber}), with the certificate the moment you finish. Nothing added at checkout.</p>
+          </div>
+          <div class="flex-[1_1_240px] flex flex-col gap-3">
+            <a href="/texas/request-defensive-driving" class="text-center no-underline bg-amber-400 hover:bg-amber-300 text-surface-dark font-extrabold text-lg px-7 py-4 rounded-xl" style={outfit}>How to ask the court →</a>
+            <a href={enrollUrl} class="text-center no-underline text-white font-semibold hover:underline">Already approved? Start the {price} course</a>
+          </div>
         </div>
+        <YouTubeCard id="GDdhttCVEkY" blurb="The four steps that get an ordinary moving violation dismissed." />
+      </section>
 
-      </div>
+      <!-- ===== Quick answers ===== -->
+      <section class={`${wrap} pt-2 pb-6`}>
+        <h2 class={h2c} style={outfit}>Quick answers</h2>
+        <div class="flex flex-col gap-3 max-w-[760px] mt-5">
+          {faqs.map((f) => (
+            <div class="rounded-xl border border-border bg-white p-5">
+              <h3 class="font-bold text-base m-0 mb-1 text-text" style={outfit}>{f.q}</h3>
+              <p class="m-0 text-text-body leading-7">{f.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- ===== Keep reading + legal ===== -->
+      <section class={`${wrap} pt-4 pb-10`}>
+        <p class="font-bold m-0 mb-2.5">Keep reading</p>
+        <div class="flex flex-wrap gap-2.5 mb-7">
+          {[
+            ['/texas/eligibility-tracker', 'Am I eligible for defensive driving?'],
+            ['/texas/deferred-disposition', 'Deferred disposition explained'],
+            ['/texas/speeding-25-over', '25+ over and other excluded tickets'],
+            ['/texas/cdl-defensive-driving', 'CDL drivers'],
+            ['/texas/courts', 'Find your court'],
+            ['/texas/speeding-ticket', 'The Texas speeding ticket guide'],
+          ].map(([href, t]) => <a href={href} class="no-underline bg-white border border-border rounded-full px-4 py-2 text-base text-text hover:border-primary-deep">{t}</a>)}
+        </div>
+        <p class="text-sm text-text-subtle m-0 max-w-[760px] leading-6">Road Ready Safety is a TDLR-licensed Texas driving safety provider ({TEXAS_COURSE.providerNumber}). General information, not legal advice; procedures vary by court and judge, so confirm with the court on your citation. Last updated October 6, 2026. Sources: Tex. Transp. Code §542.404 (doubled fines, workers-present notice, speed sign); §472.022 (work zone signs and the §472.022(f) exclusion); Tex. Code Crim. Proc. art. 45A.301(1) (deferred disposition exclusion) and art. 45A.353(3) (driving safety course exclusion).</p>
+      </section>
     </article>
+
+    <script is:inline>
+      (function () {
+        document.querySelectorAll('[data-picker]:not([data-armed])').forEach(function (root) {
+          root.setAttribute('data-armed', '1');
+          var on = ['bg-primary', 'text-white', 'border-primary'], off = ['bg-white', 'text-text', 'border-border', 'hover:border-primary-deep'];
+          var btns = root.querySelectorAll('[data-pick]'), panels = root.querySelectorAll('[data-panel]');
+          btns.forEach(function (b) {
+            b.addEventListener('click', function () {
+              var k = b.getAttribute('data-pick');
+              btns.forEach(function (x) {
+                var sel = x === b;
+                x.setAttribute('aria-pressed', sel ? 'true' : 'false');
+                on.forEach(function (c) { x.classList.toggle(c, sel); });
+                off.forEach(function (c) { x.classList.toggle(c, !sel); });
+              });
+              panels.forEach(function (p) { p.hidden = p.getAttribute('data-panel') !== k; });
+            });
+          });
+        });
+      })();
+    </script>
   </TexasLayout>
 ) : (
   <meta http-equiv="refresh" content="0; url=/" />

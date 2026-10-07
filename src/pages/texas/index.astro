@@ -6,7 +6,8 @@
  *  - Refund copy uses the three-day wording (standing rule), not "any time before you complete the course".
  *  - "Approved by every Texas court" reads "Accepted by every Texas court": TDLR approves, courts accept.
  *  - The video tile plays Jackson's pick, "Why YOU should take…" (vWLZ84aNCFU, 1:01). Its cover is a branded thumbnail
- *    rendered with rrs-videos' Thumbnail composition (2026-10-07), with a "Watch · 1:01" button in the empty corner.
+ *    is Jackson's "How to Dismiss Your Ticket" thumbnail (2026-10-07) with a centered play button, no label.
+ *  - The audio card uses the canvas's navy (#0B2160), darker than our deep blue, to soften the contrast.
  *  - The audio card's button opens checkout with the audio add-on already in the cart (texasAudioCheckoutUrl).
  */
 import TexasLayout from '../../layouts/TexasLayout.astro';
@@ -201,11 +202,10 @@ const chev = (stroke: string, size = 18) => `<svg width="${size}" height="${size
 
       <div class="min-w-0 lg:col-start-2 lg:row-start-1 lg:row-span-2 w-full max-w-[480px] mx-auto lg:mx-0">
         <div class="rrs-hero-yt relative aspect-video rounded-2xl overflow-hidden bg-primary-navy shadow-[0_16px_40px_rgba(11,33,96,0.18)]" data-embed={`https://www.youtube-nocookie.com/embed/${video.id}?autoplay=1&rel=0`} data-title={video.title}>
-          <img src="/assets/images/texas/why-rrs-video-1280.webp" srcset="/assets/images/texas/why-rrs-video-640.webp 640w, /assets/images/texas/why-rrs-video-1280.webp 1280w" sizes="(min-width: 1024px) 480px, 100vw" alt="" width="1280" height="720" loading="eager" decoding="async" class="absolute inset-0 w-full h-full object-cover" />
+          <img src="/assets/images/texas/dismiss-ticket-video-1280.webp" srcset="/assets/images/texas/dismiss-ticket-video-640.webp 640w, /assets/images/texas/dismiss-ticket-video-1280.webp 1280w" sizes="(min-width: 1024px) 480px, 100vw" alt="" width="1280" height="720" loading="eager" decoding="async" class="absolute inset-0 w-full h-full object-cover" />
           <button type="button" class="rrs-hero-yt-play group absolute inset-0 w-full h-full bg-transparent border-0 cursor-pointer" aria-label={`Play video: ${video.title} (${videoLength})`}>
-            <span class="absolute right-[5%] bottom-[8%] flex items-center gap-2.5 rounded-full bg-white pl-1.5 pr-4 py-1.5 shadow-[0_10px_24px_rgba(0,0,0,0.3)] group-hover:bg-info" aria-hidden="true">
-              <span class="w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-primary flex items-center justify-center"><svg width="16" height="16" viewBox="0 0 30 30" fill="none"><path d="M10 6 L24 15 L10 24 Z" fill="#FFFFFF"/></svg></span>
-              <span class="font-extrabold text-sm sm:text-base text-text" style={inter}>Watch · {videoLength}</span>
+            <span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white/95 flex items-center justify-center shadow-[0_12px_30px_rgba(0,0,0,0.35)] transition-transform group-hover:scale-105" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 30 30" fill="none"><path d="M10 6 L24 15 L10 24 Z" fill="#2454E6"/></svg>
             </span>
           </button>
         </div>
@@ -272,7 +272,7 @@ const chev = (stroke: string, size = 18) => `<svg width="${size}" height="${size
             <a href={enrollUrl} data-rrs-cta="texas-choose-basic" class="mt-auto no-underline text-center font-extrabold text-[17px] px-4 py-3.5 rounded-xl bg-primary hover:bg-primary-hover text-white" style={inter}>Enroll Now&nbsp;→</a>
           </div>
 
-          <div class="flex-[1_1_300px] max-w-[400px] min-w-0 rounded-[20px] px-6 py-7 flex flex-col gap-4 bg-primary-deep text-white border border-primary-deep shadow-[0_24px_60px_rgba(11,33,96,0.28)]">
+          <div class="flex-[1_1_300px] max-w-[400px] min-w-0 rounded-[20px] px-6 py-7 flex flex-col gap-4 bg-[#0B2160] text-white border border-[#0B2160] shadow-[0_24px_60px_rgba(11,33,96,0.28)]">
             <div class="flex justify-between gap-4 items-start">
               <h3 class="m-0 font-extrabold text-[21px] leading-[1.2]" style={inter}>Texas Defensive Driving Course + Audio</h3>
               <span class="flex-none font-bold text-xs px-3 py-1.5 rounded-full bg-white text-primary-deep">Hands-Free</span>

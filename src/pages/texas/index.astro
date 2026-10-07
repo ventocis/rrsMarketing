@@ -298,11 +298,11 @@ const chev = (stroke: string, size = 18) => `<svg width="${size}" height="${size
 
         <div class="flex flex-wrap gap-6 w-full justify-center">
           {[
-            { head: 'Basic is for you if you…', cost: price, items: fitBasic },
-            { head: 'Audio is for you if you…', cost: TEXAS_AUDIO_TOTAL_LABEL, items: fitAudio },
+            { head: 'Basic is for you if you…', items: fitBasic },
+            { head: 'Audio is for you if you…', items: fitAudio },
           ].map((f) => (
             <div class="flex-[1_1_300px] max-w-[400px] min-w-0 flex flex-col gap-1.5 px-6 py-4 bg-surface-muted border border-border rounded-[14px]">
-              <span class="font-extrabold text-[15px] text-text" style={inter}>{f.head} <span class="font-semibold text-text-muted">· {f.cost}</span></span>
+              <span class="font-extrabold text-[15px] text-text" style={inter}>{f.head}</span>
               {f.items.map((t) => <span class="flex gap-2 text-sm text-text-body"><span class="text-[#1E8E53] font-extrabold" aria-hidden="true">✓</span>{t}</span>)}
             </div>
           ))}

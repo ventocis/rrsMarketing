@@ -1,5 +1,6 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import CourseBand from '../../components/texas/CourseBand.astro';
 import YouTubeCard from '../../components/YouTubeCard.astro';
 import { TEXAS_COURSE, TEXAS_PRICE_LABEL } from '../../data/texas-course';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
@@ -197,22 +198,7 @@ const pillOff = 'bg-white text-text border-border hover:border-primary-deep';
           </div>
         </div>
       </section>
-
-      <!-- ===== Course band (for the ordinary-ticket reader) ===== -->
-      <section id="course" class={`${wrap} py-12 scroll-mt-28`}>
-        <div class="rounded-[20px] bg-surface-dark text-white p-8 lg:p-10 flex flex-wrap gap-8 items-center justify-between">
-          <div class="flex-[999_1_420px] min-w-0">
-            <p class="text-xs font-bold uppercase tracking-[0.06em] text-accent m-0 mb-2">Ticket doesn't say workers present?</p>
-            <h2 class="text-[28px] lg:text-[34px] font-extrabold tracking-[-0.02em] leading-[1.15] m-0 mb-3" style={outfit}>Then it can likely be dismissed the normal way.</h2>
-            <p class="m-0 text-info-border leading-7">Ask your court for defensive driving by your appearance date, then finish a {TEXAS_COURSE.hours}-hour course. Ours is {price} all-in, TDLR-approved ({TEXAS_COURSE.providerNumber}), with the certificate the moment you finish. Nothing added at checkout.</p>
-          </div>
-          <div class="flex-[1_1_240px] flex flex-col gap-3">
-            <a href="/texas/request-defensive-driving" class="text-center no-underline bg-accent hover:brightness-110 text-surface-dark font-extrabold text-lg px-7 py-4 rounded-xl" style={outfit}>How to ask the court →</a>
-            <a href={enrollUrl} class="text-center no-underline text-white font-semibold hover:underline">Already approved? Start the {price} course</a>
-          </div>
-        </div>
-        <YouTubeCard id="GDdhttCVEkY" blurb="The four steps that get an ordinary moving violation dismissed." />
-      </section>
+      <CourseBand />
 
       <!-- ===== Quick answers ===== -->
       <section class={`${wrap} pt-2 pb-6`}>

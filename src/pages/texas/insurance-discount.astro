@@ -1,15 +1,14 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import CourseBand from '../../components/texas/CourseBand.astro';
 import StickyCta from '../../components/texas/StickyCta.astro';
 import { TEXAS_COURSE, TEXAS_PRICE_LABEL } from '../../data/texas-course';
 import { INSURERS } from '../../data/texas-insurers';
-import reviews from '../../data/texas-reviews.json';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
 const price = TEXAS_PRICE_LABEL;
 const coursePrice = TEXAS_COURSE.price;
-const review = reviews.find((r: any) => r.name === 'Ryan Johnson');
 
 // Rebuilt 2026-10-06 from Jackson's design canvas "Insurance Discount Redesign" (Main.dc.html + Serp.dc.html),
 // implemented as the spec: his copy, section order, the insurer picker and the two-mode calculator. The insurer
@@ -201,33 +200,7 @@ const input = 'text-lg px-3.5 py-3 rounded-[10px] border-2 border-[#CBD3DF] bg-w
           <div class="rounded-2xl border border-info-border bg-info p-6"><p class="font-bold text-[19px] m-0 mb-1.5">Can't dismiss your ticket?</p><p class="text-base text-text-body leading-6 m-0">CDL holders, 25+ over, or a second ticket within 12 months can still take the course for the discount.</p></div>
         </div>
       </section>
-
-      <!-- ===== Course band ===== -->
-      <section id="course" class={`${wrap} py-14 scroll-mt-28`}>
-        <div class="rounded-3xl bg-primary-deep text-white px-6 py-12 lg:px-8 lg:py-14 flex flex-col items-center text-center gap-7">
-          <div class="flex flex-col gap-2.5 max-w-[680px]">
-            <span class="text-sm font-bold uppercase tracking-[0.08em] text-info-border">Confirmed with your agent?</span>
-            <h2 class="text-[30px] lg:text-[40px] font-extrabold leading-[1.1] m-0" style={inter}>Six hours online. Insurance copy the moment you finish.</h2>
-          </div>
-          {review && (
-            <div class="rounded-[18px] bg-white text-text px-7 py-7 max-w-[640px] w-full flex flex-col gap-3">
-              <span class="text-accent text-[22px] tracking-[3px]" aria-label={`${review.rating} out of 5 stars`}>{'★'.repeat(review.rating)}</span>
-              <blockquote class="m-0 text-[19px] lg:text-[21px] font-bold leading-[1.45]" style={inter}>"{review.quote}"</blockquote>
-              <div class="flex items-center gap-3 text-left">
-                <span class="w-10 h-10 rounded-full bg-primary text-white font-bold text-[15px] flex items-center justify-center" aria-hidden="true">{review.initials}</span>
-                <span class="flex flex-col text-[15px] leading-[1.35]"><strong>{review.name}</strong><span class="text-text-muted">{review.verified ? 'Verified via Trustpilot' : 'Trustpilot'} · {review.date}</span></span>
-              </div>
-            </div>
-          )}
-          <ul class="flex flex-wrap justify-center gap-2.5 list-none p-0 m-0 max-w-[820px]">
-            {[`${price} all-in, nothing added`, `TDLR-approved · ${TEXAS_COURSE.providerNumber}`, 'Insurance and court copies', 'No ticket or court needed'].map((t) => <li class="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-2 text-[15px]"><span class="text-info-border font-extrabold" aria-hidden="true">✓</span>{t}</li>)}
-          </ul>
-          <div class="flex flex-col items-center gap-3">
-            <a href={enrollUrl} class="no-underline bg-white hover:bg-info text-primary-deep font-extrabold text-lg px-8 py-4 rounded-full" style={inter}>Start the {price} course →</a>
-            <a href="/texas/cost" class="no-underline text-white hover:underline">See exactly what we charge</a>
-          </div>
-        </div>
-      </section>
+      <CourseBand />
 
       <!-- ===== Quick answers ===== -->
       <section class={`${wrap} pt-2 pb-6`}>

@@ -10,6 +10,7 @@
  * script, so every court card is in the page source for Google and the assistants.
  */
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import CourseBand from './CourseBand.astro';
 import { TEXAS_COURSE, TEXAS_PRICE_LABEL } from '../../data/texas-course';
 
 interface Court { slug: string; name: string; note: string; deadlineDays: number | null; fee: string | null; feeLabel?: string | null; deadlineLabel?: string | null }
@@ -212,18 +213,7 @@ const card = 'rounded-2xl border border-border bg-white p-5 flex flex-col gap-2 
           ))}
         </div>
       </section>
-
-      <!-- ===== Course band ===== -->
-      <section id="course" class="max-w-[1080px] mx-auto px-4 sm:px-6 lg:px-8 py-12 scroll-mt-28">
-        <div class="rounded-[20px] bg-primary-deep text-white p-8 lg:p-10 flex flex-wrap gap-8 items-center justify-between">
-          <div class="flex-[999_1_420px] min-w-0">
-            <p class="text-[15px] font-bold uppercase tracking-[0.06em] text-info-border m-0 mb-2">Approved? This is the last step.</p>
-            <h2 class="text-[28px] lg:text-[34px] font-extrabold tracking-[-0.02em] leading-[1.15] m-0 mb-3" style={outfit}>The 6-hour Texas course. {price} all-in.</h2>
-            <p class="m-0 text-[#D3D8E0] leading-7">TDLR-approved ({TEXAS_COURSE.providerNumber}) · Fully online · Accepted by every {data.county} County court · Certificate downloads the moment you finish · Nothing added at checkout</p>
-          </div>
-          <a href={enrollUrl} class="flex-[1_1_220px] text-center no-underline bg-white hover:bg-info text-primary-deep font-extrabold text-lg px-7 py-4 rounded-full" style={outfit}>Start the {price} course →</a>
-        </div>
-      </section>
+      <CourseBand />
 
       <!-- ===== Quick answers ===== -->
       <section class="max-w-[1080px] mx-auto px-4 sm:px-6 lg:px-8 pt-2 pb-6">

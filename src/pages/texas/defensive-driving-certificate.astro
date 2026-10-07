@@ -1,154 +1,227 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
-import NextStepBlock from '../../components/texas/NextStepBlock.astro';
-import YouTubeCard from '../../components/YouTubeCard.astro';
+import CourseBand from '../../components/texas/CourseBand.astro';
+import VideoEmbed from '../../components/VideoEmbed.astro';
+import StickyCta from '../../components/texas/StickyCta.astro';
+import providerData from '../../data/tdlr-providers.json';
+import { TEXAS_COURSE } from '../../data/texas-course';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
-const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
-
 const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+const portalUrl = import.meta.env.VITE_PORTAL_URL || 'https://app.roadreadysafety.com';
+const contactUrl = import.meta.env.VITE_CONTACT_US_URL || 'https://roadreadysafety.com/support';
+const { stats } = providerData as any;
+const desSearch = 'https://www.tdlr.texas.gov/dessearch';
+const cp = TEXAS_COURSE.providerNumber;
 
-const faqs = [
-  {
-    "q": "What does the Texas defensive driving certificate look like?",
-    "a": "It's the uniform certificate of course completion issued under TDLR's certificate-number system — your name, the provider and its CP license number, the course completion date, and a certificate number formatted CP###-########. The standard certificate includes a court copy and an insurance copy."
-  },
-  {
-    "q": "What's the difference between the court copy and the insurance copy?",
-    "a": "Same completion, two destinations. The court copy is submitted to the court (with your Type 3A driving record) to finish the dismissal — signed if your court requires it. The insurance copy goes to your insurer if you're claiming a discount. One completion can serve both purposes."
-  },
-  {
-    "q": "How do courts know a certificate is real?",
-    "a": "They can validate the certificate number at TDLR's DESSearch tool, which confirms the certificate against the state's issuance records. That's also why a course from a non-approved or expired provider is worthless for dismissal — there's nothing in the system to validate."
-  },
-  {
-    "q": "How fast do I get my certificate after finishing the course?",
-    "a": "Depends entirely on the provider. With Road Ready Safety it downloads instantly when you complete the final module, free. Providers that mail certificates take days to weeks, and several charge extra for instant delivery — a fee that exists only because the deadline pressure is real."
-  },
-  {
-    "q": "What if I lose my certificate before submitting it?",
-    "a": "With us: re-download it from your portal, free, forever. With mail-based providers: contact them for a replacement, usually for a fee and another wait. Either way, don't let a lost PDF run you past the 90-day deadline — replacements are always faster than excuses."
-  },
-  {
-    "q": "Can I submit the certificate to my court by email?",
-    "a": "Many Texas courts accept the certificate as a PDF by email or portal upload; others want it in person or by mail. It's the single most variable detail across courts — check your court's verified submission methods in our directory before you finish the course."
-  }
+// Rebuilt 2026-10-07 from Jackson's design canvas "The certificate redesigned". Every claim was already on this
+// page and verified (September 2, 2026): the CP###-######## format and DESSearch with TDLR's 5-day lag, court vs
+// insurance copy, The Colony's signed-and-names-the-court rule, free unlimited re-download from our portal,
+// identity check before name/birthday/court corrections, name mismatches as the most common support fix. The
+// expired-provider count comes from tdlr-providers.json (TDLR file, September 2, 2026). The canvas had no search
+// preview, so the title and meta are written to match the new H1 (flagged in the PR). Video oAj_tRcdgq0 (1:43)
+// is canonical here.
+
+const picks = [
+  { k: 'court', label: 'Send it to the court', good: true, title: 'Send the court copy, plus your Type 3A.', points: ['Use the court copy, not the insurance copy.', 'Include your Type 3A driving record from DPS.', 'Sign it if your court requires a signature.', 'Send it a few days before your deadline, not on the last day.'], cta: ['/texas/dismissal-timeline', 'How to submit to your court →'] },
+  { k: 'ins', label: 'Get my insurance discount', good: true, title: 'Send the insurance copy to your insurer.', points: ['Same course, so one completion covers the court and the discount.', 'Ask your insurer how they want it: upload, email or agent.', 'Your insurer sets the discount amount, so ask them what it is.'], cta: ['/texas/insurance-discount', 'See the insurance discount →'] },
+  { k: 'check', label: 'Check it’s real', good: true, title: 'Look it up at DESSearch.', points: ['Enter the number formatted CP###-########.', 'New certificates can take up to 5 days to appear. That’s normal.', 'Courts use this same tool.'], cta: [desSearch, 'Open DESSearch →'], ext: true },
+  { k: 'lost', label: 'I lost it', good: false, title: 'Get a new copy before your deadline.', points: ['Road Ready Safety students: log in and re-download it, free.', 'Other providers: ask about their replacement fee and wait time.', 'Don’t let a lost PDF push you past 90 days.'], cta: [portalUrl, 'Log in to my portal →'], ext: true },
+  { k: 'wrong', label: 'Something’s wrong on it', good: false, title: 'Don’t submit it. Get it fixed first.', points: ['Courts match your name, birthday and court against the citation.', 'Contact your provider to correct and reissue it.', 'With us, support verifies your identity before changing these fields.'], cta: [contactUrl, 'Contact support →'], ext: true },
 ];
-
+const fields = [
+  ['Student', '[Your full name]', 'Your name', 'must match your citation. Mismatches are the most common problem our support team fixes.'],
+  ['Provider', `Road Ready Safety · ${cp}`, 'The provider’s CP number.', 'A certificate is only as good as the license behind it.'],
+  ['Completed', '[Completion date]', 'The completion date', 'has to fall inside your court’s deadline, usually 90 days.'],
+  ['Certificate #', `${cp}-########`, 'The certificate number:', 'the provider’s license, a dash, then the certificate digits. It’s how courts confirm it’s real.'],
+];
+const faqs = [
+  { q: 'What does a Texas defensive driving certificate look like?', a: 'A uniform certificate of completion with your name, the provider and its CP number, your completion date and a certificate number formatted CP###-########. It comes as a court copy and an insurance copy.' },
+  { q: 'What’s the difference between the court copy and the insurance copy?', a: 'Same completion, two destinations. The court copy goes to the court with your Type 3A record. The insurance copy goes to your insurer for a discount.' },
+  { q: 'How do I validate my certificate?', a: 'Enter the certificate number at TDLR’s DESSearch. A new certificate can take up to 5 days to appear.' },
+  { q: 'What if I lose my certificate?', a: 'With Road Ready Safety, re-download it free from your portal. Mail-based providers usually charge a replacement fee. Either way, don’t let it push you past your deadline.' },
+  { q: 'Can I email my certificate to the court?', a: 'Many Texas courts accept a PDF by email or portal upload; others want mail or in person. Check your court before you finish the course. <a href="/texas/courts" class="text-primary-deep font-medium hover:underline">Find your court</a>' },
+];
+const plain = (s: string) => s.replace(/<[^>]+>/g, '');
 const articleSchema = JSON.stringify({
-  '@context': 'https://schema.org',
-  '@type': 'Article',
-  headline: "The Texas Defensive Driving Certificate, Explained: Copies, Numbers, Validation, and Replacements",
-  description: "What the Texas driving safety course certificate actually is — the CP###-######## number, court copy vs. insurance copy, how courts validate it, replacements, and the submission mistakes to avoid.",
+  '@context': 'https://schema.org', '@type': 'Article',
+  headline: 'Your Texas defensive driving certificate: where each copy goes, and how to keep it from being rejected',
+  description: 'One certificate, two copies. Where the court and insurance copies go, how courts validate the CP###-######## number, and the mistakes that get it rejected.',
   author: { '@type': 'Organization', name: 'Road Ready Safety' },
   publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
-  datePublished: '2026-06-11',
-  dateModified: '2026-09-02',
+  datePublished: '2026-06-11', dateModified: '2026-10-07',
   mainEntityOfPage: `${siteUrl}/texas/defensive-driving-certificate`,
 });
+const faqSchema = JSON.stringify({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: plain(f.a) } })) });
+const nextSteps = [
+  ['/texas/dismissal-timeline', 'Submit it to your court', 'Email, upload, mail →'],
+  ['/texas/type-3a-driving-record', 'Get your Type 3A', 'The record that goes with it →'],
+  ['/texas/certificate-rejected', 'Certificate rejected?', 'The common fixes →'],
+  ['/texas/tdlr-approved', 'Verify any provider', 'What TDLR-approved means →'],
+];
 
-const faqSchema = JSON.stringify({
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
-});
+const inter = "font-family:'Inter',sans-serif;";
+const sans = "font-family:'DM Sans',sans-serif;";
+const h2c = 'text-[28px] lg:text-[34px] font-extrabold tracking-[-0.02em] leading-[1.15] text-text m-0 mb-3';
+const wrap = 'max-w-[1080px] mx-auto px-4 sm:px-6 lg:px-8';
+const pillOn = 'bg-primary text-white border-primary';
+const pillOff = 'bg-white text-text border-[#CBD3DF] hover:border-primary-deep';
+const link = 'text-primary hover:text-primary-deep font-medium';
 ---
 
 {isEnabled ? (
   <TexasLayout
-    title="The Texas Defensive Driving Certificate: What It Is, Court vs. Insurance Copy, and What to Do With It (2026)"
-    description="What the Texas driving safety course certificate actually is — the CP###-######## number, court copy vs. insurance copy, how courts validate it, replacements, and the submission mistakes to avoid."
-    keywords="texas defensive driving certificate, driving safety course certificate texas, court copy insurance copy certificate, certificate of completion defensive driving, replace lost defensive driving certificate"
+    title="Texas Defensive Driving Certificate: Where Each Copy Goes"
+    description="One certificate, two copies. Where the court and insurance copies go, how courts validate the CP###-######## number, and the mistakes that get it rejected."
+    keywords="texas defensive driving certificate, driving safety course certificate texas, court copy insurance copy defensive driving, validate defensive driving certificate texas, dessearch certificate, lost defensive driving certificate texas"
     url="/texas/defensive-driving-certificate"
   >
     <script type="application/ld+json" set:html={articleSchema} />
     <script type="application/ld+json" set:html={faqSchema} />
 
-    <article class="bg-white pb-16 lg:pb-24">
-      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
-
-        <p class="text-sm text-text-body mb-6" style="font-family: 'DM Sans', sans-serif;">
-          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving course</a>
-          <span class="mx-2 text-text-subtle">›</span>
-          <a href="/texas/speeding-ticket" class="text-primary-deep font-medium hover:underline">Speeding ticket guide</a>
-          <span class="mx-2 text-text-subtle">›</span>
-          <span class="text-text">The certificate</span>
-        </p>
-
-        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style="font-family: 'Outfit', sans-serif;">
-          The Texas Defensive Driving Certificate, Explained: Copies, Numbers, Validation, and Replacements
-        </h1>
-
-        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
-          <p>The certificate of completion is the document the entire dismissal turns on — and it's more regulated than most students realize. Every certificate is issued under a TDLR-controlled <strong class="text-text">certificate number in the format CP###-########</strong> (the prefix is your provider's TDLR license number), the standard certificate comes with a <strong class="text-text">court copy and an insurance copy</strong>, and courts can validate any certificate against TDLR's database.</p>
-          <p>Here's what each piece is for, how to keep it from being rejected, and what to do if it's lost or wrong.</p>
+    <article class="bg-surface-muted pb-24 lg:pb-16 text-text" style={sans}>
+      <!-- ===== Lead ===== -->
+      <div class={wrap}>
+        <p class="text-[15px] text-text-body pt-5 m-0"><a href="/texas" class="text-text-body hover:underline">Texas defensive driving course</a><span class="mx-1.5">›</span><a href="/texas/speeding-ticket" class="text-text-body hover:underline">Speeding ticket guide</a><span class="mx-1.5">›</span><span>The certificate</span></p>
+        <div class="max-w-[860px] pt-8 pb-12">
+          <h1 class="text-[34px] lg:text-[52px] font-extrabold tracking-[-0.02em] leading-[1.05] m-0 mb-5" style={inter}>Your Texas defensive driving certificate: where each copy goes, and how to keep it from being rejected</h1>
+          <p class="text-lg lg:text-[21px] leading-8 m-0 mb-4">It's one certificate with two copies: a court copy and an insurance copy. Each carries a state-issued number (CP###-########) that any court can check against TDLR's records.</p>
+          <p class="text-lg lg:text-[21px] leading-8 m-0 mb-6">Your whole dismissal rides on this one document. Most rejections come from a handful of small, avoidable mistakes. Here's what to do with yours.</p>
+          <div class="flex flex-wrap gap-3 items-center">
+            <a href="#help" class="no-underline bg-primary hover:bg-primary-hover text-white font-bold text-[17px] px-6 py-3.5 rounded-full">What do I need to do? ↓</a>
+            <a href="#video" class="font-semibold text-primary hover:text-primary-deep">▶ Watch: How to submit your certificate (1:43)</a>
+          </div>
+          <p class="text-[15px] text-text-muted m-0 mt-6">By Road Ready Safety, TDLR provider {cp} · Checked against TDLR DESSearch and published court submission rules · Updated October 7, 2026</p>
         </div>
+      </div>
 
-        <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
-          <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Procedures vary by court and judge — confirm with the court listed on your citation.</p>
-        </div>
-
-        <NextStepBlock page="certificate" lead="eligible" ineligibleNote="Already have the certificate? Here is exactly how to get it to your court and what happens if it is rejected." ineligibleHref="/support/how-to-submit" ineligibleLabel="Read the submission guide" />
-
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Court copy vs. insurance copy — who gets what</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p>The standard certificate is really two documents. The <strong class="text-text">court copy</strong> goes to the court that approved your request, with your Type 3A driving record, before your 90-day deadline — signed, where your court requires a signature (The Colony, for example, requires the certificate be signed and name the court). The <strong class="text-text">insurance copy</strong> goes to your insurer if you're claiming a <a href="/texas/insurance-discount" class="text-primary-deep font-medium hover:underline">discount</a>. Sending the wrong copy to the wrong place is one of the avoidable rejections on our <a href="/texas/certificate-rejected" class="text-primary-deep font-medium hover:underline">rejection list</a>.</p>
-          <p>Delivery varies by provider and it matters more than price differences: some mail certificates (days to weeks against a 90-day deadline), some charge $10–$25 for "instant" delivery as an upsell after you've paid for the course. With us the certificate — both copies — is a <strong class="text-text">free instant download the moment you finish</strong>, and it stays in your portal for free re-download forever.</p>
-        </div>
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The certificate number, and how validation works</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p>Your certificate carries a number formatted <strong class="text-text">CP###-########</strong> — the provider's TDLR license, a dash, and the issued certificate digits. Anyone (you, the clerk, your insurer) can validate it at TDLR's <a href="https://www.tdlr.texas.gov/dessearch" target="_blank" rel="noopener noreferrer" class="text-primary-deep font-medium hover:underline">DESSearch</a> tool. One quirk straight from TDLR: a new certificate "may take up to 5 days after the issuance date to appear in the validation system" — so submit with a few days of cushion, not on deadline day.</p>
-          <p>This is also why provider choice matters before you ever enroll: a certificate is only as good as the license behind its prefix. TDLR's records currently list more than a dozen providers as expired — check any provider against our <a href="/texas/providers" class="text-primary-deep font-medium hover:underline">full TDLR directory</a> before paying.</p>
-        </div>
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Lost it? Wrong name on it? Here's the fix</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p><strong class="text-text">Lost or deleted:</strong> with us, log back into your portal and download it again — free, unlimited. Providers that mail certificates typically charge a replacement fee and make you wait again; ask before you buy.</p>
-          <p><strong class="text-text">Wrong name, birthday, or court:</strong> don't resubmit and hope — courts match the certificate against the citation, and identity mismatches are the most common problem our own support team handles. Contact your provider's support to correct and reissue. With us those fields are deliberately not self-editable: we verify your identity first, because nobody but you should be able to alter a document headed for a court.</p>
-        </div>
-
-        <YouTubeCard id="oAj_tRcdgq0" title="How to Submit Your Texas Driver Safety Course Certificate" blurb="How to send your completion certificate to the court." />
-
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Frequently asked questions</h2>
-        <div class="space-y-8 mb-12">
-          {faqs.map(item => (
-            <div>
-              <h3 class="text-lg font-semibold text-text mb-2" style="font-family: 'Outfit', sans-serif;">{item.q}</h3>
-              <p class="text-text-body text-base leading-7" style="font-family: 'DM Sans', sans-serif;" set:html={item.a} />
+      <!-- ===== Picker ===== -->
+      <section id="help" class="bg-white border-y border-border scroll-mt-28">
+        <div class={`${wrap} py-12 lg:py-14`} data-picker>
+          <h2 class={h2c} style={inter}>What do you need to do with your certificate?</h2>
+          <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">Pick one. We'll tell you exactly what to do next.</p>
+          <div class="flex flex-wrap gap-2.5 mb-5">
+            {picks.map((p, i) => <button type="button" data-pick={p.k} aria-pressed={i === 0 ? 'true' : 'false'} class={`font-bold text-base min-h-[48px] px-[18px] rounded-full border-2 transition-colors ${i === 0 ? pillOn : pillOff}`}>{p.label}</button>)}
+          </div>
+          {picks.map((p, i) => (
+            <div data-panel={p.k} hidden={i !== 0}>
+              <div class={`rounded-2xl border p-6 lg:p-7 max-w-[880px] flex flex-col gap-3 ${p.good ? 'bg-info border-info-border' : 'bg-amber-50 border-amber-200'}`}>
+                <p class="text-[24px] font-extrabold leading-[1.2] m-0" style={inter}>{p.title}</p>
+                <ul class="flex flex-col gap-2 list-none p-0 m-0">{p.points.map((t) => <li class="flex gap-2.5 text-[17px]"><span class="text-primary font-extrabold" aria-hidden="true">✓</span><span>{t}</span></li>)}</ul>
+                <a href={p.cta[0]} {...(p.ext ? { target: '_blank', rel: 'noopener noreferrer' } : {})} class="self-start no-underline bg-primary hover:bg-primary-hover text-white font-bold px-[22px] py-3 rounded-full mt-1">{p.cta[1]}</a>
+              </div>
             </div>
           ))}
         </div>
+      </section>
 
-        <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">A certificate with no fee, no wait, and no games</h2>
-        <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
-          <p>The certificate is the product — so we made ours instant, free, and permanent: <strong class="text-text">download both copies the moment you finish, re-download anytime</strong>. $28 all-in, TDLR CP1234.</p>
+      <!-- ===== What's on it ===== -->
+      <section class={`${wrap} pt-16 pb-6`}>
+        <h2 class={h2c} style={inter}>What's on a Texas defensive driving certificate?</h2>
+        <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">Every approved provider issues the same uniform certificate. Four details matter, and the court checks them against your citation.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+          <div class="rounded-xl border-2 border-text bg-white p-6 lg:p-7 flex flex-col gap-3" aria-label="Sample certificate layout">
+            <p class="text-[18px] font-extrabold text-center tracking-[0.04em] m-0" style={inter}>CERTIFICATE OF COMPLETION</p>
+            <p class="text-[13px] text-center text-text-muted m-0">Texas Driving Safety Course · COURT COPY</p>
+            {fields.map(([l, v], i) => (
+              <div class={`flex justify-between gap-3 text-[15px] pb-2 ${i < fields.length - 1 ? 'border-b border-border' : ''}`}><span class="text-text-muted">{l}</span><strong class="text-right">{v}&nbsp;<span class="bg-primary text-white rounded-full px-2 text-[13px]">{i + 1}</span></strong></div>
+            ))}
+          </div>
+          <ol class="flex flex-col gap-3 list-none p-0 m-0">
+            {fields.map(([, , t, b], i) => <li class="flex gap-3"><span class="flex-none w-[30px] h-[30px] rounded-full bg-primary text-white font-bold flex items-center justify-center">{i + 1}</span><span class="text-base"><strong>{t}</strong>{' '}{b}</span></li>)}
+          </ol>
         </div>
+        <p class="text-base leading-7 m-0 mt-6 max-w-[780px]">That last number is the one courts actually check. Here's how.</p>
+      </section>
 
-        <div class="flex flex-col sm:flex-row gap-4 mb-10">
-          <a
-            href={enrollUrl}
-            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
-            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
-          >
-            Start the $28 Course →
-          </a>
-          <a
-            href="/texas/tdlr-approved"
-            class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors"
-            style="font-family: 'DM Sans', sans-serif;"
-          >
-            How to verify any certificate
-          </a>
+      <!-- ===== Real? ===== -->
+      <section class={`${wrap} pt-12 pb-6`}>
+        <h2 class={h2c} style={inter}>How do courts know a certificate is real?</h2>
+        <p class="text-base leading-7 m-0 mb-5 max-w-[780px]">They look up the number at TDLR's DESSearch. You can too, and so can your insurer.</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+          <div class="rounded-[14px] border border-info-border bg-info p-5 flex flex-col gap-1.5"><span class="font-bold">✓&nbsp; Validate it yourself</span><span class="text-base text-text-body">Enter your CP###-######## at DESSearch. <a href={desSearch} target="_blank" rel="noopener noreferrer" class={link}>Open DESSearch</a></span></div>
+          <div class="rounded-[14px] border border-amber-200 bg-amber-50 p-5 flex flex-col gap-1.5"><span class="font-bold text-amber-800">Give it 5 days</span><span class="text-base text-text-body">TDLR says a new certificate can take up to 5 days to appear. Submit with cushion, not on deadline day.</span></div>
+          <div class="rounded-[14px] border border-amber-200 bg-amber-50 p-5 flex flex-col gap-1.5"><span class="font-bold text-amber-800">Check the provider first</span><span class="text-base text-text-body">TDLR's September 2026 file lists {stats.expired} providers as expired. Confirm a course's license is current before you pay. <a href="/texas/providers" class={link}>Provider directory</a></span></div>
         </div>
+        <p class="text-base leading-7 m-0 mt-6 max-w-[780px]">Real, valid, inside the deadline. One more way it still gets rejected: the wrong copy in the wrong place.</p>
+      </section>
 
-        <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
-          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP#1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>
-          <p class="text-xs text-text-subtle">Last updated September 2, 2026 — verified by the Road Ready Safety editorial team against TDLR DESSearch and certificate-issuance records, and the published submission rules of the Texas courts referenced.</p>
+      <!-- ===== Copies ===== -->
+      <section class={`${wrap} pt-12 pb-6`}>
+        <h2 class={`${h2c} mb-6`} style={inter}>Court copy vs. insurance copy: who gets what?</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="rounded-2xl bg-primary text-white p-6 flex flex-col gap-2">
+            <span class="text-sm font-bold uppercase tracking-[0.06em] text-info-border">Goes to the court</span>
+            <span class="text-[24px] font-extrabold" style={inter}>Court copy</span>
+            <span class="text-base text-info leading-6">Send it with your Type 3A driving record, before your deadline. Sign it if your court requires it. The Colony, for example, wants it signed and naming the court.</span>
+            <a href="/texas/dismissal-timeline" class="text-white font-bold hover:underline mt-auto">How to submit to your court →</a>
+          </div>
+          <div class="rounded-2xl border border-border bg-white p-6 flex flex-col gap-2">
+            <span class="text-sm font-bold uppercase tracking-[0.06em] text-primary-deep">Goes to your insurer</span>
+            <span class="text-[24px] font-extrabold" style={inter}>Insurance copy</span>
+            <span class="text-base text-text-body leading-6">Only if you're claiming a discount. Same course, so one completion can do both jobs.</span>
+            <a href="/texas/insurance-discount" class="text-primary hover:text-primary-deep font-bold mt-auto">See the insurance discount →</a>
+          </div>
         </div>
+        <p class="text-base leading-7 m-0 mt-5 max-w-[780px]">Mixing these up is one of the avoidable rejections on <a href="/texas/certificate-rejected" class={link}>our rejection list</a>. And how fast you even get the certificate depends on who you buy from.</p>
+        <div id="video" class="mt-8 max-w-[800px] scroll-mt-28"><VideoEmbed id="oAj_tRcdgq0" /></div>
+      </section>
 
-      </div>
+      <!-- ===== Speed ===== -->
+      <section class={`${wrap} pt-12 pb-6`}>
+        <h2 class={h2c} style={inter}>How fast do you get your certificate?</h2>
+        <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">It depends on the provider, and it matters more than a few dollars of price difference.</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+          <div class="rounded-2xl border border-border bg-white p-[22px] flex flex-col gap-1.5"><span class="text-[20px] font-extrabold" style={inter}>Mailed</span><span class="text-base text-text-body">Days to weeks, against a 90-day deadline. Replacements usually mean another fee and another wait.</span></div>
+          <div class="rounded-2xl border border-border bg-white p-[22px] flex flex-col gap-1.5"><span class="text-[20px] font-extrabold" style={inter}>"Instant" for a fee</span><span class="text-base text-text-body">Some providers charge extra for faster delivery after you've already paid for the course.</span></div>
+          <div class="rounded-2xl border-2 border-primary bg-info p-[22px] flex flex-col gap-1.5"><span class="text-[20px] font-extrabold" style={inter}>Road Ready Safety</span><span class="text-base text-text-body">Both copies download free the moment you finish, and stay in your portal to re-download anytime.</span></div>
+        </div>
+      </section>
+
+      <!-- ===== Lost / wrong ===== -->
+      <section class={`${wrap} pt-12 pb-6`}>
+        <h2 class={`${h2c} mb-6`} style={inter}>Lost it, or something's wrong on it?</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+          <div class="rounded-2xl border border-border bg-white p-6 flex flex-col gap-1.5"><span class="text-[21px] font-extrabold" style={inter}>Lost or deleted</span><span class="text-base text-text-body leading-6">With us: log in and download it again, free and unlimited. With a mail-based provider: ask about their replacement fee and wait time, ideally before you buy.</span></div>
+          <div class="rounded-2xl border border-border bg-white p-6 flex flex-col gap-1.5"><span class="text-[21px] font-extrabold" style={inter}>Wrong name, birthday or court</span><span class="text-base text-text-body leading-6">Don't resubmit and hope. Courts match it to your citation. Contact your provider to correct and reissue it. We verify your identity before changing these fields, so nobody else can alter a document headed to court.</span></div>
+        </div>
+      </section>
+
+      <CourseBand eyebrow="The certificate is the product" review />
+
+      <!-- ===== Quick answers ===== -->
+      <section class={`${wrap} pt-2 pb-6`}>
+        <h2 class={h2c} style={inter}>Quick answers</h2>
+        <div class="flex flex-col gap-3 max-w-[820px] mt-5">
+          {faqs.map((f) => <div class="rounded-xl border border-border bg-white p-5"><h3 class="font-bold text-base m-0 mb-1" style={sans}>{f.q}</h3><p class="m-0 text-text-body leading-7" set:html={f.a} /></div>)}
+        </div>
+      </section>
+
+      <!-- ===== Next step + legal ===== -->
+      <section class={`${wrap} pt-6 pb-10`}>
+        <p class="font-bold m-0 mb-2.5">Your next step</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-7">
+          {nextSteps.map(([href, t, s]) => <a href={href} class="no-underline text-text rounded-[14px] border border-border bg-white p-4 hover:border-primary-deep"><strong>{t}</strong><br /><span class="text-[15px] text-text-body">{s}</span></a>)}
+        </div>
+        <p class="text-[15px] text-text-muted m-0 max-w-[820px] leading-6">Road Ready Safety is a TDLR-licensed Texas driving safety provider ({cp}). Informational, not legal advice; procedures vary by court and judge, so confirm with the court on your citation. Sources: TDLR DESSearch and certificate-issuance records; TDLR Driving Safety Provider licensing file (Sept. 2, 2026); published submission rules of the Texas courts referenced. Updated October 7, 2026.</p>
+      </section>
+
+      <StickyCta afterId="help" hideAtId="course" />
     </article>
+
+    <script is:inline>
+      (function () {
+        document.querySelectorAll('[data-picker]:not([data-armed])').forEach(function (root) {
+          root.setAttribute('data-armed', '1');
+          var on = ['bg-primary', 'text-white', 'border-primary'], off = ['bg-white', 'text-text', 'border-[#CBD3DF]', 'hover:border-primary-deep'];
+          var btns = root.querySelectorAll('[data-pick]'), panels = root.querySelectorAll('[data-panel]');
+          btns.forEach(function (b) { b.addEventListener('click', function () {
+            var k = b.getAttribute('data-pick');
+            btns.forEach(function (x) { var sel = x === b; x.setAttribute('aria-pressed', sel ? 'true' : 'false'); on.forEach(function (c) { x.classList.toggle(c, sel); }); off.forEach(function (c) { x.classList.toggle(c, !sel); }); });
+            panels.forEach(function (p) { p.hidden = p.getAttribute('data-panel') !== k; });
+          }); });
+        });
+      })();
+    </script>
   </TexasLayout>
 ) : (
   <meta http-equiv="refresh" content="0; url=/" />

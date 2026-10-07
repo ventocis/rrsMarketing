@@ -15,7 +15,29 @@ export const TEXAS_COURSE = {
   providerNumber: 'CP1234',
   /** State-mandated course length in hours (TDLR Course of Organized Instruction; 16 TAC §84.500). */
   hours: 6,
+  /**
+   * Optional audio narration add-on, sold at checkout. Production sku and price read off
+   * app.roadreadysafety.com/public/checkout on 2026-10-07 ("Audio - Read to Me", $4.99).
+   * QA uses different test skus, so the link reads VITE_TEXAS_AUDIO_SKUS first.
+   */
+  audioSku: 'tx-bdi-audio',
+  audioPrice: 4.99,
 } as const;
 
 /** "$28" */
 export const TEXAS_PRICE_LABEL = `$${TEXAS_COURSE.price}`;
+
+/** "$32.99": the course plus the audio add-on, as checkout totals it. */
+export const TEXAS_AUDIO_TOTAL_LABEL = `$${(TEXAS_COURSE.price + TEXAS_COURSE.audioPrice).toFixed(2)}`;
+
+/**
+ * Checkout link with the audio add-on already in the cart. The portal reads every `sku` query value into the
+ * cart (rrsUi useSkuCheckout), so `?sku=tx-bdi&sku=tx-bdi-audio` opens checkout at the audio total with the
+ * add-on ticked. VITE_TEXAS_AUDIO_SKUS is a comma list so QA can pass its own test skus.
+ */
+export function texasAudioCheckoutUrl(enrollUrl: string): string {
+  const skus = String(import.meta.env.VITE_TEXAS_AUDIO_SKUS || TEXAS_COURSE.audioSku)
+    .split(',').map((s) => s.trim()).filter(Boolean);
+  if (!enrollUrl.includes('sku=')) return enrollUrl;
+  return enrollUrl + skus.map((s) => `&sku=${encodeURIComponent(s)}`).join('');
+}

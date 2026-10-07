@@ -5,13 +5,14 @@
  * Deviations from the canvas (each flagged in the PR):
  *  - Refund copy uses the three-day wording (standing rule), not "any time before you complete the course".
  *  - "Approved by every Texas court" reads "Accepted by every Texas court": TDLR approves, courts accept.
- *  - The video tile plays the real YouTube video (GDdhttCVEkY); [LENGTH] is its real length. The tile stays the
+ *  - The video tile plays Jackson's pick, "Why YOU should take…" (vWLZ84aNCFU, 1:01), titled as on YouTube, in
+ *    place of the canvas's "Dismiss Your Texas Ticket in 4 Steps" label; [LENGTH] is its real length. The tile stays the
  *    canvas's plain navy card, because the YouTube thumbnail carries its own text and clashed with the title.
  *  - The audio card's button opens checkout with the audio add-on already in the cart (texasAudioCheckoutUrl).
  */
 import TexasLayout from '../../layouts/TexasLayout.astro';
 import reviews from '../../data/texas-reviews.json';
-import { VIDEOS } from '../../data/videos';
+import { VIDEOS, isoDuration } from '../../data/videos';
 import {
   TEXAS_COURSE, TEXAS_PRICE_LABEL, TEXAS_AUDIO_TOTAL_LABEL, texasAudioCheckoutUrl,
 } from '../../data/texas-course';
@@ -39,7 +40,21 @@ const bullets = [
   { label: 'No Hidden Certificate Fee', text: 'Included with checkout. Instant download.' },
 ];
 
-const video = VIDEOS['GDdhttCVEkY'];
+// Hero video: S-202 "Why This Course" sales film (Jackson, 2026-10-07). /texas is its canonical page, so the
+// VideoObject schema is emitted here.
+const video = VIDEOS['vWLZ84aNCFU'];
+const videoSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'VideoObject',
+  name: video.title,
+  description: video.description,
+  thumbnailUrl: [`https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`, `https://i.ytimg.com/vi/${video.id}/maxresdefault.jpg`],
+  uploadDate: video.uploadDate,
+  duration: isoDuration(video.seconds),
+  embedUrl: `https://www.youtube.com/embed/${video.id}`,
+  contentUrl: `https://www.youtube.com/watch?v=${video.id}`,
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', logo: { '@type': 'ImageObject', url: 'https://roadreadysafety.com/assets/icons/texas/logo-shield-footer.svg' } },
+});
 const videoLength = `${Math.floor(video.seconds / 60)}:${String(video.seconds % 60).padStart(2, '0')}`;
 
 interface Review { name: string; initials: string; date: string; rating: number; verified: boolean; quote: string; title?: string }
@@ -158,6 +173,7 @@ const chev = (stroke: string, size = 18) => `<svg width="${size}" height="${size
   courseSchema={true}
 >
   <script type="application/ld+json" set:html={landingFaqSchema} />
+  <script type="application/ld+json" set:html={videoSchema} />
 
   <div class="text-text bg-white" style={sans}>
 
@@ -181,11 +197,11 @@ const chev = (stroke: string, size = 18) => `<svg width="${size}" height="${size
 
       <div class="min-w-0 lg:col-start-2 lg:row-start-1 lg:row-span-2 w-full max-w-[480px] mx-auto lg:mx-0">
         <div class="rrs-hero-yt relative aspect-[16/10] rounded-2xl overflow-hidden bg-primary-navy" data-embed={`https://www.youtube-nocookie.com/embed/${video.id}?autoplay=1&rel=0`} data-title={video.title}>
-          <button type="button" class="rrs-hero-yt-play absolute inset-0 w-full h-full flex flex-col justify-end p-6 sm:p-8 text-left text-white bg-transparent border-0 cursor-pointer" aria-label="Play video: How Texas ticket dismissal works">
+          <button type="button" class="rrs-hero-yt-play absolute inset-0 w-full h-full flex flex-col justify-end p-6 sm:p-8 text-left text-white bg-transparent border-0 cursor-pointer" aria-label={`Play video: ${video.title}`}>
             <span class="absolute top-[36%] left-1/2 w-[72px] h-[72px] sm:w-[84px] sm:h-[84px] -mt-[36px] sm:-mt-[42px] -ml-[36px] sm:-ml-[42px] rounded-full bg-white flex items-center justify-center shadow-[0_12px_30px_rgba(0,0,0,0.3)]">
               <svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true"><path d="M10 6 L24 15 L10 24 Z" fill="#2454E6"/></svg>
             </span>
-            <span class="relative font-extrabold text-[24px] sm:text-[30px] leading-[1.15]" style={inter}>Dismiss Your Texas Ticket in 4 Steps</span>
+            <span class="relative font-extrabold text-[20px] sm:text-[26px] leading-[1.2]" style={inter}>{video.title}</span>
             <span class="relative text-[15px] text-[#B9E2FE] mt-2">Video · {videoLength}</span>
           </button>
         </div>

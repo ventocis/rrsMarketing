@@ -147,6 +147,12 @@ export const VIDEOS: Record<string, VideoMeta> = {
     description: 'Step by step: how to ask a Texas court for permission to take a driving safety course, what to send with the request, and what the court sends back.',
     seconds: 244, uploadDate: '2025-10-24', canonical: '/texas/request-defensive-driving',
   },
+  'vWLZ84aNCFU': {
+    id: 'vWLZ84aNCFU',
+    title: "Why YOU should take Road Ready Safety's Texas Driver Safety Course",
+    description: 'Why Road Ready Safety: short plain-English lessons, quick checks along the way, the shortest course Texas allows, works on your phone and saves your place, certificate included the moment you finish, one flat price up front, and your money back if it is not for you.',
+    seconds: 61, uploadDate: '2026-09-05', canonical: '/texas',
+  },
 };
 
 /** "3:57" / "1:02:03" for display. */

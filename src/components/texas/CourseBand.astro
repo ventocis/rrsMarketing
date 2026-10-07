@@ -1,0 +1,37 @@
+---
+/**
+ * CourseBand — the one course offer block for every Texas content page (Jackson, 2026-10-07: "we need this to
+ * be the whole component", from the cost page's "What does Road Ready Safety charge?" band). Deep-blue panel,
+ * the price as the only number, five checkmarks, the two costs we can't include with a link to the pricing
+ * policy, a white "Start the course" button whose arrow never wraps to its own line, and the honest
+ * "ask your court first" line. Pages pass `id` only when their sticky CTA hides at a different anchor.
+ */
+import { TEXAS_COURSE, TEXAS_PRICE_LABEL } from '../../data/texas-course';
+interface Props { id?: string; }
+const { id = 'course' } = Astro.props;
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+const price = TEXAS_PRICE_LABEL;
+const checks = [
+  `The ${TEXAS_COURSE.hours}-hour TDLR-approved course (${TEXAS_COURSE.providerNumber})`,
+  'Certificate the moment you finish, court and insurance copies',
+  'Unlimited quiz retakes',
+  'No delivery, rush, premium or record fees',
+  'Full refund if you cancel within three days of enrolling',
+];
+const inter = "font-family:'Inter',sans-serif;";
+const sans = "font-family:'DM Sans',sans-serif;";
+---
+<section id={id} class="max-w-[1080px] mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-12 scroll-mt-28 text-text" style={sans}>
+  <h2 class="text-[28px] lg:text-[34px] font-extrabold tracking-[-0.02em] leading-[1.15] text-text m-0 mb-3" style={inter}>What does Road Ready Safety charge?</h2>
+  <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">{price}, and that's the only number you'll see at checkout.</p>
+  <div class="rounded-[20px] bg-primary-deep text-white p-7 lg:p-9 flex flex-wrap gap-8 items-center justify-between">
+    <ul class="flex-[999_1_420px] min-w-0 flex flex-col gap-3 list-none p-0 m-0 text-[17px]">
+      {checks.map((c) => <li class="flex gap-2.5"><span class="text-info-border font-extrabold" aria-hidden="true">✓</span><span>{c}</span></li>)}
+      <li class="flex gap-2.5 text-info text-base mt-1.5"><span class="text-info-border font-extrabold" aria-hidden="true">•</span><span>Two costs we can't include: the court's fee and the DPS record, because the court and DPS collect those. <a href="/texas/pricing" class="text-info-border font-semibold hover:underline">Our full pricing policy</a></span></li>
+    </ul>
+    <div class="flex-[1_1_240px] flex flex-col gap-3 justify-center">
+      <a href={enrollUrl} data-rrs-cta="course-band" class="text-center no-underline bg-white hover:bg-info text-primary-deep font-extrabold text-lg px-7 py-4 rounded-full whitespace-nowrap" style={inter}>Start the {price} course&nbsp;→</a>
+      <a href="/texas/request-defensive-driving" class="text-center no-underline text-info hover:text-white font-medium">Haven't asked your court yet? Do that first.</a>
+    </div>
+  </div>
+</section>

@@ -1,5 +1,6 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import CourseBand from '../../components/texas/CourseBand.astro';
 import StickyCta from '../../components/texas/StickyCta.astro';
 import { TEXAS_COURSE, TEXAS_PRICE_LABEL } from '../../data/texas-course';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
@@ -157,27 +158,7 @@ const card = 'rounded-[14px] border border-border bg-white p-5 lg:p-[22px]';
           </div>
         </div>
       </section>
-
-      <!-- ===== Our checklist ===== -->
-      <section id="course" class={`${wrap} pt-12 pb-12 scroll-mt-28`}>
-        <h2 class={h2c} style={inter}>How does Road Ready Safety do on the same checklist?</h2>
-        <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">{price} is the whole price. Here's what that covers, and what we won't claim.</p>
-        <div class="rounded-[20px] bg-primary-deep text-white p-7 lg:p-9 flex flex-wrap gap-8 items-center justify-between">
-          <ul class="flex-[999_1_420px] min-w-0 flex flex-col gap-3 list-none p-0 m-0 text-[17px]">
-            <li>✓&nbsp; <strong>Final total: {price}.</strong> No delivery, rush, processing or premium lines.</li>
-            <li>✓&nbsp; <strong>Certificate:</strong> instant download when you finish, court and insurance copies included.</li>
-            <li>✓&nbsp; <strong>Saves your place</strong> across phone, tablet and computer.</li>
-            <li>✓&nbsp; <strong>Unlimited quiz retakes</strong>, no final exam.</li>
-            <li>✓&nbsp; <strong>Full refund</strong> if you cancel within three days of enrolling.</li>
-            <li>✓&nbsp; <strong>TDLR provider {TEXAS_COURSE.providerNumber}.</strong> <a href="/texas/spanish" class="text-info-border hover:underline">Prefer Spanish?</a></li>
-            <li class="text-info text-base mt-1.5">What we don't claim: we can't make it shorter than six hours, and we can't promise what your court decides. Need a Type 3A record? It's $12 directly from Texas DPS, and we don't resell it.</li>
-          </ul>
-          <div class="flex-[1_1_240px] flex flex-col gap-3 justify-center">
-            <a href={enrollUrl} class="text-center no-underline bg-white hover:bg-info text-primary-deep font-extrabold text-lg px-7 py-4 rounded-full" style={inter}>Start the {price} course →</a>
-            <a href="/texas/request-defensive-driving" class="text-center no-underline text-info hover:text-white font-medium">Haven't asked your court yet? Do that first.</a>
-          </div>
-        </div>
-      </section>
+      <CourseBand />
 
       <!-- ===== Quick answers ===== -->
       <section class={`${wrap} pt-2 pb-6`}>

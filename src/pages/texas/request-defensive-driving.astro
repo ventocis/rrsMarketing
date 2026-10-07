@@ -1,14 +1,13 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import CourseBand from '../../components/texas/CourseBand.astro';
 import VideoEmbed from '../../components/VideoEmbed.astro';
 import StickyCta from '../../components/texas/StickyCta.astro';
 import { TEXAS_COURSE, TEXAS_PRICE_LABEL } from '../../data/texas-course';
-import reviews from '../../data/texas-reviews.json';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
 const price = TEXAS_PRICE_LABEL;
-const review = reviews.find((r: any) => r.name === 'Ryan Johnson');
 
 // Rebuilt 2026-10-06 from Jackson's design canvas "How to request defensive driving" (Main.dc.html +
 // Serp.dc.html), implemented as the spec: his copy, section order, CTAs and the packet checklist.
@@ -212,35 +211,7 @@ const card = 'rounded-[14px] border border-border bg-white p-5 lg:p-[22px] flex 
           <VideoEmbed id="lKhv6FiHoIk" />
         </div>
       </section>
-
-      <!-- ===== Approved band ===== -->
-      <section id="approved" class={`${wrap} py-14 scroll-mt-28`}>
-        <div class="rounded-[20px] bg-primary-deep text-white p-7 lg:p-10 flex flex-wrap gap-8 items-center justify-between">
-          <div class="flex-[999_1_460px] min-w-0 flex flex-col gap-[18px]">
-            <p class="text-sm font-bold uppercase tracking-[0.06em] text-info-border m-0">Approved? The course is the easy part</p>
-            {review && (
-              <div class="rounded-2xl bg-white text-text p-6 flex flex-col gap-3">
-                <div class="flex justify-between items-center gap-3 flex-wrap">
-                  <span class="text-accent text-[20px] tracking-[2px]" aria-label={`${review.rating} out of 5 stars`}>{'★'.repeat(review.rating)}</span>
-                  <span class="font-bold text-[15px] text-primary-deep">{review.title}</span>
-                </div>
-                <blockquote class="m-0 text-[20px] font-bold leading-[1.45]" style={inter}>"{review.quote}"</blockquote>
-                <div class="flex items-center gap-3">
-                  <span class="w-10 h-10 rounded-full bg-primary text-white font-bold text-[15px] flex items-center justify-center" aria-hidden="true">{review.initials}</span>
-                  <span class="flex flex-col text-[15px] leading-[1.35]"><strong>{review.name}</strong><span class="text-text-muted">{review.verified ? 'Verified via Trustpilot' : 'Trustpilot'} · {review.date}</span></span>
-                </div>
-              </div>
-            )}
-            <ul class="grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-2.5 list-none p-0 m-0 text-base">
-              {checks.map((c) => <li class="flex gap-2"><span class="text-info-border font-extrabold" aria-hidden="true">✓</span><span>{c}</span></li>)}
-            </ul>
-          </div>
-          <div class="flex-[1_1_240px] flex flex-col gap-3">
-            <a href={enrollUrl} class="text-center no-underline bg-white hover:bg-info text-primary-deep font-extrabold text-lg px-7 py-4 rounded-full" style={inter}>Start the {price} course →</a>
-            <a href="/texas/courts" class="text-center no-underline text-white font-semibold hover:underline">Not approved yet? Find your court's method</a>
-          </div>
-        </div>
-      </section>
+      <CourseBand id="approved" />
 
       <!-- ===== Quick answers ===== -->
       <section class={`${wrap} pt-2 pb-6`}>

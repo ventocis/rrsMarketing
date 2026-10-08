@@ -29,13 +29,22 @@ export const TEXAS_COURSE = {
    * (VITE_TEXAS_AUDIO_SKUS / audioSku default) once it exists, so checkout matches this price.
    */
   autoplayPrice: 4.99,
+  /**
+   * Is the autoplay add-on sold on production yet? false = audio-only offer: the /texas "+ Audio" card shows
+   * course + audio ($32.99), hides the autoplay bullets, and the checkout link adds only the audio sku.
+   * Jackson, 2026-10-08: audio only until autoplay merges into prod (planned Monday). Flip to true then, and
+   * set autoplaySku to the production autoplay sku; the price, copy and checkout link all follow this flag.
+   */
+  autoplayLive: false,
+  /** Production autoplay sku (unknown until it ships). QA overrides with VITE_TEXAS_AUTOPLAY_SKU. */
+  autoplaySku: '',
 } as const;
 
 /** "$28" */
 export const TEXAS_PRICE_LABEL = `$${TEXAS_COURSE.price}`;
 
-/** "$37.98": the course plus the audio and autoplay add-ons, as checkout totals them. */
-export const TEXAS_AUDIO_TOTAL_LABEL = `$${(TEXAS_COURSE.price + TEXAS_COURSE.audioPrice + TEXAS_COURSE.autoplayPrice).toFixed(2)}`;
+/** "$32.99" today (course + audio); "$37.98" once autoplayLive is true (course + audio + autoplay). */
+export const TEXAS_AUDIO_TOTAL_LABEL = `$${(TEXAS_COURSE.price + TEXAS_COURSE.audioPrice + (TEXAS_COURSE.autoplayLive ? TEXAS_COURSE.autoplayPrice : 0)).toFixed(2)}`;
 
 /**
  * Checkout link with the audio add-on already in the cart. The portal reads every `sku` query value into the
@@ -43,8 +52,11 @@ export const TEXAS_AUDIO_TOTAL_LABEL = `$${(TEXAS_COURSE.price + TEXAS_COURSE.au
  * add-on ticked. VITE_TEXAS_AUDIO_SKUS is a comma list so QA can pass its own test skus.
  */
 export function texasAudioCheckoutUrl(enrollUrl: string): string {
-  const skus = String(import.meta.env.VITE_TEXAS_AUDIO_SKUS || TEXAS_COURSE.audioSku)
-    .split(',').map((s) => s.trim()).filter(Boolean);
+  const list = (v: unknown) => String(v || '').split(',').map((s) => s.trim()).filter(Boolean);
+  const skus = [
+    ...list(import.meta.env.VITE_TEXAS_AUDIO_SKUS || TEXAS_COURSE.audioSku),
+    ...(TEXAS_COURSE.autoplayLive ? list(import.meta.env.VITE_TEXAS_AUTOPLAY_SKU || TEXAS_COURSE.autoplaySku) : []),
+  ];
   if (!enrollUrl.includes('sku=')) return enrollUrl;
   return enrollUrl + skus.map((s) => `&sku=${encodeURIComponent(s)}`).join('');
 }

@@ -3,7 +3,7 @@
  * /texas — the Texas course money page, rebuilt from Jackson's "Texas Hero Redesign" canvas (2026-10-07).
  * Section order, copy, CTAs and interactions follow the canvas; fonts and colors are our tokens.
  * Deviations from the canvas (each flagged in the PR):
- *  - Refund copy uses the three-day wording (standing rule), not "any time before you complete the course".
+ *  - Refund copy: full refund before completion or certificate, no forms, 3–5 business days (Jackson, 2026-10-07).
  *  - "Approved by every Texas court" reads "Accepted by every Texas court": TDLR approves, courts accept.
  *  - The video tile plays Jackson's pick, "Why YOU should take…" (vWLZ84aNCFU, 1:01). Its cover is a branded thumbnail
  *    is Jackson's "How to Dismiss Your Ticket" thumbnail (2026-10-07) with a centered play button, no label.
@@ -141,7 +141,7 @@ const landingFaqs = [
   { q: 'How long do I have to complete the course?', a: 'Texas gives you 90 days from the date the court grants the course — not from the day you enroll. Your court may set a shorter deadline, so follow the date on its approval letter.' },
   { q: 'Can I take the course on my phone?', a: 'Yes! The course is fully mobile-friendly. You can take it on any device — phone, tablet, or computer. Your progress automatically saves, so you can switch devices anytime.' },
   { q: 'Is there a final exam?', a: 'You get unlimited retakes on all unit quizzes. There is no final exam. The goal is learning, not tricking you. Take your time and review the material as needed.' },
-  { q: 'Are refunds available?', a: 'Yes! If you’re not satisfied, you get a full refund if you cancel within three days of enrolling.' },
+  { q: 'Are refunds available?', a: 'Yes! If you’re not satisfied, you can request a full refund before you complete the course or receive your certificate.' },
 ];
 
 const landingFaqSchema = JSON.stringify({
@@ -311,7 +311,7 @@ const chev = (stroke: string, size = 18) => `<svg width="${size}" height="${size
         <div class="flex flex-wrap justify-center gap-x-8 gap-y-3 text-base text-text-body">
           <span class="inline-flex items-center gap-2"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" stroke="#2454E6" stroke-width="2"/><path d="M8 11 V8 a4 4 0 0 1 8 0 V11" stroke="#2454E6" stroke-width="2"/></svg>Secure checkout</span>
           <span class="inline-flex items-center gap-2"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 L19 6 V11 C19 16 16 19 12 21 C8 19 5 16 5 11 V6 Z" stroke="#2454E6" stroke-width="2" stroke-linejoin="round"/><path d="M9 12 L11.2 14.2 L15.5 9.8" stroke="#2454E6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>TDLR-approved provider</span>
-          <span class="inline-flex items-center gap-2"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#2454E6" stroke-width="2"/><path d="M14.5 9 C14 8.2 13 7.8 12 7.8 C10.5 7.8 9.5 8.6 9.5 9.8 C9.5 12.4 14.5 11.2 14.5 14 C14.5 15.3 13.4 16.2 12 16.2 C10.8 16.2 9.8 15.7 9.3 14.8 M12 6.5 V7.8 M12 16.2 V17.5" stroke="#2454E6" stroke-width="1.8" stroke-linecap="round"/></svg>100% risk-free guarantee</span>
+          <span class="hidden sm:inline-flex items-center gap-2"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#2454E6" stroke-width="2"/><path d="M14.5 9 C14 8.2 13 7.8 12 7.8 C10.5 7.8 9.5 8.6 9.5 9.8 C9.5 12.4 14.5 11.2 14.5 14 C14.5 15.3 13.4 16.2 12 16.2 C10.8 16.2 9.8 15.7 9.3 14.8 M12 6.5 V7.8 M12 16.2 V17.5" stroke="#2454E6" stroke-width="1.8" stroke-linecap="round"/></svg>100% risk-free guarantee</span>
         </div>
       </div>
     </section>
@@ -322,9 +322,11 @@ const chev = (stroke: string, size = 18) => `<svg width="${size}" height="${size
         <div class="bg-surface-muted border border-border rounded-3xl px-6 sm:px-10 py-12 flex flex-col items-center gap-4 text-center">
           <span class="w-16 h-16 rounded-full bg-white border border-[#DCE4EF] flex items-center justify-center"><svg width="32" height="32" viewBox="0 0 34 38" fill="none" aria-hidden="true"><path d="M17 2 L31 7 V18 C31 27 24 33 17 36 C10 33 3 27 3 18 V7 Z" stroke="#2454E6" stroke-width="3" stroke-linejoin="round"/><path d="M11 18.5 L15.5 23 L23.5 14" stroke="#2454E6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
           <h2 class="m-0 font-extrabold text-[28px] lg:text-[36px] leading-[1.15] text-text" style={inter}>Try It 100% Risk-Free</h2>
-          <p class="m-0 text-lg text-text-body max-w-[560px]">Not satisfied? Get a full refund if you cancel within three days of enrolling.</p>
+          <p class="m-0 text-lg text-text-body max-w-[560px]">We built Road Ready to be the easiest way to complete your Texas driving safety course. If you’re not satisfied, you can request a full refund before you complete the course or receive your certificate.</p>
           <div class="flex flex-wrap justify-center gap-2">
-            <span class="inline-flex items-center gap-1.5 bg-white border border-[#DCE4EF] rounded-full px-3.5 py-[7px] text-sm font-bold text-text"><Fragment set:html={check('#1E8E53')} />Full refund within three days of enrolling</span>
+            {['Full refund if you request it before course completion or certificate issuance', 'No complicated forms or hoops', 'Refund processed within 3–5 business days'].map((t) => (
+              <span class="inline-flex items-center gap-1.5 bg-white border border-[#DCE4EF] rounded-full px-3.5 py-[7px] text-sm font-bold text-text text-left"><Fragment set:html={check('#1E8E53')} />{t}</span>
+            ))}
           </div>
           <a href={enrollUrl} data-rrs-cta="texas-risk-free" class="mt-1.5 no-underline bg-primary hover:bg-primary-hover text-white font-extrabold text-lg px-6 sm:px-[30px] py-[15px] rounded-full max-w-full sm:whitespace-nowrap" style={inter}>Start Risk-Free Today&nbsp;→</a>
         </div>
@@ -336,9 +338,9 @@ const chev = (stroke: string, size = 18) => `<svg width="${size}" height="${size
       <div class="max-w-[1180px] mx-auto px-4 sm:px-6 pt-20 pb-[88px] flex flex-col gap-3">
         <h2 class="m-0 text-center font-extrabold text-[32px] lg:text-[48px] leading-[1.1] text-text" style={inter}>What to Expect</h2>
         <p class="m-0 text-center text-lg text-text-body">Everything you need to know about the Texas defensive driving process.</p>
-        <div class="self-center flex flex-wrap justify-center gap-1 bg-info rounded-[28px] p-1.5 mt-5 mb-7" role="group" aria-label="What to expect topics" data-exp-tabs>
+        <div class="w-full sm:w-auto self-center grid grid-cols-2 sm:flex sm:flex-wrap sm:justify-center gap-1 bg-info rounded-2xl sm:rounded-[28px] p-1.5 mt-5 mb-7" role="group" aria-label="What to expect topics" data-exp-tabs>
           {expTabs.map((t, i) => (
-            <button type="button" data-pick={t.key} aria-pressed={i === 0 ? 'true' : 'false'} class:list={['font-bold text-base min-h-[46px] px-[22px] py-2.5 border-0 rounded-full cursor-pointer', i === 0 ? 'bg-primary text-white' : 'bg-transparent text-text']} style={inter}>{t.label}</button>
+            <button type="button" data-pick={t.key} aria-pressed={i === 0 ? 'true' : 'false'} class:list={['font-bold text-sm sm:text-base min-h-[44px] sm:min-h-[46px] px-3 sm:px-[22px] py-2 sm:py-2.5 border-0 rounded-xl sm:rounded-full cursor-pointer', i === 0 ? 'bg-primary text-white' : 'bg-transparent text-text']} style={inter}>{t.label}</button>
           ))}
         </div>
         <div class="flex flex-wrap gap-14 items-start">
@@ -362,7 +364,7 @@ const chev = (stroke: string, size = 18) => `<svg width="${size}" height="${size
               </div>
             ))}
           </div>
-          <div class="flex-[1_1_380px] min-w-0 bg-[#F4F6F9] rounded-[28px] px-6 sm:px-10 py-12" aria-hidden="true">
+          <div class="hidden lg:block flex-[1_1_380px] min-w-0 bg-[#F4F6F9] rounded-[28px] px-6 sm:px-10 py-12" aria-hidden="true">
             <div class="bg-white rounded-[20px] p-[26px] flex flex-col gap-2.5 shadow-[0_10px_28px_rgba(11,33,96,0.06)]">
               <div class="flex justify-between text-[15px]"><strong class="text-text-body">Course progress</strong><strong class="text-text">4 of 7</strong></div>
               <div class="bg-[#EEF2F7] rounded-full h-2 mb-1.5"><div class="w-[57%] h-2 rounded-full bg-[#9DB4D6]"></div></div>

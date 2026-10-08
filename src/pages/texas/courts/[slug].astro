@@ -4,7 +4,8 @@ import courtsData from '../../../data/texas-courts.json';
 import courtFaqData from '../../../data/court-faq-data.json';
 import NextStepBlock from '../../../components/texas/NextStepBlock.astro';
 import YouTubeCard from '../../../components/YouTubeCard.astro';
-import { TEXAS_PRICE_LABEL, TEXAS_AUDIO_TOTAL_LABEL, texasAudioCheckoutUrl } from '../../../data/texas-course';
+import { TEXAS_COURSE, TEXAS_PRICE_LABEL, TEXAS_AUDIO_TOTAL_LABEL, texasAudioCheckoutUrl } from '../../../data/texas-course';
+const TEXAS_COURSE_AUTOPLAY = TEXAS_COURSE.autoplayLive;
 
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '#';
@@ -142978,7 +142979,7 @@ const courtOfficeSchema = JSON.stringify({
                   <span class="flex-none bg-white text-primary-deep text-[11px] font-bold px-2 py-0.5 rounded-full">Hands-Free</span>
                 </div>
                 <p class="flex items-baseline gap-1 m-0"><span class="text-[28px] font-extrabold leading-none">{audioDollars}</span><span class="text-xs text-[#D6E8FD]">.{audioCents}</span></p>
-                <p class="text-xs text-[#D6E8FD] m-0">Narrated audio for every lesson, with autoplay that pauses only for quizzes.</p>
+                <p class="text-xs text-[#D6E8FD] m-0">{TEXAS_COURSE_AUTOPLAY ? 'Narrated audio for every lesson, with autoplay that pauses only for quizzes.' : 'Narrated audio for every lesson.'}</p>
                 <a href={audioUrl} data-rrs-cta="court-buybox-audio" class="w-full h-11 bg-white hover:bg-info text-primary-deep rounded-full text-sm font-bold flex items-center justify-center no-underline transition-colors">Enroll with Audio&nbsp;→</a>
               </div>
             </div>

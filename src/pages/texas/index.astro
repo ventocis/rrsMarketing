@@ -74,13 +74,17 @@ const courseChecks = [
   { rest: 'No final exam, unlimited quiz attempts' },
   { rest: 'Real customer support' },
 ];
-const audioExtras = [
+const audioExtrasAll = [
   { strong: 'Narrated audio', rest: ' for every lesson' },
   { strong: 'Autoplay', rest: ' keeps it going hands-free' },
   { rest: 'Pauses only when it’s time for a quiz' },
 ];
 const fitBasic = ['Like reading at your own pace', 'Want the lowest price', 'Take it in short bursts on your phone or computer'];
-const fitAudio = ['Learn better by listening', 'Want to stay hands-free while you do other things at home', 'Find long reading tiring'];
+// Autoplay lines show only once autoplay is sold on prod (TEXAS_COURSE.autoplayLive; Jackson 2026-10-08).
+const audioExtras = TEXAS_COURSE.autoplayLive ? audioExtrasAll : audioExtrasAll.slice(0, 1);
+const fitAudio = TEXAS_COURSE.autoplayLive
+  ? ['Learn better by listening', 'Want to stay hands-free while you do other things at home', 'Find long reading tiring']
+  : ['Learn better by listening', 'Find long reading tiring'];
 
 const expTabs = [
   {

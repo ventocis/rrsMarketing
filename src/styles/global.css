@@ -94,3 +94,6 @@
   @apply text-sm leading-5;
   font-family: 'DM Sans', sans-serif;
 }
+
+/* Phone numbers never break mid-number (QA 2026-10-08: court pages wrapped "(903) 764-" / "5661"). */
+a[href^="tel:"] { white-space: nowrap; }

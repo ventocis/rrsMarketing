@@ -57,6 +57,7 @@ const nextSteps = [
   ['/texas/type-3a-driving-record', 'Get your Type 3A', 'The record that goes with it →'],
   ['/texas/certificate-rejected', 'Certificate rejected?', 'The common fixes →'],
   ['/texas/tdlr-approved', 'Verify any provider', 'What TDLR-approved means →'],
+  ['/texas/best-defensive-driving-course', 'Comparing courses?', 'Check the final price →'],
 ];
 
 const inter = "font-family:'Inter',sans-serif;";
@@ -199,7 +200,7 @@ const link = 'text-primary hover:text-primary-deep font-medium';
       <!-- ===== Next step + legal ===== -->
       <section class={`${wrap} pt-6 pb-10`}>
         <p class="font-bold m-0 mb-2.5">Your next step</p>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-7">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 mb-7">
           {nextSteps.map(([href, t, s]) => <a href={href} class="no-underline text-text rounded-[14px] border border-border bg-white p-4 hover:border-primary-deep"><strong>{t}</strong><br /><span class="text-[15px] text-text-body">{s}</span></a>)}
         </div>
         <p class="text-[15px] text-text-muted m-0 max-w-[820px] leading-6">Road Ready Safety is a TDLR-licensed Texas driving safety provider ({cp}). Informational, not legal advice; procedures vary by court and judge, so confirm with the court on your citation. Sources: TDLR DESSearch and certificate-issuance records; TDLR Driving Safety Provider licensing file (Sept. 2, 2026); published submission rules of the Texas courts referenced. Updated October 7, 2026.</p>

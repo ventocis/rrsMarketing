@@ -64,6 +64,7 @@ const nextSteps = [
   ['/texas/request-defensive-driving', 'Ask the court first', 'With a letter template →'],
   ['/texas/type-3a-driving-record', 'Order your Type 3A', 'The record courts want →'],
   ['/texas/ticket-dismissal', 'The whole process', 'Texas ticket dismissal guide →'],
+  ['/texas/best-defensive-driving-course', 'Comparing courses?', 'Check the final price →'],
 ];
 
 const inter = "font-family:'Inter',sans-serif;";
@@ -224,7 +225,7 @@ const link = 'text-primary hover:text-primary-deep font-medium';
       <!-- ===== Next step + legal ===== -->
       <section class={`${wrap} pt-6 pb-10`}>
         <p class="font-bold m-0 mb-2.5">Your next step</p>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-7">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 mb-7">
           {nextSteps.map(([href, t, s]) => <a href={href} class="no-underline text-text rounded-[14px] border border-border bg-white p-4 hover:border-primary-deep"><strong>{t}</strong><br /><span class="text-[15px] text-text-body">{s}</span></a>)}
         </div>
         <p class="text-[15px] text-text-muted m-0 max-w-[820px] leading-6">Road Ready Safety is a TDLR-licensed Texas driving safety provider ({TEXAS_COURSE.providerNumber}). Informational, not legal advice; confirm requirements with the court on your citation. Sources: TDLR License Search (steps confirmed October 5, 2026); TDLR Driving Safety Provider licensing file (vsDriverSafetyProvider.csv, pulled {asOf}); TDLR DESSearch; Tex. Educ. Code §1001.352 as amended by HB 3012 (eff. Sept. 1, 2025); 16 TAC §84.504; Texas DPS driving records. Updated October 7, 2026.</p>

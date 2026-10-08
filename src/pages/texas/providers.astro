@@ -52,6 +52,7 @@ const nextSteps = [
   ['/texas/cost', 'Compare total prices', 'Course + certificate + record →'],
   ['/texas/eligibility-tracker', 'Check if you qualify', 'Eligibility in 4 questions →'],
   ['/texas/request-defensive-driving', 'Ask the court first', 'With a letter template →'],
+  ['/texas/best-defensive-driving-course', 'Comparing courses?', 'Check the final price →'],
 ];
 const inter = "font-family:'Inter',sans-serif;";
 const sans = "font-family:'DM Sans',sans-serif;";
@@ -196,7 +197,7 @@ const pillOff = 'bg-white text-text border-[#CBD3DF] hover:border-primary-deep';
       <!-- ===== Next step + legal ===== -->
       <section class={`${wrap} pt-6 pb-10`}>
         <p class="font-bold m-0 mb-2.5">Your next step</p>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-7">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 mb-7">
           {nextSteps.map(([href, t, s]) => <a href={href} class="no-underline text-text rounded-[14px] border border-border bg-white p-4 hover:border-primary-deep"><strong>{t}</strong><br /><span class="text-[15px] text-text-body">{s}</span></a>)}
         </div>
         <p class="text-[15px] text-text-muted m-0 max-w-[820px] leading-6">*Company groupings from Road Ready Safety's analysis of TDLR's driving safety provider licensee file ({asOf}): {stats.method} Road Ready Safety is a TDLR-licensed provider ({TEXAS_COURSE.providerNumber}) and is listed here like every other provider. General information, not legal advice. Sources: TDLR driving safety provider licensee file (vsDriverSafetyProvider); TDLR DESSearch. Updated October 7, 2026.</p>

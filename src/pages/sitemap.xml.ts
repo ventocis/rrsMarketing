@@ -121,7 +121,12 @@ for (const c of sitemapCourses) {
   for (const r of stateCourseRoutes) if ((r === c.state.route || r.startsWith(`${c.state.route}/`)) && !lastmodByPath.has(r)) lastmodByPath.set(r, d);
 }
 
-const courseRoutes = (coursesData as Array<{ slug: string }>).map(c => `/courses/${c.slug}`);
+// /courses/tx-defensive is a redirect shell to /texas when the Texas routes are on (courses/[slug]/index.astro),
+// so it stays out of the sitemap; listing a redirect wastes crawl and conflicts with its target's canonical.
+const texasRoutesOn = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const courseRoutes = (coursesData as Array<{ slug: string }>)
+  .filter(c => !(texasRoutesOn && c.slug === 'tx-defensive'))
+  .map(c => `/courses/${c.slug}`);
 
 const courseRequirementsRoutes = (coursesData as Array<{ slug: string }>).map(c => `/courses/${c.slug}/requirements`);
 

@@ -128,7 +128,7 @@ const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '#';
 const TRUST_ITEMS = [
   'Secure checkout',
   'TDLR-approved provider',
-  'Full refund within three days of enrolling',
+  'Full refund before course completion',
   'Instant Certificate Download',
   'Compatible with any device',
 ];

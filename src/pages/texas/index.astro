@@ -3,7 +3,7 @@
  * /texas — the Texas course money page, rebuilt from Jackson's "Texas Hero Redesign" canvas (2026-10-07).
  * Section order, copy, CTAs and interactions follow the canvas; fonts and colors are our tokens.
  * Deviations from the canvas (each flagged in the PR):
- *  - Refund copy uses the three-day wording (standing rule), not "any time before you complete the course".
+ *  - Refund copy: full refund before completion or certificate, no forms, 3–5 business days (Jackson, 2026-10-07).
  *  - "Approved by every Texas court" reads "Accepted by every Texas court": TDLR approves, courts accept.
  *  - The video tile plays Jackson's pick, "Why YOU should take…" (vWLZ84aNCFU, 1:01). Its cover is a branded thumbnail
  *    is Jackson's "How to Dismiss Your Ticket" thumbnail (2026-10-07) with a centered play button, no label.
@@ -141,7 +141,7 @@ const landingFaqs = [
   { q: 'How long do I have to complete the course?', a: 'Texas gives you 90 days from the date the court grants the course — not from the day you enroll. Your court may set a shorter deadline, so follow the date on its approval letter.' },
   { q: 'Can I take the course on my phone?', a: 'Yes! The course is fully mobile-friendly. You can take it on any device — phone, tablet, or computer. Your progress automatically saves, so you can switch devices anytime.' },
   { q: 'Is there a final exam?', a: 'You get unlimited retakes on all unit quizzes. There is no final exam. The goal is learning, not tricking you. Take your time and review the material as needed.' },
-  { q: 'Are refunds available?', a: 'Yes! If you’re not satisfied, you get a full refund if you cancel within three days of enrolling.' },
+  { q: 'Are refunds available?', a: 'Yes! If you’re not satisfied, you can request a full refund before you complete the course or receive your certificate.' },
 ];
 
 const landingFaqSchema = JSON.stringify({
@@ -322,9 +322,11 @@ const chev = (stroke: string, size = 18) => `<svg width="${size}" height="${size
         <div class="bg-surface-muted border border-border rounded-3xl px-6 sm:px-10 py-12 flex flex-col items-center gap-4 text-center">
           <span class="w-16 h-16 rounded-full bg-white border border-[#DCE4EF] flex items-center justify-center"><svg width="32" height="32" viewBox="0 0 34 38" fill="none" aria-hidden="true"><path d="M17 2 L31 7 V18 C31 27 24 33 17 36 C10 33 3 27 3 18 V7 Z" stroke="#2454E6" stroke-width="3" stroke-linejoin="round"/><path d="M11 18.5 L15.5 23 L23.5 14" stroke="#2454E6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
           <h2 class="m-0 font-extrabold text-[28px] lg:text-[36px] leading-[1.15] text-text" style={inter}>Try It 100% Risk-Free</h2>
-          <p class="m-0 text-lg text-text-body max-w-[560px]">Not satisfied? Get a full refund if you cancel within three days of enrolling.</p>
+          <p class="m-0 text-lg text-text-body max-w-[560px]">We built Road Ready to be the easiest way to complete your Texas driving safety course. If you’re not satisfied, you can request a full refund before you complete the course or receive your certificate.</p>
           <div class="flex flex-wrap justify-center gap-2">
-            <span class="inline-flex items-center gap-1.5 bg-white border border-[#DCE4EF] rounded-full px-3.5 py-[7px] text-sm font-bold text-text"><Fragment set:html={check('#1E8E53')} />Full refund within three days of enrolling</span>
+            {['Full refund if you request it before course completion or certificate issuance', 'No complicated forms or hoops', 'Refund processed within 3–5 business days'].map((t) => (
+              <span class="inline-flex items-center gap-1.5 bg-white border border-[#DCE4EF] rounded-full px-3.5 py-[7px] text-sm font-bold text-text text-left"><Fragment set:html={check('#1E8E53')} />{t}</span>
+            ))}
           </div>
           <a href={enrollUrl} data-rrs-cta="texas-risk-free" class="mt-1.5 no-underline bg-primary hover:bg-primary-hover text-white font-extrabold text-lg px-6 sm:px-[30px] py-[15px] rounded-full max-w-full sm:whitespace-nowrap" style={inter}>Start Risk-Free Today&nbsp;→</a>
         </div>

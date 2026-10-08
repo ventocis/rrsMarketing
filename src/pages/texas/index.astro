@@ -8,24 +8,23 @@
  *  - The video tile plays Jackson's pick, "Why YOU should take…" (vWLZ84aNCFU, 1:01). Its cover is a branded thumbnail
  *    is Jackson's "How to Dismiss Your Ticket" thumbnail (2026-10-07) with a centered play button, no label.
  *  - The audio card uses the canvas's navy (#0B2160), darker than our deep blue, to soften the contrast.
- *  - The audio card's button opens checkout with the audio add-on already in the cart (texasAudioCheckoutUrl).
+ *  - The audio card's button opens checkout with the audio add-on already in the cart (CoursePlanCards).
  */
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import CoursePlanCards from '../../components/texas/CoursePlanCards.astro';
 import reviews from '../../data/texas-reviews.json';
 import { VIDEOS, isoDuration } from '../../data/videos';
 import {
-  TEXAS_COURSE, TEXAS_PRICE_LABEL, TEXAS_AUDIO_TOTAL_LABEL, texasAudioCheckoutUrl,
+  TEXAS_COURSE, TEXAS_PRICE_LABEL,
 } from '../../data/texas-course';
 
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
-const audioUrl = texasAudioCheckoutUrl(enrollUrl);
 const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
 const trustpilotUrl = 'https://www.trustpilot.com/review/roadreadysafety.com';
 
 const price = TEXAS_PRICE_LABEL; // "$28"
-const [audioDollars, audioCents] = TEXAS_AUDIO_TOTAL_LABEL.split('.'); // "$37", "98"
 const CP = TEXAS_COURSE.providerNumber;
 const hours = TEXAS_COURSE.hours;
 
@@ -65,26 +64,6 @@ const allReviews = [
   ...(reviews as Review[]).filter((r) => !LEAD.includes(r.name)),
 ];
 const REVIEWS_SHOWN = 3;
-
-const courseChecks = [
-  { strong: `Official ${hours}-hour course`, rest: ' to dismiss a ticket or get an insurance discount' },
-  { rest: 'Accepted by every Texas court' },
-  { rest: 'Free instant digital certificate' },
-  { rest: 'Phone, tablet or computer: start, stop and resume anytime' },
-  { rest: 'No final exam, unlimited quiz attempts' },
-  { rest: 'Real customer support' },
-];
-const audioExtrasAll = [
-  { strong: 'Narrated audio', rest: ' for every lesson' },
-  { strong: 'Autoplay', rest: ' keeps it going hands-free' },
-  { rest: 'Pauses only when it’s time for a quiz' },
-];
-const fitBasic = ['Like reading at your own pace', 'Want the lowest price', 'Take it in short bursts on your phone or computer'];
-// Autoplay lines show only once autoplay is sold on prod (TEXAS_COURSE.autoplayLive; Jackson 2026-10-08).
-const audioExtras = TEXAS_COURSE.autoplayLive ? audioExtrasAll : audioExtrasAll.slice(0, 1);
-const fitAudio = TEXAS_COURSE.autoplayLive
-  ? ['Learn better by listening', 'Want to stay hands-free while you do other things at home', 'Find long reading tiring']
-  : ['Learn better by listening', 'Find long reading tiring'];
 
 const expTabs = [
   {
@@ -164,7 +143,6 @@ const resources = [
 ];
 
 const check = (stroke: string) => `<svg width="14" height="14" viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="M4 11.5 L9 16 L18 6" stroke="${stroke}" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-const plus = `<svg width="14" height="14" viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="M11 4 V18 M4 11 H18" stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round"/></svg>`;
 const chev = (stroke: string, size = 18) => `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9 L12 15 L18 9" stroke="${stroke}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 ---
 
@@ -250,75 +228,8 @@ const chev = (stroke: string, size = 18) => `<svg width="${size}" height="${size
       </div>
     </section>
 
-    <!-- Choose your course -->
-    <section id="choose" class="bg-white border-t border-border scroll-mt-28">
-      <div class="max-w-[1180px] mx-auto px-4 sm:px-6 pt-[72px] pb-[88px] flex flex-col gap-9 items-center">
-        <div class="flex flex-col gap-2 text-center max-w-[640px]">
-          <h2 class="m-0 font-extrabold text-[30px] lg:text-[40px] leading-[1.12] text-text" style={inter}>Choose Your Course</h2>
-          <p class="m-0 text-base text-text-muted">Read it or listen to it. Same certificate.</p>
-        </div>
-
-        <div class="flex flex-wrap gap-6 justify-center items-stretch w-full">
-          <div class="flex-[1_1_300px] max-w-[400px] min-w-0 rounded-[20px] px-6 py-7 flex flex-col gap-4 bg-white text-text border border-[#DCE4EF] shadow-[0_16px_40px_rgba(11,33,96,0.08)]">
-            <div class="flex justify-between gap-4 items-start">
-              <h3 class="m-0 font-extrabold text-[21px] leading-[1.2]" style={inter}>Texas Defensive Driving Course</h3>
-              <span class="flex-none font-bold text-xs px-3 py-1.5 rounded-full bg-[#E5F0FE] text-primary">Great Value</span>
-            </div>
-            <p class="m-0 flex items-baseline gap-1"><span class="font-extrabold text-[44px] leading-none" style={inter}>{price}</span><span class="text-base text-text-body">.00</span></p>
-            <ul class="list-none p-0 m-0 flex flex-col gap-2.5">
-              {courseChecks.map((c) => (
-                <li class="flex gap-3.5 items-start">
-                  <span class="flex-none w-6 h-6 rounded-full bg-[#DDEBFD] flex items-center justify-center" set:html={check('#2454E6')} />
-                  <span class="text-[15px] leading-[1.45] pt-0.5">{c.strong && <strong>{c.strong}</strong>}{c.rest}</span>
-                </li>
-              ))}
-            </ul>
-            <a href={enrollUrl} data-rrs-cta="texas-choose-basic" class="mt-auto no-underline text-center font-extrabold text-[17px] px-4 py-3.5 rounded-xl bg-primary hover:bg-primary-hover text-white" style={inter}>Enroll Now&nbsp;→</a>
-          </div>
-
-          <div class="flex-[1_1_300px] max-w-[400px] min-w-0 rounded-[20px] px-6 py-7 flex flex-col gap-4 bg-[#0B2160] text-white border border-[#0B2160] shadow-[0_24px_60px_rgba(11,33,96,0.28)]">
-            <div class="flex justify-between gap-4 items-start">
-              <h3 class="m-0 font-extrabold text-[21px] leading-[1.2]" style={inter}>Texas Defensive Driving Course + Audio</h3>
-              <span class="flex-none font-bold text-xs px-3 py-1.5 rounded-full bg-white text-primary-deep">Hands-Free</span>
-            </div>
-            <p class="m-0 flex items-baseline gap-1"><span class="font-extrabold text-[44px] leading-none" style={inter}>{audioDollars}</span><span class="text-base text-[#D6E8FD]">.{audioCents}</span></p>
-            <ul class="list-none p-0 m-0 flex flex-col gap-2.5">
-              {courseChecks.map((c) => (
-                <li class="flex gap-3.5 items-start">
-                  <span class="flex-none w-6 h-6 rounded-full bg-white/20 flex items-center justify-center" set:html={check('#FFFFFF')} />
-                  <span class="text-[15px] leading-[1.45] pt-0.5 text-[#D6E8FD]">{c.strong && <strong class="text-white">{c.strong}</strong>}{c.rest}</span>
-                </li>
-              ))}
-              {audioExtras.map((c) => (
-                <li class="flex gap-3.5 items-start">
-                  <span class="flex-none w-6 h-6 rounded-full bg-[#22A06B] flex items-center justify-center" set:html={plus} />
-                  <span class="text-[15px] leading-[1.45] pt-0.5 text-white font-semibold">{c.strong && <strong>{c.strong}</strong>}{c.rest}</span>
-                </li>
-              ))}
-            </ul>
-            <a href={audioUrl} data-rrs-cta="texas-choose-audio" class="mt-auto no-underline text-center font-extrabold text-[17px] px-4 py-3.5 rounded-xl bg-white hover:bg-info text-primary-deep" style={inter}>Enroll with Audio&nbsp;→</a>
-          </div>
-        </div>
-
-        <div class="flex flex-wrap gap-6 w-full justify-center">
-          {[
-            { head: 'Reading is for you if you…', items: fitBasic },
-            { head: 'Audio is for you if you…', items: fitAudio },
-          ].map((f) => (
-            <div class="flex-[1_1_300px] max-w-[400px] min-w-0 flex flex-col gap-1.5 px-6 py-4 bg-surface-muted border border-border rounded-[14px]">
-              <span class="font-extrabold text-[15px] text-text" style={inter}>{f.head}</span>
-              {f.items.map((t) => <span class="flex gap-2 text-sm text-text-body"><span class="text-[#1E8E53] font-extrabold" aria-hidden="true">✓</span>{t}</span>)}
-            </div>
-          ))}
-        </div>
-
-        <div class="flex flex-wrap justify-center gap-x-8 gap-y-3 text-base text-text-body">
-          <span class="inline-flex items-center gap-2"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" stroke="#2454E6" stroke-width="2"/><path d="M8 11 V8 a4 4 0 0 1 8 0 V11" stroke="#2454E6" stroke-width="2"/></svg>Secure checkout</span>
-          <span class="inline-flex items-center gap-2"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 L19 6 V11 C19 16 16 19 12 21 C8 19 5 16 5 11 V6 Z" stroke="#2454E6" stroke-width="2" stroke-linejoin="round"/><path d="M9 12 L11.2 14.2 L15.5 9.8" stroke="#2454E6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>TDLR-approved provider</span>
-          <span class="hidden sm:inline-flex items-center gap-2"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#2454E6" stroke-width="2"/><path d="M14.5 9 C14 8.2 13 7.8 12 7.8 C10.5 7.8 9.5 8.6 9.5 9.8 C9.5 12.4 14.5 11.2 14.5 14 C14.5 15.3 13.4 16.2 12 16.2 C10.8 16.2 9.8 15.7 9.3 14.8 M12 6.5 V7.8 M12 16.2 V17.5" stroke="#2454E6" stroke-width="1.8" stroke-linecap="round"/></svg>100% risk-free guarantee</span>
-        </div>
-      </div>
-    </section>
+    <!-- Choose your course (shared with /texas/cost and /texas/eligibility-tracker) -->
+    <CoursePlanCards id="choose" ctaPrefix="texas-choose" fit bordered />
 
     <!-- Risk-free -->
     <section class="bg-white">

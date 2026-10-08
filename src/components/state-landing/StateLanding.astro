@@ -13,7 +13,8 @@
  *
  * Facts (price, hours, modules, exam, FAQs) come from the state's course JSON. State-specific copy
  * (bullets, tabs, resources) is passed in by the page, so this file holds layout only.
- * Reviews are our verified Trustpilot reviews from the Texas course, labeled as such (no state has its own yet).
+ * Reviews are our verified Trustpilot reviews (from the Texas course; no state has its own yet). The
+ * "From students of our Texas course" line was removed at Jackson's request, 2026-10-08.
  */
 import RoadPhoto from '../landing-v2/RoadPhoto.astro';
 import SampleCertificate from '../landing-v2/SampleCertificate.astro';
@@ -106,7 +107,6 @@ const chev = (stroke: string, size = 18) => `<svg width="${size}" height="${size
       <div class="flex flex-col gap-2.5 items-center text-center">
         <h2 class="m-0 font-extrabold text-[30px] lg:text-[40px] leading-[1.12] text-text" style={inter}>Reviews</h2>
         <a href={trustpilotUrl} target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 font-semibold text-sm text-text-muted no-underline border-b border-[#CBD3DF] pb-0.5 hover:text-text">Verified reviews on Trustpilot ↗</a>
-        <p class="m-0 text-sm text-text-muted max-w-[560px]">From students of our Texas course: the same team, platform and support behind this course.</p>
       </div>
       <div class="grid gap-5 grid-cols-[repeat(auto-fill,minmax(min(300px,100%),1fr))]">
         {reviews.map((r, i) => (

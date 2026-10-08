@@ -107,7 +107,7 @@ const covered = [
 ];
 
 const support = [
-  { icon: 'email', label: 'Email us anytime', value: 'support@roadreadysafety.com', note: 'We aim to reply within 24 hours', href: 'mailto:support@roadreadysafety.com' },
+  { icon: 'email', label: 'Email us anytime', value: 'info@roadreadysafety.com', note: '', href: 'mailto:info@roadreadysafety.com' },
   { icon: 'phone', label: 'Call us', value: '(888) 885-5707', note: 'Mon–Fri, 9 a.m.–5 p.m. ET', href: 'tel:+18888855707' },
   { icon: 'help', label: 'Help Center', value: 'Answers to common questions', note: 'Open 24/7', href: '/support' },
 ];
@@ -120,7 +120,7 @@ const faqs = [
   { q: 'Can I use my phone?', a: 'Absolutely. Every course works on phone, tablet or computer, and your progress saves so you can switch devices anytime.' },
   { q: 'What languages are available?', a: 'Language options vary by course and state. Check the course page for your state.' },
   { q: 'How do refunds work?', a: 'If you haven’t completed the course and need a refund, contact Support. Eligibility can vary by state requirements.' },
-  { q: 'How do I contact support?', a: 'Email us anytime and we aim to reply within 24 hours, or call Monday–Friday, 9–5. You can also browse the Help Center.' },
+  { q: 'How do I contact support?', a: 'Email us anytime, or call Monday–Friday, 9–5. You can also browse the Help Center.' },
 ];
 
 const faqSchema = JSON.stringify({
@@ -209,6 +209,8 @@ const iconBox = 'flex-none w-11 h-11 rounded-xl bg-white border border-[#DCE4EF]
             ))}
           </ul>
           <p class="m-0 mt-1 text-[15px] text-text-body flex flex-wrap items-center gap-x-1.5 gap-y-2">Don’t see your state? <a href="#finder" class="inline-flex items-center gap-1.5 font-bold text-[#0B2160] no-underline bg-white border border-[#CBD3DF] rounded-full px-3.5 py-1.5 text-sm hover:border-[#0B2160]">Find your state <span aria-hidden="true">→</span></a></p>
+          <!-- Adult driver ed: the partner referral page until our own TDLR driver-ed license is approved (Jackson, 2026-10-07). -->
+          <p class="m-0 text-[15px] text-text-body flex flex-wrap items-center gap-x-1.5 gap-y-2">Need a Texas driver license? <a href="/courses/tx-adult-ed" class="inline-flex items-center gap-1.5 font-bold text-[#0B2160] no-underline bg-white border border-[#CBD3DF] rounded-full px-3.5 py-1.5 text-sm hover:border-[#0B2160]">Adult driver education <span aria-hidden="true">→</span></a></p>
           <div class="hidden md:flex flex-wrap gap-x-7 gap-y-2.5 text-[15px] text-text-body">
             <span>✓&nbsp; Works on your phone</span><span>✓&nbsp; Certificate the moment you finish</span><span>✓&nbsp; Secure checkout</span>
           </div>
@@ -330,7 +332,7 @@ const iconBox = 'flex-none w-11 h-11 rounded-xl bg-white border border-[#DCE4EF]
             {support.map((s) => (
               <a href={s.href} class="flex gap-3 items-center py-3 border-t border-[#EEF2F7] no-underline group">
                 <span class="flex-none w-[38px] h-[38px] rounded-[10px] bg-info flex items-center justify-center [&>svg]:w-5 [&>svg]:h-5" set:html={ICONS[s.icon]} />
-                <span class="flex flex-col leading-[1.35] min-w-0"><span class="text-[13px] text-text-muted">{s.label}</span><strong class="text-[15px] text-[#0B2160] break-words group-hover:underline">{s.value}</strong><span class="text-[13px] text-text-muted">{s.note}</span></span>
+                <span class="flex flex-col leading-[1.35] min-w-0"><span class="text-[13px] text-text-muted">{s.label}</span><strong class="text-[15px] text-[#0B2160] break-words group-hover:underline">{s.value}</strong>{s.note && <span class="text-[13px] text-text-muted">{s.note}</span>}</span>
               </a>
             ))}
             <div class="mt-2.5 bg-surface-muted rounded-[14px] px-4 py-3.5 flex flex-col gap-1.5">

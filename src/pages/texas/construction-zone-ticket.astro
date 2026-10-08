@@ -1,6 +1,7 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
 import CourseBand from '../../components/texas/CourseBand.astro';
+import NextStepBlock from '../../components/texas/NextStepBlock.astro';
 import YouTubeCard from '../../components/YouTubeCard.astro';
 import { TEXAS_COURSE, TEXAS_PRICE_LABEL } from '../../data/texas-course';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
@@ -135,6 +136,9 @@ const pillOff = 'bg-white text-text border-border hover:border-primary-deep';
           ))}
         </div>
       </section>
+
+      <!-- Path-to-purchase test (#182): restored after the canvas redesign dropped it. Keep until the R2 read. -->
+      <div class={wrap}><div class="max-w-[780px]"><NextStepBlock page="construction-zone-ticket" lead="precourt" ineligibleNote="Were workers present when you were cited? Then the course is excluded by statute and deferred disposition is the route." ineligibleHref="/texas/deferred-disposition" ineligibleLabel="How deferred disposition works" /></div></div>
 
       <!-- ===== Why two words matter ===== -->
       <section class={`${wrap} pt-14 pb-4`}>

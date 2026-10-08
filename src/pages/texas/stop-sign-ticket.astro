@@ -1,6 +1,7 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
 import CourseBand from '../../components/texas/CourseBand.astro';
+import NextStepBlock from '../../components/texas/NextStepBlock.astro';
 import VideoEmbed from '../../components/VideoEmbed.astro';
 import StickyCta from '../../components/texas/StickyCta.astro';
 import { TEXAS_COURSE, TEXAS_PRICE_LABEL } from '../../data/texas-course';
@@ -105,6 +106,9 @@ const link = 'text-primary hover:text-primary-deep font-medium';
           <p class="text-base leading-7 m-0 mt-5 max-w-[780px]">Arguing "I almost stopped" won't win. The good news is you don't need to win. You need to know if your ticket qualifies.</p>
         </div>
       </section>
+
+      <!-- Path-to-purchase test (#182): restored after the canvas redesign dropped it. Keep until the R2 read. -->
+      <div class={wrap}><div class="max-w-[780px]"><NextStepBlock page="stop-sign-ticket" lead="precourt" /></div></div>
 
       <!-- ===== Picker ===== -->
       <section id="check" class={`${wrap} pt-16 pb-6 scroll-mt-28`} data-picker>

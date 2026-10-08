@@ -1,6 +1,7 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
 import CourseBand from '../../components/texas/CourseBand.astro';
+import NextStepBlock from '../../components/texas/NextStepBlock.astro';
 import VideoEmbed from '../../components/VideoEmbed.astro';
 import StickyCta from '../../components/texas/StickyCta.astro';
 import { courtStats as S } from '../../lib/court-stats';
@@ -122,6 +123,9 @@ const link = 'text-primary hover:text-primary-deep font-medium';
           <a href="/texas/court-costs" class="inline-block mt-4 font-bold text-primary hover:text-primary-deep">Where every court cost dollar goes →</a>
         </div>
       </section>
+
+      <!-- Path-to-purchase test (#182): restored after the canvas redesign dropped it. Keep until the R2 read. -->
+      <div class={wrap}><div class="max-w-[780px]"><NextStepBlock page="how-much-is-a-speeding-ticket" lead="precourt" /></div></div>
 
       <!-- ===== Per mph ===== -->
       <section class={`${wrap} pt-16 pb-6`}>

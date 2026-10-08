@@ -22,13 +22,20 @@ export const TEXAS_COURSE = {
    */
   audioSku: 'tx-bdi-audio',
   audioPrice: 4.99,
+  /**
+   * Autoplay add-on, sold alongside audio (QA checkout "Autoplay", $4.99, sku autoplay1 on 2026-10-07).
+   * Jackson set the /texas audio card to the course + audio + autoplay total on 2026-10-07.
+   * Production checkout had no autoplay product yet that day; add its sku to the link
+   * (VITE_TEXAS_AUDIO_SKUS / audioSku default) once it exists, so checkout matches this price.
+   */
+  autoplayPrice: 4.99,
 } as const;
 
 /** "$28" */
 export const TEXAS_PRICE_LABEL = `$${TEXAS_COURSE.price}`;
 
-/** "$32.99": the course plus the audio add-on, as checkout totals it. */
-export const TEXAS_AUDIO_TOTAL_LABEL = `$${(TEXAS_COURSE.price + TEXAS_COURSE.audioPrice).toFixed(2)}`;
+/** "$37.98": the course plus the audio and autoplay add-ons, as checkout totals them. */
+export const TEXAS_AUDIO_TOTAL_LABEL = `$${(TEXAS_COURSE.price + TEXAS_COURSE.audioPrice + TEXAS_COURSE.autoplayPrice).toFixed(2)}`;
 
 /**
  * Checkout link with the audio add-on already in the cart. The portal reads every `sku` query value into the

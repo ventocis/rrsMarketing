@@ -1,6 +1,6 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
-import CourseBand from '../../components/texas/CourseBand.astro';
+import CoursePlanCards from '../../components/texas/CoursePlanCards.astro';
 import StickyCta from '../../components/texas/StickyCta.astro';
 import { courtStats as S } from '../../lib/court-stats';
 import { TEXAS_COURSE, TEXAS_PRICE_LABEL } from '../../data/texas-course';
@@ -160,7 +160,7 @@ const pillOff = 'bg-white text-text border-[#CBD3DF] hover:border-primary-deep';
           <p class="text-[20px] lg:text-[22px] font-bold leading-[1.3] m-0 mt-1" style={inter}>"When I finish, is the certificate in my hands today at no extra cost?" <a href="/texas/best-defensive-driving-course" class="text-info-border text-base font-semibold hover:underline" style={sans}>How to pick a course →</a></p>
         </div>
       </section>
-      <CourseBand />
+      <CoursePlanCards id="course" ctaPrefix="cost-choose" heading="What does Road Ready Safety charge?" subhead={`${price} all-in, certificate included. Audio is an optional add-on.`} />
 
       <!-- ===== Quick answers ===== -->
       <section class={`${wrap} pt-2 pb-6`}>

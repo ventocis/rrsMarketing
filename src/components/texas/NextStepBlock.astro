@@ -3,10 +3,9 @@
  * NextStepBlock — the compact "buy now, with one honest caveat" module for Texas content pages.
  *
  * Redesigned 2026-10-07 (Jackson): one sales bubble instead of two cards. The sale leads
- * ("Start the Texas course, $28 total, certificate the instant you finish"); a single small line
- * under it carries the caveat that protects the reader and us — the course only counts if the court
- * approved it first ("Court hasn't approved you yet? Ask first, here's how"). Pages whose reader is
- * already approved (lead="eligible") swap that line for a short reassurance. Pages where the course
+ * ("Start the Texas course, $28 total, certificate the instant you finish"). The "Court hasn't
+ * approved you yet? Ask first" caveat line was removed 2026-10-08 (Jackson). Pages whose reader is
+ * already approved (lead="eligible") add a short reassurance. Pages where the course
  * cannot help still get the ineligible off-ramp line.
  *
  * The NextStepStrings interface is kept whole so translated pages (src/data/i18n/texas/*.json) keep
@@ -95,13 +94,9 @@ const showIneligible = lead !== 'eligible' && Boolean(t.ineligibleNote);
     </ul>
   </div>
 
-  {lead === 'eligible' ? (
+  {lead === 'eligible' && (
     <p class="m-0 text-sm text-text-body leading-6" style="font-family: 'DM Sans', sans-serif;">
       <strong class="text-text">{t.approvedTitle}</strong> {t.approvedText}
-    </p>
-  ) : (
-    <p class="m-0 text-sm text-text-body leading-6" style="font-family: 'DM Sans', sans-serif;">
-      <strong class="text-text">{t.notYetTitle}</strong> <a href="/texas/request-defensive-driving" class="text-primary-deep font-medium hover:underline">{t.step2Link}</a>. {t.step1}
     </p>
   )}
 

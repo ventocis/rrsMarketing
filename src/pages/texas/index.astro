@@ -311,7 +311,7 @@ const chev = (stroke: string, size = 18) => `<svg width="${size}" height="${size
         <div class="flex flex-wrap justify-center gap-x-8 gap-y-3 text-base text-text-body">
           <span class="inline-flex items-center gap-2"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" stroke="#2454E6" stroke-width="2"/><path d="M8 11 V8 a4 4 0 0 1 8 0 V11" stroke="#2454E6" stroke-width="2"/></svg>Secure checkout</span>
           <span class="inline-flex items-center gap-2"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 L19 6 V11 C19 16 16 19 12 21 C8 19 5 16 5 11 V6 Z" stroke="#2454E6" stroke-width="2" stroke-linejoin="round"/><path d="M9 12 L11.2 14.2 L15.5 9.8" stroke="#2454E6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>TDLR-approved provider</span>
-          <span class="inline-flex items-center gap-2"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#2454E6" stroke-width="2"/><path d="M14.5 9 C14 8.2 13 7.8 12 7.8 C10.5 7.8 9.5 8.6 9.5 9.8 C9.5 12.4 14.5 11.2 14.5 14 C14.5 15.3 13.4 16.2 12 16.2 C10.8 16.2 9.8 15.7 9.3 14.8 M12 6.5 V7.8 M12 16.2 V17.5" stroke="#2454E6" stroke-width="1.8" stroke-linecap="round"/></svg>100% risk-free guarantee</span>
+          <span class="hidden sm:inline-flex items-center gap-2"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#2454E6" stroke-width="2"/><path d="M14.5 9 C14 8.2 13 7.8 12 7.8 C10.5 7.8 9.5 8.6 9.5 9.8 C9.5 12.4 14.5 11.2 14.5 14 C14.5 15.3 13.4 16.2 12 16.2 C10.8 16.2 9.8 15.7 9.3 14.8 M12 6.5 V7.8 M12 16.2 V17.5" stroke="#2454E6" stroke-width="1.8" stroke-linecap="round"/></svg>100% risk-free guarantee</span>
         </div>
       </div>
     </section>
@@ -338,9 +338,9 @@ const chev = (stroke: string, size = 18) => `<svg width="${size}" height="${size
       <div class="max-w-[1180px] mx-auto px-4 sm:px-6 pt-20 pb-[88px] flex flex-col gap-3">
         <h2 class="m-0 text-center font-extrabold text-[32px] lg:text-[48px] leading-[1.1] text-text" style={inter}>What to Expect</h2>
         <p class="m-0 text-center text-lg text-text-body">Everything you need to know about the Texas defensive driving process.</p>
-        <div class="self-center flex flex-wrap justify-center gap-1 bg-info rounded-[28px] p-1.5 mt-5 mb-7" role="group" aria-label="What to expect topics" data-exp-tabs>
+        <div class="w-full sm:w-auto self-center grid grid-cols-2 sm:flex sm:flex-wrap sm:justify-center gap-1 bg-info rounded-2xl sm:rounded-[28px] p-1.5 mt-5 mb-7" role="group" aria-label="What to expect topics" data-exp-tabs>
           {expTabs.map((t, i) => (
-            <button type="button" data-pick={t.key} aria-pressed={i === 0 ? 'true' : 'false'} class:list={['font-bold text-base min-h-[46px] px-[22px] py-2.5 border-0 rounded-full cursor-pointer', i === 0 ? 'bg-primary text-white' : 'bg-transparent text-text']} style={inter}>{t.label}</button>
+            <button type="button" data-pick={t.key} aria-pressed={i === 0 ? 'true' : 'false'} class:list={['font-bold text-sm sm:text-base min-h-[44px] sm:min-h-[46px] px-3 sm:px-[22px] py-2 sm:py-2.5 border-0 rounded-xl sm:rounded-full cursor-pointer', i === 0 ? 'bg-primary text-white' : 'bg-transparent text-text']} style={inter}>{t.label}</button>
           ))}
         </div>
         <div class="flex flex-wrap gap-14 items-start">
@@ -364,7 +364,7 @@ const chev = (stroke: string, size = 18) => `<svg width="${size}" height="${size
               </div>
             ))}
           </div>
-          <div class="flex-[1_1_380px] min-w-0 bg-[#F4F6F9] rounded-[28px] px-6 sm:px-10 py-12" aria-hidden="true">
+          <div class="hidden lg:block flex-[1_1_380px] min-w-0 bg-[#F4F6F9] rounded-[28px] px-6 sm:px-10 py-12" aria-hidden="true">
             <div class="bg-white rounded-[20px] p-[26px] flex flex-col gap-2.5 shadow-[0_10px_28px_rgba(11,33,96,0.06)]">
               <div class="flex justify-between text-[15px]"><strong class="text-text-body">Course progress</strong><strong class="text-text">4 of 7</strong></div>
               <div class="bg-[#EEF2F7] rounded-full h-2 mb-1.5"><div class="w-[57%] h-2 rounded-full bg-[#9DB4D6]"></div></div>

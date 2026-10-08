@@ -96,7 +96,7 @@ const link = 'text-primary hover:text-primary-deep font-medium';
         <div class="max-w-[820px] pt-8 pb-10">
           <h1 class="text-[36px] lg:text-[56px] font-extrabold tracking-[-0.02em] leading-[1.05] m-0 mb-5" style={inter}>Can you take defensive driving for your Texas ticket? Most drivers can.</h1>
           <p class="text-lg lg:text-[21px] leading-8 m-0 mb-4">If you hold a Texas license, have insurance, haven't used a dismissal course in the last 12 months, and your ticket is an ordinary moving violation, the court <strong>has to let you take the course</strong>. That's the law, not the judge's mood.</p>
-          <p class="text-lg lg:text-[21px] leading-8 m-0 mb-6">The people who get denied usually trip on one detail: the speed on the ticket, a CDL, a course from last year, or asking too late. <strong>Four questions tell you which, if any, applies to you.</strong></p>
+          <p class="text-lg lg:text-[21px] leading-8 m-0 mb-6">The people who get denied usually trip on one detail: the speed on the ticket, a CDL, a course from last year, or asking too late. <strong>Four questions (five for a speeding ticket) tell you which, if any, applies to you.</strong></p>
           <div class="flex flex-wrap gap-3 items-center">
             <a href="#checker" class="no-underline bg-primary hover:bg-primary-hover text-white font-bold text-[17px] px-6 py-3.5 rounded-full">Does my ticket qualify? ↓</a>
             <a href="#rules" class="font-semibold text-primary hover:text-primary-deep">Or read the rules first</a>
@@ -114,13 +114,13 @@ const link = 'text-primary hover:text-primary-deep font-medium';
             <div class="rounded-2xl border border-info-border bg-info p-6">
               <p class="font-bold text-[19px] m-0 mb-3">You need all four</p>
               <ul class="flex flex-col gap-3 list-none p-0 m-0">
-                {need.map(([t, b]) => <li class="flex gap-3"><span class="text-primary-deep font-extrabold" aria-hidden="true">✓</span><span><strong>{t}.</strong> <span class="text-text-body">{b}</span></span></li>)}
+                {need.map(([t, b]) => <li class="flex gap-3"><span class="text-primary-deep font-extrabold" aria-hidden="true">✓</span><span><strong>{t}.</strong>{' '}<span class="text-text-body">{b}</span></span></li>)}
               </ul>
             </div>
             <div class="rounded-2xl border border-border bg-white p-6">
               <p class="font-bold text-[19px] m-0 mb-3">The course is ruled out for</p>
               <ul class="flex flex-col gap-3 list-none p-0 m-0">
-                {excluded.map(([t, href, label]) => <li class="flex gap-3"><span class="text-text-muted font-extrabold" aria-hidden="true">✕</span><span><strong>{t}.</strong> <a href={href} class={link}>{label}</a></span></li>)}
+                {excluded.map(([t, href, label]) => <li class="flex gap-3"><span class="text-text-muted font-extrabold" aria-hidden="true">✕</span><span><strong>{t}.</strong>{' '}<a href={href} class={link}>{label}</a></span></li>)}
               </ul>
               <p class="text-[15px] text-text-body m-0 mt-4">Also excluded: serious traffic violations as defined for commercial vehicles. Course ruled out? <a href="/texas/deferred-disposition" class={link}>Deferred disposition</a> usually isn't.</p>
             </div>
@@ -147,7 +147,7 @@ const link = 'text-primary hover:text-primary-deep font-medium';
 
       <!-- ===== Checker ===== -->
       <section id="checker" class={`${wrap} pt-12 pb-6 scroll-mt-28`}>
-        <h2 class={h2c} style={inter}>Does your ticket qualify? Four questions.</h2>
+        <h2 class={h2c} style={inter}>Does your ticket qualify? Four questions, five for speeding.</h2>
         <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">Answer them and you'll get your route: the course, deferred disposition, or something else. If you're eligible, we'll also show your court's own instructions for asking.</p>
         <div class="max-w-2xl">
           <EligibilityChecker courts={(courtsData as any).courts} client:load />

@@ -298,7 +298,7 @@ const chev = (stroke: string, size = 18) => `<svg width="${size}" height="${size
 
         <div class="flex flex-wrap gap-6 w-full justify-center">
           {[
-            { head: 'Basic is for you if you…', items: fitBasic },
+            { head: 'Reading is for you if you…', items: fitBasic },
             { head: 'Audio is for you if you…', items: fitAudio },
           ].map((f) => (
             <div class="flex-[1_1_300px] max-w-[400px] min-w-0 flex flex-col gap-1.5 px-6 py-4 bg-surface-muted border border-border rounded-[14px]">
@@ -366,8 +366,8 @@ const chev = (stroke: string, size = 18) => `<svg width="${size}" height="${size
           </div>
           <div class="hidden lg:block flex-[1_1_380px] min-w-0 bg-[#F4F6F9] rounded-[28px] px-6 sm:px-10 py-12" aria-hidden="true">
             <div class="bg-white rounded-[20px] p-[26px] flex flex-col gap-2.5 shadow-[0_10px_28px_rgba(11,33,96,0.06)]">
-              <div class="flex justify-between text-[15px]"><strong class="text-text-body">Course progress</strong><strong class="text-text">4 of 7</strong></div>
-              <div class="bg-[#EEF2F7] rounded-full h-2 mb-1.5"><div class="w-[57%] h-2 rounded-full bg-[#9DB4D6]"></div></div>
+              <div class="flex justify-between text-[15px]"><strong class="text-text-body">Course progress</strong><strong class="text-text">4 of 5</strong></div>
+              <div class="bg-[#EEF2F7] rounded-full h-2 mb-1.5"><div class="w-[80%] h-2 rounded-full bg-[#9DB4D6]"></div></div>
               {progressDone.map((m) => (
                 <div class="flex gap-3 items-center bg-surface-muted rounded-xl px-3.5 py-[11px] text-[15px] text-text"><span class="flex-none w-6 h-6 rounded-full bg-[#9DB4D6] flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 22 22" fill="none"><path d="M4 11.5 L9 16 L18 6" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>{m}</div>
               ))}

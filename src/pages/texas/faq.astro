@@ -1,4 +1,5 @@
 ---
+import { termsUrl } from '../../lib/portal';
 import TexasLayout from '../../layouts/TexasLayout.astro';
 import { TEXAS_COURSE, TEXAS_PRICE_LABEL } from '../../data/texas-course';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
@@ -21,7 +22,7 @@ const faqs = [
   { q: 'Can I take defensive driving if I have a CDL or an out-of-state license?', a: `Not for dismissal. Commercial driver's license holders are excluded by federal anti-masking rules and Texas law, even for a ticket in a personal car; out-of-state license holders do not meet the Texas-license requirement unless they are active-duty military or dependents. Both can take the course voluntarily for an insurance discount, and deferred disposition may still be open for the ticket. See the <a href="/texas/cdl-defensive-driving" class="text-primary-deep font-medium hover:underline">CDL page</a> and the <a href="/texas/out-of-state-driver" class="text-primary-deep font-medium hover:underline">out-of-state driver page</a>.` },
   { q: 'Is the course available in Spanish?', a: `Not yet. Our course is delivered in English. TDLR allows an approved provider to offer the course in Spanish once the translation is approved (16 TAC §84.504), and we are evaluating it. The process in Spanish and a waitlist are on the <a href="/texas/spanish" class="text-primary-deep font-medium hover:underline">Spanish page</a>.` },
   { q: 'What is the difference between defensive driving and deferred disposition?', a: `Defensive driving is a statutory dismissal: meet the conditions, finish the course, file the certificate, and the charge is dismissed. Deferred disposition is a judge's discretionary probation of up to 180 days, after which the charge is dismissed if you stay ticket-free. Take the course if you qualify; use deferred when the course is closed to you. The side-by-side is on <a href="/texas/defensive-driving-vs-deferred-disposition" class="text-primary-deep font-medium hover:underline">deferred disposition vs defensive driving</a>.` },
-  { q: 'Are refunds available?', a: `Yes. If you have not completed the course or received your certificate, you can request a full refund. The policy is on the <a href="/texas/refund" class="text-primary-deep font-medium hover:underline">refund page</a>.` },
+  { q: 'Are refunds available?', a: `Yes. If you have not completed the course or received your certificate, you can request a full refund. The policy is in our <a href="${termsUrl}" class="text-primary-deep font-medium hover:underline">terms</a>.` },
 ];
 
 const faqSchema = JSON.stringify({

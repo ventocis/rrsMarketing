@@ -1,4 +1,5 @@
 ---
+import { termsUrl } from '../../lib/portal';
 import TexasLayout from '../../layouts/TexasLayout.astro';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
@@ -124,7 +125,7 @@ const faqSchema = JSON.stringify({
             <li><strong class="text-text">Independent reviews:</strong> read all of them, good and bad, on <a href={trustpilotUrl} class="text-primary-deep font-medium hover:underline" rel="noopener" target="_blank">our Trustpilot page</a>. We invite every customer to leave one.</li>
             <li><strong class="text-text">A real address and phone:</strong> 5900 Balcones Drive, Suite 100, Austin, TX 78731. <a href="tel:+18888855707" class="text-primary-deep font-medium hover:underline">(888) 885-5707</a>.</li>
             <li><strong class="text-text">A price that doesn't change at checkout:</strong> $28 total, certificate included. See <a href="/texas/cost" class="text-primary-deep font-medium hover:underline">pricing</a>.</li>
-            <li><strong class="text-text">A written refund policy:</strong> full refund if you cancel in writing within three days of enrolling (weekends and holidays don't count), as Texas law requires. See the <a href="/texas/refund" class="text-primary-deep font-medium hover:underline">refund policy</a>.</li>
+            <li><strong class="text-text">A written refund policy:</strong> a full refund if you request it before you complete the course or receive your certificate. See the <a href={termsUrl} class="text-primary-deep font-medium hover:underline">refund policy</a>.</li>
           </ul>
         </div>
 

@@ -1,6 +1,7 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
 import StickyCta from '../../components/texas/StickyCta.astro';
+import CourseBand from '../../components/texas/CourseBand.astro';
 import { TEXAS_COURSE, TEXAS_PRICE_LABEL } from '../../data/texas-course';
 import { alternatesFor, translationsOf, langLabel } from '../../lib/i18n';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
@@ -182,7 +183,7 @@ const pillOff = 'bg-white text-text border-border hover:border-primary-deep';
           {timeline.map((s) => (
             <li class={`border-t-[6px] ${s.c} pt-4 pr-4`}>
               <p class="font-bold text-text m-0">{s.t}</p>
-              <p class="text-base text-text-body leading-6 m-0">{s.b}{s.href && <> <a href={s.href[0]} class="text-primary-deep font-medium hover:underline">{s.href[1]}</a></>}</p>
+              <p class="text-base text-text-body leading-6 m-0">{s.b}{s.href && <>{' '}<a href={s.href[0]} class="text-primary-deep font-medium hover:underline">{s.href[1]}</a></>}</p>
             </li>
           ))}
         </ol>
@@ -196,7 +197,7 @@ const pillOff = 'bg-white text-text border-border hover:border-primary-deep';
           <div class="rounded-2xl bg-primary text-white p-6 lg:p-[26px] flex flex-col gap-3">
             <span class="text-xs font-bold uppercase tracking-[0.06em] text-info-border">Most drivers choose this</span>
             <span class="text-[24px] font-extrabold leading-tight" style={outfit}>Start your defensive driving course now</span>
-            <span class="text-[40px] font-extrabold leading-none" style={outfit}>{price} <span class="text-base font-semibold text-info">all-in</span></span>
+            <span class="text-[40px] font-extrabold leading-none" style={outfit}>{price}{' '}<span class="text-base font-semibold text-info">all-in</span></span>
             <ul class="flex flex-col gap-1.5 list-none p-0 m-0 text-[15px] text-info">
               {['Dismisses the ticket and keeps it off your record', `${TEXAS_COURSE.hours} hours, fully online, TDLR-approved (${TEXAS_COURSE.providerNumber})`, 'Certificate the moment you finish'].map((t) => <li class="flex gap-2"><span class="text-info-border font-extrabold" aria-hidden="true">✓</span><span>{t}</span></li>)}
             </ul>
@@ -218,6 +219,9 @@ const pillOff = 'bg-white text-text border-border hover:border-primary-deep';
         </div>
         <p class="text-base text-text-body leading-7 m-0 mt-4">Going 25+ mph over, on a CDL, or in a work zone with workers present? Defensive driving is off the table. <a href="/texas/speeding-25-over" class="text-primary-deep font-medium hover:underline">See what to do instead</a></p>
       </section>
+
+      <!-- Shared course offer (QA 2026-10-08): brings the refund line and matches every other Texas page. -->
+      <CourseBand />
 
       <!-- ===== Quick answers ===== -->
       <section class={`${wrap} pt-4 pb-6`}>

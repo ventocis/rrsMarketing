@@ -255,7 +255,7 @@ export default function EligibilityChecker({ courts }: Props) {
         {step !== 'result' ? (
           <div className="mb-8">
             <p className="text-xs text-text-body mb-2" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-              Step {currentStepNum - 1} of {totalSteps}
+              Step {currentStepNum} of {totalSteps}
             </p>
             <div className="h-1.5 w-full bg-surface-muted rounded-full overflow-hidden">
               <div

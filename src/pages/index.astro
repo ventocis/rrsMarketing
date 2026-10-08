@@ -120,7 +120,7 @@ const faqs = [
   { q: 'Can I use my phone?', a: 'Absolutely. Every course works on phone, tablet or computer, and your progress saves so you can switch devices anytime.' },
   { q: 'What languages are available?', a: 'Language options vary by course and state. Check the course page for your state.' },
   { q: 'How do refunds work?', a: 'If you haven’t completed the course and need a refund, contact Support. Eligibility can vary by state requirements.' },
-  { q: 'How do I contact support?', a: 'Email us anytime, or call Monday–Friday, 9–5. You can also browse the Help Center.' },
+  { q: 'How do I contact support?', a: 'Email us anytime, or call Mon–Fri, 9 a.m.–5 p.m. ET. You can also browse the Help Center.' },
 ];
 
 const faqSchema = JSON.stringify({
@@ -131,6 +131,12 @@ const faqSchema = JSON.stringify({
 const websiteSchema = JSON.stringify({ '@context': 'https://schema.org', '@type': 'WebSite', name: 'Road Ready Safety', url: siteUrl });
 
 // Finder: our live states first, then the partner-course states from courses.json, in the canvas's order.
+const COURSE_TYPE_LABELS: Record<string, string> = {
+  BDI: 'Basic Driver Improvement', BDIC: 'Basic Driver Improvement', ADI: 'Advanced Driver Improvement',
+  IDI: 'Intermediate Driver Improvement', TLSAE: 'TLSAE (first-time driver course)', Exam: 'Permit Exam',
+  'Adult Driver Ed': 'Adult Driver Education', IPIRP: 'Point and Insurance Reduction Program',
+  'Pre-Licensing': 'Pre-Licensing', 'Driver Improvement': 'Driver Improvement', 'Driver Education': 'Driver Education',
+};
 const partnerCodes = ['FL', 'IL', 'LA', 'MI', 'NY', 'TN', 'VA'].filter((c) => (allCourses as { state: string }[]).some((x) => x.state === c));
 const finder = [
   ...states.map((s) => ({
@@ -139,7 +145,12 @@ const finder = [
   })),
   ...partnerCodes.map((c) => {
     const n = stateNames[c] || c;
-    return { key: c, name: n, title: `${n} courses`, sub: `See the approved options for ${n}.`, cta: `See ${n} courses →`, href: `/find/${c}/multi` };
+    // Name the actual course types (QA finding: "approved options" for Illinois led to adult driver ed only).
+    const types = [...new Set((allCourses as { state: string; course_type: string }[]).filter((x) => x.state === c).map((x) => COURSE_TYPE_LABELS[x.course_type] || x.course_type))];
+    const list = types.length > 1 ? `${types.slice(0, -1).join(', ')} and ${types[types.length - 1]}` : types[0];
+    return types.length === 1
+      ? { key: c, name: n, title: `${n} ${types[0]}`, sub: `The approved ${types[0]} course for ${n}.`, cta: `See ${n} courses →`, href: `/find/${c}/multi` }
+      : { key: c, name: n, title: `${n} courses`, sub: `Approved courses: ${list}.`, cta: `See ${n} courses →`, href: `/find/${c}/multi` };
   }),
 ];
 

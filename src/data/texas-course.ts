@@ -13,6 +13,14 @@ export const TEXAS_COURSE = {
   legalMinimumPrice: 25,
   /** TDLR course provider number. */
   providerNumber: 'CP1234',
+  /**
+   * TDLR's own record of our license, one click. TDLR's current Driving Safety Provider Search reads `?lic=` and
+   * filters to that license (checked 2026-10-08: "ROAD READY SAFETY, CP1234", 1 of 480). Do NOT link the old
+   * DESSearch provider search: it returns "No matches" for CP1234 (licenses issued since ~2023 are missing there).
+   * The page renders in JavaScript; the machine-readable source is TDLR's feed, verifyDataUrl.
+   */
+  verifyUrl: 'https://www.tdlr.texas.gov/driver/safety/providers/search/?lic=CP1234',
+  verifyDataUrl: 'https://www.tdlr.texas.gov/OEPSearch/api/drivingsafety/providers/',
   /** State-mandated course length in hours (TDLR Course of Organized Instruction; 16 TAC §84.500). */
   hours: 6,
   /**

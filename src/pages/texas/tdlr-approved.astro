@@ -33,7 +33,7 @@ const tabs = [
     'Search by License # using digits only: “1234”, not “CP1234”. Or search by business name.',
     'Match the name and number to the site, and confirm the status is current, not expired.',
     'No result, or unsure? Call TDLR at 800-803-9202 before you pay.',
-  ], cta: [licenseSearch, 'Open TDLR License Search →'], tip: 'Try it on us: license 1234.' },
+  ], cta: [licenseSearch, 'Open TDLR License Search →'], tip: 'Try it on us: license 1234.', tipLink: [TEXAS_COURSE.verifyUrl, 'Or open our record on TDLR in one click ↗'] },
   { k: 'after', label: 'I finished the course', title: 'Validate your certificate', steps: [
     'Find your certificate number. It looks like CP###-########.',
     'Enter it at TDLR’s DESSearch. Courts use this same tool.',
@@ -120,7 +120,7 @@ const link = 'text-primary hover:text-primary-deep font-medium';
                 </ol>
                 <div class="flex flex-wrap gap-3 items-center pt-1">
                   <a href={t.cta[0]} target="_blank" rel="noopener noreferrer" class="no-underline bg-primary hover:bg-primary-hover text-white font-bold px-[22px] py-3 rounded-full">{t.cta[1]}</a>
-                  <span class="text-[15px] text-text-body">{t.tip}</span>
+                  <span class="text-[15px] text-text-body">{t.tip}{t.tipLink && <>{' '}<a href={t.tipLink[0]} target="_blank" rel="noopener" class="text-primary-deep font-medium underline">{t.tipLink[1]}</a></>}</span>
                 </div>
               </div>
             </div>

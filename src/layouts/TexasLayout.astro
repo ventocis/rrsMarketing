@@ -1,7 +1,7 @@
 ---
 import Layout from './Layout.astro';
 import { termsUrl } from '../lib/portal';
-import { TEXAS_COURSE, TEXAS_PRICE_LABEL } from '../data/texas-course';
+import { TEXAS_COURSE, TEXAS_PRICE_LABEL, TEXAS_AT_LEGAL_MINIMUM } from '../data/texas-course';
 
 interface Props {
   title: string;
@@ -28,8 +28,8 @@ const {
   description = 'The easiest way to dismiss your Texas traffic ticket. TDLR-approved, all courts accepted.',
   keywords = 'Texas driver safety course, defensive driving, traffic school, online course, Texas approved',
   url = '/texas',
-  banner = `${TEXAS_PRICE_LABEL} Total, No Hidden Fees — No Surprises at Checkout`,
-  showPromo = true,
+  banner = TEXAS_AT_LEGAL_MINIMUM ? `${TEXAS_PRICE_LABEL} Total, the Lowest Price Texas Law Allows — No Hidden Fees` : `${TEXAS_PRICE_LABEL} Total, No Hidden Fees — No Surprises at Checkout`,
+  showPromo = false,
   lang = 'en',
   alternates = [],
   courseSchema = false,
@@ -162,7 +162,7 @@ const courseSchemaJson = courseSchema
         var now = Date.now();
         var diff = deadline - now;
         if (diff <= 0) {
-          if (banner) banner.innerHTML = '<p class="text-sm font-semibold leading-5 text-center" style="font-family:\'DM Sans\',sans-serif;">$28 Total, No Hidden Fees — No Surprises at Checkout</p>';
+          if (banner) banner.innerHTML = '<p class="text-sm font-semibold leading-5 text-center" style="font-family:\'DM Sans\',sans-serif;">$25 Total, No Hidden Fees — No Surprises at Checkout</p>';
           if (_promoInterval !== null) clearInterval(_promoInterval);
           return;
         }

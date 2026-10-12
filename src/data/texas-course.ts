@@ -8,7 +8,7 @@ export const TEXAS_COURSE = {
   sku: 'tx-bdi',
   name: 'Texas 6-Hour Defensive Driving Course',
   /** Whole-dollar price charged at checkout, all-in, certificate included. */
-  price: 28,
+  price: 25,
   /** Statutory minimum course price (Tex. Educ. Code §1001.352). */
   legalMinimumPrice: 25,
   /** TDLR course provider number. */
@@ -39,7 +39,7 @@ export const TEXAS_COURSE = {
   autoplayPrice: 4.99,
   /**
    * Is the autoplay add-on sold on production yet? false = audio-only offer: the /texas "+ Audio" card shows
-   * course + audio ($32.99), hides the autoplay bullets, and the checkout link adds only the audio sku.
+   * course + audio ($29.99), hides the autoplay bullets, and the checkout link adds only the audio sku.
    * Jackson, 2026-10-08: audio only until autoplay merges into prod (planned Monday). Flip to true then, and
    * set autoplaySku to the production autoplay sku; the price, copy and checkout link all follow this flag.
    */
@@ -48,10 +48,13 @@ export const TEXAS_COURSE = {
   autoplaySku: '',
 } as const;
 
-/** "$28" */
+/** "$25" */
 export const TEXAS_PRICE_LABEL = `$${TEXAS_COURSE.price}`;
 
-/** "$32.99" today (course + audio); "$37.98" once autoplayLive is true (course + audio + autoplay). */
+/** True while we charge exactly the statutory minimum; gates the "lowest price Texas law allows" wording. */
+export const TEXAS_AT_LEGAL_MINIMUM = TEXAS_COURSE.price === TEXAS_COURSE.legalMinimumPrice;
+
+/** "$29.99" today (course + audio); "$34.98" once autoplayLive is true (course + audio + autoplay). */
 export const TEXAS_AUDIO_TOTAL_LABEL = `$${(TEXAS_COURSE.price + TEXAS_COURSE.audioPrice + (TEXAS_COURSE.autoplayLive ? TEXAS_COURSE.autoplayPrice : 0)).toFixed(2)}`;
 
 /**

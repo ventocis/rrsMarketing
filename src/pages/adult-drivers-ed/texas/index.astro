@@ -17,8 +17,8 @@
  *    exam. That is the ONLY approved phrasing (never "skip the written test"; never promise a license).
  *  - 16 TAC §84.503: nine modules, 40-question final (20 signs + 20 laws, 70%), three attempts.
  *  - ITAD: DPS program, free, one hour, certificate valid 90 days, taken before the driving skills test.
- * Reviews are our verified Trustpilot reviews; any that mention a price, a ticket or an instant certificate are
- * filtered out because none of that applies to this course (the ADE-1317 is signed by an instructor and emailed).
+ * Reviews are our verified Trustpilot reviews; any that mention a price or a ticket are filtered out because
+ * none of that applies to this course. Certificate is instant (Jackson, 2026-10-13).
  * Refund wording is the ADE policy (/adult-drivers-ed/texas/refund), not the driving-safety one.
  */
 import AdeLayout from '../../../layouts/AdeLayout.astro';
@@ -52,13 +52,13 @@ const bullets = [
   { label: 'Go at Your Own Pace', text: `Pause anytime, pick up on any device. ${days} days to finish.` },
   { label: `${price} Total`, text: 'Course, exam and certificate. Nothing added at checkout.' },
 ];
-const heroNote = 'Required for a first Texas license at 18 through 24. Optional at 25 and over. Under 18 takes a different course.';
+const heroNote = 'Required for a first Texas license at 18 through 24.';
 
-// Reviews: our verified Trustpilot reviews. Drop any that mention a price, a ticket, a court, an instant
-// certificate or the absence of video — none of that is true of this course (two modules carry required videos).
+// Reviews: our verified Trustpilot reviews. Drop any that mention a price, a ticket, a court or the absence of
+// video — none of that is true of this course (two modules carry required videos). Instant certificate is true.
 interface Review { name: string; initials: string; date: string; rating: number; verified: boolean; quote: string; title?: string }
 const LEAD = ['Chelsie Gates', 'Colleen Minor', 'Vamsi Raju'];
-const unfit = /\$\d|ticket|dismiss|court|certificat\w*\s+immediately|instant|video|audio/i;
+const unfit = /\$\d|ticket|dismiss|court|video|audio/i;
 const fits = (r: Review) => !unfit.test(`${r.title ?? ''} ${r.quote}`);
 const allReviews = [
   ...LEAD.map((n) => (reviews as Review[]).find((r) => r.name === n)).filter(Boolean) as Review[],
@@ -69,7 +69,7 @@ const REVIEWS_SHOWN = 3;
 const cardChecks = [
   { strong: `Official ${hours}-hour ${code} course`, rest: ' for a first Texas driver license at 18 to 24' },
   { strong: 'Highway sign and traffic law exam built in', rest: `: ${ade.exam.questions} questions, two extra attempts if you need them` },
-  { rest: 'Certificate included, signed by a licensed Texas instructor and emailed to you' },
+  { rest: 'Instant certificate included, ready the moment you pass' },
   { rest: 'Phone, tablet or computer: start, stop and resume anytime' },
   { rest: `${days} days to finish, in as many sittings as you like` },
   { rest: 'Real customer support' },
@@ -106,7 +106,7 @@ const expTabs = [
   },
   {
     key: 'after', label: 'After the Course',
-    intro: `Once you pass the final exam, a licensed Texas instructor reviews your record and signs your ${code} certificate. We email it to you; the state allows up to 15 working days, and it does not expire.`,
+    intro: `Once you pass the final exam, your ${code} certificate is ready instantly in your account. It does not expire.`,
     items: [
       ['Watch ITAD', `Free, one hour, on the DPS site. Do it within ${itd.certValidDays} days of your driving test.`],
       ['Book your DPS appointment', 'Appointments are online. Road-test queues vary a lot by office, and nine offices offer no road test at all; our wait-time table ranks every office.'],
@@ -129,7 +129,7 @@ const landingFaqs = [
   { q: 'Do adults need behind-the-wheel hours in Texas?', a: 'No. Texas does not require adults to log practice hours. You still have to pass the driving test, so if you have never driven, get practice first through a driving school or supervised practice; Texas learner licenses go to applicants 15 to 17, not adults.' },
   { q: 'What if I fail the final exam?', a: 'You get two more attempts, with different questions each time. A third failure means starting over with a new enrollment; that limit is set by the state.' },
   { q: 'What is Impact Texas Adult Drivers (ITAD)?', a: `A free one-hour video program from the Texas Department of Public Safety about distracted driving. DPS requires it before your driving skills test. It is separate from our course: you take it on the DPS site and DPS issues that certificate. It is valid ${itd.certValidDays} days, so watch it close to your test date.` },
-  { q: 'When do I get my certificate?', a: `After you pass, a licensed Texas instructor reviews your record and signs your ${code} certificate. We email it as soon as that is done. Bring it to your DPS appointment with your other documents.` },
+  { q: 'When do I get my certificate?', a: `The moment you pass. Your ${code} certificate is issued instantly and waits in your account; download it and bring it to your DPS appointment with your other documents.` },
   { q: `Is it really ${price}?`, a: 'Yes. The certificate is included. No processing fee, no delivery fee, no retake fee, and no upgraded version of the course.' },
   { q: 'I am 25 or older. Should I take this?', a: 'You do not have to. People over 25 take it because the sign and traffic law exam is part of the course, on their own schedule, and DPS says the course is highly recommended for first-time applicants.' },
   { q: 'Do I need a learner permit first?', a: 'No. You can take the course before you have any license or permit at all.' },
@@ -231,7 +231,7 @@ const chev = (stroke: string, size = 18) => `<svg width="${size}" height="${size
         <a href={enrollUrl} data-rrs-cta="ade-hero" class="inline-block no-underline bg-primary hover:bg-primary-hover text-white font-extrabold text-lg px-[30px] py-[15px] rounded-full text-center max-w-full sm:whitespace-nowrap shadow-[0_8px_20px_rgba(36,84,230,0.28)]" style={inter}>Start My Course · {price}&nbsp;→</a>
         <p class="m-0 flex items-start gap-2 text-sm text-text-muted max-w-[520px]">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" class="flex-none mt-0.5"><circle cx="12" cy="12" r="9" stroke="#64748B" stroke-width="2"/><path d="M12 11 V16 M12 8 V8.5" stroke="#64748B" stroke-width="2" stroke-linecap="round"/></svg>
-          <span>{heroNote} <a href={`${base}/do-i-need-adult-drivers-ed`} class="text-primary-deep underline font-semibold">Not sure?</a></span>
+          <span>{heroNote}</span>
         </p>
       </div>
     </section>
@@ -426,7 +426,6 @@ const chev = (stroke: string, size = 18) => `<svg width="${size}" height="${size
         {resources.length > GUIDES_SHOWN && (
           <button type="button" id="guides-toggle" aria-expanded="false" class="self-center mt-2 font-bold text-base min-h-12 px-6 py-2.5 rounded-full cursor-pointer bg-white text-text border-2 border-[#CBD3DF] hover:border-text-muted">Show more guides</button>
         )}
-        <a href={`${base}/do-i-need-adult-drivers-ed`} class="self-center text-center mt-4 font-bold text-base text-primary-deep underline">Not sure you need the course? Find out in 60 seconds&nbsp;→</a>
       </div>
     </section>
   </div>

@@ -3,7 +3,7 @@
  * AdeCourseBand — the one course offer block for Texas adult driver education content pages.
  * Same shape as src/components/texas/CourseBand.astro (Jackson, 2026-10-07: one component, not hand-built
  * bands), with the ADE facts: $39.95 flat, license C3705 (never CP1234, 16 TAC §84.503(j)(4)), the exam
- * sentence in its only approved wording, the instant certificate, and the ADE refund policy.
+ * sentence in its only approved wording, the instant certificate, and the full-refund-before-completion promise.
  *
  * Jackson, 2026-10-13: one fixed heading on every page, five bullets that read from their bold words alone,
  * one DPS-cost line under the button, no "not sure" link. Pages pass only `eyebrow` (and `id` when their
@@ -20,7 +20,7 @@ const checks: { strong: string; rest: string }[] = [
   { strong: 'Exam built in', rest: ade.exam.claimPhrasing },
   { strong: 'Instant certificate', rest: 'ready the moment you pass' },
   { strong: 'No hidden fees', rest: 'certificate, retakes and processing included' },
-  { strong: 'Your pace', rest: `${ade.course.completionDays} days, any device, full refund within 3 days` },
+  { strong: 'Your pace', rest: `${ade.course.completionDays} days, any device, full refund any time before you finish` },
 ];
 const inter = "font-family:'Inter',sans-serif;";
 const sans = "font-family:'DM Sans',sans-serif;";

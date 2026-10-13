@@ -1,56 +1,110 @@
 ---
+/**
+ * /adult-drivers-ed/texas/dps-wait-times — every Texas DPS office ranked by how long the road test is out.
+ *
+ * Rebuilt 2026-10-13 on the hook → answer → loop → funnel recipe (Jackson): the H1 names the search and the
+ * spread; the first paragraph answers it in one breath with the date, the median, the count over a month and the
+ * worst office (the sentence an answer engine can lift); each H2 is the next question a reader asks and its first
+ * sentence answers it; the page ends in the course band, because everyone reading it is getting a first license.
+ *
+ * Data: src/data/dps-wait-times.json, a dated snapshot of DPS's own report (Driver License Appointment and Office
+ * Wait Times), parsed by the extractor in ~/Claude/Texas Adult Driver Ed/_build/ade-growth/. All figures come from
+ * src/lib/dps-stats.ts at build time; nothing on this page is typed by hand. Refresh the JSON, and every number,
+ * the schema and the sources line move with it.
+ */
 import AdeGuide from '../../../components/ade/AdeGuide.astro';
-import { dpsStats as S, pct } from '../../../lib/dps-stats';
+import { dpsStats as S } from '../../../lib/dps-stats';
 import { itd } from '../../../data/ade-eligibility';
 
+const siteUrl = (import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com').replace(/\/$/, '');
+const base = '/adult-drivers-ed/texas';
+const url = `${base}/dps-wait-times`;
+
 const rows = [...S.all].sort((a, b) => (b.driveTestDays ?? -1) - (a.driveTestDays ?? -1));
+const d = S.driveTest;
+const longDate = new Date(`${S.capturedOn}T12:00:00`).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+const days = (n: number) => `${n} ${n === 1 ? 'day' : 'days'}`;
+/** "HH:MM" from the DPS report → "7 min" / "1 h 05 min", so the column reads as time, not a code. */
+const counter = (w?: string) => {
+  const m = /^(\d+):(\d+)$/.exec(w ?? '');
+  if (!m) return '—';
+  const h = parseInt(m[1]!, 10), min = parseInt(m[2]!, 10);
+  if (!h && !min) return 'none';
+  return h ? `${h} h ${String(min).padStart(2, '0')} min` : `${min} min`;
+};
+const best3 = d.best.slice(0, 3).map((o) => `${o.office} (${days(o.days)})`).join(', ');
+
+// The one-breath answer. Same sentence in the lede, the meta description and the Dataset description, so what
+// Google shows, what an assistant quotes and what the reader sees are the same facts.
+const answer = `As of ${longDate}, the median Texas DPS office books a road test ${d.median} days out. ${d.over30} of ${d.measured} offices are more than a month out, and the longest is ${d.maxOffice} at ${d.max} days. A first-license appointment runs a median of ${S.original.median} days.`;
 
 const faqs = [
-  {
-    q: 'How long is the wait for a driving test in Texas?',
-    a: `It depends entirely on the office. Across the ${S.driveTest.measured} DPS offices reporting a non-commercial road test on ${S.capturedOn}, the median wait for the next available appointment was ${S.driveTest.median} days. ${S.driveTest.over30} offices were more than a month out and the longest was ${S.driveTest.maxOffice} at ${S.driveTest.max} days.`,
-  },
-  {
-    q: 'Which Texas DPS office has the shortest wait?',
-    a: `On ${S.capturedOn} the shortest road-test queues were ${S.driveTest.best.slice(0, 3).map((o) => `${o.office} (${o.days} days)`).join(', ')}. These change daily, and the table on this page is a dated snapshot, so check the DPS report for the day you are booking.`,
-  },
-  {
-    q: 'Why is the first-license appointment faster than the driving test?',
-    a: `Because they are different transactions. DPS books "Original" appointments — the first-license transaction — at a median of ${S.original.median} days, while the road test runs at a median of ${S.driveTest.median}. At ${S.driveFasterThanOriginal} of ${S.officeCount} offices the road test was actually the quicker of the two, so the pattern is not universal.`,
-  },
-  {
-    q: 'Can my Impact Texas Drivers certificate expire before my driving test?',
-    a: `Yes, and this is the trap worth planning around. The ITD certificate is valid ${itd.certValidDays} days and must be dated within that window of your skills test. On ${S.capturedOn}, ${S.driveTest.overItd} office had a queue longer than that outright, and ${S.driveTest.over60} were past 60 days — close enough that any rescheduling would push you over. Book the test first, then watch the video.`,
-  },
-  {
-    q: 'How do I get an earlier DPS appointment?',
-    a: 'DPS releases a limited number of same-day appointments at every office except the Carrollton Mega Center, first come first served, and they fill quickly. Cancellations also free up earlier slots that the published estimate does not count. Appointments can be booked up to six months ahead, so the number you see is the worst case, not the only case.',
-  },
+  { q: 'How long is the wait for a driving test in Texas?', a: `${answer} It depends on the office more than anything else: the quickest offices book a road test inside a week.` },
+  { q: 'Which Texas DPS office has the shortest wait for a road test?', a: `On ${longDate} the shortest road-test queues were ${best3}. The figures move daily, so check DPS's live report on the day you book.` },
+  { q: 'How do I get an earlier DPS appointment in Texas?', a: 'Three ways. DPS releases a limited number of same-day appointments at every office except the Carrollton Mega Center, first come first served. Cancellations free up earlier slots the published estimate does not count. And a DPS-certified third-party school can give the road test without the DPS queue, for a fee the school sets.' },
+  { q: 'Can my Impact Texas Drivers certificate expire before my driving test?', a: `Yes. The ITAD certificate must be dated within ${itd.certValidDays} days of your driving skills test. On ${longDate}, ${d.overItd} office had a road-test queue longer than that and ${d.over60} were past 60 days, so one reschedule can push you over. Book the test first, then watch the video.` },
+  { q: 'Why is the first-license appointment faster than the driving test?', a: `They are different transactions. DPS books "Original" appointments, the first-license transaction, at a median of ${S.original.median} days and the road test at a median of ${d.median}. At ${S.driveFasterThanOriginal} of ${S.officeCount} offices the road test was the quicker of the two.` },
+  { q: 'Do I need the adult drivers ed course before I book the DPS appointment?', a: 'You need the ADE-1317 certificate at the appointment, not to book it. At 18 to 24 the six-hour course is required for a first license, and its final exam satisfies the highway sign and traffic law portions of the DPS knowledge exam. Most people finish it inside the wait for the appointment.' },
+];
+
+const dataset = {
+  '@context': 'https://schema.org',
+  '@type': 'Dataset',
+  name: `Texas DPS driving test and first-license appointment waits by office, ${S.capturedOn}`,
+  description: `Days to the next available appointment at every Texas DPS driver license office for the Non CDL Drive Test (road test) and the Original (first license) transactions, plus average in-office wait, as published by Texas DPS on ${S.dpsAsOf}. ${answer}`,
+  url: `${siteUrl}${url}`,
+  dateModified: S.capturedOn,
+  temporalCoverage: S.capturedOn,
+  spatialCoverage: { '@type': 'Place', name: 'Texas, United States' },
+  creator: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  isBasedOn: S.source,
+  isAccessibleForFree: true,
+  variableMeasured: [
+    { '@type': 'PropertyValue', name: 'Days to next Non CDL Drive Test appointment', unitText: 'days' },
+    { '@type': 'PropertyValue', name: 'Days to next Original (first license) appointment', unitText: 'days' },
+    { '@type': 'PropertyValue', name: 'Average in-office wait', unitText: 'minutes' },
+  ],
+};
+
+const next = [
+  { href: `${base}/impact-texas-adult-drivers`, title: 'The 90-day ITAD certificate trap', blurb: 'Why the free DPS video is the last thing you do, not the first.' },
+  { href: `${base}/third-party-skills-testing`, title: 'Taking the road test without the DPS queue', blurb: 'DPS-certified schools give the Class C test. What it costs and when it is worth it.' },
+  { href: `${base}/texas-driver-license-documents`, title: 'What to bring to the appointment', blurb: 'The exact documents, so the wait is not wasted at the counter.' },
+  { href: `${base}/how-to-get-a-texas-license-as-an-adult`, title: 'The whole process, step by step', blurb: 'From the course to the card in your hand, in order.' },
 ];
 ---
 
 <AdeGuide
-  title="Texas DPS Driving Test Wait Times, Office by Office | Road Ready Safety"
-  description={`Every Texas DPS driver license office ranked by how long you wait for a road test. Median ${S.driveTest.median} days, ${S.driveTest.over30} offices over a month, longest ${S.driveTest.max}. Snapshot taken ${S.capturedOn}.`}
-  url="/adult-drivers-ed/texas/dps-wait-times"
-  eyebrow="Data report"
-  h1="Texas DPS driving test waits, office by office"
-  lede={`DPS publishes how far out its appointments run, per office, and refreshes it daily. We pulled the whole report on ${S.capturedOn} and ranked it. The spread is far wider than most people expect, and at the slow end it collides with a DPS rule of its own.`}
+  title={`Texas DPS Wait Times by Office: Road Test ${d.median} Days at the Median, ${d.max} at the Worst | Road Ready Safety`}
+  description={`${answer} Every office ranked, with a search box.`}
+  url={url}
+  eyebrow={`Data report · DPS figures as of ${S.dpsAsOf}`}
+  h1={`Texas DPS wait times, every office: your road test is ${days(d.min)} away or ${d.max}, depending on where you book`}
+  lede={`${answer} The table below lists all ${S.officeCount} offices, slowest first, with a search box. At the slow end the queue is longer than a certificate DPS makes you hold for that same test, and that rule is the part most people learn too late.`}
   faqs={faqs}
+  dateModified={S.capturedOn}
+  schema={[dataset]}
+  band={{ eyebrow: 'While you wait for the appointment', heading: 'Getting a first license at 18 to 24? Do the course now, not after the wait' }}
+  next={next}
+  updated={longDate}
   sources={[
     { label: `Texas DPS, Driver License Appointment and Office Wait Times (report dated ${S.dpsAsOf}, read ${S.capturedOn})`, href: S.source },
     { label: 'Texas DPS, Impact Texas Drivers (ITD) Program', href: 'https://www.dps.texas.gov/section/driver-license/impact-texas-drivers-itd-program' },
+    { label: 'Texas DPS, Third Party Skills Testing Program', href: 'https://www.dps.texas.gov/section/driver-license/third-party-skills-testing-program' },
     { label: 'Texas DPS, Driver License Office Locations', href: 'https://www.dps.texas.gov/section/driver-license/service/driver-license-office-locations' },
   ]}
 >
 
   <section class="flex flex-col gap-4">
-    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">What the report says</h2>
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">How long is the wait for a Texas driving test right now?</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      {d.median} days at the median office, and anywhere from {days(d.min)} to {d.max} depending on which one you pick. {d.over30} offices are more than a month out, {d.over60} are past two months, and {d.noDriveTest} offer no road test at all.
+    </p>
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
       {[
-        { n: `${S.driveTest.median}`, l: 'days, median road-test wait' },
-        { n: `${S.driveTest.over30}`, l: `of ${S.driveTest.measured} offices over a month` },
-        { n: `${S.driveTest.max}`, l: `days at ${S.driveTest.maxOffice}, the longest` },
+        { n: `${d.median}`, l: 'days, median road-test wait' },
+        { n: `${d.over30}`, l: `of ${d.measured} offices over a month` },
+        { n: `${d.max}`, l: `days at ${d.maxOffice}, the longest` },
         { n: `${S.original.median}`, l: 'days, median first-license wait' },
       ].map((s) => (
         <div class="bg-surface-muted border border-border rounded-2xl p-5 flex flex-col gap-1">
@@ -60,40 +114,14 @@ const faqs = [
       ))}
     </div>
     <p class="text-[17px] text-text-body leading-[30px]">
-      The headline is the spread. The quickest offices book a road test inside a few days; the
-      slowest are more than three months out. That is not a small regional variation, it is the
-      difference between driving next week and driving next season, and it is decided by which
-      office you pick rather than anything about you.
+      The spread is the story. The quickest offices book a road test this week; the slowest are a season away. Nothing about you decides which one you get. The office does, and you choose the office.
     </p>
   </section>
 
   <section class="flex flex-col gap-4">
-    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">
-      The finding: at the slow end, the queue outlasts a DPS certificate
-    </h2>
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Which DPS office has the shortest wait near you?</h2>
     <p class="text-[17px] text-text-body leading-[30px]">
-      DPS requires an {itd.adultName} certificate before your driving skills test, and it must be
-      dated within <strong>{itd.certValidDays} days</strong> of that test. On {S.capturedOn},{' '}
-      <strong>{S.driveTest.overItd} office had a road-test queue longer than that</strong> &mdash;{' '}
-      {S.driveTest.maxOffice}, at {S.driveTest.max} days &mdash; and{' '}
-      <strong>{S.driveTest.over60} offices were already past 60 days</strong>, close enough that one
-      reschedule pushes the certificate out of date.
-    </p>
-    <p class="text-[17px] text-text-body leading-[30px]">
-      The fix is free and takes no time: <strong>book the road test first, then watch the video.</strong>{' '}
-      Doing it in the intuitive order &mdash; course, video, then look for an appointment &mdash; is
-      what burns the certificate. We set the sequence out in{' '}
-      <a class="underline hover:no-underline" href="/adult-drivers-ed/texas/impact-texas-adult-drivers">the 90-day certificate trap</a>.
-    </p>
-  </section>
-
-  <section class="flex flex-col gap-4">
-    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Every office, slowest first</h2>
-    <p class="text-[17px] text-text-body leading-[30px]">
-      All {S.officeCount} offices reporting an adult transaction. &ldquo;First license&rdquo; is the
-      DPS <em>Original</em> appointment; &ldquo;road test&rdquo; is the <em>Non&nbsp;CDL Drive Test</em>.
-      In-office wait is time from arrival to reaching a counter, separate from the wait for the
-      appointment itself.
+      Type your city. All {S.officeCount} offices are listed, slowest road test first. &ldquo;Road test&rdquo; is the DPS <em>Non&nbsp;CDL Drive Test</em> appointment; &ldquo;first license&rdquo; is the <em>Original</em> appointment; &ldquo;at the counter&rdquo; is DPS&rsquo;s average wait from arrival to being served once you are there, a separate clock from the appointment itself.
     </p>
     <label class="flex flex-col gap-2">
       <span class="text-sm font-semibold text-text">Find your office</span>
@@ -112,7 +140,7 @@ const faqs = [
             <th class="py-3 px-4 text-sm font-semibold text-text">DPS office</th>
             <th class="py-3 px-3 text-sm font-semibold text-text whitespace-nowrap">Road test</th>
             <th class="py-3 px-3 text-sm font-semibold text-text whitespace-nowrap">First license</th>
-            <th class="py-3 px-4 text-sm font-semibold text-text whitespace-nowrap">In office</th>
+            <th class="py-3 px-4 text-sm font-semibold text-text whitespace-nowrap">At the counter</th>
           </tr>
         </thead>
         <tbody id="office-rows">
@@ -120,12 +148,12 @@ const faqs = [
             <tr class="border-b border-border last:border-0" data-office={o.office.toLowerCase()}>
               <td class="py-2.5 px-4 text-text-body">{o.office}</td>
               <td class="py-2.5 px-3 text-text-body whitespace-nowrap">
-                {typeof o.driveTestDays === 'number' ? `${o.driveTestDays} days` : <span class="text-text-muted">not offered</span>}
+                {typeof o.driveTestDays === 'number' ? days(o.driveTestDays) : <span class="text-text-muted">not offered</span>}
               </td>
               <td class="py-2.5 px-3 text-text-body whitespace-nowrap">
-                {typeof o.originalDays === 'number' ? `${o.originalDays} days` : <span class="text-text-muted">&mdash;</span>}
+                {typeof o.originalDays === 'number' ? days(o.originalDays) : <span class="text-text-muted">&mdash;</span>}
               </td>
-              <td class="py-2.5 px-4 text-text-muted whitespace-nowrap">{o.driveTestWait ?? o.originalWait ?? '—'}</td>
+              <td class="py-2.5 px-4 text-text-muted whitespace-nowrap">{counter(o.driveTestWait ?? o.originalWait)}</td>
             </tr>
           ))}
         </tbody>
@@ -135,49 +163,61 @@ const faqs = [
       No office matches that. DPS names offices by city, and the big metros are split into several
       (for example &ldquo;Austin South&rdquo; rather than &ldquo;Austin&rdquo;).
     </p>
-  </section>
-
-  <section class="flex flex-col gap-4">
-    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">The fast end and the slow end</h2>
-    <div class="grid md:grid-cols-2 gap-6">
+    <div class="grid md:grid-cols-2 gap-6 mt-2">
       <div class="flex flex-col gap-2">
         <h3 class="text-[17px] font-semibold text-text leading-7">Longest road-test queues</h3>
         <ul class="flex flex-col gap-1 pl-5 m-0 list-disc marker:text-text-subtle">
-          {S.driveTest.worst.slice(0, 8).map((o) => (
-            <li class="text-[15px] text-text-body leading-6">{o.office} &mdash; {o.days} days</li>
+          {d.worst.slice(0, 8).map((o) => (
+            <li class="text-[15px] text-text-body leading-6">{o.office} &mdash; {days(o.days)}</li>
           ))}
         </ul>
       </div>
       <div class="flex flex-col gap-2">
         <h3 class="text-[17px] font-semibold text-text leading-7">Shortest road-test queues</h3>
         <ul class="flex flex-col gap-1 pl-5 m-0 list-disc marker:text-text-subtle">
-          {S.driveTest.best.slice(0, 8).map((o) => (
-            <li class="text-[15px] text-text-body leading-6">{o.office} &mdash; {o.days} {o.days === 1 ? 'day' : 'days'}</li>
+          {d.best.slice(0, 8).map((o) => (
+            <li class="text-[15px] text-text-body leading-6">{o.office} &mdash; {days(o.days)}</li>
           ))}
         </ul>
       </div>
     </div>
     <p class="text-[17px] text-text-body leading-[30px]">
-      Before driving three hours to a fast office: these figures move daily, DPS holds same-day
-      appointments at every office except the Carrollton Mega Center, and a cancellation at your
-      local office may beat the drive. Check the live report first.
+      Before you drive three hours to a fast office: these figures move daily, DPS holds same-day appointments at every office except the Carrollton Mega Center, and a cancellation at your local office may beat the drive. Check the live report first.
     </p>
   </section>
 
   <section class="flex flex-col gap-4">
-    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Method, coverage and what these numbers are not</h2>
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Why can your ITAD certificate expire before your road test?</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      Because DPS requires an {itd.adultName} certificate dated within <strong>{itd.certValidDays} days</strong> of your driving skills test, and at the slow end the queue is longer than that. On {longDate}, <strong>{d.overItd} office had a road-test queue longer than {itd.certValidDays} days</strong> ({d.maxOffice}, at {d.max}), and <strong>{d.over60} offices were past 60 days</strong>, close enough that one reschedule pushes the certificate out of date.
+    </p>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      The fix is free: <strong>book the road test first, then watch the video.</strong> The intuitive order, course, video, then look for an appointment, is what burns the certificate. The full sequence is in <a class="underline hover:no-underline" href={`${base}/impact-texas-adult-drivers`}>the 90-day certificate trap</a>.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">How do you get an earlier DPS appointment?</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      Three ways, and none of them is a trick. DPS releases a limited number of same-day appointments at every office except the Carrollton Mega Center, first come first served, and they go quickly. Cancellations free up earlier slots that the published estimate does not count, so the real wait is often shorter than the number in the table. And a DPS-certified third-party school can give you the Class C road test without the DPS queue at all, for a fee the school sets. <a class="underline hover:no-underline" href={`${base}/third-party-skills-testing`}>When a third-party test is worth paying for</a>.
+    </p>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      Appointments can be booked up to six months ahead, so the number you see is the worst case, not the only case. Book at public.txdpsscheduler.com.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">What do these numbers mean, and what do they not mean?</h2>
     <ul class="flex flex-col gap-3 pl-5 m-0 list-disc marker:text-text-subtle">
       <li class="text-[17px] text-text-body leading-[30px]"><strong>Source.</strong> The figures are DPS&rsquo;s own published report, dated {S.dpsAsOf} and read by us on {S.capturedOn}. We did not survey anyone or model anything.</li>
-      <li class="text-[17px] text-text-body leading-[30px]"><strong>Coverage.</strong> {S.coverage} Of those, {S.driveTest.measured} report a non-commercial road test; {S.noDriveTest} do not offer one at all, and show as &ldquo;not offered&rdquo;.</li>
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>Coverage.</strong> {S.coverage} Of those, {d.measured} report a non-commercial road test; {S.noDriveTest} do not offer one, and show as &ldquo;not offered&rdquo;.</li>
       <li class="text-[17px] text-text-body leading-[30px]"><strong>A snapshot, not a feed.</strong> DPS refreshes daily from the previous business day. Every figure here is one day&rsquo;s reading and will already have moved.</li>
-      <li class="text-[17px] text-text-body leading-[30px]"><strong>The estimate excludes cancellations.</strong> DPS says so itself: earlier appointments freed by someone rescheduling are not counted, so the real wait is often shorter than the published number.</li>
-      <li class="text-[17px] text-text-body leading-[30px]"><strong>Two different waits.</strong> Days-to-appointment and in-office wait measure different things. An office can be months out and still move you through the door in ten minutes, and several here do.</li>
-      <li class="text-[17px] text-text-body leading-[30px]"><strong>We are not DPS.</strong> Their page governs. Book at public.txdpsscheduler.com.</li>
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>The estimate excludes cancellations.</strong> DPS says so itself. Earlier appointments freed by someone rescheduling are not counted, so the real wait is often shorter than the published number.</li>
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>Two different clocks.</strong> Days to the appointment and the wait at the counter measure different things. An office can be months out and still serve you in ten minutes once you are there, and several do.</li>
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>We are not DPS.</strong> Their page governs.</li>
     </ul>
     <p class="text-[17px] text-text-body leading-[30px]">
-      The underlying snapshot is published as JSON in our repository and may be reused with
-      attribution. Suggested citation: &ldquo;Road Ready Safety, Texas DPS driving test waits by
-      office, {S.capturedOn}, from Texas DPS Driver License Appointment and Office Wait Times.&rdquo;
+      The snapshot is published as JSON in our repository and may be reused with attribution. Suggested citation: &ldquo;Road Ready Safety, Texas DPS driving test waits by office, {S.capturedOn}, from Texas DPS Driver License Appointment and Office Wait Times.&rdquo;
     </p>
   </section>
 

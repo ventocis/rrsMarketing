@@ -9,9 +9,13 @@
 import AdeLayout from '../../layouts/AdeLayout.astro';
 import ade from '../../data/ade-texas.json';
 import { adeEnabled } from '../../lib/ade';
+import AdeCourseBand from './AdeCourseBand.astro';
 
 interface Faq { q: string; a: string }
 interface Source { label: string; href?: string }
+
+interface Next { href: string; title: string; blurb: string }
+interface Band { heading?: string; eyebrow?: string }
 
 interface Props {
   title: string;
@@ -23,9 +27,21 @@ interface Props {
   faqs?: Faq[];
   sources?: Source[];
   updated?: string;
+  /** ISO date for the Article schema's dateModified. Defaults to the original guide date; set it when the page changes. */
+  dateModified?: string;
+  /** Extra JSON-LD objects (a Dataset, an ItemList) emitted next to the Article and FAQPage. */
+  schema?: Record<string, unknown>[];
+  /** Render the ADE course band after the article (the conversion callout for pages whose reader is getting a first license). */
+  band?: boolean | Band;
+  /** "Keep reading" cards after the article: the next loop in the funnel, one card per page. */
+  next?: Next[];
 }
 
-const { title, description, url, eyebrow, h1, lede, faqs = [], sources = [], updated = 'September 15, 2026' } = Astro.props;
+const {
+  title, description, url, eyebrow, h1, lede, faqs = [], sources = [], updated = 'September 15, 2026',
+  dateModified = '2026-09-15', schema: extraSchema = [], band = false, next = [],
+} = Astro.props;
+const bandProps: Band = typeof band === 'object' ? band : {};
 
 const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
 
@@ -40,7 +56,7 @@ const schema: Record<string, unknown>[] = [
     headline: h1,
     description,
     url: `${siteUrl}${url}`,
-    dateModified: '2026-09-15',
+    dateModified,
     author: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
     publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
     isAccessibleForFree: true,
@@ -57,6 +73,7 @@ if (faqs.length) {
     })),
   });
 }
+schema.push(...extraSchema);
 ---
 
 {!isEnabled && <meta http-equiv="refresh" content="0;url=/" />}
@@ -115,7 +132,22 @@ if (faqs.length) {
           </section>
         )}
       </div>
+
+      {next.length > 0 && (
+        <section class="mt-8 flex flex-col gap-3">
+          <h2 class="text-base font-semibold text-text leading-6 m-0">Keep reading</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {next.map((n) => (
+              <a href={n.href} class="no-underline bg-white border border-border rounded-2xl p-5 flex flex-col gap-1 hover:border-primary-deep">
+                <span class="font-bold text-text text-[17px] leading-6">{n.title}</span>
+                <span class="text-[15px] text-text-body leading-6">{n.blurb}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   </section>
+  {band && <AdeCourseBand id="course" heading={bandProps.heading} eyebrow={bandProps.eyebrow} />}
 </AdeLayout>
 )}

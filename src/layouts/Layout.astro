@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import { TEXAS_COURSE } from '../data/texas-course';
+import { adeLicensed, ADE_LICENSE, ADE_VERIFY_URL } from '../lib/ade';
 import { version } from '../../package.json';
 
 interface Props {
@@ -35,8 +36,30 @@ const gtmId = import.meta.env.VITE_GTM_ID;
 // Disable indexing in non-prod environments
 const isNoindex = noindex || import.meta.env.VITE_ENABLE_ANALYTICS !== 'true';
 const pageTitle = title.includes('Road Ready') ? title : `${title} | Road Ready Safety`;
-// Organization JSON-LD. hasCredential points at TDLR's own record of our license so an assistant or crawler can
+// Organization JSON-LD. hasCredential points at TDLR's own record of each license so an assistant or crawler can
 // verify CP1234 independently (ChatGPT, 2026-10-08: "I can't independently confirm its current license status").
+// The driver education license (C3705, 2026-10-13) is listed the same way; the organization holds both.
+const tdlr = { '@type': 'GovernmentOrganization', name: 'Texas Department of Licensing and Regulation', alternateName: 'TDLR', url: 'https://www.tdlr.texas.gov/' };
+const credentials = [
+  {
+    '@type': 'EducationalOccupationalCredential',
+    credentialCategory: 'license',
+    name: 'Texas Driving Safety Course Provider License',
+    identifier: TEXAS_COURSE.providerNumber,
+    url: TEXAS_COURSE.verifyUrl,
+    recognizedBy: tdlr,
+  },
+  ...(adeLicensed
+    ? [{
+        '@type': 'EducationalOccupationalCredential',
+        credentialCategory: 'license',
+        name: 'Texas Driver Education Provider License',
+        identifier: ADE_LICENSE,
+        url: ADE_VERIFY_URL,
+        recognizedBy: tdlr,
+      }]
+    : []),
+];
 const orgSchema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
@@ -49,14 +72,7 @@ const orgSchema = {
     'https://www.youtube.com/@RoadReadySafety',
     'https://www.trustpilot.com/review/roadreadysafety.com',
   ],
-  hasCredential: {
-    '@type': 'EducationalOccupationalCredential',
-    credentialCategory: 'license',
-    name: 'Texas Driving Safety Course Provider License',
-    identifier: TEXAS_COURSE.providerNumber,
-    url: TEXAS_COURSE.verifyUrl,
-    recognizedBy: { '@type': 'GovernmentOrganization', name: 'Texas Department of Licensing and Regulation', alternateName: 'TDLR', url: 'https://www.tdlr.texas.gov/' },
-  },
+  hasCredential: credentials,
 };
 ---
 

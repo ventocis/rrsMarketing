@@ -1,12 +1,7 @@
 ---
 import AdeLayout from '../../../layouts/AdeLayout.astro';
 import ade from '../../../data/ade-texas.json';
-
-const isProdSite =
-  import.meta.env.VITE_ENABLE_ANALYTICS === 'true' && import.meta.env.VITE_IS_QA !== 'true';
-const isLicensed = Boolean(ade.provider.deLicenseNumber);
-const isEnabled =
-  import.meta.env.VITE_ADE_ROUTES_ENABLED === 'true' && (isLicensed || !isProdSite);
+import { adeEnabled as isEnabled } from '../../../lib/ade';
 
 const provider = `${ade.provider.legalName} d/b/a ${ade.provider.dba}`;
 const email = ade.provider.supportEmail;

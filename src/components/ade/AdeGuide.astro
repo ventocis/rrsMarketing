@@ -8,6 +8,7 @@
  */
 import AdeLayout from '../../layouts/AdeLayout.astro';
 import ade from '../../data/ade-texas.json';
+import { adeEnabled } from '../../lib/ade';
 
 interface Faq { q: string; a: string }
 interface Source { label: string; href?: string }
@@ -28,15 +29,9 @@ const { title, description, url, eyebrow, h1, lede, faqs = [], sources = [], upd
 
 const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
 
-// Same route gate every other ADE page uses. 16 TAC §84.80(e) bars provider-name advertising,
-// enrolment and payment before the Driver Education Provider license is approved, so on the
-// production site these pages stay dark until ade-texas.json carries a DE license number.
-// Keeping the gate here means a new guide page cannot forget it.
-const isProdSite =
-  import.meta.env.VITE_ENABLE_ANALYTICS === 'true' && import.meta.env.VITE_IS_QA !== 'true';
-const isLicensed = Boolean(ade.provider.deLicenseNumber);
-const isEnabled =
-  import.meta.env.VITE_ADE_ROUTES_ENABLED === 'true' && (isLicensed || !isProdSite);
+// Same route gate every other ADE page uses (src/lib/ade.ts): the pages render once the DE license
+// number exists. Keeping the gate here means a new guide page cannot forget it.
+const isEnabled = adeEnabled;
 
 const schema: Record<string, unknown>[] = [
   {

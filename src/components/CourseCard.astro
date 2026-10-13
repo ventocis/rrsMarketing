@@ -1,5 +1,7 @@
 ---
 import { usd, hours, truncate } from '../utils/format';
+import ade from '../data/ade-texas.json';
+import { adeEnabled, adeEnrollUrl } from '../lib/ade';
 
 interface Course {
   slug: string;
@@ -21,7 +23,25 @@ interface Props {
   course: Course;
 }
 
-const { course } = Astro.props;
+const { course: raw } = Astro.props;
+
+// Texas adult driver education is our own licensed course now (TDLR C3705, 2026-10-13). courses.json still
+// carries the old TicketSchool reseller entry under this slug; once the license gate is on, the card shows
+// our course and sends people to our landing page and checkout, the way tx-defensive maps to /texas.
+const ADE_SLUG = 'tx-adult-ed';
+const isAdeCard = adeEnabled && raw.slug === ADE_SLUG;
+const course: Course = isAdeCard
+  ? {
+      ...raw,
+      course_name: ade.course.name,
+      price_usd: ade.course.priceUsd,
+      blurb: `The six-hour TDLR-approved course Texas requires for a first license at 18 to 24, with the exam built in and the certificate included. TDLR driver education provider ${ade.provider.deLicenseNumber}.`,
+      provider_type: 'Road Ready Safety',
+      provider_name: undefined,
+      affiliate_link: undefined,
+      qa_link: undefined,
+    }
+  : raw;
 
 const portalUrl = import.meta.env.VITE_PORTAL_URL || 'https://app.roadreadysafety.com';
 const isQa = import.meta.env.VITE_IS_QA === 'true';
@@ -31,12 +51,14 @@ const TEXAS_SLUG = 'tx-defensive';
 
 function getLearnMoreHref(slug: string) {
   if (isTexasEnabled && slug === TEXAS_SLUG) return '/texas';
+  if (isAdeCard) return '/adult-drivers-ed/texas';
   return `/courses/${slug}`;
 }
 
 function getSignUpHref(course: Course) {
   // TX: "Sign up" goes straight to checkout, not the /texas marketing page
   if (isTexasEnabled && course.slug === TEXAS_SLUG) return isQa && course.qa_link ? course.qa_link : texasEnrollUrl;
+  if (isAdeCard) return adeEnrollUrl;
   if (isQa && course.qa_link) return course.qa_link;
   if (course.provider_type === 'Partner' && course.affiliate_link) return course.affiliate_link;
   return portalUrl;

@@ -159,6 +159,9 @@ const resources = [
   { href: `${base}/new-resident-out-of-state-license`, tag: 'Moving here', title: 'New Resident with an Out-of-State License', blurb: 'When the course is waived and what DPS wants instead.' },
 ];
 
+// Jackson, 2026-10-13: show the first five guides, the rest behind a Show more button (same pattern as the reviews).
+const GUIDES_SHOWN = 5;
+
 const check = (stroke: string) => `<svg width="14" height="14" viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="M4 11.5 L9 16 L18 6" stroke="${stroke}" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 const chev = (stroke: string, size = 18) => `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9 L12 15 L18 9" stroke="${stroke}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 ---
@@ -407,17 +410,22 @@ const chev = (stroke: string, size = 18) => `<svg width="${size}" height="${size
         <h2 class="m-0 text-center font-extrabold text-[30px] lg:text-[40px] leading-[1.12] text-text" style={inter}>Helpful Resources</h2>
         <p class="m-0 mb-5 text-center text-[17px] text-text-muted">Free guides to help you through every step of getting a Texas license as an adult.</p>
         <div class="max-w-[760px] w-full mx-auto flex flex-col border-t border-border">
-          {resources.map((r) => (
-            <a href={r.href} class="group no-underline text-text flex items-start py-4 border-b border-border">
-              <span class="flex flex-col gap-1 min-w-0">
-                <span class="text-xs font-bold text-primary-deep uppercase tracking-[0.06em]">{r.tag}</span>
-                <span class="font-extrabold text-lg text-text leading-[1.3] group-hover:text-primary" style={inter}>{r.title}</span>
-                <span class="text-[15px] text-text-body">{r.blurb}</span>
-                <span class="text-sm font-bold text-primary mt-0.5">Read guide&nbsp;→</span>
-              </span>
-            </a>
+          {resources.map((r, i) => (
+            <div data-more-guide={i >= GUIDES_SHOWN ? '' : undefined} hidden={i >= GUIDES_SHOWN}>
+              <a href={r.href} class="group no-underline text-text flex items-start py-4 border-b border-border">
+                <span class="flex flex-col gap-1 min-w-0">
+                  <span class="text-xs font-bold text-primary-deep uppercase tracking-[0.06em]">{r.tag}</span>
+                  <span class="font-extrabold text-lg text-text leading-[1.3] group-hover:text-primary" style={inter}>{r.title}</span>
+                  <span class="text-[15px] text-text-body">{r.blurb}</span>
+                  <span class="text-sm font-bold text-primary mt-0.5">Read guide&nbsp;→</span>
+                </span>
+              </a>
+            </div>
           ))}
         </div>
+        {resources.length > GUIDES_SHOWN && (
+          <button type="button" id="guides-toggle" aria-expanded="false" class="self-center mt-2 font-bold text-base min-h-12 px-6 py-2.5 rounded-full cursor-pointer bg-white text-text border-2 border-[#CBD3DF] hover:border-text-muted">Show more guides</button>
+        )}
         <a href={`${base}/do-i-need-adult-drivers-ed`} class="self-center text-center mt-4 font-bold text-base text-primary-deep underline">Not sure you need the course? Find out in 60 seconds&nbsp;→</a>
       </div>
     </section>
@@ -434,6 +442,17 @@ const chev = (stroke: string, size = 18) => `<svg width="${size}" height="${size
           document.querySelectorAll('[data-more]').forEach(function (el) { el.hidden = !open; });
           rt.setAttribute('aria-expanded', open ? 'true' : 'false');
           rt.textContent = open ? 'Show fewer reviews' : 'Show more reviews';
+        });
+      }
+      // Guides: show 5, toggle the rest.
+      var gt = document.getElementById('guides-toggle');
+      if (gt && !gt.dataset.armed) {
+        gt.dataset.armed = '1';
+        gt.addEventListener('click', function () {
+          var open = gt.getAttribute('aria-expanded') !== 'true';
+          document.querySelectorAll('[data-more-guide]').forEach(function (el) { el.hidden = !open; });
+          gt.setAttribute('aria-expanded', open ? 'true' : 'false');
+          gt.textContent = open ? 'Show fewer guides' : 'Show more guides';
         });
       }
       // What to expect: tab picker.

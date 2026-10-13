@@ -1,21 +1,38 @@
 ---
+/**
+ * /adult-drivers-ed/texas/impact-texas-adult-drivers — ITAD, the free one-hour DPS video, and its 90-day certificate.
+ *
+ * Rebuilt 2026-10-13 on the hook → answer → loop → funnel recipe (ADE-PAGE-RECIPE.md): the H1 names the search and
+ * the catch (free and an hour, but the certificate expires); the first paragraph answers it in one breath; each H2 is
+ * the reader's next question; the page ends in the course band, because at 18 to 24 the course comes before ITAD.
+ *
+ * Facts: itd (DPS-ITD, 37 TAC §15.62) from src/data/ade-eligibility.ts; queue figures from src/lib/dps-stats.ts,
+ * a dated snapshot of the DPS wait-time report. Nothing numeric is typed by hand.
+ */
 import AdeGuide from '../../../components/ade/AdeGuide.astro';
-import {itd} from '../../../data/ade-eligibility';
-import { dpsStats as W } from '../../../lib/dps-stats';
+import { itd } from '../../../data/ade-eligibility';
+import { dpsStats as W, pct } from '../../../lib/dps-stats';
 
-// The finding: DPS requires the ITD certificate to be dated within 90 days of the skills test,
-// but publishes per-office drive-test queues that run past 90 days at the slowest offices.
-// Figures are a dated snapshot of the DPS wait-time report, refreshed daily at the source.
-const pct = (n: number, d: number) => Math.round((n / d) * 100);
+const base = '/adult-drivers-ed/texas';
+const longDate = new Date(`${W.capturedOn}T12:00:00`).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+const hour = itd.adultLengthHours === 1 ? 'one-hour' : `${itd.adultLengthHours}-hour`;
+const offices = (n: number) => `${n} ${n === 1 ? 'office' : 'offices'}`;
+
+// The one-breath answer: lede and meta description use the same sentence.
+const answer = `Impact Texas Adult Drivers (ITAD) is a free ${hour} Texas DPS video. You need its certificate to take the driving test, and it must be dated within ${itd.certValidDays} days of the test.`;
 
 const faqs = [
   {
     q: 'What is Impact Texas Adult Drivers (ITAD)?',
-    a: `ITAD is a free ${itd.adultLengthHours}-hour video from Texas DPS about distracted driving. DPS requires it for ${itd.adultAppliesTo}. You watch it online and print a certificate, and you must present that certificate before the driving skills test. DPS is explicit: you cannot take the test without it.`,
+    a: `ITAD is a free ${itd.adultLengthHours}-hour video from Texas DPS about distracted driving. DPS requires it for ${itd.adultAppliesTo}. You watch it online, print a certificate, and present that certificate before the driving skills test. Without it you cannot take the test.`,
   },
   {
     q: 'How long is the ITD certificate valid?',
     a: `${itd.certValidDays} days. DPS requires the certificate to be dated within ${itd.certValidDays} days of your driving skills test, so the clock starts when you finish the video, not when you book the appointment.`,
+  },
+  {
+    q: 'How do I get my ITAD certificate?',
+    a: 'Watch the free video online and print the certificate at the end. Bring the printed certificate to your driving skills test with your other documents.',
   },
   {
     q: 'Do I need ITAD if I am over 25?',
@@ -23,27 +40,38 @@ const faqs = [
   },
   {
     q: 'Does the six-hour adult driver education course count instead of ITAD?',
-    a: `No, and DPS says so directly: the ITD programs do not replace the distracted driving module in the six-hour adult driver education course. They are two separate requirements that happen to cover overlapping ground. You do both.`,
+    a: 'No. DPS says the ITD programs do not replace the distracted driving module in the six-hour adult driver education course. They are two separate requirements that cover overlapping ground, so if you need the course, you do both.',
   },
   {
     q: 'When should I watch the ITAD video?',
-    a: `DPS says the ITD program must be completed ${itd.order}. Because the certificate only lasts ${itd.certValidDays} days, the safest sequence is: book your skills test first, see the date you are actually given, then watch the video close enough to that date that the certificate is still valid.`,
+    a: `After you book your skills test and see the date you are given, close enough to that date that the certificate is still valid on the day. DPS says the ITD program must be completed ${itd.order}, and the certificate only lasts ${itd.certValidDays} days.`,
   },
   {
     q: 'Do I need ITAD for a third-party skills test?',
     a: 'Yes. DPS notes that third-party skills testing also requires ITD program completion based on your age.',
   },
 ];
+
+const next = [
+  { href: `${base}/dps-wait-times`, title: 'How far out your office books the road test', blurb: `Every DPS office ranked by the wait, so you can see whether your queue is near the ${itd.certValidDays}-day line.` },
+  { href: `${base}/texas-driving-test`, title: 'What happens at the driving test', blurb: 'What to bring, how to book it, and what the course does and does not cover.' },
+  { href: `${base}/how-to-get-a-texas-license-as-an-adult`, title: 'The whole process, in order', blurb: 'Where ITAD sits between the course and the card in your hand.' },
+  { href: `${base}/do-i-need-adult-drivers-ed`, title: 'Do you need the six-hour course?', blurb: 'Required at 18 to 24 for a first license, optional at 25 and over. Check your case.' },
+];
 ---
 
 <AdeGuide
-  title="Impact Texas Adult Drivers (ITAD) and the 90-Day Certificate Trap | Road Ready Safety"
-  description="ITAD is a 1-hour DPS video required before your driving skills test, and the certificate lasts 90 days. At some Texas offices the test queue is longer than that. Watch the video second, not first."
-  url="/adult-drivers-ed/texas/impact-texas-adult-drivers"
+  title={`Impact Texas Adult Drivers (ITAD): Free ${itd.adultLengthHours}-Hour DPS Video, Certificate Valid ${itd.certValidDays} Days | Road Ready Safety`}
+  description={answer}
+  url={`${base}/impact-texas-adult-drivers`}
   eyebrow="DPS process"
-  h1="Impact Texas Adult Drivers, and the 90-day certificate trap"
-  lede="ITAD is a one-hour video you must show before your driving skills test. The certificate is good for 90 days. At the slowest Texas driver license offices, the wait for that test is longer than the certificate lasts — which means the order you do things in matters."
+  h1={`Impact Texas Adult Drivers takes an hour and costs nothing, but its certificate expires in ${itd.certValidDays} days`}
+  lede={`${answer} ${W.driveTest.overItd > 0 ? 'At the slowest DPS office the road-test queue is longer than the certificate lasts' : 'A long road-test queue can outlast the certificate'}, so the order you do things in decides whether it is still valid on the day, and that order is below.`}
   faqs={faqs}
+  dateModified="2026-10-13"
+  updated="October 13, 2026"
+  band={{ eyebrow: 'The course comes first, ITAD comes last', heading: 'At 18 to 24 the six-hour course is the step before ITAD, and the exam is in it' }}
+  next={next}
   sources={[
     { label: 'Texas DPS, Impact Texas Drivers (ITD) Program (authority: 37 TAC §15.62)', href: 'https://www.dps.texas.gov/section/driver-license/impact-texas-drivers-itd-program' },
     { label: `Texas DPS, Driver License Appointment and Office Wait Times (figures read ${W.capturedOn})`, href: 'https://www.dps.texas.gov/apps/Viewer/Document/Vue/WAITTIMES' },
@@ -52,29 +80,34 @@ const faqs = [
 >
 
   <section class="flex flex-col gap-4">
-    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">What ITAD is</h2>
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">What is Impact Texas Adult Drivers?</h2>
     <p class="text-[17px] text-text-body leading-[30px]">
-      {itd.adultName} is a free {itd.adultLengthHours}-hour video produced by Texas DPS about
-      distracted driving. It is required for {itd.adultAppliesTo}. You watch it online, print the
-      certificate, and bring it to your driving skills test. DPS puts it bluntly: you cannot take the
+      It is a free {itd.adultLengthHours}-hour video about distracted driving, produced by Texas DPS, and you
+      need its certificate to take the driving skills test. It is required for {itd.adultAppliesTo}. You watch
+      it online, print the certificate, and bring it to your driving skills test. DPS says you cannot take the
       test without it.
     </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Does ITAD replace the six-hour adult driver education course?</h2>
     <p class="text-[17px] text-text-body leading-[30px]">
-      It is not the same thing as the six-hour adult driver education course, and it does not replace
-      it. DPS states that the ITD programs do not replace the distracted driving module in the
-      six-hour course. If you are {'18 through 24'} and getting a first Texas license, you do both.
+      No. If you are 18 through 24 and getting a first Texas license, you do both. DPS states that the ITD
+      programs do not replace the distracted driving module in the six-hour course.
     </p>
   </section>
 
   <section class="flex flex-col gap-4">
     <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">
-      The part nobody warns you about
+      Can your ITAD certificate expire before your driving test?
     </h2>
     <p class="text-[17px] text-text-body leading-[30px]">
-      Two DPS rules sit next to each other and do not quite fit. The first: the ITD certificate must
-      be dated within <strong>{itd.certValidDays} days</strong> of your driving skills test. The
-      second: every driver license office is appointment only, and DPS publishes how far out those
-      appointments run.
+      {W.driveTest.overItd > 0
+        ? `Yes, at the slowest office. On ${longDate}, ${offices(W.driveTest.overItd)} had a road-test queue longer than the ${itd.certValidDays} days an ITD certificate stays valid.`
+        : `It can, if your appointment is more than ${itd.certValidDays} days after you watch the video.`}
+      {' '}Two DPS rules sit next to each other and do not quite fit. The certificate must be dated within{' '}
+      <strong>{itd.certValidDays} days</strong> of your driving skills test, and every driver license office is
+      appointment only, with DPS publishing how far out those appointments run.
     </p>
     <p class="text-[17px] text-text-body leading-[30px]">
       We read that report on {W.capturedOn}. Across {W.driveTest.measured} offices reporting a
@@ -110,9 +143,8 @@ const faqs = [
     </div>
     {W.driveTest.overItd > 0 && (
       <p class="text-[17px] text-text-body leading-[30px]">
-        <strong>Put those two rules together.</strong> At {W.driveTest.maxOffice} the wait for a
-        driving skills test was {W.driveTest.max} days &mdash; longer than the{' '}
-        {itd.certValidDays} days an ITD certificate stays valid. Someone who did everything in the
+        At {W.driveTest.maxOffice} the wait for a driving skills test was {W.driveTest.max} days, longer than
+        the{' '}{itd.certValidDays} days an ITD certificate stays valid. Someone who did everything in the
         obvious order, watching the video as soon as they finished their course, would arrive at that
         appointment with an expired certificate and be turned away.
       </p>
@@ -120,7 +152,10 @@ const faqs = [
   </section>
 
   <section class="flex flex-col gap-4">
-    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">So do it in this order</h2>
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">When should you watch the ITAD video?</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      After you have a test date, inside the {itd.certValidDays} days before it. In order:
+    </p>
     <ul class="flex flex-col gap-3 pl-5 m-0 list-disc marker:text-text-subtle">
       <li class="text-[17px] text-text-body leading-[30px]"><strong>1. Finish your driver education course</strong> if you need one. DPS requires ITD to come {itd.order}.</li>
       <li class="text-[17px] text-text-body leading-[30px]"><strong>2. Book the skills test and look at the date you were given.</strong> Appointments can be made up to {6} months in advance, so the date you get may be a long way off.</li>
@@ -128,33 +163,29 @@ const faqs = [
       <li class="text-[17px] text-text-body leading-[30px]"><strong>4. Print the certificate and keep it with your documents.</strong></li>
     </ul>
     <p class="text-[17px] text-text-body leading-[30px]">
-      If your appointment moves later &mdash; which happens &mdash; check the date on the certificate
-      before you go. Rewatching the video costs an hour. Losing an appointment can cost a month.
-    </p>
-    <p class="text-[17px] text-text-body leading-[30px]">
-      Two things can shorten the queue itself. DPS releases a limited number of same-day appointments
-      on a first come, first served basis, and cancellations free up earlier slots that its published
-      estimate does not count. Third-party skills testing is the other route, and it still requires
-      ITD.
+      If your appointment moves later, check the date on the certificate before you go. Rewatching the video
+      costs an hour, and losing an appointment can cost a month.
     </p>
   </section>
 
   <section class="flex flex-col gap-4">
-    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">A note on these numbers</h2>
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Can you get the driving test sooner?</h2>
     <p class="text-[17px] text-text-body leading-[30px]">
-      DPS refreshes the wait-time report daily from the previous business day, so the figures above
-      are a snapshot taken on {W.capturedOn}, not a live reading. Check{' '}
+      Sometimes. DPS releases a limited number of same-day appointments on a first come, first served basis,
+      and cancellations free up earlier slots that its published estimate does not count.{' '}
+      <a class="underline hover:no-underline" href={`${base}/third-party-skills-testing`}>Third-party skills testing</a>{' '}
+      is the other route, and it still requires ITD.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">How current are these numbers?</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      They are a snapshot taken on {W.capturedOn}, not a live reading. DPS refreshes the wait-time report daily
+      from the previous business day. Check{' '}
       <a class="underline hover:no-underline" href="https://www.dps.texas.gov/apps/Viewer/Document/Vue/WAITTIMES" rel="nofollow noopener" target="_blank">the DPS report</a>{' '}
       for your own office before you plan around any of it. We are not DPS, and their page governs.
     </p>
-  </section>
-
-  <section class="flex flex-col gap-4">
-    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Read next</h2>
-    <ul class="flex flex-col gap-3 pl-5 m-0 list-disc marker:text-text-subtle">
-      <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/how-to-get-a-texas-license-as-an-adult">How to get a Texas driver license as an adult, start to finish</a></li>
-      <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/do-i-need-adult-drivers-ed">Do you need adult drivers ed in Texas?</a></li>
-    </ul>
   </section>
 
 </AdeGuide>

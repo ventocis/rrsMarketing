@@ -12,6 +12,8 @@ interface Props { id?: string; eyebrow?: string; heading?: string }
 const { id = 'course', eyebrow, heading = 'What does Road Ready Safety charge?' } = Astro.props;
 const price = `$${ade.course.priceUsd}`;
 const hours = Math.round(ade.course.courseMinutes / 60);
+// On the eligibility router itself the secondary link would point at the page it is on; send it to the landing instead.
+const onRouter = Astro.url.pathname.replace(/\/$/, '') === '/adult-drivers-ed/texas/do-i-need-adult-drivers-ed';
 const checks = [
   `The ${hours}-hour TDLR-approved adult driver education course (${ade.course.code}), license ${ADE_LICENSE}`,
   `The final exam, which ${ade.exam.claimPhrasing}. Three attempts included`,
@@ -33,7 +35,9 @@ const sans = "font-family:'DM Sans',sans-serif;";
     </ul>
     <div class="flex-[1_1_240px] flex flex-col gap-3 justify-center">
       <a href={adeEnrollUrl} data-rrs-cta="ade-course-band" class="text-center no-underline bg-white hover:bg-info text-primary-deep font-extrabold text-lg px-7 py-4 rounded-full whitespace-nowrap" style={inter}>Start the {price} course&nbsp;→</a>
-      <a href="/adult-drivers-ed/texas/do-i-need-adult-drivers-ed" class="text-center no-underline text-info hover:text-white font-medium">Not sure you need it? Check first.</a>
+      {onRouter
+        ? <a href="/adult-drivers-ed/texas" class="text-center no-underline text-info hover:text-white font-medium">Everything the course includes</a>
+        : <a href="/adult-drivers-ed/texas/do-i-need-adult-drivers-ed" class="text-center no-underline text-info hover:text-white font-medium">Not sure you need it? Check first.</a>}
     </div>
   </div>
 </section>

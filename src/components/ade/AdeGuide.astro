@@ -43,6 +43,17 @@ const {
 } = Astro.props;
 const bandProps: Band = typeof band === 'object' ? band : {};
 
+// Meta descriptions: Google shows ~155 characters. Pages reuse their one-breath `answer` here, which can run long,
+// so the meta copy is cut at the last sentence end before 160 characters (or a word boundary if there is none).
+// The Article schema keeps the full description.
+const metaDescription = (() => {
+  if (description.length <= 165) return description;
+  const head = description.slice(0, 160);
+  const cut = Math.max(head.lastIndexOf('. '), head.lastIndexOf('.'));
+  if (cut > 60) return head.slice(0, cut + 1);
+  return head.replace(/\s+\S*$/, '');
+})();
+
 const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
 
 // Same route gate every other ADE page uses (src/lib/ade.ts): the pages render once the DE license
@@ -79,7 +90,7 @@ schema.push(...extraSchema);
 {!isEnabled && <meta http-equiv="refresh" content="0;url=/" />}
 
 {isEnabled && (
-<AdeLayout title={title} description={description} url={url}>
+<AdeLayout title={title} description={metaDescription} url={url}>
   <Fragment slot="head">
     {schema.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
   </Fragment>

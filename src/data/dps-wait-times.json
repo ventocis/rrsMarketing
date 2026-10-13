@@ -1,16 +1,20 @@
 {
  "_source": "https://www.dps.texas.gov/apps/Viewer/Document/Vue/WAITTIMES",
- "_note": "Texas DPS publishes estimated days to the next available appointment and average in-office wait, per office, per transaction type. DPS refreshes it daily from the previous business day, so this is a dated snapshot. Extractor: ~/Claude/Texas Adult Driver Ed/_build/ade-growth/dps-wait-times.js",
- "_capturedOn": "2026-09-15",
- "_dpsAsOf": "09/15/2026",
+ "_note": "Texas DPS publishes estimated days to the next available appointment and average in-office wait, per office, per transaction type. DPS refreshes it daily from the previous business day, so this is a dated snapshot. Extractor: ~/Claude/Texas Adult Driver Ed/_build/ade-growth/dps-wait-times.js (run in the page console; the page is Vue-rendered).",
+ "_capturedOn": "2026-10-13",
+ "_dpsAsOf": "10/13/2026",
  "_excluded": [
-  "Opus test Location \u2014 a DPS test record, not a real office",
-  "Waco CDL \u2014 commercial license only, no Original transaction",
-  "Houston Gessner COMMERCIAL LICENSE ONLY \u2014 commercial license only"
+  "Granbury — no Original or Non CDL Drive Test row",
+  "Houston Gessner COMMERCIAL LICENSE ONLY — commercial license only",
+  "Karnes City — no Original or Non CDL Drive Test row",
+  "Lubbock Main — no Original or Non CDL Drive Test row",
+  "Opus test Location — a DPS test record, not a real office",
+  "Slaton — no Original or Non CDL Drive Test row",
+  "Waco CDL — commercial license only, no Original transaction"
  ],
  "_transactions": {
-  "originalDays": "Days to the next \"Original\" appointment \u2014 the first-license transaction",
-  "driveTestDays": "Days to the next \"Non CDL Drive Test\" appointment \u2014 the road test"
+  "originalDays": "Days to the next \"Original\" appointment — the first-license transaction",
+  "driveTestDays": "Days to the next \"Non CDL Drive Test\" appointment — the road test"
  },
  "offices": [
   {
@@ -23,16 +27,16 @@
   {
    "office": "Alice",
    "originalDays": 2,
-   "originalWait": "00:01",
+   "originalWait": "00:00",
    "driveTestDays": 9,
    "driveTestWait": "00:00"
   },
   {
    "office": "Alpine",
    "originalDays": 1,
-   "originalWait": "00:15",
-   "driveTestDays": 2,
-   "driveTestWait": "00:22"
+   "originalWait": "00:14",
+   "driveTestDays": 3,
+   "driveTestWait": "00:21"
   },
   {
    "office": "Amarillo",
@@ -45,7 +49,7 @@
    "office": "Anderson",
    "originalDays": 0,
    "originalWait": "00:01",
-   "driveTestDays": 29,
+   "driveTestDays": 30,
    "driveTestWait": "00:00"
   },
   {
@@ -65,9 +69,9 @@
   {
    "office": "Anson",
    "originalDays": 6,
-   "originalWait": "00:08",
-   "driveTestDays": 23,
-   "driveTestWait": "00:10"
+   "originalWait": "00:09",
+   "driveTestDays": 24,
+   "driveTestWait": "00:09"
   },
   {
    "office": "Aransas Pass",
@@ -78,36 +82,36 @@
   },
   {
    "office": "Athens",
-   "originalDays": 16,
+   "originalDays": 17,
    "originalWait": "00:02",
    "driveTestDays": 49,
    "driveTestWait": "00:00"
   },
   {
    "office": "Austin North",
-   "originalDays": 17,
-   "originalWait": "00:23",
-   "driveTestDays": 57,
+   "originalDays": 15,
+   "originalWait": "00:24",
+   "driveTestDays": 56,
    "driveTestWait": "00:12"
   },
   {
    "office": "Austin Northwest",
    "originalDays": 25,
-   "originalWait": "00:28",
+   "originalWait": "00:27",
    "driveTestDays": 44,
    "driveTestWait": "00:08"
   },
   {
    "office": "Austin South",
-   "originalDays": 17,
-   "originalWait": "00:24",
-   "driveTestDays": 69,
+   "originalDays": 16,
+   "originalWait": "00:21",
+   "driveTestDays": 67,
    "driveTestWait": "00:02"
   },
   {
    "office": "Baird",
-   "originalDays": 2,
-   "originalWait": "00:06"
+   "originalDays": 3,
+   "originalWait": "00:08"
   },
   {
    "office": "Ballinger",
@@ -118,29 +122,29 @@
   },
   {
    "office": "Bastrop",
-   "originalDays": 21,
-   "originalWait": "00:04",
-   "driveTestDays": 41,
+   "originalDays": 19,
+   "originalWait": "00:03",
+   "driveTestDays": 40,
    "driveTestWait": "00:00"
   },
   {
    "office": "Bay City",
-   "originalDays": 1,
+   "originalDays": 2,
    "originalWait": "00:00",
    "driveTestDays": 12,
    "driveTestWait": "00:00"
   },
   {
    "office": "Baytown",
-   "originalDays": 4,
-   "originalWait": "00:04",
-   "driveTestDays": 19,
+   "originalDays": 3,
+   "originalWait": "00:03",
+   "driveTestDays": 22,
    "driveTestWait": "00:00"
   },
   {
    "office": "Beaumont",
    "originalDays": 2,
-   "originalWait": "00:04",
+   "originalWait": "00:03",
    "driveTestDays": 29,
    "driveTestWait": "00:00"
   },
@@ -148,48 +152,48 @@
    "office": "Beeville",
    "originalDays": 3,
    "originalWait": "00:01",
-   "driveTestDays": 10,
+   "driveTestDays": 11,
    "driveTestWait": "00:00"
   },
   {
    "office": "Big Lake",
    "originalDays": 2,
-   "originalWait": "00:09"
+   "originalWait": "00:08"
   },
   {
    "office": "Big Spring",
    "originalDays": 2,
    "originalWait": "00:02",
-   "driveTestDays": 4,
+   "driveTestDays": 3,
    "driveTestWait": "00:00"
   },
   {
    "office": "Boerne",
-   "originalDays": 41,
-   "originalWait": "00:14",
+   "originalDays": 38,
+   "originalWait": "00:13",
    "driveTestDays": 66,
    "driveTestWait": "00:00"
   },
   {
    "office": "Bonham",
-   "originalDays": 28,
-   "originalWait": "00:18",
-   "driveTestDays": 84,
-   "driveTestWait": "00:14"
+   "originalDays": 24,
+   "originalWait": "00:17",
+   "driveTestDays": 82,
+   "driveTestWait": "00:13"
   },
   {
    "office": "Borger",
    "originalDays": 3,
-   "originalWait": "00:04",
-   "driveTestDays": 5,
+   "originalWait": "00:06",
+   "driveTestDays": 6,
    "driveTestWait": "00:00"
   },
   {
    "office": "Bowie",
-   "originalDays": 12,
-   "originalWait": "00:05",
+   "originalDays": 10,
+   "originalWait": "00:04",
    "driveTestDays": 11,
-   "driveTestWait": "00:01"
+   "driveTestWait": "00:00"
   },
   {
    "office": "Brady",
@@ -200,14 +204,14 @@
   },
   {
    "office": "Breckenridge",
-   "originalDays": 7,
+   "originalDays": 6,
    "originalWait": "00:00",
-   "driveTestDays": 22,
+   "driveTestDays": 19,
    "driveTestWait": "00:00"
   },
   {
    "office": "Brenham",
-   "originalDays": 4,
+   "originalDays": 3,
    "originalWait": "00:00",
    "driveTestDays": 16,
    "driveTestWait": "00:00"
@@ -222,7 +226,7 @@
   {
    "office": "Brownsville",
    "originalDays": 10,
-   "originalWait": "00:12",
+   "originalWait": "00:11",
    "driveTestDays": 19,
    "driveTestWait": "00:00"
   },
@@ -230,7 +234,7 @@
    "office": "Brownwood",
    "originalDays": 4,
    "originalWait": "00:00",
-   "driveTestDays": 28,
+   "driveTestDays": 29,
    "driveTestWait": "00:00"
   },
   {
@@ -242,98 +246,98 @@
   },
   {
    "office": "Caldwell",
-   "originalDays": 5,
+   "originalDays": 4,
    "originalWait": "00:02",
-   "driveTestDays": 16,
+   "driveTestDays": 14,
    "driveTestWait": "00:00"
   },
   {
    "office": "Cameron",
-   "originalDays": 24,
+   "originalDays": 22,
    "originalWait": "00:04",
-   "driveTestDays": 45,
+   "driveTestDays": 41,
    "driveTestWait": "00:00"
   },
   {
    "office": "Canadian",
    "originalDays": 8,
-   "originalWait": "00:14",
-   "driveTestDays": 14,
+   "originalWait": "00:16",
+   "driveTestDays": 13,
    "driveTestWait": "00:05"
   },
   {
    "office": "Canton",
-   "originalDays": 18,
+   "originalDays": 16,
    "originalWait": "00:05",
-   "driveTestDays": 44,
+   "driveTestDays": 43,
    "driveTestWait": "00:00"
   },
   {
    "office": "Carrollton Mega Center",
-   "originalDays": 28,
-   "originalWait": "00:25",
+   "originalDays": 25,
+   "originalWait": "00:23",
    "driveTestDays": 45,
-   "driveTestWait": "00:05"
+   "driveTestWait": "00:04"
   },
   {
    "office": "Carthage",
-   "originalDays": 16,
-   "originalWait": "00:06",
-   "driveTestDays": 32,
+   "originalDays": 17,
+   "originalWait": "00:05",
+   "driveTestDays": 34,
    "driveTestWait": "00:00"
   },
   {
    "office": "Castroville",
-   "originalDays": 36,
-   "originalWait": "00:20",
-   "driveTestDays": 27,
+   "originalDays": 34,
+   "originalWait": "00:19",
+   "driveTestDays": 29,
    "driveTestWait": "00:04"
   },
   {
    "office": "Center",
-   "originalDays": 1,
+   "originalDays": 2,
    "originalWait": "00:00",
    "driveTestDays": 8,
    "driveTestWait": "00:00"
   },
   {
    "office": "Centerville",
-   "originalDays": 5,
+   "originalDays": 4,
    "originalWait": "00:00",
-   "driveTestDays": 21,
+   "driveTestDays": 20,
    "driveTestWait": "00:00"
   },
   {
    "office": "Childress",
    "originalDays": 3,
-   "originalWait": "00:00",
+   "originalWait": "00:01",
    "driveTestDays": 3,
    "driveTestWait": "00:00"
   },
   {
    "office": "Clarendon",
    "originalDays": 5,
-   "originalWait": "00:18",
-   "driveTestDays": 14,
+   "originalWait": "00:21",
+   "driveTestDays": 16,
    "driveTestWait": "00:00"
   },
   {
    "office": "Clarksville",
    "originalDays": 21,
    "originalWait": "00:02",
-   "driveTestDays": 54,
+   "driveTestDays": 56,
    "driveTestWait": "00:00"
   },
   {
    "office": "Cleburne",
-   "originalDays": 29,
+   "originalDays": 27,
    "originalWait": "00:12",
-   "driveTestDays": 51,
+   "driveTestDays": 50,
    "driveTestWait": "00:00"
   },
   {
    "office": "Cleveland",
-   "originalDays": 6,
+   "originalDays": 5,
    "originalWait": "00:00",
    "driveTestDays": 25,
    "driveTestWait": "00:00"
@@ -342,15 +346,15 @@
    "office": "Coleman",
    "originalDays": 5,
    "originalWait": "00:00",
-   "driveTestDays": 26,
+   "driveTestDays": 27,
    "driveTestWait": "00:00"
   },
   {
    "office": "Colorado City",
-   "originalDays": 5,
+   "originalDays": 4,
    "originalWait": "00:00",
    "driveTestDays": 17,
-   "driveTestWait": "00:00"
+   "driveTestWait": "00:01"
   },
   {
    "office": "Columbus",
@@ -361,136 +365,136 @@
   },
   {
    "office": "Comanche",
-   "originalDays": 8,
-   "originalWait": "00:18",
-   "driveTestDays": 31,
-   "driveTestWait": "00:20"
+   "originalDays": 6,
+   "originalWait": "00:10",
+   "driveTestDays": 29,
+   "driveTestWait": "00:18"
   },
   {
    "office": "Conroe",
    "originalDays": 9,
-   "originalWait": "00:10",
-   "driveTestDays": 18,
+   "originalWait": "00:09",
+   "driveTestDays": 19,
    "driveTestWait": "00:00"
   },
   {
    "office": "Corpus Christi Mega Center",
    "originalDays": 3,
-   "originalWait": "00:12",
-   "driveTestDays": 15,
+   "originalWait": "00:11",
+   "driveTestDays": 14,
    "driveTestWait": "00:00"
   },
   {
    "office": "Corsicana",
-   "originalDays": 17,
+   "originalDays": 15,
    "originalWait": "00:07",
    "driveTestDays": 53,
-   "driveTestWait": "00:01"
+   "driveTestWait": "00:00"
   },
   {
    "office": "Cotulla",
-   "originalDays": 8,
-   "originalWait": "00:09",
-   "driveTestDays": 7,
-   "driveTestWait": "00:08"
+   "originalDays": 7,
+   "originalWait": "00:08",
+   "driveTestDays": 6,
+   "driveTestWait": "00:10"
   },
   {
    "office": "Crane",
    "originalDays": 3,
-   "originalWait": "00:08",
-   "driveTestDays": 11,
-   "driveTestWait": "00:00"
+   "originalWait": "00:07",
+   "driveTestDays": 10,
+   "driveTestWait": "00:01"
   },
   {
    "office": "Crockett",
    "originalDays": 6,
    "originalWait": "00:04",
-   "driveTestDays": 19,
-   "driveTestWait": "00:06"
+   "driveTestDays": 20,
+   "driveTestWait": "00:05"
   },
   {
    "office": "Crosbyton",
-   "originalDays": 6,
+   "originalDays": 7,
    "originalWait": "00:00",
    "driveTestDays": 9,
    "driveTestWait": "00:00"
   },
   {
    "office": "Crystal City",
-   "originalDays": 6,
-   "originalWait": "00:01",
+   "originalDays": 5,
+   "originalWait": "00:00",
    "driveTestDays": 8,
-   "driveTestWait": "00:01"
+   "driveTestWait": "00:00"
   },
   {
    "office": "Cuero",
-   "originalDays": 16,
+   "originalDays": 17,
    "originalWait": "00:01",
-   "driveTestDays": 28,
+   "driveTestDays": 27,
    "driveTestWait": "00:00"
   },
   {
    "office": "Daingerfield",
-   "originalDays": 20,
+   "originalDays": 21,
    "originalWait": "00:00",
-   "driveTestDays": 67,
+   "driveTestDays": 66,
    "driveTestWait": "00:00"
   },
   {
    "office": "Dalhart",
-   "originalDays": 19,
-   "originalWait": "00:18",
-   "driveTestDays": 26,
-   "driveTestWait": "00:16"
+   "originalDays": 18,
+   "originalWait": "00:16",
+   "driveTestDays": 27,
+   "driveTestWait": "00:14"
   },
   {
    "office": "Dallas South Mega Center",
-   "originalDays": 21,
+   "originalDays": 19,
    "originalWait": "00:22",
-   "driveTestDays": 50,
-   "driveTestWait": "00:22"
+   "driveTestDays": 49,
+   "driveTestWait": "00:24"
   },
   {
    "office": "Decatur",
-   "originalDays": 24,
+   "originalDays": 23,
    "originalWait": "00:03",
    "driveTestDays": 62,
    "driveTestWait": "00:00"
   },
   {
    "office": "Del Rio",
-   "originalDays": 3,
+   "originalDays": 2,
    "originalWait": "00:00",
    "driveTestDays": 4,
    "driveTestWait": "00:00"
   },
   {
    "office": "Denton",
-   "originalDays": 33,
+   "originalDays": 30,
    "originalWait": "00:32",
-   "driveTestDays": 50,
-   "driveTestWait": "00:20"
+   "driveTestDays": 49,
+   "driveTestWait": "00:19"
   },
   {
    "office": "Denver City",
    "originalDays": 3,
    "originalWait": "00:07",
    "driveTestDays": 4,
-   "driveTestWait": "00:19"
+   "driveTestWait": "00:21"
   },
   {
    "office": "Dimmitt",
-   "originalDays": 5,
+   "originalDays": 4,
    "originalWait": "00:00",
    "driveTestDays": 7,
    "driveTestWait": "00:00"
   },
   {
    "office": "Dumas",
-   "originalDays": 9,
+   "originalDays": 8,
    "originalWait": "00:18",
-   "driveTestDays": 18,
-   "driveTestWait": "00:15"
+   "driveTestDays": 17,
+   "driveTestWait": "00:14"
   },
   {
    "office": "Eagle Pass",
@@ -501,50 +505,50 @@
   },
   {
    "office": "Eastland",
-   "originalDays": 13,
+   "originalDays": 10,
    "originalWait": "00:00",
-   "driveTestDays": 32,
-   "driveTestWait": "00:00"
+   "driveTestDays": 26,
+   "driveTestWait": "00:01"
   },
   {
    "office": "Edinburg Mega Center",
    "originalDays": 1,
-   "originalWait": "00:07",
+   "originalWait": "00:05",
    "driveTestDays": 9,
    "driveTestWait": "00:00"
   },
   {
    "office": "El Paso Gateway",
-   "originalDays": 14,
-   "originalWait": "00:22",
+   "originalDays": 13,
+   "originalWait": "00:19",
    "driveTestDays": 5,
-   "driveTestWait": "00:17"
+   "driveTestWait": "00:11"
   },
   {
    "office": "El Paso Hondo Pass",
-   "originalDays": 13,
+   "originalDays": 12,
    "originalWait": "00:05",
-   "driveTestDays": 16,
+   "driveTestDays": 18,
    "driveTestWait": "00:00"
   },
   {
    "office": "El Paso Northwest",
-   "originalDays": 11,
+   "originalDays": 10,
    "originalWait": "00:19",
-   "driveTestDays": 11,
-   "driveTestWait": "00:10"
+   "driveTestDays": 12,
+   "driveTestWait": "00:08"
   },
   {
    "office": "El Paso Scott Simpson",
-   "originalDays": 17,
-   "originalWait": "00:10",
+   "originalDays": 16,
+   "originalWait": "00:09",
    "driveTestDays": 3,
-   "driveTestWait": "00:02"
+   "driveTestWait": "00:03"
   },
   {
    "office": "Emory",
    "originalDays": 16,
-   "originalWait": "00:05",
+   "originalWait": "00:04",
    "driveTestDays": 41,
    "driveTestWait": "00:00"
   },
@@ -552,20 +556,20 @@
    "office": "Fairfield",
    "originalDays": 26,
    "originalWait": "00:10",
-   "driveTestDays": 33,
+   "driveTestDays": 35,
    "driveTestWait": "00:00"
   },
   {
    "office": "Floresville",
-   "originalDays": 27,
-   "originalWait": "00:07",
+   "originalDays": 26,
+   "originalWait": "00:08",
    "driveTestDays": 58,
-   "driveTestWait": "00:02"
+   "driveTestWait": "00:01"
   },
   {
    "office": "Flower Mound",
-   "originalDays": 52,
-   "originalWait": "00:21",
+   "originalDays": 50,
+   "originalWait": "00:22",
    "driveTestDays": 30,
    "driveTestWait": "00:13"
   },
@@ -573,20 +577,20 @@
    "office": "Floydada",
    "originalDays": 3,
    "originalWait": "00:00",
-   "driveTestDays": 5,
+   "driveTestDays": 6,
    "driveTestWait": "00:00"
   },
   {
    "office": "Fort Bliss - MUST HAVE ACCESS TO MILITARY BASE",
-   "originalDays": 15,
-   "originalWait": "00:12",
-   "driveTestDays": 8,
-   "driveTestWait": "00:17"
+   "originalDays": 14,
+   "originalWait": "00:13",
+   "driveTestDays": 10,
+   "driveTestWait": "00:02"
   },
   {
    "office": "Fort Hood",
    "originalDays": 15,
-   "originalWait": "00:11"
+   "originalWait": "00:08"
   },
   {
    "office": "Fort Stockton",
@@ -597,42 +601,42 @@
   },
   {
    "office": "Fort Worth East",
-   "originalDays": 31,
+   "originalDays": 30,
    "originalWait": "00:08"
   },
   {
    "office": "Fort Worth Mega Center",
-   "originalDays": 29,
-   "originalWait": "00:25",
-   "driveTestDays": 48,
-   "driveTestWait": "00:14"
+   "originalDays": 25,
+   "originalWait": "00:28",
+   "driveTestDays": 46,
+   "driveTestWait": "00:17"
   },
   {
    "office": "Fort Worth South",
-   "originalDays": 36,
+   "originalDays": 34,
    "originalWait": "00:27",
-   "driveTestDays": 48,
+   "driveTestDays": 49,
    "driveTestWait": "00:06"
   },
   {
    "office": "Fredericksburg",
-   "originalDays": 19,
-   "originalWait": "00:06",
-   "driveTestDays": 57,
-   "driveTestWait": "00:01"
+   "originalDays": 20,
+   "originalWait": "00:05",
+   "driveTestDays": 54,
+   "driveTestWait": "00:00"
   },
   {
    "office": "Friona",
    "originalDays": 4,
-   "originalWait": "00:15",
-   "driveTestDays": 4,
-   "driveTestWait": "00:20"
+   "originalWait": "00:13",
+   "driveTestDays": 5,
+   "driveTestWait": "00:15"
   },
   {
    "office": "Gainesville",
-   "originalDays": 25,
-   "originalWait": "00:02",
-   "driveTestDays": 66,
+   "originalDays": 22,
+   "originalWait": "00:01",
+   "driveTestDays": 65,
    "driveTestWait": "00:00"
   },
   {
@@ -642,50 +646,50 @@
   },
   {
    "office": "Garland",
-   "originalDays": 30,
-   "originalWait": "00:19",
-   "driveTestDays": 54,
+   "originalDays": 28,
+   "originalWait": "00:18",
+   "driveTestDays": 53,
    "driveTestWait": "00:03"
   },
   {
    "office": "Gatesville",
-   "originalDays": 22,
-   "originalWait": "00:04",
-   "driveTestDays": 33,
+   "originalDays": 20,
+   "originalWait": "00:05",
+   "driveTestDays": 34,
    "driveTestWait": "00:00"
   },
   {
    "office": "George West",
    "originalDays": 5,
    "originalWait": "00:05",
-   "driveTestDays": 23,
-   "driveTestWait": "00:02"
+   "driveTestDays": 22,
+   "driveTestWait": "00:01"
   },
   {
    "office": "Georgetown",
    "originalDays": 17,
-   "originalWait": "00:27",
-   "driveTestDays": 57,
+   "originalWait": "00:25",
+   "driveTestDays": 55,
    "driveTestWait": "00:04"
   },
   {
    "office": "Giddings",
-   "originalDays": 19,
-   "originalWait": "00:12",
+   "originalDays": 16,
+   "originalWait": "00:11",
    "driveTestDays": 60,
-   "driveTestWait": "00:00"
+   "driveTestWait": "00:01"
   },
   {
    "office": "Gilmer",
-   "originalDays": 19,
+   "originalDays": 20,
    "originalWait": "00:06",
-   "driveTestDays": 56,
+   "driveTestDays": 55,
    "driveTestWait": "00:07"
   },
   {
    "office": "Goldthwaite",
    "originalDays": 16,
-   "originalWait": "00:09",
+   "originalWait": "00:12",
    "driveTestDays": 36,
    "driveTestWait": "00:00"
   },
@@ -693,168 +697,168 @@
    "office": "Gonzales",
    "originalDays": 19,
    "originalWait": "00:05",
-   "driveTestDays": 37,
-   "driveTestWait": "00:05"
+   "driveTestDays": 36,
+   "driveTestWait": "00:06"
   },
   {
    "office": "Graham",
-   "originalDays": 8,
+   "originalDays": 7,
    "originalWait": "00:04",
-   "driveTestDays": 44,
+   "driveTestDays": 45,
    "driveTestWait": "00:00"
   },
   {
    "office": "Grand Prairie",
-   "originalDays": 37,
-   "originalWait": "00:34",
+   "originalDays": 33,
+   "originalWait": "00:35",
    "driveTestDays": 47,
-   "driveTestWait": "00:16"
+   "driveTestWait": "00:18"
   },
   {
    "office": "Greenville",
-   "originalDays": 26,
-   "originalWait": "00:08",
-   "driveTestDays": 75,
+   "originalDays": 25,
+   "originalWait": "00:07",
+   "driveTestDays": 76,
    "driveTestWait": "00:00"
   },
   {
    "office": "Groesbeck",
-   "originalDays": 29,
+   "originalDays": 26,
    "originalWait": "00:09",
-   "driveTestDays": 49,
-   "driveTestWait": "00:02"
+   "driveTestDays": 50,
+   "driveTestWait": "00:03"
   },
   {
    "office": "Hallettsville",
-   "originalDays": 18,
+   "originalDays": 16,
    "originalWait": "00:20",
-   "driveTestDays": 28,
-   "driveTestWait": "00:13"
+   "driveTestDays": 30,
+   "driveTestWait": "00:12"
   },
   {
    "office": "Hamilton",
    "originalDays": 23,
-   "originalWait": "00:05",
-   "driveTestDays": 37,
+   "originalWait": "00:04",
+   "driveTestDays": 36,
    "driveTestWait": "00:01"
   },
   {
    "office": "Harlingen",
-   "originalDays": 7,
+   "originalDays": 6,
    "originalWait": "00:12",
-   "driveTestDays": 14,
+   "driveTestDays": 16,
    "driveTestWait": "00:00"
   },
   {
    "office": "Haskell",
    "originalDays": 5,
    "originalWait": "00:00",
-   "driveTestDays": 20,
+   "driveTestDays": 21,
    "driveTestWait": "00:00"
   },
   {
    "office": "Hearne",
-   "originalDays": 5,
+   "originalDays": 4,
    "originalWait": "00:00",
    "driveTestDays": 10,
    "driveTestWait": "00:00"
   },
   {
    "office": "Hebbronville",
-   "originalDays": 19,
+   "originalDays": 18,
    "originalWait": "00:03",
-   "driveTestDays": 9,
+   "driveTestDays": 11,
    "driveTestWait": "00:00"
   },
   {
    "office": "Hemphill",
    "originalDays": 2,
-   "originalWait": "00:09",
-   "driveTestDays": 7,
-   "driveTestWait": "00:17"
+   "originalWait": "00:08",
+   "driveTestDays": 6,
+   "driveTestWait": "00:13"
   },
   {
    "office": "Hempstead",
-   "originalDays": 9,
+   "originalDays": 7,
    "originalWait": "00:06",
    "driveTestDays": 32,
    "driveTestWait": "00:00"
   },
   {
    "office": "Henderson",
-   "originalDays": 12,
-   "originalWait": "00:02",
-   "driveTestDays": 41,
+   "originalDays": 13,
+   "originalWait": "00:05",
+   "driveTestDays": 43,
    "driveTestWait": "00:00"
   },
   {
    "office": "Hereford",
    "originalDays": 3,
    "originalWait": "00:12",
-   "driveTestDays": 5,
+   "driveTestDays": 6,
    "driveTestWait": "00:12"
   },
   {
    "office": "Hillsboro",
-   "originalDays": 32,
-   "originalWait": "00:17",
-   "driveTestDays": 87,
-   "driveTestWait": "00:08"
+   "originalDays": 31,
+   "originalWait": "00:14",
+   "driveTestDays": 84,
+   "driveTestWait": "00:06"
   },
   {
    "office": "Houston Dacoma",
    "originalDays": 7,
-   "originalWait": "00:14",
-   "driveTestDays": 12,
+   "originalWait": "00:15",
+   "driveTestDays": 13,
    "driveTestWait": "00:08"
   },
   {
    "office": "Houston East (Tidwell)",
    "originalDays": 4,
-   "originalWait": "00:27",
+   "originalWait": "00:25",
    "driveTestDays": 13,
-   "driveTestWait": "00:03"
+   "driveTestWait": "00:02"
   },
   {
    "office": "Houston Gessner Mega Center",
    "originalDays": 4,
-   "originalWait": "00:17",
+   "originalWait": "00:16",
    "driveTestDays": 8,
-   "driveTestWait": "00:19"
+   "driveTestWait": "00:18"
   },
   {
    "office": "Houston North Mega Center",
    "originalDays": 2,
-   "originalWait": "00:07",
-   "driveTestDays": 10,
-   "driveTestWait": "00:03"
+   "originalWait": "00:04",
+   "driveTestDays": 9,
+   "driveTestWait": "00:01"
   },
   {
    "office": "Houston Southeast",
    "originalDays": 2,
-   "originalWait": "00:08",
-   "driveTestDays": 12,
-   "driveTestWait": "00:02"
+   "originalWait": "00:04",
+   "driveTestDays": 11,
+   "driveTestWait": "00:00"
   },
   {
    "office": "Humble",
-   "originalDays": 8,
-   "originalWait": "00:17",
+   "originalDays": 7,
+   "originalWait": "00:16",
    "driveTestDays": 20,
-   "driveTestWait": "00:08"
+   "driveTestWait": "00:06"
   },
   {
    "office": "Huntsville",
    "originalDays": 3,
-   "originalWait": "00:01",
+   "originalWait": "00:00",
    "driveTestDays": 16,
    "driveTestWait": "00:00"
   },
   {
    "office": "Jacksonville",
-   "originalDays": 18,
+   "originalDays": 19,
    "originalWait": "00:00",
-   "driveTestDays": 37,
+   "driveTestDays": 36,
    "driveTestWait": "00:00"
   },
   {
@@ -866,21 +870,21 @@
   },
   {
    "office": "Jourdanton",
-   "originalDays": 25,
+   "originalDays": 24,
    "originalWait": "00:00",
-   "driveTestDays": 51,
+   "driveTestDays": 56,
    "driveTestWait": "00:00"
   },
   {
    "office": "Junction",
-   "originalDays": 16,
+   "originalDays": 11,
    "originalWait": "00:00",
-   "driveTestDays": 20,
+   "driveTestDays": 23,
    "driveTestWait": "00:00"
   },
   {
    "office": "Kermit",
-   "originalDays": 6,
+   "originalDays": 5,
    "originalWait": "00:00",
    "driveTestDays": 4,
    "driveTestWait": "00:00"
@@ -889,19 +893,19 @@
    "office": "Kerrville",
    "originalDays": 17,
    "originalWait": "00:05",
-   "driveTestDays": 38,
+   "driveTestDays": 37,
    "driveTestWait": "00:00"
   },
   {
    "office": "Kilgore",
-   "originalDays": 17,
-   "originalWait": "00:00"
+   "originalDays": 21,
+   "originalWait": "00:06"
   },
   {
    "office": "Killeen",
    "originalDays": 18,
    "originalWait": "00:10",
-   "driveTestDays": 34,
+   "driveTestDays": 32,
    "driveTestWait": "00:00"
   },
   {
@@ -913,8 +917,8 @@
   },
   {
    "office": "Lake Worth",
-   "originalDays": 45,
-   "originalWait": "00:35",
+   "originalDays": 41,
+   "originalWait": "00:37",
    "driveTestDays": 55,
    "driveTestWait": "00:13"
   },
@@ -922,19 +926,19 @@
    "office": "Lamesa",
    "originalDays": 2,
    "originalWait": "00:00",
-   "driveTestDays": 2,
+   "driveTestDays": 3,
    "driveTestWait": "00:00"
   },
   {
    "office": "Lampasas",
-   "originalDays": 26,
+   "originalDays": 28,
    "originalWait": "00:00",
-   "driveTestDays": 58,
+   "driveTestDays": 54,
    "driveTestWait": "00:00"
   },
   {
    "office": "Laredo",
-   "originalDays": 19,
+   "originalDays": 17,
    "originalWait": "00:34",
    "driveTestDays": 9,
    "driveTestWait": "00:00"
@@ -942,51 +946,51 @@
   {
    "office": "League City",
    "originalDays": 2,
-   "originalWait": "00:01",
+   "originalWait": "00:00",
    "driveTestDays": 9,
    "driveTestWait": "00:00"
   },
   {
    "office": "Leon Valley Mega Center",
-   "originalDays": 35,
+   "originalDays": 33,
    "originalWait": "00:20",
-   "driveTestDays": 43,
-   "driveTestWait": "00:19"
+   "driveTestDays": 37,
+   "driveTestWait": "00:17"
   },
   {
    "office": "Levelland",
    "originalDays": 3,
    "originalWait": "00:07",
-   "driveTestDays": 7,
-   "driveTestWait": "00:08"
+   "driveTestDays": 8,
+   "driveTestWait": "00:09"
   },
   {
    "office": "Lewisville",
-   "originalDays": 42,
+   "originalDays": 39,
    "originalWait": "00:18",
-   "driveTestDays": 33,
-   "driveTestWait": "00:08"
+   "driveTestDays": 31,
+   "driveTestWait": "00:09"
   },
   {
    "office": "Liberty",
-   "originalDays": 7,
+   "originalDays": 6,
    "originalWait": "00:00",
    "driveTestDays": 27,
    "driveTestWait": "00:00"
   },
   {
    "office": "Linden",
-   "originalDays": 19,
-   "originalWait": "00:02",
-   "driveTestDays": 61,
+   "originalDays": 17,
+   "originalWait": "00:01",
+   "driveTestDays": 62,
    "driveTestWait": "00:00"
   },
   {
    "office": "Littlefield",
-   "originalDays": 5,
-   "originalWait": "00:16",
-   "driveTestDays": 6,
-   "driveTestWait": "00:13"
+   "originalDays": 6,
+   "originalWait": "00:11",
+   "driveTestDays": 8,
+   "driveTestWait": "00:20"
   },
   {
    "office": "Livingston",
@@ -997,21 +1001,21 @@
   },
   {
    "office": "Llano",
-   "originalDays": 15,
-   "originalWait": "00:24"
+   "originalDays": 14,
+   "originalWait": "00:29"
   },
   {
    "office": "Lockhart",
-   "originalDays": 27,
+   "originalDays": 24,
    "originalWait": "00:15",
-   "driveTestDays": 16,
+   "driveTestDays": 15,
    "driveTestWait": "00:04"
   },
   {
    "office": "Longview",
-   "originalDays": 15,
-   "originalWait": "00:04",
-   "driveTestDays": 52,
+   "originalDays": 16,
+   "originalWait": "00:02",
+   "driveTestDays": 51,
    "driveTestWait": "00:00"
   },
   {
@@ -1025,7 +1029,7 @@
    "office": "Lufkin",
    "originalDays": 2,
    "originalWait": "00:01",
-   "driveTestDays": 18,
+   "driveTestDays": 19,
    "driveTestWait": "00:00"
   },
   {
@@ -1037,22 +1041,22 @@
   },
   {
    "office": "Marble Falls",
-   "originalDays": 18,
-   "originalWait": "00:26",
-   "driveTestDays": 56,
-   "driveTestWait": "00:17"
+   "originalDays": 17,
+   "originalWait": "00:23",
+   "driveTestDays": 55,
+   "driveTestWait": "00:18"
   },
   {
    "office": "Marlin",
-   "originalDays": 41,
-   "originalWait": "00:07",
-   "driveTestDays": 49,
+   "originalDays": 42,
+   "originalWait": "00:04",
+   "driveTestDays": 47,
    "driveTestWait": "00:00"
   },
   {
    "office": "Marshall",
-   "originalDays": 18,
-   "originalWait": "00:02",
+   "originalDays": 19,
+   "originalWait": "00:01",
    "driveTestDays": 56,
    "driveTestWait": "00:03"
   },
@@ -1060,36 +1064,36 @@
    "office": "McAllen",
    "originalDays": 4,
    "originalWait": "00:18",
-   "driveTestDays": 11,
-   "driveTestWait": "00:01"
+   "driveTestDays": 12,
+   "driveTestWait": "00:00"
   },
   {
    "office": "McKinney",
-   "originalDays": 70,
+   "originalDays": 69,
    "originalWait": "00:14",
-   "driveTestDays": 52,
-   "driveTestWait": "00:04"
+   "driveTestDays": 53,
+   "driveTestWait": "00:05"
   },
   {
    "office": "Meridian",
-   "originalDays": 39,
-   "originalWait": "00:13",
-   "driveTestDays": 77,
+   "originalDays": 37,
+   "originalWait": "00:12",
+   "driveTestDays": 78,
    "driveTestWait": "00:10"
   },
   {
    "office": "Midland Mega Center",
    "originalDays": 2,
-   "originalWait": "00:09",
+   "originalWait": "00:11",
    "driveTestDays": 4,
-   "driveTestWait": "00:01"
+   "driveTestWait": "00:03"
   },
   {
    "office": "Mineral Wells",
-   "originalDays": 20,
-   "originalWait": "00:04",
-   "driveTestDays": 55,
-   "driveTestWait": "00:01"
+   "originalDays": 18,
+   "originalWait": "00:05",
+   "driveTestDays": 54,
+   "driveTestWait": "00:00"
   },
   {
    "office": "Mission",
@@ -1100,13 +1104,13 @@
    "office": "Monahans",
    "originalDays": 2,
    "originalWait": "00:05",
-   "driveTestDays": 2,
-   "driveTestWait": "00:02"
+   "driveTestDays": 3,
+   "driveTestWait": "00:01"
   },
   {
    "office": "Mount Pleasant",
-   "originalDays": 18,
-   "originalWait": "00:03",
+   "originalDays": 20,
+   "originalWait": "00:02",
    "driveTestDays": 38,
    "driveTestWait": "00:00"
   },
@@ -1120,30 +1124,30 @@
   {
    "office": "Munday",
    "originalDays": 7,
-   "originalWait": "00:02",
-   "driveTestDays": 19,
+   "originalWait": "00:03",
+   "driveTestDays": 17,
    "driveTestWait": "00:00"
   },
   {
    "office": "Nacogdoches",
    "originalDays": 5,
    "originalWait": "00:00",
-   "driveTestDays": 17,
+   "driveTestDays": 16,
    "driveTestWait": "00:00"
   },
   {
    "office": "New Boston",
-   "originalDays": 20,
+   "originalDays": 21,
    "originalWait": "00:10",
-   "driveTestDays": 59,
-   "driveTestWait": "00:05"
+   "driveTestDays": 56,
+   "driveTestWait": "00:06"
   },
   {
    "office": "New Braunfels",
-   "originalDays": 17,
+   "originalDays": 16,
    "originalWait": "00:11",
-   "driveTestDays": 41,
-   "driveTestWait": "00:07"
+   "driveTestDays": 43,
+   "driveTestWait": "00:08"
   },
   {
    "office": "New Caney",
@@ -1152,15 +1156,15 @@
   },
   {
    "office": "North Garland Mega Center",
-   "originalDays": 23,
-   "originalWait": "00:31",
+   "originalDays": 20,
+   "originalWait": "00:28",
    "driveTestDays": 50,
-   "driveTestWait": "00:10"
+   "driveTestWait": "00:09"
   },
   {
    "office": "Orange",
    "originalDays": 2,
-   "originalWait": "00:01",
+   "originalWait": "00:00",
    "driveTestDays": 20,
    "driveTestWait": "00:00"
   },
@@ -1175,7 +1179,7 @@
    "office": "Palestine",
    "originalDays": 17,
    "originalWait": "00:01",
-   "driveTestDays": 35,
+   "driveTestDays": 34,
    "driveTestWait": "00:00"
   },
   {
@@ -1187,80 +1191,80 @@
   },
   {
    "office": "Panhandle",
-   "originalDays": 11,
+   "originalDays": 10,
    "originalWait": "00:00",
-   "driveTestDays": 12,
-   "driveTestWait": "00:03"
+   "driveTestDays": 13,
+   "driveTestWait": "00:00"
   },
   {
    "office": "Paris",
-   "originalDays": 16,
+   "originalDays": 17,
    "originalWait": "00:03",
-   "driveTestDays": 54,
+   "driveTestDays": 52,
    "driveTestWait": "00:00"
   },
   {
    "office": "Pearsall",
-   "originalDays": 41,
-   "originalWait": "00:05",
-   "driveTestDays": 93,
-   "driveTestWait": "00:07"
+   "originalDays": 38,
+   "originalWait": "00:03",
+   "driveTestDays": 94,
+   "driveTestWait": "00:05"
   },
   {
    "office": "Pecos",
-   "originalDays": 2,
-   "originalWait": "00:15",
+   "originalDays": 1,
+   "originalWait": "00:17",
    "driveTestDays": 2,
-   "driveTestWait": "00:15"
+   "driveTestWait": "00:16"
   },
   {
    "office": "Perryton",
    "originalDays": 3,
-   "originalWait": "00:05",
+   "originalWait": "00:03",
    "driveTestDays": 4,
-   "driveTestWait": "00:01"
+   "driveTestWait": "00:00"
   },
   {
    "office": "Pflugerville Mega Center",
-   "originalDays": 14,
-   "originalWait": "00:41",
-   "driveTestDays": 42,
-   "driveTestWait": "00:17"
+   "originalDays": 16,
+   "originalWait": "00:37",
+   "driveTestDays": 39,
+   "driveTestWait": "00:18"
   },
   {
    "office": "Pierce",
    "originalDays": 2,
    "originalWait": "00:00",
-   "driveTestDays": 14,
+   "driveTestDays": 12,
    "driveTestWait": "00:00"
   },
   {
    "office": "Plainview",
    "originalDays": 2,
-   "originalWait": "00:06",
+   "originalWait": "00:05",
    "driveTestDays": 5,
    "driveTestWait": "00:00"
   },
   {
    "office": "Plano",
-   "originalDays": 45,
-   "originalWait": "00:18",
-   "driveTestDays": 61,
+   "originalDays": 43,
+   "originalWait": "00:19",
+   "driveTestDays": 59,
    "driveTestWait": "00:00"
   },
   {
    "office": "Port Arthur",
-   "originalDays": 3,
-   "originalWait": "00:11",
+   "originalDays": 2,
+   "originalWait": "00:10",
    "driveTestDays": 22,
    "driveTestWait": "00:00"
   },
   {
    "office": "Port Lavaca",
-   "originalDays": 15,
+   "originalDays": 14,
    "originalWait": "00:11",
-   "driveTestDays": 17,
-   "driveTestWait": "00:10"
+   "driveTestDays": 15,
+   "driveTestWait": "00:12"
   },
   {
    "office": "Post",
@@ -1271,24 +1275,24 @@
   },
   {
    "office": "Presidio",
-   "originalDays": 5,
+   "originalDays": 4,
    "originalWait": "00:03",
-   "driveTestDays": 8,
+   "driveTestDays": 7,
    "driveTestWait": "00:04"
   },
   {
    "office": "Quanah",
-   "originalDays": 4,
+   "originalDays": 5,
    "originalWait": "00:06",
    "driveTestDays": 11,
    "driveTestWait": "00:04"
   },
   {
    "office": "Quitman",
-   "originalDays": 19,
-   "originalWait": "00:19",
+   "originalDays": 21,
+   "originalWait": "00:14",
    "driveTestDays": 41,
-   "driveTestWait": "00:06"
+   "driveTestWait": "00:03"
   },
   {
    "office": "Rio Grande City",
@@ -1300,15 +1304,15 @@
   {
    "office": "Roby",
    "originalDays": 13,
-   "originalWait": "00:07",
-   "driveTestDays": 18,
+   "originalWait": "00:09",
+   "driveTestDays": 19,
    "driveTestWait": "00:16"
   },
   {
    "office": "Rockwall",
-   "originalDays": 42,
-   "originalWait": "00:07",
-   "driveTestDays": 85,
+   "originalDays": 39,
+   "originalWait": "00:08",
+   "driveTestDays": 84,
    "driveTestWait": "00:00"
   },
   {
@@ -1316,7 +1320,7 @@
    "originalDays": 3,
    "originalWait": "00:11",
    "driveTestDays": 8,
-   "driveTestWait": "00:04"
+   "driveTestWait": "00:03"
   },
   {
    "office": "San Angelo",
@@ -1327,58 +1331,58 @@
   },
   {
    "office": "San Antonio Gen McMullen",
-   "originalDays": 31,
-   "originalWait": "00:26",
+   "originalDays": 29,
+   "originalWait": "00:25",
    "driveTestDays": 44,
-   "driveTestWait": "00:09"
+   "driveTestWait": "00:08"
   },
   {
    "office": "San Antonio Pat Booker",
-   "originalDays": 30,
-   "originalWait": "00:18",
-   "driveTestDays": 29,
+   "originalDays": 29,
+   "originalWait": "00:17",
+   "driveTestDays": 30,
    "driveTestWait": "00:04"
   },
   {
    "office": "San Antonio Southeast",
-   "originalDays": 33,
-   "originalWait": "00:18",
-   "driveTestDays": 37,
+   "originalDays": 32,
+   "originalWait": "00:17",
+   "driveTestDays": 36,
    "driveTestWait": "00:11"
   },
   {
    "office": "San Marcos",
-   "originalDays": 20,
+   "originalDays": 18,
    "originalWait": "00:08",
-   "driveTestDays": 42,
+   "driveTestDays": 40,
    "driveTestWait": "00:00"
   },
   {
    "office": "Seguin",
-   "originalDays": 20,
+   "originalDays": 18,
    "originalWait": "00:08",
    "driveTestDays": 46,
-   "driveTestWait": "00:02"
+   "driveTestWait": "00:04"
   },
   {
    "office": "Seminole",
    "originalDays": 1,
-   "originalWait": "00:05",
+   "originalWait": "00:07",
    "driveTestDays": 2,
-   "driveTestWait": "00:00"
+   "driveTestWait": "00:03"
   },
   {
    "office": "Seymour",
    "originalDays": 11,
-   "originalWait": "00:00",
-   "driveTestDays": 31,
+   "originalWait": "00:01",
+   "driveTestDays": 30,
    "driveTestWait": "00:00"
   },
   {
    "office": "Sherman",
-   "originalDays": 33,
-   "originalWait": "00:09",
-   "driveTestDays": 70,
+   "originalDays": 29,
+   "originalWait": "00:10",
+   "driveTestDays": 69,
    "driveTestWait": "00:00"
   },
   {
@@ -1392,14 +1396,14 @@
    "office": "Snyder",
    "originalDays": 4,
    "originalWait": "00:00",
-   "driveTestDays": 7,
+   "driveTestDays": 6,
    "driveTestWait": "00:00"
   },
   {
    "office": "Sonora",
    "originalDays": 5,
    "originalWait": "00:20",
-   "driveTestDays": 5,
+   "driveTestDays": 4,
    "driveTestWait": "00:21"
   },
   {
@@ -1411,113 +1415,113 @@
   },
   {
    "office": "Stanton",
-   "originalDays": 9,
+   "originalDays": 8,
    "originalWait": "00:00",
-   "driveTestDays": 21,
-   "driveTestWait": "00:02"
+   "driveTestDays": 23,
+   "driveTestWait": "00:04"
   },
   {
    "office": "Stephenville",
-   "originalDays": 17,
-   "originalWait": "00:16",
+   "originalDays": 18,
+   "originalWait": "00:08",
    "driveTestDays": 38,
    "driveTestWait": "00:00"
   },
   {
    "office": "Sulphur Springs",
-   "originalDays": 16,
-   "originalWait": "00:00",
-   "driveTestDays": 47,
+   "originalDays": 19,
+   "originalWait": "00:02",
+   "driveTestDays": 49,
    "driveTestWait": "00:00"
   },
   {
    "office": "Sweetwater",
    "originalDays": 5,
-   "originalWait": "00:08",
-   "driveTestDays": 17,
+   "originalWait": "00:07",
+   "driveTestDays": 18,
    "driveTestWait": "00:05"
   },
   {
    "office": "Taylor",
-   "originalDays": 15,
-   "originalWait": "00:11",
-   "driveTestDays": 45,
+   "originalDays": 16,
+   "originalWait": "00:09",
+   "driveTestDays": 42,
    "driveTestWait": "00:00"
   },
   {
    "office": "Temple",
-   "originalDays": 18,
-   "originalWait": "00:23",
-   "driveTestDays": 40,
-   "driveTestWait": "00:08"
+   "originalDays": 19,
+   "originalWait": "00:22",
+   "driveTestDays": 37,
+   "driveTestWait": "00:10"
   },
   {
    "office": "Terrell",
-   "originalDays": 44,
+   "originalDays": 41,
    "originalWait": "00:01",
-   "driveTestDays": 64,
+   "driveTestDays": 63,
    "driveTestWait": "00:00"
   },
   {
    "office": "Texarkana",
-   "originalDays": 17,
-   "originalWait": "00:13",
+   "originalDays": 16,
+   "originalWait": "00:11",
    "driveTestDays": 67,
-   "driveTestWait": "00:05"
+   "driveTestWait": "00:06"
   },
   {
    "office": "Texas City",
-   "originalDays": 4,
+   "originalDays": 3,
    "originalWait": "00:00",
-   "driveTestDays": 27,
+   "driveTestDays": 25,
    "driveTestWait": "00:00"
   },
   {
    "office": "Tolar",
-   "originalDays": 20,
-   "originalWait": "00:07",
-   "driveTestDays": 47,
+   "originalDays": 18,
+   "originalWait": "00:08",
+   "driveTestDays": 42,
    "driveTestWait": "00:01"
   },
   {
    "office": "Tulia",
    "originalDays": 5,
    "originalWait": "00:00",
-   "driveTestDays": 10,
+   "driveTestDays": 9,
    "driveTestWait": "00:00"
   },
   {
    "office": "Tyler",
-   "originalDays": 15,
+   "originalDays": 16,
    "originalWait": "00:12",
-   "driveTestDays": 24,
+   "driveTestDays": 25,
    "driveTestWait": "00:00"
   },
   {
    "office": "Uvalde",
-   "originalDays": 6,
+   "originalDays": 5,
    "originalWait": "00:08",
-   "driveTestDays": 15,
+   "driveTestDays": 17,
    "driveTestWait": "00:00"
   },
   {
    "office": "Van Horn",
    "originalDays": 3,
-   "originalWait": "00:12",
-   "driveTestDays": 6,
+   "originalWait": "00:10",
+   "driveTestDays": 5,
    "driveTestWait": "00:00"
   },
   {
    "office": "Vega",
    "originalDays": 6,
-   "originalWait": "00:04",
-   "driveTestDays": 11,
-   "driveTestWait": "00:06"
+   "originalWait": "00:01",
+   "driveTestDays": 12,
+   "driveTestWait": "00:03"
   },
   {
    "office": "Vernon",
    "originalDays": 4,
-   "originalWait": "00:03",
+   "originalWait": "00:02",
    "driveTestDays": 15,
    "driveTestWait": "00:00"
   },
@@ -1525,48 +1529,48 @@
    "office": "Victoria",
    "originalDays": 14,
    "originalWait": "00:06",
-   "driveTestDays": 16,
+   "driveTestDays": 17,
    "driveTestWait": "00:00"
   },
   {
    "office": "Waco",
    "originalDays": 32,
-   "originalWait": "00:11",
+   "originalWait": "00:10",
    "driveTestDays": 64,
-   "driveTestWait": "00:02"
+   "driveTestWait": "00:01"
   },
   {
    "office": "Wallisville",
-   "originalDays": 6,
+   "originalDays": 5,
    "originalWait": "00:02",
-   "driveTestDays": 21,
+   "driveTestDays": 23,
    "driveTestWait": "00:00"
   },
   {
    "office": "Waxahachie",
-   "originalDays": 22,
+   "originalDays": 21,
    "originalWait": "00:13",
-   "driveTestDays": 41,
+   "driveTestDays": 42,
    "driveTestWait": "00:00"
   },
   {
    "office": "Weatherford",
-   "originalDays": 26,
-   "originalWait": "00:05",
+   "originalDays": 25,
+   "originalWait": "00:06",
    "driveTestDays": 66,
-   "driveTestWait": "00:01"
+   "driveTestWait": "00:02"
   },
   {
    "office": "Weslaco",
-   "originalDays": 4,
+   "originalDays": 3,
    "originalWait": "00:03",
    "driveTestDays": 9,
    "driveTestWait": "00:00"
   },
   {
    "office": "Wichita Falls",
-   "originalDays": 4,
-   "originalWait": "00:03",
+   "originalDays": 3,
+   "originalWait": "00:01",
    "driveTestDays": 18,
    "driveTestWait": "00:00"
   },
@@ -1574,16 +1578,16 @@
    "office": "Woodville",
    "originalDays": 3,
    "originalWait": "00:00",
-   "driveTestDays": 16,
+   "driveTestDays": 15,
    "driveTestWait": "00:00"
   },
   {
    "office": "Zapata",
-   "originalDays": 9,
+   "originalDays": 7,
    "originalWait": "00:02",
    "driveTestDays": 10,
    "driveTestWait": "00:00"
   }
  ],
- "_coverage": "DPS listed 230 offices reporting an Original or Non CDL Drive Test appointment on 2026-09-15. Three were excluded (above), leaving 227."
+ "_coverage": "DPS listed 234 offices on 2026-10-13. 7 were excluded (above), leaving 227 reporting an Original or Non CDL Drive Test appointment."
 }

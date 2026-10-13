@@ -1,0 +1,39 @@
+---
+/**
+ * AdeCourseBand — the one course offer block for Texas adult driver education content pages.
+ * Same shape as src/components/texas/CourseBand.astro (Jackson, 2026-10-07: one component, not hand-built
+ * bands), with the ADE facts: $39.95 flat, license C3705 (never CP1234, 16 TAC §84.503(j)(4)), the exam
+ * sentence in its only approved wording, the instructor-signed certificate, and the ADE refund policy.
+ * Pages pass `id` only when their sticky CTA hides at a different anchor.
+ */
+import ade from '../../data/ade-texas.json';
+import { adeEnrollUrl, ADE_LICENSE, ADE_VERIFY_URL } from '../../lib/ade';
+interface Props { id?: string; eyebrow?: string; heading?: string }
+const { id = 'course', eyebrow, heading = 'What does Road Ready Safety charge?' } = Astro.props;
+const price = `$${ade.course.priceUsd}`;
+const hours = Math.round(ade.course.courseMinutes / 60);
+const checks = [
+  `The ${hours}-hour TDLR-approved adult driver education course (${ade.course.code}), license ${ADE_LICENSE}`,
+  `The final exam, which ${ade.exam.claimPhrasing}. Three attempts included`,
+  'Your certificate, signed by a licensed Texas driver education instructor and emailed to you',
+  'No certificate, delivery, processing or retake fee',
+  `${ade.course.completionDays} days to finish, on any device, and a full refund if you cancel within three days of signing up`,
+];
+const inter = "font-family:'Inter',sans-serif;";
+const sans = "font-family:'DM Sans',sans-serif;";
+---
+<section id={id} class="max-w-[1080px] mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-12 scroll-mt-28 text-text" style={sans}>
+  {eyebrow && <p class="text-sm font-bold uppercase tracking-[0.06em] text-primary-deep m-0 mb-2">{eyebrow}</p>}
+  <h2 class="text-[28px] lg:text-[34px] font-extrabold tracking-[-0.02em] leading-[1.15] text-text m-0 mb-3" style={inter}>{heading}</h2>
+  <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">{price}, and that's the only number you'll see at checkout.</p>
+  <div class="rounded-[20px] bg-primary-deep text-white p-7 lg:p-9 flex flex-wrap gap-8 items-center justify-between">
+    <ul class="flex-[999_1_420px] min-w-0 flex flex-col gap-3 list-none p-0 m-0 text-[17px]">
+      {checks.map((c, i) => <li class="flex gap-2.5"><span class="text-info-border font-extrabold" aria-hidden="true">✓</span><span>{c}{i === 0 && <>{' '}<a href={ADE_VERIFY_URL} target="_blank" rel="noopener" class="text-white underline whitespace-nowrap">Verify on TDLR ↗</a></>}</span></li>)}
+      <li class="flex gap-2.5 text-info text-base mt-1.5"><span class="text-info-border font-extrabold" aria-hidden="true">•</span><span>Two costs we can't include: the $33 DPS license fee and the free Impact Texas Adult Drivers video, because DPS collects one and runs the other. <a href="/adult-drivers-ed/texas/cost" class="text-info-border font-semibold hover:underline">The whole bill</a></span></li>
+    </ul>
+    <div class="flex-[1_1_240px] flex flex-col gap-3 justify-center">
+      <a href={adeEnrollUrl} data-rrs-cta="ade-course-band" class="text-center no-underline bg-white hover:bg-info text-primary-deep font-extrabold text-lg px-7 py-4 rounded-full whitespace-nowrap" style={inter}>Start the {price} course&nbsp;→</a>
+      <a href="/adult-drivers-ed/texas/do-i-need-adult-drivers-ed" class="text-center no-underline text-info hover:text-white font-medium">Not sure you need it? Check first.</a>
+    </div>
+  </div>
+</section>

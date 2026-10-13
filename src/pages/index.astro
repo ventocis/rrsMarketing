@@ -31,6 +31,8 @@ import mo from '../data/courses/mo-dip.json';
 import type { CourseData } from '../data/courses/types';
 import { isEnabled, enrollUrl as buildEnrollUrl } from '../lib/courseFlags';
 import { stateNames } from '../utils/states';
+import ade from '../data/ade-texas.json';
+import { adeEnabled, adeEnrollUrl, ADE_LICENSE } from '../lib/ade';
 
 const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
 const texasEnrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
@@ -163,6 +165,12 @@ const guides = [
   { href: '/texas/providers', label: 'Texas defensive driving course providers: the full TDLR list' },
 ];
 
+// Adult driver education: its own small band between the hero and the reviews (Jackson, 2026-10-13: not
+// squeezed in next to the state cards). Shows only once the DE license gate is on (src/lib/ade.ts).
+const adePrice = `$${ade.course.priceUsd}`;
+const adeHours = Math.round(ade.course.courseMinutes / 60);
+const adeChips = ['Exam built in', 'Instant certificate', `${adePrice} total, nothing added at checkout`];
+
 const eyebrow = 'text-sm font-bold uppercase tracking-[0.08em] text-primary-deep';
 const h2 = 'm-0 font-extrabold text-[30px] lg:text-[40px] leading-[1.12] text-[#0B2160]';
 const iconBox = 'flex-none w-11 h-11 rounded-xl bg-white border border-[#DCE4EF] flex items-center justify-center [&>svg]:w-6 [&>svg]:h-6';
@@ -226,6 +234,31 @@ const iconBox = 'flex-none w-11 h-11 rounded-xl bg-white border border-[#DCE4EF]
         </div>
       </div>
     </section>
+
+    <!-- 1b. Texas adult driver education (first license, 18 to 24) -->
+    {adeEnabled && (
+    <section class="bg-white border-t border-border">
+      <div class="max-w-[1180px] mx-auto px-4 sm:px-6 py-12 lg:py-14">
+        <div class="bg-[#0B2160] text-white rounded-[24px] px-6 sm:px-10 py-8 lg:py-10 flex flex-wrap gap-8 lg:gap-12 items-center justify-between">
+          <div class="flex-[999_1_480px] min-w-0 flex flex-col gap-4">
+            <span class="inline-flex items-center gap-2 self-start bg-white/10 border border-white/20 rounded-full py-1 pl-1 pr-3">
+              <img src="/assets/images/badges/texas-approved-tdlr.png" width="24" height="24" alt="Texas approved: TDLR-approved adult driver education course" class="w-6 h-6" loading="lazy" decoding="async" />
+              <span class="font-bold text-[13px] text-[#D6E8FD]" style={inter}>Texas Adult Driver Education · TDLR provider {ADE_LICENSE}</span>
+            </span>
+            <h2 class="m-0 font-extrabold text-[28px] lg:text-[36px] leading-[1.12]" style={inter}>Getting your first Texas license? Start with the {adeHours}-hour course.</h2>
+            <p class="m-0 text-[17px] leading-[1.5] text-[#D6E8FD] max-w-[600px]">Texas requires adult driver education before a first license at 18 to 24. Take the course online, at your own pace, and walk into DPS with your certificate.</p>
+            <ul class="list-none p-0 m-0 flex flex-wrap gap-x-6 gap-y-2 text-[15px] text-white">
+              {adeChips.map((c) => <li class="inline-flex items-center gap-2"><span class="text-[#9DB4D6] font-extrabold" aria-hidden="true">✓</span>{c}</li>)}
+            </ul>
+          </div>
+          <div class="flex-[1_1_260px] flex flex-col gap-3">
+            <a href={adeEnrollUrl} data-rrs-cta="home-start-ade" class="text-center no-underline bg-white hover:bg-info text-[#0B2160] font-extrabold text-[17px] px-6 py-[14px] rounded-full whitespace-nowrap" style={inter}>Start the course · {adePrice}&nbsp;→</a>
+            <a href="/adult-drivers-ed/texas" class="text-center no-underline text-white font-bold text-base px-6 py-3 rounded-full border border-white/40 hover:border-white whitespace-nowrap">Learn more</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    )}
 
     <!-- 2. Reviews -->
     <section class="bg-white">

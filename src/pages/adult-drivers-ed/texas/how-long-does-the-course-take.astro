@@ -1,30 +1,63 @@
 ---
+/**
+ * /adult-drivers-ed/texas/how-long-does-the-course-take — "how long is adult drivers ed in Texas".
+ *
+ * Rebuilt 2026-10-13 on the hook → answer → loop → funnel recipe (Jackson, ~/Claude/SEO/ADE-PAGE-RECIPE.md):
+ * the H1 answers the search with the hook (six hours at every approved provider, so no course is shorter), the
+ * answer is written once and reused in the lede and the meta description, and each H2 is the reader's next question.
+ * Two sets of minutes appear on purpose: the rule (360 total, 330 instruction, ade-texas.json course) and our
+ * delivered build (361.5 total, 331.5 instruction, ade-eligibility.ts course). Never swap one for the other.
+ */
 import AdeGuide from '../../../components/ade/AdeGuide.astro';
+import ade from '../../../data/ade-texas.json';
 import { course } from '../../../data/ade-eligibility';
 
+const base = '/adult-drivers-ed/texas';
+const url = `${base}/how-long-does-the-course-take`;
+const rule = ade.course; // the regulatory minutes: courseMinutes 360, instructionMinutes 330
+const days = rule.completionDays;
+
+// The one-breath answer: lede and meta description say the same thing.
+const answer = `Texas adult drivers ed is six hours at every approved provider, set by rule as ${rule.instructionMinutes} minutes of instruction and ${course.breakMinutes} of break. You can do ours in one sitting or across the ${days} days you have to finish it.`;
+
 const faqs = [
-  { q: 'How long is Texas adult drivers ed?', a: `Six hours, which Texas defines as ${course.totalMinutes} minutes total: a minimum of 330 minutes of instruction plus ${course.breakMinutes} minutes of break. Our build runs ${course.instructionMinutes} minutes of instruction across ${course.sections} sections.` },
-  { q: 'Can I finish the course in one day?', a: `Yes. There is no minimum number of days and no daily cap — the only constraint is the clock inside the course. If you sat down and worked straight through, including the two fifteen-minute breaks, you would finish in about ${Math.floor(course.totalMinutes / 60)} hours.` },
+  { q: 'How long is Texas adult drivers ed?', a: `Six hours. Texas sets ${rule.courseMinutes} minutes in all: a minimum of ${rule.instructionMinutes} minutes of instruction plus ${course.breakMinutes} minutes of break. Our build runs ${course.instructionMinutes} minutes of instruction across ${course.sections} sections, ${course.totalMinutes} minutes with the breaks.` },
+  { q: 'Can I finish the course in one day?', a: `Yes. There is no minimum number of days and no daily cap; the only constraint is the clock inside the course. If you sat down and worked straight through, including the two fifteen-minute breaks, you would finish in about ${Math.floor(course.totalMinutes / 60)} hours.` },
+  { q: 'Is there a shorter adult drivers ed course in Texas?', a: 'No. Every approved course is six hours, because Texas sets the minutes and each provider has to enforce them. What differs between courses is the price and what is included in it.' },
   { q: 'Can I take breaks and come back?', a: 'Yes, as often as you like. Your progress is saved at the section you reached. Most people do it across two or three sittings rather than in one block.' },
   { q: 'Why can I not skip ahead?', a: `Because Texas requires the course to deliver a minimum amount of instruction, and the timers are how an online provider demonstrates it. Each section holds for its own minimum before the Continue button unlocks. Reading faster than the timer does not shorten the course.` },
-  { q: 'Is there a deadline to finish?', a: 'Providers set a completion window and ours is generous, but the certificate is what DPS wants and you control when you start. The real deadline to plan around is your driving test appointment, not the course.' },
+  { q: 'Is there a deadline to finish?', a: `Yes. You have ${days} days to finish our course, and you control when you start. The deadline to plan around is your driving test appointment, not the course.` },
+];
+
+const next = [
+  { href: `${base}/whats-in-the-course`, title: 'What the six hours cover', blurb: `The ${course.modules} modules the state sets, in order, and where the DPS exam material sits.` },
+  { href: `${base}/final-exam`, title: 'The final exam', blurb: `${ade.exam.questions} questions, untimed, ${ade.exam.passPercent}% on each half, ${ade.exam.attempts} attempts.` },
+  { href: `${base}/cost`, title: 'What it costs', blurb: `Same six hours everywhere, so the price is what differs. Ours is $${ade.course.priceUsd}, all in.` },
+  { href: `${base}/dps-wait-times`, title: 'The wait that takes longer', blurb: 'Road-test queues at every DPS office, slowest first.' },
 ];
 ---
 <AdeGuide
-  title="How Long Does Texas Adult Drivers Ed Take? | Road Ready Safety"
-  description="Six hours means 360 minutes in Texas: 330 of instruction plus 30 of break. Whether you can finish in a day, why you cannot skip ahead, and where the time actually goes."
-  url="/adult-drivers-ed/texas/how-long-does-the-course-take"
+  title="How Long Is Texas Adult Drivers Ed? 6 Hours, in One Day or Over 90 | Road Ready Safety"
+  description={answer}
+  url={url}
   eyebrow="The course"
-  h1="How long the course really takes"
-  lede="Six hours is not marketing shorthand — it is a number written into the rules, and the software enforces it. Here is exactly how that time is divided, and what you can and cannot compress."
+  h1="How long is Texas adult drivers ed? Six hours everywhere, in one sitting or across 90 days"
+  lede={`${answer} No course can run shorter, because each section holds until its timer runs out. The step that decides when you get to the DPS counter is a different one, and it is below.`}
   faqs={faqs}
+  dateModified="2026-10-13"
+  updated="October 13, 2026"
+  band={{ eyebrow: 'Six hours, your schedule', heading: 'Every approved course is six hours. What differs is the price and what is in it' }}
+  next={next}
   sources={[
     { label: '16 TAC §84.503(b)(1), which sets the 360-minute course and the 330-minute instruction minimum' },
     { label: 'Texas Program of Organized Instruction, Adult Six-Hour edition' },
   ]}
 >
   <section class="flex flex-col gap-4">
-    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Where the time goes</h2>
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Where do the six hours go?</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      Into {course.sections} timed sections of instruction and two fifteen-minute breaks. The knowledge checks and the final exam sit on top, untimed.
+    </p>
     <div class="overflow-x-auto">
       <table class="w-full border-collapse text-left">
         <thead>
@@ -38,7 +71,7 @@ const faqs = [
           <tr class="border-b border-border">
             <td class="py-3 pr-4 text-[15px] text-text-body leading-6">Instruction, {course.sections} sections across {course.modules} modules</td>
             <td class="py-3 pr-4 text-[15px] font-semibold text-text leading-6">{course.instructionMinutes}</td>
-            <td class="py-3 text-[15px] text-text-body leading-6">Minimum 330 by rule</td>
+            <td class="py-3 text-[15px] text-text-body leading-6">Minimum {rule.instructionMinutes} by rule</td>
           </tr>
           <tr class="border-b border-border">
             <td class="py-3 pr-4 text-[15px] text-text-body leading-6">Two built-in breaks</td>
@@ -48,7 +81,7 @@ const faqs = [
           <tr class="border-b border-border">
             <td class="py-3 pr-4 text-[15px] font-semibold text-text leading-6">Total course time</td>
             <td class="py-3 pr-4 text-[15px] font-semibold text-text leading-6">{course.totalMinutes}</td>
-            <td class="py-3 text-[15px] text-text-body leading-6">The six hours Texas means</td>
+            <td class="py-3 text-[15px] text-text-body leading-6">The six hours Texas means ({rule.courseMinutes} by rule)</td>
           </tr>
           <tr class="border-b border-border">
             <td class="py-3 pr-4 text-[15px] text-text-body leading-6">Knowledge checks and the final examination</td>
@@ -59,32 +92,44 @@ const faqs = [
       </table>
     </div>
     <p class="text-[17px] text-text-body leading-[30px]">
-      The assessments carry no timer and no instruction credit, so they are genuinely as fast or slow
-      as you want them to be.
+      The assessments carry no timer and no instruction credit, so they take as long as you want them to.
     </p>
   </section>
 
   <section class="flex flex-col gap-4">
-    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Why the Continue button waits</h2>
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Can you finish adult drivers ed in one day?</h2>
     <p class="text-[17px] text-text-body leading-[30px]">
-      Every section holds for a minimum time before it lets you move on. That is not a trick to pad
-      the course; it is how an online provider demonstrates to the state that it delivered the
-      instruction it promised. Reading quickly does not shorten it, and neither does leaving the tab
-      open in the background &mdash; the time is attached to the section, not to your patience.
+      Yes. There is no daily cap, so working straight through, breaks included, takes about {Math.floor(course.totalMinutes / 60)} hours. One Saturday works.
     </p>
     <p class="text-[17px] text-text-body leading-[30px]">
-      The practical consequence: plan around six hours of your life, in whatever shape suits you.
-      Two evenings is the most common pattern. One Saturday works too.
+      Most people split it. Your progress is saved at the section you reached, and two evenings is the most common
+      pattern. Either way you have {days} days to finish.
     </p>
   </section>
 
   <section class="flex flex-col gap-4">
-    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">The course is not your bottleneck</h2>
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Is any approved course shorter than six hours?</h2>
     <p class="text-[17px] text-text-body leading-[30px]">
-      Worth saying plainly, because people optimise the wrong step: six hours is the fastest part of
-      getting licensed. The driving test appointment is the slow part, and at most offices it is
-      measured in weeks. Book that first and fit the course around it &mdash;{' '}
-      <a class="underline hover:no-underline" href="/adult-drivers-ed/texas/dps-wait-times">here is the wait at every office</a>.
+      No. Texas sets the minutes, and every approved provider has to enforce them, so no course is quicker than another.
+    </p>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      Every section holds for a minimum time before the Continue button unlocks. That is how an online provider
+      demonstrates to the state that it delivered the instruction it promised. Reading quickly does not shorten it,
+      and neither does leaving the tab open in the background; the time is attached to the section.
+    </p>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      What differs between courses is the price and what is in it.{' '}
+      <a class="underline hover:no-underline" href="/adult-drivers-ed/texas/cost">What the course costs, all in</a>, and{' '}
+      <a class="underline hover:no-underline" href="/adult-drivers-ed/texas/whats-in-the-course">what the nine modules cover</a>.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">What decides how long it takes to get licensed?</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      The driving test appointment, not the course. Six hours is the quick part of the process; at most offices the
+      road-test queue is measured in weeks. Book that first and fit the course around it.{' '}
+      <a class="underline hover:no-underline" href="/adult-drivers-ed/texas/dps-wait-times">Here is the wait at every office</a>.
     </p>
   </section>
 </AdeGuide>

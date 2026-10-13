@@ -1,8 +1,22 @@
 ---
+/**
+ * /adult-drivers-ed/texas/foreign-license-texas — a license from another country.
+ *
+ * Rebuilt 2026-10-13 on the hook → answer → loop → funnel recipe. §521.1601(b) exempts only a license issued by
+ * another state; DPS adds Canada, U.S. territories and five reciprocity countries. Everyone else is a new applicant,
+ * and at 18 through 24 the course applies, so the page ends in the course band. The page does not state the exam
+ * language, so the band heading does not either.
+ */
 import AdeGuide from '../../../components/ade/AdeGuide.astro';
 import { law, reciprocityCountries, newResident, fees, itd } from '../../../data/ade-eligibility';
 
+const base = '/adult-drivers-ed/texas';
+const url = `${base}/foreign-license-texas`;
 const recip = reciprocityCountries;
+const g = newResident.graceDays;
+
+// The one-breath answer: meta description and the first sentence of the lede.
+const answer = `Texas can waive the knowledge and driving tests for a foreign license only from Canada, a U.S. territory or five reciprocity countries, per DPS. Everyone else takes both, plus the six-hour course at ${law.requiredBand}.`;
 
 const faqs = [
   {
@@ -11,15 +25,15 @@ const faqs = [
   },
   {
     q: 'I have driven for ten years in my home country. Do I really need a beginner course?',
-    a: 'If you are 18 through 24 and your license was not issued by a U.S. state, a U.S. territory, Canada or a reciprocity country, then yes. Texas Transportation Code §521.1601 ties the requirement to age and to holding a license issued by another state, not to how long you have been driving. It is a blunt rule and it catches experienced drivers.',
+    a: 'Yes, if you are 18 through 24 and your license was not issued by a U.S. state, a U.S. territory, Canada or a reciprocity country. Texas Transportation Code §521.1601 ties the requirement to age and to holding a license issued by another state, not to how long you have been driving, so it catches experienced drivers.',
   },
   {
     q: 'How long can I drive in Texas on my foreign license?',
-    a: `DPS says you can legally drive on a valid, unexpired license from another U.S. state, U.S. territory, Canadian province or qualifying country for up to ${newResident.graceDays} days after moving to Texas. After that you need a Texas license.`,
+    a: `Up to ${g} days after moving to Texas. DPS says you can legally drive on a valid, unexpired license from another U.S. state, U.S. territory, Canadian province or qualifying country for that long. After that you need a Texas license.`,
   },
   {
     q: 'Does my license need to be translated?',
-    a: `Yes, if it is not in English or Spanish. DPS requires the translation to be done by a translation service or your consulate before you arrive in Texas, so this is something to arrange before you travel rather than after.`,
+    a: `Yes, if it is not in English or Spanish. DPS requires the translation to be done by a translation service or your consulate before you arrive in Texas, so arrange it before you travel rather than after.`,
   },
   {
     q: 'I am on a student or work visa. Can I get a Texas license?',
@@ -30,16 +44,27 @@ const faqs = [
     a: 'From the course, yes. DPS states there are no driver education requirements at 25 and older. You would still take the knowledge and skills exams, since a non-reciprocity foreign license does not waive them, and you would still need an Impact Texas Adult Drivers certificate before the skills test.',
   },
 ];
+
+const next = [
+  { href: `${base}/temporary-visitors-and-students`, title: 'On a student or work visa', blurb: 'The limited term license, lawful presence and the timing traps students hit.' },
+  { href: `${base}/do-i-need-adult-drivers-ed`, title: 'Do you need the course?', blurb: 'The Texas rule by age and by the license you already hold.' },
+  { href: `${base}/texas-driver-license-documents`, title: 'What to bring to the appointment', blurb: 'Identity, lawful presence, Social Security number and two printed proofs of residency.' },
+  { href: `${base}/cost`, title: 'What the course costs', blurb: 'The price, and what it includes.' },
+];
 ---
 
 <AdeGuide
-  title="Moving to Texas With a Foreign Driver License: What You Actually Need | Road Ready Safety"
-  description="A license from another country usually does not exempt you from Texas adult driver education. Texas has reciprocity with only five countries. Here is the rule and what it means."
-  url="/adult-drivers-ed/texas/foreign-license-texas"
+  title={`Foreign Driver License in Texas: Only 5 Countries Transfer, ${g} Days to Drive on It | Road Ready Safety`}
+  description={answer}
+  url={url}
   eyebrow="New residents"
-  h1="Moving to Texas with a license from another country"
-  lede="This is the case Texas rules handle least intuitively. An out-of-state license exempts you from adult driver education. A license from most other countries does not, no matter how long you have been driving on it."
+  h1="Foreign license in Texas? Only five countries and Canada get a transfer. Everyone else starts over"
+  lede={`${answer} You can drive on a valid license from a qualifying country for up to ${g} days after you move. The five countries are listed below, and the list leaves out most of the places people move to Texas from.`}
   faqs={faqs}
+  dateModified="2026-10-13"
+  updated="October 13, 2026"
+  band={{ eyebrow: 'Most countries are not reciprocal', heading: 'Licensed abroad and 18 to 24? The course applies, and its exam is in the price' }}
+  next={next}
   sources={[
     { label: 'Tex. Transp. Code §521.1601, Driver Education Required; Exception', href: 'https://statutes.capitol.texas.gov/Docs/TN/htm/TN.521.htm' },
     { label: 'Texas DPS, Moving to Texas: A Guide to Driver Licenses and IDs', href: 'https://www.dps.texas.gov/section/driver-license/moving-texas' },
@@ -49,27 +74,29 @@ const faqs = [
 >
 
   <section class="flex flex-col gap-4">
-    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">The sentence that decides it</h2>
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Does a foreign license exempt you from Texas drivers ed?</h2>
     <p class="text-[17px] text-text-body leading-[30px]">
-      Texas Transportation Code §521.1601 requires driver education before the state will license
-      anyone under {law.ageCeiling}. Subsection (b) is the entire exemption, and it is one line:
+      Usually not. Texas Transportation Code §521.1601 requires driver education before the state will license
+      anyone under {law.ageCeiling}, and subsection (b), the entire exemption, covers only a license from
+      another state:
     </p>
     <blockquote class="border-l-4 border-border pl-5 py-1 m-0">
       <p class="text-[17px] text-text-body leading-[30px] italic m-0">&ldquo;{law.exemptionText}&rdquo;</p>
       <cite class="text-sm text-text-muted not-italic">&mdash; Tex. Transp. Code §521.1601(b)</cite>
     </blockquote>
     <p class="text-[17px] text-text-body leading-[30px]">
-      <strong>Another state.</strong> Not another country. A license from Louisiana exempts a
-      23-year-old; a license from Honduras does not. That is not an oversight anyone has read into
-      the statute &mdash; DPS applies it the same way, and the practical consequence is that a lot of
-      experienced adult drivers arrive in Texas and discover they are treated as beginners.
+      <strong>Another state,</strong> not another country. A{' '}
+      <a class="underline hover:no-underline" href={`${base}/new-resident-out-of-state-license`}>license from Louisiana</a>{' '}
+      exempts a 23-year-old; a license from Honduras does not. DPS applies the statute the same way, and a lot of experienced adult
+      drivers arrive in Texas to find they are treated as beginners.
     </p>
   </section>
 
   <section class="flex flex-col gap-4">
-    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">The exceptions DPS does make</h2>
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Which foreign licenses can you transfer to Texas?</h2>
     <p class="text-[17px] text-text-body leading-[30px]">
-      DPS is slightly more generous than the bare statute. From its Moving to Texas page:
+      Canada, U.S. territories and five reciprocity countries. DPS is slightly more generous than the bare
+      statute. From its Moving to Texas page:
     </p>
     <ul class="flex flex-col gap-3 pl-5 m-0 list-disc marker:text-text-subtle">
       <li class="text-[17px] text-text-body leading-[30px]">
@@ -77,60 +104,59 @@ const faqs = [
         not required to take the knowledge or skills exams.
       </li>
       <li class="text-[17px] text-text-body leading-[30px]">
-        <strong>Reciprocity countries &mdash; {recip.slice(0, -1).join(', ')} and {recip.at(-1)}.</strong>{' '}
+        <strong>Reciprocity countries: {recip.slice(0, -1).join(', ')} and {recip.at(-1)}.</strong>{' '}
         A valid, unexpired license from one of these five may waive the knowledge and skills exams,
         unless you choose to keep your out-of-country license.
       </li>
       <li class="text-[17px] text-text-body leading-[30px]">
         <strong>Everywhere else.</strong> Full process, and the six-hour adult driver education
-        course if you are {law.requiredBand}.
+        course if you are {law.requiredBand}. The steps in order are in{' '}
+        <a class="underline hover:no-underline" href={`${base}/how-to-get-a-texas-license-as-an-adult`}>how to get a Texas driver license as an adult</a>.
       </li>
     </ul>
     <p class="text-[17px] text-text-body leading-[30px]">
-      Five countries is a short list. Mexico is not on it. Neither are India, the Philippines,
-      Vietnam, China, Nigeria, Brazil, El Salvador, Guatemala or Honduras &mdash; between them, most
-      of the people who move to Texas with a license already in their pocket.
+      Five countries is a short list. Mexico is not on it. Neither are India, the Philippines, Vietnam, China,
+      Nigeria, Brazil, El Salvador, Guatemala or Honduras, which between them account for most of the people
+      who move to Texas with a license already in their pocket.
     </p>
   </section>
 
   <section class="flex flex-col gap-4">
-    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Three things to do before you arrive</h2>
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">How long can you drive in Texas on a foreign license?</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      Up to {g} days after you move. DPS lets you drive on a valid, unexpired license from another U.S. state,
+      U.S. territory, Canadian province or qualifying country for that long. That is the window to get
+      everything else done.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">What should you do before you arrive?</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      Get the license translated if it is not in English or Spanish, and book the DPS appointment early.
+    </p>
     <ul class="flex flex-col gap-3 pl-5 m-0 list-disc marker:text-text-subtle">
       <li class="text-[17px] text-text-body leading-[30px]">
         <strong>Get the license translated.</strong> DPS: &ldquo;{newResident.translationRule}&rdquo;
         A translation service or your consulate can do it; the counter will not.
       </li>
       <li class="text-[17px] text-text-body leading-[30px]">
-        <strong>Count your {newResident.graceDays} days.</strong> You may drive on a valid, unexpired
-        license from another U.S. state, U.S. territory, Canadian province or qualifying country for
-        up to {newResident.graceDays} days after moving. That is the window to get everything else done.
-      </li>
-      <li class="text-[17px] text-text-body leading-[30px]">
         <strong>Book the appointment early.</strong> DPS driver license offices are appointment only,
         and the driving skills test is the slowest thing to get. See{' '}
-        <a class="underline hover:no-underline" href="/adult-drivers-ed/texas/impact-texas-adult-drivers">how the queue interacts with the {itd.certValidDays}-day ITD certificate</a>.
+        <a class="underline hover:no-underline" href={`${base}/impact-texas-adult-drivers`}>how the queue interacts with the {itd.certValidDays}-day ITD certificate</a>.
       </li>
     </ul>
   </section>
 
   <section class="flex flex-col gap-4">
-    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">If you are here on a visa</h2>
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Can you get a Texas license on a student or work visa?</h2>
     <p class="text-[17px] text-text-body leading-[30px]">
-      Texas issues a limited term driver license to temporary visitors who can document lawful
-      presence. The fee is ${fees.limitedTermVisitor}, and it expires when your period of lawful
-      presence expires &mdash; or after one year, if your status is recorded as &ldquo;duration of
-      status&rdquo;. The driver education question is unchanged: it depends on your age and on who
-      issued any license you already hold.
+      Yes, a limited term driver license, if you can document lawful presence. The fee is
+      ${fees.limitedTermVisitor}, and it expires when your period of lawful presence expires, or after one year
+      if your status is recorded as &ldquo;duration of status&rdquo;. The driver education question is
+      unchanged: it depends on your age and on who issued any license you already hold. More in{' '}
+      <a class="underline hover:no-underline" href={`${base}/temporary-visitors-and-students`}>Texas licenses for visitors and students</a>.
     </p>
-  </section>
-
-  <section class="flex flex-col gap-4">
-    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Read next</h2>
-    <ul class="flex flex-col gap-3 pl-5 m-0 list-disc marker:text-text-subtle">
-      <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/do-i-need-adult-drivers-ed">Do you need adult drivers ed in Texas? The rule by age and license</a></li>
-      <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/how-to-get-a-texas-license-as-an-adult">How to get a Texas driver license as an adult</a></li>
-      <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/new-resident-out-of-state-license">Moving to Texas with an out-of-state license</a></li>
-    </ul>
   </section>
 
 </AdeGuide>

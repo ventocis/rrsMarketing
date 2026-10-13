@@ -276,17 +276,17 @@ const chev = (stroke: string, size = 18) => `<svg width="${size}" height="${size
           <h2 class="m-0 font-extrabold text-[30px] lg:text-[40px] leading-[1.12] text-text" style={inter}>Your Course</h2>
           <p class="m-0 text-base text-text-muted">One price, everything included. Nothing is added at checkout.</p>
         </div>
-        <div class="w-full max-w-[460px] rounded-[20px] px-6 py-7 flex flex-col gap-4 bg-[#0B2160] text-white border border-[#0B2160] shadow-[0_24px_60px_rgba(11,33,96,0.28)]">
-          <div class="flex justify-between gap-4 items-start">
-            <h3 class="m-0 font-extrabold text-[21px] leading-[1.2]" style={inter}>{ade.course.name}</h3>
+        <div class="w-full max-w-[460px] rounded-[20px] px-5 py-6 sm:px-6 sm:py-7 flex flex-col gap-3.5 sm:gap-4 bg-[#0B2160] text-white border border-[#0B2160] shadow-[0_24px_60px_rgba(11,33,96,0.28)]">
+          <div class="flex flex-col-reverse sm:flex-row sm:justify-between gap-2.5 sm:gap-4 items-start">
+            <h3 class="m-0 font-extrabold text-[20px] sm:text-[21px] leading-[1.2]" style={inter}>{ade.course.name}</h3>
             <span class="flex-none font-bold text-xs px-3 py-1.5 rounded-full bg-white text-primary-deep">TDLR-Approved</span>
           </div>
-          <p class="m-0 flex items-baseline gap-1"><span class="font-extrabold text-[44px] leading-none" style={inter}>{dollars}</span><span class="text-base text-[#D6E8FD]">.{cents}</span></p>
+          <p class="m-0 flex items-baseline gap-1"><span class="font-extrabold text-[38px] sm:text-[44px] leading-none" style={inter}>{dollars}</span><span class="text-base text-[#D6E8FD]">.{cents}</span></p>
           <ul class="list-none p-0 m-0 flex flex-col gap-2.5">
             {cardChecks.map((c) => (
               <li class="flex gap-3.5 items-start">
                 <span class="flex-none w-6 h-6 rounded-full bg-white/20 flex items-center justify-center" set:html={check('#FFFFFF')} />
-                <span class="text-[15px] leading-[1.45] pt-0.5 text-[#D6E8FD]">{c.strong && <strong class="text-white">{c.strong}</strong>}{c.rest}</span>
+                <span class="text-[14px] sm:text-[15px] leading-[1.45] pt-0.5 text-[#D6E8FD]">{c.strong && <strong class="text-white">{c.strong}</strong>}{c.rest}</span>
               </li>
             ))}
           </ul>

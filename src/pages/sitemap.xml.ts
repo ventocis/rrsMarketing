@@ -67,6 +67,7 @@ if (texasGuideRoutes.length < 50) {
 const adeRoutes = adeEnabled && adeLicensed
   ? [
       '/adult-drivers-ed/texas',
+      '/adult-drivers-ed/texas/cost',
       '/adult-drivers-ed/texas/refund',
       '/adult-drivers-ed/texas/accessibility',
       '/adult-drivers-ed/texas/public-interest-notice',

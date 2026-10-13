@@ -4,7 +4,7 @@ import { fees, tpst, itd, law } from '../../../data/ade-eligibility';
 
 const faqs = [
   { q: 'How much is a Texas driver license?', a: `$${fees.newLicense18to84} for a new Class C license at ages 18 to 84, valid ${fees.newLicenseTermYears} years. A $1 administrative fee is included in that amount, and is not charged on transactions done by mail.` },
-  { q: 'How much does adult drivers ed cost in Texas?', a: 'Providers set their own price for the adult six-hour course; unlike the driving safety course there is no statutory price floor. Compare on what is included rather than headline price — a certificate fee added at the end is the usual way a low number stops being low.' },
+  { q: 'How much does adult drivers ed cost in Texas?', a: 'Providers set their own price for the adult six-hour course; unlike the driving safety course there is no statutory price floor. Ours is $39.95 with the exam and certificate included. Compare on what is included rather than headline price; a certificate fee added at the end is the usual way a low number stops being low.' },
   { q: 'Is the Impact Texas Drivers video free?', a: `Yes. ${itd.adultName} is provided by DPS at no charge. It takes about ${itd.adultLengthHours} hour and the certificate is valid ${itd.certValidDays} days.` },
   { q: 'What does a third-party driving test cost?', a: tpst.feesNote + ' Ask the school directly.' },
   { q: 'How much is a replacement Texas license?', a: `$${fees.replacement}, and the expiration date does not change.` },
@@ -90,6 +90,7 @@ const faqs = [
   <section class="flex flex-col gap-4">
     <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Read next</h2>
     <ul class="flex flex-col gap-3 pl-5 m-0 list-disc marker:text-text-subtle">
+      <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/cost">What the course costs, and what gets added at other checkouts</a></li>
       <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/texas-driver-license-documents">What to bring to the appointment</a></li>
       <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/third-party-skills-testing">Whether a third-party test is worth paying for</a></li>
       <li class="text-[17px] text-text-body leading-[30px]"><a class="underline hover:no-underline" href="/adult-drivers-ed/texas/ade-1317-certificate">The ADE-1317 certificate</a></li>

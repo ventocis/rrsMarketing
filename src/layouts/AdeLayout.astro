@@ -2,6 +2,7 @@
 import Layout from './Layout.astro';
 import ade from '../data/ade-texas.json';
 import { termsUrl } from '../lib/portal';
+import { adeEnrollUrl, adeLoginUrl, adeContactUrl, adeNoindex, adeLicensed, ADE_LICENSE, ADE_VERIFY_URL } from '../lib/ade';
 
 interface Props {
   title: string;
@@ -15,6 +16,11 @@ interface Props {
    * #who-needs-it / #curriculum / #pricing / #faq links still land on the landing page.
    */
   headerStyle?: 'minimal';
+  /**
+   * BreadcrumbList JSON-LD, as on /texas. Default: Home › Texas Adult Drivers Ed › <this page>.
+   * Pass an array to override, or `false` to emit none.
+   */
+  breadcrumbs?: { name: string; href: string }[] | false;
 }
 
 const {
@@ -22,28 +28,43 @@ const {
   description = 'TDLR-approved Texas adult driver education. The six hours Texas requires for a first driver license, for $39.95 flat.',
   keywords = 'Texas adult drivers ed, adult driver education Texas, ADE-1317, 6 hour drivers ed Texas, Texas drivers ed for adults',
   url = '/adult-drivers-ed/texas',
-  banner = '$39.95 all-in — no hidden fees, certificate included',
+  banner = `$${ade.course.priceUsd} Total, No Hidden Fees — No Surprises at Checkout`,
   headerStyle,
+  breadcrumbs,
 } = Astro.props;
 const minimalHeader = headerStyle === 'minimal';
 
-const enrollUrl = import.meta.env.VITE_ADE_ENROLLMENT_URL || '#';
-const loginUrl = import.meta.env.VITE_LOGIN_URL || '#';
-const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
+const enrollUrl = adeEnrollUrl;
+const loginUrl = adeLoginUrl;
+const contactUrl = adeContactUrl;
 const currentYear = new Date().getFullYear();
+const siteUrl = (import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com').replace(/\/$/, '');
 
-// 16 TAC 84.503(j)(4) — the DRIVER EDUCATION license number, never CP#1234.
-// Empty until TDLR approves; the route flag must stay off while it is empty.
-const deLicense = ade.provider.deLicenseNumber;
-const licenseLabel = deLicense
-  ? `TDLR Approved · DE License #${deLicense}`
+// 16 TAC 84.503(j)(4) — the DRIVER EDUCATION license number (C3705 since 2026-10-13), never CP1234.
+// Shown in the header, the footer badge (linked to TDLR's own record) and the footer line,
+// the same three places /texas shows CP1234. Source and gate: src/lib/ade.ts.
+const deLicense = ADE_LICENSE;
+const licenseLabel = adeLicensed
+  ? `TDLR Approved ${deLicense} · Verify on TDLR ↗`
   : 'TDLR Driver Education Provider · License Pending';
 
-// While the DE license is pending we may not advertise (16 TAC §84.80(e)), so every ADE
-// page is noindex regardless of environment. QA in particular is NOT protected by
-// robots.txt — it serves a permissive one because VITE_ENABLE_ANALYTICS is true there.
-// This lifts by itself once provider.deLicenseNumber is filled in.
-const licensePending = !deLicense;
+// Before the license existed every ADE page was noindex (16 TAC §84.80(e)); the number lifts it.
+const licensePending = adeNoindex;
+
+// Breadcrumb name = the page title up to the first separator, as on /texas.
+const pageName = title.split(/\s*[|:–—]\s*/)[0].trim() || title;
+const hub = { name: 'Texas Adult Drivers Ed', href: '/adult-drivers-ed/texas' };
+const crumbs =
+  breadcrumbs === false
+    ? null
+    : breadcrumbs ?? (url === hub.href ? [{ name: 'Home', href: '/' }, hub] : [{ name: 'Home', href: '/' }, hub, { name: pageName, href: url }]);
+const breadcrumbSchema = crumbs
+  ? JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: crumbs.map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.name, item: `${siteUrl}${c.href}` })),
+    })
+  : null;
 
 const nav = [
   { href: '/adult-drivers-ed/texas#who-needs-it', label: 'Do I Need This?' },
@@ -54,8 +75,9 @@ const nav = [
 
 // Footer mirrors /texas exactly. The Texas legal set ports across; everything below the
 // divider is what adult driver education adds on top (16 TAC §84.46, §84.503(d)(4), (f), (i), §84.84).
+// No Help Center link yet: /adult-drivers-ed/texas/helpcenter does not exist (ledger finding 8). The
+// §84.503(i) posted hours are in column 1 of this footer. Add the link back when the page ships.
 const supportLinks = [
-  { href: '/adult-drivers-ed/texas/helpcenter', label: 'Help Center' }, // carries the posted instructor + support hours, §84.503(i)
   { href: contactUrl, label: 'Contact Us' },
   { href: loginUrl, label: 'Log In' },
 ];
@@ -80,7 +102,7 @@ const adeLegalLinks = [
       '@type': 'Course',
       name: 'Texas Adult Driver Education Course (ADE-1317)',
       description:
-        'TDLR-approved six-hour online adult driver education course for Texas first-time driver license applicants aged 18 and over. Satisfies the highway sign and traffic law portions of the DPS knowledge exam.',
+        `TDLR-approved six-hour online adult driver education course (ADE-1317) for Texas first-time driver license applicants aged 18 and over, from TDLR Driver Education Provider ${deLicense}. Satisfies the highway sign and traffic law portions of the DPS knowledge exam.`,
       url: 'https://roadreadysafety.com/adult-drivers-ed/texas',
       provider: {
         '@type': 'Organization',
@@ -113,6 +135,8 @@ const adeLegalLinks = [
       },
     })} />
 
+    {breadcrumbSchema && <script type="application/ld+json" set:html={breadcrumbSchema} />}
+
     <!-- Forward the page's own head slot (FAQPage schema, etc.) up into Layout's head. -->
     <slot name="head" />
   </Fragment>
@@ -130,7 +154,7 @@ const adeLegalLinks = [
           <img src="/assets/icons/texas/logo-shield.svg" alt="Road Ready Safety" class="w-9 h-9 flex-shrink-0" />
           <div class="flex flex-col leading-none">
             <span class="text-[14px] font-bold text-primary-navy leading-tight">Road Ready</span>
-            <span class="text-[10px] font-medium text-text-body leading-tight">Safety</span>
+            <span class="text-[10px] font-medium text-text-body leading-tight">Safety{adeLicensed && ` TDLR: ${deLicense}`}</span>
           </div>
         </a>
 
@@ -229,10 +253,17 @@ const adeLegalLinks = [
           <p class="text-xs text-text-muted leading-5">
             Instructor of record &middot; TDLR Instructor License #{ade.provider.instructorLicenseNumber}
           </p>
-          <div class="inline-flex items-center gap-2 rounded-full px-3 py-2 w-fit border border-white/15">
-            <img src="/assets/icons/texas/tdlr-badge-footer.svg" alt="" class="w-4 h-4" />
-            <span class="text-xs font-semibold text-info-border">{licenseLabel}</span>
-          </div>
+          {adeLicensed ? (
+            <a href={ADE_VERIFY_URL} target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full px-3 py-2 w-fit border border-white/15 no-underline hover:underline text-info-border" title={`Open TDLR's record of license ${deLicense}`}>
+              <img src="/assets/icons/texas/tdlr-badge-footer.svg" alt="" class="w-4 h-4" />
+              <span class="text-xs font-semibold">{licenseLabel}</span>
+            </a>
+          ) : (
+            <div class="inline-flex items-center gap-2 rounded-full px-3 py-2 w-fit border border-white/15">
+              <img src="/assets/icons/texas/tdlr-badge-footer.svg" alt="" class="w-4 h-4" />
+              <span class="text-xs font-semibold text-info-border">{licenseLabel}</span>
+            </div>
+          )}
         </div>
 
         <div class="flex flex-col gap-4">
@@ -298,7 +329,7 @@ const adeLegalLinks = [
             &copy; {currentYear} {ade.provider.legalName} d/b/a {ade.provider.dba}. All rights reserved.
           </p>
           <p class="text-xs text-text-muted">
-            {licenseLabel}
+            {adeLicensed ? `TDLR-Licensed Driver Education Provider · ${deLicense}` : licenseLabel}
           </p>
         </div>
       </div>

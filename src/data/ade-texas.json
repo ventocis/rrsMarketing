@@ -3,8 +3,10 @@
   "provider": {
     "legalName": "Road Ready Driver Instruction LLC",
     "dba": "Road Ready Safety",
-    "deLicenseNumber": "",
-    "deLicenseNumberNote": "16 TAC 84.503(j)(4): provider name + DRIVER EDUCATION license number must show on the site and through registration/payment. This is NOT CP#1234 (that is the driving-safety license and belongs only on /texas). Fill in after TDLR approval; the flag must stay off until then.",
+    "deLicenseNumber": "C3705",
+    "deLicenseNumberNote": "16 TAC 84.503(j)(4): provider name + DRIVER EDUCATION license number must show on the site and through registration/payment. This is NOT CP1234 (that is the driving-safety license and belongs only on /texas). C3705 issued 2026-10-13, status CURRENT, expires 2027-10-12 (TDLR Driver Education Provider Search, checked 2026-10-13). Filling this field is what lifts the 84.80(e) gate: see src/lib/ade.ts.",
+    "deLicenseExpires": "2027-10-12",
+    "verifyUrl": "https://www.tdlr.texas.gov/driver/education/providers/search/?lic=C3705",
     "instructorOfRecord": "Jackson Maitner",
     "instructorLicenseNumber": "11284",
     "supportEmail": "info@roadreadysafety.com",
@@ -12,6 +14,7 @@
     "supportHours": ""
   },
   "course": {
+    "sku": "tx-ade",
     "code": "ADE-1317",
     "name": "Texas Adult Driver Education Course",
     "instructionMinutes": 330,
@@ -53,7 +56,7 @@
     {
       "n": 4,
       "title": "Traffic Control Devices",
-      "blurb": "Signs, signals, and road markings \u2014 the material the sign half of your exam comes from."
+      "blurb": "Signs, signals, and road markings — the material the sign half of your exam comes from."
     },
     {
       "n": 5,

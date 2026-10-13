@@ -5,7 +5,7 @@ import { join, relative, sep } from 'node:path';
 import coursesData from '../data/courses.json';
 import blogData from '../data/blog.json';
 import courtsData from '../data/texas-courts.json';
-import adeData from '../data/ade-texas.json';
+import { adeEnabled, adeLicensed } from '../lib/ade';
 import { translatedPages } from '../lib/i18n';
 import { INSURERS } from '../data/texas-insurers';
 import { sitemapCourses, STATE_SUBROUTES } from '../data/courses/index';
@@ -60,17 +60,13 @@ if (texasGuideRoutes.length < 50) {
   throw new Error(`sitemap: expected the Texas guide pages under ${texasDir}, found ${texasGuideRoutes.length}`);
 }
 
-// Adult Driver Education (ADE-1317) cluster — excluded from the sitemap until the
-// TDLR Driver Education Provider license is approved and VITE_ADE_ROUTES_ENABLED is true.
-// 16 TAC §84.80(e) bars provider-name advertising before approval.
-// Listed only when the routes are on AND the DE licence exists. While the licence is
-// pending the pages render noindex, so advertising them in the sitemap would contradict that.
-const adeEnabled =
-  import.meta.env.VITE_ADE_ROUTES_ENABLED === 'true' && Boolean(adeData.provider.deLicenseNumber);
-const adeRoutes = adeEnabled
+// Adult Driver Education (ADE-1317) cluster. Listed only once the TDLR Driver Education Provider
+// license exists (C3705, 2026-10-13); before that the pages were noindex redirect stubs
+// (16 TAC §84.80(e)), so advertising them in the sitemap would have contradicted that.
+// The gate is the same one the pages use: src/lib/ade.ts.
+const adeRoutes = adeEnabled && adeLicensed
   ? [
       '/adult-drivers-ed/texas',
-      '/adult-drivers-ed/texas/helpcenter',
       '/adult-drivers-ed/texas/refund',
       '/adult-drivers-ed/texas/accessibility',
       '/adult-drivers-ed/texas/public-interest-notice',
@@ -123,9 +119,11 @@ for (const c of sitemapCourses) {
 
 // /courses/tx-defensive is a redirect shell to /texas when the Texas routes are on (courses/[slug]/index.astro),
 // so it stays out of the sitemap; listing a redirect wastes crawl and conflicts with its target's canonical.
+// Likewise /courses/tx-adult-ed (the old reseller page) redirects to /adult-drivers-ed/texas once the DE license exists.
 const texasRoutesOn = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const isRedirectShell = (slug: string) => (texasRoutesOn && slug === 'tx-defensive') || (adeEnabled && slug === 'tx-adult-ed');
 const courseRoutes = (coursesData as Array<{ slug: string }>)
-  .filter(c => !(texasRoutesOn && c.slug === 'tx-defensive'))
+  .filter(c => !isRedirectShell(c.slug))
   .map(c => `/courses/${c.slug}`);
 
 const courseRequirementsRoutes = (coursesData as Array<{ slug: string }>).map(c => `/courses/${c.slug}/requirements`);

@@ -7,6 +7,7 @@ import { stateNames } from '../../../utils/states';
 import { usd, hours } from '../../../utils/format';
 import { getStateRequirements } from '../../../utils/stateRequirements';
 import courseFaqs from '../../../data/course-faqs.json';
+import { adeEnabled } from '../../../lib/ade';
 
 export function getStaticPaths() {
   return (coursesData as any[]).map((course: any) => ({
@@ -33,6 +34,11 @@ const duration = hours(course.duration_hours);
 
 // Redirect tx-defensive to the Texas landing page
 const isTexasPage = isTexasEnabled && course.slug === 'tx-defensive';
+// Redirect the old TicketSchool reseller page for adult driver ed to our own licensed course
+// (TDLR C3705, 2026-10-13). Same mechanism as tx-defensive. Until this ships, that page held
+// every "adult drivers ed texas" impression the site had, at position 60-80.
+const isAdePage = adeEnabled && course.slug === 'tx-adult-ed';
+const redirectTo = isTexasPage ? '/texas' : isAdePage ? '/adult-drivers-ed/texas' : null;
 
 function getEnrollHref(c: any) {
   if (isTexasEnabled && c.slug === 'tx-defensive') return '/texas';
@@ -93,9 +99,9 @@ const faqSchema = faqSet ? JSON.stringify({
 }) : null;
 ---
 
-{isTexasPage && <meta http-equiv="refresh" content="0;url=/texas" />}
+{redirectTo && <meta http-equiv="refresh" content={`0;url=${redirectTo}`} />}
 
-{!isTexasPage && <Layout
+{!redirectTo && <Layout
   title={`${course.course_name} | Road Ready Safety`}
   description={`${course.course_name} — online, ${stateFull}. ${course.subhead || 'State-approved, mobile-friendly.'}`}
   keywords={`${course.course_name}, ${stateFull}, traffic school, defensive driving, online course`}

@@ -15,7 +15,7 @@ interface Faq { q: string; a: string }
 interface Source { label: string; href?: string }
 
 interface Next { href: string; title: string; blurb: string }
-interface Band { heading?: string; eyebrow?: string }
+interface Band { eyebrow?: string }
 
 interface Props {
   title: string;
@@ -159,6 +159,6 @@ schema.push(...extraSchema);
       )}
     </div>
   </section>
-  {band && <AdeCourseBand id="course" heading={bandProps.heading} eyebrow={bandProps.eyebrow} />}
+  {band && <AdeCourseBand id="course" eyebrow={bandProps.eyebrow} />}
 </AdeLayout>
 )}

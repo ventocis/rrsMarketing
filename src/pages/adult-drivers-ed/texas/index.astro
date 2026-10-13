@@ -19,7 +19,7 @@
  *  - ITAD: DPS program, free, one hour, certificate valid 90 days, taken before the driving skills test.
  * Reviews are our verified Trustpilot reviews; any that mention a price or a ticket are filtered out because
  * none of that applies to this course. Certificate is instant (Jackson, 2026-10-13).
- * Refund wording is the ADE policy (/adult-drivers-ed/texas/refund), not the driving-safety one.
+ * Refund promise: full refund before completion or certificate (Jackson, 2026-10-13), same as /texas.
  */
 import AdeLayout from '../../../layouts/AdeLayout.astro';
 import RoadPhoto from '../../../components/landing-v2/RoadPhoto.astro';
@@ -69,10 +69,10 @@ const REVIEWS_SHOWN = 3;
 const cardChecks = [
   { strong: `Official ${hours}-hour ${code} course`, rest: ' for a first Texas driver license at 18 to 24' },
   { strong: 'Highway sign and traffic law exam built in', rest: `: ${ade.exam.questions} questions, two extra attempts if you need them` },
-  { rest: 'Instant certificate included, ready the moment you pass' },
-  { rest: 'Phone, tablet or computer: start, stop and resume anytime' },
-  { rest: `${days} days to finish, in as many sittings as you like` },
-  { rest: 'Real customer support' },
+  { strong: 'Instant certificate included', rest: ', ready the moment you pass' },
+  { strong: 'Phone, tablet or computer', rest: ': start, stop and resume anytime' },
+  { strong: `${days} days to finish`, rest: ', in as many sittings as you like' },
+  { strong: 'Real customer support', rest: ' by email and phone' },
 ];
 
 // DPS's own sentence on who needs the course (ade-eligibility.ts, DPS-APP), split so the waiver reads as a quote.
@@ -134,7 +134,7 @@ const landingFaqs = [
   { q: 'I am 25 or older. Should I take this?', a: 'You do not have to. People over 25 take it because the sign and traffic law exam is part of the course, on their own schedule, and DPS says the course is highly recommended for first-time applicants.' },
   { q: 'Do I need a learner permit first?', a: 'No. You can take the course before you have any license or permit at all.' },
   { q: 'Can I take the course on my phone?', a: 'Yes. The course works on any device, and your progress saves as you go, so ten minutes on a break counts.' },
-  { q: 'Can I get a refund?', a: 'Yes. Full refund if you cancel within three days of signing up, and a partial refund after that based on how much of the course you have not taken.' },
+  { q: 'Can I get a refund?', a: 'Yes. If you’re not satisfied, you can request a full refund before you complete the course or receive your certificate.' },
 ];
 
 const landingFaqSchema = JSON.stringify({
@@ -295,25 +295,24 @@ const chev = (stroke: string, size = 18) => `<svg width="${size}" height="${size
         <div class="flex flex-wrap justify-center gap-x-8 gap-y-3 text-base text-text-body">
           <span class="inline-flex items-center gap-2"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" stroke="#2454E6" stroke-width="2"/><path d="M8 11 V8 a4 4 0 0 1 8 0 V11" stroke="#2454E6" stroke-width="2"/></svg>Secure checkout</span>
           <a href={ADE_VERIFY_URL} target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-text-body no-underline hover:underline"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 L19 6 V11 C19 16 16 19 12 21 C8 19 5 16 5 11 V6 Z" stroke="#2454E6" stroke-width="2" stroke-linejoin="round"/><path d="M9 12 L11.2 14.2 L15.5 9.8" stroke="#2454E6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>TDLR-licensed provider {ADE_LICENSE}</a>
-          <span class="hidden sm:inline-flex items-center gap-2"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#2454E6" stroke-width="2"/><path d="M14.5 9 C14 8.2 13 7.8 12 7.8 C10.5 7.8 9.5 8.6 9.5 9.8 C9.5 12.4 14.5 11.2 14.5 14 C14.5 15.3 13.4 16.2 12 16.2 C10.8 16.2 9.8 15.7 9.3 14.8 M12 6.5 V7.8 M12 16.2 V17.5" stroke="#2454E6" stroke-width="1.8" stroke-linecap="round"/></svg>Three-day full refund</span>
+          <span class="hidden sm:inline-flex items-center gap-2"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#2454E6" stroke-width="2"/><path d="M14.5 9 C14 8.2 13 7.8 12 7.8 C10.5 7.8 9.5 8.6 9.5 9.8 C9.5 12.4 14.5 11.2 14.5 14 C14.5 15.3 13.4 16.2 12 16.2 C10.8 16.2 9.8 15.7 9.3 14.8 M12 6.5 V7.8 M12 16.2 V17.5" stroke="#2454E6" stroke-width="1.8" stroke-linecap="round"/></svg>100% risk-free guarantee</span>
         </div>
       </div>
     </section>
 
-    <!-- Risk-free: the ADE refund policy, not the driving-safety one -->
+    <!-- Risk-free: full refund before completion or certificate (Jackson, 2026-10-13), same promise as /texas -->
     <section class="bg-white">
       <div class="max-w-[880px] mx-auto px-4 sm:px-6 pt-0 pb-[88px]">
         <div class="bg-surface-muted border border-border rounded-3xl px-6 sm:px-10 py-12 flex flex-col items-center gap-4 text-center">
           <span class="w-16 h-16 rounded-full bg-white border border-[#DCE4EF] flex items-center justify-center"><svg width="32" height="32" viewBox="0 0 34 38" fill="none" aria-hidden="true"><path d="M17 2 L31 7 V18 C31 27 24 33 17 36 C10 33 3 27 3 18 V7 Z" stroke="#2454E6" stroke-width="3" stroke-linejoin="round"/><path d="M11 18.5 L15.5 23 L23.5 14" stroke="#2454E6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          <h2 class="m-0 font-extrabold text-[28px] lg:text-[36px] leading-[1.15] text-text" style={inter}>Try It Risk-Free</h2>
-          <p class="m-0 text-lg text-text-body max-w-[560px]">Full refund if you cancel within three days of signing up. After that, a partial refund based on how much of the course you have not taken.</p>
+          <h2 class="m-0 font-extrabold text-[28px] lg:text-[36px] leading-[1.15] text-text" style={inter}>Try It 100% Risk-Free</h2>
+          <p class="m-0 text-lg text-text-body max-w-[560px]">If you’re not satisfied, you can request a full refund before you complete the course or receive your certificate.</p>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 w-full max-w-[600px]">
-            {['No complicated forms or hoops', 'Nothing added at checkout, ever'].map((t) => (
+            {['No complicated forms or hoops', 'Refund processed within 3–5 business days'].map((t) => (
               <span class="flex items-center justify-center gap-2 h-14 bg-white border border-[#DCE4EF] rounded-2xl px-4 text-sm leading-5 font-bold text-text text-center"><span class="flex-none w-5 h-5 rounded-full bg-[#E3F6EC] flex items-center justify-center [&>svg]:w-3 [&>svg]:h-3" set:html={check('#1E8E53')} />{t}</span>
             ))}
           </div>
           <a href={enrollUrl} data-rrs-cta="ade-risk-free" class="mt-1.5 no-underline bg-primary hover:bg-primary-hover text-white font-extrabold text-lg px-6 sm:px-[30px] py-[15px] rounded-full max-w-full sm:whitespace-nowrap" style={inter}>Start Risk-Free Today&nbsp;→</a>
-          <a href={`${base}/refund`} class="text-sm font-semibold text-text-muted underline">Read the refund and attendance policy</a>
         </div>
       </div>
     </section>

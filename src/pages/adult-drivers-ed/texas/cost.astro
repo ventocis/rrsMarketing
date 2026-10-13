@@ -62,7 +62,7 @@ const why = [
   { strong: 'The certificate is in it.', rest: ' Signed by a licensed Texas driver education instructor and emailed to you. Nothing to add at the end.' },
   { strong: 'The exam is in it.', rest: ` Three attempts, as the state allows. Pass it and the course ${ade.exam.claimPhrasing}.` },
   { strong: 'Nothing renews.', rest: ' No trial, no subscription, no box to uncheck.' },
-  { strong: 'A way out.', rest: ' Full refund if you cancel within three days of signing up, and a partial refund after that based on how much of the course you have not taken.' },
+  { strong: 'A way out.', rest: ' If you’re not satisfied, you can request a full refund before you complete the course or receive your certificate.' },
 ];
 
 const faqs = [
@@ -123,7 +123,7 @@ const defaultTotal = dps + coursePrice;
           <h1 class="text-[36px] lg:text-[56px] font-extrabold tracking-[-0.02em] leading-[1.05] m-0 mb-5" style={inter}>How much is adult drivers ed in Texas? {price} here, and that's the whole bill.</h1>
           <p class="text-lg lg:text-[21px] leading-8 m-0 mb-4">You have probably seen a lower number in the last ten minutes. Most of those numbers grow before you reach the receipt. This page shows what getting licensed costs from start to finish, what gets added to a course price at checkout, and the one question that tells you what a course really costs.</p>
           <div class="flex flex-wrap gap-2.5 mb-6">
-            {[`${price} total`, 'Exam included', 'Certificate included', 'Three-day full refund'].map((c) => <span class="bg-white border border-border rounded-full px-4 py-2 text-[15px] font-semibold">{c}</span>)}
+            {[`${price} total`, 'Exam included', 'Certificate included', 'Full refund before completion'].map((c) => <span class="bg-white border border-border rounded-full px-4 py-2 text-[15px] font-semibold">{c}</span>)}
           </div>
           <p class="text-[15px] text-text-muted m-0">By Road Ready Safety, TDLR driver education provider {ADE_LICENSE}. We sell one of these courses, so every number here points at its source. · Updated {updated}</p>
         </div>

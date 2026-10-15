@@ -67,7 +67,7 @@ const moCourse = mo as CourseData;
 const states = [
   {
     abbr: 'TX', name: 'Texas', url: '/texas', badge: '/assets/images/badges/texas-approved-tdlr.png', badgeAlt: 'Texas approved course seal',
-    approval: `TDLR-approved · CP#${TEXAS_COURSE.providerNumber.replace(/^CP/, '')}`, course: 'Texas Defensive Driving Course',
+    approval: `TDLR-approved · ${TEXAS_COURSE.providerNumber}`, course: 'Texas Defensive Driving Course',
     price, hours: TEXAS_COURSE.hours, enroll: texasEnrollUrl, live: true,
   },
   {
@@ -115,7 +115,7 @@ const support = [
 ];
 
 const faqs = [
-  { q: 'Is this accepted in my state?', a: `Every Road Ready course is approved by its state: Texas (TDLR, CP#${TEXAS_COURSE.providerNumber.replace(/^CP/, '')}), North Dakota (NDDOT) and Missouri (MSC, ${moCourse.provider.approvalNumber}). Each course page lists the approval and any special instructions.` },
+  { q: 'Is this accepted in my state?', a: `Every Road Ready course is approved by its state: Texas (TDLR, ${TEXAS_COURSE.providerNumber}), North Dakota (NDDOT) and Missouri (MSC, ${moCourse.provider.approvalNumber}). Each course page lists the approval and any special instructions.` },
   { q: 'How long is the course?', a: `It depends on your state: Texas is ${TEXAS_COURSE.hours} hours, North Dakota is ${ndCourse.course.hours} hours and Missouri is ${moCourse.course.hours} hours. Start and stop anytime; your progress saves.` },
   { q: 'How do I get my certificate?', a: 'Download it the moment you finish. Some courts and insurers need you to send them a copy; your course page explains exactly how.' },
   { q: 'Will this dismiss my ticket or remove points?', a: 'It depends on your state. In Texas, the course can dismiss an eligible ticket once your court approves it. In North Dakota, it can take 3 points off your record. In Missouri, a court-approved Driver Improvement Program keeps the points off. Your course page walks you through the steps.' },
@@ -180,7 +180,7 @@ const iconBox = 'flex-none w-11 h-11 rounded-xl bg-white border border-[#DCE4EF]
   title={`Road Ready Safety: State-Approved Online Driving Courses — Texas Defensive Driving ${price} Total, North Dakota, Missouri`}
   description={`Online driving courses approved by the state and accepted by courts and insurers. Texas defensive driving: TDLR ${TEXAS_COURSE.providerNumber}, ${price} total with the certificate included, ${TEXAS_COURSE.hours} hours, no final exam. North Dakota point reduction and the Missouri Driver Improvement Program.`}
   keywords="road ready safety, defensive driving course online, driving safety course, texas defensive driving, north dakota defensive driving, missouri driver improvement program"
-  image="/assets/rrs (1200 x 630 px).png"
+  image="/assets/og-default.png"
   url="/"
 >
   <script type="application/ld+json" slot="head" set:html={websiteSchema} />

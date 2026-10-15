@@ -34,7 +34,7 @@ export const FEATURED_COURSES: FeaturedCourse[] = [
   {
     id: 'tx-bdi',
     badge: 'Most popular',
-    credential: `TDLR-approved · CP#${TEXAS_COURSE.providerNumber.slice(2)}`,
+    credential: `TDLR-approved · ${TEXAS_COURSE.providerNumber}`,
     name: 'Texas Defensive Driving Course',
     facts: `${TEXAS_COURSE.hours} hours online · ${TEXAS_PRICE_LABEL} all-in · certificate included`,
     price: String(TEXAS_COURSE.price),
@@ -49,7 +49,7 @@ export const FEATURED_COURSES: FeaturedCourse[] = [
       reviewExcerpt: 'Simple. No hidden fees. Seamless experience.',
       reviewerName: 'Ryan Johnson',
       checks: [
-        `TDLR-approved · CP#${TEXAS_COURSE.providerNumber.slice(2)}`,
+        `TDLR-approved · ${TEXAS_COURSE.providerNumber}`,
         'Accepted by Texas courts for ticket dismissal',
         'Certificate the moment you finish, no extra fee',
       ],

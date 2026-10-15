@@ -25,7 +25,7 @@ const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defe
 const contactUrl = import.meta.env.VITE_CONTACT_US_URL || '/contact';
 const trustpilotUrl = 'https://www.trustpilot.com/review/roadreadysafety.com';
 
-const price = TEXAS_PRICE_LABEL; // "$25"
+const price = TEXAS_PRICE_LABEL; // "$28"
 const CP = TEXAS_COURSE.providerNumber;
 const hours = TEXAS_COURSE.hours;
 
@@ -154,7 +154,7 @@ const chev = (stroke: string, size = 18) => `<svg width="${size}" height="${size
 {isEnabled && (
 <TexasLayout
   title={`Texas Defensive Driving Course Online: 6-Hour, ${TEXAS_PRICE_LABEL} Total, TDLR-Approved (${CP}) | Road Ready Safety`}
-  description={`${hours}-hour Texas driving safety course, online, TDLR-approved (${CP}). ${TEXAS_PRICE_LABEL} total${TEXAS_AT_LEGAL_MINIMUM ? ', the lowest price Texas law allows' : ''}: course plus your certificate the moment you finish, nothing added at checkout. Accepted by every Texas court.`}
+  description={`${hours}-hour Texas driving safety course, online, TDLR-approved (${CP}). ${TEXAS_PRICE_LABEL} total: course plus your certificate the moment you finish, nothing added at checkout. Accepted by every Texas court.`}
   keywords="texas defensive driving course, texas online defensive driving class, defensive driving course texas, online defensive driving texas, texas driving safety course, tdlr approved defensive driving"
   url="/texas"
   courseSchema={true}

@@ -78,7 +78,7 @@ const RESULT_DATA: Record<
     badge: 'Not Eligible',
     badgeClass: 'inline-flex items-center gap-2 bg-error-bg text-error text-sm font-semibold px-3 py-1.5 rounded-full',
     heading: 'CDL holders cannot use defensive driving for ticket dismissal',
-    body: 'Texas law prohibits CDL holders from dismissing violations through a Driver Safety Course, even when driving a personal vehicle.',
+    body: 'Texas law prohibits CDL holders from dismissing violations through a Driver Safety Course, even when driving a personal vehicle. You can still take the course voluntarily for an insurance discount, if your insurer offers one.',
     isEligible: false,
   },
   'ineligible-prior': {
@@ -147,6 +147,11 @@ export default function EligibilityChecker({ courts }: Props) {
 
   // Gate: always show email capture before revealing result
   const goToResult = (r: ResultType) => {
+    // One GTM event per answer: eligible or not, plus the reason, so GA4 can count each outcome.
+    if (typeof window !== 'undefined') {
+      const w = window as unknown as { dataLayer?: Record<string, unknown>[] };
+      (w.dataLayer = w.dataLayer || []).push({ event: 'eligibility_result', eligible: RESULT_DATA[r]?.isEligible ?? null, reason: r, violation });
+    }
     setPreviousStep(step); // remember where to go back if user dismisses
     setPendingResult(r);
     setShowModal(true);
@@ -482,7 +487,7 @@ export default function EligibilityChecker({ courts }: Props) {
 
                   {/* Price */}
                   <div className="flex items-baseline gap-1 mb-0.5">
-                    <span className="text-[28px] font-bold text-text leading-none">$25</span>
+                    <span className="text-[28px] font-bold text-text leading-none">$28</span>
                     <span className="text-xs text-text-body">.00</span>
                   </div>
                   <p className="text-xs text-text-body mb-3" style={{ fontFamily: "'DM Sans', sans-serif" }}>

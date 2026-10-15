@@ -41,7 +41,7 @@ const all = postsFor('ND');
 const hub = post.hub ? all.find((p) => p.slug === post.hub) : undefined;
 const children = post.kind === 'hub' ? all.filter((p) => p.hub === post.slug) : [];
 // One of several anchors for the up-link to the course, chosen per guide so the text varies site-wide.
-const courseAnchors = ['North Dakota defensive driving course', 'the 4-hour online course', 'our NDDOT-approved course', 'the course for the 3-point reduction', 'take the course in lieu of points'];
+const courseAnchors = ['North Dakota defensive driving course', 'the 4-hour online course', 'our NDDOT-approved point reduction course', 'the course for the 3-point reduction', 'take the course in lieu of points'];
 const courseAnchor = courseAnchors[[...post.slug].reduce((n, c) => n + c.charCodeAt(0), 0) % courseAnchors.length];
 const reviewedBy = post.reviewedBy ?? 'Road Ready Safety';
 // Breadcrumb trail, shown on the page and sent as BreadcrumbList JSON-LD (replacing the layout's

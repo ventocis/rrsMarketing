@@ -42,6 +42,7 @@ const tabs = [
 ];
 
 const faqs = [
+  { q: 'What does TDLR mean?', a: 'The Texas Department of Licensing and Regulation, the state agency that licenses Texas driving safety course providers and approves their courses. “TDLR-approved” means the provider holds a current license with a CP number, and its certificate is the one every Texas court accepts.' },
   { q: 'What does “TDLR-approved” mean for a Texas defensive driving course?', a: `TDLR has licensed the provider and given it a CP number (for example, ${TEXAS_COURSE.providerNumber}). Only a licensed provider can issue the certificate a Texas court accepts. Approval admits a course; it doesn’t rank it.` },
   { q: 'How do I verify a Texas driving safety course is really approved?', a: 'Before paying, find its CP number and confirm a current license in TDLR’s license search. After finishing, validate your certificate (CP###-########) at DESSearch. New certificates can take up to 5 days to appear.' },
   { q: 'How much does a TDLR-approved course cost?', a: `At least ${floor} under Educ. Code §1001.352, with no separate state fee since September 1, 2025. Road Ready Safety is ${price} with the instant certificate included.` },
@@ -55,7 +56,7 @@ const articleSchema = JSON.stringify({
   description: 'Check any Texas course’s CP number in one minute, validate your certificate, and spot look-alike “state approved” lists. Plus what the $25 minimum covers.',
   author: { '@type': 'Organization', name: 'Road Ready Safety' },
   publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
-  datePublished: '2026-06-11', dateModified: '2026-10-07',
+  datePublished: '2026-06-11', dateModified: '2026-10-14',
   mainEntityOfPage: `${siteUrl}/texas/tdlr-approved`,
 });
 const faqSchema = JSON.stringify({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) });
@@ -99,9 +100,16 @@ const link = 'text-primary hover:text-primary-deep font-medium';
             <a href="#check" class="no-underline bg-primary hover:bg-primary-hover text-white font-bold text-[17px] px-6 py-3.5 rounded-full">Check a course now ↓</a>
             <a href="#video" class="font-semibold text-primary hover:text-primary-deep">▶ Watch: How to choose a Texas course without getting overcharged (2:07)</a>
           </div>
-          <p class="text-[15px] text-text-muted m-0 mt-6">By Road Ready Safety, TDLR provider {TEXAS_COURSE.providerNumber}. We're a licensed provider, so every claim here links to the official source and you can check us too. · Updated October 7, 2026</p>
+          <p class="text-[15px] text-text-muted m-0 mt-6">By Road Ready Safety, TDLR provider {TEXAS_COURSE.providerNumber}. We're a licensed provider, so every claim here links to the official source and you can check us too. · Updated October 14, 2026</p>
         </div>
       </div>
+
+      <!-- ===== What TDLR means ===== -->
+      <section class={`${wrap} pt-2 pb-10`}>
+        <h2 class={h2c} style={inter}>What does TDLR mean?</h2>
+        <p class="text-base leading-7 m-0 mb-3 max-w-[780px]">TDLR is the <a href="https://www.tdlr.texas.gov/driver/safety/" target="_blank" rel="noopener noreferrer" class={link}>Texas Department of Licensing and Regulation</a>, the state agency that licenses Texas driving safety course providers and approves the six-hour course a court accepts for ticket dismissal. It took that job over from the Texas Education Agency in 2015.</p>
+        <p class="text-base leading-7 m-0 max-w-[780px]">On a course website, “TDLR-approved” means the provider holds a current TDLR license with a CP number, and the certificate it issues is the one every Texas court accepts. TDLR doesn’t run courses itself, doesn’t rank providers, and isn’t DPS, which issues the driving record most courts ask for alongside the certificate.</p>
+      </section>
 
       <!-- ===== Check picker ===== -->
       <section id="check" class="bg-white border-y border-border scroll-mt-28">
@@ -228,7 +236,7 @@ const link = 'text-primary hover:text-primary-deep font-medium';
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 mb-7">
           {nextSteps.map(([href, t, s]) => <a href={href} class="no-underline text-text rounded-[14px] border border-border bg-white p-4 hover:border-primary-deep"><strong>{t}</strong><br /><span class="text-[15px] text-text-body">{s}</span></a>)}
         </div>
-        <p class="text-[15px] text-text-muted m-0 max-w-[820px] leading-6">Road Ready Safety is a TDLR-licensed Texas driving safety provider ({TEXAS_COURSE.providerNumber}). Informational, not legal advice; confirm requirements with the court on your citation. Sources: TDLR License Search (steps confirmed October 5, 2026); TDLR Driving Safety Provider licensing file (vsDriverSafetyProvider.csv, pulled {asOf}); TDLR DESSearch; Tex. Educ. Code §1001.352 as amended by HB 3012 (eff. Sept. 1, 2025); 16 TAC §84.504; Texas DPS driving records. Updated October 7, 2026.</p>
+        <p class="text-[15px] text-text-muted m-0 max-w-[820px] leading-6">Road Ready Safety is a TDLR-licensed Texas driving safety provider ({TEXAS_COURSE.providerNumber}). Informational, not legal advice; confirm requirements with the court on your citation. Sources: TDLR License Search (steps confirmed October 5, 2026); TDLR Driving Safety Provider licensing file (vsDriverSafetyProvider.csv, pulled {asOf}); TDLR DESSearch; Tex. Educ. Code §1001.352 as amended by HB 3012 (eff. Sept. 1, 2025); 16 TAC §84.504; Texas DPS driving records. Updated October 14, 2026.</p>
       </section>
 
       <StickyCta afterId="check" hideAtId="course" />

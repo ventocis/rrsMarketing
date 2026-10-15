@@ -101,7 +101,7 @@ fields; consistency across listings is the whole point, so do not paraphrase.
 ```
 Name:      Road Ready Safety
 Category:  Traffic school / Driving safety course provider
-Licence:   TDLR CP#1234
+Licence:   TDLR CP1234
 Website:   https://roadreadysafety.com/texas
 Phone:     [ ]
 Address:   [ ]
@@ -112,7 +112,7 @@ Price:     $28 all-in
 **Description (long, 300 chars):**
 
 > Road Ready Safety is a TDLR-approved Texas driving safety course provider
-> (CP#1234). The state-required six-hour course is $28 all-in — the certificate,
+> (CP1234). The state-required six-hour course is $28 all-in — the certificate,
 > court copy and insurance copy are included, with no add-on fees — and downloads
 > the moment you finish. Accepted by Texas courts for ticket dismissal.
 
@@ -168,7 +168,7 @@ which court has your ticket.
 > Full methodology and the court-level breakdown are at [link]. Happy to share
 > the underlying dataset.
 >
-> [name], Road Ready Safety (TDLR CP#1234)
+> [name], Road Ready Safety (TDLR CP1234)
 
 **Who to send it to.** Texas Tribune, Houston Chronicle and Dallas Morning News
 consumer desks, Austin American-Statesman, San Antonio Express-News, KXAN and

@@ -1,5 +1,7 @@
 ---
 import { termsUrl } from '../lib/portal';
+import { TEXAS_COURSE } from '../data/texas-course';
+import { adeLicensed, ADE_LICENSE, ADE_VERIFY_URL } from '../lib/ade';
 
 const contactUrl = import.meta.env.VITE_CONTACT_US_URL || 'https://app.roadreadysafety.com/contact';
 const year = new Date().getFullYear();
@@ -68,9 +70,15 @@ const year = new Date().getFullYear();
 
     <div class="border-t border-surface-dark pt-[32.8px] mt-12">
       <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
-        <p class="text-[14px] text-text-body leading-[20px]" style="font-family: 'DM Sans', sans-serif;">
-          © {year} Road Ready Safety. All rights reserved.
-        </p>
+        <div class="flex flex-col gap-1 text-center sm:text-left" style="font-family: 'DM Sans', sans-serif;">
+          <p class="text-[14px] text-text-body leading-[20px] m-0">
+            © {year} Road Ready Driver Instruction LLC d/b/a Road Ready Safety. All rights reserved.
+          </p>
+          <!-- Both TDLR licenses, each linked to TDLR's own record. Showing one number while selling both courses is barred (16 TAC §84.503(j)(4)). -->
+          <p class="text-[13px] text-text-body leading-[20px] m-0">
+            Texas driving safety course provider <a href={TEXAS_COURSE.verifyUrl} target="_blank" rel="noopener noreferrer" class="underline hover:text-white transition-colors">TDLR {TEXAS_COURSE.providerNumber}</a>{adeLicensed && <> · Driver education provider <a href={ADE_VERIFY_URL} target="_blank" rel="noopener noreferrer" class="underline hover:text-white transition-colors">TDLR {ADE_LICENSE}</a></>}
+          </p>
+        </div>
         <div class="flex items-center gap-4">
           <a href="https://facebook.com/roadreadysafety" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="text-text-body hover:text-white transition-colors">
             <img src="/assets/social/facebook.svg" alt="" class="w-5 h-5" width="20" height="20" />
@@ -78,6 +86,7 @@ const year = new Date().getFullYear();
           <a href="https://www.youtube.com/@RoadReadySafety" target="_blank" rel="noopener noreferrer" aria-label="YouTube" class="text-text-body hover:text-white transition-colors">
             <img src="/assets/social/youtube.svg" alt="" class="w-5 h-5" width="20" height="20" />
           </a>
+          <a href="https://www.trustpilot.com/review/roadreadysafety.com" target="_blank" rel="noopener noreferrer" class="text-[13px] text-text-body hover:text-white transition-colors" style="font-family: 'DM Sans', sans-serif;">Reviews on Trustpilot</a>
         </div>
       </div>
     </div>

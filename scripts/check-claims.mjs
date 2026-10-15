@@ -14,7 +14,7 @@ import { join } from 'path';
 const dist = join(process.cwd(), 'dist');
 const coursesDir = join(process.cwd(), 'src/data/courses');
 
-const GLOBAL_BANNED = ['CP#1234', 'TDLR'];
+const GLOBAL_BANNED = ['CP#1234', 'CP1234', 'TDLR'];
 
 function walk(dir, out = []) {
   for (const name of readdirSync(dir)) {

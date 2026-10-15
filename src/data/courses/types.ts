@@ -78,6 +78,8 @@ export interface CourseData {
     route: string;
     agency: string;
     agencyShort: string;
+    /** Optional qualifier for the approval pill, e.g. "NDDOT-approved for point reduction". Default `${agencyShort}-approved`. */
+    approvalShort?: string;
     agencyUrl: string;
     timezone: string;
   };

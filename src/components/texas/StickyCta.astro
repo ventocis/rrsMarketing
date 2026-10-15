@@ -17,11 +17,11 @@ const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defe
     document.querySelectorAll('[data-sticky-cta]:not([data-armed])').forEach(function (bar) {
       bar.setAttribute('data-armed', '1');
       var after = document.getElementById(bar.getAttribute('data-after')); var hideAt = document.getElementById(bar.getAttribute('data-hide-at'));
-      if (!after || !hideAt || !('IntersectionObserver' in window)) return;
+      if (!after || !('IntersectionObserver' in window)) return;
       var past = false, near = false;
       function render() { bar.style.transform = past && !near ? 'translateY(0)' : ''; }
       new IntersectionObserver(function (es) { es.forEach(function (en) { past = en.boundingClientRect.top < 0 && !en.isIntersecting ? true : (en.isIntersecting ? false : past); render(); }); }, { threshold: 0 }).observe(after);
-      new IntersectionObserver(function (es) { es.forEach(function (en) { near = en.isIntersecting; render(); }); }, { threshold: 0.1 }).observe(hideAt);
+      if (hideAt) new IntersectionObserver(function (es) { es.forEach(function (en) { near = en.isIntersecting; render(); }); }, { threshold: 0.1 }).observe(hideAt);
     });
   })();
 </script>

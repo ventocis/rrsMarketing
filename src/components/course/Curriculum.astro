@@ -14,7 +14,7 @@ const approved = Boolean(course.provider.approvalNumber);
 
 const tiles = [
   approved
-    ? { v: `${course.state.agencyShort}-approved`, l: `${course.state.name} accepts this certificate` }
+    ? { v: course.state.approvalShort ?? `${course.state.agencyShort}-approved`, l: `${course.state.name} accepts this certificate` }
     : { v: `${course.state.agencyShort} review`, l: 'Approval pending; built to the state standard' },
   ...course.curriculum.highlights,
 ].slice(0, 4);

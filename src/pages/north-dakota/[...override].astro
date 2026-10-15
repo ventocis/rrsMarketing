@@ -35,7 +35,7 @@ const bullets = [
 ];
 
 const cardChecks = [
-  { strong: `${course.course.hours}-hour NDDOT-approved course`, rest: ' to take 3 points off or keep a ticket’s points off' },
+  { strong: `${course.course.hours}-hour course, NDDOT-approved for point reduction`, rest: ', to take 3 points off or keep a ticket’s points off' },
   { rest: `${modules.length} short modules in plain English` },
   { rest: `${exam.questions}-question final quiz, unlimited retakes` },
   { rest: 'Certificate ready to download the moment you pass' },
@@ -141,7 +141,7 @@ const faqSchema = {
   </Fragment>
   <StateLanding
     course={course}
-    seal={{ src: '/assets/images/badges/north-dakota-approved.png', alt: 'North Dakota approved: NDDOT-approved defensive driving course', label: 'NDDOT-Approved Point Reduction Course' }}
+    seal={{ src: '/assets/images/badges/north-dakota-approved.png', alt: 'North Dakota approved: defensive driving course, NDDOT-approved for point reduction', label: 'NDDOT-Approved Point Reduction Course' }}
     h1="Take 3 Points Off with a North Dakota Defensive Driving Course Online"
     bullets={bullets}
     heroNote="This is North Dakota’s point reduction course. The insurance premium reduction course is a different course."

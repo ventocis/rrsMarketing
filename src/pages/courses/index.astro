@@ -5,10 +5,20 @@ import Footer from '../../components/Footer.astro';
 import CourseCard from '../../components/CourseCard.astro';
 import coursesData from '../../data/courses.json';
 import { stateNames } from '../../utils/states';
+import { enabledCourses } from '../../data/courses/index';
+
+// Our own per-state courses (src/data/courses/*.json) that have no row in courses.json get one here, so the catalog
+// lists every course we sell (North Dakota was missing; prod audit 2026-10-15). CourseCard maps a row whose slug is a
+// state course SKU to that course's landing page and checkout.
+const catalog: any[] = [...coursesData];
+for (const c of enabledCourses) {
+  if (catalog.some((r) => r.slug === c.course.sku)) continue;
+  catalog.push({ slug: c.course.sku, state: c.state.code, course_name: c.course.name, course_type: 'Defensive Driving', language: 'English', provider_type: 'Road Ready Safety', duration_hours: c.course.hours, price_usd: c.course.priceUsd });
+}
 
 // Group and sort courses by state at build time — zero JS on client
-const grouped: Record<string, typeof coursesData> = {};
-for (const course of coursesData) {
+const grouped: Record<string, any[]> = {};
+for (const course of catalog) {
   if (!grouped[course.state]) grouped[course.state] = [];
   grouped[course.state].push(course);
 }

@@ -5,6 +5,7 @@ import coursesData from '../../../data/courses.json';
 import { stateNames } from '../../../utils/states';
 import { getStateRequirements } from '../../../utils/stateRequirements';
 import { adeEnabled } from '../../../lib/ade';
+import { enabledCourses } from '../../../data/courses/index';
 
 export function getStaticPaths() {
   return (coursesData as any[]).map((course: any) => ({
@@ -23,7 +24,8 @@ const { course } = Astro.props;
 // still carries the old TicketSchool reseller rows for them, so this page printed "Price: $25, Provider: TicketSchool"
 // for the $28 Road Ready course (prod audit, 2026-10-15).
 const isTexasEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
-const redirectTo = isTexasEnabled && course.slug === 'tx-defensive' ? '/texas' : adeEnabled && course.slug === 'tx-adult-ed' ? '/adult-drivers-ed/texas' : null;
+const ownState = enabledCourses.find((c) => c.course.sku === course.slug);
+const redirectTo = isTexasEnabled && course.slug === 'tx-defensive' ? '/texas' : adeEnabled && course.slug === 'tx-adult-ed' ? '/adult-drivers-ed/texas' : ownState ? ownState.state.route : null;
 const stateFull = stateNames[course.state] || course.state;
 const stateReqs = getStateRequirements(course.state, course.course_type);
 

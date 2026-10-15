@@ -17,7 +17,7 @@ const price = TEXAS_PRICE_LABEL;
 
 const faqs = [
   { q: 'What is the best defensive driving course in Texas?', a: 'There isn’t one best course. Every TDLR-approved course teaches the same six hours and issues the same certificate. Pick one that’s approved, shows its full price before you pay, and gives you the certificate the moment you finish.' },
-  { q: 'What is the cheapest defensive driving course in Texas?', a: `By law, no approved course can cost less than ${floor} (Tex. Educ. Code §1001.352). The cheapest real option is one at that floor with the certificate included and nothing added at checkout. Road Ready Safety is ${price} total.` },
+  { q: 'What is the cheapest defensive driving course in Texas?', a: `By law, no approved course can cost less than ${floor} (Tex. Educ. Code §1001.352). The cheapest real option is one near that floor with the certificate included and nothing added at checkout.` },
   { q: 'Is there a faster course than six hours?', a: 'No. Six hours is the state rule and every approved online course enforces it with timers. A course promising two or three hours isn’t the Texas driving safety course. You can spread it over several evenings. <a href="/texas/what-the-course-looks-like" class="text-primary-deep font-medium hover:underline">Where the time goes</a>' },
   { q: 'Is Road Ready Safety a legitimate, court-accepted course?', a: `Yes. It’s TDLR-approved (provider ${TEXAS_COURSE.providerNumber}) and accepted by Texas courts statewide for an eligible ticket. You can confirm it on TDLR’s own license search.` },
 ];
@@ -62,8 +62,8 @@ const card = 'rounded-[14px] border border-border bg-white p-5 lg:p-[22px]';
 
 {isEnabled ? (
   <TexasLayout
-    title={`Best Texas Defensive Driving Course? ${price} Total, Check the Final Price`}
-    description="Every TDLR-approved course dismisses the same ticket. The difference is the checkout total. Here's how a “$25” course becomes $45, how to spot it, and why ours stays $25."
+    title="Best Texas Defensive Driving Course? Check the Final Price"
+    description="Every TDLR-approved course dismisses the same ticket. The difference is the checkout total. Here's how a “$25” course becomes $45, and how to spot it."
     keywords="best defensive driving course texas, cheapest defensive driving course texas, texas defensive driving course comparison, tdlr approved defensive driving course, how to choose defensive driving course texas"
     url="/texas/best-defensive-driving-course"
   >

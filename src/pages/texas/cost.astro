@@ -23,8 +23,8 @@ const defaultFee = 144;
 const defaultTotal = defaultFee + recordFee + coursePrice;
 
 const faqs = [
-  { q: 'How much does a defensive driving course cost in Texas?', a: `At least ${floor}, by law. What you pay depends on what a provider adds at checkout. Ours is ${price}, the legal minimum, with the instant certificate included and nothing added at checkout.` },
-  { q: 'What is the cheapest defensive driving course in Texas?', a: `One at the ${floor} legal minimum with the certificate included and nothing added at checkout. Ours is ${price} total. Compare final totals, not ads.` },
+  { q: 'How much does a defensive driving course cost in Texas?', a: `At least ${floor}, by law. What you pay depends on what a provider adds at checkout. Ours is ${price} with the instant certificate included.` },
+  { q: 'What is the cheapest defensive driving course in Texas?', a: `One at or near the ${floor} floor with the certificate included and nothing added at checkout. Compare final totals, not ads.` },
   { q: 'Why do some courses advertise $25 and charge more?', a: 'Certificate, “processing” and premium lines get added after the advertised price. Some checkouts also still show the old $25 + $3 split.' },
   { q: 'Does Road Ready Safety charge anything after the course?', a: `No. ${price} covers the course, the instant certificate with both copies, and unlimited retakes.` },
 ];
@@ -67,7 +67,7 @@ const pillOff = 'bg-white text-text border-[#CBD3DF] hover:border-primary-deep';
 {isEnabled ? (
   <TexasLayout
     title={`Texas Defensive Driving Cost: $${TEXAS_COURSE.legalMinimumPrice} Course, About $${defaultTotal} All In`}
-    description={`Texas law sets a $25 minimum for every approved course. Ours is ${price} total, certificate included. See every fee that gets added at checkout and the full cost to dismiss a ticket.`}
+    description="Texas law sets a $25 minimum for every approved course. See every fee that gets added at checkout and the full cost to dismiss a ticket."
     keywords="texas defensive driving course cost, how much is defensive driving in texas, defensive driving price texas, cheapest defensive driving course texas, texas driving safety course fee"
     url="/texas/cost"
   >

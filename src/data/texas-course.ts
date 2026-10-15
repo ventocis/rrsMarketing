@@ -7,8 +7,8 @@
 export const TEXAS_COURSE = {
   sku: 'tx-bdi',
   name: 'Texas 6-Hour Defensive Driving Course',
-  /** Whole-dollar price charged at checkout, all-in, certificate included. */
-  price: 25,
+  /** Whole-dollar price charged at checkout, all-in, certificate included. Production checkout read 2026-10-14: $28.00 (Jackson: $28 for now). */
+  price: 28,
   /** Statutory minimum course price (Tex. Educ. Code §1001.352). */
   legalMinimumPrice: 25,
   /** TDLR course provider number. */

@@ -52,7 +52,7 @@ const key = course.course.key;
 
 interface Review { name: string; initials: string; date: string; rating: number; verified: boolean; quote: string; title?: string }
 const LEAD = ['Ryan Johnson', 'Chelsie Gates', 'Bliss James', 'MW'];
-// Texas reviews can mention Texas-only things (a $25 price, "dismiss your ticket"). On another state's page,
+// Texas reviews can mention Texas-only things (a $28 price, "dismiss your ticket"). On another state's page,
 // drop any review that names a price or uses one of that state's banned phrases (course.claims.banned).
 const banned = ((course as any).claims?.banned ?? []).map((x: string) => x.toLowerCase());
 const fits = (r: Review) => !/\$\d/.test(r.quote) && !banned.some((b: string) => `${r.title ?? ''} ${r.quote}`.toLowerCase().includes(b));

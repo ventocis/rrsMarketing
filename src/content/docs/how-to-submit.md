@@ -54,7 +54,7 @@ The second page of your certificate is for your insurer. Texas insurers typicall
 
 ## Haven't taken the course yet?
 
-If a Texas court has approved you and you are looking for the course, ours is TDLR-approved (CP1234), $25 all-in, online, with the certificate included and downloadable the moment you finish. [Start the Texas course](/texas). If the court has not approved you yet, request it by your appearance date first; [here is how](/texas/request-defensive-driving), and [here is who qualifies](/texas/ticket-dismissal).
+If a Texas court has approved you and you are looking for the course, ours is TDLR-approved (CP1234), $28 all-in, online, with the certificate included and downloadable the moment you finish. [Start the Texas course](/texas). If the court has not approved you yet, request it by your appearance date first; [here is how](/texas/request-defensive-driving), and [here is who qualifies](/texas/ticket-dismissal).
 
 ---
 

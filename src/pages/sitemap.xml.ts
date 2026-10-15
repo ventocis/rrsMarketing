@@ -10,9 +10,11 @@ import { translatedPages } from '../lib/i18n';
 import { INSURERS } from '../data/texas-insurers';
 import { sitemapCourses, STATE_SUBROUTES } from '../data/courses/index';
 import { postsFor } from '../data/blog/index';
+import { isProductionSite, siteUrl } from '../lib/site';
 
-// Generate sitemap at build time from known static routes
-const siteUrl = (import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com').replace(/\/$/, '');
+// Generate sitemap at build time from known static routes. Only the production build lists them: a QA
+// sitemap of 2,107 qa. URLs is how Bing found and indexed the QA host (2026-10-14). Non-prod gets an
+// empty urlset (astro.config.mjs then removes the file from dist along with llms.txt).
 
 const staticRoutes = [
   '/',
@@ -221,7 +223,7 @@ const toEntry = (path: string) =>
 export const GET: APIRoute = () => {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${allRoutes.map(toEntry).join('\n')}
+${isProductionSite ? allRoutes.map(toEntry).join('\n') : ''}
 </urlset>`;
 
   return new Response(xml, {

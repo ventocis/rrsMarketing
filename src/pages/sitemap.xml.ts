@@ -129,7 +129,9 @@ const courseRoutes = (coursesData as Array<{ slug: string }>)
   .filter(c => !isRedirectShell(c.slug))
   .map(c => `/courses/${c.slug}`);
 
-const courseRequirementsRoutes = (coursesData as Array<{ slug: string }>).map(c => `/courses/${c.slug}/requirements`);
+const courseRequirementsRoutes = (coursesData as Array<{ slug: string }>)
+  .filter(c => !isRedirectShell(c.slug)) // the requirements page redirects for the same two courses
+  .map(c => `/courses/${c.slug}/requirements`);
 
 const blogRoutes = ((blogData as any).posts ?? []).map((p: { slug: string }) => `/blog/${p.slug}`);
 

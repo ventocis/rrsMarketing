@@ -1,5 +1,7 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import { TEXAS_PRICE_LABEL } from '../../data/texas-course';
+const price = TEXAS_PRICE_LABEL;
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const contactUrl = import.meta.env.VITE_CONTACT_US_URL || 'https://roadreadysafety.com/support';
 
@@ -10,7 +12,7 @@ const items = [
     steps: [
       'Click the "Start Course" or "Enroll Now" button on any page',
       'Enter your ticket information and personal details',
-      'Complete the secure payment ($28 all-in)',
+      `Complete the secure payment (${price} all-in)`,
       "You'll receive an email confirmation with your login credentials",
       'Log in to your account and begin the course immediately',
     ],

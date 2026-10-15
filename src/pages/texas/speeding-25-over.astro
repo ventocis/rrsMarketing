@@ -2,6 +2,8 @@
 import TexasLayout from '../../layouts/TexasLayout.astro';
 import VideoEmbed from '../../components/VideoEmbed.astro';
 import NextStepBlock from '../../components/texas/NextStepBlock.astro';
+import { TEXAS_PRICE_LABEL } from '../../data/texas-course';
+const price = TEXAS_PRICE_LABEL;
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 
@@ -108,7 +110,7 @@ const faqSchema = JSON.stringify({
           <p>Three caveats, verified against the statute:</p>
           <p><strong class="text-text">It's the judge's call.</strong> The statute says the judge <em>may</em> defer — there's no entitlement, and some courts decline deferred for very high speeds as a matter of local policy. Ask anyway; many grant it for a first offense.</p>
           <p><strong class="text-text">Two groups are excluded by statute:</strong> offenses in a construction or maintenance work zone (Transp. Code §542.404 offenses), and anyone who holds — or held at the time of the offense — a commercial driver's license.</p>
-          <p><strong class="text-text">If you're under 25, the course is mandatory anyway.</strong> For drivers younger than 25, the judge is required to order a driving safety course as a condition of any deferred disposition for a moving violation (art. 45A.304) — and if you hold a learner permit or provisional license, a DPS exam too. So a 22-year-old cited at 26 over often ends up taking the same $28 course after all, just under the deferred route instead of the dismissal route.</p>
+          <p><strong class="text-text">If you're under 25, the course is mandatory anyway.</strong> For drivers younger than 25, the judge is required to order a driving safety course as a condition of any deferred disposition for a moving violation (art. 45A.304) — and if you hold a learner permit or provisional license, a DPS exam too. So a 22-year-old cited at 26 over often ends up taking the same {price} course after all, just under the deferred route instead of the dismissal route.</p>
           <p><strong class="text-text">How to ask:</strong> contact the court listed on your citation on or before your appearance date and request deferred disposition. Many courts have a form for it; some let you request online. Court-by-court instructions are in our <a href="/texas/courts" class="text-primary-deep font-medium hover:underline">Texas courts directory</a>.</p>
         </div>
 
@@ -144,7 +146,7 @@ const faqSchema = JSON.stringify({
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">If your court orders a course — or your next ticket qualifies</h2>
         <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
-          <p>Two ways we can still help. If your judge grants deferred disposition with a driving safety course as a condition — automatic if you're under 25 — our TDLR-approved course satisfies it: <strong class="text-text">$28 all-in, online, free instant certificate</strong>. And if your citation is actually under the 25-over line, you may still qualify for straight dismissal — check in 30 seconds.</p>
+          <p>Two ways we can still help. If your judge grants deferred disposition with a driving safety course as a condition — automatic if you're under 25 — our TDLR-approved course satisfies it: <strong class="text-text">{price} all-in, online, free instant certificate</strong>. And if your citation is actually under the 25-over line, you may still qualify for straight dismissal — check in 30 seconds.</p>
         </div>
 
         <div class="flex flex-col sm:flex-row gap-4 mb-10">
@@ -153,7 +155,7 @@ const faqSchema = JSON.stringify({
             class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
             style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
           >
-            Start the $28 Course →
+            Start the {price} Course →
           </a>
           <a
             href="/texas/eligibility-tracker"

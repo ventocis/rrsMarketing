@@ -12,11 +12,13 @@
 import TexasLayout from '../../layouts/TexasLayout.astro';
 import CourseBand from './CourseBand.astro';
 import { TEXAS_COURSE, TEXAS_PRICE_LABEL } from '../../data/texas-course';
+import { fillPricesDeep } from '../../data/prices';
 
 interface Court { slug: string; name: string; note: string; deadlineDays: number | null; fee: string | null; feeLabel?: string | null; deadlineLabel?: string | null }
 interface Faq { q: string; a: string }
 interface Data { slug: string; city: string; county: string; dateModified?: string | null; title?: string; description?: string; faqs: Faq[]; courts: Court[] }
-const { data } = Astro.props as { data: Data };
+// The JSON carries {{TX_PRICE}} tokens (src/data/prices.ts); fill them before anything reads the copy.
+const data = fillPricesDeep((Astro.props as { data: Data }).data);
 
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';

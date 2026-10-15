@@ -1,7 +1,7 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
 import NextStepBlock from '../../components/texas/NextStepBlock.astro';
-import { TEXAS_COURSE, TEXAS_PRICE_LABEL } from '../../data/texas-course';
+import { TEXAS_COURSE, TEXAS_PRICE_LABEL, TEXAS_AUDIO_PRICE_LABEL } from '../../data/texas-course';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
@@ -9,9 +9,9 @@ const price = TEXAS_PRICE_LABEL;
 
 // Audio version of the Texas course (SEO playbook, cluster A; facts from Jackson 2026-10-07):
 // live today, TDLR signed off on the audio version, optional add-on at checkout for AUDIO_PRICE.
-// The $28 course is complete without it. Lessons are read aloud; quiz questions are text.
+// The base course is complete without it. Lessons are read aloud; quiz questions are text.
 // Competitors sell audio as a $10–$15 tier and advertise it; we say what it is and what it costs.
-const AUDIO_PRICE = '$4.99';
+const AUDIO_PRICE = TEXAS_AUDIO_PRICE_LABEL;
 
 const faqs = [
   { q: 'Does the audio version make the course shorter?', a: 'No. Texas requires six hours with at least five hours of instruction, and the course keeps the same section timers whether you read or listen. Audio changes how you take it in, not how long it takes.' },

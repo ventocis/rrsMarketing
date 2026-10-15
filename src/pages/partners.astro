@@ -3,9 +3,10 @@ import DocLayout from '../layouts/DocLayout.astro';
 import { marked } from 'marked';
 import { readFileSync } from 'fs';
 import { join } from 'path';
+import { fillPrices } from '../data/prices';
 
 const md = readFileSync(join(process.cwd(), 'src/content/docs/partners.md'), 'utf-8');
-const html = marked(md);
+const html = marked(fillPrices(md)); // {{TX_PRICE}} etc. come from src/data/prices.ts
 ---
 
 <DocLayout

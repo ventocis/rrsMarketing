@@ -3,7 +3,7 @@ import TexasLayout from '../../layouts/TexasLayout.astro';
 import CourseBand from '../../components/texas/CourseBand.astro';
 import VideoEmbed from '../../components/VideoEmbed.astro';
 import StickyCta from '../../components/texas/StickyCta.astro';
-import { TEXAS_COURSE, TEXAS_PRICE_LABEL } from '../../data/texas-course';
+import { TEXAS_COURSE, TEXAS_PRICE_LABEL, TEXAS_ALL_IN_LABEL } from '../../data/texas-course';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
@@ -207,7 +207,7 @@ const pillOff = 'bg-white text-text border-border hover:border-primary-deep';
       <!-- ===== Cost ===== -->
       <section class={`${wrap} pt-12 pb-4`}>
         <h2 class={h2c} style={outfit}>What does dismissing a speeding ticket cost?</h2>
-        <p class="text-base text-text-body leading-7 m-0 mb-6 max-w-[760px]">About $184 at the most common court fee. The court's fee is the big part, and you pay it whichever course you choose.</p>
+        <p class="text-base text-text-body leading-7 m-0 mb-6 max-w-[760px]">About {TEXAS_ALL_IN_LABEL} at the most common court fee. The court's fee is the big part, and you pay it whichever course you choose.</p>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div class="rounded-2xl border border-border bg-white p-5 flex flex-col gap-1">
             <span class="text-sm text-text-subtle">Court fee</span>

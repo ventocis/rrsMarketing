@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { TEXAS_PRICE_LABEL } from '../data/texas-course';
 import LeadCaptureModal from './LeadCaptureModal';
 
 
@@ -487,7 +488,7 @@ export default function EligibilityChecker({ courts }: Props) {
 
                   {/* Price */}
                   <div className="flex items-baseline gap-1 mb-0.5">
-                    <span className="text-[28px] font-bold text-text leading-none">$28</span>
+                    <span className="text-[28px] font-bold text-text leading-none">{TEXAS_PRICE_LABEL}</span>
                     <span className="text-xs text-text-body">.00</span>
                   </div>
                   <p className="text-xs text-text-body mb-3" style={{ fontFamily: "'DM Sans', sans-serif" }}>

@@ -1,6 +1,8 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
 import YouTubeCard from '../../components/YouTubeCard.astro';
+import { TEXAS_PRICE_LABEL } from '../../data/texas-course';
+const price = TEXAS_PRICE_LABEL;
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 
@@ -115,7 +117,7 @@ const faqSchema = JSON.stringify({
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">The affidavit is the court's paperwork — the course is ours</h2>
         <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
-          <p>Once your request clears (stamped or witnessed), the rest is the easy part: <strong class="text-text">$28, online, certificate the instant you finish</strong> — no notary, no mail, no waiting.</p>
+          <p>Once your request clears (stamped or witnessed), the rest is the easy part: <strong class="text-text">{price}, online, certificate the instant you finish</strong> — no notary, no mail, no waiting.</p>
         </div>
 
         <div class="flex flex-col sm:flex-row gap-4 mb-10">
@@ -124,7 +126,7 @@ const faqSchema = JSON.stringify({
             class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
             style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
           >
-            Start the $28 Course →
+            Start the {price} Course →
           </a>
           <a
             href="/texas/request-defensive-driving"

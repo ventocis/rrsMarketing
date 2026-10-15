@@ -35,8 +35,8 @@
   "nextStep": {
     "heading": "Bước tiếp theo của bạn",
     "approvedTitle": "Tòa đã cho phép bạn học lái xe phòng thủ?",
-    "approvedText": "Vậy chỉ còn khóa học 6 giờ. Khóa của chúng tôi $28 trọn gói, được TDLR phê duyệt (CP1234), và chứng chỉ tải về ngay khi học xong. Khóa học bằng tiếng Anh.",
-    "approvedBtn": "Bắt đầu khóa học $28 →",
+    "approvedText": "Vậy chỉ còn khóa học 6 giờ. Khóa của chúng tôi {{TX_PRICE}} trọn gói, được TDLR phê duyệt (CP1234), và chứng chỉ tải về ngay khi học xong. Khóa học bằng tiếng Anh.",
+    "approvedBtn": "Bắt đầu khóa học {{TX_PRICE}} →",
     "notYetTitle": "Chưa xin tòa?",
     "step1": "Đừng trả tiền phạt qua mạng. Trả tiền là nhận tội và mất lựa chọn hủy phạt.",
     "step2": "Xin tòa cho học khóa an toàn lái xe trước hoặc đúng ngày trình diện in trên giấy phạt.",
@@ -52,8 +52,8 @@
   },
   "cta": {
     "h2": "Tìm được hồ sơ rồi? Chốt lựa chọn ngay hôm nay",
-    "text": "Khi thư ký xác nhận ngày trả lời, hãy nộp đơn ngay trong ngày. Sau đó khóa học là phần dễ: <strong>$28, trực tuyến, chứng chỉ ngay khi học xong</strong>. <strong>Khóa học được giảng dạy bằng tiếng Anh.</strong>",
-    "primary": "Bắt đầu khóa học $28 (tiếng Anh) →",
+    "text": "Khi thư ký xác nhận ngày trả lời, hãy nộp đơn ngay trong ngày. Sau đó khóa học là phần dễ: <strong>{{TX_PRICE}}, trực tuyến, chứng chỉ ngay khi học xong</strong>. <strong>Khóa học được giảng dạy bằng tiếng Anh.</strong>",
+    "primary": "Bắt đầu khóa học {{TX_PRICE}} (tiếng Anh) →",
     "secondary": "Tìm thông tin liên hệ của tòa",
     "secondaryHref": "/texas/courts"
   },

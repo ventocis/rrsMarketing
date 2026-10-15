@@ -4,11 +4,12 @@ import VideoEmbed from '../../components/VideoEmbed.astro';
 import { marked } from 'marked';
 import { readFileSync } from 'fs';
 import { join } from 'path';
+import { fillPrices } from '../../data/prices';
 import coursesData from '../../data/courses.json';
 import { stateNames } from '../../utils/states';
 
 const md = readFileSync(join(process.cwd(), 'src/content/docs/how-to-submit.md'), 'utf-8');
-const html = marked(md);
+const html = marked(fillPrices(md)); // {{TX_PRICE}} etc. come from src/data/prices.ts
 
 // Group courses by state for the state requirements section (built at static time)
 const grouped: Record<string, typeof coursesData> = {};

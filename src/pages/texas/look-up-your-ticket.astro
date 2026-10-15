@@ -4,6 +4,8 @@ import { alternatesFor, translationsOf, langLabel } from '../../lib/i18n';
 import VideoEmbed from '../../components/VideoEmbed.astro';
 import NextStepBlock from '../../components/texas/NextStepBlock.astro';
 import courtsData from '../../data/texas-courts.json';
+import { TEXAS_PRICE_LABEL } from '../../data/texas-course';
+const price = TEXAS_PRICE_LABEL;
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 
@@ -71,7 +73,7 @@ const faqs = [
   },
   {
     "q": "Does Road Ready Safety look up or take payment for my ticket?",
-    "a": "No. We're a TDLR-licensed course provider, not a court or the DMV. Use the official links above to look up or pay your citation. Our role is the $28 course that can get an eligible ticket dismissed."
+    "a": `No. We're a TDLR-licensed course provider, not a court or the DMV. Use the official links above to look up or pay your citation. Our role is the ${price} course that can get an eligible ticket dismissed.`
   }
 ];
 
@@ -131,7 +133,7 @@ const faqSchema = JSON.stringify({
         </div>
         <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
           <p>Here's the first thing nobody tells you: <strong>there is no single statewide place to look up a Texas traffic ticket.</strong> The state's only central tool covers Highway Patrol (trooper) citations from the last 24 months and just gives you the court's contact info — city police and county tickets aren't in it. For everything else, you go to the specific court that issued it.</p>
-          <p>And before you reach for your card: <strong>paying a Texas ticket is a guilty plea and a conviction</strong> that stays on your record and can raise your insurance. If you qualify, taking a defensive driving course gets the same ticket <strong>dismissed</strong> instead — for $28. Here's how to find your ticket, and how to decide what to do with it.</p>
+          <p>And before you reach for your card: <strong>paying a Texas ticket is a guilty plea and a conviction</strong> that stays on your record and can raise your insurance. If you qualify, taking a defensive driving course gets the same ticket <strong>dismissed</strong> instead — for {price}. Here's how to find your ticket, and how to decide what to do with it.</p>
         </div>
 
         <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
@@ -232,7 +234,7 @@ const faqSchema = JSON.stringify({
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Don't pay it into a conviction — dismiss it instead</h2>
         <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
-          <p>If your ticket qualifies, the course keeps it off your record and out of your insurance rate. It's $28, fully online, with the certificate the moment you finish.</p>
+          <p>If your ticket qualifies, the course keeps it off your record and out of your insurance rate. It's {price}, fully online, with the certificate the moment you finish.</p>
         </div>
 
         <div class="flex flex-col sm:flex-row gap-4 mb-10">
@@ -241,7 +243,7 @@ const faqSchema = JSON.stringify({
             class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
             style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
           >
-            Start the $28 Course →
+            Start the {price} Course →
           </a>
           <a
             href="/texas/ways-to-dismiss-ticket"

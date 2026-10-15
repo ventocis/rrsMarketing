@@ -2,6 +2,8 @@
 import TexasLayout from '../../layouts/TexasLayout.astro';
 import StickyCta from '../../components/texas/StickyCta.astro';
 import YouTubeCard from '../../components/YouTubeCard.astro';
+import { TEXAS_PRICE_LABEL } from '../../data/texas-course';
+const price = TEXAS_PRICE_LABEL;
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 
@@ -14,7 +16,7 @@ const faqs = [
   },
   {
     "q": "Do I pay more court fees for multiple charges?",
-    "a": "Per charge, yes: court costs apply to each charge, and the statute allows up to a $10 administrative fee per dismissed offense. But you take only one $28 course and order only one $12 driving record — far cheaper than the old reality of dismissing one charge and eating the other."
+    "a": `Per charge, yes: court costs apply to each charge, and the statute allows up to a $10 administrative fee per dismissed offense. But you take only one ${price} course and order only one $12 driving record — far cheaper than the old reality of dismissing one charge and eating the other.`
   },
   {
     "q": "I got a speeding ticket and an expired registration in one stop — does one course cover both?",
@@ -90,7 +92,7 @@ const faqSchema = JSON.stringify({
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">How the multi-charge dismissal works</h2>
         <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
           <p>The mechanics: when you <a href="/texas/request-defensive-driving" class="text-primary-deep font-medium hover:underline">request the course</a> by your answer date, ask the court to apply the request to <strong class="text-text">each eligible charge from the stop</strong>. Each charge must independently qualify — the same eligibility rules apply per charge, not per stop. You complete one 6-hour course, submit one certificate and one Type 3A record, and every qualifying charge is dismissed together.</p>
-          <p>The cost structure: you pay the court's costs per charge as usual, and the statute allows a separate administrative fee of up to <strong class="text-text">$10 per dismissed offense</strong> (art. 45A.358). So two charges might run roughly double the court costs — but only <em>one</em> $28 course and one $12 driving record. Compared to the old world (one dismissal plus paying or deferring the second charge as a conviction risk), the savings are real, and the record protection doubles.</p>
+          <p>The cost structure: you pay the court's costs per charge as usual, and the statute allows a separate administrative fee of up to <strong class="text-text">$10 per dismissed offense</strong> (art. 45A.358). So two charges might run roughly double the court costs — but only <em>one</em> {price} course and one $12 driving record. Compared to the old world (one dismissal plus paying or deferring the second charge as a conviction risk), the savings are real, and the record protection doubles.</p>
           <p>Timing note: the rule applies based on <strong class="text-text">when you request</strong>, not when you were cited — any request made on or after September 1, 2025 gets the new treatment, even on an older ticket. Full background in our <a href="/texas/ticket-law-changes-2025" class="text-primary-deep font-medium hover:underline">2025 law changes guide</a>.</p>
         </div>
 
@@ -120,7 +122,7 @@ const faqSchema = JSON.stringify({
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">One course, one evening, every eligible charge</h2>
         <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
-          <p>The multi-charge rule makes the course the best value in Texas traffic law: <strong class="text-text">$28 all-in, one 6-hour evening, every qualifying citation from the stop dismissed</strong>.</p>
+          <p>The multi-charge rule makes the course the best value in Texas traffic law: <strong class="text-text">{price} all-in, one 6-hour evening, every qualifying citation from the stop dismissed</strong>.</p>
         </div>
 
         <div class="flex flex-col sm:flex-row gap-4 mb-10">
@@ -129,7 +131,7 @@ const faqSchema = JSON.stringify({
             class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
             style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
           >
-            Start the $28 Course →
+            Start the {price} Course →
           </a>
           <a
             href="/texas/eligibility-tracker"

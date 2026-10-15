@@ -14,12 +14,12 @@ const coursePrice = TEXAS_COURSE.price;
 // Rebuilt 2026-10-06 from Jackson's design canvas (Dallas Page Redesign2.html, artboard 04 "Cost" + its
 // search preview), implemented as the spec: his copy, section order, the fee calculator, CTAs. Adaptations,
 // all flagged in the PR: the calculator's fee range uses our verified court dataset (court-stats.ts) instead
-// of the design's placeholder "$100–$184"; the refund checkmark matches our policy (full refund within the
+// of the design's placeholder range; the refund checkmark matches our policy (full refund within the
 // three-day cancellation window); the design has no video so the previous YouTube card is not carried over.
 
 const feeOptions = Array.from(new Set([S.fee.min, 144, 169, S.fee.max])).sort((a, b) => a - b);
-const recordFee = 12;
-const defaultFee = 144;
+const recordFee = TEXAS_COURSE.type3aRecordFee;
+const defaultFee = TEXAS_COURSE.typicalCourtFee;
 const defaultTotal = defaultFee + recordFee + coursePrice;
 
 const faqs = [
@@ -32,8 +32,8 @@ const faqs = [
 const articleSchema = JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'Article',
-  headline: 'A Texas defensive driving course costs $25. Here’s what you’ll actually pay.',
-  description: 'Texas law sets a $25 minimum for every approved course. Every fee that gets added at checkout, and the full cost to dismiss a ticket at your court’s fee.',
+  headline: `A Texas defensive driving course costs ${floor}. Here’s what you’ll actually pay.`,
+  description: `Texas law sets a ${floor} minimum for every approved course. Every fee that gets added at checkout, and the full cost to dismiss a ticket at your court’s fee.`,
   datePublished: '2026-06-15',
   dateModified: '2026-10-06',
   author: { '@type': 'Organization', name: 'Road Ready Safety' },

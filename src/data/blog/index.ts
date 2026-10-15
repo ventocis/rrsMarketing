@@ -7,6 +7,7 @@ import oh from './oh.json';
 import nd from './nd.json';
 import id from './id.json';
 import mo from './mo.json';
+import { fillPricesDeep } from '../prices';
 
 export interface StatePost {
   slug: string;
@@ -33,11 +34,13 @@ export interface StatePost {
   reviewedBy?: string;
 }
 
+// Course prices appear in the JSON as {{ND_PRICE}}, {{MO_PRICE}}, {{ID_PRICE}}, {{OH_PRICE}} (src/data/prices.ts), filled once here.
+const posts = (m: unknown) => fillPricesDeep((m as { posts: StatePost[] }).posts);
 const byState: Record<string, StatePost[]> = {
-  OH: (oh as { posts: StatePost[] }).posts,
-  ND: (nd as { posts: StatePost[] }).posts,
-  ID: (id as { posts: StatePost[] }).posts,
-  MO: (mo as { posts: StatePost[] }).posts,
+  OH: posts(oh),
+  ND: posts(nd),
+  ID: posts(id),
+  MO: posts(mo),
 };
 
 export function postsFor(stateCode: string): StatePost[] {

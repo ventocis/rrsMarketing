@@ -1,8 +1,8 @@
 import type { APIRoute } from 'astro';
+import { isProductionSite, siteUrl } from '../lib/site';
 
-// Allow indexing only when analytics (prod) are enabled — all other envs get noindex
-const isProd = import.meta.env.VITE_ENABLE_ANALYTICS === 'true';
-const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+// Only the production build advertises itself to crawlers (src/lib/site.ts). QA and local builds get
+// the non-prod file below.
 
 const prodRobots = `# Road Ready Safety — robots.txt
 
@@ -51,12 +51,18 @@ Allow: /
 Sitemap: ${siteUrl}/sitemap.xml
 `;
 
-const nonProdRobots = `User-agent: *
-Disallow: /
+// Non-production hosts (qa.roadreadysafety.com): every page carries <meta name="robots" content="noindex, nofollow">
+// and the sitemap is empty, so a crawler that fetches a page sees the noindex and drops it. Crawling stays
+// allowed on purpose: a Disallow would stop Bing and Google from ever seeing the noindex, so the QA URLs they
+// already hold (2026-10-14) would stay indexed. Once the qa. host is out of the index and behind auth, this
+// can become Disallow: /.
+const nonProdRobots = `# Non-production build. Every page is noindex, nofollow and there is no sitemap.
+User-agent: *
+Allow: /
 `;
 
 export const GET: APIRoute = () => {
-  return new Response(isProd ? prodRobots : nonProdRobots, {
+  return new Response(isProductionSite ? prodRobots : nonProdRobots, {
     headers: { 'Content-Type': 'text/plain; charset=utf-8' },
   });
 };

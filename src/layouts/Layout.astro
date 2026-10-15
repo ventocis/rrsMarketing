@@ -3,6 +3,7 @@ import '../styles/global.css';
 import { TEXAS_COURSE } from '../data/texas-course';
 import { adeLicensed, ADE_LICENSE, ADE_VERIFY_URL } from '../lib/ade';
 import { version } from '../../package.json';
+import { isProductionSite, PROD_SITE_URL } from '../lib/site';
 
 interface Props {
   title: string;
@@ -29,13 +30,16 @@ const {
   alternates = [],
 } = Astro.props;
 
-const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
-const canonicalUrl = `${siteUrl}${url}`;
+const siteUrl = import.meta.env.VITE_SITE_URL || PROD_SITE_URL;
+// The canonical (with og:url and hreflang) always names production, whatever host this build is served
+// from: a QA copy that gets crawled then consolidates to the real page instead of competing with it.
+const canonicalUrl = `${PROD_SITE_URL}${url}`;
 const fullImageUrl = image.startsWith('http') ? image : `${siteUrl}${image}`;
 const enableAnalytics = import.meta.env.VITE_ENABLE_ANALYTICS === 'true';
 const gtmId = import.meta.env.VITE_GTM_ID;
-// Disable indexing in non-prod environments
-const isNoindex = noindex || import.meta.env.VITE_ENABLE_ANALYTICS !== 'true';
+// Only the production build may be indexed (src/lib/site.ts). QA also enables analytics, so the
+// old analytics-only test let QA pages go out as index,follow.
+const isNoindex = noindex || !isProductionSite;
 const pageTitle = title.includes('Road Ready') ? title : `${title} | Road Ready Safety`;
 // Organization JSON-LD. hasCredential points at TDLR's own record of each license so an assistant or crawler can
 // verify CP1234 independently (ChatGPT, 2026-10-08: "I can't independently confirm its current license status").
@@ -88,7 +92,7 @@ const orgSchema = {
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
-    {alternates.map(a => <link rel="alternate" hreflang={a.lang} href={a.href.startsWith("http") ? a.href : `${siteUrl}${a.href}`} />)}
+    {alternates.map(a => <link rel="alternate" hreflang={a.lang} href={a.href.startsWith("http") ? a.href : `${PROD_SITE_URL}${a.href}`} />)}
     <meta name="robots" content={isNoindex ? 'noindex, nofollow' : 'index, follow'} />
     <meta name="google-site-verification" content="VRxAjfZgmw2EG3f_aiEU6rupWURg-2h5kaOU3fr7uKo" />
 

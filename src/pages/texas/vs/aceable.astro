@@ -1,5 +1,8 @@
 ---
 import TexasLayout from '../../../layouts/TexasLayout.astro';
+import { TEXAS_PRICE_LABEL, TEXAS_PRICE_CENTS_LABEL } from '../../../data/texas-course';
+const price = TEXAS_PRICE_LABEL;
+const priceCents = TEXAS_PRICE_CENTS_LABEL;
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 
@@ -48,8 +51,8 @@ const faqSchema = JSON.stringify({
 {isEnabled ? (
   <TexasLayout
     noindex={true}
-    title="Aceable vs Road Ready Safety: $49 vs $28 in Texas (2026)"
-    description="Aceable is well-rated and has an app. It also costs $49–$59 all-in vs $28 at Road Ready Safety. Here's what that difference actually buys you."
+    title={`Aceable vs Road Ready Safety: $49 vs ${price} in Texas (2026)`}
+    description={`Aceable is well-rated and has an app. It also costs $49–$59 all-in vs ${price} at Road Ready Safety. Here's what that difference actually buys you.`}
     url="/texas/vs/aceable"
   >
     <script type="application/ld+json" set:html={articleSchema} />
@@ -69,12 +72,12 @@ const faqSchema = JSON.stringify({
         </h1>
 
         <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p>Road Ready Safety costs $28 all-in, including a free instant certificate download. Aceable's current Texas defensive driving course costs $49 all-in for the standard course or $59 for the audio version — both include a $15 certificate delivery fee. Both are TDLR-approved. The difference is $21 to $31 depending on which Aceable course you choose.</p>
+          <p>Road Ready Safety costs {price} all-in, including a free instant certificate download. Aceable's current Texas defensive driving course costs $49 all-in for the standard course or $59 for the audio version — both include a $15 certificate delivery fee. Both are TDLR-approved. The difference is $21 to $31 depending on which Aceable course you choose.</p>
         </div>
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">If you just got a ticket, here's what you need to know</h2>
         <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p>Aceable is one of the most recognized names in Texas defensive driving. They've earned it — the course works on your phone, and a lot of people genuinely like it. If you're comparing them to Road Ready Safety, you're not comparing good vs bad. You're comparing $49 vs $28.</p>
+          <p>Aceable is one of the most recognized names in Texas defensive driving. They've earned it — the course works on your phone, and a lot of people genuinely like it. If you're comparing them to Road Ready Safety, you're not comparing good vs bad. You're comparing $49 vs {price}.</p>
           <p>The question is what that $21 buys you — and whether it matters for what you're actually trying to do, which is dismiss a ticket and move on.</p>
         </div>
 
@@ -94,7 +97,7 @@ const faqSchema = JSON.stringify({
               {[
                 { label: 'Base price', rrs: '$25.00', them1: '$34.00', them2: '$44.00' },
                 { label: 'Certificate fee', rrs: '$0.00', them1: '$15.00', them2: '$15.00' },
-                { label: 'Total all-in (current promo)', rrs: '$28.00', them1: '$34.00', them2: '$44.00' },
+                { label: 'Total all-in (current promo)', rrs: `${priceCents}`, them1: '$34.00', them2: '$44.00' },
                 { label: 'Instant certificate', rrs: 'Free', them1: 'Included at $15', them2: 'Included at $15' },
                 { label: 'Mobile app', rrs: 'No', them1: 'Yes', them2: 'Yes' },
                 { label: 'TDLR approved', rrs: 'Yes (CP1234)', them1: 'Yes (CP262)', them2: 'Yes (CP262)' },
@@ -153,13 +156,13 @@ const faqSchema = JSON.stringify({
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Where Road Ready Safety wins</h2>
         <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p><strong class="text-text">$21 less.</strong> The standard Aceable course with certificate delivery is $49. Road Ready Safety is $28 with the same instant certificate included. That's a real difference for a course you're taking because you got a ticket — not exactly a discretionary purchase.</p>
+          <p><strong class="text-text">$21 less.</strong> The standard Aceable course with certificate delivery is $49. Road Ready Safety is {price} with the same instant certificate included. That's a real difference for a course you're taking because you got a ticket — not exactly a discretionary purchase.</p>
           <p><strong class="text-text">No certificate fee.</strong> Aceable charges $15 for instant certificate delivery as a separate line item. At Road Ready Safety the certificate is included. Same result — you finish, you download, you submit to your court — but you're not paying extra for it.</p>
         </div>
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Who should choose which</h2>
         <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p><strong class="text-text">Choose Road Ready Safety</strong> if you want to pay $28, get it done, and have your certificate the same day. You're not paying for an app — you're dismissing a ticket.</p>
+          <p><strong class="text-text">Choose Road Ready Safety</strong> if you want to pay {price}, get it done, and have your certificate the same day. You're not paying for an app — you're dismissing a ticket.</p>
           <p><strong class="text-text">Choose Aceable</strong> if the mobile app experience matters to you and you're comfortable paying $49–$59 for a polished, well-reviewed course. It's a legitimate product at a higher price point — just make sure you're paying for features you'll actually use across a 6-hour course.</p>
         </div>
 
@@ -174,7 +177,7 @@ const faqSchema = JSON.stringify({
         </div>
 
         <div class="space-y-6 text-text-body text-base leading-7 pt-4 border-t border-border" style="font-family: 'DM Sans', sans-serif;">
-          <p class="text-lg font-semibold text-text" style="font-family: 'Outfit', sans-serif;">$28. Free instant certificate. No app required.</p>
+          <p class="text-lg font-semibold text-text" style="font-family: 'Outfit', sans-serif;">{price}. Free instant certificate. No app required.</p>
           <div>
             <a
               href={enrollUrl}

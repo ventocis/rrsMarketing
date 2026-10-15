@@ -25,13 +25,13 @@ export const TEXAS_COURSE = {
   hours: 6,
   /**
    * Optional audio narration add-on, sold at checkout. Production sku and price read off
-   * app.roadreadysafety.com/public/checkout on 2026-10-07 ("Audio - Read to Me", $4.99).
+   * app.roadreadysafety.com/public/checkout on 2026-10-07 ("Audio - Read to Me").
    * QA uses different test skus, so the link reads VITE_TEXAS_AUDIO_SKUS first.
    */
   audioSku: 'tx-bdi-audio',
   audioPrice: 4.99,
   /**
-   * Autoplay add-on, sold alongside audio (QA checkout "Autoplay", $4.99, sku autoplay1 on 2026-10-07).
+   * Autoplay add-on, sold alongside audio (QA checkout "Autoplay", same price as audio, sku autoplay1 on 2026-10-07).
    * Jackson set the /texas audio card to the course + audio + autoplay total on 2026-10-07.
    * Production checkout had no autoplay product yet that day; add its sku to the link
    * (VITE_TEXAS_AUDIO_SKUS / audioSku default) once it exists, so checkout matches this price.
@@ -39,17 +39,54 @@ export const TEXAS_COURSE = {
   autoplayPrice: 4.99,
   /**
    * Is the autoplay add-on sold on production yet? false = audio-only offer: the /texas "+ Audio" card shows
-   * course + audio ($29.99), hides the autoplay bullets, and the checkout link adds only the audio sku.
+   * course + audio, hides the autoplay bullets, and the checkout link adds only the audio sku.
    * Jackson, 2026-10-08: audio only until autoplay merges into prod (planned Monday). Flip to true then, and
    * set autoplaySku to the production autoplay sku; the price, copy and checkout link all follow this flag.
    */
   autoplayLive: false,
   /** Production autoplay sku (unknown until it ships). QA overrides with VITE_TEXAS_AUTOPLAY_SKU. */
   autoplaySku: '',
+  /**
+   * Dollars off with the promo code the TexasLayout banner advertises (showPromo, off by default).
+   * The banner shows price - promoDiscount; keep that at or above legalMinimumPrice.
+   */
+  promoCode: 'TAKE3',
+  promoDiscount: 3,
+  /**
+   * Inputs for the "all-in to dismiss a ticket" arithmetic (court fee + course + driving record).
+   * Neither is our price: typicalCourtFee is what most Texas courts charge to grant the course
+   * ($169 in a school zone), type3aRecordFee is what DPS charges online for the certified Type 3A record.
+   */
+  typicalCourtFee: 144,
+  type3aRecordFee: 12,
 } as const;
 
-/** "$25" */
+/** Whole-dollar price label, e.g. "$28". */
 export const TEXAS_PRICE_LABEL = `$${TEXAS_COURSE.price}`;
+
+/** Price label with cents, e.g. "$28.00", for the places that typeset the cents separately. */
+export const TEXAS_PRICE_CENTS_LABEL = `$${TEXAS_COURSE.price.toFixed(2)}`;
+
+/** Statutory floor label, e.g. "$25" (Tex. Educ. Code §1001.352). */
+export const TEXAS_LEGAL_MINIMUM_LABEL = `$${TEXAS_COURSE.legalMinimumPrice}`;
+
+/** Audio add-on label, e.g. "$4.99". */
+export const TEXAS_AUDIO_PRICE_LABEL = `$${TEXAS_COURSE.audioPrice.toFixed(2)}`;
+
+/** Autoplay add-on label, e.g. "$4.99". */
+export const TEXAS_AUTOPLAY_PRICE_LABEL = `$${TEXAS_COURSE.autoplayPrice.toFixed(2)}`;
+
+/** Banner price with the promo code applied, e.g. "$25". */
+export const TEXAS_PROMO_PRICE_LABEL = `$${TEXAS_COURSE.price - TEXAS_COURSE.promoDiscount}`;
+
+/** Court fee + course + Type 3A record, for a given court fee. */
+export const texasAllIn = (courtFee: number): number => courtFee + TEXAS_COURSE.price + TEXAS_COURSE.type3aRecordFee;
+
+/** All-in cost to dismiss at the typical court fee, e.g. 184. */
+export const TEXAS_ALL_IN_TOTAL = texasAllIn(TEXAS_COURSE.typicalCourtFee);
+
+/** "$184" at today's numbers. */
+export const TEXAS_ALL_IN_LABEL = `$${TEXAS_ALL_IN_TOTAL}`;
 
 /**
  * Gates the "lowest price Texas law allows" wording in the /texas title banner and meta description.
@@ -58,7 +95,7 @@ export const TEXAS_PRICE_LABEL = `$${TEXAS_COURSE.price}`;
  */
 export const TEXAS_AT_LEGAL_MINIMUM = false;
 
-/** "$29.99" today (course + audio); "$34.98" once autoplayLive is true (course + audio + autoplay). */
+/** Course + audio today; course + audio + autoplay once autoplayLive is true. Two decimals, e.g. "$32.99". */
 export const TEXAS_AUDIO_TOTAL_LABEL = `$${(TEXAS_COURSE.price + TEXAS_COURSE.audioPrice + (TEXAS_COURSE.autoplayLive ? TEXAS_COURSE.autoplayPrice : 0)).toFixed(2)}`;
 
 /**

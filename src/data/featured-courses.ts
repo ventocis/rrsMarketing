@@ -16,7 +16,7 @@ export interface FeaturedCourse {
    *  by course id in FeaturedCourses.astro (Vite needs the literal var name there). */
   enrollFallback: string;
   learnMoreHref: string;
-  /** Short line above the buttons on desktop, e.g. "Texas defensive driving · $28 all-in". */
+  /** Short line above the buttons on desktop, e.g. "Texas defensive driving · <price> all-in". */
   offerLine: string;
   /** Two or three short reassurance lines shown as a checklist under the headline. */
   heroPoints: string[];

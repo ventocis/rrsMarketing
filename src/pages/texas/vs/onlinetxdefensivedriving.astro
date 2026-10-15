@@ -1,5 +1,8 @@
 ---
 import TexasLayout from '../../../layouts/TexasLayout.astro';
+import { TEXAS_PRICE_LABEL, TEXAS_PRICE_CENTS_LABEL } from '../../../data/texas-course';
+const price = TEXAS_PRICE_LABEL;
+const priceCents = TEXAS_PRICE_CENTS_LABEL;
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 
@@ -18,7 +21,7 @@ const articleSchema = JSON.stringify({
 const faqs = [
   {
     q: 'Does OnlineTXDefensiveDrivingCourse.com really charge extra for the certificate?',
-    a: 'Yes. After purchasing the course, you are shown a certificate delivery screen before starting. Email delivery costs $49.95 on top of the $28 course fee. The free option is USPS mail with an 11–30 day window and no tracking. If you need your certificate quickly, the total comes to $77.95.',
+    a: `Yes. After purchasing the course, you are shown a certificate delivery screen before starting. Email delivery costs $49.95 on top of the $28 course fee. The free option is USPS mail with an 11–30 day window and no tracking. If you need your certificate quickly, the total comes to $77.95.`,
   },
   {
     q: 'Are both courses actually TDLR-approved?',
@@ -26,7 +29,7 @@ const faqs = [
   },
   {
     q: 'Is the $25 advertised price what I actually pay?',
-    a: 'No, for either provider. Texas law requires a $25 minimum plus a $3 administrative fee, making the base $28 for both. Certificate delivery is additional at OnlineTXDefensiveDrivingCourse.com. Road Ready Safety includes the certificate in the $28.',
+    a: `No, for either provider. Texas law requires a $25 minimum plus a $3 administrative fee, making the base $28 for both. Certificate delivery is additional at OnlineTXDefensiveDrivingCourse.com. Road Ready Safety includes the certificate in the ${price}.`,
   },
   {
     q: 'Which course is faster to complete?',
@@ -95,10 +98,10 @@ const faqSchema = JSON.stringify({
             </thead>
             <tbody style="font-family: 'DM Sans', sans-serif;">
               {[
-                { label: 'Base price', rrs: '$28.00', them: '$28.00' },
+                { label: 'Base price', rrs: `${priceCents}`, them: '$28.00' },
                 { label: 'Email certificate', rrs: 'Free, instant', them: '$49.95 extra' },
                 { label: 'Free certificate option', rrs: 'Instant download', them: 'USPS mail, 11–30 days, no tracking' },
-                { label: 'True all-in (with instant cert)', rrs: '$28.00', them: '$77.95' },
+                { label: 'True all-in (with instant cert)', rrs: `${priceCents}`, them: '$77.95' },
                 { label: 'TDLR approved', rrs: 'Yes (CP1234)', them: 'Yes (CP995)' },
                 { label: 'Format', rrs: 'Online', them: 'Online' },
                 { label: 'Language', rrs: 'English', them: 'English + Spanish' },
@@ -157,7 +160,7 @@ const faqSchema = JSON.stringify({
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Where Road Ready Safety wins</h2>
         <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p><strong class="text-text">The certificate is free and instant.</strong> You finish the course, you download your certificate, you submit it to your court the same day. $28 is what you see, $28 is what you pay.</p>
+          <p><strong class="text-text">The certificate is free and instant.</strong> You finish the course, you download your certificate, you submit it to your court the same day. {price} is what you see, {price} is what you pay.</p>
           <p><strong class="text-text">No upsell screen after you pay.</strong> The certificate is included. There's no delivery option menu to navigate before you start.</p>
           <p><strong class="text-text">Built specifically for Texas.</strong> Road Ready Safety is a Texas-focused company, not a national platform with a Texas checkbox.</p>
         </div>
@@ -171,7 +174,7 @@ const faqSchema = JSON.stringify({
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Who should choose which</h2>
         <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p><strong class="text-text">Choose Road Ready Safety</strong> if you want to pay $28, get your certificate the same day you finish, and submit it to your court without any additional fees or decisions after you pay.</p>
+          <p><strong class="text-text">Choose Road Ready Safety</strong> if you want to pay {price}, get your certificate the same day you finish, and submit it to your court without any additional fees or decisions after you pay.</p>
           <p><strong class="text-text">Choose OnlineTXDefensiveDrivingCourse.com</strong> if you need the driving record bundled with your course, you need the course in Spanish, or you want a provider with a long track record and are prepared to navigate the certificate delivery pricing upfront.</p>
         </div>
 
@@ -186,7 +189,7 @@ const faqSchema = JSON.stringify({
         </div>
 
         <div class="space-y-6 text-text-body text-base leading-7 pt-4 border-t border-border" style="font-family: 'DM Sans', sans-serif;">
-          <p class="text-lg font-semibold text-text" style="font-family: 'Outfit', sans-serif;">$28. Free instant certificate. No surprises.</p>
+          <p class="text-lg font-semibold text-text" style="font-family: 'Outfit', sans-serif;">{price}. Free instant certificate. No surprises.</p>
           <div>
             <a
               href={enrollUrl}

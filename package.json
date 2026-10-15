@@ -16,7 +16,8 @@
     "indexnow:blog": "node scripts/indexnow-submit.mjs blog",
     "indexnow:courses": "node scripts/indexnow-submit.mjs courses",
     "check:claims": "node scripts/check-claims.mjs",
-    "test": "node --experimental-strip-types --no-warnings --test tests/*.test.ts"
+    "check:prices": "node --experimental-strip-types --no-warnings scripts/check-prices.mjs",
+    "test": "node --experimental-strip-types --no-warnings --test tests/*.test.ts && npm run check:prices"
   },
   "dependencies": {
     "@astrojs/react": "^3.6.0",

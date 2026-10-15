@@ -1,5 +1,8 @@
 ---
 import TexasLayout from '../../../layouts/TexasLayout.astro';
+import { TEXAS_PRICE_LABEL, TEXAS_PRICE_CENTS_LABEL } from '../../../data/texas-course';
+const price = TEXAS_PRICE_LABEL;
+const priceCents = TEXAS_PRICE_CENTS_LABEL;
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 
@@ -18,7 +21,7 @@ const articleSchema = JSON.stringify({
 const faqs = [
   {
     q: 'Do both courses cost the same?',
-    a: 'Both start at $28. Road Ready Safety is $28 all-in including the instant certificate. DefensiveDriving.com is $28 for the course, then $25 more for instant certificate delivery — $53 total. The free option from DefensiveDriving.com is standard mail with 2-plus business days of processing before USPS transit begins.',
+    a: `Both start at $28. Road Ready Safety is ${price} all-in including the instant certificate. DefensiveDriving.com is $28 for the course, then $25 more for instant certificate delivery — $53 total. The free option from DefensiveDriving.com is standard mail with 2-plus business days of processing before USPS transit begins.`,
   },
   {
     q: 'When does DefensiveDriving.com show the certificate fee?',
@@ -57,7 +60,7 @@ const faqSchema = JSON.stringify({
   <TexasLayout
     noindex={true}
     title="Road Ready Safety vs DefensiveDriving.com — Texas Defensive Driving (2026)"
-    description="Both start at $28. DefensiveDriving.com charges $25 more for your certificate after you finish the course. Here's the full breakdown before you start."
+    description={`Both start at $28. DefensiveDriving.com charges $25 more for your certificate after you finish the course. Here's the full breakdown before you start.`}
     url="/texas/vs/defensivedriving"
   >
     <script type="application/ld+json" set:html={articleSchema} />
@@ -101,9 +104,9 @@ const faqSchema = JSON.stringify({
             </thead>
             <tbody style="font-family: 'DM Sans', sans-serif;">
               {[
-                { label: 'Base price', rrs: '$28.00', them1: '$28.00', them2: '$38.00' },
+                { label: 'Base price', rrs: `${priceCents}`, them1: '$28.00', them2: '$38.00' },
                 { label: 'Instant certificate', rrs: 'Free', them1: '$25.00 extra', them2: '$25.00 extra' },
-                { label: 'True all-in (instant cert)', rrs: '$28.00', them1: '$53.00', them2: '$63.00' },
+                { label: 'True all-in (instant cert)', rrs: `${priceCents}`, them1: '$53.00', them2: '$63.00' },
                 { label: 'Free certificate option', rrs: 'Instant download', them1: 'Standard mail, 2+ days processing', them2: 'Standard mail, 2+ days processing' },
                 { label: 'TDLR approved', rrs: 'Yes (CP1234)', them1: 'Yes (CP284)', them2: 'Yes (CP284)' },
                 { label: 'Refund policy', rrs: '100% refund, no hassle', them1: 'Contact customer service', them2: 'Contact customer service' },
@@ -154,7 +157,7 @@ const faqSchema = JSON.stringify({
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Where Road Ready Safety wins</h2>
         <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p><strong class="text-text">The certificate is free and included.</strong> $28 is the total. There's no fee waiting for you at the end of six hours.</p>
+          <p><strong class="text-text">The certificate is free and included.</strong> {price} is the total. There's no fee waiting for you at the end of six hours.</p>
           <p><strong class="text-text">No fee revealed after completion.</strong> The most common complaint about DefensiveDriving.com is that the certificate cost only appears after you've finished the course. At Road Ready Safety, the price you see at the start is the price you pay.</p>
           <p><strong class="text-text">100% refund, no hassle.</strong> Changed your mind or found a better option? As long as you haven't completed the course and downloaded your certificate, you can request a full refund directly in the portal with one button. No customer service call, no hold music, no waiting.</p>
           <p><strong class="text-text">Simpler pricing.</strong> One course, one price. No text vs video tier decision, no delivery option menu, no surprise at the end.</p>
@@ -162,7 +165,7 @@ const faqSchema = JSON.stringify({
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Who should choose which</h2>
         <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p><strong class="text-text">Choose Road Ready Safety</strong> if you want to pay $28, get your certificate the moment you finish, and know that if anything comes up before you complete the course you can get a full refund instantly from the portal. No surprises going in, no friction going out.</p>
+          <p><strong class="text-text">Choose Road Ready Safety</strong> if you want to pay {price}, get your certificate the moment you finish, and know that if anything comes up before you complete the course you can get a full refund instantly from the portal. No surprises going in, no friction going out.</p>
           <p><strong class="text-text">Choose DefensiveDriving.com</strong> if the $250 dismissal guarantee matters to you, you want a video course option, or you want a provider with a long established track record and are prepared to budget $53 all-in for the text course with instant delivery.</p>
         </div>
 
@@ -177,7 +180,7 @@ const faqSchema = JSON.stringify({
         </div>
 
         <div class="space-y-6 text-text-body text-base leading-7 pt-4 border-t border-border" style="font-family: 'DM Sans', sans-serif;">
-          <p class="text-lg font-semibold text-text" style="font-family: 'Outfit', sans-serif;">$28. Free instant certificate. Full refund if you change your mind.</p>
+          <p class="text-lg font-semibold text-text" style="font-family: 'Outfit', sans-serif;">{price}. Free instant certificate. Full refund if you change your mind.</p>
           <div>
             <a
               href={enrollUrl}

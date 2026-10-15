@@ -1,6 +1,17 @@
-# Road Ready Safety
+import type { APIRoute } from 'astro';
+import { TEXAS_PRICE_LABEL } from '../data/texas-course';
+import nd from '../data/courses/nd-ddc.json';
+import mo from '../data/courses/mo-dip.json';
 
-> Road Ready Safety offers state-approved online traffic courses: a TDLR-approved Texas 6-Hour Defensive Driving Course, a Missouri Safety Center-approved Missouri Driver Improvement Program (OL031) and a North Dakota Defensive Driving Course that is NDDOT-approved for point reduction. The Texas course is delivered 100% online. Texas drivers use it to dismiss a moving violation traffic ticket or reduce auto insurance rates. Total price: $28 (no hidden fees). The course is accepted by all Texas courts and issues an official TDLR Certificate of Completion.
+// llms.txt for AI crawlers. Same shape as robots.txt.ts: built at deploy time so every price
+// comes from the data files (src/data/texas-course.ts, src/data/courses/*.json), never typed here.
+const TX = TEXAS_PRICE_LABEL;
+const ND = `$${nd.course.priceUsd}`;
+const MO = `$${mo.course.priceUsd}`;
+
+const body = `# Road Ready Safety
+
+> Road Ready Safety offers state-approved online traffic courses: a TDLR-approved Texas 6-Hour Defensive Driving Course, a Missouri Safety Center-approved Missouri Driver Improvement Program (OL031) and a North Dakota Defensive Driving Course that is NDDOT-approved for point reduction. The Texas course is delivered 100% online. Texas drivers use it to dismiss a moving violation traffic ticket or reduce auto insurance rates. Total price: ${TX} (no hidden fees). The course is accepted by all Texas courts and issues an official TDLR Certificate of Completion.
 
 ## Product
 
@@ -8,7 +19,7 @@
   - Type: Online, self-paced
   - Duration: 6 hours (state minimum)
   - Approval: TDLR-approved, Provider License CP#1234
-  - Price: $28 total, certificate included, nothing added at checkout
+  - Price: ${TX} total, certificate included, nothing added at checkout
   - Accepted by: All Texas courts
   - Certificate: TDLR Certificate of Completion (digital + printable)
   - Device compatibility: Any modern browser — desktop, tablet, or mobile
@@ -16,7 +27,7 @@
 - **Missouri Driver Improvement Program (DIP)**
   - Type: Online, self-paced, 8 hours
   - Approval: Missouri Safety Center-approved provider, ID OL031
-  - Price: $24.99 total; MO Form 4444 completion form included
+  - Price: ${MO} total; MO Form 4444 completion form included
   - What it does: under RSMo 302.302.5, when a Missouri court orders the program in lieu of points, the points for that violation are not assessed. The conviction stays on the driving record; the ticket is not dismissed.
   - Rules: the court decides case by case; ask before paying (paying is a guilty plea); finish within 60 days of conviction; once every 36 months; Missouri license and Missouri ticket only; not for commercial driver license holders.
   - After the course: take Form 4444 to the court clerk to sign; it must reach the Department of Revenue within 15 days.
@@ -27,7 +38,7 @@
 - **North Dakota Defensive Driving Course**
   - Type: Online, self-paced, 4 hours
   - Approval: NDDOT-approved for point reduction
-  - Price: $24.99 total
+  - Price: ${ND} total
   - What it does: takes 3 points off a North Dakota driving record, once every 12 months, or is elected at court in lieu of points for a ticket worth 5 points or fewer
   - Not for: a North Dakota insurance premium reduction. That is a different course on the Highway Patrol's list, and this course does not claim it.
   - Course page: https://roadreadysafety.com/north-dakota
@@ -168,3 +179,10 @@ The following court pages contain verified, court-specific instructions for requ
 - Website: https://roadreadysafety.com
 - TDLR Provider License: CP#1234
 - Primary market: Texas (USA)
+`;
+
+export const GET: APIRoute = () => {
+  return new Response(body, {
+    headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+  });
+};

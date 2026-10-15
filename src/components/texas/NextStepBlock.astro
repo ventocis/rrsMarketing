@@ -1,9 +1,11 @@
 ---
+import { TEXAS_PRICE_LABEL } from '../../data/texas-course';
+const price = TEXAS_PRICE_LABEL;
 /**
  * NextStepBlock — the compact "buy now, with one honest caveat" module for Texas content pages.
  *
  * Redesigned 2026-10-07 (Jackson): one sales bubble instead of two cards. The sale leads
- * ("Start the Texas course, $28 total, certificate the instant you finish"). The "Court hasn't
+ * ("Start the Texas course — <price> total, certificate the instant you finish"). The "Court hasn't
  * approved you yet? Ask first" caveat line was removed 2026-10-08 (Jackson). Pages whose reader is
  * already approved (lead="eligible") add a short reassurance. Pages where the course
  * cannot help still get the ineligible off-ramp line.
@@ -49,7 +51,7 @@ const t: NextStepStrings = {
   heading: 'Your next step',
   approvedTitle: 'Court already approved you?',
   approvedText: 'The six-hour course is the only thing left. TDLR-approved (CP1234); the certificate downloads the moment you finish.',
-  approvedBtn: 'Start the Texas course — $28 total, certificate the instant you finish',
+  approvedBtn: `Start the Texas course — ${price} total, certificate the instant you finish`,
   notYetTitle: "Court hasn't approved you yet? Ask first, before you take any course.",
   step1: "Don't pay the ticket online. Paying is a guilty plea and ends the dismissal option.",
   step2: 'Request the driving safety course from your court on or before the appearance date printed on the citation.',

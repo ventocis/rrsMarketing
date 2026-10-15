@@ -2,6 +2,8 @@
 import TexasLayout from '../../layouts/TexasLayout.astro';
 import NextStepBlock from '../../components/texas/NextStepBlock.astro';
 import { practiceQuestions } from '../../data/texas-practice-test';
+import { TEXAS_PRICE_LABEL } from '../../data/texas-course';
+const price = TEXAS_PRICE_LABEL;
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
@@ -117,7 +119,7 @@ const faqSchema = JSON.stringify({
         <div id="pt-result" class="hidden rounded-2xl border p-6 mb-10" role="status" aria-live="polite" style="font-family: 'DM Sans', sans-serif;">
           <p id="pt-score" class="text-2xl font-bold text-text mb-2" style="font-family: 'Outfit', sans-serif;"></p>
           <p id="pt-verdict" class="text-text-body text-base leading-7 mb-4"></p>
-          <a href={enrollUrl} class="inline-flex bg-primary hover:bg-primary-hover text-white h-[52px] px-7 rounded-[14px] text-base font-semibold items-center no-underline">Start the $28 course</a>
+          <a href={enrollUrl} class="inline-flex bg-primary hover:bg-primary-hover text-white h-[52px] px-7 rounded-[14px] text-base font-semibold items-center no-underline">Start the {price} course</a>
         </div>
 
         <h2 class="text-2xl font-bold text-text mt-12 mb-4" style="font-family: 'Outfit', sans-serif;">How the real test works</h2>
@@ -146,7 +148,7 @@ const faqSchema = JSON.stringify({
 
         <div class="pt-4 border-t border-border">
           <a href={enrollUrl} class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline" style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);">
-            Take the $28 Course, Unlimited Quiz Retakes
+            Take the {price} Course, Unlimited Quiz Retakes
           </a>
           <p class="text-xs text-text-subtle mt-6" style="font-family: 'DM Sans', sans-serif;">Last updated September 24, 2026. Questions written by Road Ready Safety for this page; none is drawn from our course question bank. Statutes checked against the Texas Code of Criminal Procedure ch. 45A and Texas Transportation Code chs. 541, 544, 545 and 547 on statutes.capitol.texas.gov. Course length and 70% mastery standard per TDLR's Course of Organized Instruction for Six-Hour Driving Safety and 16 TAC §84.500. City phone ordinances vary; check local rules.</p>
         </div>

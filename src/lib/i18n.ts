@@ -32,9 +32,12 @@ export interface TranslatedPage {
   dateModified: string;
 }
 
+import { fillPricesDeep } from '../data/prices';
+
 const modules = import.meta.glob<{ default: TranslatedPage }>('../data/i18n/texas/*.json', { eager: true });
 
-export const translatedPages: TranslatedPage[] = Object.values(modules).map(m => m.default);
+// Prices appear in the JSON as {{TX_PRICE}} etc. (src/data/prices.ts) and are filled here, once, at build.
+export const translatedPages: TranslatedPage[] = Object.values(modules).map(m => fillPricesDeep(m.default));
 
 const LANG_LABEL: Record<string, string> = { en: 'English', es: 'Español', vi: 'Tiếng Việt', 'zh-Hans': '中文', ar: 'العربية' };
 export const langLabel = (lang: string) => LANG_LABEL[lang] ?? lang;

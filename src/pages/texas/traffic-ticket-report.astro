@@ -1,6 +1,8 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
 import { courtStats as S } from '../../lib/court-stats';
+import { TEXAS_PRICE_LABEL } from '../../data/texas-course';
+const price = TEXAS_PRICE_LABEL;
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
@@ -219,12 +221,12 @@ const spread = Math.round((S.fee.max / S.fee.min - 1) * 100);
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Find what your own court does</h2>
         <div class="space-y-4 text-text-body text-base leading-7 mb-8" style="font-family: 'DM Sans', sans-serif;">
-          <p>Averages are for reports. What binds you is one court's rules. Look yours up, then take the course — ours is <strong class="text-text">$28 all-in</strong>, with both certificate copies in the free instant download.</p>
+          <p>Averages are for reports. What binds you is one court's rules. Look yours up, then take the course — ours is <strong class="text-text">{price} all-in</strong>, with both certificate copies in the free instant download.</p>
         </div>
 
         <div class="flex flex-col sm:flex-row gap-4 mb-10">
           <a href="/texas/courts" class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline" style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);">Find your court →</a>
-          <a href={enrollUrl} class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors" style="font-family: 'DM Sans', sans-serif;">Start the $28 Course</a>
+          <a href={enrollUrl} class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors" style="font-family: 'DM Sans', sans-serif;">Start the {price} Course</a>
         </div>
 
         <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">

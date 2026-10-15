@@ -32,10 +32,10 @@ const faqs = [
 const articleSchema = JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'Article',
-  headline: `A Texas defensive driving course costs ${floor}. Here’s what you’ll actually pay.`,
+  headline: `Our Texas defensive driving course costs ${price}. Here’s what you’ll actually pay.`,
   description: `Texas law sets a ${floor} minimum for every approved course. Every fee that gets added at checkout, and the full cost to dismiss a ticket at your court’s fee.`,
   datePublished: '2026-06-15',
-  dateModified: '2026-10-06',
+  dateModified: '2026-10-15',
   author: { '@type': 'Organization', name: 'Road Ready Safety' },
   publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
   mainEntityOfPage: `${siteUrl}/texas/cost`,
@@ -66,7 +66,7 @@ const pillOff = 'bg-white text-text border-[#CBD3DF] hover:border-primary-deep';
 
 {isEnabled ? (
   <TexasLayout
-    title={`Texas Defensive Driving Cost: $${TEXAS_COURSE.legalMinimumPrice} Course, About $${defaultTotal} All In`}
+    title={`Texas Defensive Driving Cost: ${price} Course, About $${defaultTotal} All In`}
     description="Texas law sets a $25 minimum for every approved course. See every fee that gets added at checkout and the full cost to dismiss a ticket."
     keywords="texas defensive driving course cost, how much is defensive driving in texas, defensive driving price texas, cheapest defensive driving course texas, texas driving safety course fee"
     url="/texas/cost"
@@ -79,7 +79,7 @@ const pillOff = 'bg-white text-text border-[#CBD3DF] hover:border-primary-deep';
       <div class={wrap}>
         <p class="text-[15px] text-text-body pt-5 m-0"><a href="/texas" class="text-text-body hover:underline">Texas</a><span class="mx-1.5">›</span><span>Cost</span></p>
         <div class="max-w-[780px] pt-8 pb-10">
-          <h1 class="text-[36px] lg:text-[56px] font-extrabold tracking-[-0.02em] leading-[1.05] m-0 mb-5" style={inter}>A Texas defensive driving course costs {floor}. Here's what you'll actually pay.</h1>
+          <h1 class="text-[36px] lg:text-[56px] font-extrabold tracking-[-0.02em] leading-[1.05] m-0 mb-5" style={inter}>Our Texas defensive driving course costs {price}. Here's what you'll actually pay.</h1>
           <p class="text-lg lg:text-[21px] leading-8 m-0 mb-4">{floor} is the legal minimum for every TDLR-approved course. But the course is the <strong>cheapest</strong> part of getting a ticket dismissed. At the most common court fee, the whole thing comes to about <strong>${defaultTotal}</strong>.</p>
           <p class="text-lg lg:text-[21px] leading-8 m-0 mb-6">So where does the rest go, and which of it can you avoid? Pick your court's fee below and see the full math.</p>
           <p class="text-[15px] text-text-muted m-0">By Road Ready Safety, TDLR provider {TEXAS_COURSE.providerNumber}. We sell one of these courses, so every rule here points at its source. · Updated October 6, 2026</p>

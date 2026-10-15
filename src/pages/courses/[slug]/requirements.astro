@@ -4,6 +4,7 @@ import DocLayout from '../../../layouts/DocLayout.astro';
 import coursesData from '../../../data/courses.json';
 import { stateNames } from '../../../utils/states';
 import { getStateRequirements } from '../../../utils/stateRequirements';
+import { adeEnabled } from '../../../lib/ade';
 
 export function getStaticPaths() {
   return (coursesData as any[]).map((course: any) => ({
@@ -17,6 +18,12 @@ interface Props {
 }
 
 const { course } = Astro.props;
+
+// Our own Texas courses redirect to their landing pages, exactly like /courses/[slug]/index.astro: courses.json
+// still carries the old TicketSchool reseller rows for them, so this page printed "Price: $25, Provider: TicketSchool"
+// for the $28 Road Ready course (prod audit, 2026-10-15).
+const isTexasEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const redirectTo = isTexasEnabled && course.slug === 'tx-defensive' ? '/texas' : adeEnabled && course.slug === 'tx-adult-ed' ? '/adult-drivers-ed/texas' : null;
 const stateFull = stateNames[course.state] || course.state;
 const stateReqs = getStateRequirements(course.state, course.course_type);
 
@@ -75,10 +82,18 @@ function buildMarkdown(): string {
   return md;
 }
 
-const html = marked(buildMarkdown()) as string;
+const html = redirectTo ? '' : (marked(buildMarkdown()) as string);
 ---
 
-<DocLayout
+{redirectTo && (
+  <>
+    <meta name="robots" content="noindex, nofollow" />
+    <meta http-equiv="refresh" content={`0;url=${redirectTo}`} />
+    <title>Redirecting…</title>
+  </>
+)}
+
+{!redirectTo && <DocLayout
   title={`${course.course_name} — Course Requirements`}
   description={`Complete requirements, submission details, and official sources for ${course.course_name}. Eligibility, deadlines, and certificate submission for ${stateFull}.`}
   keywords={`${course.course_name}, course requirements, ${stateFull}, traffic school requirements, certificate submission`}
@@ -91,4 +106,4 @@ const html = marked(buildMarkdown()) as string;
   ]}
 >
   <Fragment set:html={html} />
-</DocLayout>
+</DocLayout>}

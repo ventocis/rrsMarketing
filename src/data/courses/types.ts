@@ -72,6 +72,13 @@ export interface CourseData {
   _note?: string;
   /** Last real content change to the state's course pages; sitemap lastmod for non-guide URLs. */
   lastUpdated?: string;
+  /**
+   * Where this course's guides live when it shares another course's library instead of having
+   * `${route}/blog` of its own. The North Dakota insurance course (nd-ipr) points at /north-dakota/blog:
+   * its guides sit in nd.json tagged `course: "nd-ipr"`, so the layout, the landing page and the
+   * sitemap link there and never generate a second copy of the North Dakota guides.
+   */
+  guidesRoute?: string;
   state: {
     code: string;
     name: string;

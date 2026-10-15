@@ -103,16 +103,22 @@ const adeRoutes = adeEnabled && adeLicensed
 // Per-state course sites (/ohio, ...). Listed only when the state is enabled AND approved
 // (src/lib/courseFlags.ts). While approval is pending the pages are noindex, so they stay out.
 // lastmod for state guides, from the post's updated/date; other routes get a git-derived date (lastmodFor, below).
+// A course that shares another course's guide library (nd-ipr: guidesRoute = /north-dakota/blog) lists no
+// /blog of its own and no posts; its guides are already listed under the course that owns the library.
 const lastmodByPath = new Map<string, string>();
-for (const c of sitemapCourses) for (const p of postsFor(c.state.code)) lastmodByPath.set(`${c.state.route}/blog/${p.slug}`, p.updated ?? p.date);
+for (const c of sitemapCourses) if (!c.guidesRoute) for (const p of postsFor(c.state.code)) lastmodByPath.set(`${c.state.route}/blog/${p.slug}`, p.updated ?? p.date);
 
 const stateCourseRoutes = sitemapCourses.flatMap((c) => {
   const base = c.state.route;
-  const subs = STATE_SUBROUTES.map((s) => `${base}${s}`);
-  const posts = postsFor(c.state.code).map((p) => `${base}/blog/${p.slug}`);
+  const subs = STATE_SUBROUTES.filter((s) => !(c.guidesRoute && s === '/blog')).map((s) => `${base}${s}`);
+  const posts = c.guidesRoute ? [] : postsFor(c.state.code).map((p) => `${base}/blog/${p.slug}`);
   const extras = c.state.code === 'OH' ? [`${base}/12-point-suspension`] : [];
   return [...subs, ...posts, ...extras];
 });
+// /north-dakota/which-course sends a reader to the right one of North Dakota's two courses; it exists only
+// while both are live (src/pages/north-dakota/which-course/[...override].astro).
+const ndBoth = ['nd-ddc', 'nd-ipr'].every((k) => sitemapCourses.some((c) => c.course.key === k));
+const ndChooserRoutes = ndBoth ? ['/north-dakota/which-course'] : [];
 
 // A state's other pages take the course file's optional `lastUpdated` (only North Dakota sets it).
 for (const c of sitemapCourses) {
@@ -165,7 +171,7 @@ const i18nRoutes = translatedPages.map(p => `/texas/${p.slug}`);
 // Per-insurer defensive-driving discount pages
 const insurerRoutes = INSURERS.map(i => `/texas/insurance-discount/${i.slug}`);
 
-const allRoutes = [...staticRoutes, ...texasGuideRoutes, ...adeRoutes, ...i18nRoutes, ...insurerRoutes, ...stateCourseRoutes, ...courseRoutes, ...courseRequirementsRoutes, ...blogRoutes, ...findRoutes, ...texasCourtsRoutes, ...courtSlugRoutes];
+const allRoutes = [...staticRoutes, ...texasGuideRoutes, ...adeRoutes, ...i18nRoutes, ...insurerRoutes, ...stateCourseRoutes, ...ndChooserRoutes, ...courseRoutes, ...courseRequirementsRoutes, ...blogRoutes, ...findRoutes, ...texasCourtsRoutes, ...courtSlugRoutes];
 
 // <lastmod> = the last git commit that touched the route's source. Static pages map to their
 // .astro file; data-driven routes map to the data file that generates them. Falls back to the
@@ -213,6 +219,7 @@ const lastmodFor = (path: string): string => {
   if (path.startsWith('/blog/')) return gitDate('src/data/blog.json');
   if (path.startsWith('/find/')) return gitDate('src/data/courses.json');
   if (path.startsWith('/new-york/')) return gitDate(`src/pages${path}.astro`);
+  if (path === '/north-dakota/which-course') return gitDate('src/pages/north-dakota/which-course/[...override].astro');
   const direct = `src/pages${path}.astro`;
   if (existsSync(join(process.cwd(), direct))) return gitDate(direct);
   const index = `src/pages${path}/index.astro`;

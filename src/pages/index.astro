@@ -27,6 +27,7 @@ import { TEXAS_COURSE, TEXAS_PRICE_LABEL } from '../data/texas-course';
 import texasReviews from '../data/texas-reviews.json';
 import allCourses from '../data/courses.json';
 import nd from '../data/courses/nd-ddc.json';
+import ndIpr from '../data/courses/nd-ipr.json';
 import mo from '../data/courses/mo-dip.json';
 import type { CourseData } from '../data/courses/types';
 import { isEnabled, enrollUrl as buildEnrollUrl } from '../lib/courseFlags';
@@ -61,6 +62,7 @@ const ICONS: Record<string, string> = {
 };
 
 const ndCourse = nd as CourseData;
+const ndInsurance = ndIpr as CourseData;
 const moCourse = mo as CourseData;
 
 // State cards: Texas always; the others only when courseFlags says the state is live.
@@ -74,6 +76,13 @@ const states = [
     abbr: 'ND', name: 'North Dakota', url: ndCourse.state.route, badge: '/assets/images/badges/north-dakota-approved.png', badgeAlt: 'North Dakota approved course seal',
     approval: 'NDDOT-approved for point reduction', course: ndCourse.course.name,
     price: `$${ndCourse.course.priceUsd}`, hours: ndCourse.course.hours, enroll: buildEnrollUrl(ndCourse), live: isEnabled(ndCourse),
+  },
+  // North Dakota's second course (Highway Patrol, insurance premium reduction) gets its own card so a buyer
+  // with that intent is never sent to the point reduction checkout. Dark until nd-ipr.json carries its approval.
+  {
+    abbr: 'ND-IPR', name: 'North Dakota', url: ndInsurance.state.route, badge: '/assets/images/badges/north-dakota-approved.png', badgeAlt: 'North Dakota approved course seal',
+    approval: 'NDHP-approved for insurance premium reduction', course: ndInsurance.course.name,
+    price: `$${ndInsurance.course.priceUsd}`, hours: ndInsurance.course.hours, enroll: buildEnrollUrl(ndInsurance), live: isEnabled(ndInsurance),
   },
   {
     abbr: 'MO', name: 'Missouri', url: moCourse.state.route, badge: '/assets/images/badges/missouri-approved.png', badgeAlt: 'Missouri approved course seal',
@@ -115,7 +124,7 @@ const support = [
 ];
 
 const faqs = [
-  { q: 'Is this accepted in my state?', a: `Every Road Ready course is approved by its state: Texas (TDLR, ${TEXAS_COURSE.providerNumber}), North Dakota (NDDOT, point reduction) and Missouri (MSC, ${moCourse.provider.approvalNumber}). Each course page lists the approval and any special instructions.` },
+  { q: 'Is this accepted in my state?', a: `Every Road Ready course is approved by its state: Texas (TDLR, ${TEXAS_COURSE.providerNumber}), North Dakota (NDDOT, point reduction${isEnabled(ndInsurance) ? '; NDHP, insurance premium reduction' : ''}) and Missouri (MSC, ${moCourse.provider.approvalNumber}). Each course page lists the approval and any special instructions.` },
   { q: 'How long is the course?', a: `It depends on your state: Texas is ${TEXAS_COURSE.hours} hours, North Dakota is ${ndCourse.course.hours} hours and Missouri is ${moCourse.course.hours} hours. Start and stop anytime; your progress saves.` },
   { q: 'How do I get my certificate?', a: 'Download it the moment you finish. Some courts and insurers need you to send them a copy; your course page explains exactly how.' },
   { q: 'Will this dismiss my ticket or remove points?', a: 'It depends on your state. In Texas, the course can dismiss an eligible ticket once your court approves it. In North Dakota, it can take 3 points off your record. In Missouri, a court-approved Driver Improvement Program keeps the points off. Your course page walks you through the steps.' },

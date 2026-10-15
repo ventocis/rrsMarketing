@@ -6,10 +6,10 @@
  * Same pattern as /texas/contactus. noindex so Google keeps the portal page, not this one.
  */
 import { termsUrl } from '../../lib/portal';
-import { enabledCourses, stateParam } from '../../data/courses/index';
+import { stateRouteCourses, stateParam } from '../../data/courses/index';
 
 export function getStaticPaths() {
-  return enabledCourses.map((course) => ({ params: { state: stateParam(course) } }));
+  return stateRouteCourses.map((course) => ({ params: { state: stateParam(course) } }));
 }
 ---
 

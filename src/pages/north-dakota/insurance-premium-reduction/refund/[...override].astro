@@ -1,0 +1,21 @@
+---
+/**
+ * /north-dakota/insurance-premium-reduction/refund — the insurance course's copy of the shared
+ * /<state>/refund page. The course is nested under /north-dakota, which the shared `[state]` route cannot
+ * express (no slash in a route param), so each subpage is its own rest-param file, like
+ * north-dakota/pricing/[...override].astro. Emits nothing while the course is disabled (production until
+ * NDHP approves: src/lib/courseFlags.ts).
+ */
+import RefundPage from '../../../../components/course/pages/RefundPage.astro';
+import ndIpr from '../../../../data/courses/nd-ipr.json';
+import type { CourseData } from '../../../../data/courses/types';
+import { isEnabled } from '../../../../lib/courseFlags';
+
+export function getStaticPaths() {
+  return isEnabled(ndIpr as CourseData) ? [{ params: { override: undefined } }] : [];
+}
+
+const course = ndIpr as CourseData;
+---
+
+<RefundPage course={course} />

@@ -14,6 +14,7 @@ import Layout from './Layout.astro';
 import type { CourseData } from '../data/courses/types';
 import { enrollUrl as buildEnrollUrl, loginUrl, contactUrl, siteUrl, isNoindex } from '../lib/courseFlags';
 import { termsUrl } from '../lib/portal';
+import { guidesRouteFor } from '../data/courses/index';
 
 interface Props {
   course: CourseData;
@@ -35,6 +36,7 @@ interface Props {
 const { course, title, description = course.seo.description, keywords = course.seo.keywords, url, banner = course.banner, courseSchema: showCourseSchema = true, breadcrumbs } = Astro.props;
 
 const route = course.state.route;
+const guidesRoute = guidesRouteFor(course);
 const enrollUrl = buildEnrollUrl(course);
 const currentYear = new Date().getFullYear();
 const licenceLabel = course.provider.approvalNumber
@@ -49,7 +51,7 @@ const courseLinks = [
   { href: `${route}/pricing`, label: 'Pricing' },
   { href: `${route}/how-it-works`, label: 'How It Works' },
   { href: `${route}/faq`, label: 'FAQ' },
-  { href: `${route}/blog`, label: 'Guides' },
+  { href: guidesRoute, label: 'Guides' },
 ];
 const supportLinks = [
   { href: `${route}/helpcenter`, label: 'Help Center' },

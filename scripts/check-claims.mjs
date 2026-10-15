@@ -15,11 +15,14 @@ const dist = join(process.cwd(), 'dist');
 const coursesDir = join(process.cwd(), 'src/data/courses');
 
 const GLOBAL_BANNED = ['CP#1234', 'CP1234', 'TDLR'];
+/** Routes under a state path that use the site-wide Header/Footer (the North Dakota course chooser). */
+const SITE_CHROME_PAGES = ['/north-dakota/which-course'];
 
-function walk(dir, out = []) {
+function walk(dir, out = [], skip = new Set()) {
   for (const name of readdirSync(dir)) {
     const p = join(dir, name);
-    if (statSync(p).isDirectory()) walk(p, out);
+    if (skip.has(p)) continue;
+    if (statSync(p).isDirectory()) walk(p, out, skip);
     else if (p.endsWith('.html')) out.push(p);
   }
   return out;
@@ -36,9 +39,10 @@ function stripTags(html) {
 
 let failures = 0;
 const courseFiles = readdirSync(coursesDir).filter((f) => f.endsWith('.json'));
+const allCourses = courseFiles.map((f) => JSON.parse(readFileSync(join(coursesDir, f), 'utf-8')));
+const routeDir = (c) => join(dist, c.state.route.replace(/^\//, ''));
 
-for (const file of courseFiles) {
-  const course = JSON.parse(readFileSync(join(coursesDir, file), 'utf-8'));
+for (const course of allCourses) {
   const route = course.state.route.replace(/^\//, '');
   const dir = join(dist, route);
   if (!existsSync(dir)) {
@@ -46,7 +50,12 @@ for (const file of courseFiles) {
     continue;
   }
   const banned = [...GLOBAL_BANNED, ...(course.claims?.banned ?? [])];
-  const pages = walk(dir);
+  // A course nested under this one's route (nd-ipr under /north-dakota) has its own banned list; skip its pages here.
+  const nested = new Set(allCourses.filter((c) => c !== course && c.state.route.startsWith(`${course.state.route}/`)).map(routeDir));
+  // Pages under a state route that render in the site-wide chrome (Header/Footer, like /courses) rather than
+  // CourseLayout: the site footer carries the Texas licence line on purpose, so they are not state course pages.
+  for (const p of SITE_CHROME_PAGES) if (p.startsWith(`${course.state.route}/`)) nested.add(join(dist, p.replace(/^\//, '')));
+  const pages = walk(dir, [], nested);
   let hits = 0;
   for (const page of pages) {
     const text = stripTags(readFileSync(page, 'utf-8'));

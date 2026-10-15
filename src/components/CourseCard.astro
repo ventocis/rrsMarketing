@@ -39,7 +39,7 @@ const isOurTexasCard = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true' && r
 // Per-state courses we run ourselves (src/data/courses/*.json, gated by courseFlags). When a catalog row's slug is
 // one of their SKUs the card shows our course and links to its landing page and checkout. courses.json still
 // carries TicketSchool's Missouri row (mo-dip): it shipped "Offered through our partner, TicketSchool" at $29.95 on
-// /courses next to our $24.99 course at /missouri (prod audit, 2026-10-15). /courses also synthesizes a row for
+// /courses next to our own, cheaper course at /missouri (prod audit, 2026-10-15). /courses also synthesizes a row for
 // each enabled state course that has no catalog row (North Dakota), which lands here the same way.
 const ownState = enabledCourses.find((c) => c.course.sku === raw.slug);
 const course: Course = ownState

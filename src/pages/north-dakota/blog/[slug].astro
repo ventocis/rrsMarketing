@@ -16,6 +16,7 @@
 import { marked } from 'marked';
 import CourseLayout from '../../../layouts/CourseLayout.astro';
 import nd from '../../../data/courses/nd-ddc.json';
+import ndIpr from '../../../data/courses/nd-ipr.json';
 import { postsFor, type StatePost } from '../../../data/blog/index';
 import { isEnabled, enrollUrl as buildEnrollUrl, siteUrl } from '../../../lib/courseFlags';
 import type { CourseData } from '../../../data/courses/types';
@@ -26,10 +27,16 @@ export function getStaticPaths() {
   return postsFor('ND').map((post) => ({ params: { slug: post.slug }, props: { post } }));
 }
 
-const course = nd as CourseData;
 const { post } = Astro.props as { post: StatePost };
+// A guide sells the course it names (post.course): the insurance premium reduction guides render in the
+// nd-ipr chrome with nd-ipr buy boxes; every other guide is the point reduction course's. postsFor() already
+// drops guides whose course is disabled, so an insurance guide never builds before NDHP approves.
+const isInsurance = post.course === 'nd-ipr';
+const course = (isInsurance ? ndIpr : nd) as CourseData;
 const route = course.state.route;
-const url = `${route}/blog/${post.slug}`;
+// Guides live under /north-dakota/blog whichever course they sell (nd-ipr.json guidesRoute).
+const guides = course.guidesRoute ?? `${route}/blog`;
+const url = `${guides}/${post.slug}`;
 const enrollUrl = buildEnrollUrl(course);
 const price = course.course.priceUsd;
 const hours = course.course.hours;
@@ -41,7 +48,9 @@ const all = postsFor('ND');
 const hub = post.hub ? all.find((p) => p.slug === post.hub) : undefined;
 const children = post.kind === 'hub' ? all.filter((p) => p.hub === post.slug) : [];
 // One of several anchors for the up-link to the course, chosen per guide so the text varies site-wide.
-const courseAnchors = ['North Dakota defensive driving course', 'the 4-hour online course', 'our NDDOT-approved point reduction course', 'the course for the 3-point reduction', 'take the course in lieu of points'];
+const courseAnchors = isInsurance
+  ? ['North Dakota insurance premium reduction course', 'the 4-hour online course', 'our Highway Patrol crash prevention course', 'the course for the two-year premium reduction', 'the course your insurer must honor']
+  : ['North Dakota defensive driving course', 'the 4-hour online course', 'our NDDOT-approved point reduction course', 'the course for the 3-point reduction', 'take the course in lieu of points'];
 const courseAnchor = courseAnchors[[...post.slug].reduce((n, c) => n + c.charCodeAt(0), 0) % courseAnchors.length];
 const reviewedBy = post.reviewedBy ?? 'Road Ready Safety';
 // Breadcrumb trail, shown on the page and sent as BreadcrumbList JSON-LD (replacing the layout's
@@ -49,14 +58,17 @@ const reviewedBy = post.reviewedBy ?? 'Road Ready Safety';
 const crumbs = [
   { name: 'Home', url: '/' },
   { name: course.course.name, url: route },
-  { name: 'Guides', url: `${route}/blog` },
-  ...(hub ? [{ name: hub.seoTitle ?? hub.title, url: `${route}/blog/${hub.slug}` }] : []),
+  { name: 'Guides', url: guides },
+  ...(hub ? [{ name: hub.seoTitle ?? hub.title, url: `${guides}/${hub.slug}` }] : []),
   { name: post.seoTitle ?? post.title, url },
 ];
+const reviewedAgainst = isInsurance ? 'the Century Code, the Administrative Code and the Highway Patrol’s pages' : 'the Century Code and NDDOT’s pages';
+const hubLine = isInsurance ? 'If you want the lower premium,' : 'If you need the points off,';
+const whoApplies = isInsurance ? 'Your insurer applies any premium reduction and sets its amount.' : 'NDDOT applies any point reduction, and your court handles an election in lieu of points.';
 // The fee-and-points calculator (src/lib/nd-speeding.ts) sits on the speeding hub and the cost guide.
 const withCalculator = post.slug === 'north-dakota-speeding-ticket' || post.slug === 'north-dakota-speeding-ticket-cost';
 const picked = (post.related ?? []).map((s) => all.find((p) => p.slug === s)).filter(Boolean) as StatePost[];
-const related = (picked.length ? picked : all.filter((p) => p.slug !== post.slug)).slice(0, 4);
+const related = (picked.length ? picked : all.filter((p) => p.slug !== post.slug && (p.course ?? '') === (post.course ?? ''))).slice(0, 4);
 
 function formatDate(d: string) {
   return new Date(d).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
@@ -75,7 +87,7 @@ const articleSchema = {
   inLanguage: 'en-US',
   author: org,
   publisher: { ...org, logo: { '@type': 'ImageObject', url: `${siteUrl}/assets/icons/texas/logo-shield.svg` } },
-  about: { '@type': 'Thing', name: 'North Dakota defensive driving course for point reduction' },
+  about: { '@type': 'Thing', name: isInsurance ? 'North Dakota insurance premium reduction course' : 'North Dakota defensive driving course for point reduction' },
   isPartOf: { '@type': 'WebPage', url: `${siteUrl}${route}`, name: course.course.name },
   citation: (post.sources ?? []).map((s) => ({ '@type': 'CreativeWork', name: s.name, url: s.url })),
 };
@@ -100,16 +112,16 @@ const outfit = "font-family:'Outfit',sans-serif;";
           <li aria-hidden="true">›</li>
           <li><a href={route} class="hover:text-primary no-underline">{course.course.name}</a></li>
           <li aria-hidden="true">›</li>
-          <li><a href={`${route}/blog`} class="hover:text-primary no-underline">Guides</a></li>
+          <li><a href={guides} class="hover:text-primary no-underline">Guides</a></li>
           {hub && <li aria-hidden="true">›</li>}
-          {hub && <li><a href={`${route}/blog/${hub.slug}`} class="hover:text-primary no-underline">{hub.seoTitle ?? hub.title}</a></li>}
+          {hub && <li><a href={`${guides}/${hub.slug}`} class="hover:text-primary no-underline">{hub.seoTitle ?? hub.title}</a></li>}
         </ol>
       </nav>
 
       <header class="mb-8 flex flex-col gap-4">
         <h1 class="text-3xl md:text-[40px] font-bold text-text leading-[1.15] tracking-[-0.02em] m-0" style={outfit}>{post.title}</h1>
         <p class="text-sm text-text-muted m-0">
-          By Road Ready Safety &middot; Last reviewed <time datetime={updated}>{formatDate(updated)}</time> by {reviewedBy}, against the Century Code and NDDOT's pages
+          By Road Ready Safety &middot; Last reviewed <time datetime={updated}>{formatDate(updated)}</time> by {reviewedBy}, against {reviewedAgainst}
         </p>
       </header>
 
@@ -149,7 +161,7 @@ const outfit = "font-family:'Outfit',sans-serif;";
           <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3 list-none p-0 m-0">
             {children.map((c) => (
               <li class="border border-border rounded-2xl p-5 flex flex-col gap-1">
-                <a href={`${route}/blog/${c.slug}`} class="font-semibold text-text no-underline hover:text-primary">{c.title}</a>
+                <a href={`${guides}/${c.slug}`} class="font-semibold text-text no-underline hover:text-primary">{c.title}</a>
                 <span class="text-sm text-text-body leading-6">{c.description}</span>
               </li>
             ))}
@@ -159,8 +171,8 @@ const outfit = "font-family:'Outfit',sans-serif;";
 
       {hub && (
         <p class="mt-10 text-base text-text-body leading-7 m-0">
-          This guide is part of <a href={`${route}/blog/${hub.slug}`} class="text-primary-deep font-semibold underline underline-offset-2">{hub.title}</a>.
-          If you need the points off, <a href={route} class="text-primary-deep font-semibold underline underline-offset-2">{courseAnchor}</a> is 4 hours online for ${price}.
+          This guide is part of <a href={`${guides}/${hub.slug}`} class="text-primary-deep font-semibold underline underline-offset-2">{hub.title}</a>.
+          {hubLine} <a href={route} class="text-primary-deep font-semibold underline underline-offset-2">{courseAnchor}</a> is 4 hours online for ${price}.
         </p>
       )}
 
@@ -188,7 +200,7 @@ const outfit = "font-family:'Outfit',sans-serif;";
           </ul>
           <p class="text-sm text-text-muted leading-6 mt-4 mb-0">
             We read each source on {formatDate(updated)}. This guide is general information, not legal advice.
-            NDDOT applies any point reduction, and your court handles an election in lieu of points.
+            {whoApplies}
             See a mistake? Email <a href={`mailto:${course.provider.supportEmail}`} class="text-primary-deep underline">{course.provider.supportEmail}</a>.
           </p>
         </section>
@@ -209,11 +221,11 @@ const outfit = "font-family:'Outfit',sans-serif;";
           <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3 list-none p-0 m-0">
             {related.map((r) => (
               <li class="border border-border rounded-2xl p-5">
-                <a href={`${route}/blog/${r.slug}`} class="font-semibold text-text no-underline hover:text-primary">{r.title}</a>
+                <a href={`${guides}/${r.slug}`} class="font-semibold text-text no-underline hover:text-primary">{r.title}</a>
               </li>
             ))}
           </ul>
-          <a href={`${route}/blog`} class="inline-block mt-4 text-primary font-semibold underline underline-offset-2">All North Dakota guides</a>
+          <a href={guides} class="inline-block mt-4 text-primary font-semibold underline underline-offset-2">All North Dakota guides</a>
         </section>
       )}
     </div>

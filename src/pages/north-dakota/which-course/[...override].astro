@@ -1,0 +1,255 @@
+---
+/**
+ * /north-dakota/which-course — the router between North Dakota's two courses.
+ *
+ * North Dakota approves courses for two separate purposes under two agencies: NDDOT for point
+ * reduction (NDCC 39-06.1-13 / -10.1, our nd-ddc course at /north-dakota) and the Highway Patrol for
+ * the insurance premium reduction (NDCC 26.1-25-04.1, our nd-ipr course at
+ * /north-dakota/insurance-premium-reduction). A buyer searching for either lands on whichever page
+ * ranks; this page, linked from both landings and the guides, asks the one question that sorts them
+ * and shows the matching buy box in the same card structure the landings use.
+ *
+ * Neutral chrome (site Layout + Header + Footer), because CourseLayout carries one course's approval
+ * label, price bar and footer. Both courses must be enabled for the page to exist; in production that
+ * means both approval numbers are in (src/lib/courseFlags.ts), so it never advertises an unapproved
+ * course. The picker is one inline, delegated listener (survives ViewTransitions); `hidden` sits on plain
+ * wrapper divs, never on a flex/grid element (Tailwind's display utilities beat the attribute).
+ */
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import nd from '../../../data/courses/nd-ddc.json';
+import ndIpr from '../../../data/courses/nd-ipr.json';
+import type { CourseData } from '../../../data/courses/types';
+import { isEnabled, isLicensed, enrollUrl as buildEnrollUrl, siteUrl } from '../../../lib/courseFlags';
+
+export function getStaticPaths() {
+  return isEnabled(nd as CourseData) && isEnabled(ndIpr as CourseData) ? [{ params: { override: undefined } }] : [];
+}
+
+const points = nd as CourseData;
+const insurance = ndIpr as CourseData;
+const url = '/north-dakota/which-course';
+
+type Card = {
+  key: 'points' | 'insurance';
+  course: CourseData;
+  eyebrow: string;
+  pill: string;
+  outcome: string;
+  checks: { strong: string; rest: string }[];
+  enroll: string;
+};
+const cards: Card[] = [
+  {
+    key: 'points',
+    course: points,
+    eyebrow: 'For your driving record',
+    pill: isLicensed(points) ? 'NDDOT-Approved' : 'NDDOT Approval Pending',
+    outcome: 'Take 3 points off, or keep a new ticket’s points off',
+    checks: [
+      { strong: '3 points off your record', rest: ', once every 12 months, up to 9 in 3 years (NDCC 39-06.1-13)' },
+      { strong: 'Or elect it at court', rest: ' when you post bond for a ticket worth 5 points or fewer, and the points never post' },
+      { strong: 'Certificate to NDDOT', rest: ', by email or mail. In-lieu elections: within 30 days' },
+      { strong: `${points.course.hours} hours, $${points.course.priceUsd} total`, rest: ', certificate included' },
+    ],
+    enroll: buildEnrollUrl(points),
+  },
+  {
+    key: 'insurance',
+    course: insurance,
+    eyebrow: 'For your premium',
+    pill: isLicensed(insurance) ? 'NDHP-Approved' : 'NDHP Approval Pending',
+    outcome: 'Lower your premium for 2 years, 3 if you are 55 or older',
+    checks: [
+      { strong: 'Your insurer must offer a reduction', rest: ' for at least two years after you finish (NDCC 26.1-25-04.1). The amount is theirs to set' },
+      { strong: 'Three years at 55+', rest: ', same course, same certificate' },
+      { strong: 'Certificate to your insurer', rest: ', shown as its own line on your bill. No points come off' },
+      { strong: `${insurance.course.hours} hours, $${insurance.course.priceUsd} total`, rest: ', certificate included' },
+    ],
+    enroll: buildEnrollUrl(insurance),
+  },
+];
+
+const picks: { key: string; label: string; sub: string; show: ('points' | 'insurance')[] }[] = [
+  { key: 'points', label: 'I have points, or a new ticket', sub: 'I want points off my record, or to keep a ticket’s points off it', show: ['points'] },
+  { key: 'insurance', label: 'I want a lower insurance premium', sub: 'No ticket needed; I want the reduction North Dakota law gives', show: ['insurance'] },
+  { key: 'both', label: 'Both', sub: 'Two separate courses, two certificates', show: ['points', 'insurance'] },
+];
+
+const rows: [string, string, string][] = [
+  ['What it does', 'Takes 3 points off your record, or keeps a small ticket’s points from posting', 'Lowers your auto insurance premium; your record is untouched'],
+  ['Who approves it', 'North Dakota Department of Transportation (NDDOT)', 'North Dakota Highway Patrol (NDHP)'],
+  ['The law', 'NDCC 39-06.1-13 and 39-06.1-10.1', 'NDCC 26.1-25-04.1; NDAC 38-08'],
+  ['Who it is for', 'A driver with points, or one who elected a course at court', 'The principal operator of a private passenger car or light pickup or van'],
+  ['How long it counts', 'Once every 12 months; up to 9 points in 3 years', 'At least 2 years; 3 years at 55 or older'],
+  ['Where the certificate goes', 'NDDOT, by email or mail (you send it)', 'Your insurer or agent (you send it)'],
+  ['Deadline', 'In-lieu elections: certificate to NDDOT within 30 days. Otherwise none', 'None; the reduction starts when you finish'],
+];
+
+const faqs = [
+  { q: 'Can I take both North Dakota courses?', a: 'Yes. They are separate courses with separate approvals and separate certificates, and each does only its own job. Finishing one does not earn the other’s benefit.' },
+  { q: 'Does the point reduction course lower my insurance?', a: 'Not under NDCC 26.1-25-04.1. That statute applies to courses the Highway Patrol approves, which is the insurance premium reduction course. Whether fewer points change your rate is your insurer’s call, and the violation stays on your record either way.' },
+  { q: 'Does the insurance course take points off my record?', a: 'No. Only an NDDOT-approved course can earn the 3-point reduction or be elected at court in lieu of points. The insurance course changes your premium, not your record.' },
+  { q: 'I have a ticket and I also want the lower premium. Which first?', a: 'If you elected a course at court, do the point reduction course first: NDDOT needs that certificate within 30 days of the election. The insurance course has no deadline, so take it when it suits you.' },
+];
+
+const faqSchema = JSON.stringify({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) });
+const breadcrumbSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl },
+    { '@type': 'ListItem', position: 2, name: points.course.name, item: `${siteUrl}${points.state.route}` },
+    { '@type': 'ListItem', position: 3, name: 'Which course do I need?', item: `${siteUrl}${url}` },
+  ],
+});
+
+const inter = "font-family:'Inter',sans-serif;";
+const sans = "font-family:'DM Sans',sans-serif;";
+const check = `<svg width="14" height="14" viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="M4 11.5 L9 16 L18 6" stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+---
+
+<Layout
+  title="Point Reduction or Insurance Premium Reduction? Pick the Right North Dakota Course | Road Ready Safety"
+  description="North Dakota approves two different courses: NDDOT's for taking points off your record and the Highway Patrol's for a lower insurance premium. One question tells you which one you need."
+  keywords="north dakota defensive driving course, north dakota point reduction course, north dakota insurance premium reduction course, which north dakota course do i need, nddot approved course, ndhp approved course"
+  url={url}
+>
+  <script type="application/ld+json" slot="head" set:html={faqSchema} />
+  <script type="application/ld+json" slot="head" set:html={breadcrumbSchema} />
+
+  <Header />
+
+  <main class="bg-white text-text" style={sans}>
+    <section class="bg-[#EEF6FD] border-b border-border">
+      <div class="max-w-[1180px] mx-auto px-4 sm:px-6 pt-10 lg:pt-14 pb-10 flex flex-col gap-5">
+        <nav class="text-sm" aria-label="Breadcrumb">
+          <ol class="flex flex-wrap items-center gap-2 list-none p-0 m-0 text-text-body">
+            <li><a href="/" class="hover:text-primary no-underline">Home</a></li>
+            <li aria-hidden="true">›</li>
+            <li><a href={points.state.route} class="hover:text-primary no-underline">North Dakota</a></li>
+            <li aria-hidden="true">›</li>
+            <li class="text-text font-medium">Which course do I need?</li>
+          </ol>
+        </nav>
+        <h1 class="m-0 font-extrabold text-[32px] sm:text-[40px] lg:text-[48px] leading-[1.08] tracking-[-0.02em] text-[#0B2160] max-w-[820px]" style={inter}>Which North Dakota course do you need?</h1>
+        <p class="m-0 text-[17px] lg:text-[19px] leading-[1.5] text-text-body max-w-[720px]">North Dakota approves courses for two separate purposes, through two agencies. One takes points off your record. The other lowers your insurance premium. They are different courses, and the certificate from one does not do the other’s job. Answer one question and we will show you yours.</p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-2" role="group" aria-label="What do you want the course to do?" data-nd-picker>
+          {picks.map((p, i) => (
+            <button type="button" data-pick={p.key} aria-pressed={i === 2 ? 'true' : 'false'} class:list={['text-left rounded-2xl border-2 px-5 py-4 flex flex-col gap-1 cursor-pointer transition-colors', i === 2 ? 'border-primary bg-white' : 'border-[#CBD3DF] bg-white/70 hover:border-primary-deep']}>
+              <span class="font-extrabold text-[17px] text-[#0B2160]" style={inter}>{p.label}</span>
+              <span class="text-sm text-text-body leading-5">{p.sub}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section id="courses" class="scroll-mt-28">
+      <div class="max-w-[1180px] mx-auto px-4 sm:px-6 py-12 lg:py-16 flex flex-col gap-8">
+        <div class="grid gap-6 lg:gap-8 grid-cols-1 md:grid-cols-2" data-nd-cards>
+          {cards.map((c) => (
+            <div data-card={c.key}>
+              <div class="h-full rounded-[20px] px-6 py-7 flex flex-col gap-4 bg-[#0B2160] text-white border border-[#0B2160] shadow-[0_24px_60px_rgba(11,33,96,0.28)]">
+                <span class="text-[13px] font-bold uppercase tracking-[0.08em] text-[#9DB4D6]">{c.eyebrow}</span>
+                <div class="flex justify-between gap-4 items-start">
+                  <h2 class="m-0 font-extrabold text-[21px] leading-[1.2]" style={inter}>{c.course.course.name}</h2>
+                  <span class="flex-none font-bold text-xs px-3 py-1.5 rounded-full bg-white text-primary-deep">{c.pill}</span>
+                </div>
+                <p class="m-0 text-[17px] font-bold text-white leading-[1.35]" style={inter}>{c.outcome}</p>
+                <p class="m-0 flex items-baseline gap-1"><span class="font-extrabold text-[44px] leading-none" style={inter}>${c.course.course.priceUsd.split('.')[0]}</span><span class="text-base text-[#D6E8FD]">.{c.course.course.priceUsd.split('.')[1] ?? '00'}</span><span class="text-sm text-[#D6E8FD] ml-2">total · {c.course.course.hours} hours online</span></p>
+                <ul class="list-none p-0 m-0 flex flex-col gap-2.5 flex-1">
+                  {c.checks.map((k) => (
+                    <li class="flex gap-3.5 items-start">
+                      <span class="flex-none w-6 h-6 rounded-full bg-white/20 flex items-center justify-center" set:html={check} />
+                      <span class="text-[15px] leading-[1.45] pt-0.5 text-[#D6E8FD]"><strong class="text-white">{k.strong}</strong>{k.rest}</span>
+                    </li>
+                  ))}
+                </ul>
+                <a href={c.enroll} data-rrs-cta={`${c.course.course.key}-chooser`} class="mt-2 no-underline text-center font-extrabold text-[17px] px-4 py-3.5 rounded-xl bg-white hover:bg-info text-primary-deep" style={inter}>Enroll Now&nbsp;→</a>
+                <a href={c.course.state.route} class="no-underline text-center text-[#D6E8FD] hover:text-white font-semibold text-[15px]">About this course →</a>
+              </div>
+            </div>
+          ))}
+        </div>
+        <p class="m-0 text-center text-[15px] text-text-muted">Both courses are four hours, self-paced, with the certificate included and a full refund any time before you finish.</p>
+      </div>
+    </section>
+
+    <section class="bg-surface-muted border-y border-border">
+      <div class="max-w-[1180px] mx-auto px-4 sm:px-6 py-14 lg:py-16 flex flex-col gap-6">
+        <h2 class="m-0 font-extrabold text-[28px] lg:text-[36px] leading-[1.12] text-[#0B2160]" style={inter}>The two courses, side by side</h2>
+        <div class="overflow-x-auto rounded-[20px] border border-border bg-white">
+          <table class="w-full text-[15px] min-w-[680px]">
+            <thead>
+              <tr class="bg-surface-muted text-left">
+                <th scope="col" class="px-5 py-4 font-semibold text-text"></th>
+                <th scope="col" class="px-5 py-4 font-semibold text-text">Point reduction course</th>
+                <th scope="col" class="px-5 py-4 font-semibold text-text">Insurance premium reduction course</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map(([label, a, b]) => (
+                <tr class="border-t border-border align-top">
+                  <th scope="row" class="px-5 py-4 font-semibold text-text text-left whitespace-nowrap">{label}</th>
+                  <td class="px-5 py-4 text-text-body leading-6">{a}</td>
+                  <td class="px-5 py-4 text-text-body leading-6">{b}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p class="m-0 text-sm text-text-muted max-w-[820px]">The insurer sets the amount of any premium reduction and NDDOT applies any point reduction; neither is ours to promise. Sources: NDCC 26.1-25-04.1, NDCC 39-06.1-10.1 and -13, NDAC 38-08, read October 15, 2026.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="max-w-[820px] mx-auto px-4 sm:px-6 py-14 lg:py-16 flex flex-col gap-3">
+        <h2 class="m-0 text-center font-extrabold text-[28px] lg:text-[36px] leading-[1.12] text-[#0B2160]" style={inter}>Quick answers</h2>
+        <div class="flex flex-col gap-2.5 mt-3">
+          {faqs.map((f, i) => (
+            <details name="nd-which-faq" open={i === 0} class="group bg-white border border-border rounded-[14px] open:border-[#B9D3F6]">
+              <summary class="list-none [&::-webkit-details-marker]:hidden flex justify-between items-center gap-4 px-[22px] py-[18px] cursor-pointer">
+                <h3 class="m-0 font-bold text-[17px] text-text" style={inter}>{f.q}</h3>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true" class="flex-none transition-transform group-open:rotate-180"><path d="M6 9 L12 15 L18 9" stroke="#2454E6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </summary>
+              <p class="m-0 px-[22px] pb-5 text-base leading-[1.6] text-text-body">{f.a}</p>
+            </details>
+          ))}
+        </div>
+        <p class="m-0 mt-4 text-center text-[15px] text-text-body">Still not sure? Read <a href="/north-dakota/blog/north-dakota-point-reduction-or-insurance-premium-reduction" class="text-primary-deep font-semibold underline underline-offset-2">the longer guide</a> or <a href="/support" class="text-primary-deep font-semibold underline underline-offset-2">ask us</a>.</p>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+
+  <script is:inline>
+    (function () {
+      if (window.__rrsNdChooser) return;
+      window.__rrsNdChooser = true;
+      var SHOW = { points: ['points'], insurance: ['insurance'], both: ['points', 'insurance'] };
+      document.addEventListener('click', function (e) {
+        var b = e.target.closest('[data-nd-picker] [data-pick]');
+        if (!b) return;
+        var key = b.getAttribute('data-pick');
+        document.querySelectorAll('[data-nd-picker] [data-pick]').forEach(function (x) {
+          var on = x === b;
+          x.setAttribute('aria-pressed', on ? 'true' : 'false');
+          x.classList.toggle('border-primary', on); x.classList.toggle('bg-white', on);
+          x.classList.toggle('border-[#CBD3DF]', !on); x.classList.toggle('bg-white/70', !on);
+        });
+        var show = SHOW[key] || SHOW.both;
+        document.querySelectorAll('[data-nd-cards] [data-card]').forEach(function (c) {
+          c.hidden = show.indexOf(c.getAttribute('data-card')) === -1;
+        });
+        var grid = document.querySelector('[data-nd-cards]');
+        if (grid) { grid.classList.toggle('md:grid-cols-2', show.length === 2); grid.classList.toggle('max-w-[560px]', show.length === 1); grid.classList.toggle('mx-auto', show.length === 1); }
+        var target = document.getElementById('courses');
+        if (target && window.innerWidth < 768) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    })();
+  </script>
+</Layout>

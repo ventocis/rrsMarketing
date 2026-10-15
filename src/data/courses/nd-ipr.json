@@ -1,0 +1,503 @@
+{
+  "_note": "Single source of truth for the North Dakota INSURANCE PREMIUM REDUCTION course site (/north-dakota/insurance-premium-reduction). This is a different course from the NDDOT point reduction course in nd-ddc.json: a different agency (the North Dakota Highway Patrol, NDAC 38-08, filed on SFN 12382), a different approval, a different SKU (nd-ipr) and, per NDHP (call 2026-10-08), marketed as a separate course. Course facts trace to the portal sheet 'ND IPR — … 2026-10-12b, key nd-ipr' and the filed curriculum PDF in ~/Claude/North Dakota Point Reduction/NDHP Submission/. Regulatory facts cite NDCC 26.1-25-04.1 and NDAC 38-08-02 / 38-08-04 (read 2026-10-15). approvalNumber: EMPTY until NDHP approves. That empty string is the launch switch: production builds no pages, every environment marks them noindex, and the sitemap, home page and catalog leave the course out. Fill it (NDHP lists courses rather than numbering them, so 'Approved 2026' like nd-ddc) and the next production deploy ships the course. claims.banned is enforced by scripts/check-claims.mjs. 'insurance discount' stays banned on purpose: the statute's own term is 'premium reduction', and nd-ddc bans the phrase across every /north-dakota page.",
+  "lastUpdated": "2026-10-15",
+  "guidesRoute": "/north-dakota/blog",
+  "state": {
+    "code": "ND",
+    "name": "North Dakota",
+    "route": "/north-dakota/insurance-premium-reduction",
+    "agency": "North Dakota Highway Patrol",
+    "agencyShort": "NDHP",
+    "approvalShort": "NDHP-approved for insurance premium reduction",
+    "agencyUrl": "https://www.statepatrol.nd.gov/insurance-premium-reduction-online-courses",
+    "timezone": "America/Chicago"
+  },
+  "provider": {
+    "legalName": "Road Ready Driver Instruction LLC",
+    "dba": "Road Ready Safety",
+    "approvalNumber": "Approved 2026",
+    "approvalLabel": "NDHP-Approved · Insurance Premium Reduction Course",
+    "approvalPendingLabel": "North Dakota Insurance Premium Reduction Course · NDHP Approval Pending",
+    "supportEmail": "info@roadreadysafety.com",
+    "supportPhone": "(888) 885-5707",
+    "supportPhoneHref": "tel:+18888855707",
+    "supportHours": ""
+  },
+  "course": {
+    "key": "nd-ipr",
+    "sku": "nd-ipr",
+    "name": "North Dakota Insurance Premium Reduction Course",
+    "shortName": "North Dakota Insurance Course",
+    "hours": 4,
+    "priceUsd": "24.99",
+    "completionDays": null,
+    "completionNote": "North Dakota sets no deadline for the course. Your premium reduction runs from the date you finish, so the sooner you complete it, the sooner it starts.",
+    "modules": [
+      {
+        "n": 1,
+        "title": "Introduction and Orientation",
+        "blurb": "What crashes cost all of us, why most of them are preventable, and the mindset that makes the next four hours worth it."
+      },
+      {
+        "n": 2,
+        "title": "Traffic Laws and Why They Matter",
+        "blurb": "Right-of-way, speed, signs, signals, markings, turns, roundabouts and the rules drivers most often get wrong."
+      },
+      {
+        "n": 3,
+        "title": "Defensive Driving Techniques",
+        "blurb": "Scanning, space, following distance, hazard perception, adverse conditions and a checklist you can actually use."
+      },
+      {
+        "n": 4,
+        "title": "The Psychology of Driving",
+        "blurb": "Attention, attitude, age and crash risk, road rage, the myth of multitasking and the three kinds of distraction."
+      },
+      {
+        "n": 5,
+        "title": "Impaired Driving",
+        "blurb": "Alcohol, drugs, prescriptions, fatigue, the human and financial cost, and the plan you make before the first drink."
+      },
+      {
+        "n": 6,
+        "title": "Sharing the Road",
+        "blurb": "Pedestrians, cyclists, motorcycles, large trucks, school buses, emergency vehicles and work zones."
+      },
+      {
+        "n": 7,
+        "title": "Crash Dynamics and Avoidance",
+        "blurb": "What happens in a collision, what to do when a wheel drops off the pavement, and the seconds that avoid it."
+      },
+      {
+        "n": 8,
+        "title": "The Vehicle and Driving Environment",
+        "blurb": "Maintenance, safety equipment, passing on a two-lane road, weather, animals, night driving and road types."
+      },
+      {
+        "n": 9,
+        "title": "Final exam",
+        "blurb": "25 questions. 18 correct to pass. Unlimited retakes.",
+        "isFinal": true
+      }
+    ],
+    "knowledgeChecks": null
+  },
+  "exam": {
+    "questions": 25,
+    "passPercent": 72,
+    "passCount": 18,
+    "attempts": null,
+    "cooldownHours": null,
+    "showAnswers": false,
+    "failNote": "Unlimited retakes, no waiting period. Different questions each time."
+  },
+  "identityChecks": null,
+  "seo": {
+    "title": "North Dakota Insurance Premium Reduction Course Online, $24.99 | Road Ready Safety",
+    "description": "4-hour online North Dakota insurance premium reduction course, approved by the Highway Patrol. Finish, send your certificate to your insurer, and North Dakota law requires a premium reduction for 2 years, 3 at 55+. $24.99, certificate included.",
+    "keywords": "North Dakota insurance premium reduction course, ND insurance premium reduction course online, North Dakota defensive driving course insurance, crash prevention course North Dakota, NDHP approved online course, lower car insurance North Dakota",
+    "credential": "North Dakota Insurance Premium Reduction Course Certificate of Completion",
+    "courseDescription": "Four-hour online motor vehicle crash prevention course for North Dakota drivers seeking the insurance premium reduction under NDCC 26.1-25-04.1, built to the North Dakota Highway Patrol's curriculum rule (NDAC 38-08-02). Self-paced, eight modules and a 25-question final exam.",
+    "pages": {
+      "faq": {
+        "title": "North Dakota Insurance Premium Reduction Course FAQ | Road Ready",
+        "description": "Plain answers about North Dakota's insurance premium reduction course: how long the reduction lasts, who qualifies, what your insurer needs, the exam, the certificate and the price."
+      },
+      "howItWorks": {
+        "title": "How the ND Insurance Premium Reduction Course Works | Road Ready",
+        "description": "What the course does under NDCC 26.1-25-04.1, how the eight modules and final exam work, and how your certificate gets to your insurer after you pass."
+      },
+      "refund": {
+        "title": "ND Insurance Premium Reduction Course Refund Policy | Road Ready",
+        "description": "Refund policy for the North Dakota Insurance Premium Reduction Course: a full refund any time before you complete the course. No cancellation window, no deductions."
+      },
+      "helpcenter": {
+        "title": "ND Insurance Premium Reduction Course Help Center | Road Ready",
+        "description": "Step-by-step help with the North Dakota insurance course: enrolling, logging in, the final exam, downloading your certificate and sending it to your insurer."
+      },
+      "accessibility": {
+        "title": "ND Insurance Premium Reduction Course Accessibility | Road Ready",
+        "description": "How the North Dakota Insurance Premium Reduction Course is built for accessibility, and how to ask for an accommodation by email or phone before or during the course."
+      }
+    }
+  },
+  "banner": "$24.99 total — certificate included and ready to download the moment you pass. Nothing added at checkout.",
+  "headerStyle": "minimal",
+  "nav": [
+    {
+      "href": "/north-dakota/insurance-premium-reduction#course",
+      "label": "Your Course"
+    },
+    {
+      "href": "/north-dakota/insurance-premium-reduction/how-it-works",
+      "label": "How It Works"
+    },
+    {
+      "href": "/north-dakota/insurance-premium-reduction/pricing",
+      "label": "Pricing"
+    },
+    {
+      "href": "/north-dakota/blog",
+      "label": "Guides"
+    },
+    {
+      "href": "/north-dakota/insurance-premium-reduction/faq",
+      "label": "FAQ"
+    }
+  ],
+  "hero": {
+    "eyebrow": "North Dakota · 4 Hours Online",
+    "headline": "North Dakota (ND) Insurance Premium Reduction Course Online",
+    "subhead": "Finish the course, hand your insurer the certificate, and North Dakota law requires a premium reduction for at least two years, three if you are 55 or older. Four hours, self-paced, $24.99 total.",
+    "ctaLabel": "Start the Course",
+    "secondaryCta": {
+      "label": "How the reduction works",
+      "href": "#how-it-works"
+    },
+    "microcopy": "Self-paced · Works on your phone · No ticket needed",
+    "mockProgressLabel": "Course Progress",
+    "mockContinueLabel": "Continue Module 5",
+    "mockCalloutTitle": "Certificate on completion",
+    "mockCalloutBody": "Download as a PDF"
+  },
+  "badges": [
+    {
+      "icon": "/assets/icons/texas/tdlr-approved-icon.svg",
+      "title": "Built to the Highway Patrol's Rule",
+      "body": "Every topic NDAC 38-08-02 requires of a crash prevention course, in four hours of plain-language instruction."
+    },
+    {
+      "icon": "/assets/icons/texas/guarantee-icon.svg",
+      "title": "One Flat Price",
+      "body": "$24.99. Certificate included. No processing fee, no delivery fee."
+    },
+    {
+      "icon": "/assets/icons/texas/super-easy-icon.svg",
+      "title": "Unlimited Retakes",
+      "body": "The final exam can be retaken as many times as you need, at no charge."
+    },
+    {
+      "icon": "/assets/icons/texas/mobile-friendly-icon.svg",
+      "title": "Works on Your Phone",
+      "body": "Stop and resume anywhere. Most people finish in one evening or two."
+    }
+  ],
+  "trustBand": [
+    "4 hours, self-paced",
+    "Certificate ready to download when you pass",
+    "Full refund any time before you finish",
+    "Real people on phone and email"
+  ],
+  "pricing": {
+    "heading": "One price. Here is everything inside it.",
+    "included": [
+      "All four hours of the course",
+      "Eight modules in plain English",
+      "The 25-question final exam, with unlimited retakes",
+      "Your certificate of completion, ready to download as a PDF the moment you pass",
+      "Support by phone and email while you are enrolled"
+    ],
+    "notCharged": [
+      "Certificate fees",
+      "Processing fees",
+      "Exam retakes",
+      "Faster delivery"
+    ],
+    "lineItems": [
+      {
+        "label": "Course",
+        "value": "$24.99",
+        "good": false
+      },
+      {
+        "label": "Certificate",
+        "value": "Included",
+        "good": true
+      },
+      {
+        "label": "Processing fee",
+        "value": "$0.00",
+        "good": true
+      },
+      {
+        "label": "Exam retakes",
+        "value": "$0.00",
+        "good": true
+      }
+    ],
+    "totalLabel": "Total. Not a deposit, not a starting price.",
+    "refundNote": "Full refund any time before you complete the course."
+  },
+  "audiences": {
+    "eyebrow": "Who it is for",
+    "heading": "Is this course for you?",
+    "intro": "What North Dakota law gives a driver who finishes an approved crash prevention course.",
+    "items": [
+      {
+        "label": "If you want a lower premium",
+        "status": "2-year reduction",
+        "tone": "info",
+        "heading": "Your insurer must offer a premium reduction",
+        "bullets": [
+          "For at least two years after you finish",
+          "On the vehicle you principally drive",
+          "The amount is set by your insurer"
+        ]
+      },
+      {
+        "label": "If you are 55 or older",
+        "status": "3-year reduction",
+        "tone": "info",
+        "heading": "The reduction runs three years instead of two",
+        "bullets": [
+          "Same course, same certificate",
+          "Written into NDCC 26.1-25-04.1",
+          "Ask your insurer when it starts"
+        ]
+      },
+      {
+        "label": "If you need points off",
+        "status": "Different course",
+        "tone": "muted",
+        "heading": "This course does not touch your driving record",
+        "bullets": [
+          "Taking 3 points off, or keeping a ticket's points off, is a separate course approved by NDDOT. Ours is at roadreadysafety.com/north-dakota."
+        ]
+      }
+    ]
+  },
+  "curriculum": {
+    "heading": "What is in the four hours",
+    "intro": "Eight short modules that cover every subject the Highway Patrol's rule names, from the cost of crashes to passing on a two-lane road.",
+    "highlights": [
+      {
+        "v": "4 hours",
+        "l": "Self-paced. Stop and resume any time"
+      },
+      {
+        "v": "Unlimited retakes",
+        "l": "On the final exam, at no charge"
+      },
+      {
+        "v": "Certificate",
+        "l": "Ready to download the moment you pass"
+      }
+    ]
+  },
+  "steps": {
+    "heading": "How it works, start to lower premium",
+    "intro": "We handle the first four steps. The last one is a message to your insurance agent.",
+    "withUsCount": 4,
+    "withUsLabel": "With us",
+    "afterLabel": "You and your insurer",
+    "items": [
+      {
+        "n": 1,
+        "title": "Enroll",
+        "body": "Pay $24.99 and confirm your details. No ticket, court order or insurer referral is needed; any North Dakota driver can take the course."
+      },
+      {
+        "n": 2,
+        "title": "Work through the eight modules",
+        "body": "Four hours, self-paced. Each section has a minimum reading time, and your place is saved whenever you stop."
+      },
+      {
+        "n": 3,
+        "title": "Pass the 25-question final",
+        "body": "Eighteen correct to pass. Unlimited retakes with different questions, no waiting period."
+      },
+      {
+        "n": 4,
+        "title": "Get your certificate",
+        "body": "Ready to download from your account as a PDF the moment you pass. We email you the link, and our help center shows how to send it to your insurer."
+      },
+      {
+        "n": 5,
+        "title": "Send it to your insurer",
+        "body": "Give the certificate to your agent or upload it where your insurer asks. Under NDCC 26.1-25-04.1 the reduction must be shown separately on your premium bill, so check the next one. North Dakota has no state reporting system; the certificate is the whole proof."
+      }
+    ]
+  },
+  "deadline": null,
+  "compare": null,
+  "benefits": [
+    {
+      "headline": "A premium reduction your insurer must offer",
+      "body": "North Dakota Century Code 26.1-25-04.1 requires every auto insurer's rate filing to provide an appropriate reduction in premium for principal operators who complete a crash prevention course approved by the superintendent of the Highway Patrol. The reduction lasts at least two years and must be disclosed separately on the bill. The amount is each insurer's to set.",
+      "cite": "NDCC 26.1-25-04.1"
+    },
+    {
+      "headline": "Three years if you are 55 or older",
+      "body": "The same section entitles a driver fifty-five or older who completes an approved course to a three-year premium reduction. There is no separate senior course; it is this one.",
+      "cite": "NDCC 26.1-25-04.1"
+    },
+    {
+      "headline": "A certificate you send to your insurer yourself",
+      "body": "The course sponsor issues the certificate that is the basis for the reduction. We issue yours the moment you pass, in the form the Highway Patrol approves, and you deliver it to your agent or insurer. No points come off your record; that is a different course.",
+      "cite": "NDCC 26.1-25-04.1; NDAC 38-08-04-01(3)"
+    }
+  ],
+  "faqs": [
+    {
+      "q": "How much will my premium go down?",
+      "a": "That is your insurer's number, not ours. The law requires \"an appropriate reduction in premium charges\" and leaves the amount to each company's rate filing. If the figure matters to you, ask your agent before you enroll. We do not promise any amount."
+    },
+    {
+      "q": "How long does the reduction last?",
+      "a": "At least two years from the date you complete the course. If you are fifty-five or older when you complete it, three years. Both periods are written into NDCC 26.1-25-04.1."
+    },
+    {
+      "q": "Who qualifies?",
+      "a": "The principal operator of a private passenger vehicle, or a pickup or van under 10,000 pounds that is not used for hauling goods, insured in North Dakota. The reduction does not apply if your rate is experience-rated or your policy already carries a driver education reduction. On a policy with several vehicles, it applies to the one you principally drive."
+    },
+    {
+      "q": "Will my insurer accept this course?",
+      "a": "The statute applies to every insurer's North Dakota rate filing, and it names courses approved by the superintendent of the Highway Patrol. Ours is built to the Patrol's curriculum rule and our approval status is shown at the top of every page. Insurers can still ask for the certificate in their own way, so ask your agent how they want it."
+    },
+    {
+      "q": "Is this the point reduction course?",
+      "a": "No. This course lowers your premium; it does not change your driving record. Taking three points off, or keeping a new ticket's points off, is a separate course under NDDOT's point reduction program. We offer that one too, at roadreadysafety.com/north-dakota."
+    },
+    {
+      "q": "Do I need a ticket to take it?",
+      "a": "No. Any North Dakota driver can take the course, with or without a ticket, and most people take it simply to lower their premium."
+    },
+    {
+      "q": "How do I get the reduction?",
+      "a": "Finish the course, download your certificate, and give it to your agent or upload it where your insurer asks. Then read your next bill: the law says the reduction must be shown separately. If it is not there, call your agent with the certificate in hand."
+    },
+    {
+      "q": "How long does the course take?",
+      "a": "Four hours, self-paced. Most people finish in one or two evenings. There is no deadline; the reduction simply starts from the date you finish."
+    },
+    {
+      "q": "What is the final exam like?",
+      "a": "Twenty-five questions, eighteen correct to pass. Unlimited retakes with different questions and no waiting period. There are no quizzes between modules."
+    },
+    {
+      "q": "Is it really $24.99?",
+      "a": "Yes. The certificate, unlimited retakes and support are inside that number. There is no processing fee and no upgraded version of the course."
+    },
+    {
+      "q": "Can I get a refund?",
+      "a": "Yes, in full, at any time before you complete the course. After you pass the exam and the certificate is issued, no refund is available."
+    },
+    {
+      "q": "What happens when the two or three years are up?",
+      "a": "The reduction ends. The law ties it to completing an approved course, so most drivers take the course again before the period runs out. Ask your insurer how far ahead they will accept a new certificate."
+    },
+    {
+      "q": "Can I do this on my phone?",
+      "a": "Yes. The course and exam work on a phone, and your progress saves the moment you leave."
+    },
+    {
+      "q": "Is this a Highway Patrol course?",
+      "a": "No. The Highway Patrol approves courses offered by private providers. We are a private company; our approval status is shown at the top of every page, and you can confirm it on the Patrol's list of approved online courses."
+    }
+  ],
+  "finalCta": {
+    "heading": "Four hours. One flat price. Two years of a lower premium, or three.",
+    "body": "Enroll now, finish tonight or over the weekend, and hand your insurer the certificate. That is the whole process.",
+    "bullets": [
+      "4 hours, self-paced",
+      "Certificate included",
+      "Unlimited retakes",
+      "Full refund before completion"
+    ]
+  },
+  "reviewsHeading": "What students say about our courses",
+  "help": [
+    {
+      "q": "How to enroll",
+      "steps": [
+        "Click Start the Course on any page",
+        "Enter your name, date of birth, North Dakota driver license number and contact details exactly as they appear on your license",
+        "Pay $24.99 by card. Nothing else is charged",
+        "You receive a confirmation email with your login link"
+      ]
+    },
+    {
+      "q": "How to log in",
+      "steps": [
+        "Open the login page and enter your email and password",
+        "Enter the code we email you",
+        "Click Continue Course to pick up where you left off"
+      ]
+    },
+    {
+      "q": "How the modules work",
+      "steps": [
+        "Work through the eight modules in order",
+        "Each section has a minimum reading time before the next one unlocks; use it to read, the course sticks better",
+        "Stop and resume whenever you like; your place is saved"
+      ]
+    },
+    {
+      "q": "How to take the final exam",
+      "steps": [
+        "Finish every module first",
+        "The exam is 25 questions; 18 correct passes",
+        "If you miss it, retake it immediately with different questions. There is no limit"
+      ]
+    },
+    {
+      "q": "How to get your certificate",
+      "steps": [
+        "It is ready to download from your account as a PDF the moment you pass, and we email you the link",
+        "Download it and keep a copy",
+        "Need another copy? Ask support. One free duplicate within 30 days"
+      ]
+    },
+    {
+      "q": "How to send your certificate to your insurer",
+      "steps": [
+        "Email the PDF to your agent, or upload it in your insurer's app or website if they have a place for documents",
+        "Ask them to apply the crash prevention course reduction under NDCC 26.1-25-04.1 and to show it as its own line on your bill",
+        "Check your next premium bill. The reduction runs at least two years, three if you were 55 or older when you finished"
+      ],
+      "note": "We do not report completions to insurers or to the state. This step is yours."
+    },
+    {
+      "q": "How to reset your password",
+      "steps": [
+        "Open the login page and click Forgot Password",
+        "Enter the email you enrolled with",
+        "Open the reset link in the email (it expires after 24 hours)",
+        "Choose a new password and log in"
+      ]
+    },
+    {
+      "q": "Taking the course on your phone",
+      "steps": [
+        "Open your phone's browser and log in",
+        "The course and exam adapt to your screen",
+        "Your progress saves when you leave, so you can switch between phone and computer any time"
+      ]
+    }
+  ],
+  "footer": {
+    "blurb": "North Dakota's four-hour online crash prevention course for the insurance premium reduction, at one flat price with the certificate included.",
+    "disclaimer": "Completing this course may entitle the principal operator of a qualifying vehicle to a premium reduction under NDCC 26.1-25-04.1 for at least two years, or three years for a driver fifty-five or older. The insurer applies the reduction and sets its amount; the student is responsible for delivering the certificate. This course does not reduce points on a North Dakota driving record. Road Ready Safety is a private company and is not affiliated with the North Dakota Highway Patrol or any insurer."
+  },
+  "claims": {
+    "banned": [
+      "National Safety Council",
+      "NDDOT-approved",
+      "NDDOT approved",
+      "approved by NDDOT",
+      "dismiss your ticket",
+      "ticket dismissed",
+      "ticket dismissal",
+      "guaranteed discount",
+      "guaranteed reduction",
+      "guaranteed savings",
+      "10%",
+      "insurance discount",
+      "live instructor"
+    ]
+  },
+  "blog": {
+    "title": "North Dakota insurance premium reduction guides",
+    "intro": "Plain answers on the premium reduction North Dakota law gives drivers who finish an approved course: how long it lasts, who qualifies and what your insurer needs. From the Century Code, with sources."
+  }
+}

@@ -51,8 +51,12 @@ export const TEXAS_COURSE = {
 /** "$25" */
 export const TEXAS_PRICE_LABEL = `$${TEXAS_COURSE.price}`;
 
-/** True while we charge exactly the statutory minimum; gates the "lowest price Texas law allows" wording. */
-export const TEXAS_AT_LEGAL_MINIMUM = TEXAS_COURSE.price === TEXAS_COURSE.legalMinimumPrice;
+/**
+ * Gates the "lowest price Texas law allows" wording in the /texas title banner and meta description.
+ * Jackson, 2026-10-14: off until the Texas lawyer clears the claim, even though price === legalMinimumPrice.
+ * Flip back to `TEXAS_COURSE.price === TEXAS_COURSE.legalMinimumPrice` once cleared.
+ */
+export const TEXAS_AT_LEGAL_MINIMUM = false;
 
 /** "$29.99" today (course + audio); "$34.98" once autoplayLive is true (course + audio + autoplay). */
 export const TEXAS_AUDIO_TOTAL_LABEL = `$${(TEXAS_COURSE.price + TEXAS_COURSE.audioPrice + (TEXAS_COURSE.autoplayLive ? TEXAS_COURSE.autoplayPrice : 0)).toFixed(2)}`;

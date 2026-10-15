@@ -21,6 +21,7 @@ import {
 } from './texas-course';
 import ade from './ade-texas.json';
 import nd from './courses/nd-ddc.json';
+import ndIpr from './courses/nd-ipr.json';
 import mo from './courses/mo-dip.json';
 import id from './courses/id-ddc.json';
 import oh from './courses/oh-bdi.json';
@@ -44,6 +45,8 @@ export const PRICE_TOKENS: Record<string, string> = {
   ADE_PRICE: `$${ade.course.priceUsd}`,
   /** "$24.99" */
   ND_PRICE: `$${nd.course.priceUsd}`,
+  /** "$24.99": the North Dakota insurance premium reduction course (nd-ipr). */
+  ND_IPR_PRICE: `$${ndIpr.course.priceUsd}`,
   /** "$24.99" */
   MO_PRICE: `$${mo.course.priceUsd}`,
   /** "$24.99" */
@@ -52,7 +55,7 @@ export const PRICE_TOKENS: Record<string, string> = {
   OH_PRICE: `$${oh.course.priceUsd}`,
 };
 
-const TOKEN_RE = /\{\{(TX_PRICE_CENTS|TX_PRICE|TX_LEGAL_MIN|TX_AUDIO_PRICE|TX_AUTOPLAY_PRICE|TX_AUDIO_TOTAL|TX_ALL_IN|ADE_PRICE|ND_PRICE|MO_PRICE|ID_PRICE|OH_PRICE)\}\}/g;
+const TOKEN_RE = /\{\{(TX_PRICE_CENTS|TX_PRICE|TX_LEGAL_MIN|TX_AUDIO_PRICE|TX_AUTOPLAY_PRICE|TX_AUDIO_TOTAL|TX_ALL_IN|ADE_PRICE|ND_IPR_PRICE|ND_PRICE|MO_PRICE|ID_PRICE|OH_PRICE)\}\}/g;
 
 /** Replace every {{PRICE_TOKEN}} in a string. Unknown tokens are left alone. */
 export function fillPrices(s: string): string {

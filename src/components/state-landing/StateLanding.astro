@@ -21,6 +21,7 @@ import SampleCertificate from '../landing-v2/SampleCertificate.astro';
 import texasReviews from '../../data/texas-reviews.json';
 import type { CourseData } from '../../data/courses/types';
 import { enrollUrl as buildEnrollUrl, contactUrl } from '../../lib/courseFlags';
+import { guidesRouteFor } from '../../data/courses/index';
 
 type Check = { strong?: string; rest: string };
 type Tab = { key: string; label: string; intro: string; items: [string, string][]; note?: string; link?: boolean };
@@ -31,6 +32,8 @@ interface Props {
   h1: string;
   bullets: { label: string; text: string }[];
   heroNote?: string;
+  /** Optional link after the hero note: North Dakota's two courses point at each other here. */
+  heroNoteLink?: { href: string; label: string };
   cardChecks: Check[];
   tabs: Tab[];
   resources: Resource[];
@@ -39,7 +42,8 @@ interface Props {
   /** Override the FAQ list (Missouri drops its "$10 courses" answer on the landing page). Must match the page's FAQPage schema. */
   faqs?: { q: string; a: string }[];
 }
-const { course, seal, h1, bullets, heroNote, cardChecks, tabs, resources, aboutWho, sampleNumber, faqs = course.faqs } = Astro.props;
+const { course, seal, h1, bullets, heroNote, heroNoteLink, cardChecks, tabs, resources, aboutWho, sampleNumber, faqs = course.faqs } = Astro.props;
+const guidesRoute = guidesRouteFor(course);
 
 const enrollUrl = buildEnrollUrl(course);
 const price = `$${course.course.priceUsd}`;
@@ -95,7 +99,7 @@ const chev = (stroke: string, size = 18) => `<svg width="${size}" height="${size
       {heroNote && (
         <p class="m-0 flex items-start gap-2 text-sm text-text-muted max-w-[520px]">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" class="flex-none mt-0.5"><circle cx="12" cy="12" r="9" stroke="#64748B" stroke-width="2"/><path d="M12 11 V16 M12 8 V8.5" stroke="#64748B" stroke-width="2" stroke-linecap="round"/></svg>
-          <span>{heroNote}</span>
+          <span>{heroNote}{heroNoteLink && <>{' '}<a href={heroNoteLink.href} class="text-primary-deep font-semibold underline underline-offset-2 whitespace-nowrap">{heroNoteLink.label}</a></>}</span>
         </p>
       )}
     </div>
@@ -279,7 +283,7 @@ const chev = (stroke: string, size = 18) => `<svg width="${size}" height="${size
           </a>
         ))}
       </div>
-      <a href={`${course.state.route}/blog`} class="self-center text-center mt-4 font-bold text-base text-primary-deep underline">Every {course.state.name} guide&nbsp;→</a>
+      <a href={guidesRoute} class="self-center text-center mt-4 font-bold text-base text-primary-deep underline">Every {course.state.name} guide&nbsp;→</a>
     </div>
   </section>
 </div>

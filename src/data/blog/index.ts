@@ -8,6 +8,7 @@ import nd from './nd.json';
 import id from './id.json';
 import mo from './mo.json';
 import { fillPricesDeep } from '../prices';
+import { enabledCourses } from '../courses/index';
 
 export interface StatePost {
   slug: string;
@@ -32,6 +33,13 @@ export interface StatePost {
   kind?: 'hub';
   /** Who checked the facts on `updated`. */
   reviewedBy?: string;
+  /**
+   * The course this guide sells when it is not the state's default one (North Dakota: "nd-ipr" for the
+   * insurance premium reduction guides). The guide renders in that course's chrome with that course's
+   * buy boxes, and it exists only while that course is enabled (src/lib/courseFlags.ts), so an
+   * unapproved course's guides never build.
+   */
+  course?: string;
 }
 
 // Course prices appear in the JSON as {{ND_PRICE}}, {{MO_PRICE}}, {{ID_PRICE}}, {{OH_PRICE}} (src/data/prices.ts), filled once here.
@@ -43,7 +51,13 @@ const byState: Record<string, StatePost[]> = {
   MO: posts(mo),
 };
 
+const courseOn = (key: string) => enabledCourses.some((c) => c.course.key === key);
+
 export function postsFor(stateCode: string): StatePost[] {
   // Newest first; posts with the same date keep their order in the file, so a state's main guide can lead.
-  return (byState[stateCode.toUpperCase()] ?? []).slice().sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
+  // A guide that names a course exists only while that course is enabled.
+  return (byState[stateCode.toUpperCase()] ?? [])
+    .filter((p) => !p.course || courseOn(p.course))
+    .slice()
+    .sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
 }

@@ -1,13 +1,38 @@
 import type { APIRoute } from 'astro';
 import { TEXAS_PRICE_LABEL } from '../data/texas-course';
 import nd from '../data/courses/nd-ddc.json';
+import ndIpr from '../data/courses/nd-ipr.json';
 import mo from '../data/courses/mo-dip.json';
+import type { CourseData } from '../data/courses/types';
+import { isEnabled } from '../lib/courseFlags';
 
 // llms.txt for AI crawlers. Same shape as robots.txt.ts: built at deploy time so every price
 // comes from the data files (src/data/texas-course.ts, src/data/courses/*.json), never typed here.
 const TX = TEXAS_PRICE_LABEL;
 const ND = `$${nd.course.priceUsd}`;
 const MO = `$${mo.course.priceUsd}`;
+// The North Dakota insurance premium reduction course (Highway Patrol, SKU nd-ipr) is listed only once it is
+// live (src/lib/courseFlags.ts: production needs its approval number). Until then the point reduction entry
+// says the insurance course is a different course and this one does not claim it.
+const IPR_ON = isEnabled(ndIpr as CourseData);
+const IPR = `$${ndIpr.course.priceUsd}`;
+const iprLine = IPR_ON
+  ? `That is our separate North Dakota Insurance Premium Reduction Course (Highway Patrol-approved): https://roadreadysafety.com/north-dakota/insurance-premium-reduction`
+  : `That is a different course on the Highway Patrol's list, and this course does not claim it.`;
+const iprBlock = IPR_ON
+  ? `
+- **North Dakota Insurance Premium Reduction Course**
+  - Type: Online, self-paced, 4 hours (motor vehicle crash prevention course, NDAC 38-08-02)
+  - Approval: approved by the North Dakota Highway Patrol for insurance premium reduction
+  - Price: ${IPR} total
+  - What it does: under NDCC 26.1-25-04.1, every auto insurer's North Dakota rate filing must provide an appropriate premium reduction for the principal operator who completes an approved course, for at least two years; three years for a driver 55 or older. The insurer sets the amount. The reduction must be shown separately on the bill.
+  - Not for: taking points off a driving record. That is the separate NDDOT point reduction course above.
+  - After the course: the student gives the certificate to their insurer; there is no state reporting.
+  - Course page: https://roadreadysafety.com/north-dakota/insurance-premium-reduction
+  - Which course do I need?: https://roadreadysafety.com/north-dakota/which-course
+  - Enroll: https://app.roadreadysafety.com/public/checkout?sku=nd-ipr
+`
+  : '';
 
 const body = `# Road Ready Safety
 
@@ -40,10 +65,10 @@ const body = `# Road Ready Safety
   - Approval: NDDOT-approved for point reduction
   - Price: ${ND} total
   - What it does: takes 3 points off a North Dakota driving record, once every 12 months, or is elected at court in lieu of points for a ticket worth 5 points or fewer
-  - Not for: a North Dakota insurance premium reduction. That is a different course on the Highway Patrol's list, and this course does not claim it.
+  - Not for: a North Dakota insurance premium reduction. ${iprLine}
   - Course page: https://roadreadysafety.com/north-dakota
   - Guides: https://roadreadysafety.com/north-dakota/blog
-
+${iprBlock}
 ## Who It's For
 
 Texas drivers who received a moving violation traffic ticket and wish to dismiss it through the Texas Driver Safety Course (DSC) program, or any Texas driver who wants to reduce their auto insurance premium by completing a state-approved defensive driving course.
@@ -55,7 +80,7 @@ Eligibility requirements: valid Texas driver's license (not expired/suspended), 
 - A Texas driver with a moving-violation ticket whose court allows a driving safety course (DSC) for dismissal. Request the course from the court by the appearance date on the citation, before paying.
 - A Texas driver who wants the defensive driving discount their auto insurer offers. Insurers set their own terms; a discount is possible, check with your insurer.
 - A Missouri driver whose court ordered the Driver Improvement Program in lieu of points.
-- A North Dakota driver taking three points off their record, or electing the course at court in lieu of points.
+- A North Dakota driver taking three points off their record, or electing the course at court in lieu of points.${IPR_ON ? '\n- A North Dakota driver who wants the premium reduction NDCC 26.1-25-04.1 requires insurers to offer after an approved crash prevention course (the separate insurance course).' : ''}
 
 ## Not For
 
@@ -63,7 +88,7 @@ Eligibility requirements: valid Texas driver's license (not expired/suspended), 
 - Drivers with an out-of-state license: not eligible for Texas ticket dismissal.
 - Tickets for 25+ mph over the limit (or 95+ mph), passing a stopped school bus, or a construction-zone violation with workers present: Texas excludes these from dismissal.
 - Anyone who already completed a Texas DSC for dismissal in the last 12 months.
-- A North Dakota insurance premium reduction: that is a different course, and this one does not claim it.
+- A North Dakota insurance premium reduction from the point reduction course: ${IPR_ON ? 'that is the separate insurance premium reduction course, not the point reduction course.' : 'that is a different course, and this one does not claim it.'}
 
 ## Key URLs
 

@@ -5,12 +5,12 @@ import Pricing from '../../components/course/Pricing.astro';
 import CompareTable from '../../components/course/CompareTable.astro';
 import Faq from '../../components/course/Faq.astro';
 import FinalCta from '../../components/course/FinalCta.astro';
-import { enabledCourses, stateParam } from '../../data/courses/index';
+import { stateRouteCourses, stateParam } from '../../data/courses/index';
 import { enrollUrl as buildEnrollUrl, contactUrl } from '../../lib/courseFlags';
 import type { CourseData } from '../../data/courses/types';
 
 export function getStaticPaths() {
-  return enabledCourses.map((course) => ({ params: { state: stateParam(course) }, props: { course } }));
+  return stateRouteCourses.map((course) => ({ params: { state: stateParam(course) }, props: { course } }));
 }
 
 const { course } = Astro.props as { course: CourseData };

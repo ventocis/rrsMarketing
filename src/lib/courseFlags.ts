@@ -61,13 +61,16 @@ export function isInSitemap(course: CourseGateInput): boolean {
 }
 
 /**
- * Enrollment URL. A per-course override (VITE_<STATE>_ENROLLMENT_URL) wins; otherwise derive
- * from VITE_PORTAL_URL so QA builds point at the QA portal automatically.
+ * Enrollment URL. A per-course override wins (VITE_<SKU>_ENROLLMENT_URL, e.g. VITE_ND_IPR_ENROLLMENT_URL,
+ * then the older per-state VITE_<STATE>_ENROLLMENT_URL); otherwise derive from VITE_PORTAL_URL so QA
+ * builds point at the QA portal automatically. The SKU form exists because North Dakota now has two
+ * courses (nd-ddc, nd-ipr) and a state-level override would send both to one checkout.
  */
 export function enrollUrl(course: CourseGateInput): string {
-  const override = (import.meta.env as Record<string, string | undefined>)[
-    `VITE_${course.state.code.toUpperCase()}_ENROLLMENT_URL`
-  ];
+  const env = import.meta.env as Record<string, string | undefined>;
+  const override =
+    env[`VITE_${course.course.sku.toUpperCase().replace(/-/g, '_')}_ENROLLMENT_URL`] ||
+    env[`VITE_${course.state.code.toUpperCase()}_ENROLLMENT_URL`];
   if (override) return override;
   const portal = (import.meta.env.VITE_PORTAL_URL || 'https://app.roadreadysafety.com').replace(/\/$/, '');
   return `${portal}/public/checkout?sku=${course.course.sku}`;

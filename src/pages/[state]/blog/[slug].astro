@@ -1,13 +1,13 @@
 ---
 import { marked } from 'marked';
 import CourseLayout from '../../../layouts/CourseLayout.astro';
-import { enabledCourses, stateParam } from '../../../data/courses/index';
+import { stateRouteCourses, stateParam } from '../../../data/courses/index';
 import { postsFor, type StatePost } from '../../../data/blog/index';
 import { enrollUrl as buildEnrollUrl, siteUrl } from '../../../lib/courseFlags';
 import type { CourseData } from '../../../data/courses/types';
 
 export function getStaticPaths() {
-  return enabledCourses.flatMap((course) =>
+  return stateRouteCourses.flatMap((course) =>
     postsFor(course.state.code).map((post) => ({
       params: { state: stateParam(course), slug: post.slug },
       props: { course, post },

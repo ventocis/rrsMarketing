@@ -21,8 +21,8 @@ interface Props {
 const { course } = Astro.props;
 
 // Our own Texas courses redirect to their landing pages, exactly like /courses/[slug]/index.astro: courses.json
-// still carries the old TicketSchool reseller rows for them, so this page printed "Price: $25, Provider: TicketSchool"
-// for the $28 Road Ready course (prod audit, 2026-10-15).
+// still carries the old TicketSchool reseller rows for them, so this page printed the reseller's price and "Provider: TicketSchool"
+// for the Road Ready course (prod audit, 2026-10-15).
 const isTexasEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const ownState = enabledCourses.find((c) => c.course.sku === course.slug);
 const redirectTo = isTexasEnabled && course.slug === 'tx-defensive' ? '/texas' : adeEnabled && course.slug === 'tx-adult-ed' ? '/adult-drivers-ed/texas' : ownState ? ownState.state.route : null;

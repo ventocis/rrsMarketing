@@ -1,0 +1,169 @@
+---
+/**
+ * North Dakota INSURANCE PREMIUM REDUCTION course landing page, on the same structure as the point
+ * reduction page (north-dakota/[...override].astro) via the shared StateLanding layout.
+ *
+ * This is a different course from /north-dakota: approved by the North Dakota Highway Patrol under
+ * NDAC 38-08 (not NDDOT), sold as SKU nd-ipr, and marketed separately at NDHP's request (call,
+ * 2026-10-08). The page says so in the hero and never claims a point reduction. Facts come from
+ * nd-ipr.json (price, hours, modules, exam, FAQs) and NDCC 26.1-25-04.1 / NDAC 38-08-02, 38-08-04
+ * (read 2026-10-15). The amount of the reduction is never promised: the statute requires "an appropriate
+ * reduction" and leaves the number to each insurer's rate filing.
+ *
+ * Gating: getStaticPaths returns nothing while nd-ipr is disabled. In production that is until
+ * provider.approvalNumber is filled in nd-ipr.json (src/lib/courseFlags.ts); on QA/local the state flag
+ * previews it. The seal pill and first bullet read "approval pending" until the number is in.
+ */
+import CourseLayout from '../../../layouts/CourseLayout.astro';
+import StateLanding from '../../../components/state-landing/StateLanding.astro';
+import ndIpr from '../../../data/courses/nd-ipr.json';
+import ndDdc from '../../../data/courses/nd-ddc.json';
+import type { CourseData } from '../../../data/courses/types';
+import { isEnabled, isLicensed, siteUrl } from '../../../lib/courseFlags';
+
+export function getStaticPaths() {
+  return isEnabled(ndIpr as CourseData) ? [{ params: { override: undefined } }] : [];
+}
+
+const course = ndIpr as CourseData;
+const points = ndDdc as CourseData;
+const route = course.state.route;
+const guides = course.guidesRoute ?? `${route}/blog`;
+const price = `$${course.course.priceUsd}`;
+const licensed = isLicensed(course);
+const faqs = course.faqs;
+const exam = course.exam;
+const modules = course.course.modules.filter((m) => !/quiz|exam/i.test(m.title));
+
+const bullets = [
+  licensed
+    ? { label: 'NDHP-Approved', text: 'Approved by the North Dakota Highway Patrol as a motor vehicle crash prevention course.' }
+    : { label: 'Highway Patrol Course', text: 'Built to the North Dakota Highway Patrol’s crash prevention curriculum rule. NDHP approval pending.' },
+  { label: '2 Years Lower', text: 'North Dakota law requires your insurer to offer a premium reduction for at least two years after you finish.' },
+  { label: '3 Years at 55+', text: 'Drivers fifty-five and older get a three-year reduction.' },
+  { label: `${course.course.hours} Hours, Your Pace`, text: 'Pause anytime, pick up on any device. No ticket needed.' },
+  { label: 'Certificate Included', text: `Download it the moment you pass and hand it to your insurer. ${price} total.` },
+];
+
+const cardChecks = [
+  { strong: `${course.course.hours}-hour crash prevention course`, rest: ', built to the Highway Patrol’s rule for the insurance premium reduction' },
+  { rest: `${modules.length} short modules in plain English` },
+  { rest: `${exam.questions}-question final exam, unlimited retakes` },
+  { rest: 'Certificate ready to download the moment you pass; you send it to your insurer' },
+  { rest: 'Phone, tablet or computer: start, stop and resume anytime' },
+  { rest: 'Real customer support' },
+];
+
+const tabs = [
+  {
+    key: 'rules', label: 'North Dakota Rules',
+    intro: 'North Dakota’s insurance premium reduction is written into the Century Code, NDCC 26.1-25-04.1. Here is what it gives you and what it does not:',
+    items: [
+      ['Your insurer must offer a premium reduction', 'Every auto insurer’s North Dakota rate filing must provide an appropriate reduction in premium for the principal operator of a vehicle who completes a crash prevention course approved by the superintendent of the Highway Patrol. How much is each insurer’s call; the law sets no percentage.'],
+      ['It lasts at least two years, three if you are 55 or older', 'The reduction runs for at least two years after you complete the course. A driver fifty-five or older is entitled to three years. Both periods come from the statute, not from us.'],
+      ['It applies to one vehicle, and some policies are excluded', 'The reduction goes on the vehicle you principally operate: a private passenger car, or a pickup or van under 10,000 pounds that is not used for hauling goods. It does not apply if your rate is experience-rated or your policy already carries a driver education reduction.'],
+      ['It must show on your bill as its own line', 'The statute says the reduction must be separately disclosed, and your premium billing must show it for the person who earned it. If your next bill does not show it, call your agent with the certificate in hand.'],
+      ['You send the certificate to your insurer', 'The course sponsor issues the certificate that is the basis for the reduction. We issue yours the moment you pass, in the form the Highway Patrol approves. There is no state reporting system; you deliver it to your agent or insurer.'],
+      ['It does not touch your driving record', 'This course lowers a premium. It takes no points off and keeps no ticket’s points off; that is a separate course under NDDOT\u2019s point reduction program, and we offer that one too.'],
+    ] as [string, string][],
+    note: 'Your insurer applies the reduction and sets its amount, not us. If the number matters to you, ask your agent before you enroll.',
+  },
+  {
+    key: 'topics', label: 'Topics Covered',
+    intro: course.curriculum.intro,
+    items: [
+      ...modules.map((m) => [m.title, m.blurb] as [string, string]),
+      ['The final exam', `${exam.questions} questions; ${exam.passCount} correct passes. ${exam.failNote}`],
+    ] as [string, string][],
+  },
+  {
+    key: 'support', label: 'Support',
+    intro: 'We’re here to help throughout your course, from questions about the material to login or account access. Browse our help articles anytime, or contact us and a real person will help.',
+    items: [] as [string, string][],
+    link: true,
+  },
+  {
+    key: 'after', label: 'After the Course',
+    intro: 'Once you pass, your certificate of completion is ready to download right away.',
+    items: [
+      ['Send it to your insurer', 'Email the PDF to your agent, or upload it where your insurer keeps documents. Ask them to apply the crash prevention course reduction under NDCC 26.1-25-04.1.'],
+      ['Check your next bill', 'The reduction must appear as a separate line. If it is missing, that is the call to make, not a reason to retake anything.'],
+      ['Mark the end date', 'Two years from your completion date, or three if you were fifty-five or older. Most drivers retake an approved course before it runs out; ask your insurer how far ahead they accept a new certificate.'],
+    ] as [string, string][],
+  },
+];
+
+const resources = [
+  { href: `${guides}/north-dakota-insurance-premium-reduction-course`, tag: 'The reduction', title: 'North Dakota’s insurance premium reduction: how it works and who qualifies', blurb: 'What NDCC 26.1-25-04.1 gives you, the one-vehicle rule, and the two policies it skips.' },
+  { href: `${guides}/how-to-get-north-dakota-insurance-premium-reduction`, tag: 'Step by step', title: 'How to get the reduction on your bill', blurb: 'Course, certificate, agent, next bill. What to say and what to check.' },
+  { href: `${guides}/north-dakota-insurance-premium-reduction-55-and-older`, tag: '55 and older', title: 'Fifty-five or older? Yours lasts three years', blurb: 'The same course, one extra year, and the questions to ask your insurer.' },
+  { href: `${guides}/how-long-north-dakota-insurance-premium-reduction-lasts`, tag: 'Renewing', title: 'How long the reduction lasts, and when to retake the course', blurb: 'Two years, three at 55+, and the gap most drivers leave by accident.' },
+  { href: `${guides}/north-dakota-point-reduction-or-insurance-premium-reduction`, tag: 'Which course?', title: 'Point reduction or premium reduction: which course do you need?', blurb: 'Two agencies, two approvals, two courses. Pick the right one in a minute.' },
+  { href: '/north-dakota/which-course', tag: 'Quick check', title: 'Not sure which North Dakota course is yours?', blurb: 'Answer one question and we point you to the right page.' },
+];
+
+// One node typed both Course and Product, as on /north-dakota: Google retired Course rich results, and
+// the price only counts in Product (merchant listing) markup. The layout's own Course block is off.
+const courseProductSchema = {
+  '@context': 'https://schema.org',
+  '@type': ['Product', 'Course'],
+  '@id': `${siteUrl}${route}#course`,
+  name: course.course.name,
+  description: course.seo.courseDescription,
+  url: `${siteUrl}${route}`,
+  image: `${siteUrl}/assets/images/badges/north-dakota-approved.png`,
+  brand: { '@type': 'Brand', name: course.provider.dba },
+  category: 'Online motor vehicle crash prevention course',
+  provider: { '@type': 'Organization', name: course.provider.dba, legalName: course.provider.legalName, url: siteUrl },
+  educationalCredentialAwarded: course.seo.credential,
+  timeRequired: `PT${course.course.hours}H`,
+  inLanguage: 'en-US',
+  offers: {
+    '@type': 'Offer',
+    price: course.course.priceUsd,
+    priceCurrency: 'USD',
+    availability: 'https://schema.org/InStock',
+    url: `${siteUrl}${route}`,
+    seller: { '@type': 'Organization', name: course.provider.dba },
+    areaServed: { '@type': 'State', name: course.state.name },
+  },
+  hasCourseInstance: { '@type': 'CourseInstance', courseMode: 'online', courseWorkload: `PT${course.course.hours}H` },
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+---
+<CourseLayout
+  course={course}
+  title={course.seo.title}
+  description={course.seo.description}
+  keywords={course.seo.keywords}
+  url={route}
+  courseSchema={false}
+  breadcrumbs={[{ name: 'Home', url: '/' }, { name: points.course.name, url: points.state.route }, { name: course.course.name, url: route }]}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(courseProductSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  </Fragment>
+  <StateLanding
+    course={course}
+    seal={{
+      src: '/assets/images/badges/north-dakota-approved.png',
+      alt: licensed ? 'North Dakota approved: insurance premium reduction course, NDHP-approved' : 'North Dakota insurance premium reduction course, NDHP approval pending',
+      label: licensed ? 'NDHP-Approved Insurance Premium Reduction Course' : 'Insurance Premium Reduction Course · NDHP Approval Pending',
+    }}
+    h1="Lower Your Car Insurance with North Dakota’s Insurance Premium Reduction Course Online"
+    bullets={bullets}
+    heroNote="This is North Dakota’s insurance premium reduction course. It does not take points off your record; that is a different course."
+    heroNoteLink={{ href: points.state.route, label: 'Need points off? See the point reduction course →' }}
+    cardChecks={cardChecks}
+    tabs={tabs}
+    resources={resources}
+    aboutWho="North Dakotans"
+    sampleNumber="ND-IPR-000123"
+  />
+</CourseLayout>

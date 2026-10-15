@@ -13,6 +13,7 @@ import { TEXAS_COURSE, TEXAS_PRICE_LABEL } from '../data/texas-course';
 import ade from '../data/ade-texas.json';
 import { adeEnabled, adeLicensed, ADE_LICENSE, ADE_VERIFY_URL } from '../lib/ade';
 import nd from '../data/courses/nd-ddc.json';
+import ndIpr from '../data/courses/nd-ipr.json';
 import mo from '../data/courses/mo-dip.json';
 import { isEnabled, isLicensed, contactUrl } from '../lib/courseFlags';
 import type { CourseData } from '../data/courses/types';
@@ -21,6 +22,9 @@ const siteUrl = (import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com')
 const ndCourse = nd as CourseData;
 const moCourse = mo as CourseData;
 const ndLive = isEnabled(ndCourse) && isLicensed(ndCourse);
+// The insurance premium reduction course (Highway Patrol, nd-ipr) is a separate approval; shown only once it is on file.
+const ndInsurance = ndIpr as CourseData;
+const ndInsuranceLive = isEnabled(ndInsurance) && isLicensed(ndInsurance);
 const moLive = isEnabled(moCourse) && isLicensed(moCourse);
 
 const legalName = 'Road Ready Driver Instruction LLC';
@@ -56,6 +60,16 @@ const courses = [
     href: ndCourse.state.route,
     license: 'NDDOT-approved for point reduction',
     live: ndLive,
+  },
+  {
+    state: 'North Dakota',
+    name: ndInsurance.course.name,
+    what: 'Lowers your auto insurance premium for at least two years, three at 55 or older (NDCC 26.1-25-04.1). It does not change your driving record.',
+    price: `$${ndInsurance.course.priceUsd}`,
+    hours: ndInsurance.course.hours,
+    href: ndInsurance.state.route,
+    license: 'NDHP-approved for insurance premium reduction',
+    live: ndInsuranceLive,
   },
   {
     state: 'Missouri',
@@ -155,7 +169,13 @@ const link = 'text-primary-deep font-semibold underline hover:text-primary';
           {ndLive && (
             <li class={card}>
               <strong class="text-text text-[17px]">North Dakota: NDDOT-approved for point reduction</strong>
-              <span class="text-[15px] text-text-body">North Dakota Department of Transportation, Driver License Division. The point reduction course only; the insurance premium reduction course is a different approval we do not hold.</span>
+              <span class="text-[15px] text-text-body">North Dakota Department of Transportation, Driver License Division. The point reduction course only; the insurance premium reduction course is a different approval{ndInsuranceLive ? ', listed next' : ' we do not hold'}.</span>
+            </li>
+          )}
+          {ndInsuranceLive && (
+            <li class={card}>
+              <strong class="text-text text-[17px]">North Dakota: NDHP-approved for insurance premium reduction</strong>
+              <span class="text-[15px] text-text-body">North Dakota Highway Patrol, motor vehicle crash prevention course under NDAC 38-08. The insurance premium reduction course only; it does not reduce points.</span>
             </li>
           )}
           {moLive && (

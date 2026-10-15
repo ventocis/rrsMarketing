@@ -1,0 +1,29 @@
+---
+/**
+ * RefundPage — body of the shared /<state>/refund page, so a course nested under another course's
+ * route (North Dakota's insurance course at /north-dakota/insurance-premium-reduction) can render the
+ * same page from its own page file. The `[state]` route and the nested route both render this.
+ */
+import CourseLayout from '../../../layouts/CourseLayout.astro';
+import PageIntro from '../../../components/course/PageIntro.astro';
+import PolicyDoc from '../../../components/course/PolicyDoc.astro';
+import type { CourseData } from '../../../data/courses/types';
+
+interface Props { course: CourseData }
+const { course } = Astro.props;
+const route = course.state.route;
+---
+
+<CourseLayout
+  course={course}
+  title={course.seo.pages?.refund?.title ?? `Refund and Withdrawal Policy — ${course.course.shortName} | Road Ready Safety`}
+  description={course.seo.pages?.refund?.description ?? `Refund policy for the ${course.course.name}: a full refund at any time before you complete the course, no cancellation window, no pro-rata deductions.`}
+  url={`${route}/refund`}
+>
+  <section class="py-16 lg:py-24 px-4 sm:px-6 lg:px-8 bg-surface-muted">
+    <div class="max-w-4xl mx-auto">
+      <PageIntro chip="Legal" title="Refund and Withdrawal Policy" subtitle={`${course.provider.legalName} d/b/a ${course.provider.dba}`} />
+      <PolicyDoc file="refund-standard.md" tokens={{ courseName: `the ${course.course.name}`, stateName: course.state.name, agency: course.state.agency, supportEmail: course.provider.supportEmail, supportPhone: course.provider.supportPhone }} />
+    </div>
+  </section>
+</CourseLayout>

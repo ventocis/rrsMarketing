@@ -1,0 +1,21 @@
+---
+/**
+ * /north-dakota/insurance-premium-reduction/how-it-works — the insurance course's copy of the shared
+ * /<state>/how-it-works page. The course is nested under /north-dakota, which the shared `[state]` route cannot
+ * express (no slash in a route param), so each subpage is its own rest-param file, like
+ * north-dakota/pricing/[...override].astro. Emits nothing while the course is disabled (production until
+ * NDHP approves: src/lib/courseFlags.ts).
+ */
+import HowItWorksPage from '../../../../components/course/pages/HowItWorksPage.astro';
+import ndIpr from '../../../../data/courses/nd-ipr.json';
+import type { CourseData } from '../../../../data/courses/types';
+import { isEnabled } from '../../../../lib/courseFlags';
+
+export function getStaticPaths() {
+  return isEnabled(ndIpr as CourseData) ? [{ params: { override: undefined } }] : [];
+}
+
+const course = ndIpr as CourseData;
+---
+
+<HowItWorksPage course={course} />

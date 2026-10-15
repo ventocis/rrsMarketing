@@ -12,6 +12,7 @@
 import CourseLayout from '../../layouts/CourseLayout.astro';
 import StateLanding from '../../components/state-landing/StateLanding.astro';
 import nd from '../../data/courses/nd-ddc.json';
+import ndIpr from '../../data/courses/nd-ipr.json';
 import type { CourseData } from '../../data/courses/types';
 import { isEnabled, siteUrl } from '../../lib/courseFlags';
 
@@ -22,7 +23,15 @@ export function getStaticPaths() {
 const course = nd as CourseData;
 const route = course.state.route;
 const price = `$${course.course.priceUsd}`;
-const faqs = course.faqs;
+// The insurance premium reduction course (nd-ipr, a different course under the Highway Patrol) is linked
+// from here only once it is enabled, so a reader with the other intent is sent to the right page.
+const insurance = ndIpr as CourseData;
+const insuranceOn = isEnabled(insurance);
+const faqs = insuranceOn
+  ? course.faqs.map((f) => (f.q === 'Is this the insurance reduction course?'
+      ? { ...f, a: `${f.a} We offer that one too: it is linked under the Start button and in Helpful Resources below.` }
+      : f))
+  : course.faqs;
 const exam = course.exam;
 const modules = course.course.modules.filter((m) => !/quiz|exam/i.test(m.title));
 
@@ -88,6 +97,10 @@ const resources = [
   { href: `${route}/blog/north-dakota-traffic-ticket`, tag: 'Tickets', title: 'Got a North Dakota ticket? What to do next', blurb: 'Pay, keep the points off, or contest it.' },
   { href: `${route}/blog/send-defensive-driving-certificate-to-nddot`, tag: 'After the course', title: 'How to send your certificate to NDDOT', blurb: 'Where to email it, and what happens next.' },
   { href: `${route}/blog/how-long-is-north-dakota-defensive-driving-course`, tag: 'The course', title: 'How long the North Dakota course takes', blurb: 'Four hours, at your own pace.' },
+  ...(insuranceOn ? [
+    { href: '/north-dakota/which-course', tag: 'Which course?', title: 'Points off, or a lower premium? Pick the right North Dakota course', blurb: 'Two agencies approve two different courses. One question sorts it out.' },
+    { href: insurance.state.route, tag: 'Insurance', title: 'The insurance premium reduction course', blurb: 'Lower your premium for two years, three at 55+. A separate course, also four hours.' },
+  ] : []),
 ];
 
 // One node typed both Course and Product (2026-10-05): Google retired Course rich results, and the
@@ -145,6 +158,8 @@ const faqSchema = {
     h1="Take 3 Points Off with a North Dakota Defensive Driving Course Online"
     bullets={bullets}
     heroNote="This is North Dakota’s point reduction course. The insurance premium reduction course is a different course."
+    heroNoteLink={insuranceOn ? { href: insurance.state.route, label: 'See the insurance course →' } : undefined}
+    faqs={faqs}
     cardChecks={cardChecks}
     tabs={tabs}
     resources={resources}

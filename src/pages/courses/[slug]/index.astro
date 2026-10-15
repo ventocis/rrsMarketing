@@ -8,6 +8,7 @@ import { usd, hours } from '../../../utils/format';
 import { getStateRequirements } from '../../../utils/stateRequirements';
 import courseFaqs from '../../../data/course-faqs.json';
 import { adeEnabled } from '../../../lib/ade';
+import { enabledCourses } from '../../../data/courses/index';
 
 export function getStaticPaths() {
   return (coursesData as any[]).map((course: any) => ({
@@ -38,7 +39,10 @@ const isTexasPage = isTexasEnabled && course.slug === 'tx-defensive';
 // (TDLR C3705, 2026-10-13). Same mechanism as tx-defensive. Until this ships, that page held
 // every "adult drivers ed texas" impression the site had, at position 60-80.
 const isAdePage = adeEnabled && course.slug === 'tx-adult-ed';
-const redirectTo = isTexasPage ? '/texas' : isAdePage ? '/adult-drivers-ed/texas' : null;
+// A catalog row whose slug is one of our per-state course SKUs (mo-dip) redirects to that state's landing page;
+// the row is TicketSchool's old reseller listing and our own course replaced it (prod audit, 2026-10-15).
+const ownState = enabledCourses.find((c) => c.course.sku === course.slug);
+const redirectTo = isTexasPage ? '/texas' : isAdePage ? '/adult-drivers-ed/texas' : ownState ? ownState.state.route : null;
 
 function getEnrollHref(c: any) {
   if (isTexasEnabled && c.slug === 'tx-defensive') return '/texas';

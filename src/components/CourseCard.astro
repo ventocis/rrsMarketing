@@ -3,6 +3,8 @@ import { usd, hours, truncate } from '../utils/format';
 import ade from '../data/ade-texas.json';
 import { adeEnabled, adeEnrollUrl } from '../lib/ade';
 import { TEXAS_COURSE } from '../data/texas-course';
+import { enabledCourses } from '../data/courses/index';
+import { enrollUrl as stateEnrollUrl } from '../lib/courseFlags';
 
 interface Course {
   slug: string;
@@ -34,7 +36,25 @@ const isAdeCard = adeEnabled && raw.slug === ADE_SLUG;
 // Texas defensive driving is likewise our own TDLR-licensed course (CP1234): courses.json still carries the
 // old TicketSchool reseller row, and the card used to print "Provided by TicketSchool" under a link to /texas.
 const isOurTexasCard = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true' && raw.slug === 'tx-defensive';
-const course: Course = isOurTexasCard
+// Per-state courses we run ourselves (src/data/courses/*.json, gated by courseFlags). When a catalog row's slug is
+// one of their SKUs the card shows our course and links to its landing page and checkout. courses.json still
+// carries TicketSchool's Missouri row (mo-dip): it shipped "Offered through our partner, TicketSchool" at $29.95 on
+// /courses next to our $24.99 course at /missouri (prod audit, 2026-10-15). /courses also synthesizes a row for
+// each enabled state course that has no catalog row (North Dakota), which lands here the same way.
+const ownState = enabledCourses.find((c) => c.course.sku === raw.slug);
+const course: Course = ownState
+  ? {
+      ...raw,
+      course_name: ownState.course.name,
+      duration_hours: ownState.course.hours,
+      price_usd: ownState.course.priceUsd,
+      blurb: (ownState as { hero?: { subhead?: string } }).hero?.subhead || raw.blurb,
+      provider_type: 'Road Ready Safety',
+      provider_name: undefined,
+      affiliate_link: undefined,
+      qa_link: undefined,
+    }
+  : isOurTexasCard
   ? { ...raw, price_usd: TEXAS_COURSE.price, provider_type: 'Road Ready Safety', provider_name: undefined, affiliate_link: undefined }
   : isAdeCard
   ? {
@@ -56,12 +76,14 @@ const texasEnrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || 'https://app
 const TEXAS_SLUG = 'tx-defensive';
 
 function getLearnMoreHref(slug: string) {
+  if (ownState) return ownState.state.route;
   if (isTexasEnabled && slug === TEXAS_SLUG) return '/texas';
   if (isAdeCard) return '/adult-drivers-ed/texas';
   return `/courses/${slug}`;
 }
 
 function getSignUpHref(course: Course) {
+  if (ownState) return stateEnrollUrl(ownState);
   // TX: "Sign up" goes straight to checkout, not the /texas marketing page
   if (isTexasEnabled && course.slug === TEXAS_SLUG) return isQa && course.qa_link ? course.qa_link : texasEnrollUrl;
   if (isAdeCard) return adeEnrollUrl;

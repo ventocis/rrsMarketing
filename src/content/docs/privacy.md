@@ -2,11 +2,11 @@
 
 Effective Date: 2/25/2026  |  Last Updated: 9/21/2026
 
-www.roadreadysafety.com
+https://roadreadysafety.com
 
 ## 1. Introduction and Scope
 
-Road Ready Driver Instruction LLC, doing business as Road Ready Safety ("Road Ready Safety," "we," "us," or "our") operates www.roadreadysafety.com and related subdomains (collectively, the "Site"), as well as associated online driver safety education services, mobile applications, and course delivery platforms (together, the "Services").
+Road Ready Driver Instruction LLC, doing business as Road Ready Safety ("Road Ready Safety," "we," "us," or "our") operates https://roadreadysafety.com and related subdomains (collectively, the "Site"), as well as associated online driver safety education services, mobile applications, and course delivery platforms (together, the "Services").
 
 This Privacy Policy describes how we collect, use, store, disclose, and protect information about individuals who access or use the Services, including:
 
@@ -223,6 +223,6 @@ If you have questions about this Privacy Policy, wish to exercise your privacy r
 **Road Ready Driver Instruction LLC dba Road Ready Safety**
 
 - Email: info@roadreadysafety.com
-- Website: www.roadreadysafety.com/privacy
+- Website: https://roadreadysafety.com/privacy
 
 For California residents submitting a CCPA request, our designated Privacy Request Form is via contacting our email address. We will respond to verified requests within 45 days (with one possible 45-day extension where permitted by law).

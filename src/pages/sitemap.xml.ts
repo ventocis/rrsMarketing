@@ -8,7 +8,7 @@ import courtsData from '../data/texas-courts.json';
 import { adeEnabled, adeLicensed } from '../lib/ade';
 import { translatedPages } from '../lib/i18n';
 import { INSURERS } from '../data/texas-insurers';
-import { sitemapCourses, STATE_SUBROUTES } from '../data/courses/index';
+import { sitemapCourses, enabledCourses, STATE_SUBROUTES } from '../data/courses/index';
 import { postsFor } from '../data/blog/index';
 import { isProductionSite, siteUrl } from '../lib/site';
 
@@ -124,7 +124,8 @@ for (const c of sitemapCourses) {
 // so it stays out of the sitemap; listing a redirect wastes crawl and conflicts with its target's canonical.
 // Likewise /courses/tx-adult-ed (the old reseller page) redirects to /adult-drivers-ed/texas once the DE license exists.
 const texasRoutesOn = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
-const isRedirectShell = (slug: string) => (texasRoutesOn && slug === 'tx-defensive') || (adeEnabled && slug === 'tx-adult-ed');
+const isRedirectShell = (slug: string) =>
+  (texasRoutesOn && slug === 'tx-defensive') || (adeEnabled && slug === 'tx-adult-ed') || enabledCourses.some((c) => c.course.sku === slug);
 const courseRoutes = (coursesData as Array<{ slug: string }>)
   .filter(c => !isRedirectShell(c.slug))
   .map(c => `/courses/${c.slug}`);

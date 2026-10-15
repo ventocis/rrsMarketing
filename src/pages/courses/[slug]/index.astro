@@ -99,7 +99,13 @@ const faqSchema = faqSet ? JSON.stringify({
 }) : null;
 ---
 
-{redirectTo && <meta http-equiv="refresh" content={`0;url=${redirectTo}`} />}
+{redirectTo && (
+  <>
+    <meta name="robots" content="noindex, nofollow" />
+    <meta http-equiv="refresh" content={`0;url=${redirectTo}`} />
+    <title>Redirecting…</title>
+  </>
+)}
 
 {!redirectTo && <Layout
   title={`${course.course_name} | Road Ready Safety`}

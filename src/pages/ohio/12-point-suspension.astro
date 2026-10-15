@@ -79,7 +79,13 @@ const howToSchema = {
 };
 ---
 
-{!enabled && <meta http-equiv="refresh" content="0;url=/" />}
+{!enabled && (
+  <>
+    <meta name="robots" content="noindex, nofollow" />
+    <meta http-equiv="refresh" content="0;url=/" />
+    <title>Redirecting…</title>
+  </>
+)}
 
 {enabled && (
 <CourseLayout

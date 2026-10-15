@@ -25,7 +25,9 @@ interface Props {
 }
 
 const { post } = Astro.props;
-const htmlContent = marked(post.content) as string;
+// Every post opens with a "# Title" line and the header below renders its own <h1> from post.title, so each
+// post shipped with two H1s (2026-10-14 crawl). Drop the markdown heading; the header is the H1.
+const htmlContent = marked(post.content.replace(/^\s*#\s+[^\n]*\n+/, '')) as string;
 
 const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
 

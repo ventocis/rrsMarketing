@@ -11,7 +11,14 @@ import { adeEnabled } from '../../../lib/ade';
 import { enabledCourses } from '../../../data/courses/index';
 
 export function getStaticPaths() {
-  return (coursesData as any[]).map((course: any) => ({
+  // Same merge as /courses: our own per-state courses (src/data/courses/*.json) with no row in courses.json
+  // get a path too, so /courses/<sku> (e.g. /courses/nd-ddc) redirects to the state landing page instead of 404ing.
+  const catalog: any[] = [...(coursesData as any[])];
+  for (const c of enabledCourses) {
+    if (catalog.some((r) => r.slug === c.course.sku)) continue;
+    catalog.push({ slug: c.course.sku, state: c.state.code, course_name: c.course.name, course_type: 'Defensive Driving', language: 'English', provider_type: 'Road Ready Safety', duration_hours: c.course.hours, price_usd: c.course.priceUsd });
+  }
+  return catalog.map((course: any) => ({
     params: { slug: course.slug },
     props: { course },
   }));

@@ -1,0 +1,200 @@
+---
+/**
+ * /about — who runs Road Ready Safety, the licenses, the states served, and how to reach us.
+ * Built 2026-10-15 (QA review: the page was linked but returned 404). Opening copy is Jackson's "About us" block
+ * from the /texas landing page, verbatim. Prices come from the data files (never typed here); the address is the
+ * one every footer on the site already shows. Both TDLR licenses are shown and linked to TDLR's own record
+ * (16 TAC §84.503(j)(4): never one number while selling both courses).
+ */
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { TEXAS_COURSE, TEXAS_PRICE_LABEL } from '../data/texas-course';
+import ade from '../data/ade-texas.json';
+import { adeEnabled, adeLicensed, ADE_LICENSE, ADE_VERIFY_URL } from '../lib/ade';
+import nd from '../data/courses/nd-ddc.json';
+import mo from '../data/courses/mo-dip.json';
+import { isEnabled, isLicensed, contactUrl } from '../lib/courseFlags';
+import type { CourseData } from '../data/courses/types';
+
+const siteUrl = (import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com').replace(/\/$/, '');
+const ndCourse = nd as CourseData;
+const moCourse = mo as CourseData;
+const ndLive = isEnabled(ndCourse) && isLicensed(ndCourse);
+const moLive = isEnabled(moCourse) && isLicensed(moCourse);
+
+const legalName = 'Road Ready Driver Instruction LLC';
+const dba = 'Road Ready Safety';
+
+const courses = [
+  {
+    state: 'Texas',
+    name: TEXAS_COURSE.name,
+    what: 'Dismiss a ticket or ask your insurer about a discount. Certificate the moment you finish.',
+    price: TEXAS_PRICE_LABEL,
+    hours: TEXAS_COURSE.hours,
+    href: '/texas',
+    license: `TDLR driving safety course provider ${TEXAS_COURSE.providerNumber}`,
+    live: true,
+  },
+  {
+    state: 'Texas',
+    name: 'Texas Adult Driver Education (ADE-1317)',
+    what: 'The six hours Texas requires for a first license at 18 through 24. Exam built in, instant certificate.',
+    price: `$${ade.course.priceUsd}`,
+    hours: Math.round(ade.course.courseMinutes / 60),
+    href: '/adult-drivers-ed/texas',
+    license: `TDLR driver education provider ${ADE_LICENSE}`,
+    live: adeEnabled,
+  },
+  {
+    state: 'North Dakota',
+    name: ndCourse.course.name,
+    what: 'Takes 3 points off your record, or is elected at court in lieu of points. Point reduction only; it is not the insurance premium reduction course.',
+    price: `$${ndCourse.course.priceUsd}`,
+    hours: ndCourse.course.hours,
+    href: ndCourse.state.route,
+    license: 'NDDOT-approved for point reduction',
+    live: ndLive,
+  },
+  {
+    state: 'Missouri',
+    name: moCourse.course.name,
+    what: 'When a Missouri court orders the program in lieu of points, the points for that violation are not assessed.',
+    price: `$${moCourse.course.priceUsd}`,
+    hours: moCourse.course.hours,
+    href: moCourse.state.route,
+    license: `Missouri Safety Center approved provider ${moCourse.provider.approvalNumber}`,
+    live: moLive,
+  },
+].filter((c) => c.live);
+
+const aboutSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'AboutPage',
+  name: 'About Road Ready Safety',
+  url: `${siteUrl}/about`,
+  description: 'Who runs Road Ready Safety, the state licenses behind each course, the states served, and how to reach a real person.',
+  mainEntity: {
+    '@type': 'Organization',
+    name: dba,
+    legalName,
+    url: siteUrl,
+    telephone: '+1-888-885-5707',
+    email: 'info@roadreadysafety.com',
+    address: { '@type': 'PostalAddress', streetAddress: '5900 Balcones Drive, Ste 100', addressLocality: 'Austin', addressRegion: 'TX', postalCode: '78731', addressCountry: 'US' },
+  },
+};
+
+const inter = "font-family:'Inter',sans-serif;";
+const sans = "font-family:'DM Sans',sans-serif;";
+const wrap = 'max-w-[860px] mx-auto px-4 sm:px-6';
+const h2 = 'm-0 font-extrabold text-[26px] lg:text-[30px] leading-[1.2] text-text';
+const p = 'm-0 text-[17px] leading-[1.65] text-text-body';
+const card = 'bg-white border border-border rounded-[20px] px-6 sm:px-8 py-7 flex flex-col gap-3 shadow-[0_6px_18px_rgba(11,33,96,0.05)]';
+const link = 'text-primary-deep font-semibold underline hover:text-primary';
+---
+
+<Layout
+  title="About Road Ready Safety"
+  description="Who runs Road Ready Safety, the TDLR and state licenses behind each course, the states we serve, and how to reach a real person."
+  keywords="about Road Ready Safety, Road Ready Driver Instruction LLC, TDLR CP1234, TDLR C3705"
+  url="/about"
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(aboutSchema)} />
+  </Fragment>
+  <Header />
+
+  <main class="bg-surface-muted text-text" style={sans}>
+    <!-- Why we built it (Jackson's copy, as on /texas) -->
+    <section class="bg-white border-b border-border">
+      <div class={`${wrap} pt-14 pb-12 flex flex-col gap-4`}>
+        <span class="text-[13px] font-bold text-primary-deep uppercase tracking-[0.08em]">About us</span>
+        <h1 class="m-0 font-extrabold text-[34px] lg:text-[44px] leading-[1.12] text-text" style={inter}>Why we built Road Ready Safety</h1>
+        <p class={p}>Our goal is simple: fair, transparent, state-approved courses for Texans, plus plain-English guides so nobody is left confused, frustrated or upset about how ticket dismissal works.</p>
+        <p class={p}>A lot of drivers have had bad experiences with surprise fees, confusing options and no one to help. Our refund policy is compliant and clear, because we want to earn back the trust those experiences cost.</p>
+        <p class={p}>We hope you leave with a great course and a great experience, and that you trust us enough to tell your friends.</p>
+        <span class="text-[15px] font-bold text-text">The Road Ready Safety team</span>
+      </div>
+    </section>
+
+    <!-- Who we are -->
+    <section>
+      <div class={`${wrap} pt-12 pb-4 flex flex-col gap-4`}>
+        <h2 class={h2} style={inter}>Who we are</h2>
+        <p class={p}>{dba} is the trade name of {legalName}, an online course provider. We build and run our own courses, write the guides on this site, and answer the phone and the inbox ourselves.</p>
+        <div class={card}>
+          <address class="not-italic text-[16px] leading-[1.7] text-text-body">
+            <strong class="text-text">{legalName} d/b/a {dba}</strong><br />
+            5900 Balcones Drive, Ste 100<br />
+            Austin, TX 78731<br />
+            <a href="tel:+18888855707" class={link}>(888) 885-5707</a> · <a href="mailto:info@roadreadysafety.com" class={link}>info@roadreadysafety.com</a><br />
+            Monday to Friday, 9:00 a.m. to 5:00 p.m. ET (8:00 a.m. to 4:00 p.m. Central), excluding federal holidays
+          </address>
+        </div>
+      </div>
+    </section>
+
+    <!-- Licenses -->
+    <section>
+      <div class={`${wrap} pt-10 pb-4 flex flex-col gap-4`}>
+        <h2 class={h2} style={inter}>Our licenses</h2>
+        <p class={p}>Each course runs under its own state approval. The Texas numbers link to TDLR's own record, so you can check them without taking our word for it.</p>
+        <ul class="m-0 p-0 list-none flex flex-col gap-3">
+          <li class={card}>
+            <strong class="text-text text-[17px]">Texas driving safety course provider {TEXAS_COURSE.providerNumber}</strong>
+            <span class="text-[15px] text-text-body">Texas Department of Licensing and Regulation. Covers the {TEXAS_COURSE.hours}-hour defensive driving course. <a href={TEXAS_COURSE.verifyUrl} target="_blank" rel="noopener" class={link}>Verify {TEXAS_COURSE.providerNumber} on TDLR ↗</a></span>
+          </li>
+          {adeLicensed && (
+            <li class={card}>
+              <strong class="text-text text-[17px]">Texas driver education provider {ADE_LICENSE}</strong>
+              <span class="text-[15px] text-text-body">Texas Department of Licensing and Regulation, online exclusively for adults. Covers the adult driver education course (ADE-1317). <a href={ADE_VERIFY_URL} target="_blank" rel="noopener" class={link}>Verify {ADE_LICENSE} on TDLR ↗</a></span>
+            </li>
+          )}
+          {ndLive && (
+            <li class={card}>
+              <strong class="text-text text-[17px]">North Dakota: NDDOT-approved for point reduction</strong>
+              <span class="text-[15px] text-text-body">North Dakota Department of Transportation, Driver License Division. The point reduction course only; the insurance premium reduction course is a different approval we do not hold.</span>
+            </li>
+          )}
+          {moLive && (
+            <li class={card}>
+              <strong class="text-text text-[17px]">Missouri Safety Center approved provider {moCourse.provider.approvalNumber}</strong>
+              <span class="text-[15px] text-text-body">The Missouri Driver Improvement Program, ordered by a court in lieu of points.</span>
+            </li>
+          )}
+        </ul>
+      </div>
+    </section>
+
+    <!-- States and courses -->
+    <section>
+      <div class={`${wrap} pt-10 pb-4 flex flex-col gap-4`}>
+        <h2 class={h2} style={inter}>Where we're approved, and what each course costs</h2>
+        <p class={p}>One price per course, certificate included, nothing added at checkout.</p>
+        <ul class="m-0 p-0 list-none grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {courses.map((c) => (
+            <li class={card}>
+              <span class="text-[13px] font-bold text-primary-deep uppercase tracking-[0.08em]">{c.state}</span>
+              <strong class="text-text text-[17px] leading-tight">{c.name}</strong>
+              <span class="text-[15px] text-text-body">{c.what}</span>
+              <span class="text-[15px] text-text-body">{c.hours} hours · <strong class="text-text">{c.price}</strong> total · {c.license}</span>
+              <a href={c.href} class={`${link} text-[15px]`}>Course page →</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- Help -->
+    <section>
+      <div class={`${wrap} pt-10 pb-20 flex flex-col gap-4`}>
+        <h2 class={h2} style={inter}>Need a person?</h2>
+        <p class={p}>Questions before you buy, a court that wants something unusual, a certificate that needs re-sending: <a href={contactUrl} class={link}>contact us</a> or call <a href="tel:+18888855707" class={link}>(888) 885-5707</a>. Students can also open the help center from inside the course at <a href="https://app.roadreadysafety.com" class={link}>app.roadreadysafety.com</a>.</p>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

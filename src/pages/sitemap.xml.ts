@@ -21,6 +21,7 @@ const staticRoutes = [
   '/courses',
   '/faq',
   '/blog',
+  '/about',
   '/privacy',
   '/partners',
   '/support/how-to-submit',

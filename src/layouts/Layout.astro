@@ -7,6 +7,7 @@ import { version } from '../../package.json';
 interface Props {
   title: string;
   description?: string;
+  /** Accepted for compatibility; no longer rendered (search engines ignore meta keywords). */
   keywords?: string;
   image?: string;
   url?: string;
@@ -86,7 +87,6 @@ const orgSchema = {
     <!-- SEO -->
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
-    {keywords && <meta name="keywords" content={keywords} />}
     <link rel="canonical" href={canonicalUrl} />
     {alternates.map(a => <link rel="alternate" hreflang={a.lang} href={a.href.startsWith("http") ? a.href : `${siteUrl}${a.href}`} />)}
     <meta name="robots" content={isNoindex ? 'noindex, nofollow' : 'index, follow'} />

@@ -24,14 +24,12 @@ const course = nd as CourseData;
 const route = course.state.route;
 const price = `$${course.course.priceUsd}`;
 // The insurance premium reduction course (nd-ipr, a different course under the Highway Patrol) is linked
-// from here only once it is enabled, so a reader with the other intent is sent to the right page.
+// from the hero and Helpful Resources only once it is enabled, so a reader with the other intent is sent to
+// the right page. The FAQ answer in nd-ddc.json carries its own link to that course (NDHP approved it
+// through 2028-10-31, so the two courses are live together); the FAQ and pricing pages render the same answer.
 const insurance = ndIpr as CourseData;
 const insuranceOn = isEnabled(insurance);
-const faqs = insuranceOn
-  ? course.faqs.map((f) => (f.q === 'Is this the insurance reduction course?'
-      ? { ...f, a: `${f.a} We offer that one too: it is linked under the Start button and in Helpful Resources below.` }
-      : f))
-  : course.faqs;
+const faqs = course.faqs;
 const exam = course.exam;
 const modules = course.course.modules.filter((m) => !/quiz|exam/i.test(m.title));
 

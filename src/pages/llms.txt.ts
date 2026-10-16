@@ -36,7 +36,7 @@ const iprBlock = IPR_ON
 
 const body = `# Road Ready Safety
 
-> Road Ready Safety offers state-approved online traffic courses: a TDLR-approved Texas 6-Hour Defensive Driving Course, a Missouri Safety Center-approved Missouri Driver Improvement Program (OL031) and a North Dakota Defensive Driving Course that is NDDOT-approved for point reduction. The Texas course is delivered 100% online. Texas drivers use it to dismiss a moving violation traffic ticket or reduce auto insurance rates. Total price: ${TX} (no hidden fees). The course is accepted by all Texas courts and issues an official TDLR Certificate of Completion.
+> Road Ready Safety offers state-approved online traffic courses: a TDLR-approved Texas 6-Hour Defensive Driving Course, a Missouri Safety Center-approved Missouri Driver Improvement Program (OL031), a North Dakota Defensive Driving Course that is NDDOT-approved for point reduction${IPR_ON ? ' and a North Dakota Insurance Premium Reduction Course approved by the North Dakota Highway Patrol' : ''}. The Texas course is delivered 100% online. Texas drivers use it to dismiss a moving violation traffic ticket or reduce auto insurance rates. Total price: ${TX} (no hidden fees). The course is accepted by all Texas courts and issues an official TDLR Certificate of Completion.
 
 ## Product
 

@@ -2,9 +2,13 @@
 import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+import coursesData from '../../data/courses.json';
 
 const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
-const enrollUrl = '/courses/ny-ipirp';
+// The TicketSchool referral link (affiliate 434) from the catalog row, so New York readers enroll in one click
+// instead of going through /courses/ny-ipirp first (Grok prod audit, 2026-10-15). The row is the single source of the URL.
+const partner = (coursesData as any[]).find((c) => c.slug === 'ny-ipirp');
+const enrollUrl: string = partner?.affiliate_link || '/courses/ny-ipirp';
 
 const faqs = [
   {
@@ -77,6 +81,20 @@ const faqSchema = JSON.stringify({
           <p>That doesn't mean the course is useless — it means the order of operations matters. Here's how to think about it.</p>
         </div>
 
+        <div class="mb-10">
+          <a
+            href={enrollUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-affiliate="true"
+            class="inline-flex bg-primary hover:bg-primary-hover text-white h-[52px] px-7 rounded-[16px] text-base font-semibold items-center justify-center no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
+          >
+            Start NY Defensive Driving Course →
+          </a>
+          <p class="mt-2 mb-0 text-xs text-text-subtle" style="font-family: 'DM Sans', sans-serif;">Provided by TicketSchool, a DMV-approved sponsor. You enroll and take the course on their site.</p>
+        </div>
+
         <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
           <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information about New York PIRP (the Point &amp; Insurance Reduction Program), not legal or insurance advice. Confirm current rules with the NY DMV and your insurer.</p>
         </div>
@@ -117,10 +135,13 @@ const faqSchema = JSON.stringify({
         <div class="flex flex-col sm:flex-row gap-4 mb-10">
           <a
             href={enrollUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-affiliate="true"
             class="inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline"
             style="font-family: 'DM Sans', sans-serif; box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);"
           >
-            See the New York Course →
+            Start NY Defensive Driving Course →
           </a>
           <a
             href="/new-york/nyc-tvb-vs-town-court"

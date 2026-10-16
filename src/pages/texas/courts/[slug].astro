@@ -6,7 +6,7 @@ import NextStepBlock from '../../../components/texas/NextStepBlock.astro';
 import YouTubeCard from '../../../components/YouTubeCard.astro';
 import { TEXAS_COURSE, TEXAS_PRICE_LABEL, TEXAS_AUDIO_TOTAL_LABEL, texasAudioCheckoutUrl } from '../../../data/texas-course';
 import { fillPrices } from '../../../data/prices';
-const TEXAS_COURSE_AUTOPLAY = TEXAS_COURSE.autoplayLive;
+const TEXAS_COURSE_AUTOPLAY = TEXAS_COURSE.autoplayLive || TEXAS_COURSE.autoplayIncluded;
 
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '#';

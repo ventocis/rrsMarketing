@@ -28,7 +28,7 @@ const { faqs, contactUrl, heading = 'Questions people actually ask', intro, id =
             </svg>
           </summary>
           <div class="px-6 pb-6 -mt-1">
-            <p class="text-base text-text-body leading-7" set:html={f.a} />
+            <p class="text-base text-text-body leading-7 [&_a]:text-primary [&_a]:underline [&_a]:underline-offset-2" set:html={f.a} />
           </div>
         </details>
       ))}

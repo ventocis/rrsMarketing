@@ -65,6 +65,8 @@ const tabs = [
       ['It must show on your bill as its own line', 'The statute says the reduction must be separately disclosed, and your premium billing must show it for the person who earned it. If your next bill does not show it, call your agent with the certificate in hand.'],
       ['You send the certificate to your insurer', 'The course sponsor issues the certificate that is the basis for the reduction. We issue yours the moment you pass, in the form the Highway Patrol approves. There is no state reporting system; you deliver it to your agent or insurer.'],
       ['It does not touch your driving record', 'This course lowers a premium. It takes no points off and keeps no ticket’s points off; that is a separate course under NDDOT\u2019s point reduction program, and we offer that one too.'],
+      // The Highway Patrol lists providers by legal name; ours shows as "Road Ready Driving Instruction" (read 2026-10-16).
+      ...(licensed ? [['How to check we are on the list', 'The Highway Patrol’s online course list shows us as Road Ready Driving Instruction, with our phone number, approved through October 31, 2028. Your insurer can check it at statepatrol.nd.gov.'] as [string, string]] : []),
     ] as [string, string][],
     note: 'Your insurer applies the reduction and sets its amount, not us. If the number matters to you, ask your agent before you enroll.',
   },

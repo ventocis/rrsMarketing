@@ -47,6 +47,14 @@ export const TEXAS_COURSE = {
   /** Production autoplay sku (unknown until it ships). QA overrides with VITE_TEXAS_AUTOPLAY_SKU. */
   autoplaySku: '',
   /**
+   * Autoplay ships inside the audio add-on (Jackson, 2026-10-16: "the /texas audio upsell now has autoplay").
+   * Production checkout on 2026-10-16 still sells one add-on, "Audio - Read to Me" at audioPrice, and no
+   * autoplay product, so this flag only restores the autoplay bullets and the hands-free "fit" line on the
+   * audio card; the price and the checkout link stay course + audio. autoplayLive stays for the day autoplay
+   * becomes its own sku and price.
+   */
+  autoplayIncluded: true,
+  /**
    * Dollars off with the promo code the TexasLayout banner advertises (showPromo, off by default).
    * The banner shows price - promoDiscount; keep that at or above legalMinimumPrice.
    */

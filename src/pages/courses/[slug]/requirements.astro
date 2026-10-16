@@ -33,6 +33,11 @@ const stateReqs = getStateRequirements(course.state, course.course_type);
 function buildMarkdown(): string {
   let md = `# ${course.course_name} — Course Requirements\n\n`;
   md += `_Last updated: ${new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}_\n\n`;
+  // Partner courses: the referral link up top, so the requirements page can enroll a reader as well as inform one
+  // (the New York pages had no path to TicketSchool except via /courses/<sku>; Grok prod audit, 2026-10-15).
+  if (course.provider_type === 'Partner' && course.affiliate_link) {
+    md += `**Ready to enroll?** [${course.hero_cta_label || 'Start the course'} on ${course.provider_name || 'our partner'}'s site →](${course.affiliate_link})\n\n`;
+  }
 
   if (stateReqs) {
     if (stateReqs.who_for) {

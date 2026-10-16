@@ -11,7 +11,8 @@
  *   what to expect (tabs + accordions, all collapsed; progress mockup on desktop only)
  *   about us · FAQ + still have questions · helpful resources
  *
- * Facts (price, hours, modules, exam, FAQs) come from the state's course JSON. State-specific copy
+ * Facts (price, hours, modules, exam, FAQs) come from the state's course JSON. FAQ answers may carry a link
+ * (set:html, as in course/Faq.astro), e.g. the point course's "Is this the insurance reduction course?" answer. State-specific copy
  * (bullets, tabs, resources) is passed in by the page, so this file holds layout only.
  * Reviews are our verified Trustpilot reviews (from the Texas course; no state has its own yet). The
  * "From students of our Texas course" line was removed at Jackson's request, 2026-10-08.
@@ -255,7 +256,7 @@ const chev = (stroke: string, size = 18) => `<svg width="${size}" height="${size
               <h3 class="m-0 font-bold text-[17px] text-text" style={inter}>{f.q}</h3>
               <span class="flex-none transition-transform group-open:rotate-180" set:html={chev('#2454E6', 20)} />
             </summary>
-            <p class="m-0 px-[22px] pb-5 text-base leading-[1.6] text-text-body">{f.a}</p>
+            <p class="m-0 px-[22px] pb-5 text-base leading-[1.6] text-text-body [&_a]:text-primary [&_a]:underline [&_a]:underline-offset-2" set:html={f.a} />
           </details>
         ))}
       </div>

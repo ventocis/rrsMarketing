@@ -165,6 +165,19 @@ const faqSchema = faqSet ? JSON.stringify({
             {course.partner_badge}
           </span>
         )}
+        <!-- Enroll button in the top section too, so a reader does not have to scroll to the card (Grok audit, 2026-10-15) -->
+        <div class="mt-5">
+          <a
+            href={enrollHref}
+            target={isPartner ? '_blank' : undefined}
+            rel={isPartner ? 'noopener noreferrer' : undefined}
+            data-affiliate={isPartner ? 'true' : undefined}
+            class="inline-flex items-center justify-center py-3.5 px-6 rounded-[14px] bg-primary hover:bg-primary-hover text-white font-bold text-base transition-colors no-underline"
+            style="font-family: 'DM Sans', sans-serif; box-shadow: 0 4px 12px rgba(6,103,209,0.3);"
+          >
+            {course.hero_cta_label || 'Enroll Now'} →
+          </a>
+        </div>
       </div>
     </div>
 

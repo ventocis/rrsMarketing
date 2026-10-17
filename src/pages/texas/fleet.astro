@@ -1,0 +1,249 @@
+---
+/**
+ * /texas/fleet — the employer / fleet landing page (Grok plan CHANGE-25, 2026-10-16).
+ *
+ * A lead page, not a checkout: a business with several drivers tells us the headcount and we come back
+ * with how to enroll them. Every claim is one we can back today: the same TDLR-approved course, the same
+ * price per driver (Texas sets a $25-per-student floor in Educ. Code §1001.352, so there is no bulk price
+ * below it), a certificate per driver the moment each one finishes, and the two legal limits up top:
+ * CDL holders cannot use the course to dismiss a ticket (CCP art. 45A.351(c)), and the certificate is the
+ * driver's own, so it goes on the driver's personal record, not the company's.
+ *
+ * Inquiry capture: with VITE_KLAVIYO_FLEET_LIST set, the form posts to that Klaviyo list (same client API
+ * as /texas/spanish, custom_source "Fleet inquiry"). Without it the page offers a prefilled email instead,
+ * so the lead path works on day one without subscribing a fleet manager to the eligibility-reminder list.
+ * Either path pushes a `fleet_inquiry` dataLayer event so GTM can make it a key event.
+ */
+import TexasLayout from '../../layouts/TexasLayout.astro';
+import { TEXAS_COURSE, TEXAS_PRICE_LABEL, TEXAS_LEGAL_MINIMUM_LABEL } from '../../data/texas-course';
+const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
+const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
+const listId: string = import.meta.env.VITE_KLAVIYO_FLEET_LIST || '';
+const price = TEXAS_PRICE_LABEL;
+const floor = TEXAS_LEGAL_MINIMUM_LABEL;
+const hours = TEXAS_COURSE.hours;
+const CP = TEXAS_COURSE.providerNumber;
+const courtFee = `$${TEXAS_COURSE.typicalCourtFee}`;
+const supportEmail = 'info@roadreadysafety.com';
+const supportPhone = '(888) 885-5707';
+const mailto = `mailto:${supportEmail}?subject=${encodeURIComponent('Fleet defensive driving: quote request')}&body=${encodeURIComponent('Company:\nNumber of drivers:\nWhy (ticket dismissal, insurance, safety training):\nBest phone number:\n')}`;
+
+const faqs = [
+  { q: 'Is there a bulk discount?', a: `No, and no Texas provider can legitimately offer one below ${floor}: Texas Education Code §1001.352 requires every driving safety provider to charge each student at least ${floor}. Our price is ${price} per driver with the certificate included, whether you enroll one driver or forty.` },
+  { q: 'Can our CDL drivers use it to dismiss a ticket?', a: 'No. Code of Criminal Procedure art. 45A.351(c) excludes anyone who holds a commercial driver license, even for a ticket in a personal car. A CDL driver can still take the course as training or for an insurance discount their insurer offers, but not to keep a ticket off the record.' },
+  { q: 'Whose record does the course go on?', a: 'The driver’s. The certificate is issued in the individual driver’s name and is used for that driver’s own ticket or insurance policy. It is not a company credential and it does not change a commercial policy by itself; ask your insurer what it offers for employee-completed courses.' },
+  { q: 'How long does each driver need?', a: `${hours} hours of course time, set by state rule, on a phone, tablet or computer. Drivers can stop and pick up where they left off, so it fits around shifts. There is no final exam; short quizzes follow each unit with unlimited retakes.` },
+  { q: 'How do we get the certificates?', a: 'Each driver downloads their own certificate the moment they finish. For a ticket, the driver sends it to the court with a Type 3A driving record; for insurance, the driver sends it to the insurer. Ask us if you need completion confirmed for your own files.' },
+  { q: 'Does a driver need court approval first?', a: 'Only for ticket dismissal. A driver dismissing a ticket must ask the court for the course by the appearance date on the citation, before enrolling. Drivers taking it for insurance or as training can enroll any time.' },
+];
+
+const articleSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Texas Defensive Driving for Employers and Fleets',
+  description: `Enroll your drivers in Road Ready Safety’s TDLR-approved Texas defensive driving course: ${price} per driver, certificate included, ${hours} hours online. What it does for a ticket or insurance, and the CDL limit.`,
+  datePublished: '2026-10-16',
+  dateModified: '2026-10-16',
+  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  mainEntityOfPage: `${siteUrl}/texas/fleet`,
+});
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+
+const outfit = "font-family: 'Outfit', sans-serif;";
+const sans = "font-family: 'DM Sans', sans-serif;";
+const h2 = 'text-2xl font-bold text-text mt-10 mb-4';
+const body = 'space-y-4 text-text-body text-base leading-7 mb-10';
+const btn = 'inline-flex bg-primary hover:bg-primary-hover text-white h-[56px] px-8 rounded-[16px] text-lg font-semibold items-center justify-center no-underline';
+const btnShadow = 'box-shadow: 0px 10px 15px -3px rgba(17,23,34,0.08), 0px 4px 6px -4px rgba(17,23,34,0.05);';
+const inputCls = 'w-full h-12 rounded-xl border border-border bg-white px-4 text-base text-text';
+
+const steps = [
+  ['Tell us how many drivers', 'Headcount, company name and why your drivers need the course. We reply with how to enroll them in one go.'],
+  ['Drivers enroll and take the course', `${hours} hours online, on any device, stop and resume. Each driver has their own account and their own progress.`],
+  ['Each driver gets a certificate', 'Ready to download the moment the course is done. The driver sends it to the court or the insurer.'],
+];
+---
+
+{isEnabled ? (
+  <TexasLayout
+    title={`Texas Defensive Driving for Employers & Fleets: ${price} Per Driver, TDLR-Approved`}
+    description={`Put your drivers through a TDLR-approved Texas defensive driving course: ${price} per driver, certificate included, ${hours} hours online. Tell us the headcount and we set it up. CDL holders cannot use it to dismiss a ticket.`}
+    keywords="texas defensive driving fleet, employer defensive driving course texas, bulk defensive driving course texas, company drivers defensive driving texas, fleet safety course texas"
+    url="/texas/fleet"
+  >
+    <script type="application/ld+json" set:html={articleSchema} />
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    <article class="bg-white pb-16 lg:pb-24">
+      <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-14">
+
+        <p class="text-sm text-text-body mb-6" style={sans}>
+          <a href="/texas" class="text-primary-deep font-medium hover:underline">Texas defensive driving course</a>
+          <span class="mx-2 text-text-subtle">›</span>
+          <span class="text-text">Employers and fleets</span>
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-bold text-primary-navy leading-tight tracking-[-0.02em] mb-6" style={outfit}>
+          Texas Defensive Driving for Employers and Fleets
+        </h1>
+
+        <div class="bg-info border border-info-border rounded-2xl p-6 mb-8">
+          <p class="text-sm font-semibold text-primary-deep mb-2" style={outfit}>Short answer</p>
+          <p class="text-text-body text-base leading-7 m-0" style={sans}>
+            Your drivers can take the same <strong class="text-text">TDLR-approved {hours}-hour course</strong> every Texas court accepts, for <strong class="text-text">{price} per driver with the certificate included</strong>. Tell us how many drivers and we set it up. Two limits first: a driver who holds a CDL cannot use it to dismiss a ticket, and the certificate goes on the driver’s own record, not the company’s.
+          </p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-6">
+          <a href="#inquiry" class={btn} style={`${sans} ${btnShadow}`} data-rrs-cta="fleet-hero">Get a quote for your drivers →</a>
+          <a href={enrollUrl} class="inline-flex h-[56px] px-8 border border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-white rounded-[16px] text-lg font-semibold items-center justify-center no-underline transition-colors" style={sans}>Enroll one driver now</a>
+        </div>
+
+        <ul class="flex flex-wrap gap-2.5 list-none p-0 mb-10" aria-label="Fleet course facts" style={sans}>
+          {[`TDLR course provider ${CP}`, `${price} per driver, certificate included`, `${hours} hours online, any device`, 'Stop and resume around shifts', 'Real support, phone and email'].map((t) => (
+            <li class="inline-flex items-center gap-2 rounded-full border border-info-border bg-white px-3.5 py-1.5 text-sm font-medium text-text">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="8" fill="#16A34A" opacity="0.14"/><path d="M4.8 8.2l2.1 2.1 4.3-4.4" stroke="#16A34A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              {t}
+            </li>
+          ))}
+        </ul>
+
+        <h2 class={h2} style={outfit}>Who this is for</h2>
+        <div class={body} style={sans}>
+          <p>Small businesses whose people drive for work in their own cars or light company vehicles: field techs, sales reps, delivery and service crews, home health, real estate, landscaping. Three reasons employers send drivers to us, and they are not the same:</p>
+          <ul class="list-disc pl-6 space-y-2">
+            <li><strong class="text-text">A driver got a ticket.</strong>{' '}The driver asks the court for the course by the appearance date, finishes it, and the ticket is dismissed. One course per driver, once every 12 months.</li>
+            <li><strong class="text-text">Insurance.</strong>{' '}Many Texas insurers give a discount for a completed defensive driving course on a personal policy. The amount and the term are the insurer’s; ask before you count on it. Our <a href="/texas/insurance-discount" class="text-primary-deep font-medium hover:underline">insurer-by-insurer page</a> has what each one publishes.</li>
+            <li><strong class="text-text">Safety training.</strong>{' '}Six hours on speed, following distance, distraction, impairment and work zones, written to the state’s curriculum. No court or insurer needs to be involved.</li>
+          </ul>
+        </div>
+
+        <div class="rounded-2xl border border-amber-300 bg-amber-50 p-5 mb-10" style={sans}>
+          <p class="m-0 text-sm font-semibold text-amber-800 mb-1" style={outfit}>The limit to read before you buy seats</p>
+          <p class="m-0 text-sm text-amber-800 leading-6">A driver who holds a commercial driver license cannot use this course to dismiss a ticket, even one received in a personal car; Texas excludes CDL holders outright (Code of Criminal Procedure art. 45A.351(c)). The course is still fine for them as training or for an insurance discount their insurer offers. <a href="/texas/cdl-defensive-driving" class="text-amber-800 underline">The CDL rules, in full.</a></p>
+        </div>
+
+        <h2 class={h2} style={outfit}>What it costs</h2>
+        <div class={body} style={sans}>
+          <p><strong class="text-text">{price} per driver, certificate included, nothing added at checkout.</strong>{' '}That is our one price, for one driver or forty. Texas law sets a floor, not a ceiling: Education Code §1001.352 requires every driving safety provider to charge each student at least {floor}, so a bulk price below that is not a deal, it is a violation. Volume pricing above the floor is allowed; we would rather keep one honest number.</p>
+          <p>Not included, because they are not ours: the court’s fee to grant the course for a ticket (set by each court, often around {courtFee}) and the driver’s Type 3A driving record from DPS. Neither applies to a driver taking the course for insurance or training. The <a href="/texas/cost" class="text-primary-deep font-medium hover:underline">cost page</a> walks through every line.</p>
+        </div>
+
+        <h2 class={h2} style={outfit}>How enrolling your drivers works</h2>
+        <ol class="grid gap-4 sm:grid-cols-3 list-none p-0 mb-10" style={sans}>
+          {steps.map(([t, d], i) => (
+            <li class="rounded-2xl border border-border bg-surface-muted p-5">
+              <span class="inline-flex w-8 h-8 rounded-full bg-primary text-white items-center justify-center text-sm font-bold mb-3" style={outfit}>{i + 1}</span>
+              <p class="m-0 font-semibold text-text mb-1" style={outfit}>{t}</p>
+              <p class="m-0 text-sm text-text-body leading-6">{d}</p>
+            </li>
+          ))}
+        </ol>
+
+        <h2 class={h2} style={outfit}>What each driver gets</h2>
+        <div class={body} style={sans}>
+          <ul class="list-disc pl-6 space-y-2">
+            <li><strong class="text-text">The same course every Texas court accepts.</strong>{' '}TDLR course provider {CP}; the certificate is the state’s uniform certificate of completion.</li>
+            <li><strong class="text-text">Their own login and progress.</strong>{' '}Phone, tablet or computer; stop and resume at any point, so a six-hour course fits into breaks and evenings.</li>
+            <li><strong class="text-text">No final exam.</strong>{' '}Short quizzes after each unit, unlimited retakes.</li>
+            <li><strong class="text-text">A certificate the moment they finish.</strong>{' '}Downloadable right away, with a court copy and an insurance copy.</li>
+            <li><strong class="text-text">A person to call.</strong>{' '}{supportPhone} or {supportEmail}, for you or for a driver stuck at 9 pm.</li>
+          </ul>
+          <p>Want to see the course before you commit? <a href="/texas/what-the-course-looks-like" class="text-primary-deep font-medium hover:underline">What the course looks like</a> walks through every module.</p>
+        </div>
+
+        <section id="inquiry" class="scroll-mt-28 rounded-2xl border border-border bg-surface-muted p-6 sm:p-8 mb-12" style={sans}>
+          <h2 class="text-2xl font-bold text-text m-0 mb-2" style={outfit}>Get a quote for your drivers</h2>
+          <p class="text-text-body text-base leading-7 m-0 mb-5">Tell us the headcount and why. A person replies, usually the same business day, with how to enroll your drivers in one go.</p>
+          {listId ? (
+            <form class="rrs-fleet-form grid gap-3 sm:grid-cols-2" novalidate>
+              <label class="flex flex-col gap-1 text-sm font-medium text-text">Company<input type="text" name="company" class={inputCls} autocomplete="organization" required /></label>
+              <label class="flex flex-col gap-1 text-sm font-medium text-text">Number of drivers<input type="number" name="drivers" min="1" class={inputCls} required /></label>
+              <label class="flex flex-col gap-1 text-sm font-medium text-text">Work email<input type="email" name="email" class={inputCls} autocomplete="email" required /></label>
+              <label class="flex flex-col gap-1 text-sm font-medium text-text">Phone (optional)<input type="tel" name="phone" class={inputCls} autocomplete="tel" /></label>
+              <label class="flex flex-col gap-1 text-sm font-medium text-text sm:col-span-2">Why do your drivers need the course?
+                <select name="reason" class={inputCls}>
+                  <option value="ticket">A driver has a ticket to dismiss</option>
+                  <option value="insurance">Insurance discount</option>
+                  <option value="training">Safety training</option>
+                  <option value="mixed">A mix</option>
+                </select>
+              </label>
+              <p class="rrs-fleet-error m-0 text-sm text-amber-800 sm:col-span-2" style="display:none">Please check the company, driver count and email, then try again. Or email us at {supportEmail}.</p>
+              <div class="sm:col-span-2">
+                <button type="submit" class={btn} style={btnShadow} data-rrs-cta="fleet-inquiry">Request a quote →</button>
+              </div>
+            </form>
+          ) : (
+            <div class="flex flex-col sm:flex-row gap-4 items-start">
+              <a href={mailto} class={btn} style={btnShadow} data-rrs-cta="fleet-inquiry" data-fleet-mailto>Email us your headcount →</a>
+              <p class="m-0 text-sm text-text-body leading-6 pt-2">Or call {supportPhone}. The email opens with the four things we need filled in.</p>
+            </div>
+          )}
+          <p class="rrs-fleet-ok m-0 text-base text-text font-medium" style="display:none">Thanks. A person will reply with the next step. If you do not hear from us within a business day, email {supportEmail}.</p>
+        </section>
+
+        <h2 class={h2} style={outfit}>Frequently asked questions</h2>
+        <div class="space-y-8 mb-12">
+          {faqs.map((item) => (
+            <div>
+              <h3 class="text-lg font-semibold text-text mb-2" style={outfit}>{item.q}</h3>
+              <p class="text-text-body text-base leading-7" style={sans}>{item.a}</p>
+            </div>
+          ))}
+        </div>
+
+        <div class="pt-6 mt-10 border-t border-border space-y-2" style={sans}>
+          <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider ({CP}). This page is informational and not legal advice; dismissal is granted by the court on the driver’s citation, and any insurance discount is set by the insurer.</p>
+          <p class="text-xs text-text-subtle">Published October 16, 2026. Price floor per Tex. Educ. Code §1001.352 (HB 3012, eff. Sept. 1, 2025); CDL exclusion per Tex. Code Crim. Proc. art. 45A.351(c); course length per 16 TAC chapter 84; court fee from our verified court dataset.</p>
+        </div>
+
+      </div>
+    </article>
+
+    <script is:inline define:vars={{ listId }}>
+      (function () {
+        function track(reason, drivers) {
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({ event: 'fleet_inquiry', fleet_reason: reason || '', fleet_drivers: drivers || '' });
+        }
+        function init() {
+          var mail = document.querySelector('[data-fleet-mailto]');
+          if (mail) mail.addEventListener('click', function () { track('email', ''); });
+          var form = document.querySelector('.rrs-fleet-form');
+          if (!form || !listId) return;
+          var err = document.querySelector('.rrs-fleet-error');
+          var ok = document.querySelector('.rrs-fleet-ok');
+          form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            err.style.display = 'none';
+            var v = function (n) { var el = form.querySelector('[name=' + n + ']'); return el ? (el.value || '').trim() : ''; };
+            var company = v('company'), drivers = v('drivers'), email = v('email'), phone = v('phone'), reason = v('reason');
+            if (!company || !drivers || !email || email.indexOf('@') < 1) { err.style.display = 'block'; return; }
+            var btn = form.querySelector('button[type=submit]');
+            btn.disabled = true; btn.textContent = 'Sending…';
+            var payload = { data: { type: 'subscription', attributes: {
+              custom_source: 'Fleet inquiry',
+              profile: { data: { type: 'profile', attributes: { email: email, phone_number: phone || undefined, organization: company, properties: { fleet_inquiry: true, fleet_company: company, fleet_drivers: drivers, fleet_reason: reason, signup_page: 'fleet', signup_url: location.href, signup_source: 'fleet-inquiry' } } } }
+            }, relationships: { list: { data: { type: 'list', id: listId } } } } };
+            fetch('https://a.klaviyo.com/client/subscriptions/?company_id=U3BbdX', {
+              method: 'POST', headers: { 'Content-Type': 'application/json', 'revision': '2024-10-15' }, body: JSON.stringify(payload)
+            }).then(function (r) {
+              if (r.status >= 200 && r.status < 300) { track(reason, drivers); form.style.display = 'none'; ok.style.display = 'block'; }
+              else { throw new Error('status ' + r.status); }
+            }).catch(function () { btn.disabled = false; btn.textContent = 'Request a quote →'; err.style.display = 'block'; });
+          });
+        }
+        if (document.readyState !== 'loading') { init(); } else { document.addEventListener('DOMContentLoaded', init); }
+      })();
+    </script>
+  </TexasLayout>
+) : (
+  <meta http-equiv="refresh" content="0; url=/" />
+)}

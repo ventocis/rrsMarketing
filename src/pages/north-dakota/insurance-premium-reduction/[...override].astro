@@ -15,6 +15,7 @@
  * previews it. The seal pill and first bullet read "approval pending" until the number is in.
  */
 import CourseLayout from '../../../layouts/CourseLayout.astro';
+import { COMPLETION_RATE_BANNER } from '../../../data/banners';
 import StateLanding from '../../../components/state-landing/StateLanding.astro';
 import ndIpr from '../../../data/courses/nd-ipr.json';
 import ndDdc from '../../../data/courses/nd-ddc.json';
@@ -144,6 +145,7 @@ const faqSchema = {
   description={course.seo.description}
   keywords={course.seo.keywords}
   url={route}
+  banner={COMPLETION_RATE_BANNER}
   courseSchema={false}
   breadcrumbs={[{ name: 'Home', url: '/' }, { name: points.course.name, url: points.state.route }, { name: course.course.name, url: route }]}
 >

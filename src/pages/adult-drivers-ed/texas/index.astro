@@ -22,6 +22,7 @@
  * Refund promise: full refund before completion or certificate (Jackson, 2026-10-13), same as /texas.
  */
 import AdeLayout from '../../../layouts/AdeLayout.astro';
+import { COMPLETION_RATE_BANNER } from '../../../data/banners';
 import RoadPhoto from '../../../components/landing-v2/RoadPhoto.astro';
 import ade from '../../../data/ade-texas.json';
 import reviews from '../../../data/texas-reviews.json';
@@ -174,6 +175,7 @@ const chev = (stroke: string, size = 18) => `<svg width="${size}" height="${size
   description={`The ${hours}-hour Texas adult driver education course (${code}) online, TDLR-approved (${ADE_LICENSE}), for first-time drivers 18 and over. ${price} flat: course, exam and certificate, nothing added at checkout. Required at 18 to 24.`}
   keywords="texas adult drivers ed, adult drivers ed texas, texas adult driver education course, 6 hour adult driver education texas, adult drivers ed online texas, ADE-1317, tdlr approved adult drivers ed"
   url={base}
+  banner={COMPLETION_RATE_BANNER}
   headerStyle="minimal"
 >
   <Fragment slot="head">

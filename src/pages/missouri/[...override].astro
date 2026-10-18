@@ -10,6 +10,7 @@
  * getStaticPaths returns nothing when the state is disabled.
  */
 import CourseLayout from '../../layouts/CourseLayout.astro';
+import { COMPLETION_RATE_BANNER } from '../../data/banners';
 import StateLanding from '../../components/state-landing/StateLanding.astro';
 import mo from '../../data/courses/mo-dip.json';
 import type { CourseData } from '../../data/courses/types';
@@ -105,6 +106,7 @@ const resources = [
   description={course.seo.description}
   keywords={course.seo.keywords}
   url={route}
+  banner={COMPLETION_RATE_BANNER}
 >
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />

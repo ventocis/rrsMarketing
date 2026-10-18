@@ -11,6 +11,7 @@
  *  - The audio card's button opens checkout with the audio add-on already in the cart (CoursePlanCards).
  */
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import { COMPLETION_RATE_BANNER } from '../../data/banners';
 import CoursePlanCards from '../../components/texas/CoursePlanCards.astro';
 import reviews from '../../data/texas-reviews.json';
 import { VIDEOS, isoDuration } from '../../data/videos';
@@ -157,7 +158,7 @@ const chev = (stroke: string, size = 18) => `<svg width="${size}" height="${size
   description={`${hours}-hour TDLR-approved Texas driving safety course (${CP}), online. ${TEXAS_PRICE_LABEL} total with your certificate the moment you finish, nothing added at checkout. Accepted by every Texas court.`}
   keywords="texas defensive driving course, texas online defensive driving class, defensive driving course texas, online defensive driving texas, texas driving safety course, tdlr approved defensive driving"
   url="/texas"
-  banner="97.8% of Students Completed the Course"
+  banner={COMPLETION_RATE_BANNER}
   courseSchema={true}
 >
   <script type="application/ld+json" set:html={landingFaqSchema} />

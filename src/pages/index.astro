@@ -15,14 +15,11 @@
  * appears in the dialog only when courseFlags says it is live; no competitor names or prices; no Review /
  * AggregateRating schema (reviews are for people); the ADE card carries the DE license C3705, never CP1234
  * (16 TAC §84.503(j)(4)); no sample certificate for ADE (the ADE-1317 is a TDLR-controlled form). Title and
- * meta unchanged. The hero quote is checked at build time against texas-reviews.json (featured-courses.ts).
+ * H1/title/meta retargeted 2026-10-19 (seo-intent-analyst: ~/Claude/SEO/ledgers/intent/road-ready-safety-homepage.md). The hero quote is checked at build time against texas-reviews.json (featured-courses.ts).
  */
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import Rating from '../components/landing-v2/Rating.astro';
-import RoadPhoto from '../components/landing-v2/RoadPhoto.astro';
-import SampleCertificate from '../components/landing-v2/SampleCertificate.astro';
 import { TEXAS_COURSE, TEXAS_PRICE_LABEL } from '../data/texas-course';
 import { FEATURED_COURSES } from '../data/featured-courses';
 import texasReviews from '../data/texas-reviews.json';
@@ -236,8 +233,8 @@ const iconBox = 'flex-none w-11 h-11 rounded-xl bg-white border border-[#DCE4EF]
 ---
 
 <Layout
-  title={`Texas Defensive Driving Online, ${price} Total, TDLR-Approved | Road Ready Safety`}
-  description={`TDLR-approved Texas defensive driving (${TEXAS_COURSE.providerNumber}), ${price} total with the certificate included, ${TEXAS_COURSE.hours} hours, no final exam. Plus North Dakota point reduction and the Missouri DIP.`}
+  title={`Texas Defensive Driving Course Online: ${price} Total, TDLR-Approved | Road Ready Safety`}
+  description={`Road Ready Safety: the TDLR-approved Texas defensive driving course online (${TEXAS_COURSE.providerNumber}). ${price} total with the certificate included, ${TEXAS_COURSE.hours} hours, no final exam. Also Texas adult driver ed, North Dakota and Missouri.`}
   keywords="road ready safety, defensive driving course online, driving safety course, texas defensive driving, north dakota defensive driving, missouri driver improvement program"
   image="/assets/og-default.png"
   url="/"
@@ -252,14 +249,14 @@ const iconBox = 'flex-none w-11 h-11 rounded-xl bg-white border border-[#DCE4EF]
   <main class="text-text" style={sans}>
     <!-- 1. Hero: the Texas course in the landing-v2 look (2026-10-06 homepage, /texas, ADE landing) -->
     <section class="bg-white border-b border-border overflow-hidden">
-      <div class="max-w-[1180px] mx-auto px-4 sm:px-6 pt-9 pb-12 lg:pt-16 lg:pb-16 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,520px)] gap-x-14 gap-y-8 items-center">
+      <div class="max-w-[1180px] mx-auto px-4 sm:px-6 pt-9 pb-12 lg:pt-16 lg:pb-16 grid grid-cols-1 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,460px)] gap-x-14 gap-y-10 items-center">
         <div class="min-w-0 flex flex-col gap-5 items-start">
           <p class="inline-flex items-center gap-2 m-0 bg-white border border-[#B9D3F6] rounded-full py-1 pl-1 pr-3">
             <img src="/assets/images/badges/texas-approved-tdlr.png" width="24" height="24" alt="Texas approved: TDLR-approved defensive driving course" class="w-6 h-6 shrink-0" decoding="async" />
             <span class="font-bold text-[13px] text-primary-deep" style={inter}>TDLR-Approved Provider {TEXAS_COURSE.providerNumber}</span>
           </p>
-          <h1 class="m-0 font-extrabold text-[34px] sm:text-[42px] lg:text-[46px] xl:text-[50px] leading-[1.08] tracking-[-0.02em] text-[#0B2160] max-w-[11ch] sm:max-w-none" style={inter}>Dismiss your Texas ticket online. Keep it off your record.</h1>
-          <p class="m-0 text-[17px] lg:text-[19px] leading-[1.5] text-text-body max-w-[560px]">The {TEXAS_COURSE.hours}-hour defensive driving course Texas courts accept. <strong class="font-bold text-text">{price} total</strong> with the certificate included, no final exam, done on your phone.</p>
+          <h1 class="m-0 font-extrabold text-[34px] sm:text-[42px] lg:text-[46px] xl:text-[50px] leading-[1.08] tracking-[-0.02em] text-[#0B2160]" style={inter}>Texas Defensive Driving Course Online: Dismiss Your Ticket, {price} Total</h1>
+          <p class="m-0 text-[17px] lg:text-[19px] leading-[1.5] text-text-body max-w-[560px]">The TDLR-approved {TEXAS_COURSE.hours}-hour course Texas courts accept. Keep the ticket off your record, with the <strong class="font-bold text-text">certificate included</strong> the moment you finish. No final exam, done on your phone.</p>
           <ul class="flex flex-wrap gap-2.5 list-none p-0 m-0" aria-label="What the course includes">
             {heroChips.map((t) => (
               <li class="inline-flex items-center gap-2 rounded-full border border-border bg-white px-3.5 py-2 text-sm font-medium text-text">
@@ -272,29 +269,30 @@ const iconBox = 'flex-none w-11 h-11 rounded-xl bg-white border border-[#DCE4EF]
             <a href={texasEnrollUrl} data-rrs-cta="home-start-tx" class="inline-flex items-center justify-center gap-2 no-underline bg-primary hover:bg-primary-hover text-white font-extrabold text-lg h-[56px] px-8 rounded-full whitespace-nowrap shadow-[0_8px_20px_rgba(36,84,230,0.28)]" style={inter}>Start the Texas course · {price}&nbsp;→</a>
             <a href="/texas" class="inline-flex items-center justify-center no-underline bg-info hover:brightness-95 text-info-text font-bold text-base h-[56px] px-7 rounded-full whitespace-nowrap">How it works</a>
           </div>
-          <div class="flex flex-wrap items-center gap-x-6 gap-y-3 mt-1">
-            <Rating />
-            <button type="button" data-open-states class="inline-flex items-center gap-1.5 bg-transparent border-0 p-0 cursor-pointer text-sm font-semibold text-primary-deep underline underline-offset-[3px] decoration-[#B9D3F6] hover:decoration-primary-deep">
-              Not in Texas? Select your state
-              <svg class="w-4 h-4" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-          </div>
+          <!-- State picker: a select-style control that opens the dialog (Jackson, 2026-10-19: no Trustpilot score here). -->
+          <button type="button" data-open-states class="group mt-1 inline-flex items-center gap-3 w-full sm:w-auto bg-white border border-[#CBD3DF] hover:border-primary focus-visible:border-primary rounded-full pl-1.5 pr-4 h-[52px] cursor-pointer text-left shadow-[0_1px_2px_rgba(16,24,40,0.05)] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+            <span class="flex-none w-10 h-10 rounded-full bg-info text-primary-deep flex items-center justify-center" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6-5.3-6-10a6 6 0 0 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg>
+            </span>
+            <span class="flex flex-col leading-tight min-w-0">
+              <span class="text-[12px] font-semibold uppercase tracking-[0.08em] text-text-muted">Not in Texas?</span>
+              <span class="text-[15px] font-bold text-[#0B2160]">Select your state</span>
+            </span>
+            <svg class="ml-auto sm:ml-2 w-5 h-5 flex-none text-text-muted group-hover:text-primary-deep transition-colors" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
         </div>
 
-        <!-- Desktop only: the Dallas bridge, the price tag, a verified review and the sample certificate. -->
-        <div class="relative hidden lg:block min-w-0 pb-14">
-          <RoadPhoto class="w-full aspect-[4/3] rounded-[28px]" position="50% 60%" eager desktopOnly photo="texas-dallas" />
-          <div class="absolute right-6 top-6 rounded-2xl bg-white shadow-[0_20px_25px_-5px_rgba(17,23,34,0.15)] px-4 py-3" aria-hidden="true">
-            <p class="text-[24px] font-extrabold text-[#0B2160] leading-7 m-0" style={inter}>{price}</p>
-            <p class="text-xs text-text-body leading-4 m-0">Texas, total</p>
-          </div>
-          <figure class="absolute left-6 top-6 m-0 w-[250px] rounded-2xl bg-white shadow-[0_20px_25px_-5px_rgba(17,23,34,0.15)] px-4 py-3 flex flex-col gap-1">
-            <span class="text-accent text-[13px] tracking-[2px]" aria-label={`${featuredReview.rating} out of 5 stars`}>{'★'.repeat(featuredReview.rating)}</span>
-            <blockquote class="m-0 text-[15px] font-bold leading-[1.35] text-[#0B2160]" style={inter}>“{featured.proof.reviewExcerpt}”</blockquote>
-            <figcaption class="text-xs text-text-muted">{featuredReview.name} · {featuredReview.verified ? 'Verified via Trustpilot' : 'via Trustpilot'}</figcaption>
-          </figure>
-          <SampleCertificate courseName={TEXAS_COURSE.name} hours={TEXAS_COURSE.hours} sampleNumber="TX-000128" class="absolute -left-8 bottom-0" />
-        </div>
+        <!-- Beside the offer on desktop, under it on phones: one verified Trustpilot review (Jackson, 2026-10-19: no photo, no certificate). -->
+        <figure class="relative m-0 w-full max-w-[520px] mx-auto lg:mx-0 bg-white rounded-[28px] border border-border shadow-[0_24px_60px_-20px_rgba(17,23,34,0.28)] p-7 lg:p-10 flex flex-col gap-4 overflow-hidden">
+          <span class="absolute -top-3 right-8 font-extrabold text-[120px] leading-none text-[#DDEBFD] select-none" style={inter} aria-hidden="true">”</span>
+          <span class="relative text-accent text-[22px] tracking-[3px]" aria-label={`${featuredReview.rating} out of 5 stars`}>{'★'.repeat(featuredReview.rating)}</span>
+          <blockquote class="relative m-0 text-[24px] lg:text-[30px] font-extrabold leading-[1.25] tracking-[-0.01em] text-[#0B2160]" style={inter}>“{featured.proof.reviewExcerpt}”</blockquote>
+          <figcaption class="relative flex items-center gap-3 pt-4 border-t border-[#EEF2F7]">
+            <span class="w-10 h-10 rounded-full bg-[#DDEBFD] text-primary-deep font-bold text-sm flex items-center justify-center" aria-hidden="true">{featuredReview.initials}</span>
+            <span class="flex flex-col leading-tight"><span class="text-[15px] font-bold text-text">{featuredReview.name}</span><span class="text-[13px] text-text-muted">{featuredReview.verified ? 'Verified via Trustpilot' : 'via Trustpilot'}</span></span>
+            <a href={trustpilotUrl} target="_blank" rel="noopener" class="ml-auto text-[13px] font-semibold text-primary-deep no-underline border-b border-[#B9D3F6] hover:border-primary-deep">More reviews ↗</a>
+          </figcaption>
+        </figure>
       </div>
     </section>
 

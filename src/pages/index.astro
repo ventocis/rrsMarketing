@@ -1,29 +1,24 @@
 ---
 /**
- * Homepage, rebuilt from Jackson's "Home Page Redesign v2" canvas (2026-10-07). Section order, copy,
- * CTAs and interactions follow the canvas (desktop 1280 + mobile 390 artboards); fonts and colors are
- * our tokens (Inter headings, DM Sans body).
+ * Homepage (Jackson, 2026-10-19): Texas first again.
  *
- * Rules kept from the previous homepage: prices and hours come from texas-course.ts and the state course
- * JSON; a state card renders only when courseFlags says the state is live; no competitor names or prices;
- * no Review/AggregateRating schema (reviews are for people). Title and meta are unchanged (the canvas has
- * no search-preview artboard).
+ * Order: the Texas Defensive Driving hero (offer + proof, the hero that shipped 2026-09-21 and converted
+ * 17–18% of visits), a "Select your state" dialog opened from the hero for everyone who is not in Texas
+ * (our live courses first, then the partner-course states), the Texas adult driver education band, the
+ * Trustpilot reviews, then the rest of the "Home Page Redesign v2" canvas sections (why choose us, how it
+ * works, peace of mind, about, FAQ, guides). The three-state card row and the bottom finder are gone;
+ * North Dakota and Missouri live in the dialog.
  *
- * Deviations from the canvas (flagged in the PR):
- *  - "Start now" on each state card goes to that course's checkout; "Learn more" goes to the state page.
- *    The canvas pointed both at the state page.
- *  - Short reviews lead (Ryan Johnson, Chelsie Gates, Bliss James); MW's long review opens "Show more",
- *    shown in full, per Jackson's /texas feedback. No 4-line clamp.
- *  - The phone mockup is hidden on phones, per Jackson's /texas feedback on the progress mockup.
- *  - "Texas defensive driving course providers, compared" reads "…: the full TDLR list"; that page is a
- *    directory, not a comparison.
- *  - The finder's partner states (FL, IL, LA, MI, NY, TN, VA) link to their /find/<STATE>/multi page.
- *  - The site-wide Header and Footer stay; the canvas header is the shared one.
+ * Rules kept: prices and hours come from texas-course.ts and the state course JSON; a state appears in
+ * the dialog only when courseFlags says it is live; no competitor names or prices; no Review /
+ * AggregateRating schema (reviews are for people). Title and meta are unchanged. The hero quote is
+ * checked at build time against texas-reviews.json (featured-courses.ts).
  */
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { TEXAS_COURSE, TEXAS_PRICE_LABEL } from '../data/texas-course';
+import { FEATURED_COURSES } from '../data/featured-courses';
 import texasReviews from '../data/texas-reviews.json';
 import allCourses from '../data/courses.json';
 import nd from '../data/courses/nd-ddc.json';
@@ -98,6 +93,13 @@ const ORDER = ['Ryan Johnson', 'Chelsie Gates', 'Bliss James', 'MW', 'Jeffrey', 
 const reviews = ORDER.map((n) => (texasReviews as Review[]).find((r) => r.name === n)).filter(Boolean) as Review[];
 const REVIEWS_SHOWN = 3;
 
+// Hero: the Texas course and its proof card. Refuse to build if the quoted excerpt is not the customer's words.
+const featured = FEATURED_COURSES[0];
+const featuredReview = (texasReviews as Review[]).find((r) => r.name === featured.proof.reviewerName);
+if (!featuredReview || !featuredReview.quote.includes(featured.proof.reviewExcerpt)) {
+  throw new Error(`featured-courses: "${featured.proof.reviewExcerpt}" is not a verbatim excerpt of ${featured.proof.reviewerName}'s review`);
+}
+
 const why = [
   { icon: 'self', title: 'Self-paced online course', body: 'Start, stop and pick up anytime. Your progress saves automatically, so you can finish in one sitting or over a few days.' },
   { icon: 'short', title: 'Shortest state-approved course', body: `Only the hours your state requires: ${TEXAS_COURSE.hours} in Texas, ${ndCourse.course.hours} in North Dakota, ${moCourse.course.hours} in Missouri. No filler.` },
@@ -142,29 +144,40 @@ const faqSchema = JSON.stringify({
 });
 const websiteSchema = JSON.stringify({ '@context': 'https://schema.org', '@type': 'WebSite', name: 'Road Ready Safety', url: siteUrl });
 
-// Finder: our live states first, then the partner-course states from courses.json, in the canvas's order.
+// "Select your state" dialog: our live courses grouped by state (North Dakota has two), then the
+// partner-course states from courses.json.
 const COURSE_TYPE_LABELS: Record<string, string> = {
   BDI: 'Basic Driver Improvement', BDIC: 'Basic Driver Improvement', ADI: 'Advanced Driver Improvement',
   IDI: 'Intermediate Driver Improvement', TLSAE: 'TLSAE (first-time driver course)', Exam: 'Permit Exam',
   'Adult Driver Ed': 'Adult Driver Education', IPIRP: 'Point and Insurance Reduction Program',
   'Pre-Licensing': 'Pre-Licensing', 'Driver Improvement': 'Driver Improvement', 'Driver Education': 'Driver Education',
 };
+type PickerCourse = { title: string; sub: string; cta: string; href: string; learn?: string; ctaId: string };
+const picker: { key: string; name: string; courses: PickerCourse[] }[] = [];
+for (const s of states) {
+  let group = picker.find((p) => p.name === s.name);
+  if (!group) {
+    group = { key: s.name.toLowerCase().replace(/\s+/g, '-'), name: s.name, courses: [] };
+    picker.push(group);
+  }
+  group.courses.push({
+    title: s.course, sub: `${s.approval} · ${s.price} all-in · ${s.hours} hours online`,
+    cta: 'Start now', href: s.enroll, learn: s.url, ctaId: `home-picker-${s.abbr.toLowerCase()}`,
+  });
+}
 const partnerCodes = ['FL', 'IL', 'LA', 'MI', 'NY', 'TN', 'VA'].filter((c) => (allCourses as { state: string }[]).some((x) => x.state === c));
-const finder = [
-  ...states.map((s) => ({
-    key: s.abbr, name: s.name, title: s.course,
-    sub: `${s.approval} · ${s.price} all-in · ${s.hours} hours online`, cta: 'Start now →', href: s.enroll,
-  })),
-  ...partnerCodes.map((c) => {
-    const n = stateNames[c] || c;
-    // Name the actual course types (QA finding: "approved options" for Illinois led to adult driver ed only).
-    const types = [...new Set((allCourses as { state: string; course_type: string }[]).filter((x) => x.state === c).map((x) => COURSE_TYPE_LABELS[x.course_type] || x.course_type))];
-    const list = types.length > 1 ? `${types.slice(0, -1).join(', ')} and ${types[types.length - 1]}` : types[0];
-    return types.length === 1
-      ? { key: c, name: n, title: `${n} ${types[0]}`, sub: `The approved ${types[0]} course for ${n}.`, cta: `See ${n} courses →`, href: `/find/${c}/multi` }
-      : { key: c, name: n, title: `${n} courses`, sub: `Approved courses: ${list}.`, cta: `See ${n} courses →`, href: `/find/${c}/multi` };
-  }),
-];
+for (const c of partnerCodes) {
+  const n = stateNames[c] || c;
+  // Name the actual course types (QA finding: "approved options" for Illinois led to adult driver ed only).
+  const types = [...new Set((allCourses as { state: string; course_type: string }[]).filter((x) => x.state === c).map((x) => COURSE_TYPE_LABELS[x.course_type] || x.course_type))];
+  const list = types.length > 1 ? `${types.slice(0, -1).join(', ')} and ${types[types.length - 1]}` : types[0];
+  picker.push({
+    key: c.toLowerCase(), name: n,
+    courses: [types.length === 1
+      ? { title: `${n} ${types[0]}`, sub: `The approved ${types[0]} course for ${n}.`, cta: `See ${n} courses`, href: `/find/${c}/multi`, ctaId: `home-picker-${c.toLowerCase()}` }
+      : { title: `${n} courses`, sub: `Approved courses: ${list}.`, cta: `See ${n} courses`, href: `/find/${c}/multi`, ctaId: `home-picker-${c.toLowerCase()}` }],
+  });
+}
 
 const guides = [
   { href: '/texas/ways-to-dismiss-ticket', label: 'Every way to dismiss a traffic ticket in Texas' },
@@ -201,48 +214,103 @@ const iconBox = 'flex-none w-11 h-11 rounded-xl bg-white border border-[#DCE4EF]
   <Header />
 
   <main class="text-text" style={sans}>
-    <!-- 1. Hero + state cards -->
-    <section class="bg-[#EEF6FD]">
-      <div class="max-w-[1180px] mx-auto px-4 sm:px-6 pt-10 lg:pt-14 pb-14 lg:pb-[72px] flex flex-col gap-8 lg:gap-10">
-        <div class="flex flex-wrap gap-10 items-center justify-between">
-          <div class="flex-[999_1_520px] min-w-0 flex flex-col gap-[18px]">
-            <h1 class="m-0 font-extrabold text-[34px] sm:text-[44px] lg:text-[56px] leading-[1.06] tracking-[-0.02em] text-[#0B2160]" style={inter}>State-Approved Online Defensive Driving Courses</h1>
-            <p class="m-0 text-[17px] lg:text-[19px] leading-[1.5] text-text-body max-w-[560px]">Dismiss a ticket, take points off your record, or save on insurance with a course your state approves. 100% online and self-paced, with your certificate ready the moment you finish.</p>
-          </div>
-          <div class="hidden md:flex flex-[1_1_340px] max-w-[440px] bg-white rounded-[20px] px-7 py-[26px] flex-col gap-3 shadow-[0_18px_44px_rgba(11,33,96,0.10)]">
-            <div class="flex items-center gap-2.5"><span class="text-accent text-lg tracking-[2px]" aria-label="5 out of 5 stars">★★★★★</span><span class="text-sm text-text-muted">Verified via Trustpilot</span></div>
-            <p class="m-0 font-bold text-xl leading-[1.4] text-[#0B2160]" style={inter}>“Simple. No hidden fees. Seamless experience.”</p>
-            <span class="text-[15px] text-text-body">Ryan Johnson</span>
-          </div>
-        </div>
+    <!-- 1. Hero: the Texas course, its proof, and the state picker on demand (the 2026-09-21 hero, restored) -->
+    <section class="rrs-hero relative border-b border-border py-12 lg:py-20 overflow-hidden" id="find-course" style={inter}>
+      <!-- Soft blue wash with a faint dot grid fading in from the right. Decorative only. -->
+      <div class="rrs-hero-wash absolute inset-0 pointer-events-none" aria-hidden="true"></div>
+      <div class="rrs-hero-dots absolute inset-y-0 right-0 w-1/2 pointer-events-none hidden lg:block" aria-hidden="true"></div>
 
-        <div id="states" class="flex flex-col gap-4 scroll-mt-28">
-          <span class={eyebrow}>Pick your state</span>
-          <ul class="list-none p-0 m-0 grid gap-4 lg:gap-5 grid-cols-[repeat(auto-fit,minmax(min(300px,100%),1fr))]">
-            {states.map((c) => (
-              <li class="bg-white border border-border rounded-[20px] p-5 lg:p-6 flex flex-col gap-3 lg:gap-3.5 shadow-[0_10px_28px_rgba(11,33,96,0.07)]">
-                <div class="flex items-center gap-3">
-                  <img src={c.badge} alt={c.badgeAlt} width="44" height="44" class="flex-none w-11 h-11 object-contain" loading="lazy" decoding="async" />
-                  <div class="flex flex-col leading-[1.25] min-w-0 flex-1">
-                    <h3 class="m-0 font-extrabold text-[22px] lg:text-[26px] leading-[1.15]" style={inter}><a href={c.url} class="text-[#0B2160] no-underline hover:underline">{c.name}</a></h3>
-                    <span class="text-[13px] font-bold text-primary-deep">{c.approval}</span>
-                  </div>
-                  <span class="md:hidden font-extrabold text-2xl text-[#0B2160]" style={inter}>{c.price}</span>
-                </div>
-                <a href={c.url} class="text-[15px] text-text-muted underline decoration-[#CBD3DF] underline-offset-[3px] hover:text-text">{c.course}</a>
-                <span class="md:hidden text-[15px] text-text-body -mt-1">{c.hours} hours online</span>
-                <p class="hidden md:flex m-0 items-baseline gap-2"><span class="font-extrabold text-[32px] text-[#0B2160]" style={inter}>{c.price}</span><span class="text-[15px] text-text-body">all-in · {c.hours} hours online</span></p>
-                <div class="flex gap-2.5 mt-auto">
-                  <a href={c.enroll} data-rrs-cta={`home-start-${c.abbr.toLowerCase()}`} class="flex-1 text-center no-underline bg-primary hover:bg-primary-hover text-white font-extrabold text-base px-2.5 py-[13px] rounded-full whitespace-nowrap">Start now&nbsp;→</a>
-                  <a href={c.url} class="flex-1 text-center no-underline text-[#0B2160] font-bold text-base px-2.5 py-3 rounded-full border border-[#CBD3DF] hover:border-[#0B2160] whitespace-nowrap">Learn more</a>
-                </div>
-              </li>
-            ))}
-          </ul>
-          <p class="m-0 mt-1 text-[15px] text-text-body flex flex-wrap items-center gap-x-1.5 gap-y-2">Don’t see your state? <a href="#finder" class="inline-flex items-center gap-1.5 font-bold text-[#0B2160] no-underline bg-white border border-[#CBD3DF] rounded-full px-3.5 py-1.5 text-sm hover:border-[#0B2160]">Find your state <span aria-hidden="true">→</span></a></p>
-          <div class="hidden md:flex flex-wrap gap-x-7 gap-y-2.5 text-[15px] text-text-body">
-            <span>✓&nbsp; Works on your phone</span><span>✓&nbsp; Certificate the moment you finish</span><span>✓&nbsp; Secure checkout</span>
+      <div class="relative max-w-[1152px] mx-auto px-4 sm:px-6 lg:px-8 z-10 w-full">
+        <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] gap-x-12 gap-y-6">
+
+          <!-- Headline + offer -->
+          <div class="lg:col-start-1 lg:row-start-1">
+            <p class="flex items-center gap-2 w-fit mx-auto lg:mx-0 mb-5 rounded-full bg-white/70 border border-info-border pl-1.5 pr-4 py-1 text-sm font-semibold text-primary-deep leading-5">
+              <img src="/assets/images/badges/texas-approved-tdlr.png" width="28" height="28" alt="Texas approved: TDLR-approved course" class="w-7 h-7 shrink-0" decoding="async" />
+              {featured.name}
+            </p>
+            <h1 class="text-[32px] leading-[40px] lg:text-[44px] lg:leading-[54px] font-extrabold text-text tracking-[-0.02em] mb-5 text-center lg:text-left">
+              Dismiss your ticket online.<br class="hidden lg:block" /> Keep it off your record.
+            </h1>
+
+            <ul class="list-none p-0 m-0 mb-7 space-y-2 w-fit mx-auto lg:mx-0">
+              {featured.heroPoints.map((pt) => (
+                <li class="flex items-start gap-2.5 text-base lg:text-lg leading-7 text-text-body" style={sans}>
+                  <svg class="w-5 h-5 mt-1 shrink-0 text-text" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="8.25" stroke="currentColor" stroke-width="1.5"/><path d="M6.5 10.3l2.4 2.4 4.6-4.9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span>{pt}</span>
+                </li>
+              ))}
+            </ul>
+
+            <!-- Boxed purchase panel on phones; unboxed and inline from lg up -->
+            <div class="bg-white border-2 border-primary rounded-[20px] p-5 shadow-[0_10px_30px_-12px_rgba(17,23,34,0.18)] lg:bg-transparent lg:border-0 lg:rounded-none lg:p-0 lg:shadow-none">
+              <div class="flex items-center justify-between gap-3 mb-3 lg:hidden">
+                <span class="bg-info text-info-text text-xs font-semibold leading-4 px-2.5 py-1 rounded-full">{featured.badge}</span>
+                <span class="text-xs leading-4 text-text-body">{featured.credential}</span>
+              </div>
+              <p class="mb-4 lg:hidden">
+                <span class="text-[36px] leading-[44px] font-extrabold text-text tracking-[-0.02em]">${featured.price}</span>
+                <span class="text-sm text-text-body ml-1" style={sans}>all-in · certificate included</span>
+              </p>
+
+              <p class="hidden lg:inline-flex items-center rounded-full border border-[#FBB991] bg-[#FFF1E8] px-3.5 py-1.5 text-sm font-semibold text-text mb-4">
+                {featured.offerLine}
+              </p>
+
+              <div class="flex flex-col sm:flex-row gap-3">
+                <a
+                  href={texasEnrollUrl}
+                  data-rrs-cta="home-start-tx"
+                  class="bg-primary hover:bg-primary-hover text-white h-[52px] pl-7 pr-5 rounded-full text-base font-semibold inline-flex items-center justify-center gap-2 no-underline transition-colors shadow-[0_8px_20px_-8px_rgba(36,84,230,0.55)]"
+                >
+                  <span class="lg:hidden">Start now</span>
+                  <span class="hidden lg:inline">Start now for ${featured.price}</span>
+                  <svg class="w-4 h-4" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M7.5 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+                <a
+                  href={featured.learnMoreHref}
+                  class="border-[1.5px] border-primary hover:bg-white text-primary-deep bg-white/60 h-[52px] px-7 rounded-full text-base font-semibold inline-flex items-center justify-center no-underline transition-colors"
+                >
+                  Learn more
+                </a>
+              </div>
+            </div>
           </div>
+
+          <!-- Proof: beside the offer on desktop, under it on phones -->
+          <aside class="lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:self-start lg:mt-1 bg-white rounded-[20px] p-6 lg:p-7 border border-border shadow-[0_24px_60px_-20px_rgba(17,23,34,0.28)]" aria-label="Why drivers trust Road Ready Safety">
+            <div class="flex items-center gap-2.5 mb-3">
+              <div class="flex gap-0.5" aria-label={`Rated ${featuredReview.rating} out of 5 stars`}>
+                {[...Array(5)].map((_, i) => (
+                  <svg class:list={["w-[18px] h-[18px]", i < featuredReview.rating ? "text-accent" : "text-border"]} viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 1.8l2.5 5.2 5.7.8-4.1 4 1 5.7-5.1-2.7-5.1 2.7 1-5.7-4.1-4 5.7-.8z"/></svg>
+                ))}
+              </div>
+              <span class="text-xs text-text-body" style={sans}>{featuredReview.verified ? 'Verified via Trustpilot' : 'via Trustpilot'}</span>
+            </div>
+            <blockquote class="text-lg leading-8 text-text m-0 mb-2">&ldquo;{featured.proof.reviewExcerpt}&rdquo;</blockquote>
+            <p class="text-sm text-text-body mb-5" style={sans}>{featuredReview.name}</p>
+            <ul class="list-none p-0 m-0 pt-5 border-t border-border space-y-3.5" style={sans}>
+              {featured.proof.checks.map((c) => (
+                <li class="flex items-start gap-3 text-[15px] leading-6 text-text">
+                  <svg class="w-5 h-5 mt-0.5 shrink-0" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="10" class="fill-primary"/><path d="M6 10.4l2.6 2.6L14 7.4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span>{c}</span>
+                </li>
+              ))}
+            </ul>
+            <p class="flex items-center gap-2 text-sm text-text-body mt-5 pt-5 border-t border-border m-0" style={sans}>
+              <svg class="w-4 h-4 shrink-0" viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="4" y="9" width="12" height="8" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M6.8 9V6.6a3.2 3.2 0 016.4 0V9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+              Secure checkout
+            </p>
+          </aside>
+
+          <!-- Select your state: opens the dialog below. Not the tallest thing on the screen. -->
+          <div class="lg:col-start-1 lg:row-start-2 flex justify-center lg:justify-start">
+            <button type="button" data-open-states class="inline-flex items-center gap-2.5 bg-white border border-border hover:border-primary rounded-[10px] px-4 h-11 text-sm font-medium text-text transition-colors cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary shadow-[0_1px_2px_rgba(16,24,40,0.05)]" style={sans}>
+              <span>Not in Texas? Select your state</span>
+              <svg class="w-4 h-4" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+
         </div>
       </div>
     </section>
@@ -309,7 +377,7 @@ const iconBox = 'flex-none w-11 h-11 rounded-xl bg-white border border-[#DCE4EF]
               </div>
             ))}
           </div>
-          <a href="#states" class="hidden md:inline-block self-start mt-3 no-underline bg-primary hover:bg-primary-hover text-white font-extrabold text-[17px] px-[26px] py-3.5 rounded-full whitespace-nowrap">Find my course&nbsp;→</a>
+          <button type="button" data-open-states class="hidden md:inline-block self-start mt-3 cursor-pointer bg-primary hover:bg-primary-hover text-white font-extrabold text-[17px] px-[26px] py-3.5 rounded-full whitespace-nowrap">Find my course&nbsp;→</button>
         </div>
         <div class="hidden lg:flex flex-[1_1_300px] justify-center py-5 pr-10" aria-hidden="true">
           <div class="relative w-[260px]">
@@ -358,7 +426,7 @@ const iconBox = 'flex-none w-11 h-11 rounded-xl bg-white border border-[#DCE4EF]
             </li>
           ))}
         </ol>
-        <a href="#states" class="self-center mt-2 no-underline bg-primary hover:bg-primary-hover text-white font-extrabold text-[17px] px-[30px] py-[15px] rounded-full text-center max-w-full sm:whitespace-nowrap">Pick your state and start&nbsp;→</a>
+        <button type="button" data-open-states class="self-center mt-2 cursor-pointer bg-primary hover:bg-primary-hover text-white font-extrabold text-[17px] px-[30px] py-[15px] rounded-full text-center max-w-full sm:whitespace-nowrap">Pick your state and start&nbsp;→</button>
       </div>
     </section>
 
@@ -436,28 +504,7 @@ const iconBox = 'flex-none w-11 h-11 rounded-xl bg-white border border-[#DCE4EF]
       </div>
     </section>
 
-    <!-- 8. Finder -->
-    <section id="finder" class="bg-[#EEF6FD] border-t border-[#D6E8FA] scroll-mt-28">
-      <div class="max-w-[900px] mx-auto px-4 sm:px-6 pt-16 lg:pt-20 pb-20 lg:pb-24 flex flex-col gap-[18px] items-center text-center">
-        <h2 class={h2} style={inter}>Find the right course</h2>
-        <p class="m-0 text-[17px] text-text-body">Pick your state. We’ll show you the approved option.</p>
-        <div class="flex flex-wrap justify-center gap-2 mt-2" role="group" aria-label="Pick your state" data-home-finder>
-          {finder.map((f, i) => (
-            <button type="button" data-pick={f.key} aria-pressed={i === 0 ? 'true' : 'false'} class:list={['font-bold text-[15px] min-h-11 px-4 py-2 rounded-full cursor-pointer border-2', i === 0 ? 'bg-[#0B2160] text-white border-[#0B2160]' : 'bg-white text-[#0B2160] border-[#CBD3DF]']}>{f.name}</button>
-          ))}
-        </div>
-        {finder.map((f, i) => (
-          <div data-panel={f.key} hidden={i !== 0} class="w-full max-w-[620px]">
-            <div class="bg-white border border-[#DCE4EF] rounded-[18px] p-6 flex flex-wrap gap-3.5 items-center justify-between text-left mt-2">
-              <div class="flex flex-col gap-0.5 min-w-0"><strong class="text-[19px] text-[#0B2160]" style={inter}>{f.title}</strong><span class="text-[15px] text-text-body">{f.sub}</span></div>
-              <a href={f.href} class="no-underline bg-primary hover:bg-primary-hover text-white font-extrabold text-base px-[22px] py-[13px] rounded-full whitespace-nowrap">{f.cta.replace(' →', '')}&nbsp;→</a>
-            </div>
-          </div>
-        ))}
-      </div>
-    </section>
-
-    <!-- 9. Guides -->
+    <!-- 8. Guides -->
     <section class="bg-white border-t border-border">
       <div class="max-w-[1000px] mx-auto px-4 sm:px-6 pt-16 lg:pt-[72px] pb-20 lg:pb-[88px] flex flex-col gap-2.5">
         <span class="text-[13px] font-bold uppercase tracking-[0.08em] text-primary-deep">Driver guides</span>
@@ -470,9 +517,61 @@ const iconBox = 'flex-none w-11 h-11 rounded-xl bg-white border border-[#DCE4EF]
         </div>
       </div>
     </section>
+    <!-- Select your state: one dialog, opened from the hero and the two "find my course" buttons -->
+    <dialog id="state-picker" class="rrs-state-dialog m-auto w-[calc(100%-32px)] max-w-[720px] max-h-[calc(100vh-32px)] rounded-[24px] border border-border p-0 bg-white text-text shadow-[0_30px_80px_rgba(11,33,96,0.28)]" aria-labelledby="state-picker-title" style={sans}>
+      <div class="flex items-start justify-between gap-4 px-5 sm:px-7 pt-6 pb-4 border-b border-border">
+        <div class="flex flex-col gap-1">
+          <h2 id="state-picker-title" class="m-0 font-extrabold text-[24px] lg:text-[28px] leading-[1.15] text-[#0B2160]" style={inter}>Select your state</h2>
+          <p class="m-0 text-[15px] text-text-body">We’ll show you the approved course.</p>
+        </div>
+        <button type="button" data-close-states aria-label="Close" class="flex-none w-10 h-10 -mr-2 -mt-1 rounded-full bg-transparent border-0 cursor-pointer text-text-muted hover:bg-surface-muted hover:text-text flex items-center justify-center">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <div class="px-5 sm:px-7 py-5 flex flex-col gap-5">
+        <div class="flex flex-wrap gap-2" role="group" aria-label="Pick your state" data-state-pills>
+          {picker.map((p) => (
+            <button type="button" data-pick={p.key} aria-pressed="false" class="font-bold text-[15px] min-h-11 px-4 py-2 rounded-full cursor-pointer border-2 bg-white text-[#0B2160] border-[#CBD3DF] hover:border-[#0B2160]">{p.name}</button>
+          ))}
+        </div>
+        <p data-picker-hint class="m-0 text-[15px] text-text-body">Pick a state above to see its course.</p>
+        {picker.map((p) => (
+          <div data-panel={p.key} hidden>
+            <div class="flex flex-col gap-3">
+              {p.courses.map((c) => (
+                <div class="bg-[#F4F8FD] border border-[#DCE4EF] rounded-[18px] p-5 flex flex-wrap gap-3.5 items-center justify-between">
+                  <div class="flex flex-col gap-0.5 min-w-0 flex-[1_1_260px]"><strong class="text-[18px] leading-[1.3] text-[#0B2160]" style={inter}>{c.title}</strong><span class="text-[15px] text-text-body">{c.sub}</span></div>
+                  <div class="flex gap-2.5 flex-wrap">
+                    <a href={c.href} data-rrs-cta={c.ctaId} class="no-underline bg-primary hover:bg-primary-hover text-white font-extrabold text-base px-[22px] py-[13px] rounded-full whitespace-nowrap">{c.cta}&nbsp;→</a>
+                    {c.learn && <a href={c.learn} class="no-underline text-[#0B2160] font-bold text-base px-5 py-3 rounded-full border border-[#CBD3DF] hover:border-[#0B2160] whitespace-nowrap bg-white">Learn more</a>}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+        <p class="m-0 text-sm text-text-body border-t border-border pt-4">Don’t see your state? <a href="/courses" class="font-bold text-[#0B2160]">Browse every course</a>. We add states as they approve us.</p>
+      </div>
+    </dialog>
   </main>
 
   <Footer />
+
+  <style>
+    .rrs-hero-wash {
+      background:
+        radial-gradient(90% 120% at 100% 100%, rgba(36, 84, 230, 0.16), transparent 60%),
+        linear-gradient(180deg, var(--color-info-bg) 0%, #eef4fb 55%, #e4ecf7 100%);
+    }
+    .rrs-hero-dots {
+      background-image: radial-gradient(rgba(36, 84, 230, 0.22) 1px, transparent 1.5px);
+      background-size: 18px 18px;
+      -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,0.55), transparent 85%);
+              mask-image: linear-gradient(to left, rgba(0,0,0,0.55), transparent 85%);
+    }
+    .rrs-state-dialog::backdrop { background: rgba(11, 33, 96, 0.55); }
+    .rrs-state-dialog[open] { display: block; overflow: auto; }
+  </style>
 
   <script is:inline>
     (function () {
@@ -488,16 +587,27 @@ const iconBox = 'flex-none w-11 h-11 rounded-xl bg-white border border-[#DCE4EF]
           rt.textContent = open ? 'Show fewer reviews' : 'Show more reviews';
           return;
         }
-        var b = e.target.closest('[data-home-finder] [data-pick]');
+        var dlg = document.getElementById('state-picker');
+        if (!dlg) return;
+        if (e.target.closest('[data-open-states]')) {
+          if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.setAttribute('open', '');
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({ event: 'finder_open', location: 'home_hero' });
+          return;
+        }
+        if (e.target.closest('[data-close-states]') || e.target === dlg) { dlg.close ? dlg.close() : dlg.removeAttribute('open'); return; }
+        var b = e.target.closest('[data-state-pills] [data-pick]');
         if (!b) return;
         var key = b.getAttribute('data-pick');
-        document.querySelectorAll('[data-home-finder] [data-pick]').forEach(function (x) {
+        dlg.querySelectorAll('[data-state-pills] [data-pick]').forEach(function (x) {
           var on = x === b;
           x.setAttribute('aria-pressed', on ? 'true' : 'false');
           ['bg-[#0B2160]', 'text-white', 'border-[#0B2160]'].forEach(function (c) { x.classList.toggle(c, on); });
           ['bg-white', 'text-[#0B2160]', 'border-[#CBD3DF]'].forEach(function (c) { x.classList.toggle(c, !on); });
         });
-        document.querySelectorAll('#finder [data-panel]').forEach(function (p) { p.hidden = p.getAttribute('data-panel') !== key; });
+        var hint = dlg.querySelector('[data-picker-hint]');
+        if (hint) hint.hidden = true;
+        dlg.querySelectorAll('[data-panel]').forEach(function (p) { p.hidden = p.getAttribute('data-panel') !== key; });
       });
     })();
   </script>

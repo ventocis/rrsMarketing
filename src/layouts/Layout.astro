@@ -4,6 +4,7 @@ import { TEXAS_COURSE } from '../data/texas-course';
 import { adeLicensed, ADE_LICENSE, ADE_VERIFY_URL } from '../lib/ade';
 import { version } from '../../package.json';
 import { isProductionSite, PROD_SITE_URL } from '../lib/site';
+import { courseForPath } from '../data/analytics-course';
 
 interface Props {
   title: string;
@@ -37,6 +38,7 @@ const canonicalUrl = `${PROD_SITE_URL}${url}`;
 const fullImageUrl = image.startsWith('http') ? image : `${siteUrl}${image}`;
 const enableAnalytics = import.meta.env.VITE_ENABLE_ANALYTICS === 'true';
 const gtmId = import.meta.env.VITE_GTM_ID;
+const course = courseForPath(Astro.url.pathname);
 // Only the production build may be indexed (src/lib/site.ts). QA also enables analytics, so the
 // old analytics-only test let QA pages go out as index,follow.
 const isNoindex = noindex || !isProductionSite;
@@ -140,7 +142,10 @@ const orgSchema = {
 
     <!-- Google Tag Manager (via GTM Gateway) -->
     {enableAnalytics && gtmId && (
-      <script define:vars={{ gtmId }}>
+      <script define:vars={{ gtmId, course }}>
+        // Course value for GA4 (src/data/analytics-course.ts). Pushed before GTM loads so the
+        // Google tag's content_group and every event can read it from the dataLayer.
+        window.dataLayer=window.dataLayer||[];window.dataLayer.push({course:course,content_group:course});
         (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
         new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
         j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=

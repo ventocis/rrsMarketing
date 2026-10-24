@@ -1,5 +1,6 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import TicketCourseBox from '../../components/texas/TicketCourseBox.astro';
 import CompareCoursesCard from '../../components/texas/CompareCoursesCard.astro';
 import { alternatesFor, translationsOf, langLabel } from '../../lib/i18n';
 import VideoEmbed from '../../components/VideoEmbed.astro';
@@ -136,6 +137,8 @@ const faqSchema = JSON.stringify({
           <p>Here's the first thing nobody tells you: <strong>there is no single statewide place to look up a Texas traffic ticket.</strong> The state's only central tool covers Highway Patrol (trooper) citations from the last 24 months and just gives you the court's contact info — city police and county tickets aren't in it. For everything else, you go to the specific court that issued it.</p>
           <p>And before you reach for your card: <strong>paying a Texas ticket is a guilty plea and a conviction</strong> that stays on your record and can raise your insurance. If you qualify, taking a defensive driving course gets the same ticket <strong>dismissed</strong> instead — for {price}. Here's how to find your ticket, and how to decide what to do with it.</p>
         </div>
+
+        <TicketCourseBox slug="look-up-your-ticket" />
 
         <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
           <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. We don't collect citation payments — use the official links to pay or look up your case, and confirm options with the court on your citation.</p>

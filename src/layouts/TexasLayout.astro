@@ -1,5 +1,6 @@
 ---
 import Layout from './Layout.astro';
+import TicketBoxCarry from '../components/texas/TicketBoxCarry.astro';
 import { termsUrl } from '../lib/portal';
 import { TEXAS_COURSE, TEXAS_PRICE_LABEL, TEXAS_PROMO_PRICE_LABEL, TEXAS_AT_LEGAL_MINIMUM } from '../data/texas-course';
 import { adeEnabled } from '../lib/ade';
@@ -276,6 +277,7 @@ const courseSchemaJson = courseSchema
   <!-- Page Content -->
   <main>
     <slot />
+    <TicketBoxCarry />
   </main>
 
   <!-- Footer -->

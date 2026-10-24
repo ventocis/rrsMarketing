@@ -1,5 +1,6 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import TicketCourseBox from '../../components/texas/TicketCourseBox.astro';
 import CompareCoursesCard from '../../components/texas/CompareCoursesCard.astro';
 import StickyCta from '../../components/texas/StickyCta.astro';
 import YouTubeCard from '../../components/YouTubeCard.astro';
@@ -85,6 +86,8 @@ const faqSchema = JSON.stringify({
           <p>A Texas traffic defendant <strong class="text-text">younger than 17 can't resolve a ticket by mail or online</strong> — the law requires the plea to be taken in <strong class="text-text">open court</strong>, and the court summons a <strong class="text-text">parent, guardian, or managing conservator</strong> to be present (CCP art. 45A.452). That's why court websites tell teens to appear in person with a parent: it's statute, not policy.</p>
           <p>After the courtroom formality, the dismissal toolbox looks familiar — course dismissal, deferred — applied with a parent in the room. Here's what to expect, from a parent's seat.</p>
         </div>
+
+        <TicketCourseBox slug="minor-traffic-ticket" />
 
         <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
           <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Procedures vary by court and judge — confirm with the court listed on your citation, and for a juvenile case consider speaking with a licensed attorney before deciding how to proceed.</p>

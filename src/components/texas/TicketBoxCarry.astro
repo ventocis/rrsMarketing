@@ -1,0 +1,73 @@
+---
+/**
+ * TicketBoxCarry: keeps the ticket-box UTMs and article slug with a visitor who arrived on a Texas page
+ * from TicketCourseBox (utm_campaign=tx_ticket_box), through checkout and purchase.
+ *  - Saves them for the browser session (sessionStorage here, plus a session cookie on .roadreadysafety.com
+ *    that the portal can read later if it wants them on its own events).
+ *  - Registers them as PostHog session properties on this site.
+ *  - Adds them to checkout links (app.roadreadysafety.com) at click time, so the portal's PostHog
+ *    pageview carries them. PostHog already shares the visitor and session across both subdomains,
+ *    so a funnel ticket_box_clicked -> portal_checkout_start -> purchase can break down by article_slug.
+ * Included once in TexasLayout. Renders nothing.
+ */
+---
+
+<script>
+  const w = window as any;
+  const KEY = 'rrs_tx_ticket_box';
+  const UTM = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content'];
+
+  function read(): Record<string, string> | null {
+    try { return JSON.parse(sessionStorage.getItem(KEY) || 'null'); } catch { return null; }
+  }
+
+  function capture() {
+    const q = new URLSearchParams(location.search);
+    if (q.get('utm_campaign') !== 'tx_ticket_box') return;
+    const data: Record<string, string> = {};
+    for (const k of UTM) { const v = q.get(k); if (v) data[k] = v; }
+    data.article_slug = q.get('utm_content') || '';
+    try { sessionStorage.setItem(KEY, JSON.stringify(data)); } catch {}
+    if (location.hostname.endsWith('roadreadysafety.com')) {
+      document.cookie = `${KEY}=${encodeURIComponent(JSON.stringify(data))}; domain=.roadreadysafety.com; path=/; SameSite=Lax; Secure`;
+    }
+  }
+
+  function register(tries = 0) {
+    const data = read();
+    if (!data) return;
+    const ph = w.posthog;
+    if (ph && ph.__loaded) {
+      ph.register_for_session({
+        ticket_box_article_slug: data.article_slug,
+        ticket_box_utm_source: data.utm_source,
+        ticket_box_utm_medium: data.utm_medium,
+        ticket_box_utm_campaign: data.utm_campaign,
+        ticket_box_utm_content: data.utm_content,
+      });
+    } else if (tries < 40) {
+      setTimeout(() => register(tries + 1), 250);
+    }
+  }
+
+  function onPage() { capture(); register(); }
+
+  if (!w.__rrsTicketBoxCarry) {
+    w.__rrsTicketBoxCarry = true;
+    // Decorate checkout links when clicked (delegated: works for links added later and after view transitions).
+    document.addEventListener('click', (e) => {
+      const a = (e.target as Element | null)?.closest('a[href]') as HTMLAnchorElement | null;
+      if (!a) return;
+      const data = read();
+      if (!data) return;
+      let url: URL;
+      try { url = new URL(a.href); } catch { return; }
+      if (!/(^|\.)app(\.qa)?\.roadreadysafety\.com$/.test(url.hostname)) return;
+      for (const k of UTM) if (data[k] && !url.searchParams.has(k)) url.searchParams.set(k, data[k]);
+      if (data.article_slug) url.searchParams.set('article_slug', data.article_slug);
+      a.href = url.toString();
+    }, true);
+    document.addEventListener('astro:page-load', onPage);
+  }
+  onPage();
+</script>

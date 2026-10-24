@@ -1,5 +1,6 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import CompareCoursesCard from '../../components/texas/CompareCoursesCard.astro';
 import StickyCta from '../../components/texas/StickyCta.astro';
 import YouTubeCard from '../../components/YouTubeCard.astro';
 import { TEXAS_PRICE_LABEL } from '../../data/texas-course';
@@ -134,6 +135,8 @@ const faqSchema = JSON.stringify({
             Driver between 17 and 25?
           </a>
         </div>
+
+        <CompareCoursesCard page="minor-traffic-ticket" />
 
         <div class="pt-6 border-t border-border space-y-2" style="font-family: 'DM Sans', sans-serif;">
           <p class="text-sm text-text-subtle">Road Ready Safety is a TDLR-licensed Texas driving safety provider (CP1234). This page is informational and not legal advice; confirm requirements with the court on your citation.</p>

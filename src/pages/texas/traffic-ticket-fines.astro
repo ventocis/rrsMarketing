@@ -1,5 +1,6 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import TicketCourseBox from '../../components/texas/TicketCourseBox.astro';
 import CompareCoursesCard from '../../components/texas/CompareCoursesCard.astro';
 import NextStepBlock from '../../components/texas/NextStepBlock.astro';
 import { TEXAS_PRICE_LABEL } from '../../data/texas-course';
@@ -92,6 +93,8 @@ const h = "font-family: 'Outfit', sans-serif;";
             Most Texas moving violations, including <strong class="text-text">speeding, running a stop sign or red light, and failure to yield, carry a $1 to $200 fine</strong>. Each court picks the amount. If you're convicted, <strong class="text-text">about $126 in state court costs</strong> is added, so a typical ticket runs <strong class="text-text">$225 to $325</strong> before any insurance increase. Some tickets have their own ranges, and several can be dismissed for much less. The table has every common one.
           </p>
         </div>
+
+        <TicketCourseBox slug="traffic-ticket-fines" />
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style={h}>Texas ticket fines by violation</h2>
         <div class="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 mb-4 rounded-xl border border-border">

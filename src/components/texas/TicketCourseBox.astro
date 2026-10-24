@@ -1,0 +1,82 @@
+---
+/**
+ * TicketCourseBox: course box near the top of high-traffic, low-converting Texas ticket-help articles.
+ * Links to /texas (not checkout) with UTMs naming the article. Fires PostHog events
+ * ticket_box_viewed (in view) and ticket_box_clicked (button), both with article_slug.
+ * PostHog loads through GTM, so events wait for window.posthog. The /texas side (keeping the
+ * UTMs and slug with the visitor through checkout) lives in TicketBoxCarry.astro.
+ * Spec: Jackson change request 2026-10-24. Price comes from the shared Texas price.
+ */
+import { TEXAS_PRICE_LABEL } from '../../data/texas-course';
+
+interface Props {
+  /** Article slug, e.g. "lost-ticket". Goes into utm_content and the PostHog events. */
+  slug: string;
+}
+const { slug } = Astro.props;
+const params = new URLSearchParams({
+  utm_source: 'ticket_article',
+  utm_medium: 'internal',
+  utm_campaign: 'tx_ticket_box',
+  utm_content: slug,
+});
+const href = `/texas?${params.toString()}`;
+---
+
+<aside
+  class="rrs-ticket-box my-8 rounded-2xl border border-info-border bg-info p-5 sm:p-6"
+  data-article-slug={slug}
+  aria-label="Texas defensive driving course"
+>
+  <p class="m-0 mb-2 text-xl sm:text-[22px] font-bold text-text leading-snug" style="font-family: 'Outfit', sans-serif;">
+    Got a ticket in Texas? You may be able to get it dismissed.
+  </p>
+  <p class="m-0 mb-4 text-base text-text-body leading-7" style="font-family: 'DM Sans', sans-serif;">
+    Many Texas courts let you take a state-approved driving safety course to keep the ticket off your record. Ours is {TEXAS_PRICE_LABEL}, 100% online, and you get your certificate when you finish.
+  </p>
+  <a
+    href={href}
+    class="rrs-ticket-box-btn flex sm:inline-flex w-full sm:w-auto min-h-[52px] items-center justify-center rounded-[14px] bg-primary hover:bg-primary-hover px-6 py-3 text-center text-base font-semibold text-white no-underline"
+    style="font-family: 'DM Sans', sans-serif;"
+  >
+    See if your ticket qualifies
+  </a>
+</aside>
+
+<script>
+  // One set of listeners for every box on the page. Guarded so view transitions don't double-bind.
+  const w = window as any;
+
+  function withPostHog(fn: (ph: any) => void, tries = 0) {
+    const ph = w.posthog;
+    if (ph && ph.__loaded) return fn(ph);
+    if (tries < 40) setTimeout(() => withPostHog(fn, tries + 1), 250);
+  }
+
+  function watchBoxes() {
+    const boxes = document.querySelectorAll<HTMLElement>('.rrs-ticket-box:not([data-watched])');
+    if (!boxes.length || !('IntersectionObserver' in window)) return;
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (!e.isIntersecting) continue;
+        io.unobserve(e.target);
+        const slug = (e.target as HTMLElement).dataset.articleSlug;
+        withPostHog((ph) => ph.capture('ticket_box_viewed', { article_slug: slug }));
+      }
+    }, { threshold: 0.5 });
+    boxes.forEach((b) => { b.dataset.watched = '1'; io.observe(b); });
+  }
+
+  if (!w.__rrsTicketBoxBound) {
+    w.__rrsTicketBoxBound = true;
+    document.addEventListener('click', (e) => {
+      const btn = (e.target as Element | null)?.closest('.rrs-ticket-box-btn');
+      if (!btn) return;
+      const slug = (btn.closest('.rrs-ticket-box') as HTMLElement | null)?.dataset.articleSlug;
+      const ph = w.posthog;
+      if (ph && ph.__loaded) ph.capture('ticket_box_clicked', { article_slug: slug }, { transport: 'sendBeacon' });
+    });
+    document.addEventListener('astro:page-load', watchBoxes);
+  }
+  watchBoxes();
+</script>

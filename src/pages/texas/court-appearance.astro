@@ -1,5 +1,6 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import TicketCourseBox from '../../components/texas/TicketCourseBox.astro';
 import CompareCoursesCard from '../../components/texas/CompareCoursesCard.astro';
 import YouTubeCard from '../../components/YouTubeCard.astro';
 import NextStepBlock from '../../components/texas/NextStepBlock.astro';
@@ -85,6 +86,8 @@ const faqSchema = JSON.stringify({
           <p>The citation says "you must appear" — but in Texas traffic law, <strong class="text-text">appearing almost never means standing in a courtroom</strong>. An appearance is satisfied by responding to the court by your answer date: a written plea, a mailed request, many courts' online portals, or an attorney acting for you. Most defensive-driving dismissals happen start-to-finish without the driver ever seeing the building.</p>
           <p>But "usually" isn't "always" — a few categories of people genuinely must show up, and one common mistake converts an optional visit into a mandatory one. Here's the map.</p>
         </div>
+
+        <TicketCourseBox slug="court-appearance" />
 
         <div class="bg-surface-muted border border-border rounded-xl p-5 mb-10">
           <p class="text-sm text-text-body" style="font-family: 'DM Sans', sans-serif;">This page is general information, not legal advice. Procedures vary by court and judge — confirm with the court listed on your citation.</p>

@@ -1,5 +1,6 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import CompareCoursesCard from '../../components/texas/CompareCoursesCard.astro';
 import CourseBand from '../../components/texas/CourseBand.astro';
 import VideoEmbed from '../../components/VideoEmbed.astro';
 import StickyCta from '../../components/texas/StickyCta.astro';
@@ -200,6 +201,8 @@ const pillOff = 'bg-white text-text border-[#CBD3DF] hover:border-primary-deep';
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-7">
           {nextSteps.map(([href, t, s]) => <a href={href} class="no-underline text-text rounded-[14px] border border-border bg-white p-4 hover:border-primary-deep"><strong>{t}</strong><br /><span class="text-[15px] text-text-body">{s}</span></a>)}
         </div>
+        <CompareCoursesCard page="ways-to-dismiss-ticket" />
+
         <p class="text-[15px] text-text-muted m-0 max-w-[820px] leading-6">General information, not legal advice. Eligibility depends on your offense, record and court; confirm with the court on your citation. Road Ready Safety is a TDLR-licensed course provider ({TEXAS_COURSE.providerNumber}), not a court. Data: Texas Office of Court Administration, justice and municipal court activity, FY2024 ({total.toLocaleString('en-US')} disposed traffic cases; shares rounded). Law: Tex. Code Crim. Proc. arts. 45A.301–.302 (deferred), 45A.351–.357 (driving safety course); Tex. Transp. Code §601.193 (proof of insurance). Original analysis by the Road Ready Safety editorial team. Updated October 6, 2026.</p>
       </section>
 

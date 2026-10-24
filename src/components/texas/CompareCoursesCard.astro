@@ -1,0 +1,35 @@
+---
+/**
+ * CompareCoursesCard: "Keep reading" card at the end of Texas informational pages.
+ * Sends readers who are still shopping to /texas/best-defensive-driving-course.
+ * Sits under each page's own buy buttons and above the legal/updated line.
+ * Copy approved by Jackson 2026-10-24. No competitor names or prices here.
+ */
+interface Props {
+  /** Page slug, for the data-page attribute (analytics). */
+  page: string;
+}
+const { page } = Astro.props;
+---
+
+<aside
+  class="rrs-compare-card my-10 max-w-[780px] rounded-2xl border border-border bg-white p-5 sm:p-6 flex gap-4 items-start"
+  data-cta="compare-courses"
+  data-page={page}
+>
+  <svg class="shrink-0 mt-1 text-primary-deep" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M7 20h10M6 6l6-1 6 1M12 3v17M9 12l-3-6-3 6a3 3 0 0 0 6 0M21 12l-3-6-3 6a3 3 0 0 0 6 0" />
+  </svg>
+  <div class="min-w-0">
+    <p class="m-0 mb-1 text-sm font-semibold text-primary-deep" style="font-family: 'DM Sans', sans-serif;">Keep reading</p>
+    <p class="m-0 mb-2 text-xl font-bold text-text leading-snug" style="font-family: 'Outfit', sans-serif;">Every Texas course is the same 6 hours. The price isn't.</p>
+    <p class="m-0 mb-3 text-base text-text-body leading-7" style="font-family: 'DM Sans', sans-serif;">Some courses add a certificate fee or a processing fee at the last checkout screen. See how to spot the real total, and which course is the best value for your situation.</p>
+    <a
+      href="/texas/best-defensive-driving-course"
+      class="inline text-base font-semibold text-primary-deep no-underline hover:underline"
+      style="font-family: 'DM Sans', sans-serif;"
+    >
+      Compare Texas defensive driving courses <span aria-hidden="true">→</span>
+    </a>
+  </div>
+</aside>

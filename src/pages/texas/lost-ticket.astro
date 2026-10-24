@@ -1,5 +1,6 @@
 ---
 import TexasLayout from '../../layouts/TexasLayout.astro';
+import CompareCoursesCard from '../../components/texas/CompareCoursesCard.astro';
 import StickyCta from '../../components/texas/StickyCta.astro';
 import CourseBand from '../../components/texas/CourseBand.astro';
 import NextStepBlock from '../../components/texas/NextStepBlock.astro';
@@ -253,6 +254,8 @@ const pillOff = 'bg-white text-text border-border hover:border-primary-deep';
             ['/texas/type-3a-driving-record', 'Order a Type 3A record'],
           ].map(([href, t]) => <a href={href} class="no-underline bg-white border border-border rounded-full px-4 py-2 text-base text-text hover:border-primary-deep">{t}</a>)}
         </div>
+        <CompareCoursesCard page="lost-ticket" />
+
         <p class="text-sm text-text-subtle m-0 max-w-[780px] leading-6">Road Ready Safety is a TDLR-licensed Texas driving safety provider ({TEXAS_COURSE.providerNumber}). General information, not legal advice; confirm with the court on your citation. Last updated October 6, 2026. Sources: Tex. Transp. Code §543.006 (court location and 10-day minimum); Tex. Code Crim. Proc. ch. 45A; published lookup procedures of Texas municipal and JP courts, including Austin Municipal Court.</p>
       </section>
 

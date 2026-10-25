@@ -47,7 +47,7 @@ export const PRICE_TOKENS: Record<string, string> = {
   ND_PRICE: `$${nd.course.priceUsd}`,
   /** "$24.99": the North Dakota insurance premium reduction course (nd-ipr). */
   ND_IPR_PRICE: `$${ndIpr.course.priceUsd}`,
-  /** "$24.99" */
+  /** "$19.95" */
   MO_PRICE: `$${mo.course.priceUsd}`,
   /** "$24.99" */
   ID_PRICE: `$${id.course.priceUsd}`,

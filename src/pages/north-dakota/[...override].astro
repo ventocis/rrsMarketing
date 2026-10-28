@@ -35,7 +35,7 @@ const exam = course.exam;
 const modules = course.course.modules.filter((m) => !/quiz|exam/i.test(m.title));
 
 // Audio add-on (Jackson, 2026-10-28: the /texas audio card on ND). Production checkout sells it as
-// rrs-nd-bdi-audio, "Audio & Autoplay", $4.99 (read off app.roadreadysafety.com/public/checkout?sku=nd-ddc on
+// rrs-nd-bdi-audio, "Audio & Autoplay", 4.99 USD (read off app.roadreadysafety.com/public/checkout?sku=nd-ddc on
 // 2026-10-28). QA has no ND products yet; set VITE_ND_DDC_AUDIO_SKU there once it does.
 const audio = { sku: import.meta.env.VITE_ND_DDC_AUDIO_SKU || 'rrs-nd-bdi-audio', price: 4.99 };
 

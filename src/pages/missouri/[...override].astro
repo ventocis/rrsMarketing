@@ -36,6 +36,12 @@ const faqSchema = {
   mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
 };
 
+// Audio add-on (Jackson, 2026-10-28: same "+ Audio" card as /texas and /north-dakota). Price is in USD.
+// Jackson gave the sku as MO-BDI-AUDIO; prod checkout rejects that casing ("Some product SKUs do not exist")
+// and accepts mo-bdi-audio ("Audio & Autoplay", 4.99 USD, total 19.98 USD, checked 2026-10-28).
+// QA override: VITE_MO_DIP_AUDIO_SKU.
+const audio = { sku: import.meta.env.VITE_MO_DIP_AUDIO_SKU || 'mo-bdi-audio', price: 4.99 };
+
 const bullets = [
   { label: 'MSC-Approved', text: `Approved by the Missouri Safety Center, provider ${course.provider.approvalNumber}.` },
   { label: 'Keep the Points Off', text: 'When your court orders the program, the points for that ticket aren’t assessed.' },
@@ -123,5 +129,6 @@ const resources = [
     aboutWho="Missourians"
     sampleNumber="MO-000123"
     faqs={faqs}
+    audio={audio}
   />
 </CourseLayout>

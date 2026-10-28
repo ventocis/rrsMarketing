@@ -153,6 +153,14 @@ export const VIDEOS: Record<string, VideoMeta> = {
     description: 'Why Road Ready Safety: short plain-English lessons, quick checks along the way, the shortest course Texas allows, works on your phone and saves your place, certificate included the moment you finish, one flat price up front, and your money back if it is not for you.',
     seconds: 61, uploadDate: '2026-09-05', canonical: '/texas',
   },
+  // S-204 v2 North Dakota sales film (Jackson, 2026-10-28). Uploaded private on 2026-10-24; the page
+  // embeds it now and it plays once the video is public or unlisted.
+  'TyriauaAN00': {
+    id: 'TyriauaAN00',
+    title: 'North Dakota Point Reduction Course — Road Ready Safety',
+    description: 'How the North Dakota point reduction course works: NDDOT-approved, finish it and send your certificate to take up to 3 points off your record once every 12 months. Four hours online at your own pace, certificate ready the moment you pass, one price with nothing added at checkout, and a full refund if you change your mind before you finish.',
+    seconds: 51, uploadDate: '2026-10-24', canonical: '/north-dakota',
+  },
 };
 
 /** "3:57" / "1:02:03" for display. */

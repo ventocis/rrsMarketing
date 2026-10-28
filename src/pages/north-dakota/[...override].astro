@@ -16,6 +16,7 @@ import nd from '../../data/courses/nd-ddc.json';
 import ndIpr from '../../data/courses/nd-ipr.json';
 import type { CourseData } from '../../data/courses/types';
 import { isEnabled, siteUrl } from '../../lib/courseFlags';
+import { VIDEOS, isoDuration } from '../../data/videos';
 
 export function getStaticPaths() {
   return isEnabled(nd as CourseData) ? [{ params: { override: undefined } }] : [];
@@ -136,6 +137,31 @@ const courseProductSchema = {
   hasCourseInstance: { '@type': 'CourseInstance', courseMode: 'online', courseWorkload: `PT${course.course.hours}H` },
 };
 
+// Hero video: S-204 v2 North Dakota sales film (Jackson, 2026-10-28: "similar to how Texas has it"). This page is
+// its canonical page, so the VideoObject schema is emitted here, built the same way as /texas.
+const video = VIDEOS['TyriauaAN00'];
+const videoSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'VideoObject',
+  name: video.title,
+  description: video.description,
+  thumbnailUrl: [`https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`, `https://i.ytimg.com/vi/${video.id}/maxresdefault.jpg`],
+  uploadDate: video.uploadDate,
+  duration: isoDuration(video.seconds),
+  embedUrl: `https://www.youtube.com/embed/${video.id}`,
+  contentUrl: `https://www.youtube.com/watch?v=${video.id}`,
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', logo: { '@type': 'ImageObject', url: 'https://roadreadysafety.com/assets/icons/texas/logo-shield-footer.svg' } },
+};
+const heroVideo = {
+  id: video.id,
+  title: video.title,
+  seconds: video.seconds,
+  cover: {
+    src: '/assets/images/north-dakota/nd-sales-video-1280.webp',
+    srcset: '/assets/images/north-dakota/nd-sales-video-640.webp 640w, /assets/images/north-dakota/nd-sales-video-1280.webp 1280w',
+  },
+};
+
 const faqSchema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
@@ -156,6 +182,7 @@ const faqSchema = {
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify(courseProductSchema)} />
     <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(videoSchema)} />
   </Fragment>
   <StateLanding
     course={course}
@@ -171,5 +198,6 @@ const faqSchema = {
     aboutWho="North Dakotans"
     sampleNumber="ND-000123"
     audio={audio}
+    video={heroVideo}
   />
 </CourseLayout>

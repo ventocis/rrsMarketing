@@ -48,8 +48,14 @@ interface Props {
    * "… is for you if you…" boxes. `sku` is the portal's production add-on sku; the page passes an env override for QA.
    */
   audio?: { sku: string; price: number };
+  /**
+   * Optional hero video (North Dakota, Jackson 2026-10-28: "similar to how Texas has it"). When set, the hero's
+   * right column is the /texas click-to-load YouTube tile instead of the road photo + sample certificate, and it
+   * shows on mobile too, as on /texas. The page emits the VideoObject schema (only on the video's canonical page).
+   */
+  video?: { id: string; title: string; seconds: number; cover: { src: string; srcset: string } };
 }
-const { course, seal, h1, bullets, heroNote, heroNoteLink, cardChecks, tabs, resources, aboutWho, sampleNumber, faqs = course.faqs, audio } = Astro.props;
+const { course, seal, h1, bullets, heroNote, heroNoteLink, cardChecks, tabs, resources, aboutWho, sampleNumber, faqs = course.faqs, audio, video } = Astro.props;
 const guidesRoute = guidesRouteFor(course);
 
 const enrollUrl = buildEnrollUrl(course);
@@ -60,6 +66,7 @@ const progressDone = modules.slice(0, 4).map((m) => m.title);
 const progressNext = modules[4]?.title ?? '';
 const trustpilotUrl = 'https://www.trustpilot.com/review/roadreadysafety.com';
 const key = course.course.key;
+const videoLength = video ? `${Math.floor(video.seconds / 60)}:${String(video.seconds % 60).padStart(2, '0')}` : '';
 
 // Audio card (same copy as the /texas CoursePlanCards, autoplay included in the add-on).
 const audioUrl = audio ? `${enrollUrl}${enrollUrl.includes('?') ? '&' : '?'}sku=${encodeURIComponent(audio.sku)}` : '';
@@ -111,10 +118,23 @@ const chev = (stroke: string, size = 18) => `<svg width="${size}" height="${size
         ))}
       </ul>
     </div>
-    <div class="hidden lg:block min-w-0 lg:col-start-2 lg:row-start-1 lg:row-span-2 relative pb-14" aria-hidden="true">
-      <RoadPhoto class="w-full aspect-[4/3] rounded-[24px]" position="50% 60%" eager desktopOnly />
-      <SampleCertificate courseName={course.course.name} hours={course.course.hours} sampleNumber={sampleNumber} class="absolute -left-8 bottom-0" />
-    </div>
+    {video ? (
+      <div class="min-w-0 lg:col-start-2 lg:row-start-1 lg:row-span-2 w-full max-w-[480px] mx-auto lg:mx-0">
+        <div class="rrs-hero-yt relative aspect-video rounded-2xl overflow-hidden bg-primary-navy shadow-[0_16px_40px_rgba(11,33,96,0.18)]" data-embed={`https://www.youtube-nocookie.com/embed/${video.id}?autoplay=1&rel=0`} data-title={video.title}>
+          <img src={video.cover.src} srcset={video.cover.srcset} sizes="(min-width: 1024px) 480px, 100vw" alt="" width="1280" height="720" loading="eager" decoding="async" class="absolute inset-0 w-full h-full object-cover" />
+          <button type="button" class="rrs-hero-yt-play group absolute inset-0 w-full h-full bg-transparent border-0 cursor-pointer" aria-label={`Play video: ${video.title} (${videoLength})`}>
+            <span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white/95 flex items-center justify-center shadow-[0_12px_30px_rgba(0,0,0,0.35)] transition-transform group-hover:scale-105" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 30 30" fill="none"><path d="M10 6 L24 15 L10 24 Z" fill="#2454E6"/></svg>
+            </span>
+          </button>
+        </div>
+      </div>
+    ) : (
+      <div class="hidden lg:block min-w-0 lg:col-start-2 lg:row-start-1 lg:row-span-2 relative pb-14" aria-hidden="true">
+        <RoadPhoto class="w-full aspect-[4/3] rounded-[24px]" position="50% 60%" eager desktopOnly />
+        <SampleCertificate courseName={course.course.name} hours={course.course.hours} sampleNumber={sampleNumber} class="absolute -left-8 bottom-0" />
+      </div>
+    )}
     <div class="min-w-0 lg:col-start-1 lg:row-start-2 pt-1 flex flex-col gap-3 items-start">
       <a href={enrollUrl} data-rrs-cta={`${key}-hero`} class="inline-block no-underline bg-primary hover:bg-primary-hover text-white font-extrabold text-lg px-[30px] py-[15px] rounded-full text-center max-w-full sm:whitespace-nowrap shadow-[0_8px_20px_rgba(36,84,230,0.28)]" style={inter}>Start My Course · {price}&nbsp;→</a>
       {heroNote && (
@@ -368,8 +388,22 @@ const chev = (stroke: string, size = 18) => `<svg width="${size}" height="${size
   (function () {
     if (window.__rrsStateLanding) return;
     window.__rrsStateLanding = true;
-    // One delegated listener (survives ViewTransitions): reviews toggle + What to Expect tabs.
+    // One delegated listener (survives ViewTransitions): hero video, reviews toggle, What to Expect tabs.
     document.addEventListener('click', function (e) {
+      // Hero video: load the YouTube player only on click (same as /texas).
+      var play = e.target.closest('.rrs-hero-yt-play');
+      if (play) {
+        var box = play.closest('.rrs-hero-yt');
+        var f = document.createElement('iframe');
+        f.className = 'absolute inset-0 w-full h-full';
+        f.src = box.getAttribute('data-embed');
+        f.title = box.getAttribute('data-title') || 'Video';
+        f.setAttribute('frameborder', '0');
+        f.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+        f.setAttribute('allowfullscreen', '');
+        box.replaceChildren(f);
+        return;
+      }
       var rt = e.target.closest('[data-state-reviews-toggle]');
       if (rt) {
         var open = rt.getAttribute('aria-expanded') !== 'true';

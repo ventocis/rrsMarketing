@@ -42,8 +42,14 @@ interface Props {
   sampleNumber: string;
   /** Override the FAQ list (Missouri drops its "$10 courses" answer on the landing page). Must match the page's FAQPage schema. */
   faqs?: { q: string; a: string }[];
+  /**
+   * Optional audio add-on. When set, "Your Course" becomes the /texas "Choose Your Course" pair: the course card,
+   * a "+ Audio" card whose button opens checkout with the add-on already in the cart (repeat sku=), and the two
+   * "… is for you if you…" boxes. `sku` is the portal's production add-on sku; the page passes an env override for QA.
+   */
+  audio?: { sku: string; price: number };
 }
-const { course, seal, h1, bullets, heroNote, heroNoteLink, cardChecks, tabs, resources, aboutWho, sampleNumber, faqs = course.faqs } = Astro.props;
+const { course, seal, h1, bullets, heroNote, heroNoteLink, cardChecks, tabs, resources, aboutWho, sampleNumber, faqs = course.faqs, audio } = Astro.props;
 const guidesRoute = guidesRouteFor(course);
 
 const enrollUrl = buildEnrollUrl(course);
@@ -54,6 +60,20 @@ const progressDone = modules.slice(0, 4).map((m) => m.title);
 const progressNext = modules[4]?.title ?? '';
 const trustpilotUrl = 'https://www.trustpilot.com/review/roadreadysafety.com';
 const key = course.course.key;
+
+// Audio card (same copy as the /texas CoursePlanCards, autoplay included in the add-on).
+const audioUrl = audio ? `${enrollUrl}${enrollUrl.includes('?') ? '&' : '?'}sku=${encodeURIComponent(audio.sku)}` : '';
+const [audioDollars, audioCents] = audio ? `$${(Number(course.course.priceUsd) + audio.price).toFixed(2)}`.split('.') : ['', ''];
+const audioExtras = [
+  { strong: 'Narrated audio', rest: ' for every lesson' },
+  { strong: 'Autoplay', rest: ' keeps it going hands-free' },
+  { rest: 'Pauses only when it’s time for a quiz' },
+];
+const fitBoxes = [
+  { head: 'Reading is for you if you…', items: ['Like reading at your own pace', 'Want the lowest price', 'Take it in short bursts on your phone or computer'] },
+  { head: 'Audio is for you if you…', items: ['Learn better by listening', 'Want to stay hands-free while you do other things at home', 'Find long reading tiring'] },
+];
+const plus = `<svg width="14" height="14" viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="M11 4 V18 M4 11 H18" stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round"/></svg>`;
 
 interface Review { name: string; initials: string; date: string; rating: number; verified: boolean; quote: string; title?: string }
 const LEAD = ['Ryan Johnson', 'Chelsie Gates', 'Bliss James', 'MW'];
@@ -136,13 +156,67 @@ const chev = (stroke: string, size = 18) => `<svg width="${size}" height="${size
     </div>
   </section>
 
-  <!-- Your course: one card on a contrast panel -->
+  <!-- Your course: one card on a contrast panel, or the /texas "Choose Your Course" pair when the course sells audio -->
   <section id="course" class="bg-white border-t border-border scroll-mt-28">
     <div class="max-w-[1180px] mx-auto px-4 sm:px-6 pt-[72px] pb-[88px] flex flex-col gap-9 items-center">
       <div class="flex flex-col gap-2 text-center max-w-[640px]">
-        <h2 class="m-0 font-extrabold text-[30px] lg:text-[40px] leading-[1.12] text-text" style={inter}>Your Course</h2>
-        <p class="m-0 text-base text-text-muted">One price, everything included. Nothing is added at checkout.</p>
+        <h2 class="m-0 font-extrabold text-[30px] lg:text-[40px] leading-[1.12] text-text" style={inter}>{audio ? 'Choose Your Course' : 'Your Course'}</h2>
+        <p class="m-0 text-base text-text-muted">{audio ? 'Read it or listen to it. Same certificate.' : 'One price, everything included. Nothing is added at checkout.'}</p>
       </div>
+      {audio ? (
+        <>
+          <div class="flex flex-wrap gap-6 justify-center items-stretch w-full">
+            <div class="flex-[1_1_300px] max-w-[400px] min-w-0 rounded-[20px] px-6 py-7 flex flex-col gap-4 bg-white text-text border border-[#DCE4EF] shadow-[0_16px_40px_rgba(11,33,96,0.08)]">
+              <div class="flex justify-between gap-4 items-start">
+                <h3 class="m-0 font-extrabold text-[21px] leading-[1.2]" style={inter}>{course.course.name}</h3>
+                <span class="flex-none font-bold text-xs px-3 py-1.5 rounded-full bg-[#E5F0FE] text-primary">Great Value</span>
+              </div>
+              <p class="m-0 flex items-baseline gap-1"><span class="font-extrabold text-[44px] leading-none" style={inter}>{dollars}</span><span class="text-base text-text-body">{cents ? `.${cents}` : '.00'}</span></p>
+              <ul class="list-none p-0 m-0 flex flex-col gap-2.5">
+                {cardChecks.map((c) => (
+                  <li class="flex gap-3.5 items-start">
+                    <span class="flex-none w-6 h-6 rounded-full bg-[#DDEBFD] flex items-center justify-center" set:html={check('#2454E6')} />
+                    <span class="text-[15px] leading-[1.45] pt-0.5">{c.strong && <strong>{c.strong}</strong>}{c.rest}</span>
+                  </li>
+                ))}
+              </ul>
+              <a href={enrollUrl} data-rrs-cta={`${key}-course-card`} class="mt-auto no-underline text-center font-extrabold text-[17px] px-4 py-3.5 rounded-xl bg-primary hover:bg-primary-hover text-white" style={inter}>Enroll Now&nbsp;→</a>
+            </div>
+
+            <div class="flex-[1_1_300px] max-w-[400px] min-w-0 rounded-[20px] px-6 py-7 flex flex-col gap-4 bg-[#0B2160] text-white border border-[#0B2160] shadow-[0_24px_60px_rgba(11,33,96,0.28)]">
+              <div class="flex justify-between gap-4 items-start">
+                <h3 class="m-0 font-extrabold text-[21px] leading-[1.2]" style={inter}>{course.course.name} + Audio</h3>
+                <span class="flex-none font-bold text-xs px-3 py-1.5 rounded-full bg-white text-primary-deep">Hands-Free</span>
+              </div>
+              <p class="m-0 flex items-baseline gap-1"><span class="font-extrabold text-[44px] leading-none" style={inter}>{audioDollars}</span><span class="text-base text-[#D6E8FD]">.{audioCents}</span></p>
+              <ul class="list-none p-0 m-0 flex flex-col gap-2.5">
+                {cardChecks.map((c) => (
+                  <li class="flex gap-3.5 items-start">
+                    <span class="flex-none w-6 h-6 rounded-full bg-white/20 flex items-center justify-center" set:html={check('#FFFFFF')} />
+                    <span class="text-[15px] leading-[1.45] pt-0.5 text-[#D6E8FD]">{c.strong && <strong class="text-white">{c.strong}</strong>}{c.rest}</span>
+                  </li>
+                ))}
+                {audioExtras.map((c) => (
+                  <li class="flex gap-3.5 items-start">
+                    <span class="flex-none w-6 h-6 rounded-full bg-[#22A06B] flex items-center justify-center" set:html={plus} />
+                    <span class="text-[15px] leading-[1.45] pt-0.5 text-white font-semibold">{c.strong && <strong>{c.strong}</strong>}{c.rest}</span>
+                  </li>
+                ))}
+              </ul>
+              <a href={audioUrl} data-rrs-cta={`${key}-course-card-audio`} class="mt-auto no-underline text-center font-extrabold text-[17px] px-4 py-3.5 rounded-xl bg-white hover:bg-info text-primary-deep" style={inter}>Enroll with Audio&nbsp;→</a>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap gap-6 w-full justify-center">
+            {fitBoxes.map((f) => (
+              <div class="flex-[1_1_300px] max-w-[400px] min-w-0 flex flex-col gap-1.5 px-6 py-4 bg-surface-muted border border-border rounded-[14px]">
+                <span class="font-extrabold text-[15px] text-text" style={inter}>{f.head}</span>
+                {f.items.map((t) => <span class="flex gap-2 text-sm text-text-body"><span class="text-[#1E8E53] font-extrabold" aria-hidden="true">✓</span>{t}</span>)}
+              </div>
+            ))}
+          </div>
+        </>
+      ) : (
       <div class="w-full max-w-[460px] rounded-[20px] px-6 py-7 flex flex-col gap-4 bg-[#0B2160] text-white border border-[#0B2160] shadow-[0_24px_60px_rgba(11,33,96,0.28)]">
         <div class="flex justify-between gap-4 items-start">
           <h3 class="m-0 font-extrabold text-[21px] leading-[1.2]" style={inter}>{course.course.name}</h3>
@@ -159,6 +233,7 @@ const chev = (stroke: string, size = 18) => `<svg width="${size}" height="${size
         </ul>
         <a href={enrollUrl} data-rrs-cta={`${key}-course-card`} class="mt-2 no-underline text-center font-extrabold text-[17px] px-4 py-3.5 rounded-xl bg-white hover:bg-info text-primary-deep" style={inter}>Enroll Now&nbsp;→</a>
       </div>
+      )}
       <div class="flex flex-wrap justify-center gap-x-8 gap-y-3 text-base text-text-body">
         <span class="inline-flex items-center gap-2"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" stroke="#2454E6" stroke-width="2"/><path d="M8 11 V8 a4 4 0 0 1 8 0 V11" stroke="#2454E6" stroke-width="2"/></svg>Secure checkout</span>
         <span class="inline-flex items-center gap-2"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 L19 6 V11 C19 16 16 19 12 21 C8 19 5 16 5 11 V6 Z" stroke="#2454E6" stroke-width="2" stroke-linejoin="round"/><path d="M9 12 L11.2 14.2 L15.5 9.8" stroke="#2454E6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>{course.state.approvalShort ?? `${course.state.agencyShort}-approved`} provider</span>

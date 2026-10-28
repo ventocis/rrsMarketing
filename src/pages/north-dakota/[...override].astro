@@ -34,6 +34,11 @@ const faqs = course.faqs;
 const exam = course.exam;
 const modules = course.course.modules.filter((m) => !/quiz|exam/i.test(m.title));
 
+// Audio add-on (Jackson, 2026-10-28: the /texas audio card on ND). Production checkout sells it as
+// rrs-nd-bdi-audio, "Audio & Autoplay", $4.99 (read off app.roadreadysafety.com/public/checkout?sku=nd-ddc on
+// 2026-10-28). QA has no ND products yet; set VITE_ND_DDC_AUDIO_SKU there once it does.
+const audio = { sku: import.meta.env.VITE_ND_DDC_AUDIO_SKU || 'rrs-nd-bdi-audio', price: 4.99 };
+
 const bullets = [
   { label: 'NDDOT-Approved', text: 'Approved by the North Dakota Department of Transportation for point reduction.' },
   { label: '3 Points Off', text: 'Once every 12 months, up to 9 points in 3 years.' },
@@ -165,5 +170,6 @@ const faqSchema = {
     resources={resources}
     aboutWho="North Dakotans"
     sampleNumber="ND-000123"
+    audio={audio}
   />
 </CourseLayout>

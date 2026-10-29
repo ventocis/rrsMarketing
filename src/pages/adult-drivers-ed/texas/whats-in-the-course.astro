@@ -7,10 +7,14 @@
  * written once and reused in the lede and the meta description; each H2 is the reader's next question. The module
  * list feeds both the visible cards and the ItemList schema, so the two cannot drift. Facts: ade-texas.json
  * (modules, exam) and ade-eligibility.ts (course build counts).
+ *
+ * 2026-10-29 (REPORT v3 §6, step 8): absorbs /what-the-course-does-not-do as #what-it-doesnt-do; that URL now
+ * redirects here.
  */
 import AdeGuide from '../../../components/ade/AdeGuide.astro';
 import ade from '../../../data/ade-texas.json';
-import { course, CLAIM } from '../../../data/ade-eligibility';
+import { course, itd, CLAIM } from '../../../data/ade-eligibility';
+import { dpsStats as S } from '../../../lib/dps-stats';
 
 const siteUrl = (import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com').replace(/\/$/, '');
 const base = '/adult-drivers-ed/texas';
@@ -26,6 +30,8 @@ const faqs = [
   { q: 'Is the course the same at every provider?', a: 'The required topics are, because Texas prescribes them. Providers cannot add or remove subjects. The writing, the examples, the graphics and the examination are the provider’s own.' },
   { q: 'Do I have to do it in order?', a: 'Yes. The course runs in sequence and you cannot skip ahead of a section before its timer has run. You can stop and come back as often as you like.' },
   { q: 'Which module has the material for the DPS exam?', a: `Module 4, Traffic Control Devices, carries the signs material, and the traffic law content runs through Modules 2, 3 and 5. The final examination draws on both because it ${CLAIM}.` },
+  { q: 'Does adult drivers ed give me a Texas driver license?', a: 'No, and no provider may promise that. The course produces a certificate. DPS issues licenses, after its own tests and checks.' },
+  { q: 'Does the course teach me to drive?', a: 'No. It is classroom instruction: law, signs, right-of-way and risk. Learning to operate a car happens behind the wheel, with a driving school or supervised practice.' },
 ];
 
 const itemList = {
@@ -59,8 +65,8 @@ const next = [
   h1="What is in Texas adult drivers ed? Nine modules the state sets, the same at every provider"
   lede={`${answer} What a provider does control, and which modules hold the material for the DPS knowledge exam, is below.`}
   faqs={faqs}
-  dateModified="2026-10-13"
-  updated="October 13, 2026"
+  dateModified="2026-10-29"
+  updated="October 29, 2026"
   schema={[itemList]}
   band={{ eyebrow: 'Nine modules, six hours' }}
   next={next}
@@ -95,7 +101,7 @@ const next = [
       You need {ade.exam.passPercent}% on each half, with {ade.exam.attempts} attempts.{' '}
       <a class="underline hover:no-underline" href="/adult-drivers-ed/texas/final-exam">How the final exam works</a>.
       The rest of the DPS process, including the road test, stays where it is;{' '}
-      <a class="underline hover:no-underline" href="/adult-drivers-ed/texas/what-the-course-does-not-do">here is what the course does not do</a>.
+      <a class="underline hover:no-underline" href="#what-it-doesnt-do">here is what the course does not do</a>.
     </p>
   </section>
 
@@ -129,5 +135,18 @@ const next = [
       What a provider does control is whether the material reads like it was written for a person. That is the
       thing to compare, so look at a sample of the writing before you pay.
     </p>
+  </section>
+  <section id="what-it-doesnt-do" class="flex flex-col gap-4 scroll-mt-28">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">What doesn&rsquo;t the course do?</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      It doesn&rsquo;t give you a license, teach you to drive, replace the road test or the ITAD video, or shorten any DPS queue.
+    </p>
+    <ul class="flex flex-col gap-4 pl-5 m-0 list-disc marker:text-text-subtle">
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>It is not a driver license.</strong> It produces a certificate. DPS issues licenses, and Texas rules forbid a provider from promising you one.</li>
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>It does not teach you to drive.</strong> If you have never been behind a wheel, budget for lessons separately.</li>
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>It does not replace the driving test.</strong> It {CLAIM}, and nothing more. The road test remains, with a median {S.driveTest.median}-day wait when we last read the DPS report. <a class="underline hover:no-underline" href={`${base}/texas-driving-test`}>What the driving test checks</a>.</li>
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>It does not replace the {itd.adultName} video.</strong> DPS says so itself. You do both.</li>
+      <li class="text-[17px] text-text-body leading-[30px]"><strong>It does not shorten any queue.</strong> Finishing in one evening does not move your appointment. If the wait is your problem, a <a class="underline hover:no-underline" href={`${base}/third-party-skills-testing`}>DPS-authorized driving school</a> may have a shorter one.</li>
+    </ul>
   </section>
 </AdeGuide>

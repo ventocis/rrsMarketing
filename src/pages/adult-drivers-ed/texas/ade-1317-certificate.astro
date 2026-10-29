@@ -6,23 +6,24 @@
  * Rebuilt 2026-10-13 on the hook → answer → loop → funnel recipe (~/Claude/SEO/ADE-PAGE-RECIPE.md). Facts used and
  * nothing more: the ADE-1317 does not expire (landing page); the ITAD certificate is the one valid 90 days
  * (itd.certValidDays); DPS lists "DE-964/DEE-964 or ADE-1317/ADEE-1317" for third-party skills testing at 18 to 24
- * (tpst.requires18to24); a provider has up to 15 working days to issue (course.certificateDays, 16 TAC §84.503(h)).
+ * (tpst.requires18to24); a provider has up to 15 working days to issue (course.certificateDays, 16 TAC §84.503(h)),
+ * and ours is issued the moment you pass (Jackson, 2026-10-13); the under-25 exam waiver lapses at 2 years (WAIVER_LAPSE).
  */
 import AdeGuide from '../../../components/ade/AdeGuide.astro';
-import { course, law, itd, tpst, CLAIM } from '../../../data/ade-eligibility';
+import { course, law, itd, tpst, CLAIM, WAIVER_LAPSE } from '../../../data/ade-eligibility';
 
 const base = '/adult-drivers-ed/texas';
 const code = course.certificateCode; // ADE-1317
 const tpstCert = tpst.requires18to24[0]; // 'A valid DE-964/DEE-964 or ADE-1317/ADEE-1317 showing a completed driver education course'
 
 // The one-breath answer: lede and meta description.
-const answer = `The ${code} is the Texas adult drivers ed certificate, required at ${law.requiredBand} for a first license. Providers have up to ${course.certificateDays} working days to issue it; it does not expire.`;
+const answer = `The ${code} is the Texas adult drivers ed certificate, required at ${law.requiredBand} for a first license. Ours is ready the moment you pass, and it does not expire.`;
 
 const faqs = [
   { q: `What is an ${code} certificate?`, a: `The Texas adult driver education certificate of completion. A licensed provider issues it after you pass the six-hour course, and it is the document DPS wants from you if you are ${law.requiredBand} and applying for a first Texas driver license.` },
-  { q: 'How long does it take to get the certificate?', a: `Up to ${course.certificateDays} working days after the course completion date, which is the most Texas gives a provider. We email ours once you pass and a licensed instructor signs it, and a provider quoting ${course.certificateDays} working days is within the rules.` },
-  { q: `Does the ${code} expire?`, a: `No. The certificate with a ${itd.certValidDays}-day clock is ITAD, the Impact Texas Adult Drivers certificate, and people confuse the two constantly.` },
-  { q: 'What do I do with the certificate?', a: `Bring it to your DPS appointment with your other documents. It is the proof that you completed driver education, and it is what lets a licensed instructor confirm the highway sign and traffic law portions on your behalf.` },
+  { q: 'How long does it take to get the certificate?', a: `Ours is ready to download the moment you pass. Texas allows a provider up to ${course.certificateDays} working days after the completion date, so if you take the course somewhere else, ask before you book your DPS appointment.` },
+  { q: `Does the ${code} expire?`, a: `No. It stays valid as proof that you took the course. If you are under 25, though, the knowledge-test waiver it carries lapses after 2 years. The certificate with a ${itd.certValidDays}-day clock is ITAD, the Impact Texas Adult Drivers certificate, and people confuse the two constantly.` },
+  { q: 'What do I do with the certificate?', a: `Bring it to your DPS appointment with your other documents. It is the proof that you completed driver education, and it shows you passed the highway sign and traffic law portions of the DPS knowledge exam in the course. ${WAIVER_LAPSE}` },
   { q: 'What if I lose it?', a: 'Ask the provider that issued it for a replacement. Providers are required to keep student records, so a certificate can be reissued.' },
   { q: `Is ${code} the same as DE-964?`, a: `No. DE-964 is the minor driver education certificate, for the 32-hour teen course. ${code} is the adult six-hour equivalent. DPS accepts either for third-party skills testing at 18 to 24; they are still different documents.` },
 ];
@@ -35,16 +36,16 @@ const next = [
 ];
 ---
 <AdeGuide
-  title={`${code} Certificate: Does Not Expire, Up to ${course.certificateDays} Working Days to Issue | Road Ready Safety`}
+  title={`${code} Certificate: Does Not Expire, Ready the Moment You Pass | Road Ready Safety`}
   description={answer}
   url={`${base}/ade-1317-certificate`}
   eyebrow="The course"
   h1={`The ${code} certificate does not expire. The one with a ${itd.certValidDays}-day clock is ITAD.`}
   lede={`${answer} It gets mixed up with two other certificates, the ITAD one you also need for the driving test and the teen DE-964. Which is which, and when yours arrives, is below.`}
   faqs={faqs}
-  dateModified="2026-10-13"
-  updated="October 13, 2026"
-  band={{ eyebrow: 'Signed by a licensed instructor' }}
+  dateModified="2026-10-29"
+  updated="October 29, 2026"
+  band={{ eyebrow: 'Ready the moment you pass' }}
   next={next}
   sources={[
     { label: '16 TAC §84.503(h), the 15-working-day issuance rule' },
@@ -114,10 +115,10 @@ const next = [
   <section class="flex flex-col gap-4">
     <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">How long until I get my certificate?</h2>
     <p class="text-[17px] text-text-body leading-[30px]">
-      Up to {course.certificateDays} working days after your completion date. That is the most Texas gives
-      a provider to issue it, and a good provider issues it sooner. A provider that quotes you the full{' '}
-      {course.certificateDays} days is within the rules, so check before you book a DPS appointment for
-      the day after you finish.
+      Ours is ready to download the moment you pass. Texas allows a provider up to{' '}
+      {course.certificateDays} working days after your completion date, and a provider that quotes the full{' '}
+      {course.certificateDays} days is within the rules. If you take the course somewhere else, ask before you
+      book a DPS appointment for the day after you finish.
     </p>
   </section>
 </AdeGuide>

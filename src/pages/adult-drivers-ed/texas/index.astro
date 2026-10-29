@@ -26,7 +26,7 @@ import { COMPLETION_RATE_BANNER } from '../../../data/banners';
 import RoadPhoto from '../../../components/landing-v2/RoadPhoto.astro';
 import ade from '../../../data/ade-texas.json';
 import reviews from '../../../data/texas-reviews.json';
-import { law, itd } from '../../../data/ade-eligibility';
+import { law, itd, WAIVER_LAPSE } from '../../../data/ade-eligibility';
 import { adeEnabled, adeEnrollUrl, adeContactUrl, ADE_LICENSE, ADE_VERIFY_URL } from '../../../lib/ade';
 
 const isEnabled = adeEnabled;
@@ -88,7 +88,7 @@ const expTabs = [
       ['Finish the six-hour course', `All nine modules the state sets (16 TAC §84.503), with the final exam at the end: ${ade.exam.signsQuestions} highway sign questions and ${ade.exam.lawsQuestions} traffic law questions, ${ade.exam.passPercent}% to pass, three attempts.`],
       ['Watch Impact Texas Adult Drivers (ITAD)', `A free ${itd.adultLengthHours}-hour video from DPS, taken on the DPS site. Its certificate is valid ${itd.certValidDays} days, so watch it close to your driving test, not the day you enroll.`],
       ['Bring your documents to DPS', `Proof of identity, Social Security number and Texas residency, plus your ${code} certificate and your ITAD certificate. Two printed residency documents, one showing 30 days in Texas.`],
-      ['Pass the vision screening and the driving test', 'At your DPS appointment, or take the driving test with a DPS-certified third-party tester to skip the DPS road-test queue.'],
+      ['Pass the vision screening and the driving test', 'At your DPS appointment, or take the driving test with a DPS-certified third-party tester, which may have a shorter wait.'],
     ] as [string, string][],
     note: 'Moving to Texas with a valid, unexpired license from another state? The course requirement is waived when you surrender it. A license from another country usually is not, unless it is from a country with a DPS reciprocity agreement.',
   },
@@ -124,7 +124,7 @@ const progressNext = ade.modules[4].title;
 // The FAQPage schema below is built from this array, so schema and visible answers cannot drift.
 const landingFaqs = [
   { q: 'Who has to take Texas adult drivers ed?', a: 'Anyone 18 to 24 getting a first Texas driver license has to complete a six-hour approved adult driver education course. Drivers 25 and over do not have to, though DPS recommends it. Drivers under 18 take a different, longer course that includes supervised driving hours.' },
-  { q: 'Do I still take the written test at the DPS?', a: `Completing this course ${ade.exam.claimPhrasing}. You still take the vision screening and the driving test at the DPS.` },
+  { q: 'Do I still take the written test at the DPS?', a: `Completing this course ${ade.exam.claimPhrasing}. You still take the vision screening and the driving test at the DPS. ${WAIVER_LAPSE}` },
   { q: 'How long is adult drivers ed in Texas?', a: `Six hours. Texas sets the length of every approved adult driver education course, so no approved course is shorter. You can finish in one sitting or spread it over several days; you have ${days} days and the course saves your place.` },
   { q: 'What is in the six hours?', a: 'Nine modules set by the state: getting your license, right-of-way, signs and signals, speed and lane use, alcohol and drugs, sharing the road, managing risk, and the final exam.' },
   { q: 'Do adults need behind-the-wheel hours in Texas?', a: 'No. Texas does not require adults to log practice hours. You still have to pass the driving test, so if you have never driven, get practice first through a driving school or supervised practice; Texas learner licenses go to applicants 15 to 17, not adults.' },

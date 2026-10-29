@@ -12,7 +12,7 @@
  * Facts: src/data/ade-eligibility.ts, src/lib/dps-stats.ts (the median wait). §84.40(j): never promise a license.
  */
 import AdeGuide from '../../../components/ade/AdeGuide.astro';
-import { law, itd, fees, tpst, CLAIM } from '../../../data/ade-eligibility';
+import { law, itd, fees, tpst, CLAIM, CLAIM_25 } from '../../../data/ade-eligibility';
 import { dpsStats as W } from '../../../lib/dps-stats';
 
 const base = '/adult-drivers-ed/texas';
@@ -22,7 +22,7 @@ const answer = `No. Drivers ed isn't required at ${law.ageCeiling} and over in T
 
 const faqs = [
   { q: 'Do you need drivers ed at 25 in Texas?', a: 'No. DPS states there are no driver education requirements for ages 25 and older. §521.1601 only reaches people younger than 25, so once you are 25 the course is optional.' },
-  { q: 'Do I have to take the written test if I am over 25?', a: `Yes, at the DPS office. If you pass an approved driver education course first, it ${CLAIM}. A valid license from another U.S. state is the other way around it, since DPS exempts that transfer from the knowledge and skills exams.` },
+  { q: 'Do I have to take the written test if I am over 25?', a: `Yes, at the DPS office, unless you take an approved driver education course first: its exam ${CLAIM_25}. A valid license from another U.S. state is the other way around it, since DPS exempts that transfer from the knowledge and skills exams.` },
   { q: 'What do I still have to do at 25 or older?', a: `Everything else: the application, identity, lawful presence and Texas residency documents, the $${fees.newLicense18to84} fee, the vision test, the knowledge test, the driving skills test, and the ${itd.adultName} video before that skills test. Only the driver education requirement drops away.` },
   { q: 'Is the course still worth taking at 25 or older?', a: `It can be, if you would rather not take the sign and traffic law portions at the office. Under §521.167 it ${CLAIM}, and DPS calls it highly recommended for first-time applicants over 25. Whether that is worth six hours and the price depends on how comfortable you feel walking into a written test on Texas traffic law.` },
   { q: 'Do I still need the ITAD video at 25 or older?', a: `Yes. DPS lists ${itd.adultName} as required for drivers aged 18 through 24 who must take an adult driver education course, and for drivers 25 years or older. The video requirement does not have the same age cut-off as the course.` },

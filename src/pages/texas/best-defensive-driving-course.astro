@@ -15,24 +15,27 @@ const cp = TEXAS_COURSE.providerNumber;
 
 // Restored 2026-10-18 to the June/July structure (the version Google ranked for "best" and "cheapest"
 // Texas defensive driving searches): answer-first short answer, how to choose, picks by need, a named
-// price table, why we recommend ourselves, FAQs. Prices re-verified October 18, 2026 on each provider's
-// public site or checkout page without buying. Our own figures are imported, never typed.
-const verified = 'October 18, 2026';
+// price table, why we recommend ourselves, FAQs. Prices re-verified October 29, 2026 on each provider's
+// public site or checkout page without buying, for the 2026-10-29 price change (Grok's Oct 29 table, rows we could not
+// confirm left out). Our own figures are imported, never typed.
+const verified = 'October 29, 2026';
 
 const picks = [
   { provider: 'Road Ready Safety', cp, total: priceCents, instantCert: 'Free, included (instant download)', best: 'Best overall value: certificate included, nothing added at checkout', highlight: true },
-  { provider: 'I Drive Safely', cp: 'CP022', total: '$28.00', instantCert: 'Free (electronic)', best: 'Same total; text, video or audio format' },
-  { provider: 'IMPROV', cp: 'CP342', total: '$28.95', instantCert: 'Free (electronic)', best: 'Comedy format with the certificate included (sale price; list $37.95)' },
-  { provider: 'Comedy Driving', cp: 'CP319', total: '$25.00', instantCert: 'Paid add-on (fee shown at signup); mail free', best: 'Animated comedy course at the legal floor; instant download costs extra' },
-  { provider: 'DefensiveDriving.com', cp: 'CP284', total: '$25.00 (text course)', instantCert: '$25.00 add-on; mail free; FedEx $45', best: 'Known national brand; instant certificate doubles the price' },
-  { provider: 'GetDefensive.com', cp: 'CP021', total: '$25.00', instantCert: 'None. Mailed in 2 to 3 business days; same-day processing $10, still mailed', best: 'Best bilingual (English / Spanish) pick' },
-  { provider: 'Aceable', cp: 'CP262', total: '$44.00', instantCert: '$15.00 (sale price; $20 list)', best: 'Polished app and audio option; course $29 on sale ($49 list) plus the certificate fee' },
+  { provider: 'I Drive Safely', cp: 'CP022', total: '$28.00 ($25.00 + $3.00 admin fee)', instantCert: 'Free (electronic)', best: 'Text course with free audio read-along; video upgrade extra' },
+  { provider: 'IMPROV', cp: 'CP342', total: '$28.95 ($25.95 + $3.00 admin fee)', instantCert: 'Free (electronic)', best: 'Comedy format with the certificate included (sale price; list $34.95)' },
+  { provider: 'Comedy Driving', cp: 'CP319', total: '$25.00', instantCert: 'Immediate download is an option; fee not shown before signup', best: 'Animated comedy course at the legal floor' },
+  { provider: 'DefensiveDriving.com', cp: 'CP284', total: '"Lowest price by law" (text course; no figure shown)', instantCert: '$25.00 instant download; FedEx $45', best: 'Known national brand; instant certificate doubles the price' },
+  { provider: 'GetDefensive.com', cp: 'CP021', total: '$25.00', instantCert: 'Same-day certificate is an upgrade; fee not shown before signup', best: 'Best bilingual (English / Spanish) pick' },
+  { provider: 'Aceable', cp: 'CP262', total: '$41.10 default ($26.10 without the certificate)', instantCert: '$15.00, pre-selected in the cart (sale; $20 list)', best: 'Polished app and audio option; course $26.10 after two automatic codes ($49 list)' },
 ];
 
 const faqs = [
-  { q: 'What is the best Texas defensive driving course?', a: `Every TDLR-approved Texas defensive driving course teaches the same state-mandated 6-hour curriculum, so for ticket dismissal the "best" course is the one with the lowest all-in price and the fastest certificate. On verified ${verified} pricing, Road Ready Safety is the best overall value: ${priceCents} all-in with a free instant certificate download and nothing added at checkout. I Drive Safely matches that total with a free electronic certificate, and IMPROV is $28.95 with the certificate included. If you need a bilingual course, GetDefensive.com (English / Spanish) is the pick, but its certificate comes by mail.` },
+  { q: 'What is the best Texas defensive driving course?', a: `Every TDLR-approved Texas defensive driving course teaches the same state-mandated 6-hour curriculum, so for ticket dismissal the "best" course is the one with the lowest all-in price and the fastest certificate. On verified ${verified} pricing, Road Ready Safety is the best overall value: ${priceCents} total with a free instant certificate download and nothing added at checkout. I Drive Safely ($28.00) and IMPROV ($28.95) also include a free electronic certificate. If you need a bilingual course, GetDefensive.com (English / Spanish) is the pick, but same-day delivery of its certificate is an upgrade.` },
   { q: 'Are all Texas defensive driving courses the same?', a: 'The course content is essentially the same. TDLR (the Texas Department of Licensing and Regulation) approves every provider against the same required curriculum, and any TDLR-approved course your court accepts will dismiss an eligible ticket. The differences that actually matter are the total price at checkout, whether the certificate is free and instant, the format (read, video or audio), language options, and the quality of the app and support.' },
-  { q: 'What is the cheapest Texas defensive driving course in 2026?', a: `Texas law sets a ${floor} minimum course price (Education Code §1001.352), and Comedy Driving, DefensiveDriving.com and GetDefensive.com all advertise that floor. None of the three includes an instant certificate at that price: you either wait for the mail or pay a fee of $10 to $25 to get it today. Road Ready Safety is ${priceCents} all-in with the instant certificate included, so on a court deadline it is the cheapest way to be done the same day. See the full breakdown on our Texas defensive driving cost page.` },
+  { q: 'What is the cheapest Texas defensive driving course in 2026?', a: `Texas law sets a ${floor} minimum course price (Education Code §1001.352). On ${verified}, Road Ready Safety, Comedy Driving and GetDefensive.com charged ${floor}, and DefensiveDriving.com advertised the "lowest price by law". The difference is the certificate: ours is included and downloads the moment you finish, while the others charge extra or sell an upgrade to get it the same day. See the full breakdown on our Texas defensive driving cost page.` },
+  { q: 'Which Texas defensive driving courses include the certificate in the price?', a: `On provider pages checked ${verified}: Road Ready Safety (${priceCents} total, ${cp}) includes an instant download. I Drive Safely ($28.00, with a $3 admin fee) and IMPROV ($28.95) include a free electronic certificate. Aceable pre-selects a $15 instant certificate in the cart, DefensiveDriving.com charges $25 for an instant download, and GetDefensive.com and Comedy Driving sell same-day delivery as an option. Prices change; confirm at checkout.` },
+  { q: 'How much does Aceable cost?', a: "As checked on October 29, 2026, Aceable's Texas defensive driving course was $26.10 after two automatically applied discount codes (list price $49). Its cart preselects a $15 instant certificate, so the default checkout total was $41.10. Removing the instant certificate leaves $26.10. Prices change often; confirm at checkout." },
   { q: 'How do I choose the right defensive driving course?', a: 'Confirm the provider is TDLR-approved (look for a CP license number), then compare the all-in checkout total (base fee, any processing fee, any certificate fee), how fast you get the certificate, and whether it works well on your phone. For ticket dismissal on a deadline, a free instant certificate is the single most important feature: it lets you submit to your court the same day you finish.' },
   { q: 'Is the cheapest defensive driving course any good?', a: 'Yes, because price has nothing to do with whether the course dismisses your ticket. The court only cares that the certificate comes from a TDLR-approved provider. Paying more does not get your ticket dismissed faster or more reliably; it usually pays for branding or a paid certificate. The lowest-friction choice is an approved course at the cheapest total with a free instant certificate.' },
   { q: 'Is Road Ready Safety a legitimate, court-accepted course?', a: `Yes. Road Ready Safety is TDLR-approved (license ${cp}) and its certificate is accepted by Texas courts statewide for dismissal of an eligible citation. The course is the full state-required 6 hours, completed online on any device, with a certificate you download the moment you finish.` },
@@ -44,7 +47,7 @@ const articleSchema = JSON.stringify({
   headline: 'Best Texas Defensive Driving Course (2026): Honest Comparison',
   description: 'Every TDLR-approved course teaches the same material, so the best one is the cheapest with the fastest certificate. Verified all-in prices for seven providers and the best pick for each need.',
   datePublished: '2026-06-15',
-  dateModified: '2026-10-18',
+  dateModified: '2026-10-29',
   author: { '@type': 'Organization', name: 'Road Ready Safety' },
   publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
   mainEntityOfPage: `${siteUrl}/texas/best-defensive-driving-course`,
@@ -72,8 +75,8 @@ const link = 'text-primary-deep font-medium hover:underline';
 
 {isEnabled ? (
   <TexasLayout
-    title="Best Texas Defensive Driving Course 2026: Honest Comparison"
-    description="Every TDLR-approved course teaches the same material, so the best one is the cheapest with the fastest certificate. We compare verified all-in prices for seven providers and name the best pick for each need."
+    title={`Best Texas Defensive Driving Course: ${price} Total (2026)`}
+    description={`Road Ready Safety (${cp}): ${price} total, instant certificate included, nothing added at checkout. Verified ${verified} prices for seven TDLR-approved providers.`}
     keywords="best defensive driving course texas, cheapest defensive driving course texas, texas defensive driving course comparison, tdlr approved defensive driving course"
     url="/texas/best-defensive-driving-course"
   >
@@ -96,7 +99,7 @@ const link = 'text-primary-deep font-medium hover:underline';
         <div class="bg-info border border-info-border rounded-2xl p-6 mb-10">
           <p class="text-sm font-semibold text-primary-deep mb-2" style={head}>Short answer</p>
           <p class="text-text-body text-base leading-7" style={sans}>
-            Every TDLR-approved Texas defensive driving course teaches the same state-required 6-hour material, so any of them will dismiss an eligible ticket. That makes the <strong class="text-text">best course the one with the lowest all-in price and the fastest certificate</strong>. On pricing verified {verified}, <strong class="text-text">Road Ready Safety is the best overall value at {priceCents} all-in</strong> with a <strong class="text-text">free instant certificate download</strong>, so you can submit to your court the same day. I Drive Safely matches the total with a free electronic certificate; IMPROV is $28.95 with the certificate included. The three courses advertised at the {floor} legal minimum either mail the certificate or charge a fee to get it today. Need English/Spanish? <strong class="text-text">GetDefensive.com</strong> is the bilingual pick.
+            Every TDLR-approved Texas defensive driving course teaches the same state-required 6-hour material, so any of them will dismiss an eligible ticket. That makes the <strong class="text-text">best course the one with the lowest all-in price and the fastest certificate</strong>. <strong class="text-text">Road Ready Safety ({cp}) is {price} total</strong>, the {floor} minimum Texas law sets (Tex. Educ. Code §1001.352), with a <strong class="text-text">free instant certificate download</strong> and nothing added at checkout, so you can submit to your court the same day. Several other approved providers also charge {floor}; the ones we checked on {verified} charge extra or sell an upgrade to get the certificate the same day. Court fee and DPS driving record are separate. Need English/Spanish? <strong class="text-text">GetDefensive.com</strong> is the bilingual pick.
           </p>
         </div>
 
@@ -119,12 +122,12 @@ const link = 'text-primary-deep font-medium hover:underline';
         <h2 class={h2} style={head}>Best Texas defensive driving courses, by need</h2>
         <div class="space-y-4 text-text-body text-base leading-7 mb-6" style={sans}>
           <ul class="list-disc pl-6 space-y-3">
-            <li><strong class="text-text">Best overall value:</strong> Road Ready Safety, {priceCents} all-in with a free instant certificate and nothing added at checkout.</li>
+            <li><strong class="text-text">Best overall value:</strong> Road Ready Safety, {priceCents} total with a free instant certificate and nothing added at checkout.</li>
             <li><strong class="text-text">Best if you need a same-day certificate on a deadline:</strong> Road Ready Safety, I Drive Safely or IMPROV. All three include an electronic certificate at no extra cost; the other four either mail it or charge for the download.</li>
-            <li><strong class="text-text">Best bilingual (English / Spanish):</strong> GetDefensive.com, $25.00 plus a certificate by mail in 2 to 3 business days.</li>
-            <li><strong class="text-text">Best known national brand:</strong> DefensiveDriving.com, $25.00 for the text course, but the instant certificate is a $25.00 fee on top.</li>
-            <li><strong class="text-text">Best app and audio experience:</strong> Aceable, well reviewed, but $44.00 all-in once the instant certificate fee is included.</li>
-            <li><strong class="text-text">Cheapest headline price:</strong> Comedy Driving, DefensiveDriving.com and GetDefensive.com all advertise $25.00. None includes an instant certificate at that price.</li>
+            <li><strong class="text-text">Best bilingual (English / Spanish):</strong> GetDefensive.com, $25.00; same-day certificate delivery is an upgrade.</li>
+            <li><strong class="text-text">Best known national brand:</strong> DefensiveDriving.com, advertised at the "lowest price by law" for the text course, but the instant certificate is a $25.00 fee on top.</li>
+            <li><strong class="text-text">Best app and audio experience:</strong> Aceable, well reviewed, but $41.10 by default because the cart pre-selects a $15.00 instant certificate ($26.10 without it).</li>
+            <li><strong class="text-text">Cheapest price:</strong> Road Ready Safety, Comedy Driving and GetDefensive.com are $25.00, the legal minimum. Of the three, Road Ready Safety is the one with the instant certificate included.</li>
           </ul>
         </div>
 
@@ -161,12 +164,12 @@ const link = 'text-primary-deep font-medium hover:underline';
             </tbody>
           </table>
         </div>
-        <p class="text-sm text-text-body mb-2" style={sans}>All-in totals are the course price plus any required processing fee, before the certificate options shown. Read on each provider's public site or checkout page on {verified}, without buying; Aceable and IMPROV were showing sale prices that day. Course fees are set by each provider and may change. Confirm at checkout.</p>
+        <p class="text-sm text-text-body mb-2" style={sans}>All-in totals are the course price plus any required processing fee, before the certificate options shown. Read on each provider's public site or checkout page on {verified}, without buying; Aceable, I Drive Safely and IMPROV were showing sale prices that day. Court fee and DPS Type 3A record are excluded for every provider. Since September 1, 2025, Texas law no longer requires a separate $3 fee (HB 3012); some providers still list one. Course fees are set by each provider and may change. Confirm at checkout.</p>
         <p class="text-text-body text-base leading-7 mb-10" style={sans}>Want every fee line explained, including the certificate add-ons and the court's own fee? See our <a href="/texas/cost" class={link}>Texas defensive driving cost page</a>.</p>
 
         <h2 class={h2} style={head}>Why a {floor} course ends up costing $40 or more</h2>
         <div class={prose} style={sans}>
-          <p>Because at the {floor} legal minimum the certificate is usually free only by mail, in two to four weeks. You find that out after you finish. Your court has a deadline, so you pay a $10 to $25 fee to get it today, and the "cheapest" course becomes one of the most expensive. The one question that stops it: <strong class="text-text">"When I finish, is the certificate in my hands today at no extra cost?"</strong></p>
+          <p>Because of the certificate, not the course. At {floor}, many courses send the certificate free only by mail, or charge $10 to $25 to get it today. You find that out after you finish, and your court has a deadline. The one question that stops it: <strong class="text-text">"When I finish, is the certificate in my hands today at no extra cost?"</strong> At Road Ready Safety the answer is yes, inside the {price}.</p>
         </div>
 
         <h2 class={h2} style={head}>Why we recommend Road Ready Safety</h2>
@@ -174,7 +177,7 @@ const link = 'text-primary-deep font-medium hover:underline';
           <p>We'll be upfront: Road Ready Safety is our course. But the case for it is built entirely on the criteria above, and you can verify every claim on our <a href="/texas/cost" class={link}>cost page</a>:</p>
           <ul class="list-disc pl-6 space-y-3">
             <li><strong class="text-text">TDLR-approved ({cp})</strong> and accepted by Texas courts statewide for dismissal of an eligible citation.</li>
-            <li><strong class="text-text">{priceCents} all-in</strong>, with no surprise checkout fees.</li>
+            <li><strong class="text-text">{priceCents} total</strong>, the legal minimum, with no surprise checkout fees.</li>
             <li><strong class="text-text">Free instant certificate.</strong> You download it the moment you finish and can submit to your court the same day. Included, not a paid add-on.</li>
             <li><strong class="text-text">The full state-required {TEXAS_COURSE.hours} hours, online on any device</strong>, with progress saved so you can stop and resume.</li>
           </ul>

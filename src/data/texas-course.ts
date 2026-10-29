@@ -7,8 +7,11 @@
 export const TEXAS_COURSE = {
   sku: 'tx-bdi',
   name: 'Texas 6-Hour Defensive Driving Course',
-  /** Whole-dollar price charged at checkout, all-in, certificate included. Production checkout read 2026-10-14: $28.00 (Jackson: $28 for now). */
-  price: 28,
+  /**
+   * Whole-dollar price charged at checkout, all-in, certificate included. Jackson, 2026-10-29: $25 (was $28 since
+   * 2026-10-14). Promote the site only after the portal tx-bdi price is $25 and the $3-off codes are off.
+   */
+  price: 25,
   /** Statutory minimum course price (Tex. Educ. Code §1001.352). */
   legalMinimumPrice: 25,
   /** TDLR course provider number. */
@@ -57,9 +60,10 @@ export const TEXAS_COURSE = {
   /**
    * Dollars off with the promo code the TexasLayout banner advertises (showPromo, off by default).
    * The banner shows price - promoDiscount; keep that at or above legalMinimumPrice.
+   * 0 since the price moved to the $25 floor (2026-10-29): any discount would charge below §1001.352.
    */
   promoCode: 'TAKE3',
-  promoDiscount: 3,
+  promoDiscount: 0,
   /**
    * Inputs for the "all-in to dismiss a ticket" arithmetic (court fee + course + driving record).
    * Neither is our price: typicalCourtFee is what most Texas courts charge to grant the course
@@ -69,10 +73,10 @@ export const TEXAS_COURSE = {
   type3aRecordFee: 12,
 } as const;
 
-/** Whole-dollar price label, e.g. "$28". */
+/** Whole-dollar price label, e.g. "$25". */
 export const TEXAS_PRICE_LABEL = `$${TEXAS_COURSE.price}`;
 
-/** Price label with cents, e.g. "$28.00", for the places that typeset the cents separately. */
+/** Price label with cents, e.g. "$25.00", for the places that typeset the cents separately. */
 export const TEXAS_PRICE_CENTS_LABEL = `$${TEXAS_COURSE.price.toFixed(2)}`;
 
 /** Statutory floor label, e.g. "$25" (Tex. Educ. Code §1001.352). */
@@ -90,10 +94,10 @@ export const TEXAS_PROMO_PRICE_LABEL = `$${TEXAS_COURSE.price - TEXAS_COURSE.pro
 /** Court fee + course + Type 3A record, for a given court fee. */
 export const texasAllIn = (courtFee: number): number => courtFee + TEXAS_COURSE.price + TEXAS_COURSE.type3aRecordFee;
 
-/** All-in cost to dismiss at the typical court fee, e.g. 184. */
+/** All-in cost to dismiss at the typical court fee, e.g. 181. */
 export const TEXAS_ALL_IN_TOTAL = texasAllIn(TEXAS_COURSE.typicalCourtFee);
 
-/** "$184" at today's numbers. */
+/** "$181" at today's numbers. */
 export const TEXAS_ALL_IN_LABEL = `$${TEXAS_ALL_IN_TOTAL}`;
 
 /**
@@ -103,7 +107,7 @@ export const TEXAS_ALL_IN_LABEL = `$${TEXAS_ALL_IN_TOTAL}`;
  */
 export const TEXAS_AT_LEGAL_MINIMUM = false;
 
-/** Course + audio today; course + audio + autoplay once autoplayLive is true. Two decimals, e.g. "$32.99". */
+/** Course + audio today; course + audio + autoplay once autoplayLive is true. Two decimals, e.g. "$29.99". */
 export const TEXAS_AUDIO_TOTAL_LABEL = `$${(TEXAS_COURSE.price + TEXAS_COURSE.audioPrice + (TEXAS_COURSE.autoplayLive ? TEXAS_COURSE.autoplayPrice : 0)).toFixed(2)}`;
 
 /**

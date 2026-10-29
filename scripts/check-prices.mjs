@@ -47,16 +47,23 @@ const literals = [
     label: tx.TEXAS_LEGAL_MINIMUM_LABEL,
     what: "Texas statutory floor as a price claim",
   },
+  {
+    label: `$${tx.TEXAS_COURSE.legalMinimumPrice.toFixed(2)}`,
+    what: "Texas statutory floor as a price claim",
+  },
   { label: tx.TEXAS_PROMO_PRICE_LABEL, what: "Texas promo-code price" },
   { label: `$${ade.course.priceUsd}`, what: "Texas ADE price" },
   ...courses.map((c) => ({ label: `$${c.price}`, what: `${c.file} price` })),
 ];
 
-// Two prices can share a label (today the promo price equals the floor); the first entry's rules apply.
-const seen = new Set();
-const uniqueLiterals = literals.filter(
-  (l) => !seen.has(l.label) && seen.add(l.label),
-);
+// Two prices can share a label (since 2026-10-29 the course price equals the $25 floor). Check each label once,
+// and let an allowlist entry for any of its meanings clear the line: "$25 is the legal minimum" is still a statute.
+const byLabel = new Map();
+for (const l of literals) {
+  if (!byLabel.has(l.label)) byLabel.set(l.label, { label: l.label, what: l.what, whats: [] });
+  byLabel.get(l.label).whats.push(l.what);
+}
+const uniqueLiterals = [...byLabel.values()];
 
 const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 /** "$28" must not match "$284", "$28.5", "$28,000" or "$28.00" when the cents label is its own entry. */
@@ -108,7 +115,7 @@ const ALLOW = [
   },
   {
     file: "src/pages/texas/best-defensive-driving-course.astro",
-    line: /provider: '(?!Road Ready)|\$25\.00 (plus|for the text course)|advertise \$25\.00/,
+    line: /provider: '(?!Road Ready)|\$25\.00 (plus|for the text course)|advertise \$25\.00|GetDefensive\.com, \$25\.00/,
     why: "competitor totals and certificate fees in the named price comparison; our own row imports its labels",
   },
   {
@@ -172,11 +179,11 @@ function walk(dir, out = []) {
   return out;
 }
 
-function allowed(rel, line, what) {
+function allowed(rel, line, whats) {
   return ALLOW.some(
     (a) =>
       rel.startsWith(a.file) &&
-      (!a.only || a.only === what) &&
+      (!a.only || whats.includes(a.only)) &&
       (!a.line || a.line.test(line)),
   );
 }
@@ -190,10 +197,10 @@ for (const file of files) {
   if (!text.includes("$")) continue;
   const lines = text.split("\n");
   lines.forEach((line, i) => {
-    for (const { label, what } of uniqueLiterals) {
+    for (const { label, what, whats } of uniqueLiterals) {
       const re = literalRe(label);
       if (!re.test(line)) continue;
-      if (allowed(rel, line, what)) continue;
+      if (allowed(rel, line, whats)) continue;
       const at = line.indexOf(label);
       hits.push({
         rel,

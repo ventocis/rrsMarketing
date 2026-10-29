@@ -15,7 +15,7 @@ const facts = [
   { label: 'Legal name', value: 'Road Ready Driver Instruction LLC, d/b/a Road Ready Safety' },
   { label: 'TDLR license', value: 'Driving Safety Provider CP1234 — status CURRENT' },
   { label: 'Course', value: 'Texas 6-hour driving safety (defensive driving) course, TDLR-approved' },
-  { label: 'Price', value: `${priceCents} all-in — no hidden fees (the statutory minimum is ${floor})` },
+  { label: 'Price', value: `${priceCents} all-in, the statutory minimum (Tex. Educ. Code §1001.352). No hidden fees` },
   { label: 'Certificate', value: 'Free instant download on completion; court copy + insurance copy included' },
   { label: 'Format', value: 'Text and images (not video), self-paced, mobile-friendly, timed modules' },
   { label: 'Language', value: 'English (no Spanish version currently)' },
@@ -125,7 +125,7 @@ const schema = JSON.stringify({
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Pricing, with nothing hidden</h2>
         <div class="space-y-4 text-text-body text-base leading-7 mb-10" style="font-family: 'DM Sans', sans-serif;">
-          <p>Texas law sets a price floor for every approved course: {floor} (Tex. Educ. Code §1001.352, as amended by HB 3012 effective September 1, 2025). <strong class="text-text">We charge {price} all-in — and nothing else at checkout.</strong> No certificate fee, no delivery fee, no processing fee, no upsells at checkout. We don't sell the Type 3A driving record as an add-on either: <a href="/texas/type-3a-driving-record" class="text-primary-deep font-medium hover:underline">order it from DPS directly for $12</a> and keep the markup. Your court charges its own separate fee when it grants the course (commonly $144) — that's the court's, not ours, and we say so everywhere prices appear.</p>
+          <p>Texas law sets a price floor for every approved course: {floor} (Tex. Educ. Code §1001.352, as amended by HB 3012 effective September 1, 2025). <strong class="text-text">We charge {price} all-in, the floor itself, and nothing else at checkout.</strong> No certificate fee, no delivery fee, no processing fee, no upsells at checkout. We don't sell the Type 3A driving record as an add-on either: <a href="/texas/type-3a-driving-record" class="text-primary-deep font-medium hover:underline">order it from DPS directly for $12</a> and keep the markup. Your court charges its own separate fee when it grants the course (commonly $144) — that's the court's, not ours, and we say so everywhere prices appear.</p>
         </div>
 
         <h2 class="text-2xl font-bold text-text mt-10 mb-4" style="font-family: 'Outfit', sans-serif;">Refunds: a button, not a phone call</h2>

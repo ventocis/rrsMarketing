@@ -27,9 +27,9 @@ import id from './courses/id-ddc.json';
 import oh from './courses/oh-bdi.json';
 
 export const PRICE_TOKENS: Record<string, string> = {
-  /** "$28": the Texas 6-hour course, all-in. */
+  /** "$25": the Texas 6-hour course, all-in. */
   TX_PRICE: TEXAS_PRICE_LABEL,
-  /** "$28.00" */
+  /** "$25.00" */
   TX_PRICE_CENTS: TEXAS_PRICE_CENTS_LABEL,
   /** "$25": the statutory floor, for "the legal minimum is …" sentences only. */
   TX_LEGAL_MIN: TEXAS_LEGAL_MINIMUM_LABEL,
@@ -39,7 +39,7 @@ export const PRICE_TOKENS: Record<string, string> = {
   TX_AUTOPLAY_PRICE: TEXAS_AUTOPLAY_PRICE_LABEL,
   /** Course + audio (+ autoplay once it is live). */
   TX_AUDIO_TOTAL: TEXAS_AUDIO_TOTAL_LABEL,
-  /** "$184": typical court fee + course + Type 3A record. */
+  /** "$181": typical court fee + course + Type 3A record. */
   TX_ALL_IN: TEXAS_ALL_IN_LABEL,
   /** "$39.95": Texas adult driver education. */
   ADE_PRICE: `$${ade.course.priceUsd}`,

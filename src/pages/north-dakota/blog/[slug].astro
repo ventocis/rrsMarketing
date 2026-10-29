@@ -40,7 +40,9 @@ const url = `${guides}/${post.slug}`;
 const enrollUrl = buildEnrollUrl(course);
 const price = course.course.priceUsd;
 const hours = course.course.hours;
-const html = marked(post.content) as string;
+// A `<!-- buy -->` line in the content becomes a buy button, for a CTA in the middle of a long guide.
+const buyButton = `<p class="not-prose my-8"><a href="${enrollUrl}" data-rrs-cta="nd-guide-inline" class="bg-primary hover:bg-primary-hover text-white min-h-12 py-3 px-6 rounded-full text-base font-semibold inline-flex items-center justify-center text-center no-underline transition-colors">${course.hero.ctaLabel} &mdash; $${course.course.priceUsd}</a></p>`;
+const html = (marked(post.content) as string).replace(/<!-- buy -->/g, buyButton);
 const updated = post.updated ?? post.date;
 
 const all = postsFor('ND');

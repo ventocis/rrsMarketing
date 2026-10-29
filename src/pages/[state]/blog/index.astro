@@ -3,7 +3,7 @@ import CourseLayout from '../../../layouts/CourseLayout.astro';
 import PageIntro from '../../../components/course/PageIntro.astro';
 import FinalCta from '../../../components/course/FinalCta.astro';
 import { stateRouteCourses, stateParam } from '../../../data/courses/index';
-import { postsFor } from '../../../data/blog/index';
+import { postsFor, postUrl } from '../../../data/blog/index';
 import { enrollUrl as buildEnrollUrl } from '../../../lib/courseFlags';
 import type { CourseData } from '../../../data/courses/types';
 
@@ -36,10 +36,10 @@ function formatDate(d: string) {
           <article class="bg-white border border-border rounded-[20px] p-7 lg:p-8 flex flex-col gap-3">
             <time class="text-xs text-text-muted" datetime={post.updated ?? post.date}>Updated {formatDate(post.updated ?? post.date)}</time>
             <h2 class="text-[22px] font-bold text-text leading-7 m-0" style="font-family:'Outfit',sans-serif;">
-              <a href={`${route}/blog/${post.slug}`} class="no-underline hover:text-primary transition-colors">{post.title}</a>
+              <a href={postUrl(route, post)} class="no-underline hover:text-primary transition-colors">{post.title}</a>
             </h2>
             <p class="text-base text-text-body leading-7 m-0">{post.description}</p>
-            <a href={`${route}/blog/${post.slug}`} class="text-primary font-semibold underline underline-offset-2 w-fit">Read the guide</a>
+            <a href={postUrl(route, post)} class="text-primary font-semibold underline underline-offset-2 w-fit">Read the guide</a>
           </article>
         ))}
         {posts.length === 0 && <p class="text-text-body">Guides for {course.state.name} are on the way.</p>}

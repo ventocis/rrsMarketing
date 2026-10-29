@@ -2,13 +2,13 @@
 import { marked } from 'marked';
 import CourseLayout from '../../../layouts/CourseLayout.astro';
 import { stateRouteCourses, stateParam } from '../../../data/courses/index';
-import { postsFor, type StatePost } from '../../../data/blog/index';
+import { postsFor, postUrl, type StatePost } from '../../../data/blog/index';
 import { enrollUrl as buildEnrollUrl, siteUrl } from '../../../lib/courseFlags';
 import type { CourseData } from '../../../data/courses/types';
 
 export function getStaticPaths() {
   return stateRouteCourses.flatMap((course) =>
-    postsFor(course.state.code).map((post) => ({
+    postsFor(course.state.code).filter((post) => !post.path).map((post) => ({
       params: { state: stateParam(course), slug: post.slug },
       props: { course, post },
     })),
@@ -100,7 +100,7 @@ const faqSchema = post.faq && post.faq.length
           <ul class="flex flex-col gap-3 list-none p-0 m-0">
             {related.map((r) => (
               <li class="border border-border rounded-2xl p-5">
-                <a href={`${route}/blog/${r.slug}`} class="font-semibold text-text no-underline hover:text-primary">{r.title}</a>
+                <a href={postUrl(route, r)} class="font-semibold text-text no-underline hover:text-primary">{r.title}</a>
                 <p class="text-sm text-text-body mt-1 m-0">{r.description}</p>
               </li>
             ))}

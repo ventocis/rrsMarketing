@@ -40,6 +40,13 @@ export interface StatePost {
    * unapproved course's guides never build.
    */
   course?: string;
+  /** Served at this root-relative URL instead of <route>/blog/<slug> (needs its own page file). */
+  path?: string;
+}
+
+/** Where a state guide lives: its own `path`, or <route>/blog/<slug>. */
+export function postUrl(route: string, post: StatePost): string {
+  return post.path ?? `${route}/blog/${post.slug}`;
 }
 
 // Course prices appear in the JSON as {{ND_PRICE}}, {{MO_PRICE}}, {{ID_PRICE}}, {{OH_PRICE}} (src/data/prices.ts), filled once here.

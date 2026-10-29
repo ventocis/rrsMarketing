@@ -9,7 +9,7 @@ import { adeEnabled, adeLicensed } from '../lib/ade';
 import { translatedPages } from '../lib/i18n';
 import { INSURERS } from '../data/texas-insurers';
 import { sitemapCourses, enabledCourses, STATE_SUBROUTES } from '../data/courses/index';
-import { postsFor } from '../data/blog/index';
+import { postsFor, postUrl } from '../data/blog/index';
 import { isProductionSite, siteUrl } from '../lib/site';
 
 // Generate sitemap at build time from known static routes. Only the production build lists them: a QA
@@ -106,12 +106,12 @@ const adeRoutes = adeEnabled && adeLicensed
 // A course that shares another course's guide library (nd-ipr: guidesRoute = /north-dakota/blog) lists no
 // /blog of its own and no posts; its guides are already listed under the course that owns the library.
 const lastmodByPath = new Map<string, string>();
-for (const c of sitemapCourses) if (!c.guidesRoute) for (const p of postsFor(c.state.code)) lastmodByPath.set(`${c.state.route}/blog/${p.slug}`, p.updated ?? p.date);
+for (const c of sitemapCourses) if (!c.guidesRoute) for (const p of postsFor(c.state.code)) lastmodByPath.set(postUrl(c.state.route, p), p.updated ?? p.date);
 
 const stateCourseRoutes = sitemapCourses.flatMap((c) => {
   const base = c.state.route;
   const subs = STATE_SUBROUTES.filter((s) => !(c.guidesRoute && s === '/blog')).map((s) => `${base}${s}`);
-  const posts = c.guidesRoute ? [] : postsFor(c.state.code).map((p) => `${base}/blog/${p.slug}`);
+  const posts = c.guidesRoute ? [] : postsFor(c.state.code).map((p) => postUrl(base, p));
   const extras = c.state.code === 'OH' ? [`${base}/12-point-suspension`] : [];
   return [...subs, ...posts, ...extras];
 });

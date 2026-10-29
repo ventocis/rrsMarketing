@@ -1,0 +1,22 @@
+---
+/**
+ * /missouri/best-driver-improvement-program — every Missouri Safety Center-approved online school,
+ * compared on what you pay. The copy is the guide in src/data/blog/mo.json whose `path` is this URL;
+ * it renders with the Missouri guide template and is left out of /missouri/blog/[slug].
+ * Rest-param route so it emits nothing while Missouri is disabled (same gate as /missouri).
+ */
+import MissouriGuide from '../../../components/missouri/MissouriGuide.astro';
+import mo from '../../../data/courses/mo-dip.json';
+import { postsFor } from '../../../data/blog/index';
+import { isEnabled } from '../../../lib/courseFlags';
+import type { CourseData } from '../../../data/courses/types';
+
+export function getStaticPaths() {
+  const post = postsFor('MO').find((p) => p.path === '/missouri/best-driver-improvement-program');
+  return isEnabled(mo as CourseData) && post ? [{ params: { override: undefined }, props: { post } }] : [];
+}
+
+const { post } = Astro.props;
+---
+
+<MissouriGuide post={post} />

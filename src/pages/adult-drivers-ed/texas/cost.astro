@@ -1,295 +1,348 @@
 ---
 /**
- * /adult-drivers-ed/texas/cost — the buying page for "how much is adult drivers ed in Texas".
+ * /adult-drivers-ed/texas/cost — "The real price of Texas adult driver ed": the dated, named price table.
  *
- * Built 2026-10-13 on the content-page pattern (DESIGN-STANDARD.md) and the shape of /texas/cost: lead →
- * the whole bill as a calculator with the reader's situation as the switch → the legal-floor answer (there is
- * none for this course) → what other checkouts add after the ad → why we price it once → the course band →
- * quick answers → keep reading → sources. No provider is named or priced; the add-on categories come from
- * checkout flows reviewed 2026-10-13. Facts: ade-texas.json, ade-eligibility.ts (DPS fee page, read 2026-09-15).
+ * Rebuilt 2026-10-29 per REPORT v3 §3–4 (~/Downloads/tx-adult-de) and SEO's TX-ADE-PRICE-AND-AI-CITATION spec.
+ * Jackson decided on 2026-10-29 to name competitors here, dated, verified rows only (hold rows stay out until
+ * rechecked). This page owns the price data; other pages show one summary sentence from the same module and link
+ * to an anchor below, so keep the anchors stable.
  *
- * Claims that are law: no first license under 25 without driver education (Transp. Code §521.1601), waived for
- * a valid out-of-state license; the course's exam "satisfies the highway sign and traffic law portions of the
- * DPS knowledge exam" (§521.167, the only approved wording); §84.40(j): never promise a license.
+ * Every number comes from src/data/ade-prices.ts (rows: ade-prices.json; our price: ade-texas.json). Never type a
+ * count, range, median or date here. Rules kept: no "cheapest"/"lowest" claim about us, no "best" labels or
+ * badges, no "hidden fees" or quality judgments about named schools, no ownership claims, no Course/Offer/ItemList
+ * schema (Course lives on the hub only).
  */
 import AdeLayout from '../../../layouts/AdeLayout.astro';
-import AdeCourseBand from '../../../components/ade/AdeCourseBand.astro';
-import ade from '../../../data/ade-texas.json';
-import reviews from '../../../data/texas-reviews.json';
-import { fees, itd, law } from '../../../data/ade-eligibility';
-import { adeEnabled, adeEnrollUrl, ADE_LICENSE, ADE_VERIFY_URL } from '../../../lib/ade';
+import { fees, itd } from '../../../data/ade-eligibility';
+import { adeEnabled, adeEnrollUrl, ADE_LICENSE } from '../../../lib/ade';
+import {
+  tableRows, inPerson, online, onlineOnly, classroom, cartGap, cartsCount, cartsWithTrial, requiredFees,
+  preselectedUpgrades, advertisedBelowUs, advertisedSameAsUs, lowest, ourPrice, checkedOn, tdlrAdultProviders,
+  providerPagesRead, bundles, schoolRoadTest, changelog, totalToLicense, usd, longDate, moneyText, competitors,
+  STALE_WARN_DAYS,
+} from '../../../data/ade-prices';
 
-const isEnabled = adeEnabled;
-const enrollUrl = adeEnrollUrl;
 const siteUrl = (import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com').replace(/\/$/, '');
 const base = '/adult-drivers-ed/texas';
+const url = `${base}/cost`;
+const csvPath = '/data/texas-adult-driver-ed-prices.csv';
+const snapshotPath = `/data/texas-adult-driver-ed-prices-${checkedOn.slice(0, 7)}.csv`;
 
-const coursePrice = Number(ade.course.priceUsd); // 39.95
-const price = `$${ade.course.priceUsd}`;
-const dps = fees.newLicense18to84; // 33
-const requiredTotal = (dps + coursePrice).toFixed(2); // 72.95
-const aboutTotal = Math.round(dps + coursePrice); // 73
-const hours = Math.round(ade.course.courseMinutes / 60);
-const code = ade.course.code;
-const days = ade.course.completionDays;
-const updated = 'October 13, 2026';
+const N = competitors.length;
+const date = longDate(checkedOn);
+const price = usd(ourPrice);
+const dps = fees.newLicense18to84;
+const total = totalToLicense(dps);
+const tdlrLookup = (lic: string) => `https://www.tdlr.texas.gov/driver/education/providers/search/?lic=${encodeURIComponent(lic)}`;
+const shortDate = (iso: string) => new Date(`${iso}T12:00:00Z`).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+const range = (s: { min: number; max: number }) => (s.min === s.max ? usd(s.min) : `${usd(s.min)} to ${usd(s.max)}`);
 
-// One verified Trustpilot review, filtered the way the landing page filters: nothing about a price, a ticket, a
-// court or an instant certificate, because none of that is true of this course.
-interface Review { name: string; initials: string; date: string; rating: number; verified: boolean; quote: string; title?: string }
-const unfit = /\$\d|ticket|dismiss|court|certificat\w*\s+immediately|instant|video|audio/i;
-const review = (reviews as Review[]).find((r) => r.name === 'Chelsie Gates' && !unfit.test(`${r.title ?? ''} ${r.quote}`))
-  ?? (reviews as Review[]).find((r) => !unfit.test(`${r.title ?? ''} ${r.quote}`));
-
-// The three readers. The calculator and the router are the same three buttons.
-const situations = [
-  { key: 'req', label: '18 to 24, first license', course: 'required', note: `Required. Texas will not issue a first license under 25 without it (Transp. Code §521.1601).`, href: `${base}/first-texas-license-18-to-24`, link: 'What the law requires at 18 to 24' },
-  { key: 'opt', label: '25 or older, first license', course: 'optional', note: `Optional. DPS says it is “highly recommended.” With it, the sign and traffic law parts of the knowledge exam are done at home; without it, you take them at the DPS office.`, href: `${base}/drivers-ed-over-25`, link: 'Drivers ed over 25, in full' },
-  { key: 'exempt', label: 'Moving here with a valid license', course: 'waived', note: 'Waived. A valid, unexpired license from another U.S. state waives the course, the knowledge test and the driving test. Do not buy a course you do not need.', href: `${base}/new-resident-out-of-state-license`, link: 'New resident with an out-of-state license' },
-];
-
-const addons = [
-  { t: 'Certificate or “handling” fee', pill: 'Watch this one', hot: true, b: 'A line added at the end for the one document you came for. The most common way a low price stops being low.' },
-  { t: 'A sale price with a timer', pill: 'Read the small print', hot: false, b: 'The crossed-out number is the real one. The timer resets. Ask what the price is tomorrow.' },
-  { t: 'Rush or “instant” certificate', pill: 'Check it', hot: false, b: `The ${code} is signed by a licensed instructor, so no one hands it over the second you finish. Paying to speed that up is paying for a promise.` },
-  { t: 'Retake or extension fees', pill: 'Read first', hot: false, b: 'The state allows three attempts at the final exam. Some checkouts charge for the second one, or to reopen a course after its window closes.' },
-  { t: 'Audio, video or “premium”', pill: 'Optional', hot: false, b: 'A higher tier of the same six hours. Same certificate, same DPS.' },
-  { t: 'Trials that renew', pill: 'Uncheck it', hot: false, b: 'A roadside or insurance trial bundled into checkout, free for a month, then billed monthly until you cancel.' },
-];
-
-const why = [
-  { strong: 'One price, every day.', rest: ` ${price} today, ${price} next week. No timer, no crossed-out number.` },
-  { strong: 'The certificate is in it.', rest: ' Signed by a licensed Texas driver education instructor and emailed to you. Nothing to add at the end.' },
-  { strong: 'The exam is in it.', rest: ` Three attempts, as the state allows. Pass it and the course ${ade.exam.claimPhrasing}.` },
-  { strong: 'Nothing renews.', rest: ' No trial, no subscription, no box to uncheck.' },
-  { strong: 'A way out.', rest: ' If you’re not satisfied, you can request a full refund before you complete the course or receive your certificate.' },
-];
+// Answer blocks: 40–60 words each, answer first, then the number with n, date and a caveat.
+const answers = {
+  howMuch: `Online Texas adult driver ed courses advertised prices from ${usd(online.min)} to ${usd(online.max)} when we checked ${N} TDLR-licensed providers on ${date}. The median advertised price was ${usd(online.median)}, and the median for online-only providers was ${usd(onlineOnly.median)}. In-person six-hour classes cost ${range(classroom)}. Prices change. Confirm at checkout.`,
+  checkout: `Not always. In the ${cartsCount} checkouts we viewed on ${date}, the default total ran ${range(cartGap)} above the headline price. The extra came from required certificate fees (${range(requiredFees)}) and preselected instant-certificate upgrades (${range(preselectedUpgrades)}). ${cartsWithTrial} of the ${cartsCount} headline prices required starting a roadside-assistance trial that renews monthly.`,
+  lowest: `The lowest advertised online price was ${usd(lowest.price)}, from ${lowest.count === 1 ? 'one provider' : `${lowest.count} providers`} on ${date}. We didn't view ${lowest.count === 1 ? 'that checkout' : 'those checkouts'}, so any added fees aren't verified. Every TDLR-approved adult course teaches the same six-hour state curriculum and issues the same ADE-1317 certificate.`,
+  ours:
+    `Road Ready Safety, which publishes this page, sells its TDLR-approved online course (${ADE_LICENSE}) for ${price} total. Our own checkout on ${longDate(tableRows.find((r) => r.publisher)!.checked)} showed the course and the instant certificate, and nothing else added. ` +
+    (ourPrice < online.median
+      ? `That's below the ${usd(online.median)} median of the ${N} providers we checked, but it isn't the lowest: ${advertisedBelowUs} advertised less.`
+      : `Of the ${N} providers we checked, ${advertisedBelowUs} advertised less${advertisedSameAsUs ? ` and ${advertisedSameAsUs} advertised the same price` : ''}.`),
+  inPerson: `Usually. In-person six-hour adult classes at TDLR-licensed local schools cost ${range(classroom)}, with a ${usd(classroom.median)} median across the ${classroom.n} schools we checked on ${date}. The online median advertised price was ${usd(online.median)}. Packages that add behind-the-wheel lessons and a school road test ran about ${usd(bundles.low)} to ${usd(bundles.high)}.`,
+  total: `At 18 to 24, budget for the six-hour course, the free ${itd.adultName} video and the $${dps} DPS license fee. With the middle half of online course prices (${usd(Math.round(online.q1))} to ${usd(Math.round(online.q3))}), that comes to roughly ${usd(total.low)} to ${usd(total.high)}. A road test at a driving school, if you choose one, adds about ${usd(schoolRoadTest.low)} to ${usd(schoolRoadTest.high)}.`,
+  same: `No. Every TDLR-approved adult driver education course teaches the same state-set six-hour curriculum and issues the ADE-1317 certificate, whatever it costs. The differences are price, how fast the certificate arrives, retake rules, audio, Spanish options and support. Check that a provider holds a TDLR license before you pay; every row below lists it.`,
+};
 
 const faqs = [
-  { q: 'How much is adult drivers ed in Texas?', a: `Providers set their own price; Texas does not set a minimum for this course. Ours is ${price}, with the exam and the certificate included and nothing added at checkout. With the $${dps} DPS license fee, getting licensed at 18 to 24 comes to about $${aboutTotal} all in.` },
-  { q: 'Is there a free adult drivers ed course in Texas?', a: `No approved course is free. The free part of the process is ${itd.adultName}, a one-hour DPS video that everyone taking the driving test watches. It is separate from the course and does not replace it.` },
-  { q: 'Why do some courses cost more at checkout than on the ad?', a: 'Three things get added after the advertised price: a certificate or handling fee, a sale price that expires on a timer, and a trial that renews monthly. The number that counts is the one on your receipt.' },
-  { q: `Does Road Ready Safety charge anything after ${price}?`, a: `No. ${price} covers the ${hours}-hour course, three attempts at the final exam, your signed ${code} certificate by email, and ${days} days to finish. No delivery, processing, retake or renewal fee.` },
-  { q: 'Do I have to pay for the course if I am 25 or older?', a: `No. At 25 and over the course is optional. DPS says it is highly recommended for first-time applicants. The difference is where you take the sign and traffic law parts of the knowledge exam: in the course at home, or at the DPS office.` },
-  { q: 'How much is the Texas driver license itself?', a: `$${dps} for a new Class C license at ages 18 to 84, valid ${fees.newLicenseTermYears} years. That includes a $1 administrative fee. A replacement is $${fees.replacement}.` },
+  { q: 'Do these prices include the certificate?', a: `Not always. The table's "What's added" column lists the certificate, handling or processing fees we saw or that the provider states. Where we only read the advertised price, the checkout total says "Not verified". Ours includes the instant certificate in ${price}.` },
+  { q: 'What is an instant-certificate upgrade, and do I need it?', a: 'Some checkouts add a paid option to receive the certificate right away, and some tick it for you. Texas lets a provider take up to 15 working days to issue the ADE-1317, so the upgrade buys speed, not a different certificate. If you have a DPS appointment soon, ask how long the free option takes.' },
+  { q: 'Why do some courses require a roadside-assistance trial?', a: `In ${cartsWithTrial} of the ${cartsCount} carts we viewed, the advertised price applied only with a roadside-assistance trial that starts free and then renews monthly. Without the trial, the same course cost more. If you accept a trial, note the date to cancel.` },
+  { q: 'Are Spanish courses priced differently?', a: 'Sometimes. A few providers charge a different price for the Spanish version of the course; the Notes column shows it where we saw it. Prices in the table are for the English course.' },
+  { q: `Is a ${usd(lowest.price)} course legitimate?`, a: 'Price doesn’t change the certificate. What matters is that the provider holds a current TDLR driver education license for adult courses. Every row in the table shows the license number we matched.' },
+  { q: 'How often is this page updated?', a: `We recheck every row monthly and the carts we viewed twice a month. A row not rechecked in ${STALE_WARN_DAYS} days is marked "price may be outdated", and older rows come out of the table and the numbers.` },
+  { q: 'Does Road Ready Safety earn money from this table?', a: `Only from our own course, which is one of the rows. No link in the table is an affiliate link, and the table is sorted by advertised price, not by preference.` },
+  { q: 'Which price should I compare: advertised or checkout?', a: 'The checkout total, with nothing added that you didn’t choose. That is the number on your receipt. Where we couldn’t see it, compare the advertised price and check the final screen before you pay.' },
 ];
 
-const articleSchema = JSON.stringify({
+const methodItems = [
+  `We pulled TDLR’s driver education provider data on ${date}: ${tdlrAdultProviders} licensed providers hold an adult approval.`,
+  `We read prices on ${providerPagesRead} providers’ own course pages and published the ${N} competitors whose online price and TDLR license we could match. Rows with an approximate or unconfirmed price are left out until rechecked.`,
+  `For ${cartsCount} providers and our own course, we viewed the checkout without creating an account or paying.`,
+  'We show the price for the English six-hour course with default options. Promotional prices that apply automatically are included and noted.',
+  'Each row links to the provider’s own page and to its TDLR license record.',
+];
+
+const tierLabel: Record<string, string> = { A: 'Checkout viewed', B: 'Provider states the total', C: 'Advertised price only' };
+const outdated = 'Price may be outdated';
+
+const datasetSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Dataset',
+  name: `Texas adult driver education course prices, ${new Date(`${checkedOn}T12:00:00Z`).toLocaleDateString('en-US', { month: 'long', year: 'numeric', timeZone: 'UTC' })}`,
+  description: `Advertised prices, and default checkout totals where viewed, for ${N} TDLR-licensed Texas adult driver education providers plus the publisher, and six-hour class prices at ${classroom.n} in-person schools. Checked ${checkedOn}.`,
+  url: `${siteUrl}${url}`,
+  temporalCoverage: checkedOn,
+  dateModified: checkedOn,
+  creator: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
+  isAccessibleForFree: true,
+  license: 'https://creativecommons.org/licenses/by/4.0/',
+  spatialCoverage: { '@type': 'Place', name: 'Texas, US' },
+  variableMeasured: ['Advertised price (USD)', 'Default checkout total (USD)', 'Verification tier', 'Date checked'],
+  measurementTechnique: methodItems.join(' '),
+  isBasedOn: 'https://www.tdlr.texas.gov/driver/education/providers/search/',
+  distribution: [{ '@type': 'DataDownload', encodingFormat: 'text/csv', contentUrl: `${siteUrl}${csvPath}` }],
+};
+const articleSchema = {
   '@context': 'https://schema.org',
   '@type': 'Article',
-  headline: `How much is adult drivers ed in Texas? ${price} here, and that's the whole bill.`,
-  description: `Texas sets no minimum price for adult driver education, so the ad and the receipt can differ. Ours is ${price} with the exam and certificate included. The whole cost of getting licensed, and what other checkouts add.`,
+  headline: `The real price of Texas adult driver ed: ${N} providers checked`,
+  description: answers.howMuch,
   datePublished: '2026-10-13',
-  dateModified: '2026-10-13',
-  author: { '@type': 'Organization', name: 'Road Ready Safety' },
+  dateModified: checkedOn,
+  author: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
   publisher: { '@type': 'Organization', name: 'Road Ready Safety', url: siteUrl },
-  mainEntityOfPage: `${siteUrl}${base}/cost`,
-});
-const faqSchema = JSON.stringify({
+  mainEntityOfPage: `${siteUrl}${url}`,
+  about: 'Texas adult driver education (ADE-1317) course prices',
+};
+const faqSchema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
   mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
-});
+};
 
-const inter = "font-family:'Inter',sans-serif;";
-const sans = "font-family:'DM Sans',sans-serif;";
-const h2c = 'text-[28px] lg:text-[34px] font-extrabold tracking-[-0.02em] leading-[1.15] text-text m-0 mb-3';
+const next = [
+  { href: base, title: 'Texas 6-hour adult drivers ed online', blurb: `Our course: TDLR ${ADE_LICENSE}, ${price} total, certificate the moment you pass.` },
+  { href: `${base}/do-i-need-adult-drivers-ed`, title: 'Do you need the course at all?', blurb: 'Required at 18 to 24 for a first license; optional at 25 and over.' },
+  { href: `${base}/texas-driver-license-fees`, title: 'What the license itself costs', blurb: `$${dps} at DPS, and what else you pay there.` },
+  { href: `${base}/ade-1317-certificate`, title: 'The ADE-1317 certificate', blurb: 'What it is, when it arrives, and why it doesn’t expire.' },
+];
+
+const outfit = "font-family:'Outfit',sans-serif;";
 const wrap = 'max-w-[1080px] mx-auto px-4 sm:px-6 lg:px-8';
-const card = 'rounded-[14px] border border-border bg-white p-5 lg:p-[22px]';
-const pillOn = 'bg-primary text-white border-primary';
-const pillOff = 'bg-white text-text border-[#CBD3DF] hover:border-primary-deep';
-const pct = (n: number, total: number) => `${((n / total) * 100).toFixed(1)}%`;
-const defaultTotal = dps + coursePrice;
+const h2 = 'text-[24px] lg:text-[28px] font-bold text-text leading-tight m-0 mb-3 scroll-mt-24';
+const p = 'text-[17px] text-text-body leading-[30px] m-0';
+const th = 'text-left text-[11px] font-semibold uppercase tracking-wider text-text-muted px-2.5 py-3 border-b border-border whitespace-nowrap';
+const td = 'px-2.5 py-2.5 border-b border-border align-top text-left text-[13px] leading-5 text-text-body';
 ---
 
-{!isEnabled && <meta http-equiv="refresh" content="0;url=/" />}
+{!adeEnabled && <meta http-equiv="refresh" content="0;url=/" />}
 
-{isEnabled && (
+{adeEnabled && (
   <AdeLayout
-    title={`How Much Is Adult Drivers Ed in Texas? ${price} Flat, About $${aboutTotal} to Get Licensed | Road Ready Safety`}
-    description={`Texas sets no minimum price for adult driver education, so the ad and the receipt can differ. Ours is ${price}, exam and certificate included. The whole bill to get licensed at 18 to 24, and what other checkouts add after the ad.`}
-    keywords="how much is adult drivers ed in texas, adult drivers ed texas cost, cheap adult drivers ed texas, texas adult driver education price, adult drivers ed course texas free"
-    url={`${base}/cost`}
+    title="What Does Texas Adult Drivers Ed Really Cost? (2026)"
+    description={answers.howMuch}
+    keywords="how much is adult drivers ed in texas, texas adult drivers ed price comparison, 6 hour adult driving course texas cost, adult drivers ed texas cost"
+    url={url}
+    banner={`${price} total · Instant certificate included · Nothing added at checkout`}
+    courseSchema={false}
   >
     <Fragment slot="head">
-      <script type="application/ld+json" set:html={articleSchema} />
-      <script type="application/ld+json" set:html={faqSchema} />
+      <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+      <script type="application/ld+json" set:html={JSON.stringify(datasetSchema)} />
+      <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
     </Fragment>
 
-    <article class="bg-surface-muted pb-24 lg:pb-16 text-text" style={sans}>
-      <!-- ===== Lead ===== -->
-      <div class={wrap}>
-        <div class="max-w-[780px] pt-8 pb-10">
-          <h1 class="text-[36px] lg:text-[56px] font-extrabold tracking-[-0.02em] leading-[1.05] m-0 mb-5" style={inter}>How much is adult drivers ed in Texas? {price} here, and that's the whole bill.</h1>
-          <p class="text-lg lg:text-[21px] leading-8 m-0 mb-4">You have probably seen a lower number in the last ten minutes. Most of those numbers grow before you reach the receipt. This page shows what getting licensed costs from start to finish, what gets added to a course price at checkout, and the one question that tells you what a course really costs.</p>
-          <div class="flex flex-wrap gap-2.5 mb-6">
-            {[`${price} total`, 'Exam included', 'Certificate included', 'Full refund before completion'].map((c) => <span class="bg-white border border-border rounded-full px-4 py-2 text-[15px] font-semibold">{c}</span>)}
-          </div>
-          <p class="text-[15px] text-text-muted m-0">By Road Ready Safety, TDLR driver education provider {ADE_LICENSE}. We sell one of these courses, so every number here points at its source. · Updated {updated}</p>
+    <article class="bg-surface-muted pb-20 text-text">
+      <!-- Lead: disclosure before the first number, then the dated line and the hook. -->
+      <header class={`${wrap} pt-12 lg:pt-16 pb-8 flex flex-col gap-5`}>
+        <span class="bg-info inline-flex w-fit items-center px-4 py-2 rounded-full text-sm font-semibold text-info-text">Price check</span>
+        <h1 class="text-[32px] lg:text-[44px] font-bold leading-[1.1] tracking-[-1px] m-0 max-w-[860px]" style={outfit}>
+          The real price of Texas adult driver ed: {N} providers checked
+        </h1>
+        <div class="rounded-2xl border border-border bg-white p-5 max-w-[860px]">
+          <p class="text-[15px] text-text-body leading-6 m-0">
+            <strong class="text-text">Disclosure.</strong> Road Ready Safety sells a Texas adult driver ed course (TDLR {ADE_LICENSE}, {price}). We&rsquo;re one of the rows below.
+            The table is sorted by advertised price, not by preference. We don&rsquo;t rank providers or award &ldquo;best&rdquo; picks, and no link in the table earns us money.
+          </p>
         </div>
-      </div>
+        <p class="text-[15px] font-semibold text-text m-0">
+          Prices checked <time datetime={checkedOn}>{date}</time>. Prices change. Confirm at checkout.
+        </p>
+        <p class={`${p} max-w-[860px]`}>
+          The price on the ad isn&rsquo;t always the price at checkout. On {date} we put the same six-hour course in {cartsCount} providers&rsquo; carts,
+          and the default totals ran {range(cartGap)} above the headline. Three line items move the total, and two of them are pre-checked in some carts.
+          Here&rsquo;s what each provider advertises, what we saw at checkout, and what it all adds up to.
+        </p>
+      </header>
 
-      <!-- ===== Calculator: the whole bill, by situation ===== -->
-      <section id="total" class="bg-white border-y border-border scroll-mt-28">
-        <div class={`${wrap} py-12 lg:py-14`} data-calc data-course={coursePrice} data-dps={dps}>
-          <h2 class={h2c} style={inter}>What does it cost to get a Texas license as an adult, all in?</h2>
-          <p class="text-base leading-7 m-0 mb-7 max-w-[780px]">Two numbers for most people: the DPS license fee and the course. The DPS fee is the same whatever you do. The course is the only part you shop for, and whether you need it depends on one thing.</p>
-          <div class="flex flex-wrap gap-8">
-            <div class="flex-[1_1_340px] min-w-0 flex flex-col gap-6">
-              <div>
-                <p class="font-bold text-base m-0 mb-2.5">Which one is you?</p>
-                <div class="flex flex-wrap gap-2.5">
-                  {situations.map((s, i) => <button type="button" data-sit={s.key} aria-pressed={i === 0 ? 'true' : 'false'} class={`font-bold text-[17px] min-h-[48px] px-[18px] rounded-full border-2 transition-colors text-left ${i === 0 ? pillOn : pillOff}`}>{s.label}</button>)}
-                </div>
-                {situations.map((s, i) => (
-                  <div data-sit-note={s.key} class={i === 0 ? '' : 'hidden'}>
-                    <p class="text-[15px] text-text-body leading-6 m-0 mt-3">{s.note}{' '}<a href={s.href} class="text-primary hover:text-primary-deep font-medium">{s.link}</a></p>
-                  </div>
+      <div class={`${wrap} flex flex-col gap-6`}>
+        <section id="how-much" class="rounded-[20px] bg-white border border-border p-6 lg:p-8 scroll-mt-24">
+          <h2 class={h2} style={outfit}>How much does adult drivers ed cost in Texas?</h2>
+          <p class={p}>{answers.howMuch}</p>
+        </section>
+
+        <section id="advertised-vs-checkout" class="rounded-[20px] bg-white border border-border p-6 lg:p-8 scroll-mt-24">
+          <h2 class={h2} style={outfit}>Is the advertised price what you pay?</h2>
+          <p class={p}>{answers.checkout}</p>
+          <p class={`${p} mt-4`}>
+            Those are the three line items: a required certificate fee, a paid instant certificate, and a trial you&rsquo;d have to remember to cancel.
+            A course that puts all three in one price makes comparing easy.
+          </p>
+        </section>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <section id="lowest-price" class="rounded-[20px] bg-white border border-border p-6 lg:p-8 scroll-mt-24">
+            <h2 class={h2} style={outfit}>What&rsquo;s the lowest advertised price?</h2>
+            <p class={p}>{answers.lowest}</p>
+          </section>
+          <section id="road-ready-price" class="rounded-[20px] bg-white border border-border p-6 lg:p-8 scroll-mt-24">
+            <h2 class={h2} style={outfit}>What does Road Ready Safety charge?</h2>
+            <p class={p}>{answers.ours}</p>
+          </section>
+        </div>
+
+        <!-- Online table -->
+        <section id="online-prices" class="rounded-[20px] bg-white border border-border p-4 lg:p-6 scroll-mt-24">
+          <h2 class={h2} style={outfit}>Online courses: advertised price vs checkout</h2>
+          <p class={`${p} mb-4`}>Sorted by advertised price, lowest first. Scroll sideways on a phone.</p>
+          <div class="overflow-x-auto -mx-4 lg:mx-0">
+            <table class="w-full min-w-[860px] border-collapse">
+              <caption class="sr-only">Texas adult driver education: online course prices, checked {date}</caption>
+              <thead>
+                <tr>
+                  <th scope="col" class={th}>Provider and TDLR license</th>
+                  <th scope="col" class={th}>Format</th>
+                  <th scope="col" class={th}>Advertised</th>
+                  <th scope="col" class={th}>Checkout total</th>
+                  <th scope="col" class={th}>What&rsquo;s added</th>
+                  <th scope="col" class={th}>How verified</th>
+                  <th scope="col" class={th}>Notes</th>
+                </tr>
+              </thead>
+              <tbody>
+                {tableRows.map((r) => (
+                  <tr class={r.publisher ? 'bg-info' : ''}>
+                    <th scope="row" class={`${td} font-semibold text-text min-w-[170px]`}>
+                      {r.publisher
+                        ? <a href={r.source} class="underline hover:no-underline">{r.provider}</a>
+                        : <a href={r.source} rel="nofollow noopener" target="_blank" class="underline hover:no-underline">{r.provider}</a>}
+                      {r.publisher && <span class="font-normal text-text-muted"> (publisher)</span>}
+                      <a href={tdlrLookup(r.license)} rel="nofollow noopener" target="_blank" class="block font-normal text-text-muted underline hover:no-underline">{r.license}</a>
+                    </th>
+                    <td class={td}>{r.format}</td>
+                    <td class={`${td} whitespace-nowrap font-semibold text-text`}>{usd(r.advertised)}{r.advertisedNote && <span class="block font-normal text-text-muted text-[13px]">{r.advertisedNote}</span>}</td>
+                    <td class={`${td} whitespace-nowrap`}>{r.checkout != null ? <>{usd(r.checkout)}<span class="block text-text-muted text-[13px]">{r.checkoutNote}</span></> : <span class="text-text-muted">Not verified</span>}</td>
+                    <td class={`${td} min-w-[150px]`}>{r.added ? moneyText(r.added) : <span class="text-text-muted">Not checked</span>}</td>
+                    <td class={`${td} min-w-[120px]`}>{tierLabel[r.tier]}<span class="block text-text-muted whitespace-nowrap"><time datetime={r.checked}>{shortDate(r.checked)}</time></span></td>
+                    <td class={`${td} min-w-[150px]`}>{[r.stale ? outdated : '', moneyText(r.notes)].filter(Boolean).join('. ')}</td>
+                  </tr>
                 ))}
-              </div>
-              <div>
-                <p class="font-bold text-base m-0 mb-2.5">Taking the driving test?</p>
-                <p class="text-[15px] text-text-body leading-6 m-0">Then you also watch {itd.adultName}, a one-hour DPS video. It is free, and its certificate is good for {itd.certValidDays} days, so watch it near your test date. <a href={`${base}/impact-texas-adult-drivers`} class="text-primary hover:text-primary-deep font-medium">How ITAD works</a></p>
-              </div>
-            </div>
-            <div class="flex-[1_1_400px] min-w-0 rounded-2xl border border-border bg-surface-muted p-6 flex flex-col gap-3.5">
-              <span class="text-sm font-bold uppercase tracking-[0.06em] text-primary-deep">Your total with Road Ready Safety</span>
-              <span class="text-[48px] lg:text-[56px] font-extrabold leading-none" style={inter}>$<span data-total>{requiredTotal}</span></span>
-              <div class="flex h-[18px] w-full rounded-full overflow-hidden bg-[#E6E9EF]">
-                <div data-bar-dps class="bg-[#8B95A5] transition-all" style={`width:${pct(dps, defaultTotal)}`}></div>
-                <div data-bar-course class="bg-primary transition-all" style={`width:${pct(coursePrice, defaultTotal)}`}></div>
-              </div>
-              <div class="flex flex-col gap-2 text-[17px]">
-                <div class="flex justify-between gap-3"><span>DPS license fee, paid to DPS, good for {fees.newLicenseTermYears} years</span><strong>${dps}</strong></div>
-                <div class="flex justify-between gap-3"><span>{itd.adultName} video, from DPS</span><strong>Free</strong></div>
-                <div class="flex justify-between gap-3"><span data-course-label>The course, exam and certificate included</span><strong class="text-primary" data-course-out>{price}</strong></div>
-              </div>
-              <p class="border-t border-border pt-3.5 text-base text-text-body m-0">One optional cost: a driving test at a DPS-certified third-party school instead of the DPS queue. The school sets that fee. <a href={`${base}/third-party-skills-testing`} class="text-primary hover:text-primary-deep font-medium">When it is worth it</a></p>
-            </div>
+              </tbody>
+            </table>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <!-- ===== Legal floor ===== -->
-      <section class={`${wrap} pt-16 pb-6`}>
-        <h2 class={h2c} style={inter}>What's the cheapest an adult drivers ed course can legally be?</h2>
-        <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">There is no floor. Texas sets a minimum price for the course that dismisses a ticket, and sets none for adult driver education. A provider can put any number on the ad. Whether that number is the number on the receipt is up to the provider, and that is where the lower numbers come from.</p>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
-          <div class={card}>
-            <p class="font-bold text-[19px] m-0 mb-1.5">Is there a free course?</p>
-            <p class="text-base text-text-body leading-6 m-0">No. A course that issues the {code} has to be TDLR-approved, and approved providers charge for it. The free thing in this process is the ITAD video, and that is DPS, not a course.</p>
+        <section id="online-vs-in-person-cost" class="rounded-[20px] bg-white border border-border p-4 lg:p-8 scroll-mt-24">
+          <h2 class={h2} style={outfit}>Is in-person adult drivers ed more expensive?</h2>
+          <p class={`${p} mb-5`}>{answers.inPerson}</p>
+          <div class="overflow-x-auto -mx-4 lg:mx-0">
+            <table class="w-full min-w-[600px] border-collapse">
+              <caption class="sr-only">Texas adult driver education: in-person six-hour class prices, checked {date}</caption>
+              <thead>
+                <tr>
+                  <th scope="col" class={th}>School and TDLR license</th>
+                  <th scope="col" class={th}>6-hour class</th>
+                  <th scope="col" class={th}>Checked</th>
+                  <th scope="col" class={th}>Notes</th>
+                </tr>
+              </thead>
+              <tbody>
+                {inPerson.map((r) => (
+                  <tr>
+                    <th scope="row" class={`${td} font-semibold text-text`}><a href={r.source} rel="nofollow noopener" target="_blank" class="underline hover:no-underline">{r.provider}</a><a href={tdlrLookup(r.license)} rel="nofollow noopener" target="_blank" class="block font-normal text-text-muted underline hover:no-underline">{r.license}</a></th>
+                    <td class={`${td} whitespace-nowrap font-semibold text-text`}>{usd(r.price)}</td>
+                    <td class={`${td} whitespace-nowrap`}><time datetime={r.checked}>{shortDate(r.checked)}</time></td>
+                    <td class={td}>{[r.stale ? outdated : '', moneyText(r.notes)].filter(Boolean).join('. ')}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-          <div class={card}>
-            <p class="font-bold text-[19px] m-0 mb-1.5">What is the only number that counts?</p>
-            <p class="text-base text-text-body leading-6 m-0">The one on the receipt, with the certificate in it. A course advertised for less than ours that charges for the certificate at the end costs more than ours. <a href={`${base}/ade-1317-certificate`} class="text-primary hover:text-primary-deep font-medium">What the certificate is</a></p>
-          </div>
-        </div>
-      </section>
+          <p class="text-[15px] text-text-muted leading-6 mt-4 mb-0">
+            Class price only. Many of these schools also sell behind-the-wheel lessons and a road test as packages. Road Ready Safety sells online only;
+            for a classroom near you, TDLR&rsquo;s provider search lists every licensed school.
+          </p>
+        </section>
 
-      <!-- ===== Added fees ===== -->
-      <section id="fees" class={`${wrap} pt-12 pb-6 scroll-mt-28`}>
-        <h2 class={h2c} style={inter}>What gets added after the advertised price?</h2>
-        <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">Six lines can sit between the ad and your total. Read the first one twice. Every course on this list is the same six hours set by the state, so the price is the only thing that varies.</p>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
-          {addons.map((a) => (
-            <div class={`rounded-[14px] border p-5 lg:p-[22px] flex flex-col gap-1.5 ${a.hot ? 'bg-amber-50 border-amber-200' : 'bg-white border-border'}`}>
-              <span class="flex justify-between gap-2.5 items-baseline"><span class="font-bold text-[19px]">{a.t}</span><span class={`text-sm font-bold px-2.5 py-0.5 rounded-full whitespace-nowrap ${a.hot ? 'text-white bg-amber-800' : 'text-text-body bg-[#F6F6F9]'}`}>{a.pill}</span></span>
-              <span class="text-base text-text-body leading-6">{a.b}</span>
-            </div>
-          ))}
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <section id="total-to-get-licensed" class="rounded-[20px] bg-white border border-border p-6 lg:p-8 scroll-mt-24">
+            <h2 class={h2} style={outfit}>What does it cost in total to get a Texas license at 18 to 24?</h2>
+            <p class={p}>{answers.total}</p>
+            <p class={`${p} mt-4`}><a class="underline hover:no-underline" href={`${base}/texas-driver-license-fees`}>What the license itself costs at DPS</a></p>
+          </section>
+          <section id="same-certificate" class="rounded-[20px] bg-white border border-border p-6 lg:p-8 scroll-mt-24">
+            <h2 class={h2} style={outfit}>Does a cheaper course give a lesser certificate?</h2>
+            <p class={p}>{answers.same}</p>
+          </section>
         </div>
-        <div class="mt-5 rounded-[14px] bg-primary-deep text-white px-6 py-5 lg:px-7 max-w-[820px]">
-          <span class="text-sm font-bold uppercase tracking-[0.06em] text-info-border">One question for any checkout</span>
-          <p class="text-[20px] lg:text-[22px] font-bold leading-[1.3] m-0 mt-1" style={inter}>"When I pass, is my signed certificate in this price, and is this price the same tomorrow?"</p>
-        </div>
-      </section>
 
-      <!-- ===== Why one price ===== -->
-      <section id="why" class={`${wrap} pt-12 pb-6 scroll-mt-28`}>
-        <h2 class={h2c} style={inter}>Why {price} and not a lower number?</h2>
-        <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">We are not the lowest number you will see on an ad. We are the number you will see on your receipt. The course is the six hours the state sets, the same for every approved provider. What you are paying for is everything around it, and ours is in the price.</p>
-        <div class="flex flex-wrap gap-6">
-          <ul class="flex-[999_1_420px] min-w-0 list-none p-0 m-0 flex flex-col gap-3">
-            {why.map((w) => (
-              <li class={`${card} flex gap-3`}>
-                <span class="text-primary font-extrabold text-lg leading-6" aria-hidden="true">✓</span>
-                <span class="text-base leading-6"><strong>{w.strong}</strong>{w.rest}</span>
-              </li>
-            ))}
+        <section id="method" class="rounded-[20px] bg-white border border-border p-6 lg:p-8 scroll-mt-24">
+          <h2 class={h2} style={outfit}>How we checked</h2>
+          <ul class="flex flex-col gap-2 pl-5 m-0 list-disc marker:text-text-subtle">
+            {methodItems.map((m) => <li class="text-[16px] text-text-body leading-7">{m}</li>)}
           </ul>
-          {review && (
-            <div class="flex-[1_1_300px] min-w-0 rounded-[18px] bg-white border border-border px-6 py-6 flex flex-col gap-3 self-start">
-              <span class="text-accent text-[22px] tracking-[3px]" aria-label={`${review.rating} out of 5 stars`}>{'★'.repeat(review.rating)}</span>
-              <blockquote class="m-0 text-[19px] font-bold leading-[1.45]" style={inter}>"{review.quote}"</blockquote>
-              <div class="flex items-center gap-3"><span class="w-10 h-10 rounded-full bg-primary text-white font-bold text-[15px] flex items-center justify-center" aria-hidden="true">{review.initials}</span><span class="flex flex-col text-[15px] leading-[1.35]"><strong>{review.name}</strong><span class="text-text-muted">{review.verified ? 'Verified via Trustpilot' : 'Trustpilot'} · {review.date}</span></span></div>
-              <p class="text-sm text-text-muted m-0">A review of our Texas driving safety course. The adult driver education course is new, so its own reviews come as students finish it.</p>
-            </div>
-          )}
-        </div>
-        <div class="mt-5 rounded-[14px] bg-amber-50 border border-amber-200 px-6 py-5 max-w-[820px]">
-          <p class="font-bold text-[17px] m-0 mb-1">Who should not buy it</p>
-          <p class="text-base text-text-body leading-6 m-0">Anyone surrendering a valid, unexpired license from another U.S. state. DPS waives the course for you, so {price} would buy nothing. Under 18, you take the teen course, which is longer and includes supervised driving. <a href={`${base}/do-i-need-adult-drivers-ed`} class="text-amber-900 font-semibold hover:underline">Check whether you need it first</a></p>
-        </div>
-      </section>
+        </section>
 
-      <AdeCourseBand id="course" />
+        <!-- CTA after the data, not before it. -->
+        <aside class="bg-primary-navy rounded-[24px] p-8 flex flex-col lg:flex-row lg:items-center gap-5 text-white">
+          <div class="flex-1 flex flex-col gap-2">
+            <p class="text-sm font-semibold uppercase tracking-wider text-white/70 m-0">If you want one price with the certificate included</p>
+            <p class="text-2xl font-bold leading-tight m-0" style={outfit}>Road Ready Safety &middot; TDLR {ADE_LICENSE} &middot; {price} total</p>
+            <p class="text-white/85 leading-7 m-0">If another course on this list fits you better, use it. Ours is six hours online, with the certificate ready the moment you pass.</p>
+          </div>
+          <a href={adeEnrollUrl} data-rrs-cta="ade-cost-table" class="bg-white text-primary-navy min-h-12 py-3 px-6 rounded-xl text-base font-semibold inline-flex items-center justify-center text-center no-underline hover:bg-info transition-colors">Start the 6-hour course &middot; {price}</a>
+        </aside>
 
-      <div class={`${wrap} -mt-6 pb-4`}>
-        <p class="text-base text-text-body leading-7 m-0 max-w-[780px]"><strong>What happens when you click.</strong>{' '}The checkout shows {price} and nothing else. You pay once, the course opens, and your place is saved every time you stop. When you pass the final exam, a licensed Texas instructor signs your {code} certificate and we email it to you. You take that and your other documents to your DPS appointment. <a href={`${base}/how-to-get-a-texas-license-as-an-adult`} class="text-primary hover:text-primary-deep font-medium">The full process, step by step</a></p>
+        <section id="faq" class="rounded-[20px] bg-white border border-border p-6 lg:p-8 scroll-mt-24">
+          <h2 class={h2} style={outfit}>Common questions</h2>
+          <div class="flex flex-col gap-6">
+            {faqs.map((f) => (
+              <div class="flex flex-col gap-2">
+                <h3 class="text-[17px] font-semibold text-text leading-7 m-0">{f.q}</h3>
+                <p class={p}>{f.a}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section id="cite" class="rounded-[20px] bg-white border border-border p-6 lg:p-8 flex flex-col gap-4 scroll-mt-24">
+          <h2 class="text-base font-semibold text-text m-0">Cite or download this data</h2>
+          <p class="text-[15px] text-text-body leading-6 m-0">
+            Road Ready Safety, <em>Texas adult driver education prices</em>, checked {checkedOn}, roadreadysafety.com{url}. Free to reuse with credit (CC BY 4.0).
+          </p>
+          <p class="text-[15px] text-text-body leading-6 m-0">
+            <a class="underline hover:no-underline" href={csvPath} download>Download the table (CSV)</a>
+            &middot; <a class="underline hover:no-underline" href={snapshotPath} download>This month&rsquo;s snapshot</a>
+          </p>
+          <div>
+            <h3 class="text-sm font-semibold text-text m-0 mb-1">Changes</h3>
+            <ul class="pl-5 m-0 list-disc text-[15px] text-text-body leading-6">
+              {changelog.map((c) => <li><time datetime={c.date}>{longDate(c.date)}</time>: {c.text} {N} providers.</li>)}
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-sm font-semibold text-text m-0 mb-1">Sources</h3>
+            <ul class="pl-5 m-0 list-disc text-[15px] text-text-muted leading-6">
+              <li><a class="underline hover:no-underline" href="https://www.tdlr.texas.gov/driver/education/providers/search/" rel="nofollow noopener" target="_blank">TDLR driver education provider search</a></li>
+              <li>Each provider&rsquo;s own course page, linked in the tables</li>
+              <li><a class="underline hover:no-underline" href="https://www.dps.texas.gov/section/driver-license/driver-license-fees" rel="nofollow noopener" target="_blank">Texas DPS, driver license fees</a></li>
+              <li><a class="underline hover:no-underline" href="https://www.dps.texas.gov/section/driver-license/impact-texas-drivers-itd-program" rel="nofollow noopener" target="_blank">Texas DPS, Impact Texas Drivers program</a></li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="flex flex-col gap-3">
+          <h2 class="text-base font-semibold text-text m-0">Keep reading</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {next.map((n) => (
+              <a href={n.href} class="no-underline bg-white border border-border rounded-2xl p-5 flex flex-col gap-1 hover:border-primary-deep">
+                <span class="font-bold text-text text-[17px] leading-6">{n.title}</span>
+                <span class="text-[15px] text-text-body leading-6">{n.blurb}</span>
+              </a>
+            ))}
+          </div>
+        </section>
       </div>
-
-      <!-- ===== Quick answers ===== -->
-      <section class={`${wrap} pt-8 pb-6`}>
-        <h2 class={h2c} style={inter}>Quick answers</h2>
-        <div class="flex flex-col gap-3 max-w-[780px] mt-5">
-          {faqs.map((f) => (
-            <div class="rounded-xl border border-border bg-white p-5">
-              <h3 class="font-bold text-base m-0 mb-1" style={sans}>{f.q}</h3>
-              <p class="m-0 text-text-body leading-7">{f.a}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <!-- ===== Keep reading + legal ===== -->
-      <section class={`${wrap} pt-6 pb-10`}>
-        <p class="font-bold m-0 mb-2.5">Keep reading</p>
-        <div class="flex flex-wrap gap-2.5 mb-7">
-          {[
-            [`${base}/do-i-need-adult-drivers-ed`, 'Do I need adult drivers ed?'],
-            [`${base}/texas-driver-license-fees`, 'Every DPS fee'],
-            [`${base}/drivers-ed-over-25`, 'Drivers ed over 25'],
-            [`${base}/ade-1317-certificate`, 'The ADE-1317 certificate'],
-            [`${base}/final-exam`, 'The final exam'],
-            [`${base}/what-the-course-does-not-do`, 'What the course does not do'],
-          ].map(([href, t]) => <a href={href} class="no-underline bg-white border border-border rounded-full px-4 py-2 text-base text-text hover:border-primary-deep">{t}</a>)}
-        </div>
-        <p class="text-[15px] text-text-muted m-0 max-w-[780px] leading-6">General information, not legal advice. Sources: Tex. Transp. Code §521.1601 (driver education required under 25; waived for a valid out-of-state license) and §521.167 (the knowledge exam portions the course satisfies); Texas DPS, Driver License Fees (${dps} new Class C, ${fees.newLicenseTermYears} years; ${fees.replacement} replacement); Texas DPS, Impact Texas Drivers program (free, {itd.certValidDays}-day certificate); Tex. Educ. Code §1001.352 (the price floor applies to driving safety courses only). Add-on categories come from checkout flows we reviewed in October 2026. No provider is named or priced on this page. Road Ready Safety is a TDLR-licensed driver education provider (<a href={ADE_VERIFY_URL} target="_blank" rel="noopener" class="underline hover:no-underline">{ADE_LICENSE}</a>). Last updated {updated}.</p>
-      </section>
     </article>
-
-    <script is:inline>
-      (function () {
-        document.querySelectorAll('[data-calc]:not([data-armed])').forEach(function (root) {
-          root.setAttribute('data-armed', '1');
-          var course = +root.getAttribute('data-course'), dps = +root.getAttribute('data-dps');
-          var on = ['bg-primary', 'text-white', 'border-primary'], off = ['bg-white', 'text-text', 'border-[#CBD3DF]', 'hover:border-primary-deep'];
-          var labels = { req: 'The course, exam and certificate included', opt: 'The course, optional at 25 and over', exempt: 'The course, waived for you' };
-          var btns = root.querySelectorAll('[data-sit]'), notes = root.querySelectorAll('[data-sit-note]');
-          function money(n) { return n.toFixed(2); }
-          function render(key) {
-            var c = key === 'exempt' ? 0 : course, total = dps + c;
-            root.querySelector('[data-total]').textContent = money(total);
-            root.querySelector('[data-course-out]').textContent = c ? '$' + money(c) : 'Waived';
-            root.querySelector('[data-course-label]').textContent = labels[key];
-            root.querySelector('[data-bar-dps]').style.width = (dps / total * 100).toFixed(1) + '%';
-            root.querySelector('[data-bar-course]').style.width = (c / total * 100).toFixed(1) + '%';
-            notes.forEach(function (n) { n.classList.toggle('hidden', n.getAttribute('data-sit-note') !== key); });
-            btns.forEach(function (b) { var s = b.getAttribute('data-sit') === key; b.setAttribute('aria-pressed', s ? 'true' : 'false'); on.forEach(function (x) { b.classList.toggle(x, s); }); off.forEach(function (x) { b.classList.toggle(x, !s); }); });
-          }
-          btns.forEach(function (b) { b.addEventListener('click', function () { render(b.getAttribute('data-sit')); }); });
-        });
-      })();
-    </script>
   </AdeLayout>
 )}

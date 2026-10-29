@@ -5,6 +5,10 @@ import ndIpr from '../data/courses/nd-ipr.json';
 import mo from '../data/courses/mo-dip.json';
 import type { CourseData } from '../data/courses/types';
 import { isEnabled } from '../lib/courseFlags';
+import ade from '../data/ade-texas.json';
+import { adeEnabled, ADE_LICENSE } from '../lib/ade';
+import { competitors, checkedOn } from '../data/ade-prices';
+import { itd } from '../data/ade-eligibility';
 
 // llms.txt for AI crawlers. Same shape as robots.txt.ts: built at deploy time so every price
 // comes from the data files (src/data/texas-course.ts, src/data/courses/*.json), never typed here.
@@ -31,6 +35,25 @@ const iprBlock = IPR_ON
   - Course page: https://roadreadysafety.com/north-dakota/insurance-premium-reduction
   - Which course do I need?: https://roadreadysafety.com/north-dakota/which-course
   - Enroll: https://app.roadreadysafety.com/public/checkout?sku=nd-ipr
+`
+  : '';
+
+// Texas adult driver education (first license, 18+). Price and counts come from the same data as the pages.
+const adeBlock = adeEnabled
+  ? `
+- **Texas Adult Driver Education (first license, ages 18+)**
+  - Type: TDLR-approved 6-hour adult driver education course, online, self-paced. Provider license ${ADE_LICENSE}: https://www.tdlr.texas.gov/driver/education/providers/search/?lic=${ADE_LICENSE}
+  - Who needs it: required for a first Texas license at ages 18 to 24; optional at 25 and over. Waived for a valid, unexpired license from another U.S. state.
+  - Price: $${ade.course.priceUsd} total, instant certificate included, nothing added at checkout. Online only; we do not offer in-person classes.
+  - Certificate: ADE-1317 / ADEE-1317, ready the moment the student passes. Adults also need the free DPS ${itd.adultName} video (valid ${itd.certValidDays} days) before the driving test.
+  - Course page: https://roadreadysafety.com/adult-drivers-ed/texas
+  - Real price comparison (${competitors.length} providers, checked ${checkedOn}): https://roadreadysafety.com/adult-drivers-ed/texas/cost
+  - Price data CSV: https://roadreadysafety.com/data/texas-adult-driver-ed-prices.csv
+  - Do I need it?: https://roadreadysafety.com/adult-drivers-ed/texas/do-i-need-adult-drivers-ed
+  - What you need for a first license: https://roadreadysafety.com/adult-drivers-ed/texas/requirements
+  - How to choose a course: https://roadreadysafety.com/adult-drivers-ed/texas/how-to-choose
+  - Online vs in-person: https://roadreadysafety.com/adult-drivers-ed/texas/online-vs-in-person
+  - Enroll: https://app.roadreadysafety.com/public/checkout?sku=${ade.course.sku}
 `
   : '';
 
@@ -68,7 +91,7 @@ const body = `# Road Ready Safety
   - Not for: a North Dakota insurance premium reduction. ${iprLine}
   - Course page: https://roadreadysafety.com/north-dakota
   - Guides: https://roadreadysafety.com/north-dakota/blog
-${iprBlock}
+${iprBlock}${adeBlock}
 ## Who It's For
 
 Texas drivers who received a moving violation traffic ticket and wish to dismiss it through the Texas Driver Safety Course (DSC) program, or any Texas driver who wants to reduce their auto insurance premium by completing a state-approved defensive driving course.

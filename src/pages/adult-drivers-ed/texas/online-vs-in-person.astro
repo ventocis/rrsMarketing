@@ -1,0 +1,95 @@
+---
+/**
+ * /adult-drivers-ed/texas/online-vs-in-person — "adult drivers ed online vs in person texas".
+ *
+ * Built 2026-10-29 (REPORT v3 §3 and §6). Two medians, the two ranges and the bundle range, all from
+ * src/data/ade-prices.ts, linking to /cost#online-vs-in-person-cost. We sell online only; the page says so and
+ * points classroom seekers to TDLR's provider search. No school names here (they are on /cost).
+ */
+import AdeGuide from '../../../components/ade/AdeGuide.astro';
+import ade from '../../../data/ade-texas.json';
+import { course } from '../../../data/ade-eligibility';
+import { online, classroom, bundles, schoolRoadTest, checkedOn, longDate, usd, competitors } from '../../../data/ade-prices';
+
+const base = '/adult-drivers-ed/texas';
+const url = `${base}/online-vs-in-person`;
+const price = `$${ade.course.priceUsd}`;
+const date = longDate(checkedOn);
+
+const answer = `Both formats teach the same TDLR six-hour curriculum and lead to the same ${course.certificateCode} certificate. Online courses advertised a median ${usd(online.median)} (${competitors.length} providers, ${date}). In-person classes at TDLR-licensed local schools cost ${usd(classroom.min)} to ${usd(classroom.max)} (median ${usd(classroom.median)}, ${classroom.n} schools). Road Ready Safety is online only.`;
+
+const rows = [
+  ['Curriculum', 'The same nine state-set modules', 'The same nine state-set modules'],
+  ['Certificate', `${course.certificateCode}`, `${course.certificateCode}`],
+  ['Length', 'Six hours, at your pace, across days', 'Six hours, usually one scheduled day'],
+  ['Price (advertised)', `${usd(online.min)} to ${usd(online.max)}, median ${usd(online.median)}`, `${usd(classroom.min)} to ${usd(classroom.max)}, median ${usd(classroom.median)}`],
+  ['Lessons and road test', 'Not included', `Often sold as packages, about ${usd(bundles.low)} to ${usd(bundles.high)}`],
+  ['Final exam', `${course.finalExamQuestions} questions, ${course.finalExamPassPercent}% on each part, ${course.finalExamAttempts} attempts`, 'Same rules'],
+];
+
+const faqs = [
+  { q: 'Is online adult drivers ed accepted in Texas?', a: `Yes. A TDLR-approved online course issues the same ${course.certificateCode} certificate as a classroom course, and DPS accepts either.` },
+  { q: 'Is in-person adult drivers ed more expensive?', a: `Usually. In-person classes ran ${usd(classroom.min)} to ${usd(classroom.max)} at the ${classroom.n} schools we checked on ${date}, against a median online price of ${usd(online.median)}.` },
+  { q: 'When is in-person worth it?', a: `When you also want behind-the-wheel lessons or a road test at the school, which local schools sell together, or when you learn better in a room with an instructor. A road test at a school runs about ${usd(schoolRoadTest.low)} to ${usd(schoolRoadTest.high)}.` },
+  { q: 'Does Road Ready Safety offer an in-person class?', a: `No. We sell the online course only, for ${price}. For a classroom near you, TDLR’s driver education provider search lists every licensed school.` },
+];
+
+const next = [
+  { href: `${base}/cost#online-vs-in-person-cost`, title: 'See the full dated price table', blurb: 'Every online provider and in-person school we checked.' },
+  { href: `${base}/how-to-choose`, title: 'How to choose a course', blurb: 'A 9-point check that works on any provider.' },
+  { href: `${base}/third-party-skills-testing`, title: 'The road test at a driving school', blurb: 'What it costs and what to bring.' },
+  { href: base, title: 'Texas 6-hour adult drivers ed online', blurb: `Our course: ${price} total, certificate the moment you pass.` },
+];
+
+const h2 = 'text-[22px] font-bold text-text leading-8';
+const p = 'text-[17px] text-text-body leading-[30px]';
+const th = 'text-left text-xs font-semibold uppercase tracking-wider text-text-muted px-3 py-3 border-b border-border';
+const td = 'px-3 py-3 border-b border-border align-top text-left text-[15px] leading-6 text-text-body';
+---
+<AdeGuide
+  title="Online or In-Person Adult Drivers Ed in Texas?"
+  description={answer}
+  url={url}
+  eyebrow="Online or in person"
+  h1="Online vs in-person adult drivers ed in Texas: same 6 hours"
+  lede={answer}
+  faqs={faqs}
+  dateModified="2026-10-29"
+  updated="October 29, 2026"
+  next={next}
+  sources={[
+    { label: '16 TAC §84.502 and §84.503, in-person and online adult courses' },
+    { label: 'TDLR, driver education provider search', href: 'https://www.tdlr.texas.gov/driver/education/providers/search/' },
+    { label: `Road Ready Safety price check, ${date}`, href: `${base}/cost#online-vs-in-person-cost` },
+  ]}
+>
+  <section class="flex flex-col gap-4">
+    <h2 class={h2} style="font-family:'Outfit',sans-serif;">What is the same, and what is not?</h2>
+    <div class="overflow-x-auto">
+      <table class="w-full min-w-[520px] border-collapse">
+        <caption class="sr-only">Online vs in-person Texas adult driver education</caption>
+        <thead><tr><th scope="col" class={th}></th><th scope="col" class={th}>Online</th><th scope="col" class={th}>In person</th></tr></thead>
+        <tbody>
+          {rows.map(([k, a, b]) => (
+            <tr><th scope="row" class={`${td} font-semibold text-text`}>{k}</th><td class={td}>{a}</td><td class={td}>{b}</td></tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class={p}>
+      Prices are advertised prices checked {date}. <a class="underline hover:no-underline" href={`${base}/cost#online-vs-in-person-cost`}>See the full dated price table</a>. Prices change. Confirm at checkout.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class={h2} style="font-family:'Outfit',sans-serif;">Which one fits you?</h2>
+    <p class={p}>
+      <strong class="text-text">Online</strong> fits if you want to finish around work or school, on your phone, and pay less.
+      <strong class="text-text">In person</strong> fits if you also want lessons or a road test from the same school, or you learn better in a classroom.
+      The certificate is the same either way.
+    </p>
+    <p class={p}>
+      We sell the online course only. For a classroom near you, TDLR&rsquo;s driver education provider search lists every licensed school.
+    </p>
+  </section>
+</AdeGuide>

@@ -119,6 +119,7 @@ const expTabs = [
       ['Watch ITAD', `Free, one hour, on the DPS site. Do it within ${itd.certValidDays} days of your driving test.`],
       ['Book your DPS appointment', 'Appointments are online. Road-test queues vary a lot by office, and nine offices offer no road test at all; our wait-time table ranks every office.'],
       ['Take the tests', 'Vision screening and the driving test at DPS, or the driving test with a third-party skills tester. The highway sign and traffic law parts of the knowledge test are already satisfied by the course. ' + WAIVER_LAPSE],
+      ['Everything you need', 'The full checklist by age is on our requirements page: documents, the DPS fee, ITAD and the tests.'],
       ['Important', 'Every remaining step is between you and DPS. The course does not entitle anyone to a license; it completes the driver education requirement.'],
     ] as [string, string][],
     note: '',
@@ -153,6 +154,7 @@ const landingFaqSchema = JSON.stringify({
 
 const resources = [
   { href: `${base}/cost`, tag: 'Cost', title: 'What Adult Drivers Ed Really Costs', blurb: `${competitors.length} providers’ prices, checked and dated, and what checkouts add.` },
+  { href: `${base}/requirements`, tag: 'Checklist', title: 'What You Need for a First Texas License', blurb: 'Everything you need, by age, in one list.' },
   { href: `${base}/do-i-need-adult-drivers-ed`, tag: 'Start here', title: 'Do I Need Adult Drivers Ed in Texas?', blurb: 'Age, license history and where you are moving from, in one decision table.' },
   { href: `${base}/how-to-get-a-texas-license-as-an-adult`, tag: 'Process', title: 'How to Get a Texas License as an Adult', blurb: 'Every step from the course to the card in your hand.' },
   { href: `${base}/first-texas-license-18-to-24`, tag: 'Ages 18–24', title: 'Your First Texas License at 18 to 24', blurb: 'What the state requires at your age and in what order.' },
@@ -165,6 +167,8 @@ const resources = [
   { href: `${base}/how-long-does-the-course-take`, tag: 'Time', title: 'How Long the Course Takes', blurb: 'Six hours of instruction, your schedule.' },
   { href: `${base}/dps-wait-times`, tag: 'DPS', title: 'DPS Wait Times by Office', blurb: 'Every Texas office ranked by road-test queue.' },
   { href: `${base}/new-resident-out-of-state-license`, tag: 'Moving here', title: 'New Resident with an Out-of-State License', blurb: 'When the course is waived and what DPS wants instead.' },
+  { href: `${base}/how-to-choose`, tag: 'Choosing', title: 'How to Choose a Course', blurb: 'A 9-point check that works on any provider, us included.' },
+  { href: `${base}/online-vs-in-person`, tag: 'Format', title: 'Online vs In-Person', blurb: 'Same six hours and certificate, different price.' },
   { href: `${base}/final-exam`, tag: 'Exam', title: 'The Final Exam', blurb: `${ade.exam.questions} questions, ${ade.exam.passPercent}% on each part, three attempts.` },
   { href: `${base}/texas-driver-license-fees`, tag: 'DPS fees', title: 'What the License Itself Costs', blurb: 'The DPS fee, and what else you pay at the office.' },
   { href: `${base}/texas-driver-license-documents`, tag: 'Documents', title: 'What to Bring to DPS', blurb: 'Identity, residency and the two certificates.' },

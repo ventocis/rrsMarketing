@@ -1,0 +1,125 @@
+---
+/**
+ * /adult-drivers-ed/texas/requirements — "what do I need to get a driver's license in Texas": a static, indexable
+ * checklist by age, with anchors the /do-i-need tree links into (#18-24, #25-plus, #out-of-state).
+ *
+ * Built 2026-10-29 (REPORT v3 §6, SEO page map). One interactive tool lives on /do-i-need only; this page is plain
+ * lists. The checkout button appears in #18-24 only (the 25+ and out-of-state sections say honestly that you may
+ * not need us). Facts: ade-eligibility.ts (DPS pages, statute) and DPS-RULES-CONFIRMED.md (B restriction, ITAD
+ * printed, waiver wording). §84.40(j): never promise a license.
+ */
+import AdeGuide from '../../../components/ade/AdeGuide.astro';
+import ade from '../../../data/ade-texas.json';
+import { law, itd, fees, residency, CLAIM, CLAIM_25, WAIVER_LAPSE } from '../../../data/ade-eligibility';
+import { adeEnrollUrl } from '../../../lib/ade';
+
+const base = '/adult-drivers-ed/texas';
+const url = `${base}/requirements`;
+const siteUrl = (import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com').replace(/\/$/, '');
+const price = `$${ade.course.priceUsd}`;
+const code = ade.course.code;
+
+const answer = `Every first-time adult needs proof of identity, U.S. citizenship or lawful presence and a Social Security number, ${residency.documentsRequired} printed Texas residency documents, the $${fees.newLicense18to84} DPS fee, and a printed ${itd.adultName} certificate dated within ${itd.certValidDays} days of the road test. At ${law.requiredBand}, add the six-hour adult driver education certificate (${code}).`;
+
+// Shared by every age: the list and the HowTo schema read from the same array.
+const everyone = [
+  { name: 'Proof of identity, citizenship or lawful presence, and your Social Security number', text: 'DPS checks all three at your first visit. Its REAL ID Document Check tool builds the exact list for your situation.' },
+  { name: `${residency.documentsRequired} printed Texas residency documents`, text: `${residency.thirtyDayRule} ${residency.printedOnly}` },
+  { name: `The $${fees.newLicense18to84} license fee`, text: `For a new Class C license at 18 to 84, valid ${fees.newLicenseTermYears} years.` },
+  { name: 'The vision test and the knowledge test', text: 'At your first DPS visit. DPS then issues a restricted license (B restriction): you may drive only with a licensed driver 21 or older in the front seat until you pass the road test.' },
+  { name: `The ${itd.adultName} video`, text: `Free, ${itd.adultLengthHours} hour, on the DPS site. The certificate is valid ${itd.certValidDays} days, and you must print it and bring it to your road test.` },
+  { name: 'The road test', text: 'At a DPS office, or at a DPS-authorized driving school. Bring your restricted license.' },
+];
+
+const howTo = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'What you need for your first Texas driver license',
+  description: answer,
+  url: `${siteUrl}${url}`,
+  step: everyone.map((s, i) => ({ '@type': 'HowToStep', position: i + 1, name: s.name, text: s.text })),
+};
+
+const faqs = [
+  { q: 'What do I need to get a driver license in Texas as an adult?', a: answer },
+  { q: 'Do I need drivers ed if I am 25 or older?', a: 'No. Texas requires driver education for a first license only under 25. You still need the documents, the fee, ITAD and the DPS tests.' },
+  { q: 'Do adults get a learner permit in Texas?', a: 'Not by that name. The learner license is for 15 to 17. Adults get a license with a B restriction at the first DPS visit, then take the road test.' },
+  { q: 'Is ITAD required at 25 and over?', a: `Yes. DPS requires ${itd.adultName} for ${itd.adultAppliesTo}.` },
+];
+
+const next = [
+  { href: `${base}/do-i-need-adult-drivers-ed`, title: 'Not sure which list is yours?', blurb: 'Three questions sort it out.' },
+  { href: `${base}/texas-driver-license-documents`, title: 'What to bring to DPS, in detail', blurb: 'Which residency documents count, and which do not.' },
+  { href: `${base}/cost#total-to-get-licensed`, title: 'What it all costs', blurb: 'The course, the fee and an optional school road test.' },
+  { href: `${base}/third-party-skills-testing`, title: 'The road test at a driving school', blurb: 'What it costs and what to bring.' },
+];
+
+const h2 = 'text-[22px] font-bold text-text leading-8 scroll-mt-28';
+const p = 'text-[17px] text-text-body leading-[30px]';
+const li = 'text-[17px] text-text-body leading-[30px]';
+---
+<AdeGuide
+  title="What Do You Need for a First Texas Driver License?"
+  description={answer}
+  url={url}
+  eyebrow="Checklist, 18 and over"
+  h1="What you need for your first Texas driver license, by age"
+  lede={`${answer} The three lists below differ in one or two lines, and those lines are the ones people miss.`}
+  faqs={faqs}
+  dateModified="2026-10-29"
+  updated="October 29, 2026"
+  schema={[howTo]}
+  next={next}
+  sources={[
+    { label: 'Texas DPS, Apply for a Texas Driver License', href: 'https://www.dps.texas.gov/section/driver-license/apply-texas-driver-license' },
+    { label: 'Texas DPS, Schedule your Driving Test Appointment', href: 'https://www.dps.texas.gov/section/driver-license/schedule-your-driving-test-appointment' },
+    { label: 'Texas DPS, Impact Texas Drivers (ITD) program', href: 'https://www.dps.texas.gov/section/driver-license/impact-texas-drivers-itd-program' },
+    { label: 'Tex. Transp. Code §521.1601 and §521.167', href: 'https://statutes.capitol.texas.gov/Docs/TN/htm/TN.521.htm' },
+    { label: '37 TAC §15.55, waiver of knowledge and skills tests' },
+  ]}
+>
+  <section class="flex flex-col gap-4">
+    <h2 class={h2} style="font-family:'Outfit',sans-serif;">What does every first-time adult need?</h2>
+    <ol class="flex flex-col gap-3 pl-5 m-0 list-decimal">
+      {everyone.map((s) => <li class={li}><strong class="text-text">{s.name}.</strong> {s.text}</li>)}
+    </ol>
+  </section>
+
+  <section id="18-24" class="flex flex-col gap-4">
+    <h2 class={h2} style="font-family:'Outfit',sans-serif;">Ages 18 to 24: add the six-hour course</h2>
+    <p class={p}>
+      Texas will not issue a first license under 25 without a driver education certificate (Transp. Code §521.1601).
+      At {law.requiredBand}, that is the six-hour adult course and its {code} certificate. Take it before your first DPS visit.
+      Passing its final exam {CLAIM}. {WAIVER_LAPSE}
+    </p>
+    <p class={p}>Then watch {itd.adultName} within {itd.certValidDays} days of your road test, as on the list above.</p>
+    <p class="m-0">
+      <a href={adeEnrollUrl} data-rrs-cta="ade-requirements-18-24" class="inline-flex items-center justify-center min-h-12 py-3 px-6 rounded-full bg-primary hover:bg-primary-hover text-white font-semibold no-underline">Start the 6-hour course &middot; {price}</a>
+    </p>
+  </section>
+
+  <section id="25-plus" class="flex flex-col gap-4">
+    <h2 class={h2} style="font-family:'Outfit',sans-serif;">25 and over: the course is optional</h2>
+    <p class={p}>
+      Everything on the first list still applies, ITAD included. The six-hour course is not required. DPS calls it
+      &ldquo;highly recommended&rdquo; for first-time applicants, and if you take it, its exam {CLAIM_25}.
+    </p>
+    <p class={p}>
+      You can also <a class="underline hover:no-underline" href={base}>take the 6-hour course anyway (optional at 25+)</a>, or skip it and take the
+      knowledge test at DPS.
+    </p>
+  </section>
+
+  <section id="out-of-state" class="flex flex-col gap-4">
+    <h2 class={h2} style="font-family:'Outfit',sans-serif;">Moving here with a license from another state</h2>
+    <p class={p}>Most of the list falls away. DPS puts it this way:</p>
+    <blockquote class="border-l-4 border-info-border pl-5 m-0">
+      <p class="text-[17px] text-text-body leading-[30px] italic m-0">&ldquo;{law.dpsWaiverText}&rdquo;</p>
+    </blockquote>
+    <p class={p}>
+      You still bring the identity, lawful presence, Social Security and residency proofs, and pay the fee.
+      {residency.thirtyDayWaived} A license from another country is treated differently; see{' '}
+      <a class="underline hover:no-underline" href={`${base}/foreign-license-texas`}>a license from another country</a>.
+    </p>
+  </section>
+</AdeGuide>

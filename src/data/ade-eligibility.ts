@@ -107,6 +107,20 @@ export const process = {
 export const CLAIM =
   'satisfies the highway sign and traffic law portions of the DPS knowledge exam';
 
+/**
+ * 37 TAC §15.55(e)(2): applicants under 25 whose certificate is dated two or more years before the application have
+ * no exams waived (the certificate still proves the course). Say it wherever the waiver is explained.
+ */
+export const WAIVER_LAPSE =
+  'If you are under 25, this counts only while your ADE-1317 is less than 2 years old.';
+
+/**
+ * 25 and over: §521.167 sets no age limit, but no DPS page confirms the waiver for 25+ (checked 2026-10-29), so
+ * 25+ copy says "can count for", never "skip".
+ */
+export const CLAIM_25 =
+  'can count for the DPS road rules and road signs tests. Bring your ADE-1317 to DPS';
+
 /** DPS, Texas Residency Requirement for Driver Licenses and ID Cards (read 2026-09-15). */
 export const residency = {
   documentsRequired: 2,

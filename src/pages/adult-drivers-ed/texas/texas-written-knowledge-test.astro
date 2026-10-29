@@ -9,7 +9,7 @@
  * own text (vision and the driving skills test). §84.40(j): never promise a license.
  */
 import AdeGuide from '../../../components/ade/AdeGuide.astro';
-import { law, process, course, CLAIM } from '../../../data/ade-eligibility';
+import { law, process, course, CLAIM, WAIVER_LAPSE } from '../../../data/ade-eligibility';
 
 const base = '/adult-drivers-ed/texas';
 const parts = process.examParts.length; // 6
@@ -19,7 +19,7 @@ const answer = `An approved Texas adult drivers ed course ${CLAIM}. Vision and t
 
 const faqs = [
   { q: 'What is on the Texas written driving test?', a: `Highway signs, Texas traffic laws, bicyclists and distracted driving. Tex. Transp. Code §521.161 sets the content: your ability to identify and understand highway signs that regulate, warn or direct traffic; your knowledge of Texas traffic laws; motorists' rights and responsibilities in relation to bicyclists; and the effect of using a wireless communication device or otherwise driving distracted. Vision is tested separately, and the driving skills test is separate again.` },
-  { q: 'Does adult drivers ed replace the written test?', a: `Partly. The course ${CLAIM}. Under §521.167 you are not required to take the highway sign and traffic law parts of the DPS examination once a licensed driver education instructor confirms you passed them in the course. The vision test and the driving skills test remain.` },
+  { q: 'Does adult drivers ed replace the written test?', a: `Partly. The course ${CLAIM}. Under §521.167 you are not required to take the highway sign and traffic law parts of the DPS examination once a licensed driver education instructor confirms you passed them in the course. The vision test and the driving skills test remain. ${WAIVER_LAPSE}` },
   { q: 'Do I still take a test if I do the course?', a: `Yes, inside the course. It ends with a two-part examination of ${course.finalExamQuestions} questions, ${course.finalExamSigns} on highway signs and ${course.finalExamLaws} on traffic laws, and you need ${course.finalExamPassPercent}% on each part. That is the examination DPS accepts in place of its own written portions.` },
   { q: 'Is the Texas written test hard?', a: 'It covers material that is published in full. The Texas Driver Handbook covers everything on it, and so does an approved driver education course. People who fail it generally have not read either.' },
   { q: 'Can I take the written test online?', a: 'Not as a standalone DPS transaction for a first license. Either you sit the written portions at a DPS office, or you complete an approved driver education course and a licensed instructor certifies those portions for you.' },

@@ -13,7 +13,7 @@
  */
 import AdeGuide from '../../../components/ade/AdeGuide.astro';
 import ade from '../../../data/ade-texas.json';
-import { law, itd, fees, residency, process as dpsProcess, CLAIM } from '../../../data/ade-eligibility';
+import { law, itd, fees, residency, process as dpsProcess, CLAIM, WAIVER_LAPSE } from '../../../data/ade-eligibility';
 
 const base = '/adult-drivers-ed/texas';
 
@@ -32,7 +32,7 @@ const faqs = [
   { q: 'Do 18 to 24 year olds need drivers ed in Texas?', a: `Yes, for a first driver license. Tex. Transp. Code §521.1601 bars DPS from issuing a license to anyone under ${law.ageCeiling} without a driver education certificate, and DPS applies that as a six-hour adult driver education course for applicants ${law.requiredBand}. The exception is if you already hold a valid license issued by another U.S. state.` },
   { q: 'What are the requirements to get a Texas driver license at 18?', a: `For a first license at ${law.requiredBand}: the six-hour adult driver education course, the ${itd.adultName} video within ${itd.certValidDays} days before your driving test, identity, lawful presence and Texas residency documents, the $${fees.newLicense18to84} DPS fee, and the vision and driving skills tests at DPS.` },
   { q: 'How long is the adult drivers ed course in Texas?', a: 'Six hours, which Texas defines as 360 minutes with a minimum of 330 minutes of instruction. It is online and self-paced, so you can do it across several sittings rather than in one block.' },
-  { q: 'Does the course replace the DPS written test?', a: `It ${CLAIM}. Under §521.167 you are not required to take those parts of the examination once a licensed driver education instructor confirms you passed them. The vision test and the driving skills test still happen at DPS.` },
+  { q: 'Does the course replace the DPS written test?', a: `It ${CLAIM}. Under §521.167 you are not required to take those parts of the examination once a licensed driver education instructor confirms you passed them. The vision test and the driving skills test still happen at DPS. ${WAIVER_LAPSE}` },
   { q: 'What else do I need besides the course?', a: `The ${itd.adultName} video before your driving skills test, your identity, lawful presence and Texas residency documents, and the $${fees.newLicense18to84} DPS fee. The course is one requirement among several, not the whole process.` },
   { q: 'What happens when I turn 25 partway through?', a: 'If you apply at 25 or older, there is no driver education requirement, because the requirement is tested when DPS issues the license. If you are close to 25 and not in a hurry, you can wait. If you need to drive sooner, the six hours is the faster path.' },
 ];

@@ -13,7 +13,7 @@
  */
 import AdeGuide from '../../../components/ade/AdeGuide.astro';
 import ade from '../../../data/ade-texas.json';
-import { law, reciprocityCountries, fees, itd, CLAIM } from '../../../data/ade-eligibility';
+import { law, reciprocityCountries, fees, itd, CLAIM, WAIVER_LAPSE } from '../../../data/ade-eligibility';
 
 const base = '/adult-drivers-ed/texas';
 
@@ -57,7 +57,7 @@ const faqs = [
   },
   {
     q: 'What does the six-hour course actually do for me?',
-    a: `It ${CLAIM}. Under §521.167, finishing an approved adult driver education course means you are not required to take the highway sign and traffic law parts of the DPS examination, once a licensed driver education instructor has confirmed you passed them. It does not remove the vision test or the driving skills test, and it is not a driver license.`,
+    a: `It ${CLAIM}. Under §521.167, finishing an approved adult driver education course means you are not required to take the highway sign and traffic law parts of the DPS examination, once a licensed driver education instructor has confirmed you passed them. It does not remove the vision test or the driving skills test, and it is not a driver license. ${WAIVER_LAPSE}`,
   },
   {
     q: 'How much is the license itself?',

@@ -9,7 +9,7 @@
  */
 import AdeGuide from '../../../components/ade/AdeGuide.astro';
 import ade from '../../../data/ade-texas.json';
-import { course, CLAIM } from '../../../data/ade-eligibility';
+import { course, CLAIM, WAIVER_LAPSE } from '../../../data/ade-eligibility';
 
 const base = '/adult-drivers-ed/texas';
 
@@ -22,7 +22,7 @@ const faqs = [
   { q: 'How many times can I take it?', a: `${course.finalExamAttempts} attempts. If you miss more than 30% of the questions on an attempt, the course retests you using different questions, and you may review the material first. Fail three times and you fail the course.` },
   { q: 'Does it show me the right answers?', a: 'No. Texas requires that the course not identify the correct answer on the final examination, so you get your result without an answer key. Knowledge checks during the course work differently and do show you where you went wrong.' },
   { q: 'Is it open book?', a: 'No one proctors you at home, but the questions are written so the answer is not easily determined without having done the course. Texas requires that, and skimming is the reliable way to fail.' },
-  { q: 'What happens after I pass?', a: 'Your certificate is issued and a licensed driver education instructor confirms you passed the highway sign and traffic law portions. That confirmation is what DPS relies on.' },
+  { q: 'What happens after I pass?', a: `Your ADE-1317 certificate is ready the moment you pass, and it shows you passed the highway sign and traffic law portions. That is what DPS relies on. ${WAIVER_LAPSE}` },
 ];
 
 const next = [
@@ -114,9 +114,9 @@ const next = [
   <section class="flex flex-col gap-4">
     <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">What does passing do for my DPS test?</h2>
     <p class="text-[17px] text-text-body leading-[30px]">
-      Passing it {CLAIM}, once a licensed driver education instructor confirms you passed those
-      portions. Texas gives the provider up to {course.certificateDays} working days to issue your{' '}
-      <a class="underline hover:no-underline" href={`${base}/ade-1317-certificate`}>{course.certificateCode} certificate</a>.
+      Passing it {CLAIM}. Your{' '}
+      <a class="underline hover:no-underline" href={`${base}/ade-1317-certificate`}>{course.certificateCode} certificate</a>{' '}
+      is ready the moment you pass and shows those portions as passed. {WAIVER_LAPSE}
       The vision test and the driving skills test stay at DPS; the{' '}
       <a class="underline hover:no-underline" href={`${base}/texas-written-knowledge-test`}>written test page</a>{' '}
       sets out exactly which parts are which.

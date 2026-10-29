@@ -102,6 +102,11 @@ const ALLOW = [
     why: "the $25 reinstatement fee key fact",
   },
   {
+    file: "src/data/blog/mo.json",
+    line: /\$24\.99 \(old price\)/,
+    why: "the Missouri Safety Center list still shows our old $24.99 in the named price comparison; our price is a token",
+  },
+  {
     file: "src/pages/texas/best-defensive-driving-course.astro",
     line: /provider: '(?!Road Ready)|\$25\.00 (plus|for the text course)|advertise \$25\.00/,
     why: "competitor totals and certificate fees in the named price comparison; our own row imports its labels",

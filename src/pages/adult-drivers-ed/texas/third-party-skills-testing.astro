@@ -4,7 +4,8 @@
  *
  * Rebuilt 2026-10-13 on the hook → answer → loop → funnel recipe (ADE-PAGE-RECIPE.md). The H1 names the search and
  * the contrast (a certified school against the DPS median queue); each H2 is the reader's next question. The
- * "valid restricted driver license" paragraph is DPS's wording and is kept exactly as it was.
+ * "valid restricted driver license" is DPS's wording; since 2026-10-29 (DPS-RULES-CONFIRMED.md §b) the page says what it
+ * is: the B-restricted license DPS issues at the first visit. Price range for school road tests from ade-prices.ts.
  *
  * Facts: tpst, itd, law from src/data/ade-eligibility.ts (DPS Third Party Skills Testing Program, read 2026-09-15);
  * queue figures from src/lib/dps-stats.ts.
@@ -12,19 +13,21 @@
 import AdeGuide from '../../../components/ade/AdeGuide.astro';
 import { tpst, itd, fees, law } from '../../../data/ade-eligibility';
 import { dpsStats as S } from '../../../lib/dps-stats';
+import { schoolRoadTest, usd } from '../../../data/ade-prices';
 
 const base = '/adult-drivers-ed/texas';
 const longDate = new Date(`${S.capturedOn}T12:00:00`).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 
 // The one-breath answer: lede and meta description use the same sentence.
-const answer = `DPS certifies driver education schools to give the Class C road test, and says the program "${tpst.whyText}". Each school sets its own fee.`;
+const answer = `Yes. DPS certifies some driving schools to give the Class C road test, and says the program "${tpst.whyText}". Schools set their own fees, about ${usd(schoolRoadTest.low)} to ${usd(schoolRoadTest.high)} at the schools we checked. You still apply at DPS first, and DPS issues your license.`;
 
 const faqs = [
   { q: 'What is third party skills testing in Texas?', a: `A DPS program that authorizes certified driver education schools to administer the driving test for Class C non-commercial applicants. DPS says it exists partly because it "${tpst.whyText}". The schools are audited: their instructors are tested and their drive route is approved by the Department.` },
   { q: 'Is a third-party driving test as valid as a DPS one?', a: 'Yes. It is administered under DPS certification for the issuance of your Texas driver license. The difference is who runs it and how soon you can get in.' },
   { q: 'What do I need to qualify at 18 to 24?', a: tpst.requires18to24.join('; ') + '.' },
   { q: 'What do I need at 25 or older?', a: tpst.requires25plus.join('; ') + '.' },
-  { q: 'How much does a third-party driving test cost?', a: `It depends on the school. ${tpst.feesNote} Prices vary between schools, so ask before booking.` },
+  { q: 'How much does a third-party driving test cost?', a: `It depends on the school: about ${usd(schoolRoadTest.low)} to ${usd(schoolRoadTest.high)} at the local schools we checked. ${tpst.feesNote} Ask before booking.` },
+  { q: 'Do I need a license before a third-party road test?', a: 'Yes: the restricted license (B restriction) DPS issues at your first visit, after your documents, vision test and knowledge test. It lets you drive only with a licensed driver 21 or older in the front seat. Book the school test after you have it.' },
   { q: 'Do I still need the ITAD video?', a: `Yes. DPS requires ITD completion for third-party testing the same as for its own, with the certificate dated within ${itd.certValidDays} days before the drive test.` },
 ];
 
@@ -36,15 +39,15 @@ const next = [
 ];
 ---
 <AdeGuide
-  title={`Third-Party Skills Testing in Texas: Road Test at a Certified School, ${S.driveTest.median}-Day DPS Median | Road Ready Safety`}
+  title="Can a Driving School Give Your Texas Road Test?"
   description={answer}
   url={`${base}/third-party-skills-testing`}
   eyebrow="DPS process"
-  h1={`Third-party skills testing: a certified Texas school gives the road test, and DPS's median wait is ${S.driveTest.median} days`}
+  h1="Third-party skills testing: your Texas road test at a school"
   lede={`${answer} At 18 to 24 you still need a completed driver education course before a school can test you, and the full list for each age is below.`}
   faqs={faqs}
-  dateModified="2026-10-13"
-  updated="October 13, 2026"
+  dateModified="2026-10-29"
+  updated="October 29, 2026"
   band={{ eyebrow: 'Your road test at a school' }}
   next={next}
   sources={[
@@ -88,9 +91,9 @@ const next = [
       </div>
     </div>
     <p class="text-[17px] text-text-body leading-[30px]">
-      Note the phrase &ldquo;a valid restricted driver license&rdquo; in both lists. That is
-      DPS&rsquo;s wording, and it means third-party testing is not a route for someone with no Texas
-      credential at all &mdash; check your own status with the school before you pay.
+      Note &ldquo;a valid restricted driver license&rdquo; in both lists. That is the license with a B restriction
+      that DPS issues at your first visit, after your documents, the vision test and the knowledge test. So the order is:
+      DPS first, then the school road test. If you hold no Texas license yet, a school can&rsquo;t test you.
     </p>
   </section>
 

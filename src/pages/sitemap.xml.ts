@@ -97,6 +97,9 @@ const adeRoutes = adeEnabled && adeLicensed
       '/adult-drivers-ed/texas/what-the-course-does-not-do',
       '/adult-drivers-ed/texas/adult-learner-permit-texas',
       '/adult-drivers-ed/texas/temporary-visitors-and-students',
+      '/adult-drivers-ed/texas/requirements',
+      '/adult-drivers-ed/texas/how-to-choose',
+      '/adult-drivers-ed/texas/online-vs-in-person',
     ]
   : [];
 

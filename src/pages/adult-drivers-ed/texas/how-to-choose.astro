@@ -1,0 +1,101 @@
+---
+/**
+ * /adult-drivers-ed/texas/how-to-choose — "best online adult drivers ed texas": a 9-point check that works on any
+ * provider, us included.
+ *
+ * Built 2026-10-29 (REPORT v3 §3 and §6). Cart-structure stats only, no provider names; every number comes from
+ * src/data/ade-prices.ts and links to /cost#advertised-vs-checkout. No "best", "cheapest" or quality judgments.
+ */
+import AdeGuide from '../../../components/ade/AdeGuide.astro';
+import ade from '../../../data/ade-texas.json';
+import { course } from '../../../data/ade-eligibility';
+import { ADE_LICENSE } from '../../../lib/ade';
+import {
+  cartGap, cartsCount, cartsWithTrial, requiredFees, preselectedUpgrades, checkedOn, longDate, usd, competitors,
+} from '../../../data/ade-prices';
+
+const base = '/adult-drivers-ed/texas';
+const url = `${base}/how-to-choose`;
+const price = `$${ade.course.priceUsd}`;
+const date = longDate(checkedOn);
+const range = (s: { min: number; max: number }) => (s.min === s.max ? usd(s.min) : `${usd(s.min)} to ${usd(s.max)}`);
+
+const answer = 'Every TDLR-approved adult course teaches the same six-hour state curriculum, so choose on trust, total price and support. Check the provider’s TDLR license, compare the checkout total rather than the headline price, and confirm how fast the certificate comes and what retakes cost. Use this checklist on any provider, including us.';
+
+const checks = [
+  { t: 'It holds a TDLR license for adult courses.', b: 'Every approved provider has a driver education license number starting with C. Look it up on TDLR’s driver education provider search before you pay; the record shows whether the license is current and covers online adult courses.' },
+  { t: 'You compare the checkout total, not the ad.', b: `In the ${cartsCount} checkouts we viewed on ${date}, the default total ran ${range(cartGap)} above the headline price.` },
+  { t: 'You know whether there is a certificate fee.', b: `Some providers add a required certificate, handling or processing fee of ${range(requiredFees)} at checkout.` },
+  { t: 'Nothing is pre-checked that you did not choose.', b: `Some carts tick a paid instant-certificate upgrade for you (${range(preselectedUpgrades)}). Untick it if you don’t need it.` },
+  { t: 'The price doesn’t depend on a trial.', b: `${cartsWithTrial} of the ${cartsCount} headline prices we checked required starting a roadside-assistance trial that renews monthly.` },
+  { t: 'You know when the certificate arrives.', b: `Texas lets a provider take up to ${course.certificateDays} working days to issue the ${course.certificateCode}. If your DPS appointment is soon, ask before you buy.` },
+  { t: 'Retakes are clear.', b: `The state allows ${course.finalExamAttempts} attempts at the final exam. Ask whether any of them cost extra, and what happens after the third.` },
+  { t: 'It fits how you study.', b: 'Phone or computer, progress that saves, audio or Spanish if you need them, and enough days to finish.' },
+  { t: 'You can reach a person, and get your money back.', b: 'Look for a phone number, posted support hours and a written refund policy before you enroll.' },
+];
+
+const faqs = [
+  { q: 'What is the best online adult drivers ed in Texas?', a: 'The one that passes these nine checks for you. Every TDLR-approved course covers the same six-hour curriculum and issues the same ADE-1317 certificate, so the differences are the total price, the certificate timing, retakes and support.' },
+  { q: 'Is a cheaper course a worse course?', a: 'Not on the certificate. Price doesn’t change what Texas accepts. It can change what you get with the course, so compare the full checkout total and the support.' },
+  { q: 'How do I check that a provider is approved?', a: 'Find its driver education license number (it starts with C) and look it up on TDLR’s driver education provider search. The record shows whether it is current and covers online adult courses.' },
+];
+
+const next = [
+  { href: `${base}/cost#advertised-vs-checkout`, title: 'See the full dated price table', blurb: `${competitors.length} providers, advertised price vs checkout.` },
+  { href: `${base}/online-vs-in-person`, title: 'Online or in person?', blurb: 'Same six hours, same certificate, different price.' },
+  { href: `${base}/whats-in-the-course`, title: 'What is in the six hours', blurb: 'The nine modules and the final exam.' },
+  { href: `${base}/ade-1317-certificate`, title: 'The ADE-1317 certificate', blurb: 'What it is and when it arrives.' },
+];
+
+const ours = [
+  ['TDLR license', `${ADE_LICENSE}, online exclusively for adults`],
+  ['Checkout total', `${price}, the instant certificate included, nothing else added`],
+  ['Trial or pre-checked upgrade', 'None'],
+  ['Certificate', 'Ready the moment you pass'],
+  ['Final exam', `${course.finalExamAttempts} attempts, no retake fee`],
+  ['Refund', 'Full refund before you finish the course or receive your certificate'],
+];
+
+const h2 = 'text-[22px] font-bold text-text leading-8';
+const p = 'text-[17px] text-text-body leading-[30px]';
+---
+<AdeGuide
+  title="Which Texas Adult Drivers Ed Course Should You Pick?"
+  description={answer}
+  url={url}
+  eyebrow="Choosing a course"
+  h1="How to choose a Texas adult drivers ed course: a 9-point check"
+  lede={answer}
+  faqs={faqs}
+  dateModified="2026-10-29"
+  updated="October 29, 2026"
+  next={next}
+  sources={[
+    { label: 'TDLR, driver education provider search', href: 'https://www.tdlr.texas.gov/driver/education/providers/search/' },
+    { label: '16 TAC §84.503, online driver education course exclusively for adults' },
+    { label: `Road Ready Safety price check, ${date}`, href: `${base}/cost` },
+  ]}
+>
+  <section class="flex flex-col gap-4">
+    <h2 class={h2} style="font-family:'Outfit',sans-serif;">The 9 checks</h2>
+    <ol class="flex flex-col gap-3 pl-5 m-0 list-decimal">
+      {checks.map((c) => <li class={p}><strong class="text-text">{c.t}</strong> {c.b}</li>)}
+    </ol>
+    <p class={p}>
+      Checks 2 to 5 are where the price moves. <a class="underline hover:no-underline" href={`${base}/cost#advertised-vs-checkout`}>See the full dated price table</a> for every provider we checked.
+    </p>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class={h2} style="font-family:'Outfit',sans-serif;">How our course answers the 9 checks</h2>
+    <p class={p}>We sell a course, so here are our answers. Hold us to the same list.</p>
+    <dl class="grid grid-cols-1 sm:grid-cols-2 gap-px bg-border border border-border rounded-[16px] overflow-hidden m-0">
+      {ours.map(([k, v]) => (
+        <div class="bg-white px-5 py-4">
+          <dt class="text-xs font-semibold uppercase tracking-wider text-text-muted">{k}</dt>
+          <dd class="text-base text-text leading-6 m-0 mt-1">{v}</dd>
+        </div>
+      ))}
+    </dl>
+  </section>
+</AdeGuide>

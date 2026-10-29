@@ -22,8 +22,8 @@ interface Props {
    */
   breadcrumbs?: { name: string; href: string }[] | false;
   /**
-   * false: leave out the Course + Offer JSON-LD. Pages that are not the course page (the /cost price table)
-   * set it; the hub keeps it.
+   * Emit the Course + Offer JSON-LD. Default: on the hub only (REPORT v3 §6: Course/Offer lives on the course page,
+   * not on the guides or the /cost price table).
    */
   courseSchema?: boolean;
 }
@@ -36,7 +36,7 @@ const {
   banner = `$${ade.course.priceUsd} Total, Instant Certificate Included — Nothing Added at Checkout`,
   headerStyle,
   breadcrumbs,
-  courseSchema = true,
+  courseSchema = url === '/adult-drivers-ed/texas',
 } = Astro.props;
 const minimalHeader = headerStyle === 'minimal';
 
@@ -175,7 +175,7 @@ const adeLegalLinks = [
 
         <div class="hidden lg:flex items-center gap-3">
           {minimalHeader && <a href={contactUrl} class="text-sm font-medium text-text-body hover:text-text no-underline transition-colors mr-3">Contact Support</a>}<a href={loginUrl} class="h-10 px-5 border border-border text-text rounded-xl text-sm font-semibold flex items-center justify-center no-underline hover:bg-surface-muted transition-colors">Log In</a>
-          <a href={enrollUrl} class="h-10 px-5 bg-primary hover:bg-primary-hover text-white rounded-xl text-sm font-semibold flex items-center justify-center no-underline transition-colors shadow-[0px_4px_6px_-1px_rgba(17,23,34,0.1)]">Get My License</a>
+          <a href={enrollUrl} class="h-10 px-5 bg-primary hover:bg-primary-hover text-white rounded-xl text-sm font-semibold flex items-center justify-center no-underline transition-colors shadow-[0px_4px_6px_-1px_rgba(17,23,34,0.1)]">Start the Course</a>
         </div>
 
         <button
@@ -205,7 +205,7 @@ const adeLegalLinks = [
         <hr class="border-border" />
         <div class="flex flex-col gap-3">
           <a href={loginUrl} class="h-10 px-5 border border-border text-text rounded-xl text-sm font-semibold flex items-center justify-center no-underline hover:bg-surface-muted transition-colors">Log In</a>
-          <a href={enrollUrl} class="h-10 px-5 bg-primary hover:bg-primary-hover text-white rounded-xl text-sm font-semibold flex items-center justify-center no-underline transition-colors">Get My License</a>
+          <a href={enrollUrl} class="h-10 px-5 bg-primary hover:bg-primary-hover text-white rounded-xl text-sm font-semibold flex items-center justify-center no-underline transition-colors">Start the Course</a>
         </div>
       </div>
     </div>
@@ -223,7 +223,7 @@ const adeLegalLinks = [
         <span class="text-[11px] text-text-muted mt-0.5">nothing added</span>
       </div>
       <a href={enrollUrl} class="flex-1 max-w-[220px] h-11 bg-primary hover:bg-primary-hover text-white rounded-xl text-[15px] font-semibold flex items-center justify-center no-underline transition-colors">
-        Get My License
+        Start the Course
       </a>
     </div>
   </div>

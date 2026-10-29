@@ -20,6 +20,10 @@
  * Reviews are our verified Trustpilot reviews; any that mention a price or a ticket are filtered out because
  * none of that applies to this course. Certificate is instant (Jackson, 2026-10-13).
  * Refund promise: full refund before completion or certificate (Jackson, 2026-10-13), same as /texas.
+ *
+ * 2026-10-29 (REPORT v3 §5–6): 6-hour title and H1, value bullets with the instant certificate and the verified
+ * cart (nothing added, no trial), one price sentence from src/data/ade-prices.ts linking to /cost#how-much, links
+ * to every guide, Course/Offer schema here only. Kept from 10-13: the one-line 18–24 hero note, no "not sure" links.
  */
 import AdeLayout from '../../../layouts/AdeLayout.astro';
 import { COMPLETION_RATE_BANNER } from '../../../data/banners';
@@ -27,6 +31,7 @@ import RoadPhoto from '../../../components/landing-v2/RoadPhoto.astro';
 import ade from '../../../data/ade-texas.json';
 import reviews from '../../../data/texas-reviews.json';
 import { law, itd, WAIVER_LAPSE } from '../../../data/ade-eligibility';
+import { competitors, online, checkedOn, longDate, usd } from '../../../data/ade-prices';
 import { adeEnabled, adeEnrollUrl, adeContactUrl, ADE_LICENSE, ADE_VERIFY_URL } from '../../../lib/ade';
 
 const isEnabled = adeEnabled;
@@ -48,12 +53,14 @@ const sans = "font-family:'DM Sans',sans-serif;";
 
 const bullets = [
   { label: 'TDLR-Approved', text: `The official ${hours}-hour adult driver education course (${code}) Texas requires for a first license at 18 to 24.` },
+  { label: 'Instant Certificate Included', text: `Your ${code} is in your account the moment you pass, so you never pay for “instant delivery”.` },
   { label: 'Knowledge Exam Built In', text: `Finishing the course ${ade.exam.claimPhrasing}.` },
-  { label: 'No Behind-the-Wheel Hours', text: 'Adults do not log practice hours. No classroom, no instructor visits.' },
-  { label: 'Go at Your Own Pace', text: `Pause anytime, pick up on any device. ${days} days to finish.` },
-  { label: `${price} Total`, text: 'Course, exam and certificate. Nothing added at checkout.' },
+  { label: 'Go at Your Own Pace', text: `${hours} hours on your phone or laptop. Stop anytime and it saves your spot.` },
+  { label: `${price} Total`, text: 'No certificate fee, no trial to cancel, nothing pre-checked.' },
 ];
 const heroNote = 'Required for a first Texas license at 18 through 24.';
+// One stat sentence for the pricing block; every number comes from the /cost data (never typed here).
+const marketLine = `When we checked ${competitors.length} Texas providers on ${longDate(checkedOn)}, online courses advertised ${usd(online.min)} to ${usd(online.max)}, with a ${usd(online.median)} median.`;
 
 // Reviews: our verified Trustpilot reviews. Drop any that mention a price, a ticket, a court or the absence of
 // video — none of that is true of this course (two modules carry required videos). Instant certificate is true.
@@ -111,7 +118,7 @@ const expTabs = [
     items: [
       ['Watch ITAD', `Free, one hour, on the DPS site. Do it within ${itd.certValidDays} days of your driving test.`],
       ['Book your DPS appointment', 'Appointments are online. Road-test queues vary a lot by office, and nine offices offer no road test at all; our wait-time table ranks every office.'],
-      ['Take the tests', 'Vision screening and the driving test at DPS, or the driving test with a third-party skills tester. The highway sign and traffic law parts of the knowledge test are already satisfied by the course.'],
+      ['Take the tests', 'Vision screening and the driving test at DPS, or the driving test with a third-party skills tester. The highway sign and traffic law parts of the knowledge test are already satisfied by the course. ' + WAIVER_LAPSE],
       ['Important', 'Every remaining step is between you and DPS. The course does not entitle anyone to a license; it completes the driver education requirement.'],
     ] as [string, string][],
     note: '',
@@ -127,13 +134,13 @@ const landingFaqs = [
   { q: 'Do I still take the written test at the DPS?', a: `Completing this course ${ade.exam.claimPhrasing}. You still take the vision screening and the driving test at the DPS. ${WAIVER_LAPSE}` },
   { q: 'How long is adult drivers ed in Texas?', a: `Six hours. Texas sets the length of every approved adult driver education course, so no approved course is shorter. You can finish in one sitting or spread it over several days; you have ${days} days and the course saves your place.` },
   { q: 'What is in the six hours?', a: 'Nine modules set by the state: getting your license, right-of-way, signs and signals, speed and lane use, alcohol and drugs, sharing the road, managing risk, and the final exam.' },
-  { q: 'Do adults need behind-the-wheel hours in Texas?', a: 'No. Texas does not require adults to log practice hours. You still have to pass the driving test, so if you have never driven, get practice first through a driving school or supervised practice; Texas learner licenses go to applicants 15 to 17, not adults.' },
+  { q: 'Do adults need behind-the-wheel hours in Texas?', a: 'No. Texas does not require adults to log practice hours. You still have to pass the driving test, so if you have never driven, get practice first through a driving school or supervised practice. At your first DPS visit, DPS issues a restricted license (B restriction) that lets you drive with a licensed driver 21 or older in the front seat until you pass the road test.' },
   { q: 'What if I fail the final exam?', a: 'You get two more attempts, with different questions each time. A third failure means starting over with a new enrollment; that limit is set by the state.' },
   { q: 'What is Impact Texas Adult Drivers (ITAD)?', a: `A free one-hour video program from the Texas Department of Public Safety about distracted driving. DPS requires it before your driving skills test. It is separate from our course: you take it on the DPS site and DPS issues that certificate. It is valid ${itd.certValidDays} days, so watch it close to your test date.` },
   { q: 'When do I get my certificate?', a: `The moment you pass. Your ${code} certificate is issued instantly and waits in your account; download it and bring it to your DPS appointment with your other documents.` },
   { q: `Is it really ${price}?`, a: 'Yes. The certificate is included. No processing fee, no delivery fee, no retake fee, and no upgraded version of the course.' },
   { q: 'I am 25 or older. Should I take this?', a: 'You do not have to. People over 25 take it because the sign and traffic law exam is part of the course, on their own schedule, and DPS says the course is highly recommended for first-time applicants.' },
-  { q: 'Do I need a learner permit first?', a: 'No. You can take the course before you have any license or permit at all.' },
+  { q: 'Do I need a learner permit first?', a: 'No. You can take the course before you have any license or permit at all. Adults don’t get a learner license by that name: DPS issues a restricted license (B restriction) before your road test.' },
   { q: 'Can I take the course on my phone?', a: 'Yes. The course works on any device, and your progress saves as you go, so ten minutes on a break counts.' },
   { q: 'Can I get a refund?', a: 'Yes. If you’re not satisfied, you can request a full refund before you complete the course or receive your certificate.' },
 ];
@@ -145,11 +152,11 @@ const landingFaqSchema = JSON.stringify({
 });
 
 const resources = [
-  { href: `${base}/cost`, tag: 'Cost', title: 'How Much Adult Drivers Ed Costs', blurb: 'The whole bill to get licensed, and what other checkouts add after the ad.' },
+  { href: `${base}/cost`, tag: 'Cost', title: 'What Adult Drivers Ed Really Costs', blurb: `${competitors.length} providers’ prices, checked and dated, and what checkouts add.` },
   { href: `${base}/do-i-need-adult-drivers-ed`, tag: 'Start here', title: 'Do I Need Adult Drivers Ed in Texas?', blurb: 'Age, license history and where you are moving from, in one decision table.' },
   { href: `${base}/how-to-get-a-texas-license-as-an-adult`, tag: 'Process', title: 'How to Get a Texas License as an Adult', blurb: 'Every step from the course to the card in your hand.' },
   { href: `${base}/first-texas-license-18-to-24`, tag: 'Ages 18–24', title: 'Your First Texas License at 18 to 24', blurb: 'What the state requires at your age and in what order.' },
-  { href: `${base}/drivers-ed-over-25`, tag: '25 and over', title: 'Drivers Ed Over 25: Optional, Still Useful', blurb: 'Why DPS recommends it and what you skip at the office.' },
+  { href: `${base}/drivers-ed-over-25`, tag: '25 and over', title: 'Drivers Ed Over 25: Optional, Still Useful', blurb: 'Why DPS recommends it, and how its exam can count at DPS.' },
   { href: `${base}/impact-texas-adult-drivers`, tag: 'ITAD', title: 'Impact Texas Adult Drivers', blurb: 'The free DPS video, its 90-day clock, and when to watch it.' },
   { href: `${base}/texas-written-knowledge-test`, tag: 'DPS test', title: 'The Texas Written Knowledge Test', blurb: 'What the course satisfies and what DPS still tests.' },
   { href: `${base}/texas-driving-test`, tag: 'Driving test', title: 'The Texas Driving Test', blurb: 'What examiners score and how to book it.' },
@@ -158,6 +165,16 @@ const resources = [
   { href: `${base}/how-long-does-the-course-take`, tag: 'Time', title: 'How Long the Course Takes', blurb: 'Six hours of instruction, your schedule.' },
   { href: `${base}/dps-wait-times`, tag: 'DPS', title: 'DPS Wait Times by Office', blurb: 'Every Texas office ranked by road-test queue.' },
   { href: `${base}/new-resident-out-of-state-license`, tag: 'Moving here', title: 'New Resident with an Out-of-State License', blurb: 'When the course is waived and what DPS wants instead.' },
+  { href: `${base}/final-exam`, tag: 'Exam', title: 'The Final Exam', blurb: `${ade.exam.questions} questions, ${ade.exam.passPercent}% on each part, three attempts.` },
+  { href: `${base}/texas-driver-license-fees`, tag: 'DPS fees', title: 'What the License Itself Costs', blurb: 'The DPS fee, and what else you pay at the office.' },
+  { href: `${base}/texas-driver-license-documents`, tag: 'Documents', title: 'What to Bring to DPS', blurb: 'Identity, residency and the two certificates.' },
+  { href: `${base}/third-party-skills-testing`, tag: 'Road test', title: 'Your Road Test at a Driving School', blurb: 'Third-party skills testing, what it costs and what to bring.' },
+  { href: `${base}/adult-learner-permit-texas`, tag: 'Before the road test', title: 'The Restricted License Before Your Road Test', blurb: 'What adults get instead of a learner permit.' },
+  { href: `${base}/never-had-a-license`, tag: 'New driver', title: 'Never Had a License?', blurb: 'Where to start if you have never driven.' },
+  { href: `${base}/foreign-license-texas`, tag: 'Foreign license', title: 'A License from Another Country', blurb: 'Which countries Texas treats differently.' },
+  { href: `${base}/expired-out-of-state-license`, tag: 'Expired license', title: 'An Expired Out-of-State License', blurb: 'Where the two-year line falls.' },
+  { href: `${base}/temporary-visitors-and-students`, tag: 'Visitors', title: 'Temporary Visitors and Students', blurb: 'What DPS asks of you.' },
+  { href: `${base}/what-the-course-does-not-do`, tag: 'Course', title: 'What the Course Does Not Do', blurb: 'The parts of licensing that stay with DPS.' },
 ];
 
 // Jackson, 2026-10-13: show the first five guides, the rest behind a Show more button (same pattern as the reviews).
@@ -171,8 +188,8 @@ const chev = (stroke: string, size = 18) => `<svg width="${size}" height="${size
 
 {isEnabled && (
 <AdeLayout
-  title={`Texas Adult Drivers Ed Online: 6-Hour TDLR-Approved Course, ${price} Flat | Road Ready Safety`}
-  description={`The ${hours}-hour Texas adult driver education course (${code}) online, TDLR-approved (${ADE_LICENSE}), for first-time drivers 18 and over. ${price} flat: course, exam and certificate, nothing added at checkout. Required at 18 to 24.`}
+  title={`Texas 6-Hour Adult Drivers Ed Online, ${price} Total | Road Ready Safety`}
+  description={`The ${hours}-hour Texas adult driver education course (${code}) online, TDLR-approved (${ADE_LICENSE}), for first-time drivers 18 and over. ${price} total: course, exam and instant certificate, nothing added at checkout. Required at 18 to 24.`}
   keywords="texas adult drivers ed, adult drivers ed texas, texas adult driver education course, 6 hour adult driver education texas, adult drivers ed online texas, ADE-1317, tdlr approved adult drivers ed"
   url={base}
   banner={COMPLETION_RATE_BANNER}
@@ -191,7 +208,8 @@ const chev = (stroke: string, size = 18) => `<svg width="${size}" height="${size
           <img src="/assets/images/badges/texas-approved-tdlr.png" width="24" height="24" alt={`Texas approved: TDLR-approved adult driver education course (${code})`} class="w-6 h-6 shrink-0" decoding="async" />
           <span class="font-bold text-[13px] text-primary-deep" style={inter}>TDLR-Approved Driver Education Provider {ADE_LICENSE}</span>
         </p>
-        <h1 class="m-0 font-extrabold text-[32px] lg:text-[44px] leading-[1.1] tracking-[-0.02em] text-text" style={inter}>Texas Adult Drivers Ed Online: The 6-Hour Course for Your First License</h1>
+        <h1 class="m-0 font-extrabold text-[32px] lg:text-[44px] leading-[1.1] tracking-[-0.02em] text-text" style={inter}>Texas 6-Hour Adult Drivers Ed Online, from Road Ready Safety</h1>
+        <p class="m-0 text-lg leading-[1.5] text-text-body max-w-[580px]">Done in {hours} hours, online. {price} total: course, exam and instant certificate.</p>
         <ul class="list-none p-0 m-0 flex flex-col gap-3 max-w-[580px]">
           {bullets.map((b) => (
             <li class="flex gap-3.5 items-start">
@@ -277,6 +295,7 @@ const chev = (stroke: string, size = 18) => `<svg width="${size}" height="${size
         <div class="flex flex-col gap-2 text-center max-w-[640px]">
           <h2 class="m-0 font-extrabold text-[30px] lg:text-[40px] leading-[1.12] text-text" style={inter}>Your Course</h2>
           <p class="m-0 text-base text-text-muted">One price, everything included. Nothing is added at checkout.</p>
+          <p class="m-0 text-[15px] text-text-muted">{marketLine} <a class="underline hover:no-underline text-primary-deep" href={`${base}/cost#how-much`}>What Texas adult drivers ed really costs ({competitors.length} providers checked)</a></p>
         </div>
         <div class="w-full max-w-[460px] rounded-[20px] px-5 py-6 sm:px-6 sm:py-7 flex flex-col gap-3.5 sm:gap-4 bg-[#0B2160] text-white border border-[#0B2160] shadow-[0_24px_60px_rgba(11,33,96,0.28)]">
           <div class="flex flex-col-reverse sm:flex-row sm:justify-between gap-2.5 sm:gap-4 items-start">

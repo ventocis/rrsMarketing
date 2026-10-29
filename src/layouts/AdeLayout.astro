@@ -21,6 +21,11 @@ interface Props {
    * Pass an array to override, or `false` to emit none.
    */
   breadcrumbs?: { name: string; href: string }[] | false;
+  /**
+   * false: leave out the Course + Offer JSON-LD. Pages that are not the course page (the /cost price table)
+   * set it; the hub keeps it.
+   */
+  courseSchema?: boolean;
 }
 
 const {
@@ -28,9 +33,10 @@ const {
   description = `TDLR-approved Texas adult driver education. The six hours Texas requires for a first driver license, for $${ade.course.priceUsd} flat.`,
   keywords = 'Texas adult drivers ed, adult driver education Texas, ADE-1317, 6 hour drivers ed Texas, Texas drivers ed for adults',
   url = '/adult-drivers-ed/texas',
-  banner = `$${ade.course.priceUsd} Total, No Hidden Fees — No Surprises at Checkout`,
+  banner = `$${ade.course.priceUsd} Total, Instant Certificate Included — Nothing Added at Checkout`,
   headerStyle,
   breadcrumbs,
+  courseSchema = true,
 } = Astro.props;
 const minimalHeader = headerStyle === 'minimal';
 
@@ -98,7 +104,7 @@ const adeLegalLinks = [
 
 <Layout title={title} description={description} keywords={keywords} url={url} noindex={licensePending}>
   <Fragment slot="head">
-    <script type="application/ld+json" set:html={JSON.stringify({
+    {courseSchema && <script type="application/ld+json" set:html={JSON.stringify({
       '@context': 'https://schema.org',
       '@type': 'Course',
       name: 'Texas Adult Driver Education Course (ADE-1317)',
@@ -134,7 +140,7 @@ const adeLegalLinks = [
           repeatCount: -1,
         },
       },
-    })} />
+    })} />}
 
     {breadcrumbSchema && <script type="application/ld+json" set:html={breadcrumbSchema} />}
 
@@ -214,7 +220,7 @@ const adeLegalLinks = [
     <div class="flex items-center justify-between gap-3 px-4 py-3">
       <div class="flex flex-col leading-none">
         <span class="text-[19px] font-bold text-primary-navy" style="font-family:'Outfit',sans-serif;">${ade.course.priceUsd}</span>
-        <span class="text-[11px] text-text-muted mt-0.5">no hidden fees</span>
+        <span class="text-[11px] text-text-muted mt-0.5">nothing added</span>
       </div>
       <a href={enrollUrl} class="flex-1 max-w-[220px] h-11 bg-primary hover:bg-primary-hover text-white rounded-xl text-[15px] font-semibold flex items-center justify-center no-underline transition-colors">
         Get My License

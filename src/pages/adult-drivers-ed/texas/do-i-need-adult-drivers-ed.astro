@@ -10,15 +10,39 @@
  *
  * Facts: src/data/ade-eligibility.ts (§521.1601, §521.167, DPS Apply and Moving to Texas pages) and
  * src/data/ade-texas.json. §84.40(j): never promise a license; exam wording is CLAIM only.
+ *
+ * 2026-10-29 (REPORT v3 §6, step 9): the site's one interactive checker sits above the table. Three questions
+ * (age, any license, who issued it); results link into /requirements anchors. Price line on the 18–24 and 25+
+ * results only, from src/data/ade-prices.ts; checkout button on the 18–24 result only. The table and FAQ below stay
+ * as the crawlable version of the same logic. Script: one delegated listener (survives ViewTransitions); `hidden`
+ * sits on plain wrapper divs, never on a flex element.
  */
 import AdeGuide from '../../../components/ade/AdeGuide.astro';
 import ade from '../../../data/ade-texas.json';
 import { law, reciprocityCountries, fees, itd, CLAIM, WAIVER_LAPSE } from '../../../data/ade-eligibility';
+import { adeEnrollUrl } from '../../../lib/ade';
+import { competitors, online, checkedOn, longDate, usd } from '../../../data/ade-prices';
 
 const base = '/adult-drivers-ed/texas';
 
 // The one-breath answer. Same sentence in the meta description and the lede.
-const answer = `At 18 to 24, Texas requires six hours of adult drivers ed for a first license unless you hold a valid license from another U.S. state. At ${law.ageCeiling} and over, it's optional.`;
+const answer = `Only if you're 18 to 24 and getting your first license. At ${law.ageCeiling} or older the six-hour course is optional, and a valid, unexpired license from another U.S. state waives it. Answer three questions to see your path.`;
+const price = `$${ade.course.priceUsd}`;
+const priceLine = `Online courses advertised ${usd(online.min)} to ${usd(online.max)} (median ${usd(online.median)}) when we checked ${competitors.length} providers on ${longDate(checkedOn)}. Ours is ${price} total.`;
+
+// The checker's results. Keys are set by the script from the three answers.
+const results = [
+  { key: 'teen', need: 'Not this course', head: 'Under 18: the teen course applies', body: 'Texas drivers under 18 take a longer teen driver education course with supervised driving hours. The six-hour adult course is for 18 and over.', links: [] as { href: string; label: string }[], price: false, cta: false },
+  { key: 'required', need: 'Required', head: 'You need the six-hour course', body: `Texas will not issue your first license without it (Transp. Code §521.1601). Take it before your first DPS visit; passing its final exam ${CLAIM}. ${WAIVER_LAPSE}`, links: [{ href: `${base}/requirements#18-24`, label: 'Everything you need at 18 to 24' }], price: true, cta: true },
+  { key: 'transfer', need: 'Not required', head: 'Your license transfers', body: 'A valid license from another U.S. state, a U.S. territory or Canada, or one not expired over two years, is a transfer: no course, no knowledge or skills exam, no ITAD. You surrender it when you apply.', links: [{ href: `${base}/requirements#out-of-state`, label: 'What you still bring to DPS' }, { href: `${base}/new-resident-out-of-state-license`, label: 'New residents, in full' }], price: false, cta: false },
+  { key: 'reciprocity', need: 'Usually not', head: 'Your country has a reciprocity agreement', body: `Texas has reciprocity with ${reciprocityCountries.join(', ')}. With a valid, unexpired license from one of them, DPS may waive the exams and the course. Check with DPS before you apply.`, links: [{ href: `${base}/foreign-license-texas`, label: 'Foreign licenses in Texas' }], price: false, cta: false },
+  { key: 'optional', need: 'Optional', head: 'At 25 or older, the course is optional', body: `You still need your documents, the $${fees.newLicense18to84} fee, ${itd.adultName} and the DPS tests. DPS calls the course highly recommended for first-time applicants.`, links: [{ href: `${base}/requirements#25-plus`, label: 'Everything you need at 25 and over' }, { href: base, label: 'Take the 6-hour course anyway (optional at 25+)' }], price: true, cta: false },
+];
+const questions = [
+  { id: 'age', q: 'How old are you?', opts: [['under18', 'Under 18'], ['18-24', '18 to 24'], ['25plus', '25 or older']] },
+  { id: 'has', q: 'Do you have a driver license now, from anywhere?', opts: [['no', 'No, this is my first'], ['yes', 'Yes']] },
+  { id: 'from', q: 'Who issued it, and is it current?', opts: [['state', 'Another U.S. state, a U.S. territory or Canada, valid or expired 2 years or less'], ['recip', `${reciprocityCountries.join(', ')}, valid`], ['other', 'Another country, or expired more than 2 years']] },
+];
 
 // The decision this page exists to settle. Each row is a different legal answer, not a
 // rephrasing: §521.1601(a) sets the under-25 rule, (b) carves out another state's license,
@@ -65,6 +89,11 @@ const faqs = [
   },
 ];
 
+faqs.unshift({
+  q: 'How do I know if I need drivers ed in Texas?',
+  a: `Answer three questions. How old are you? Under 18 takes the teen course; 18 to 24 needs the six-hour adult course for a first license; 25 and over is optional. Do you hold a license now? If not, your age decides. Who issued it? A valid license from another U.S. state, a U.S. territory or Canada, or one not expired over two years, transfers with no course; a license from ${reciprocityCountries.join(', ')} may too; any other country does not.`,
+});
+
 const next = [
   { href: `${base}/first-texas-license-18-to-24`, title: 'Your row says Yes: first license at 18 to 24', blurb: 'What the law requires, and the order to do the course, the video and the tests.' },
   { href: `${base}/drivers-ed-over-25`, title: 'You are 25 or older', blurb: 'Not required. What the course still does for the knowledge exam, and what never changes.' },
@@ -74,15 +103,15 @@ const next = [
 ---
 
 <AdeGuide
-  title="Do You Have to Take Drivers Ed in Texas? Required at 18 to 24, Not at 25 | Road Ready Safety"
+  title="Do You Need Drivers Ed in Texas? 2-Minute Age Check"
   description={answer}
   url={`${base}/do-i-need-adult-drivers-ed`}
   eyebrow="Eligibility · The rule by age and license"
-  h1="Do you have to take drivers ed in Texas? At 18 to 24, yes. At 25, no."
-  lede={`${answer} The license exception is narrower than it sounds, because a license from most other countries does not count as another state. The table below sorts every case by your age and by who issued the license you hold.`}
+  h1="Do you need drivers ed in Texas? Answer 3 questions"
+  lede={`${answer} The license exception is narrower than it sounds, because a license from most other countries does not count as another state.`}
   faqs={faqs}
-  dateModified="2026-10-13"
-  updated="October 13, 2026"
+  dateModified="2026-10-29"
+  updated="October 29, 2026"
   band={{ eyebrow: 'If your row says Yes' }}
   next={next}
   sources={[
@@ -92,6 +121,35 @@ const next = [
     { label: 'Texas DPS, Moving to Texas: A Guide to Driver Licenses and IDs', href: 'https://www.dps.texas.gov/section/driver-license/moving-texas' },
   ]}
 >
+
+  <section id="check" class="flex flex-col gap-5" data-ade-check>
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Check your case</h2>
+    {questions.map((q, i) => (
+      <div data-q={q.id} hidden={i > 0}>
+        <fieldset class="border-0 p-0 m-0">
+          <legend class="text-[17px] font-semibold text-text mb-3">{i + 1}. {q.q}</legend>
+          <div class="flex flex-wrap gap-2">
+            {q.opts.map(([v, label]) => (
+              <button type="button" data-a={q.id} data-v={v} aria-pressed="false" class="text-left text-[15px] leading-6 px-4 py-2.5 rounded-xl border border-border bg-white text-text hover:border-primary-deep aria-pressed:bg-primary aria-pressed:text-white aria-pressed:border-primary">{label}</button>
+            ))}
+          </div>
+        </fieldset>
+      </div>
+    ))}
+    {results.map((r) => (
+      <div data-result={r.key} hidden>
+        <div class="rounded-[16px] border-2 border-primary-deep bg-info p-5 flex flex-col gap-3" role="status">
+          <p class="text-xs font-bold uppercase tracking-wider text-primary-deep m-0">Course: {r.need}</p>
+          <p class="text-[19px] font-bold text-text m-0" style="font-family:'Outfit',sans-serif;">{r.head}</p>
+          <p class="text-[16px] text-text-body leading-7 m-0">{r.body}</p>
+          {r.price && <p class="text-[15px] text-text-body leading-6 m-0">{priceLine} <a class="underline hover:no-underline" href={`${base}/cost#how-much`}>See real prices</a></p>}
+          {r.links.length > 0 && <p class="text-[15px] leading-6 m-0">{r.links.map((l, i) => <>{i > 0 && ' · '}<a class="underline hover:no-underline text-primary-deep" href={l.href}>{l.label}</a></>)}</p>}
+          {r.cta && <p class="m-0"><a href={adeEnrollUrl} data-rrs-cta="ade-checker-required" class="inline-flex items-center justify-center min-h-12 py-3 px-6 rounded-full bg-primary hover:bg-primary-hover text-white font-semibold no-underline">Start the 6-hour course &middot; {price}</a></p>}
+        </div>
+      </div>
+    ))}
+    <p class="m-0"><button type="button" data-ade-reset class="text-[15px] underline text-text-muted bg-transparent border-0 p-0 cursor-pointer">Start over</button></p>
+  </section>
 
   <section class="flex flex-col gap-4">
     <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Do you need drivers ed? Find your age and your license</h2>
@@ -181,3 +239,48 @@ const next = [
   </section>
 
 </AdeGuide>
+
+<script is:inline>
+  // One delegated listener on document, so it keeps working after ViewTransitions swaps the page.
+  (function () {
+    if (window.__adeCheck) return;
+    window.__adeCheck = true;
+    function show(root, sel, on) { root.querySelectorAll(sel).forEach(function (el) { el.hidden = !on; }); }
+    function outcome(a) {
+      if (a.age === 'under18') return 'teen';
+      if (!a.has) return null;
+      if (a.has === 'no') return a.age === '25plus' ? 'optional' : 'required';
+      if (!a.from) return null;
+      if (a.from === 'state') return 'transfer';
+      if (a.from === 'recip') return 'reciprocity';
+      return a.age === '25plus' ? 'optional' : 'required';
+    }
+    function render(root) {
+      var a = JSON.parse(root.dataset.answers || '{}');
+      root.querySelector('[data-q="has"]').hidden = !a.age || a.age === 'under18';
+      root.querySelector('[data-q="from"]').hidden = a.has !== 'yes' || a.age === 'under18';
+      root.querySelectorAll('[data-a]').forEach(function (b) { b.setAttribute('aria-pressed', String(a[b.dataset.a] === b.dataset.v)); });
+      var key = outcome(a);
+      show(root, '[data-result]', false);
+      if (key) root.querySelector('[data-result="' + key + '"]').hidden = false;
+    }
+    document.addEventListener('click', function (e) {
+      var t = e.target instanceof Element ? e.target : null;
+      if (!t) return;
+      var root = t.closest('[data-ade-check]');
+      if (!root) return;
+      var btn = t.closest('[data-a]');
+      if (btn) {
+        var a = JSON.parse(root.dataset.answers || '{}');
+        a[btn.dataset.a] = btn.dataset.v;
+        if (btn.dataset.a === 'age') { delete a.has; delete a.from; }
+        if (btn.dataset.a === 'has') { delete a.from; }
+        root.dataset.answers = JSON.stringify(a);
+        render(root);
+      } else if (t.closest('[data-ade-reset]')) {
+        root.dataset.answers = '{}';
+        render(root);
+      }
+    });
+  })();
+</script>

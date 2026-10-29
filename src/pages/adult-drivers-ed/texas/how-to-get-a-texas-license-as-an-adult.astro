@@ -8,9 +8,14 @@
  * reader's next question, answered in its first sentence; the page ends in the course band and the next cards.
  * The steps array is the single source for the visible list and the HowTo schema. Facts: ade-eligibility.ts and
  * the DPS wait-time snapshot via src/lib/dps-stats.ts.
+ *
+ * 2026-10-29 (REPORT v3 §6, steps 8 and 15): absorbs /never-had-a-license as #never-driven (that URL now redirects
+ * here); adds a 2–3 sentence cost summary linking /cost, and short pointers to /do-i-need, /requirements and
+ * /online-vs-in-person instead of repeating those pages; the appointment step names the B-restricted license.
  */
 import AdeGuide from '../../../components/ade/AdeGuide.astro';
 import {law, itd, fees, process, CLAIM} from '../../../data/ade-eligibility';
+import { online, competitors, checkedOn, longDate, usd, schoolRoadTest } from '../../../data/ade-prices';
 import { dpsStats as W } from '../../../lib/dps-stats';
 
 const siteUrl = (import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com').replace(/\/$/, '');
@@ -24,7 +29,7 @@ const steps = [
   { name: 'Take the six-hour course, if it applies to you', text: `Online and self-paced. Under §521.167 it ${CLAIM}, once a licensed driver education instructor confirms you passed those parts.` },
   { name: 'Book your driving skills test', text: `Every DPS office is appointment only. Appointments open up to ${6} months ahead, and the median wait for a skills test was ${W.driveTest.median} days when we last read the DPS report.` },
   { name: `Watch the ${itd.adultLengthHours}-hour ${itd.adultName} video`, text: `Required before the skills test for everyone 18 and over. The certificate is valid ${itd.certValidDays} days, so watch it after you know your appointment date, not before.` },
-  { name: 'Go to your appointment', text: `Application form, documents, biometrics, photo, the $${fees.newLicense18to84} fee, vision test, then the knowledge test if it has not been waived, then the driving skills test.` },
+  { name: 'Go to your appointment', text: `Application form, documents, biometrics, photo, the $${fees.newLicense18to84} fee, the vision test and the knowledge test if it has not been waived. DPS issues a restricted license (B restriction): you may drive only with a licensed driver 21 or older in the front seat. Bring it to the driving skills test, at DPS or a DPS-authorized driving school.` },
   { name: 'Leave with a temporary license', text: `You get a paper temporary license the same day. Check every field on it before you leave. The card arrives by mail in about ${process.cardArrivesWeeks} weeks.` },
 ];
 
@@ -67,12 +72,17 @@ const faqs = [
   },
 ];
 
+faqs.push(
+  { q: 'Can I get a first Texas driver license at 30, 40 or 50?', a: `Yes. Texas has no upper age limit on a first license. At ${law.ageCeiling} and over the six-hour course is optional; everything else is the same as at 22.` },
+  { q: 'How do I practice if I have never driven?', a: 'Behind-the-wheel lessons from a driving school, or practice with a licensed driver 21 or older in the front seat once DPS has issued your restricted license. The six-hour course is classroom material and does not teach you to operate a car.' },
+);
+
 const next = [
+  { href: `${base}/requirements`, title: 'The full checklist, by age', blurb: 'Everything you need for a first license, in one list.' },
   { href: `${base}/do-i-need-adult-drivers-ed`, title: 'Do you need adult drivers ed?', blurb: 'The rule by age and by license, so you know whether step three applies to you.' },
   { href: `${base}/texas-driver-license-documents`, title: 'What to bring to the appointment', blurb: 'The exact documents, so a weeks-long wait is not wasted at the counter.' },
   { href: `${base}/dps-wait-times`, title: 'DPS wait times, every office', blurb: 'How far out the road test is at each office, so you can pick where to book.' },
   { href: `${base}/impact-texas-adult-drivers`, title: 'The 90-day ITAD certificate trap', blurb: 'Why the free DPS video comes after you book the test.' },
-  { href: `${base}/never-had-a-license`, title: 'Never had a license?', blurb: 'Starting from zero at 25, 35 or 50, and what the course does not teach.' },
   { href: `${base}/new-resident-out-of-state-license`, title: 'Moving here with an out-of-state license', blurb: 'A valid license from another state skips most of these steps.' },
 ];
 ---
@@ -85,8 +95,8 @@ const next = [
   h1={h1}
   lede={`${answer} One step carries a ${itd.certValidDays}-day clock, and doing it before you book the road test is how people lose the certificate. The order that avoids it is below.`}
   faqs={faqs}
-  dateModified="2026-10-13"
-  updated="October 13, 2026"
+  dateModified="2026-10-29"
+  updated="October 29, 2026"
   schema={[howTo]}
   band={{ eyebrow: 'Step one at 18 to 24' }}
   next={next}
@@ -112,6 +122,20 @@ const next = [
         </li>
       ))}
     </ol>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      Not sure step one applies to you? <a class="underline hover:no-underline" href={`${base}/do-i-need-adult-drivers-ed`}>Take the 2-minute check</a>.
+      Want every item for your age in one list? See <a class="underline hover:no-underline" href={`${base}/requirements`}>the full checklist</a>.
+    </p>
+  </section>
+
+  <section id="cost" class="flex flex-col gap-4 scroll-mt-28">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">What does it cost?</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      The DPS fee is ${fees.newLicense18to84} and the {itd.adultName} video is free. At {law.requiredBand}, add the six-hour course:
+      online courses advertised {usd(online.min)} to {usd(online.max)}, with a {usd(online.median)} median, when we checked {competitors.length} providers on {longDate(checkedOn)}.
+      A road test at a driving school, if you choose one, adds about {usd(schoolRoadTest.low)} to {usd(schoolRoadTest.high)}.
+      See <a class="underline hover:no-underline" href={`${base}/cost#total-to-get-licensed`}>real prices</a>, or compare <a class="underline hover:no-underline" href={`${base}/online-vs-in-person`}>online vs in-person</a>.
+    </p>
   </section>
 
   <section class="flex flex-col gap-4">
@@ -165,6 +189,25 @@ const next = [
       Waits vary by office and by day. To see where the road test is closest, check{' '}
       <a class="underline hover:no-underline" href={`${base}/dps-wait-times`}>DPS wait times by office</a>.
       After you pass, the card arrives by mail in about {process.cardArrivesWeeks} weeks.
+    </p>
+  </section>
+
+  <section id="never-driven" class="flex flex-col gap-4 scroll-mt-28">
+    <h2 class="text-[22px] font-bold text-text leading-8" style="font-family:'Outfit',sans-serif;">Never driven? Start here</h2>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      Texas has no upper age limit on a first license, and your age changes only one thing: under {law.ageCeiling} the
+      six-hour course is required, and at {law.ageCeiling} and over it is optional (DPS calls it &ldquo;highly recommended&rdquo;
+      for first-time applicants). The documents, the fee, the vision and knowledge tests, the {itd.adultName} video and the
+      driving test are the same at 22 and at 52.
+    </p>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      The course will not teach you to drive. It covers the law, the signs, right-of-way and risk, and it {CLAIM}.
+      For the driving itself, budget for lessons at a driving school. After your first DPS visit you hold a restricted
+      license (B restriction), so you can also practice with a licensed driver 21 or older in the front seat. Never practice
+      unlicensed.
+    </p>
+    <p class="text-[17px] text-text-body leading-[30px]">
+      From zero, the real variables are your practice and the road-test wait. The rest moves quickly.
     </p>
   </section>
 

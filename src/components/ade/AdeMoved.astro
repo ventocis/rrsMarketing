@@ -1,0 +1,23 @@
+---
+/**
+ * A retired ADE guide URL that now lives inside another page. Static hosting can't send a server 301 without the
+ * CDK infra (Sam-owned), so this is an instant meta refresh plus a canonical to the new place and noindex. The
+ * URL is out of the sitemap and nothing on the site links to it. Same approach as the /courses/tx-adult-ed stub.
+ */
+interface Props { to: string; title: string }
+const { to, title } = Astro.props;
+const siteUrl = (import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com').replace(/\/$/, '');
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>{title}</title>
+    <meta name="robots" content="noindex, follow" />
+    <link rel="canonical" href={`${siteUrl}${to.split('#')[0]}`} />
+    <meta http-equiv="refresh" content={`0;url=${to}`} />
+  </head>
+  <body>
+    <p>This page moved: <a href={to}>{title}</a>.</p>
+  </body>
+</html>

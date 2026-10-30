@@ -1,0 +1,214 @@
+<div class="internal-user-indicator" data-internal-user-indicator hidden>
+  <button
+    type="button"
+    class="internal-user-button"
+    aria-label="Internal user"
+    aria-expanded="false"
+    aria-controls="internal-user-description"
+  >
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+      class="internal-user-icon"
+    >
+      <path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11z" />
+    </svg>
+  </button>
+  <div id="internal-user-description" role="tooltip" class="internal-user-info" hidden>
+    <div class="internal-user-panel">
+      <strong>Internal user</strong>
+      <p>This browser is marked as internal for analytics.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { INTERNAL_USER_COOKIE } from '../lib/analytics';
+
+  let isInternalUser = readInternalUser();
+  const indicator = document.querySelector<HTMLElement>('[data-internal-user-indicator]');
+  if (indicator) indicator.hidden = !isInternalUser;
+
+  const button = indicator?.querySelector<HTMLButtonElement>('button');
+  const info = indicator?.querySelector<HTMLElement>('[role="tooltip"]');
+  if (indicator && button && info) {
+    let hovered = false;
+    let focused = false;
+    let pinned = false;
+    let dismissed = false;
+
+    const render = () => {
+      const open = !dismissed && (hovered || focused || pinned);
+      info.hidden = !open;
+      button.setAttribute('aria-expanded', String(open));
+      if (open) button.setAttribute('aria-describedby', info.id);
+      else button.removeAttribute('aria-describedby');
+    };
+    const close = () => {
+      pinned = false;
+      dismissed = true;
+      render();
+    };
+
+    indicator.addEventListener('pointerenter', (event) => {
+      if (event.pointerType !== 'mouse') return;
+      hovered = true;
+      dismissed = false;
+      render();
+    });
+    indicator.addEventListener('pointerleave', () => {
+      hovered = false;
+      render();
+    });
+    indicator.addEventListener('focusin', () => {
+      focused = true;
+      dismissed = false;
+      render();
+    });
+    indicator.addEventListener('focusout', () => {
+      focused = false;
+      render();
+    });
+    button.addEventListener('click', () => {
+      if (pinned) close();
+      else {
+        pinned = true;
+        dismissed = false;
+        render();
+      }
+    });
+    document.addEventListener('pointerdown', (event) => {
+      if (!indicator.contains(event.target as Node)) close();
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') close();
+    });
+  }
+
+  // PostHog is loaded asynchronously through GTM, as in TicketBoxCarry.
+  const analyticsWindow = window as typeof window & {
+    cookieStore?: {
+      addEventListener: (
+        event: 'change',
+        callback: (event: { changed: { name: string }[]; deleted: { name: string }[] }) => void,
+      ) => void;
+    };
+    posthog?: {
+      __loaded?: boolean;
+      setInternalOrTestUser?: () => void;
+      setPersonProperties?: (properties: Record<string, boolean>) => void;
+    };
+  };
+
+  function readInternalUser() {
+    return document.cookie
+      .split(';')
+      .some((cookie) => cookie.trim() === `${INTERNAL_USER_COOKIE}=true`);
+  }
+
+  function refreshInternalUser() {
+    const isMarkedAsInternal = readInternalUser();
+    if (isMarkedAsInternal === isInternalUser) return;
+    isInternalUser = isMarkedAsInternal;
+    if (indicator) indicator.hidden = !isMarkedAsInternal;
+    if (isMarkedAsInternal) markInternalUser();
+  }
+
+  window.addEventListener('focus', refreshInternalUser);
+  analyticsWindow.cookieStore?.addEventListener('change', (event) => {
+    if ([...event.changed, ...event.deleted].some((cookie) => cookie.name === INTERNAL_USER_COOKIE)) {
+      refreshInternalUser();
+    }
+  });
+
+  function markInternalUser(tries = 0) {
+    if (!isInternalUser) return;
+    const posthog = analyticsWindow.posthog;
+    if (posthog?.__loaded) {
+      if (posthog.setInternalOrTestUser) {
+        posthog.setInternalOrTestUser();
+        return;
+      }
+      // Older GTM SDK snippets support the equivalent person property call.
+      if (posthog.setPersonProperties) {
+        posthog.setPersonProperties({ $internal_or_test_user: true });
+        return;
+      }
+    }
+    if (tries < 40) setTimeout(() => markInternalUser(tries + 1), 250);
+  }
+  markInternalUser();
+</script>
+
+<style>
+  .internal-user-indicator {
+    position: fixed;
+    left: max(8px, env(safe-area-inset-left));
+    bottom: max(8px, env(safe-area-inset-bottom));
+    z-index: 40;
+  }
+
+  .internal-user-indicator[hidden],
+  .internal-user-info[hidden] {
+    display: none;
+  }
+
+  .internal-user-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--color-internal-border);
+    border-radius: 9999px;
+    background: var(--color-internal-bg);
+    color: var(--color-internal-text);
+    cursor: pointer;
+  }
+
+  .internal-user-button:focus-visible {
+    outline: 2px solid var(--color-internal-text);
+    outline-offset: 2px;
+  }
+
+  .internal-user-info {
+    position: absolute;
+    left: 0;
+    bottom: 100%;
+    width: 264px;
+    max-width: calc(100vw - 16px);
+    padding-bottom: 8px;
+  }
+
+  .internal-user-icon {
+    color: var(--color-internal-icon);
+  }
+
+  .internal-user-panel {
+    padding: 10px 12px;
+    border: 1px solid var(--color-internal-border);
+    border-radius: 8px;
+    background: var(--color-internal-bg);
+    color: var(--color-internal-text);
+    box-shadow: 0 2px 8px rgb(0 0 0 / 8%);
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .internal-user-panel p {
+    margin-top: 2px;
+  }
+
+  @media print {
+    .internal-user-indicator {
+      display: none;
+    }
+  }
+</style>

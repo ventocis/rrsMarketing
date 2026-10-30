@@ -3,7 +3,7 @@ import TexasLayout from '../../layouts/TexasLayout.astro';
 import CoursePlanCards from '../../components/texas/CoursePlanCards.astro';
 import StickyCta from '../../components/texas/StickyCta.astro';
 import { courtStats as S } from '../../lib/court-stats';
-import { TEXAS_COURSE, TEXAS_PRICE_LABEL } from '../../data/texas-course';
+import { TEXAS_COURSE, TEXAS_PRICE_LABEL, TEXAS_LOWEST_LEGAL_LINE } from '../../data/texas-course';
 const isEnabled = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true';
 const enrollUrl = import.meta.env.VITE_TEXAS_ENROLLMENT_URL || '/courses/tx-defensive';
 const siteUrl = import.meta.env.VITE_SITE_URL || 'https://roadreadysafety.com';
@@ -24,7 +24,7 @@ const defaultTotal = defaultFee + recordFee + coursePrice;
 
 const faqs = [
   { q: 'How much does a defensive driving course cost in Texas?', a: `At least ${floor}, by law. What you pay depends on what a provider adds at checkout. Ours is ${price} with the instant certificate included.` },
-  { q: 'What is the cheapest defensive driving course in Texas?', a: `One at the ${floor} floor with the certificate included and nothing added at checkout. Ours is ${price} total, instant certificate included. Compare final totals, not ads.` },
+  { q: 'What is the lowest price for a defensive driving course in Texas?', a: `${floor}, the legal floor. Ours is ${TEXAS_LOWEST_LEGAL_LINE}, with the instant certificate included and nothing added at checkout. Compare final totals, not ads.` },
   { q: 'Why do some courses advertise $25 and charge more?', a: 'Certificate, “processing” and premium lines get added after the advertised price. Some checkouts also still show the old $25 + $3 split.' },
   { q: 'Does Road Ready Safety charge anything after the course?', a: `No. ${price} covers the course, the instant certificate with both copies, and unlimited retakes.` },
 ];
@@ -80,7 +80,7 @@ const pillOff = 'bg-white text-text border-[#CBD3DF] hover:border-primary-deep';
         <p class="text-[15px] text-text-body pt-5 m-0"><a href="/texas" class="text-text-body hover:underline">Texas</a><span class="mx-1.5">›</span><span>Cost</span></p>
         <div class="max-w-[780px] pt-8 pb-10">
           <h1 class="text-[36px] lg:text-[56px] font-extrabold tracking-[-0.02em] leading-[1.05] m-0 mb-5" style={inter}>Our Texas defensive driving course costs {price}. Here's what you'll actually pay.</h1>
-          <p class="text-lg lg:text-[21px] leading-8 m-0 mb-4">{floor} is the legal minimum for every TDLR-approved course. But the course is the <strong>cheapest</strong> part of getting a ticket dismissed. At the most common court fee, the whole thing comes to about <strong>${defaultTotal}</strong>.</p>
+          <p class="text-lg lg:text-[21px] leading-8 m-0 mb-4">{floor} is the legal minimum for every TDLR-approved course. But the course is the <strong>smallest</strong> part of getting a ticket dismissed. At the most common court fee, the whole thing comes to about <strong>${defaultTotal}</strong>.</p>
           <p class="text-lg lg:text-[21px] leading-8 m-0 mb-6">So where does the rest go, and which of it can you avoid? Pick your court's fee below and see the full math.</p>
           <p class="text-[15px] text-text-muted m-0">By Road Ready Safety, TDLR provider {TEXAS_COURSE.providerNumber}. We sell one of these courses, so every rule here points at its source. · Updated October 6, 2026</p>
         </div>
@@ -129,7 +129,7 @@ const pillOff = 'bg-white text-text border-[#CBD3DF] hover:border-primary-deep';
 
       <!-- ===== Legal floor ===== -->
       <section class={`${wrap} pt-16 pb-6`}>
-        <h2 class={h2c} style={inter}>What's the cheapest a course can legally be?</h2>
+        <h2 class={h2c} style={inter}>How low can a course price legally go?</h2>
         <p class="text-base leading-7 m-0 mb-6 max-w-[780px]">{floor}. Texas law sets that as the minimum for every approved course (Tex. Educ. Code §1001.352). Anything advertised for less is either not approved or not showing you the real price.</p>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
           <div class={card}>

@@ -2,7 +2,7 @@
 import Layout from './Layout.astro';
 import TicketBoxCarry from '../components/texas/TicketBoxCarry.astro';
 import { termsUrl } from '../lib/portal';
-import { TEXAS_COURSE, TEXAS_PRICE_LABEL, TEXAS_PROMO_PRICE_LABEL, TEXAS_AT_LEGAL_MINIMUM } from '../data/texas-course';
+import { TEXAS_COURSE, TEXAS_PRICE_LABEL, TEXAS_PROMO_PRICE_LABEL, TEXAS_AT_LEGAL_MINIMUM, TEXAS_LOWEST_LEGAL_LINE } from '../data/texas-course';
 import { adeEnabled } from '../lib/ade';
 
 interface Props {
@@ -30,7 +30,7 @@ const {
   description = 'The easiest way to dismiss your Texas traffic ticket. TDLR-approved, all courts accepted.',
   keywords = 'Texas driver safety course, defensive driving, traffic school, online course, Texas approved',
   url = '/texas',
-  banner = TEXAS_AT_LEGAL_MINIMUM ? `${TEXAS_PRICE_LABEL} Total, the Lowest Price Texas Law Allows — No Hidden Fees` : `${TEXAS_PRICE_LABEL} Total, No Hidden Fees — No Surprises at Checkout`,
+  banner = TEXAS_AT_LEGAL_MINIMUM ? TEXAS_LOWEST_LEGAL_LINE : `${TEXAS_PRICE_LABEL} Total, No Hidden Fees — No Surprises at Checkout`,
   showPromo = false,
   lang = 'en',
   alternates = [],
@@ -88,7 +88,7 @@ const courseSchemaJson = courseSchema
 
   <!-- Announcement Banner -->
   {showPromo ? (
-    <div id="promo-banner" data-price={TEXAS_PRICE_LABEL} class="bg-announcement-tx text-white text-center py-2.5 px-4" style="font-family: 'DM Sans', sans-serif;">
+    <div id="promo-banner" data-banner={banner} class="bg-announcement-tx text-white text-center py-2.5 px-4" style="font-family: 'DM Sans', sans-serif;">
 
       <!-- Desktop: single row -->
       <div class="hidden sm:flex items-center justify-center gap-2.5">
@@ -164,7 +164,7 @@ const courseSchemaJson = courseSchema
         var now = Date.now();
         var diff = deadline - now;
         if (diff <= 0) {
-          if (banner) banner.innerHTML = '<p class="text-sm font-semibold leading-5 text-center" style="font-family:\'DM Sans\',sans-serif;">' + (banner.getAttribute('data-price') || '') + ' Total, No Hidden Fees — No Surprises at Checkout</p>';
+          if (banner) banner.innerHTML = '<p class="text-sm font-semibold leading-5 text-center" style="font-family:\'DM Sans\',sans-serif;">' + (banner.getAttribute('data-banner') || '') + '</p>';
           if (_promoInterval !== null) clearInterval(_promoInterval);
           return;
         }

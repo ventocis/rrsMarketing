@@ -1,0 +1,45 @@
+---
+import { GOOGLE_INTERNAL_TRAFFIC_TYPE, INTERNAL_USER_COOKIE } from '../lib/analytics';
+
+interface Props {
+  enabled: boolean;
+}
+
+const { enabled } = Astro.props;
+---
+
+<!-- Inline and before GTM: a bundled/deferred script would miss the first pageview. -->
+<script define:vars={{ enabled, INTERNAL_USER_COOKIE, GOOGLE_INTERNAL_TRAFFIC_TYPE }}>
+  let previousInternal;
+
+  // Google tag commands use an Arguments object, rather than a plain data-layer event.
+  function queueGoogleCommand() {
+    window.dataLayer = window.dataLayer || [];
+    // eslint-disable-next-line prefer-rest-params -- Google tag requires a real Arguments object.
+    window.dataLayer.push(arguments);
+  }
+
+  function syncInternalTraffic() {
+    const internal = document.cookie
+      .split(';')
+      .some((cookie) => cookie.trim() === `${INTERNAL_USER_COOKIE}=true`);
+    if (internal === previousInternal) return;
+    previousInternal = internal;
+    if (!enabled) return;
+
+    const parameters = { traffic_type: internal ? GOOGLE_INTERNAL_TRAFFIC_TYPE : undefined };
+    if (typeof window.gtag === 'function') window.gtag('set', parameters);
+    else queueGoogleCommand('set', parameters);
+  }
+
+  if (new URLSearchParams(window.location.search).get('internal_user') === 'true') {
+    document.cookie = `${INTERNAL_USER_COOKIE}=true; Max-Age=31536000; Path=/; SameSite=Lax${window.location.protocol === 'https:' ? '; Secure' : ''}`;
+  }
+  syncInternalTraffic();
+  window.addEventListener('focus', syncInternalTraffic);
+  window.cookieStore?.addEventListener('change', (event) => {
+    if ([...event.changed, ...event.deleted].some((cookie) => cookie.name === INTERNAL_USER_COOKIE)) {
+      syncInternalTraffic();
+    }
+  });
+</script>

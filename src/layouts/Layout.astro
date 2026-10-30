@@ -1,5 +1,7 @@
 ---
 import '../styles/global.css';
+import InternalUserIndicator from '../components/InternalUserIndicator.astro';
+import InternalTrafficScript from '../components/InternalTrafficScript.astro';
 import { TEXAS_COURSE } from '../data/texas-course';
 import { adeLicensed, ADE_LICENSE, ADE_VERIFY_URL } from '../lib/ade';
 import { version } from '../../package.json';
@@ -140,6 +142,8 @@ const orgSchema = {
     <!-- JSON-LD: Organization -->
     <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
 
+    <InternalTrafficScript enabled={enableAnalytics && !!gtmId} />
+
     <!-- Google Tag Manager (via GTM Gateway) -->
     {enableAnalytics && gtmId && (
       <script define:vars={{ gtmId, course }}>
@@ -155,6 +159,7 @@ const orgSchema = {
     )}
   </head>
   <body class="w-full overflow-x-hidden m-0 p-0 bg-white text-text" style="font-family: 'DM Sans', sans-serif;">
+    <InternalUserIndicator />
     <!-- Google Tag Manager (noscript) -->
     {enableAnalytics && gtmId && (
       <noscript>

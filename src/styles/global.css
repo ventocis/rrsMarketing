@@ -67,6 +67,12 @@
   --color-error: #dc2626;
   --color-error-bg: #fee2e2;
 
+  /* Internal-user indicator */
+  --color-internal-bg: hsla(107, 74%, 93%, 1);
+  --color-internal-border: hsla(142, 70%, 80%, 1);
+  --color-internal-text: hsla(142, 76%, 20%, 1);
+  --color-internal-icon: hsla(142, 76%, 36%, 1);
+
   /* Announcement bars */
   --color-announcement: #1D46BF;
   --color-announcement-tx: #2e7d32;

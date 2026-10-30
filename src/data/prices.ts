@@ -41,7 +41,7 @@ export const PRICE_TOKENS: Record<string, string> = {
   TX_AUDIO_TOTAL: TEXAS_AUDIO_TOTAL_LABEL,
   /** "$181": typical court fee + course + Type 3A record. */
   TX_ALL_IN: TEXAS_ALL_IN_LABEL,
-  /** "$39.95": Texas adult driver education. */
+  /** "$29.95": Texas adult driver education (Jackson, 2026-10-30; was $39.95). */
   ADE_PRICE: `$${ade.course.priceUsd}`,
   /** "$24.99" */
   ND_PRICE: `$${nd.course.priceUsd}`,

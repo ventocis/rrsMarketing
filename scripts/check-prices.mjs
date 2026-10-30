@@ -114,6 +114,18 @@ const ALLOW = [
     why: "the Missouri Safety Center list still shows our old $24.99 in the named price comparison; our price is a token",
   },
   {
+    file: "src/data/blog/mo.json",
+    only: "Texas ADE price",
+    line: /\$19\.95 to \$29\.95/,
+    why: "Missouri competitor price range, not the Texas ADE price",
+  },
+  {
+    file: "src/components/CourseCard.astro",
+    only: "Texas ADE price",
+    line: /TicketSchool/,
+    why: "code comment on TicketSchool's old Missouri price",
+  },
+  {
     file: "src/pages/texas/best-defensive-driving-course.astro",
     line: /provider: '(?!Road Ready)|\$25\.00 (plus|for the text course)|advertise \$25\.00|GetDefensive\.com, \$25\.00/,
     why: "competitor totals and certificate fees in the named price comparison; our own row imports its labels",

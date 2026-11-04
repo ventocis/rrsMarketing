@@ -1,5 +1,5 @@
 {
-  "_note": "Single source of truth for the Missouri marketing site. Course facts trace to the portal sheet 'MO DIP — v3 PROD Upload — 2026-07-29'. Regulatory facts cite RSMo 302.302 and the Missouri Department of Revenue. The existing TicketSchool affiliate listing (courses.json mo-dip, $29.95) is retired when this site launches. approvalNumber: Missouri Safety Center provider ID OL031 (Jackson confirmed approval with MSC 2026-10-02). A non-empty value is what lets production build, index and list the Missouri pages. claims.banned is enforced by scripts/check-claims.mjs.",
+  "_note": "Single source of truth for the Missouri marketing site. Course facts trace to the portal sheet 'MO DIP — v3 PROD Upload — 2026-07-29'. Regulatory facts cite RSMo 302.302 and the Missouri Department of Revenue. The existing TicketSchool affiliate listing (courses.json mo-dip) is retired when this site launches. approvalNumber: Missouri Safety Center provider ID OL031 (Jackson confirmed approval with MSC 2026-10-02). A non-empty value is what lets production build, index and list the Missouri pages. claims.banned is enforced by scripts/check-claims.mjs.",
   "state": {
     "code": "MO",
     "name": "Missouri",
@@ -27,6 +27,7 @@
     "shortName": "Missouri DIP",
     "hours": 8,
     "priceUsd": "14.99",
+    "audioPriceUsd": "19.98",
     "completionDays": null,
     "completionNote": "Finish within 60 days of your conviction (RSMo 302.302)",
     "modules": [

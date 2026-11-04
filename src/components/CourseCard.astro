@@ -38,10 +38,12 @@ const isAdeCard = adeEnabled && raw.slug === ADE_SLUG;
 const isOurTexasCard = import.meta.env.VITE_TEXAS_ROUTES_ENABLED === 'true' && raw.slug === 'tx-defensive';
 // Per-state courses we run ourselves (src/data/courses/*.json, gated by courseFlags). When a catalog row's slug is
 // one of their SKUs the card shows our course and links to its landing page and checkout. courses.json still
-// carries TicketSchool's Missouri row (mo-dip): it shipped "Offered through our partner, TicketSchool" at $29.95 on
+// carries TicketSchool's Missouri row (mo-dip): it shipped "Offered through our partner, TicketSchool" at TicketSchool's price on
 // /courses next to our own, cheaper course at /missouri (prod audit, 2026-10-15). /courses also synthesizes a row for
 // each enabled state course that has no catalog row (North Dakota), which lands here the same way.
 const ownState = enabledCourses.find((c) => c.course.sku === raw.slug);
+// Optional second price chip ("$19.98 with audio") for state courses whose data file sets audioPriceUsd.
+const audioPrice = (ownState?.course as { audioPriceUsd?: string } | undefined)?.audioPriceUsd;
 const course: Course = ownState
   ? {
       ...raw,
@@ -113,6 +115,9 @@ const learnMoreHref = getLearnMoreHref(course.slug);
       )}
       {course.price_usd && (
         <span class="rounded-md bg-white text-text border border-border px-2 py-1">{usd(course.price_usd)}</span>
+      )}
+      {audioPrice && (
+        <span class="rounded-md bg-white text-text border border-border px-2 py-1">{usd(audioPrice)} with audio</span>
       )}
     </div>
 

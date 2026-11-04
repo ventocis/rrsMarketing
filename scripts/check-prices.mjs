@@ -110,8 +110,8 @@ const ALLOW = [
   },
   {
     file: "src/data/blog/mo.json",
-    line: /\$24\.99 \(old price\)/,
-    why: "the Missouri Safety Center list still shows our old $24.99 in the named price comparison; our price is a token",
+    line: /\(OL0\d\d\)/,
+    why: "competitor prices in the named comparison of Missouri Safety Center-approved schools (OLxxx IDs); our own price is a token",
   },
   {
     file: "src/data/blog/mo.json",
